@@ -1,0 +1,12 @@
+@import 'styles/variables';
+@import '~bootstrap/scss/mixins/breakpoints';
+
+.donations {
+	width: 100%;
+}
+
+@include media-breakpoint-up(lg) {
+	.donations {
+		width: 40%;
+	}
+}

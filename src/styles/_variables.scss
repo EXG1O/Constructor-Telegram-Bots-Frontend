@@ -1,0 +1,22 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/variables-dark';
+
+$form-check-margin-bottom: 0;
+
+$dropdown-link-active-color: $dropdown-link-color;
+$dropdown-link-active-bg: $gray-200;
+
+$card-border-color: $border-color;
+
+$pagination-color: $dark;
+
+$pagination-focus-color: $dark;
+$pagination-focus-box-shadow: none;
+
+$pagination-hover-color: $dark;
+
+$pagination-active-bg: $dark;
+$pagination-active-border-color: $dark;
+
+$offcanvas-horizontal-width: 420px;

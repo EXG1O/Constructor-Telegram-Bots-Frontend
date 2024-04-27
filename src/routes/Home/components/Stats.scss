@@ -1,0 +1,12 @@
+@import 'styles/variables';
+@import '~bootstrap/scss/mixins/breakpoints';
+
+.stats {
+	width: 100%;
+}
+
+@include media-breakpoint-up(lg) {
+	.stats {
+		width: 35%;
+	}
+}

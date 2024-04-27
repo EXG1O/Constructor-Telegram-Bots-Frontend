@@ -1,0 +1,25 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html class="h-100" lang="{{ LANGUAGE_CODE }}">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>Constructor Telegram Bots</title>
+		<meta name="robots" content="index, follow">
+		<meta name="description" content="{% trans 'Сайт, с помощью которого вы можете легко, бесплатно и без каких-либо знаний в программирование, сделать своего многофункционального Telegram бота.' %}">
+		<meta name="keywords" content="бесплатный, free, конструктор, constructor, telegram, телеграм, bot, бот, bots, ботов">
+
+		<meta name="google-site-verification" content="YbS9xa_kQpSf_XVG7tmdkCnX-av6lvsIm9m0E5SGTds">
+
+		<link rel="icon" href="{% static 'favicon.png' %}">
+	</head>
+	<body class="h-100">
+		<div class="vstack h-100" id="root"></div>
+
+		<script src="{% url 'javascript-catalog' %}"></script>
+	</body>
+</html>

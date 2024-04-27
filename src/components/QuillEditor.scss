@@ -1,0 +1,148 @@
+@use 'QuillEditor.content' as content;
+@import 'styles/variables';
+
+.quill {
+	transition: $input-transition;
+
+	&.focus {
+		border-color: $input-focus-border-color!important;
+		box-shadow: $input-focus-box-shadow;
+	}
+
+	.ql-toolbar {
+		font-family: 'bootstrap-icons';
+		font-size: 17px;
+		padding: 6px 12px;
+		border-bottom: $border-width $border-style $border-color;
+
+		.ql-formats {
+			display: flex;
+			gap: 6px;
+
+			button {
+				color: $dark;
+				background: none;
+				border: none;
+				padding: 0;
+				transition: color 0.15s ease-in-out;
+
+				$formats: (
+					'bold': '\F5F0',
+					'italic': '\F5F4',
+					'underline': '\F5F6',
+					'strike': '\F5F5',
+					'link': '\F470',
+					'blockquote': '\F6B0',
+					'code': '\F2C8',
+					'code-block': '\F2C6',
+					'clean': '\F331',
+				);
+
+				@each $name, $icon in $formats {
+					&.ql-#{$name} {
+						&::before {
+							content: $icon;
+						}
+
+						&:hover, &.ql-active {
+							color: #3f8cfd;
+						}
+					}
+				}
+
+				svg {
+					display: none;
+				}
+			}
+		}
+	}
+
+	.ql-container {
+		position: relative;
+
+		.ql-editor {
+			overflow: auto;
+			padding: $input-padding-y $input-padding-x;
+			outline: 0;
+
+			&.ql-blank::before {
+				position: absolute;
+				color: $secondary;
+				content: attr(data-placeholder);
+			}
+
+			@include content.styles;
+		}
+
+		.ql-clipboard {
+			display: none;
+		}
+
+		.ql-tooltip {
+			position: absolute;
+			display: flex;
+			align-items: center;
+			padding: 4px 12px;
+			background-color: $light;
+			border-radius: $border-radius-sm;
+			border: $border-width $border-style $border-color;
+			box-shadow: 0 0 10px 1px $secondary;
+
+			&.ql-hidden, input, .ql-remove {
+				display: none;
+			}
+
+			.ql-preview {
+				margin-right: 7px;
+			}
+
+			.ql-action {
+				color: $secondary;
+				font-family: 'bootstrap-icons';
+				text-decoration-line: none;
+				cursor: pointer;
+
+				&::before {
+					content: '\F4CA';
+				}
+			}
+
+			&.ql-editing {
+				.ql-preview {
+					display: none;
+				}
+
+				input {
+					display: unset;
+					min-height: calc(24px + 8px + calc($border-width * 2));
+					font-size: $input-font-size-sm;
+					font-weight: $input-font-weight;
+					line-height: $input-line-height;
+					padding: $input-padding-y-sm $input-padding-x-sm;
+					margin-right: 11px;
+					color: $body-color;
+					background-color: $body-bg;
+					border-radius: $border-radius-sm;
+					border: $border-width $border-style $border-color;
+					transition: $input-transition;
+
+					&:focus {
+						border-color: $input-focus-border-color!important;
+						box-shadow: 0 0 $focus-ring-blur 2px $focus-ring-color;
+						outline: 0;
+					}
+				}
+
+				.ql-action {
+					color: $success;
+					font-size: 18px;
+					-webkit-text-stroke: 0.6px;
+
+					&::before {
+						content: '\F633';
+					}
+				}
+			}
+		}
+	}
+}

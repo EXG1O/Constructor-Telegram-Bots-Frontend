@@ -1,0 +1,11 @@
+@import '~bootstrap/scss/nav';
+
+.nav-pills .nav-link {
+	color: $dark;
+	transition: $btn-transition;
+
+	&.active, &:hover {
+		color: $light;
+		background-color: $dark;
+	}
+}

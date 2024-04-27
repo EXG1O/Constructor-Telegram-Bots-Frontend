@@ -1,0 +1,39 @@
+.react-flow__attribution {
+	background: none;
+	padding: 0 15px;
+}
+
+.react-flow__controls {
+	overflow: hidden;
+	box-shadow: none;
+
+	&-button {
+		transition: background-color 0.15s ease-in-out;
+
+		&:last-child {
+			border-bottom: 0;
+		}
+
+		&:hover {
+			background-color: #f8f9fa;
+		}
+
+		&:active {
+			background-color: #e9ecef;
+		}
+	}
+}
+
+.react-flow__handle {
+	width: 12px;
+	height: 12px;
+	border-width: 1.5px;
+
+	$positions: 'top', 'bottom', 'left', 'right';
+
+	@each $position in $positions {
+		&-#{$position} {
+			#{$position}: -6px;
+		}
+	}
+}

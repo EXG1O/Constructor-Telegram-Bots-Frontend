@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"module": "CommonJS",
+		"target": "ES2015",
+		"lib": ["ES2021"],
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"jsx": "react",
+		"strict": true,
+		"noEmit": true,
+		"allowUnreachableCode": false,
+		"noFallthroughCasesInSwitch": false,
+		"paths": {
+			"styles/*": ["./src/styles/*"],
+			"components/*": ["./src/components/*"],
+			"routes/*": ["./src/routes/*"],
+			"services/*": ["./src/services/*"],
+			"utils/*": ["./src/utils/*"]
+		}
+	},
+	"include": ["./**/*.ts", "./**/*.tsx"],
+	"exclude": ["./node_modules"]
+}

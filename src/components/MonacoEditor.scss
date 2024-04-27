@@ -1,0 +1,14 @@
+@import 'styles/variables';
+
+.monaco-editor-wrapper {
+	transition: $input-transition;
+
+	&.padding {
+		padding: $input-padding-y $input-padding-x;
+	}
+
+	&.focus {
+		border-color: $input-focus-border-color!important;
+		box-shadow: $input-focus-box-shadow;
+	}
+}

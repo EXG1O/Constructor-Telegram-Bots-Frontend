@@ -1,0 +1,9 @@
+@import '~bootstrap/scss/pagination';
+
+.pagination {
+	margin-bottom: unset;
+
+	.page-item.active > .page-link {
+		cursor: default;
+	}
+}

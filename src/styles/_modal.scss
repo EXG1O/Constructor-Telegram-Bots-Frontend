@@ -1,0 +1,13 @@
+@import '~bootstrap/scss/modal';
+
+.modal-footer {
+	padding: $modal-inner-padding;
+
+	& > * {
+		margin: unset;
+
+		&:not(.flex-fill) {
+			width: 100%;
+		}
+	}
+}

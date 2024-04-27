@@ -1,0 +1,6 @@
+@use 'components/QuillEditor.content' as QuillEditorContent;
+
+
+.message-text-block {
+	@include QuillEditorContent.styles;
+}
