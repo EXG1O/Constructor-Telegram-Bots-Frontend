@@ -21,22 +21,12 @@ function Links({ className, ...props }: LinksProps): ReactElement<LinksProps> {
 	const location = useLocation();
 
 	return (
-		<Nav
-			{...props}
-			variant='underline'
-			className={classNames('gap-0', className)}
-		>
+		<Nav {...props} variant='underline' className={classNames('gap-0', className)}>
 			{links.map(({ className, ...props }, index) => (
 				<Link
 					key={index}
 					{...props}
-					className={
-						classNames(
-							'nav-link pb-1',
-							{ active: location.pathname === props.to },
-							className,
-						)
-					}
+					className={classNames('nav-link pb-1', { active: location.pathname === props.to }, className)}
 				/>
 			))}
 		</Nav>

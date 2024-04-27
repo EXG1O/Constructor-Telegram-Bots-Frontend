@@ -11,7 +11,11 @@ const linkGroups: LinkGroupProps[] = [
 		title: gettext('Проект'),
 		links: [
 			{ type: 'default', href: 'https://github.com/EXG1O/Constructor-Telegram-Bots', children: 'GitHub' },
-			{ type: 'default', href: 'https://github.com/EXG1O/Constructor-Telegram-Bots/blob/master/LICENSE.md', children: 'License' },
+			{
+				type: 'default',
+				href: 'https://github.com/EXG1O/Constructor-Telegram-Bots/blob/master/LICENSE.md',
+				children: 'License',
+			},
 		],
 	},
 	{
@@ -25,9 +29,7 @@ const linkGroups: LinkGroupProps[] = [
 	},
 	{
 		title: gettext('Другое'),
-		links: [
-			{ type: 'react', to: '/privacy-policy/', children: 'Privacy Policy' },
-		],
+		links: [{ type: 'react', to: '/privacy-policy/', children: 'Privacy Policy' }],
 	},
 ];
 

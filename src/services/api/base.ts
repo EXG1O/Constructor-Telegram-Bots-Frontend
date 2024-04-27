@@ -1,8 +1,5 @@
 export namespace APIResponse {
-	export interface Base<
-		Ok extends boolean,
-		Json extends Record<string, any>
-	> extends Omit<Response, 'ok' | 'json'> {
+	export interface Base<Ok extends boolean, Json extends Record<string, any>> extends Omit<Response, 'ok' | 'json'> {
 		ok: Ok;
 		json: Json;
 	}
@@ -21,15 +18,12 @@ export namespace APIResponse {
 
 export async function makeRequest<
 	SuccessAPIResponse extends Record<string, any> = {},
-	ErrorAPIResponse extends Record<string, any> = APIResponse.Error
+	ErrorAPIResponse extends Record<string, any> = APIResponse.Error,
 >(
 	url: string,
 	method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
 	data?: Record<string, any> | FormData,
-): Promise<
-	APIResponse.Base<true, SuccessAPIResponse> |
-	APIResponse.Base<false, ErrorAPIResponse>
-> {
+): Promise<APIResponse.Base<true, SuccessAPIResponse> | APIResponse.Base<false, ErrorAPIResponse>> {
 	let init: RequestInit = { method };
 
 	if (data !== undefined) {

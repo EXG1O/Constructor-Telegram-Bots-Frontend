@@ -18,7 +18,7 @@ export interface MonacoEditorProps extends Omit<BaseMonacoEditorProps, 'loading'
 	disableFocusEffect?: boolean;
 	onFocus?: () => void;
 	onBlur?: () => void;
-	onChange?: (editor: Editor, value: string) => void
+	onChange?: (editor: Editor, value: string) => void;
 	OnMount?: (editor: Editor, monaco: Monaco) => void;
 }
 
@@ -36,9 +36,9 @@ function MonacoEditor({
 }: MonacoEditorProps): ReactElement<MonacoEditorProps> {
 	const editor = useRef<Editor | undefined>(undefined);
 
-	const lineHeight = useMemo<number>(() => size === 'sm' ? 19 : size === 'lg' ? 24 : 22, [size]);
-	const fontSize = useMemo<number>(() => size === 'sm' ? 14 : size === 'lg' ? 18 : 16, [size]);
-	const roundedValue = useMemo<number>(() =>  size === 'sm' ? 1 : size === 'lg' ? 3 : 2, [size]);
+	const lineHeight = useMemo<number>(() => (size === 'sm' ? 19 : size === 'lg' ? 24 : 22), [size]);
+	const fontSize = useMemo<number>(() => (size === 'sm' ? 14 : size === 'lg' ? 18 : 16), [size]);
+	const roundedValue = useMemo<number>(() => (size === 'sm' ? 1 : size === 'lg' ? 3 : 2), [size]);
 	const baseClassName = useMemo<string>(() => classNames(`border rounded-${roundedValue}`), [roundedValue]);
 
 	const [focus, setFocus] = useState<boolean>(false);
@@ -49,7 +49,9 @@ function MonacoEditor({
 
 			if (editorModel !== null) {
 				editor.current.layout({
-					width: shouldResetWidth ? 0 : editor.current.getContainerDomNode().querySelector('.monaco-editor')!.clientWidth,
+					width: shouldResetWidth
+						? 0
+						: editor.current.getContainerDomNode().querySelector('.monaco-editor')!.clientWidth,
 					height: editorModel.getLineCount() * lineHeight,
 				});
 			}
@@ -72,23 +74,29 @@ function MonacoEditor({
 		onBlur?.();
 	}
 
-	const handleChange = useCallback<NonNullable<BaseMonacoEditorProps['onChange']>>(value => {
-		if (editor.current && value !== undefined) {
+	const handleChange = useCallback<NonNullable<BaseMonacoEditorProps['onChange']>>(
+		(value) => {
+			if (editor.current && value !== undefined) {
+				updateLayout();
+				onChange?.(editor.current, value);
+			}
+		},
+		[onChange],
+	);
+
+	const handleMount = useCallback<NonNullable<BaseMonacoEditorProps['onMount']>>(
+		(baseEditor, monaco) => {
+			editor.current = Object.assign(baseEditor, { updateLayout });
+
+			editor.current.onDidFocusEditorText(handleFocus);
+			editor.current.onDidBlurEditorText(handleBlur);
+
 			updateLayout();
-			onChange?.(editor.current, value);
-		}
-	}, [onChange]);
 
-	const handleMount = useCallback<NonNullable<BaseMonacoEditorProps['onMount']>>((baseEditor, monaco) => {
-		editor.current = Object.assign(baseEditor, { updateLayout });
-
-		editor.current.onDidFocusEditorText(handleFocus);
-		editor.current.onDidBlurEditorText(handleBlur);
-
-		updateLayout();
-
-		onMount?.(editor.current, monaco);
-	}, [onMount]);
+			onMount?.(editor.current, monaco);
+		},
+		[onMount],
+	);
 
 	return (
 		<BaseMonacoEditor
@@ -98,26 +106,27 @@ function MonacoEditor({
 					<Loading size='sm' />
 				</div>
 			}
-			options={useMemo(() => ({
-				minimap: { enabled: false },
-				renderLineHighlight: 'none',
-				lineNumbersMinChars: 3,
-				overviewRulerLanes: 0,
-				scrollBeyondLastLine: false,
-				scrollbar: { vertical: 'hidden' },
-				inlayHints: { enabled: 'off' },
-				contextmenu: false,
-				fontSize,
-				...options,
-			}), [options])}
-			className={
-				classNames(
-					baseClassName,
-					'monaco-editor-wrapper overflow-hidden',
-					{ padding: !disablePadding, focus },
-					className,
-				)
-			}
+			options={useMemo(
+				() => ({
+					minimap: { enabled: false },
+					renderLineHighlight: 'none',
+					lineNumbersMinChars: 3,
+					overviewRulerLanes: 0,
+					scrollBeyondLastLine: false,
+					scrollbar: { vertical: 'hidden' },
+					inlayHints: { enabled: 'off' },
+					contextmenu: false,
+					fontSize,
+					...options,
+				}),
+				[options],
+			)}
+			className={classNames(
+				baseClassName,
+				'monaco-editor-wrapper overflow-hidden',
+				{ padding: !disablePadding, focus },
+				className,
+			)}
 			onChange={handleChange}
 			onMount={handleMount}
 		/>

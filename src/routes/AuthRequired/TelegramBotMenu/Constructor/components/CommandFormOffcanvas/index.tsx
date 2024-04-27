@@ -14,7 +14,10 @@ import FilesCard, { Data as FilesData, defaultData as filesDefaultData } from '.
 import MessageBlock, { Message } from './components/MessageBlock';
 import KeyboardBlock, { Data as KeyboardData, defaultData as keyboardDefaultData } from './components/KeyboardBlock';
 import APIRequestBlock, { Data as APIRequestData, defaultData as apiRequestDefaultData } from '../APIRequestBlock';
-import DatabaseRecordBlock, { Value as DatabaseRecordValue, defaultValue as databaseRecordDefaultValue } from './components/DatabaseRecordBlock';
+import DatabaseRecordBlock, {
+	Value as DatabaseRecordValue,
+	defaultValue as databaseRecordDefaultValue,
+} from './components/DatabaseRecordBlock';
 import AddonButtonGroup, { AddonButtonProps } from '../AddonButtonGroup';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
@@ -24,7 +27,7 @@ export interface CommandFormOffcanvasProps extends OffcanvasProps {
 	settings?: Settings;
 	trigger?: Trigger;
 	images?: ImagesData;
-	files?: FilesData,
+	files?: FilesData;
 	message?: Message;
 	keyboard?: KeyboardData;
 	apiRequest?: APIRequestData;
@@ -68,59 +71,58 @@ function CommandFormOffcanvas({
 }: CommandFormOffcanvasProps): ReactElement<CommandFormOffcanvasProps> {
 	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
 
-	const addonButtons = useMemo<AddonButtonProps<AddonNames>[]>(() => [
-		{
-			name: 'trigger',
-			onShow: () => onTriggerChange(defaultTrigger),
-			onHide: () => onTriggerChange(undefined),
-			children: gettext('Триггер'),
-		},
-		{
-			name: 'images',
-			onShow: () => onImagesChange(imagesDefaultData),
-			onHide: () => onImagesChange(undefined),
-			children: gettext('Изображения'),
-		},
-		{
-			name: 'files',
-			onShow: () => onFilesChange(filesDefaultData),
-			onHide: () => onFilesChange(undefined),
-			children: gettext('Файлы'),
-		},
-		{
-			name: 'keyboard',
-			onShow: () => onKeyboardChange(keyboardDefaultData),
-			onHide: () => onKeyboardChange(undefined),
-			children: gettext('Клавиатура'),
-		},
-		{
-			name: 'apiRequest',
-			onShow: () => onAPIRequestChange(apiRequestDefaultData),
-			onHide: () => onAPIRequestChange(undefined),
-			children: gettext('API-запрос'),
-		},
-		{
-			name: 'databaseRecord',
-			onShow: () => onDatabaseRecordChange(databaseRecordDefaultValue),
-			onHide: () => onDatabaseRecordChange(undefined),
-			children: gettext('Запись в базу данных'),
-		},
-	], [
-		onTriggerChange,
-		onImagesChange,
-		onFilesChange,
-		onKeyboardChange,
-		onAPIRequestChange,
-		onDatabaseRecordChange,
-	]);
-	const showAddons = useMemo<Record<AddonNames, boolean>>(() => ({
-		trigger: trigger !== undefined,
-		images: images !== undefined,
-		files: files !== undefined,
-		keyboard: keyboard !== undefined,
-		apiRequest: apiRequest !== undefined,
-		databaseRecord: databaseRecord !== undefined,
-	}), [trigger, images, files, keyboard, apiRequest, databaseRecord]);
+	const addonButtons = useMemo<AddonButtonProps<AddonNames>[]>(
+		() => [
+			{
+				name: 'trigger',
+				onShow: () => onTriggerChange(defaultTrigger),
+				onHide: () => onTriggerChange(undefined),
+				children: gettext('Триггер'),
+			},
+			{
+				name: 'images',
+				onShow: () => onImagesChange(imagesDefaultData),
+				onHide: () => onImagesChange(undefined),
+				children: gettext('Изображения'),
+			},
+			{
+				name: 'files',
+				onShow: () => onFilesChange(filesDefaultData),
+				onHide: () => onFilesChange(undefined),
+				children: gettext('Файлы'),
+			},
+			{
+				name: 'keyboard',
+				onShow: () => onKeyboardChange(keyboardDefaultData),
+				onHide: () => onKeyboardChange(undefined),
+				children: gettext('Клавиатура'),
+			},
+			{
+				name: 'apiRequest',
+				onShow: () => onAPIRequestChange(apiRequestDefaultData),
+				onHide: () => onAPIRequestChange(undefined),
+				children: gettext('API-запрос'),
+			},
+			{
+				name: 'databaseRecord',
+				onShow: () => onDatabaseRecordChange(databaseRecordDefaultValue),
+				onHide: () => onDatabaseRecordChange(undefined),
+				children: gettext('Запись в базу данных'),
+			},
+		],
+		[onTriggerChange, onImagesChange, onFilesChange, onKeyboardChange, onAPIRequestChange, onDatabaseRecordChange],
+	);
+	const showAddons = useMemo<Record<AddonNames, boolean>>(
+		() => ({
+			trigger: trigger !== undefined,
+			images: images !== undefined,
+			files: files !== undefined,
+			keyboard: keyboard !== undefined,
+			apiRequest: apiRequest !== undefined,
+			databaseRecord: databaseRecord !== undefined,
+		}),
+		[trigger, images, files, keyboard, apiRequest, databaseRecord],
+	);
 
 	const usedStorageSize: number = useMemo(() => {
 		let size: number = telegramBot.used_storage_size;
@@ -138,23 +140,11 @@ function CommandFormOffcanvas({
 				<Offcanvas.Title as='h5'>{title}</Offcanvas.Title>
 			</Offcanvas.Header>
 			<Offcanvas.Body>
-				<NameBlock
-					value={name}
-					className='mb-3'
-					onChange={onNameChange}
-				/>
-				<SettingsBlock
-					settings={settings}
-					className='mb-3'
-					onChange={onSettingsChange}
-				/>
+				<NameBlock value={name} className='mb-3' onChange={onNameChange} />
+				<SettingsBlock settings={settings} className='mb-3' onChange={onSettingsChange} />
 				<Collapse in={showAddons.trigger} unmountOnExit>
 					<div>
-						<TriggerBlock
-							trigger={trigger}
-							className='mb-3'
-							onChange={onTriggerChange}
-						/>
+						<TriggerBlock trigger={trigger} className='mb-3' onChange={onTriggerChange} />
 					</div>
 				</Collapse>
 				<Collapse in={showAddons.images} unmountOnExit>
@@ -177,27 +167,15 @@ function CommandFormOffcanvas({
 						/>
 					</div>
 				</Collapse>
-				<MessageBlock
-					message={message}
-					className='mb-3'
-					onChange={onMessageChange}
-				/>
+				<MessageBlock message={message} className='mb-3' onChange={onMessageChange} />
 				<Collapse in={showAddons.keyboard} unmountOnExit>
 					<div>
-						<KeyboardBlock
-							data={keyboard}
-							className='mb-3'
-							onChange={onKeyboardChange}
-						/>
+						<KeyboardBlock data={keyboard} className='mb-3' onChange={onKeyboardChange} />
 					</div>
 				</Collapse>
 				<Collapse in={showAddons.apiRequest} unmountOnExit>
 					<div>
-						<APIRequestBlock
-							data={apiRequest}
-							className='mb-3'
-							onChange={onAPIRequestChange}
-						/>
+						<APIRequestBlock data={apiRequest} className='mb-3' onChange={onAPIRequestChange} />
 					</div>
 				</Collapse>
 				<Collapse in={showAddons.databaseRecord} unmountOnExit>
@@ -211,15 +189,8 @@ function CommandFormOffcanvas({
 				</Collapse>
 			</Offcanvas.Body>
 			<Offcanvas.Footer className='gap-2'>
-				<TelegramBotStorage
-					size='sm'
-					telegramBot={telegramBot}
-					usedStorageSize={usedStorageSize}
-				/>
-				<AddonButtonGroup
-					addonButtons={addonButtons}
-					showAddons={showAddons}
-				/>
+				<TelegramBotStorage size='sm' telegramBot={telegramBot} usedStorageSize={usedStorageSize} />
+				<AddonButtonGroup addonButtons={addonButtons} showAddons={showAddons} />
 			</Offcanvas.Footer>
 			{children}
 		</Offcanvas>

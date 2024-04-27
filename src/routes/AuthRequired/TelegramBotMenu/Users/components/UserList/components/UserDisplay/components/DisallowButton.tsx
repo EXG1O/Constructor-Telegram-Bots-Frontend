@@ -1,4 +1,4 @@
-import React, { ReactElement, HTMLAttributes, memo, useState, useCallback } from 'react'
+import React, { ReactElement, HTMLAttributes, memo, useState, useCallback } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -14,7 +14,12 @@ import { UserAPI } from 'services/api/telegram_bots/main';
 
 export type DisallowButtonProps = Omit<HTMLAttributes<HTMLElement>, 'children'>;
 
-function DisallowButton({ className, style, onClick, ...props }: DisallowButtonProps): ReactElement<DisallowButtonProps> {
+function DisallowButton({
+	className,
+	style,
+	onClick,
+	...props
+}: DisallowButtonProps): ReactElement<DisallowButtonProps> {
 	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();

@@ -21,10 +21,7 @@ function NodeToolbar({ title, onEdit, onDelete }: NodeToolbarProps): ReactElemen
 					style={{ fontSize: '16px' }}
 					onClick={onDelete}
 				/>
-				<span
-					className='text-bg-dark rounded-1 px-2'
-					style={{ cursor: 'default' }}
-				>
+				<span className='text-bg-dark rounded-1 px-2' style={{ cursor: 'default' }}>
 					{title}
 				</span>
 				<Button

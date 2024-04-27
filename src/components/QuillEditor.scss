@@ -5,7 +5,7 @@
 	transition: $input-transition;
 
 	&.focus {
-		border-color: $input-focus-border-color!important;
+		border-color: $input-focus-border-color !important;
 		box-shadow: $input-focus-box-shadow;
 	}
 
@@ -44,7 +44,8 @@
 							content: $icon;
 						}
 
-						&:hover, &.ql-active {
+						&:hover,
+						&.ql-active {
 							color: #3f8cfd;
 						}
 					}
@@ -88,7 +89,9 @@
 			border: $border-width $border-style $border-color;
 			box-shadow: 0 0 10px 1px $secondary;
 
-			&.ql-hidden, input, .ql-remove {
+			&.ql-hidden,
+			input,
+			.ql-remove {
 				display: none;
 			}
 
@@ -127,7 +130,7 @@
 					transition: $input-transition;
 
 					&:focus {
-						border-color: $input-focus-border-color!important;
+						border-color: $input-focus-border-color !important;
 						box-shadow: 0 0 $focus-ring-blur 2px $focus-ring-color;
 						outline: 0;
 					}

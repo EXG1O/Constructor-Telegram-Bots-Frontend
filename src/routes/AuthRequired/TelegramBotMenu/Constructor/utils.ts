@@ -1,10 +1,6 @@
 import { Node } from 'reactflow';
 
-import {
-	DiagramCommand,
-	DiagramCondition,
-	DiagramBackgroundTask,
-} from 'services/api/telegram_bots/types';
+import { DiagramCommand, DiagramCondition, DiagramBackgroundTask } from 'services/api/telegram_bots/types';
 
 export function parseNodes(
 	diagramCommands: DiagramCommand[] = [],

@@ -12,24 +12,25 @@ import Footer from './components/Footer';
 
 import OffcanvasContext from './contexts/OffcanvasContext';
 
-export interface OffcanvasProps extends Omit<
-	BaseModalProps,
-	'role' |
-	'renderBackdrop' |
-	'renderDialog' |
-	'transition' |
-	'backdrop' |
-	'backdropTransition' |
-	'keyboard' |
-	'children'
-> {
+export interface OffcanvasProps
+	extends Omit<
+		BaseModalProps,
+		| 'role'
+		| 'renderBackdrop'
+		| 'renderDialog'
+		| 'transition'
+		| 'backdrop'
+		| 'backdropTransition'
+		| 'keyboard'
+		| 'children'
+	> {
 	loading?: boolean;
 	bsPrefix?: string;
-    backdropClassName?: string;
-    scroll?: boolean;
-    placement?: 'start' | 'end' | 'top' | 'bottom';
-    responsive?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
-    renderStaticNode?: boolean;
+	backdropClassName?: string;
+	scroll?: boolean;
+	placement?: 'start' | 'end' | 'top' | 'bottom';
+	responsive?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+	renderStaticNode?: boolean;
 	children?: ReactNode;
 }
 

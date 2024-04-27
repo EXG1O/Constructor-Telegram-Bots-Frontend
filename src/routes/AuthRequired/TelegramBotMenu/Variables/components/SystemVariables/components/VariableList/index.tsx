@@ -32,7 +32,7 @@ const variables: Record<Type, Variable[]> = {
 		{ name: 'BOT_NAME', description: gettext('Название бота') },
 		{ name: 'BOT_USERNAME', description: gettext('@username бота') },
 	],
-}
+};
 
 function VariableList({ type, className, ...props }: VariableListProps): ReactElement<VariableListProps> {
 	return (

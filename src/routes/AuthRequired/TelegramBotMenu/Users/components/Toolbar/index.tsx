@@ -23,7 +23,7 @@ function Toolbar({ paginationData, className, ...props }: ToolbarProps): ReactEl
 			<Search
 				size='sm'
 				className='flex-fill'
-				onSearch={useCallback(value => updateUsers(undefined, undefined, value), [])}
+				onSearch={useCallback((value) => updateUsers(undefined, undefined, value), [])}
 				onClear={useCallback(() => updateUsers(undefined, undefined, searchDefaultValue), [])}
 			/>
 			<Pagination
@@ -32,7 +32,7 @@ function Toolbar({ paginationData, className, ...props }: ToolbarProps): ReactEl
 				itemOffset={paginationData.offset}
 				size='sm'
 				className='justify-content-center ps-1'
-				onPageChange={useCallback(newOffset => updateUsers(undefined, newOffset), [])}
+				onPageChange={useCallback((newOffset) => updateUsers(undefined, newOffset), [])}
 			/>
 		</div>
 	);

@@ -36,10 +36,7 @@ function LanguagesDropdown(props: LanguagesDropdownProps): ReactElement<Language
 			</Dropdown.Toggle>
 			<Dropdown.Menu className='text-center'>
 				{Object.entries(languages.available).map((language, index) => (
-					<Dropdown.Item
-						key={index}
-						onClick={() => setLanguage(language[0])}
-					>
+					<Dropdown.Item key={index} onClick={() => setLanguage(language[0])}>
 						{language[1]}
 					</Dropdown.Item>
 				))}

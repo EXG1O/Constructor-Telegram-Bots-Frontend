@@ -70,9 +70,7 @@ function Updates(): ReactElement {
 			<Container as='main' className='vstack gap-3 gap-lg-4 my-3 my-lg-4'>
 				<h1 className='fw-semibold text-center mb-0'>{title}</h1>
 				{!loading ? (
-					paginationData.results.map(update => (
-						<UpdateDisplay key={update.id} update={update} />
-					))
+					paginationData.results.map((update) => <UpdateDisplay key={update.id} update={update} />)
 				) : (
 					<Loading size='lg' className='m-auto' />
 				)}
@@ -81,7 +79,7 @@ function Updates(): ReactElement {
 					itemLimit={paginationData.limit}
 					itemOffset={paginationData.offset}
 					className='align-self-center'
-					onPageChange={useCallback(newItemOffset => updateUpdates(undefined, newItemOffset), [])}
+					onPageChange={useCallback((newItemOffset) => updateUpdates(undefined, newItemOffset), [])}
 				/>
 			</Container>
 		</Title>

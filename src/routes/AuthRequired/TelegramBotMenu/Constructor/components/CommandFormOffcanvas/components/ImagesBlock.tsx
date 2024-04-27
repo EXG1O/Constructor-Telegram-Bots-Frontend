@@ -32,7 +32,12 @@ interface ProcessedFile extends File {
 	url?: string;
 }
 
-function ImagesBlock({ data = defaultData, remainingStorageSize, onChange, ...props }: ImagesBlockProps): ReactElement<ImagesBlockProps> {
+function ImagesBlock({
+	data = defaultData,
+	remainingStorageSize,
+	onChange,
+	...props
+}: ImagesBlockProps): ReactElement<ImagesBlockProps> {
 	const { createMessageToast } = useToast();
 
 	const [loading, setLoading] = useState<boolean>(false);
@@ -46,47 +51,51 @@ function ImagesBlock({ data = defaultData, remainingStorageSize, onChange, ...pr
 
 			event.target.value = '';
 
-			const processedFiles: ProcessedFile[] = files.filter(file => {
-				if (file.size > 2621440) {
-					createMessageToast({
-						message: interpolate(
-							gettext('Изображение %(name)s весит больше 2.5МБ!'),
-							{ name: file.name },
-							true,
-						),
-						level: 'error',
-					});
-					return false;
-				}
-
-				if (availableStorageSize - file.size < 0) {
-					createMessageToast({
-						message: interpolate(
-							gettext('Невозможно добавить изображение %(name)s, потому-что не хватает места в хранилище!'),
-							{ name: file.name },
-							true,
-						),
-						level: 'error',
-					});
-					return false;
-				}
-
-				availableStorageSize -= file.size;
-
-				return true;
-			}).map((file, index) => {
-				const fileRender = new FileReader();
-				fileRender.readAsDataURL(file);
-				fileRender.addEventListener('loadend', e => {
-					if (e.target?.result) {
-						processedFiles[index].url = e.target.result as string;
-					} else {
-						delete processedFiles[index];
+			const processedFiles: ProcessedFile[] = files
+				.filter((file) => {
+					if (file.size > 2621440) {
+						createMessageToast({
+							message: interpolate(
+								gettext('Изображение %(name)s весит больше 2.5МБ!'),
+								{ name: file.name },
+								true,
+							),
+							level: 'error',
+						});
+						return false;
 					}
-				});
 
-				return file;
-			});
+					if (availableStorageSize - file.size < 0) {
+						createMessageToast({
+							message: interpolate(
+								gettext(
+									'Невозможно добавить изображение %(name)s, потому-что не хватает места в хранилище!',
+								),
+								{ name: file.name },
+								true,
+							),
+							level: 'error',
+						});
+						return false;
+					}
+
+					availableStorageSize -= file.size;
+
+					return true;
+				})
+				.map((file, index) => {
+					const fileRender = new FileReader();
+					fileRender.readAsDataURL(file);
+					fileRender.addEventListener('loadend', (e) => {
+						if (e.target?.result) {
+							processedFiles[index].url = e.target.result as string;
+						} else {
+							delete processedFiles[index];
+						}
+					});
+
+					return file;
+				});
 
 			const checkFilesResult = (): void => {
 				for (const file of processedFiles) {
@@ -98,7 +107,7 @@ function ImagesBlock({ data = defaultData, remainingStorageSize, onChange, ...pr
 
 				onChange([
 					...data,
-					...processedFiles.map(file => ({
+					...processedFiles.map((file) => ({
 						key: crypto.randomUUID(),
 						file: file,
 						name: file.name,
@@ -107,7 +116,7 @@ function ImagesBlock({ data = defaultData, remainingStorageSize, onChange, ...pr
 					})),
 				]);
 				setLoading(false);
-			}
+			};
 
 			checkFilesResult();
 		}
@@ -145,7 +154,7 @@ function ImagesBlock({ data = defaultData, remainingStorageSize, onChange, ...pr
 								indicators={data.length > 1}
 								className='overflow-hidden border rounded'
 							>
-								{data.map(image => (
+								{data.map((image) => (
 									<Carousel.Item key={image.key}>
 										<img
 											src={image.url}
@@ -161,7 +170,7 @@ function ImagesBlock({ data = defaultData, remainingStorageSize, onChange, ...pr
 							<div className='border rounded-1 p-1'>
 								<DragDropContext onDragEnd={handleImageDragEnd}>
 									<Droppable droppableId='command-offcanvas-images'>
-										{provided => (
+										{(provided) => (
 											<div
 												ref={provided.innerRef}
 												{...provided.droppableProps}
@@ -173,7 +182,7 @@ function ImagesBlock({ data = defaultData, remainingStorageSize, onChange, ...pr
 														index={index}
 														draggableId={`command-offcanvas-image-${image.key}`}
 													>
-														{provided => (
+														{(provided) => (
 															<ButtonGroup
 																ref={provided.innerRef}
 																{...provided.draggableProps}
@@ -218,12 +227,7 @@ function ImagesBlock({ data = defaultData, remainingStorageSize, onChange, ...pr
 					hidden
 					onChange={handleImagesChange}
 				/>
-				<Button
-					as='label'
-					htmlFor='command-offcanvas-images-input-file'
-					size='sm'
-					variant='dark'
-				>
+				<Button as='label' htmlFor='command-offcanvas-images-input-file' size='sm' variant='dark'>
 					{gettext('Добавить изображение')}
 				</Button>
 			</Block.Body>

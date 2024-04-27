@@ -23,24 +23,24 @@ export async function loader({ params }: { params: Params<'userID' | 'confirmCod
 			return {
 				message: gettext('Успешная авторизация.'),
 				level: 'success',
-			}
+			};
 		} else if (response.status === 404) {
 			return {
 				message: gettext('Пользователь не найден!'),
 				level: 'error',
-			}
+			};
 		} else if (response.status === 401) {
 			return {
 				message: gettext('Неверный код подтверждения!'),
 				level: 'error',
-			}
+			};
 		}
 	}
 
 	return {
 		message: gettext('Не удалось пройти авторизацию!'),
 		level: 'error',
-	}
+	};
 }
 
 function Login(): ReactElement {

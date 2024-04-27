@@ -14,7 +14,13 @@ export interface RecordFormModalProps extends ModalProps {
 
 export const defaultValue: Value = JSON.stringify({ key: 'value' }, undefined, 4);
 
-function RecordFormModal({ value, title, onChange, children, ...props }: RecordFormModalProps): ReactElement<RecordFormModalProps> {
+function RecordFormModal({
+	value,
+	title,
+	onChange,
+	children,
+	...props
+}: RecordFormModalProps): ReactElement<RecordFormModalProps> {
 	return (
 		<Modal {...props}>
 			<Modal.Header closeButton>
@@ -24,14 +30,20 @@ function RecordFormModal({ value, title, onChange, children, ...props }: RecordF
 				<MonacoEditor
 					value={value}
 					language='json'
-					options={useMemo(() => ({
-						glyphMargin: false,
-						folding: false,
-						lineNumbers: 'off',
-						lineDecorationsWidth: 0,
-						lineNumbersMinChars: 0,
-					}), [])}
-					onChange={useCallback<NonNullable<MonacoEditorProps['onChange']>>((editor, newValue) => onChange(newValue), [])}
+					options={useMemo(
+						() => ({
+							glyphMargin: false,
+							folding: false,
+							lineNumbers: 'off',
+							lineDecorationsWidth: 0,
+							lineNumbersMinChars: 0,
+						}),
+						[],
+					)}
+					onChange={useCallback<NonNullable<MonacoEditorProps['onChange']>>(
+						(editor, newValue) => onChange(newValue),
+						[],
+					)}
 				/>
 			</Modal.Body>
 			{children}

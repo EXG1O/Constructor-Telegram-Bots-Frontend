@@ -12,10 +12,7 @@ export interface BlockProps extends CardProps {
 function Block({ title, children, ...props }: BlockProps): ReactElement<BlockProps> {
 	return (
 		<Card {...props}>
-			<Card.Header
-				as='h6'
-				className='text-center'
-			>
+			<Card.Header as='h6' className='text-center'>
 				{title}
 			</Card.Header>
 			{children}

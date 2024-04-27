@@ -16,11 +16,9 @@ export namespace DonationsAPI {
 		}
 
 		return makeRequest<
-			Limit extends number ?
-			APIResponse.DonationsAPI.Get.Pagination :
-			APIResponse.DonationsAPI.Get.Default
+			Limit extends number ? APIResponse.DonationsAPI.Get.Pagination : APIResponse.DonationsAPI.Get.Default
 		>(url, 'GET');
-	}
+	};
 }
 
 export namespace SectionsAPI {

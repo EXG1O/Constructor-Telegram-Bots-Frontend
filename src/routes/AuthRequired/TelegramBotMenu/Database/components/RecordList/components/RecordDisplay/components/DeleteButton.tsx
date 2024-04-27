@@ -18,7 +18,13 @@ export interface DeleteButtonProps extends Omit<ButtonProps, 'as' | 'size' | 'va
 	record: DatabaseRecord;
 }
 
-function DeleteButton({ record, className, style, onClick, ...props }: DeleteButtonProps): ReactElement<DeleteButtonProps> {
+function DeleteButton({
+	record,
+	className,
+	style,
+	onClick,
+	...props
+}: DeleteButtonProps): ReactElement<DeleteButtonProps> {
 	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();

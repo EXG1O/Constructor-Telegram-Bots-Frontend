@@ -4,7 +4,9 @@
 	.ql-toolbar {
 		.ql-formats {
 			button {
-				$formats: ('spoiler': '\F777');
+				$formats: (
+					'spoiler': '\F777',
+				);
 
 				@each $name, $icon in $formats {
 					&.ql-#{$name} {
@@ -12,7 +14,8 @@
 							content: $icon;
 						}
 
-						&:hover, &.ql-active {
+						&:hover,
+						&.ql-active {
 							color: #3f8cfd;
 						}
 					}

@@ -89,14 +89,16 @@ function Users(): ReactElement {
 					{gettext('Список пользователей')}
 				</Card.Header>
 				<Card.Body className='vstack gap-2'>
-					<UsersContext.Provider value={{
-						users: paginationData.results,
-						filter: {
-							search: paginationData.search,
-							type: paginationData.type,
-						},
-						updateUsers,
-					}}>
+					<UsersContext.Provider
+						value={{
+							users: paginationData.results,
+							filter: {
+								search: paginationData.search,
+								type: paginationData.type,
+							},
+							updateUsers,
+						}}
+					>
 						<Toolbar paginationData={paginationData} />
 						<UserList loading={loading} />
 					</UsersContext.Provider>

@@ -11,14 +11,8 @@ function AddVariableButton(props: AddVariableButtonProps): ReactElement<AddVaria
 
 	return (
 		<>
-			<VariableAdditionModal
-				show={showModal}
-				onHide={useCallback(() => setShowModal(false), [])}
-			/>
-			<AddButton
-				{...props}
-				onClick={useCallback(() => setShowModal(true), [])}
-			>
+			<VariableAdditionModal show={showModal} onHide={useCallback(() => setShowModal(false), [])} />
+			<AddButton {...props} onClick={useCallback(() => setShowModal(true), [])}>
 				{gettext('Добавить переменную')}
 			</AddButton>
 		</>

@@ -15,22 +15,23 @@ function Donations(): ReactElement {
 		<Stack gap={2} className='donations align-self-center'>
 			<h3 className='mb-0'>{gettext('Список пожертвований')}</h3>
 			<div className='border rounded'>
-				<Table
-					responsive
-					striped
-					borderless
-					className='overflow-hidden align-middle rounded mb-0'
-				>
+				<Table responsive striped borderless className='overflow-hidden align-middle rounded mb-0'>
 					<thead className='border-bottom'>
 						<tr>
-							<th scope='col' style={{ width: '30%' }}>{gettext('Сумма')}</th>
-							<th scope='col' style={{ width: '40%' }}>Telegram</th>
-							<th scope='col' style={{ width: '30%' }}>{gettext('Дата')}</th>
+							<th scope='col' style={{ width: '30%' }}>
+								{gettext('Сумма')}
+							</th>
+							<th scope='col' style={{ width: '40%' }}>
+								Telegram
+							</th>
+							<th scope='col' style={{ width: '30%' }}>
+								{gettext('Дата')}
+							</th>
 						</tr>
 					</thead>
 					<tbody>
 						{donations.count ? (
-							donations.results.map(donation => (
+							donations.results.map((donation) => (
 								<tr key={donation.id}>
 									<td>{donation.sum}€</td>
 									<td>
@@ -53,10 +54,7 @@ function Donations(): ReactElement {
 					</tbody>
 				</Table>
 			</div>
-			<Link
-				to='/donation/'
-				className='btn btn-success align-self-center'
-			>
+			<Link to='/donation/' className='btn btn-success align-self-center'>
 				{gettext('Поддержать разработчика')}
 			</Link>
 		</Stack>

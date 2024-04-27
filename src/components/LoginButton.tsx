@@ -16,10 +16,7 @@ function LoginButton({ onClick, ...props }: LoginButtonProps): ReactElement<Logi
 
 	return (
 		<>
-			<LoginModal
-				show={showModal}
-				onHide={useCallback(() => setShowModal(false), [])}
-			/>
+			<LoginModal show={showModal} onHide={useCallback(() => setShowModal(false), [])} />
 			<Button
 				{...props}
 				as='a'

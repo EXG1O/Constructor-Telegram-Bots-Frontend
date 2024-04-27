@@ -30,13 +30,16 @@ function RecordDisplay({ record, className, ...props }: RecordDisplayProps): Rea
 	const { updateRecords } = useRecords();
 
 	const initialValue = useMemo<string>(() => JSON.stringify(record.data, undefined, 4), []);
-	const options = useMemo<NonNullable<MonacoEditorProps['options']>>(() => ({
-		glyphMargin: false,
-		folding: false,
-		lineNumbers: 'off',
-		lineDecorationsWidth: 0,
-		lineNumbersMinChars: 0,
-	}), []);
+	const options = useMemo<NonNullable<MonacoEditorProps['options']>>(
+		() => ({
+			glyphMargin: false,
+			folding: false,
+			lineNumbers: 'off',
+			lineDecorationsWidth: 0,
+			lineNumbersMinChars: 0,
+		}),
+		[],
+	);
 
 	const [value, setValue] = useState<string>(initialValue);
 	const [loading, setLoading] = useState<boolean>(false);
@@ -86,33 +89,23 @@ function RecordDisplay({ record, className, ...props }: RecordDisplayProps): Rea
 		setLoading(false);
 	}, [telegramBot, record, value]);
 
-	const handleCancel = useCallback<NonNullable<ConfirmButtonGroupProps['onCancel']>>(() => setValue(initialValue), [initialValue]);
+	const handleCancel = useCallback<NonNullable<ConfirmButtonGroupProps['onCancel']>>(
+		() => setValue(initialValue),
+		[initialValue],
+	);
 
-	return (
-		!loading ? (
-			<ListGroupItem {...props} className={classNames(className, 'd-flex gap-3')}>
-				<MonacoEditor
-					size='sm'
-					value={value}
-					language='json'
-					options={options}
-					onChange={handleChange}
-				/>
-				<div className='d-flex align-items-center gap-2'>
-					{value !== initialValue && (
-						<ConfirmButtonGroup
-							onConfirm={handleConfirm}
-							onCancel={handleCancel}
-						/>
-					)}
-					<DeleteButton record={record} />
-				</div>
-			</ListGroupItem>
-		) : (
-			<Block className='d-flex justify-content-center p-3'>
-				<Loading size='sm' />
-			</Block>
-		)
+	return !loading ? (
+		<ListGroupItem {...props} className={classNames(className, 'd-flex gap-3')}>
+			<MonacoEditor size='sm' value={value} language='json' options={options} onChange={handleChange} />
+			<div className='d-flex align-items-center gap-2'>
+				{value !== initialValue && <ConfirmButtonGroup onConfirm={handleConfirm} onCancel={handleCancel} />}
+				<DeleteButton record={record} />
+			</div>
+		</ListGroupItem>
+	) : (
+		<Block className='d-flex justify-content-center p-3'>
+			<Loading size='sm' />
+		</Block>
 	);
 }
 

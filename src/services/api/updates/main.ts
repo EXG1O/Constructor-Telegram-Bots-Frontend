@@ -16,9 +16,7 @@ export namespace UpdatesAPI {
 		}
 
 		return makeRequest<
-			Limit extends number ?
-			APIResponse.UpdatesAPI.Get.Pagination :
-			APIResponse.UpdatesAPI.Get.Default
+			Limit extends number ? APIResponse.UpdatesAPI.Get.Pagination : APIResponse.UpdatesAPI.Get.Default
 		>(url, 'GET');
-	}
+	};
 }

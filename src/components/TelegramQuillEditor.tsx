@@ -31,19 +31,25 @@ const baseToolbar: Toolbar = {
 		'spoiler',
 		'clean',
 	],
-}
+};
 
 function TelegramQuillEditor({ toolbar, ...props }: TelegramQuillEditorProps): ReactElement<TelegramQuillEditorProps> {
 	return (
 		<QuillEditor
 			{...props}
-			toolbar={useMemo(() => toolbar ? ({
-				...toolbar,
-				container: {
-					...baseToolbar.container,
-					...toolbar.container,
-				},
-			}) : baseToolbar, [toolbar])}
+			toolbar={useMemo(
+				() =>
+					toolbar
+						? {
+								...toolbar,
+								container: {
+									...baseToolbar.container,
+									...toolbar.container,
+								},
+							}
+						: baseToolbar,
+				[toolbar],
+			)}
 		/>
 	);
 }

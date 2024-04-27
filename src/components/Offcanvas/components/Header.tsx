@@ -9,7 +9,7 @@ export type HeaderProps = BaseHeaderProps;
 function Header({ closeButton, ...props }: HeaderProps): ReactElement<HeaderProps> {
 	const context = useContext(OffcanvasContext);
 
-	return <BaseHeader {...props} closeButton={!context?.loading && closeButton}  />;
+	return <BaseHeader {...props} closeButton={!context?.loading && closeButton} />;
 }
 
 export default Header;

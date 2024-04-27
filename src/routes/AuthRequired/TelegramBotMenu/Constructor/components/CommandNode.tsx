@@ -22,7 +22,7 @@ interface NodeData extends Omit<DiagramCommand, keyof DiagramBlock> {
 	updateNodes: () => Promise<void>;
 }
 
-interface CommandNodeProps extends Omit<NodeProps, 'data'>{
+interface CommandNodeProps extends Omit<NodeProps, 'data'> {
 	data: NodeData;
 }
 
@@ -40,7 +40,7 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 		const response = await CommandAPI._delete(telegramBot.id, data.id);
 
 		if (response.ok) {
-			setNodes(prevNodes => prevNodes.filter(node => node.id !== id));
+			setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
 			setShowDeletionModal(false);
 			createMessageToast({
 				message: gettext('Вы успешно удалили команду.'),
@@ -75,18 +75,13 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 				onDelete={useCallback(() => setShowEditOffcanvas(true), [])}
 			/>
 			<Stack gap={2} style={{ width: '300px' }}>
-				<div className='bg-light border rounded text-center text-break px-3 py-2' style={{ position: 'relative' }}>
-					<Handle
-						id={`${id}:left:0`}
-						type='target'
-						position={Position.Left}
-					/>
+				<div
+					className='bg-light border rounded text-center text-break px-3 py-2'
+					style={{ position: 'relative' }}
+				>
+					<Handle id={`${id}:left:0`} type='target' position={Position.Left} />
 					{data.name}
-					<Handle
-						id={`${id}:right:0`}
-						type='target'
-						position={Position.Right}
-					/>
+					<Handle id={`${id}:right:0`} type='target' position={Position.Right} />
 				</div>
 				<div
 					className='message-text-block bg-light border rounded px-3 py-2'
@@ -94,23 +89,15 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 				/>
 				{data.keyboard?.buttons && (
 					<Stack gap={1}>
-						{data.keyboard.buttons.map(button => (
+						{data.keyboard.buttons.map((button) => (
 							<div
 								key={button.id}
 								className='text-bg-dark rounded text-center text-break px-3 py-2'
 								style={{ position: 'relative' }}
 							>
-								<Handle
-									id={`${id}:left:${button.id}`}
-									type='source'
-									position={Position.Left}
-								/>
+								<Handle id={`${id}:left:${button.id}`} type='source' position={Position.Left} />
 								{button.text}
-								<Handle
-									id={`${id}:right:${button.id}`}
-									type='source'
-									position={Position.Right}
-								/>
+								<Handle id={`${id}:right:${button.id}`} type='source' position={Position.Right} />
 							</div>
 						))}
 					</Stack>

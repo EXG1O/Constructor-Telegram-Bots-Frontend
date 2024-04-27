@@ -173,8 +173,8 @@ export namespace Data {
 		}
 
 		export interface Create extends Omit<Command, 'id' | 'images' | 'files' | 'keyboard'> {
-			images?: File[],
-			files?: File[],
+			images?: File[];
+			files?: File[];
 			keyboard: CreateCommandKeyboard | null;
 		}
 	}

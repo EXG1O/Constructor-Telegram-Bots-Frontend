@@ -17,7 +17,9 @@ import { VariablesAPI } from 'services/api/telegram_bots/main';
 
 function UserVariables(): ReactElement {
 	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
-	const { paginationData: initialPaginationData } = useRouteLoaderData('telegram-bot-menu-variables') as TelegramBotMenuVariablesLoaderData;
+	const { paginationData: initialPaginationData } = useRouteLoaderData(
+		'telegram-bot-menu-variables',
+	) as TelegramBotMenuVariablesLoaderData;
 
 	const { createMessageToast } = useToast();
 
@@ -51,11 +53,13 @@ function UserVariables(): ReactElement {
 				{gettext('Пользовательские переменные')}
 			</Card.Header>
 			<Card.Body className='vstack gap-2'>
-				<VariablesContext.Provider value={{
-					variables: paginationData.results,
-					filter: { search: paginationData.search },
-					updateVariables,
-				}}>
+				<VariablesContext.Provider
+					value={{
+						variables: paginationData.results,
+						filter: { search: paginationData.search },
+						updateVariables,
+					}}
+				>
 					<Toolbar paginationData={paginationData} />
 					<VariableList loading={loading} />
 				</VariablesContext.Provider>

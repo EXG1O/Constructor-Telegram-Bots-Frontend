@@ -29,10 +29,13 @@ import { CommandsAPI, DiagramCommandAPI } from 'services/api/telegram_bots/main'
 
 export interface CommandAdditionOffcanvasProps {
 	show: boolean;
-	onHide: () => void
+	onHide: () => void;
 }
 
-function CommandAdditionOffcanvas({ onHide, ...props }: CommandAdditionOffcanvasProps): ReactElement<CommandAdditionOffcanvasProps> {
+function CommandAdditionOffcanvas({
+	onHide,
+	...props
+}: CommandAdditionOffcanvasProps): ReactElement<CommandAdditionOffcanvasProps> {
 	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
@@ -73,26 +76,34 @@ function CommandAdditionOffcanvas({ onHide, ...props }: CommandAdditionOffcanvas
 				is_delete_user_message: settings.isDeleteUserMessage,
 				is_send_as_new_message: settings.isSendAsNewMessage,
 			},
-			trigger: trigger ? {
-				...trigger,
-				description: trigger.description ?? null,
-			} : null,
-			images: images?.map(image => image.file!),
-			files: files?.map(file => file.file!),
+			trigger: trigger
+				? {
+						...trigger,
+						description: trigger.description ?? null,
+					}
+				: null,
+			images: images?.map((image) => image.file!),
+			files: files?.map((file) => file.file!),
 			message: { text: message },
-			keyboard: keyboard ? {
-				...keyboard,
-				buttons: keyboard.buttons.map(button => ({
-					...button,
-					row: button.row ?? null,
-					url: button.url ?? null,
-				})),
-			} : null,
-			api_request: apiRequest ? {
-				...apiRequest,
-				headers: apiRequest.headers ? apiRequest.headers.map(header => ({ [header.key]: header.value })) : null,
-				body: apiRequest.body ? JSON.parse(apiRequest.body) : null,
-			} : null,
+			keyboard: keyboard
+				? {
+						...keyboard,
+						buttons: keyboard.buttons.map((button) => ({
+							...button,
+							row: button.row ?? null,
+							url: button.url ?? null,
+						})),
+					}
+				: null,
+			api_request: apiRequest
+				? {
+						...apiRequest,
+						headers: apiRequest.headers
+							? apiRequest.headers.map((header) => ({ [header.key]: header.value }))
+							: null,
+						body: apiRequest.body ? JSON.parse(apiRequest.body) : null,
+					}
+				: null,
 			database_record: databaseRecord ? { data: JSON.parse(databaseRecord) } : null,
 		});
 
@@ -149,10 +160,7 @@ function CommandAdditionOffcanvas({ onHide, ...props }: CommandAdditionOffcanvas
 			onHide={onHide}
 		>
 			<CommandFormOffcanvas.Footer>
-				<Button
-					variant='success'
-					onClick={handleClick}
-				>
+				<Button variant='success' onClick={handleClick}>
 					{gettext('Добавить')}
 				</Button>
 			</CommandFormOffcanvas.Footer>

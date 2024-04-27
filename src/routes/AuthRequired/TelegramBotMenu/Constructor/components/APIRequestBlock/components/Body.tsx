@@ -1,4 +1,4 @@
-import React, { ReactElement, memo } from 'react'
+import React, { ReactElement, memo } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
@@ -20,26 +20,22 @@ function Body({ show, value, onShow, onHide, onChange }: BodyProps): ReactElemen
 		<div>
 			<Button
 				size='sm'
-				{...(
-					show ? {
-						variant: 'secondary',
-						className: 'w-100 border-bottom-0 rounded-bottom-0',
-						children: gettext('Убрать данные'),
-					} : {
-						variant: 'dark',
-						className: 'w-100',
-						children: gettext('Добавить данные'),
-					}
-				)}
+				{...(show
+					? {
+							variant: 'secondary',
+							className: 'w-100 border-bottom-0 rounded-bottom-0',
+							children: gettext('Убрать данные'),
+						}
+					: {
+							variant: 'dark',
+							className: 'w-100',
+							children: gettext('Добавить данные'),
+						})}
 				aria-controls='command-offcanvas-api-request-body-addon'
 				aria-expanded={show}
 				onClick={show ? onHide : onShow}
 			/>
-			<Collapse
-				in={show}
-				unmountOnExit
-				onExited={() => onChange(undefined)}
-			>
+			<Collapse in={show} unmountOnExit onExited={() => onChange(undefined)}>
 				<div id='command-offcanvas-api-request-body-addon'>
 					<MonacoEditor
 						value={value ?? JSON.stringify({ key: 'value' }, undefined, 4)}

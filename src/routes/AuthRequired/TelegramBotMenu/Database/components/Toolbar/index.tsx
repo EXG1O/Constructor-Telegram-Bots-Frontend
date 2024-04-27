@@ -20,15 +20,12 @@ function Toolbar({ paginationData, className, ...props }: ToolbarProps): ReactEl
 	return (
 		<div {...props} className={classNames('row row-cols-lg-auto g-2', className)}>
 			<div>
-				<AddRecordButton
-					size='sm'
-					className='w-100'
-				/>
+				<AddRecordButton size='sm' className='w-100' />
 			</div>
 			<Search
 				size='sm'
 				className='flex-fill'
-				onSearch={useCallback(search => updateRecords(undefined, undefined, search), [])}
+				onSearch={useCallback((search) => updateRecords(undefined, undefined, search), [])}
 				onClear={useCallback(() => updateRecords(undefined, undefined, searchDefaultValue), [])}
 			/>
 			<Pagination
@@ -37,7 +34,7 @@ function Toolbar({ paginationData, className, ...props }: ToolbarProps): ReactEl
 				itemLimit={paginationData.limit}
 				itemOffset={paginationData.offset}
 				className='justify-content-center ps-1'
-				onPageChange={useCallback(newOffset => updateRecords(undefined, newOffset), [])}
+				onPageChange={useCallback((newOffset) => updateRecords(undefined, newOffset), [])}
 			/>
 		</div>
 	);

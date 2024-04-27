@@ -12,10 +12,7 @@ function Header({ className, ...props }: HeaderProps): ReactElement<HeaderProps>
 
 	return (
 		<>
-			<TelegramBotAdditionModal
-				show={showModal}
-				onHide={useCallback(() => setShowModal(false), [])}
-			/>
+			<TelegramBotAdditionModal show={showModal} onHide={useCallback(() => setShowModal(false), [])} />
 			<div {...props} className={classNames('d-flex flex-wrap justify-content-between gap-2', className)}>
 				<h1 className='flex-grow-1 flex-lg-grow-0 fw-semibold text-center mb-0'>
 					{gettext('Добавленные Telegram боты')}

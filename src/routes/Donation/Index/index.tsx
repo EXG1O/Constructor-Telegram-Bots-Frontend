@@ -12,8 +12,8 @@ import { SectionsAPI, ButtonsAPI } from 'services/api/donations/main';
 import { APIResponse } from 'services/api/donations/types';
 
 export interface LoaderData {
-	sections: APIResponse.SectionsAPI.Get,
-	buttons: APIResponse.ButtonsAPI.Get,
+	sections: APIResponse.SectionsAPI.Get;
+	buttons: APIResponse.ButtonsAPI.Get;
 }
 
 export async function loader(): Promise<LoaderData> {
@@ -25,8 +25,8 @@ export async function loader(): Promise<LoaderData> {
 
 	return {
 		sections: sectionsResponse.json,
-		buttons:buttonsResponse.json,
-	}
+		buttons: buttonsResponse.json,
+	};
 }
 
 const title: string = gettext('Пожертвование');
@@ -38,11 +38,11 @@ function Index(): ReactElement {
 		<Title title={title}>
 			<Container as='main' className='vstack gap-3 gap-lg-4 my-3 my-lg-4'>
 				<h1 className='fw-semibold text-center mb-0'>{title}</h1>
-				{sections.map(section => (
+				{sections.map((section) => (
 					<SectionDisplay key={section.id} section={section} />
 				))}
 				<div className='d-flex gap-2 mt-auto'>
-					{buttons.map(button => (
+					{buttons.map((button) => (
 						<Button
 							key={button.id}
 							as='a'

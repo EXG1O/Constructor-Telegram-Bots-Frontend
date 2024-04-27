@@ -20,7 +20,7 @@ function NameBlock({ value = defaultValue, onChange, ...props }: NameBlockProps)
 				<Input
 					value={value}
 					placeholder={gettext('Придумайте название')}
-					onChange={e => onChange(e.target.value)}
+					onChange={(e) => onChange(e.target.value)}
 				/>
 			</Block.Body>
 		</Block>

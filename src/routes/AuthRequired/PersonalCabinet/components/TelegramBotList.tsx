@@ -16,7 +16,7 @@ function TelegramBotList({ className, ...props }: TelegramBotListProps): ReactEl
 	return (
 		<Row xs={1} md={2} xl={3} {...props} className={classNames('g-3', className)}>
 			{telegramBots.length ? (
-				telegramBots.map(telegramBot => (
+				telegramBots.map((telegramBot) => (
 					<TelegramBotCard key={telegramBot.id} telegramBot={telegramBot}>
 						{() => (
 							<Link

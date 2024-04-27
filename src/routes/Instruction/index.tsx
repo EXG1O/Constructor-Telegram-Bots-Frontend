@@ -33,7 +33,7 @@ function Instruction(): ReactElement {
 		<Title title={title}>
 			<Container as='main' className='vstack gap-3 gap-lg-4 my-3 my-lg-4'>
 				<h1 className='fw-semibold text-center mb-0'>{title}</h1>
-				{sections.map(section => (
+				{sections.map((section) => (
 					<SectionDisplay key={section.id} section={section} />
 				))}
 			</Container>

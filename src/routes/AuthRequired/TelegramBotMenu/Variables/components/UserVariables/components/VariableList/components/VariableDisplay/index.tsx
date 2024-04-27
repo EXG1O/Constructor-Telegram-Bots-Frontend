@@ -10,7 +10,7 @@ export type VariableDisplayProps = Omit<HTMLAttributes<HTMLTableRowElement>, 'ch
 function VariableDisplay(props: VariableDisplayProps): ReactElement<VariableDisplayProps> {
 	const { variable } = useVariable();
 
-	return(
+	return (
 		<tr {...props}>
 			<td className='w-50'>
 				<div className='d-flex gap-2'>
@@ -19,22 +19,15 @@ function VariableDisplay(props: VariableDisplayProps): ReactElement<VariableDisp
 						data-clipboard-text={`{{ ${variable.name} }}`}
 						style={{ cursor: 'pointer' }}
 					/>
-					<span className='flex-fill text-info-emphasis'>
-						{variable.name}
-					</span>
+					<span className='flex-fill text-info-emphasis'>{variable.name}</span>
 				</div>
 			</td>
 			<td>
 				<div className='d-flex gap-2'>
-					<span className='flex-fill text-nowrap'>
-						{variable.description}
-					</span>
+					<span className='flex-fill text-nowrap'>{variable.description}</span>
 					<div className='d-flex'>
 						<EditButton className='my-auto' />
-						<DeleteButton
-							className='my-auto'
-							style={{ marginLeft: '5.5px' }}
-						/>
+						<DeleteButton className='my-auto' style={{ marginLeft: '5.5px' }} />
 					</div>
 				</div>
 			</td>

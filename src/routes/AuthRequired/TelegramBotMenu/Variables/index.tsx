@@ -41,14 +41,18 @@ function Variables(): ReactElement {
 	useEffect(() => {
 		const clipboard = new ClipboardJS('.btn-clipboard');
 
-		clipboard.on('success', () => createMessageToast({
-			message: gettext('Вы успешно скопировали переменную в буфер обмена.'),
-			level: 'success',
-		}));
-		clipboard.on('error', () => createMessageToast({
-			message: gettext('При попытки скопировать переменную в буфер обмена, непредвиденная ошибка!'),
-			level: 'error',
-		}));
+		clipboard.on('success', () =>
+			createMessageToast({
+				message: gettext('Вы успешно скопировали переменную в буфер обмена.'),
+				level: 'success',
+			}),
+		);
+		clipboard.on('error', () =>
+			createMessageToast({
+				message: gettext('При попытки скопировать переменную в буфер обмена, непредвиденная ошибка!'),
+				level: 'error',
+			}),
+		);
 	}, []);
 
 	return (

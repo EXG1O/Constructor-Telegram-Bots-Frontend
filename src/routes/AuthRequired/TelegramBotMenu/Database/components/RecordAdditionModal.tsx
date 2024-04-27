@@ -12,9 +12,16 @@ import { LoaderData as TelegramBotMenuRootLoaderData } from '../../Root';
 
 import { DatabaseRecordAPI } from 'services/api/telegram_bots/main';
 
-export type RecordAdditionModalProps = Omit<RecordFormModalProps, 'loading' | 'value' | 'title' | 'onChange' | 'children'>;
+export type RecordAdditionModalProps = Omit<
+	RecordFormModalProps,
+	'loading' | 'value' | 'title' | 'onChange' | 'children'
+>;
 
-function RecordAdditionModal({ onHide, onExited, ...props }: RecordAdditionModalProps): ReactElement<RecordAdditionModalProps> {
+function RecordAdditionModal({
+	onHide,
+	onExited,
+	...props
+}: RecordAdditionModalProps): ReactElement<RecordAdditionModalProps> {
 	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
@@ -77,10 +84,7 @@ function RecordAdditionModal({ onHide, onExited, ...props }: RecordAdditionModal
 			onExited={handleExited}
 		>
 			<RecordFormModal.Footer>
-				<Button
-					variant='success'
-					onClick={handleClick}
-				>
+				<Button variant='success' onClick={handleClick}>
 					{gettext('Добавить')}
 				</Button>
 			</RecordFormModal.Footer>

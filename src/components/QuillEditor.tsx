@@ -29,7 +29,7 @@ function QuillEditor({
 	...props
 }: QuillEditorProps): ReactElement<QuillEditorProps> {
 	const quillRef = useRef<Quill | null>(null);
-    const reactQuillRef = useRef<ReactQuill | null>(null);
+	const reactQuillRef = useRef<ReactQuill | null>(null);
 
 	const [focus, setFocus] = useState<boolean>(false);
 

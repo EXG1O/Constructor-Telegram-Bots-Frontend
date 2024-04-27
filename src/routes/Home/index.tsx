@@ -28,21 +28,13 @@ export interface LoaderData {
 }
 
 export async function loader(): Promise<LoaderData> {
-	const [
-		usersStatsResponse,
-		telegramBotsResponse,
-		donationsResponse,
-	] = await Promise.all([
+	const [usersStatsResponse, telegramBotsResponse, donationsResponse] = await Promise.all([
 		UsersStatsAPI.get(),
 		TelegramBotsStatsAPI.get(),
 		DonationsAPI.get(20),
 	]);
 
-	if (
-		!usersStatsResponse.ok ||
-		!telegramBotsResponse.ok ||
-		!donationsResponse.ok
-	) {
+	if (!usersStatsResponse.ok || !telegramBotsResponse.ok || !donationsResponse.ok) {
 		throw Error('Failed to fetch data!');
 	}
 
@@ -52,7 +44,7 @@ export async function loader(): Promise<LoaderData> {
 			telegramBots: telegramBotsResponse.json,
 		},
 		donations: donationsResponse.json,
-	}
+	};
 }
 
 function Home(): ReactElement {

@@ -4,7 +4,8 @@ import Button, { ButtonProps } from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 import Stack from 'react-bootstrap/esm/Stack';
 
-export interface AddonButtonProps<Name extends string = string> extends Omit<ButtonProps, 'key' | 'size' | 'variant' | 'onClick'> {
+export interface AddonButtonProps<Name extends string = string>
+	extends Omit<ButtonProps, 'key' | 'size' | 'variant' | 'onClick'> {
 	name: Name;
 	onShow: () => void;
 	onHide: () => void;
@@ -16,24 +17,28 @@ export interface AddonButtonGroupProps extends Omit<HTMLAttributes<HTMLDivElemen
 	showAddons: Record<string, boolean>;
 }
 
-function AddonButtonGroup({ addonButtons, showAddons, ...props }: AddonButtonGroupProps): ReactElement<AddonButtonGroupProps> {
+function AddonButtonGroup({
+	addonButtons,
+	showAddons,
+	...props
+}: AddonButtonGroupProps): ReactElement<AddonButtonGroupProps> {
 	const [show, setShow] = useState<boolean>(false);
 
 	return (
 		<div {...props}>
 			<Button
 				size='sm'
-				{...(
-					show ? {
-						variant: 'secondary',
-						className: 'w-100 border-bottom-0 rounded-bottom-0',
-						children: gettext('Скрыть дополнения'),
-					} : {
-						variant: 'dark',
-						className: 'w-100',
-						children: gettext('Показать дополнения'),
-					}
-				)}
+				{...(show
+					? {
+							variant: 'secondary',
+							className: 'w-100 border-bottom-0 rounded-bottom-0',
+							children: gettext('Скрыть дополнения'),
+						}
+					: {
+							variant: 'dark',
+							className: 'w-100',
+							children: gettext('Показать дополнения'),
+						})}
 				onClick={() => setShow(!show)}
 			/>
 			<Collapse in={show} unmountOnExit>

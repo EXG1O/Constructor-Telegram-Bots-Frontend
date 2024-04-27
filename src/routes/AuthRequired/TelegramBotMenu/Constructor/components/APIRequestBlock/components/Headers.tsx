@@ -1,4 +1,4 @@
-import React, { ReactElement, memo } from 'react'
+import React, { ReactElement, memo } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
@@ -45,27 +45,22 @@ function Headers({ show, data, onShow, onHide, onChange }: HeadersProps): ReactE
 		<div>
 			<Button
 				size='sm'
-				{...(
-					show ? {
-						variant: 'secondary',
-						className: 'w-100 border-bottom-0 rounded-bottom-0',
-						children: gettext('Убрать заголовки'),
-					} : {
-						variant: 'dark',
-						className: 'w-100',
-						children: gettext('Добавить заголовки'),
-					}
-				)}
+				{...(show
+					? {
+							variant: 'secondary',
+							className: 'w-100 border-bottom-0 rounded-bottom-0',
+							children: gettext('Убрать заголовки'),
+						}
+					: {
+							variant: 'dark',
+							className: 'w-100',
+							children: gettext('Добавить заголовки'),
+						})}
 				aria-controls='command-offcanvas-api-request-headers-addon'
 				aria-expanded={show}
 				onClick={show ? onHide : onShow}
 			/>
-			<Collapse
-				in={show}
-				unmountOnExit
-				onEnter={() => onChange([])}
-				onExited={() => onChange(undefined)}
-			>
+			<Collapse in={show} unmountOnExit onEnter={() => onChange([])} onExited={() => onChange(undefined)}>
 				<div id='command-offcanvas-api-request-headers-addon'>
 					<div className='vstack border border-top-0 rounded-1 rounded-top-0 gap-1 p-1'>
 						{data?.map((header, index) => (
@@ -74,13 +69,13 @@ function Headers({ show, data, onShow, onHide, onChange }: HeadersProps): ReactE
 									size='sm'
 									value={header.key}
 									placeholder={gettext('Ключ')}
-									onChange={e => handleHeaderChange(index, 'key', e.target.value)}
+									onChange={(e) => handleHeaderChange(index, 'key', e.target.value)}
 								/>
 								<Form.Control
 									size='sm'
 									value={header.value}
 									placeholder={gettext('Значение')}
-									onChange={e => handleHeaderChange(index, 'value', e.target.value)}
+									onChange={(e) => handleHeaderChange(index, 'value', e.target.value)}
 								/>
 								<Button
 									as='i'
@@ -92,11 +87,7 @@ function Headers({ show, data, onShow, onHide, onChange }: HeadersProps): ReactE
 								/>
 							</InputGroup>
 						))}
-						<Button
-							size='sm'
-							variant='dark'
-							onClick={() => onChange([...data!, { key: '', value: '' }])}
-						>
+						<Button size='sm' variant='dark' onClick={() => onChange([...data!, { key: '', value: '' }])}>
 							{gettext('Добавить заголовок')}
 						</Button>
 					</div>

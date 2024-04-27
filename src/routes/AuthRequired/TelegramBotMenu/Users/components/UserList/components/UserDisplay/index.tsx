@@ -26,18 +26,8 @@ function UserDisplay(props: UserDisplayProps): ReactElement<UserDisplayProps> {
 			<td>
 				<div className='d-flex'>
 					<div className='d-flex gap-2'>
-						{telegramBot.is_private && (
-							user.is_allowed ? (
-								<DisallowButton />
-							) : (
-								<AllowButton />
-							)
-						)}
-						{user.is_blocked ? (
-							<UnblockButton />
-						) : (
-							<BlockButton />
-						)}
+						{telegramBot.is_private && (user.is_allowed ? <DisallowButton /> : <AllowButton />)}
+						{user.is_blocked ? <UnblockButton /> : <BlockButton />}
 					</div>
 					<DeleteButton style={{ marginLeft: '5.5px' }} />
 				</div>

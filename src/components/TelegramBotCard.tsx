@@ -1,4 +1,13 @@
-import React, { ReactElement, ReactNode, Dispatch, SetStateAction, ChangeEvent, memo, useEffect, useState } from 'react';
+import React, {
+	ReactElement,
+	ReactNode,
+	Dispatch,
+	SetStateAction,
+	ChangeEvent,
+	memo,
+	useEffect,
+	useState,
+} from 'react';
 import classNames from 'classnames';
 
 import Card, { CardProps } from 'react-bootstrap/Card';
@@ -112,18 +121,23 @@ function TelegramBotCard({
 
 	return (
 		<Card {...props} className={classNames('border-0', className)}>
-			<Card.Header as='h5' {...(
-				telegramBot.is_loading ? {
-					className: 'd-flex justify-content-center text-bg-secondary border-secondary',
-					children: <Loading size='xs' />,
-				} : telegramBot.is_enabled ? {
-					className: 'text-bg-success border-success fw-semibold text-center',
-					children: gettext('Telegram бот включен'),
-				} : {
-					className: 'text-bg-danger border-danger fw-semibold text-center',
-					children: gettext('Telegram бот выключен'),
-				}
-			)} />
+			<Card.Header
+				as='h5'
+				{...(telegramBot.is_loading
+					? {
+							className: 'd-flex justify-content-center text-bg-secondary border-secondary',
+							children: <Loading size='xs' />,
+						}
+					: telegramBot.is_enabled
+						? {
+								className: 'text-bg-success border-success fw-semibold text-center',
+								children: gettext('Telegram бот включен'),
+							}
+						: {
+								className: 'text-bg-danger border-danger fw-semibold text-center',
+								children: gettext('Telegram бот выключен'),
+							})}
+			/>
 			<Card.Body className='border p-2'>
 				<Table size='sm' borderless className='align-middle mb-0'>
 					<tbody>
@@ -149,7 +163,7 @@ function TelegramBotCard({
 											value={apiTokenInputValue}
 											placeholder={gettext('Введите API-токен')}
 											style={{ fontSize: '16px' }}
-											onChange={event => setAPITokenInputValue(event.target.value)}
+											onChange={(event) => setAPITokenInputValue(event.target.value)}
 										/>
 									) : (
 										<span className='text-break flex-fill'>{telegramBot.api_token}</span>
@@ -189,15 +203,14 @@ function TelegramBotCard({
 						</tr>
 						<tr>
 							<th scope='row'>{gettext('Хранилище')}:</th>
-							<td><TelegramBotStorage telegramBot={telegramBot} /></td>
+							<td>
+								<TelegramBotStorage telegramBot={telegramBot} />
+							</td>
 						</tr>
 						<tr>
 							<th scope='row'>{gettext('Приватный')}:</th>
 							<td>
-								<Form.Switch
-									checked={telegramBot.is_private}
-									onChange={handleIsPrivateChange}
-								/>
+								<Form.Switch checked={telegramBot.is_private} onChange={handleIsPrivateChange} />
 							</td>
 						</tr>
 						<tr>

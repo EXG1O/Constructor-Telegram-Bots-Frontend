@@ -20,29 +20,31 @@ function Pagination({
 		const pageCount: number = Math.ceil(itemCount / itemLimit);
 		const activePageNum: number = Math.ceil(itemOffset / itemLimit) + 1;
 
-		return (
-			pageCount > 1 ? (
-				Array.from({ length: pageCount }, (_, pageNum) => {
+		return pageCount > 1
+			? Array.from({ length: pageCount }, (_, pageNum) => {
 					pageNum++;
 
 					if (
 						pageCount <= 7 ||
-						pageNum === 1 || pageNum === pageCount ||
-						pageNum <= 5 && activePageNum <= 5 && activePageNum !== 5 ||
-						pageNum >= pageCount - 4 && activePageNum >= pageCount - 4 && activePageNum !== pageCount - 4 ||
-						pageNum >= activePageNum - 1 && pageNum <= activePageNum + 1
+						pageNum === 1 ||
+						pageNum === pageCount ||
+						(pageNum <= 5 && activePageNum <= 5 && activePageNum !== 5) ||
+						(pageNum >= pageCount - 4 &&
+							activePageNum >= pageCount - 4 &&
+							activePageNum !== pageCount - 4) ||
+						(pageNum >= activePageNum - 1 && pageNum <= activePageNum + 1)
 					) {
 						return (
 							<BasePagination.Item
 								key={pageNum}
 								as='span'
-								{...(
-									activePageNum === pageNum ? {
-										active: true,
-									} : {
-										onClick: () => onPageChange((pageNum - 1) * itemLimit),
-									}
-								)}
+								{...(activePageNum === pageNum
+									? {
+											active: true,
+										}
+									: {
+											onClick: () => onPageChange((pageNum - 1) * itemLimit),
+										})}
 								style={{ cursor: 'pointer' }}
 							>
 								{pageNum}
@@ -60,17 +62,10 @@ function Pagination({
 						);
 					}
 				})
-			) : []
-		);
+			: [];
 	}, [itemCount, itemLimit, itemOffset]);
 
-	return (
-		items?.length ? (
-			<BasePagination {...props}>
-				{items}
-			</BasePagination>
-		) : <></>
-	);
+	return items?.length ? <BasePagination {...props}>{items}</BasePagination> : <></>;
 }
 
 export default memo(Pagination);

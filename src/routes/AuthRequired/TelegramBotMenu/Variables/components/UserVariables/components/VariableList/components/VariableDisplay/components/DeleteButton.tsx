@@ -2,7 +2,7 @@ import React, { ReactElement, HTMLAttributes, memo, useState, useCallback } from
 import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
 
-import AskConfirmModal  from 'components/AskConfirmModal';
+import AskConfirmModal from 'components/AskConfirmModal';
 
 import useToast from 'services/hooks/useToast';
 import useVariables from '../../../../../hooks/useVariables';

@@ -14,7 +14,7 @@ function ToastProvider({ children }: ToastProviderProps): ReactElement<ToastProv
 	const [toasts, setToasts] = useState<ReactElement[]>([]);
 
 	function deleteToast(key: string): void {
-		setToasts(prevToasts => prevToasts.filter(toast => toast.key !== key));
+		setToasts((prevToasts) => prevToasts.filter((toast) => toast.key !== key));
 	}
 
 	function createMessageToast({ onExited, ...props }: MessageToastProps): void {
@@ -25,14 +25,12 @@ function ToastProvider({ children }: ToastProviderProps): ReactElement<ToastProv
 			onExited?.(node);
 		}
 
-		setToasts(prevToasts => [...prevToasts, <MessageToast key={key} {...props} onExited={handleExited} />]);
+		setToasts((prevToasts) => [...prevToasts, <MessageToast key={key} {...props} onExited={handleExited} />]);
 	}
 
 	return (
 		<ToastContext.Provider value={useMemo(() => ({ createMessageToast }), [])}>
-			<ToastContainer className='vstack position-fixed bottom-0 end-0 gap-3 p-3'>
-				{toasts}
-			</ToastContainer>
+			<ToastContainer className='vstack position-fixed bottom-0 end-0 gap-3 p-3'>{toasts}</ToastContainer>
 			{children}
 		</ToastContext.Provider>
 	);

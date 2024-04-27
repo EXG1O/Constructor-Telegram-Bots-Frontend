@@ -25,11 +25,7 @@ function Header(): ReactElement {
 					<hr className='d-xxl-none text-white-50 mt-0 mb-2'></hr>
 					<div className='d-flex flex-wrap gap-2'>
 						<LanguagesDropdown />
-						{user ? (
-							<UserMenuDropdown user={user} />
-						) : (
-							<LoginButton variant='success' />
-						)}
+						{user ? <UserMenuDropdown user={user} /> : <LoginButton variant='success' />}
 					</div>
 				</Navbar.Collapse>
 			</Container>

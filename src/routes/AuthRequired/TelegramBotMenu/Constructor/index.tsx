@@ -40,12 +40,7 @@ import {
 	DiagramBackgroundTasksAPI,
 	DiagramBackgroundTaskAPI,
 } from 'services/api/telegram_bots/main';
-import {
-	DiagramCommand,
-	DiagramCondition,
-	DiagramBackgroundTask,
-	APIResponse,
-} from 'services/api/telegram_bots/types';
+import { DiagramCommand, DiagramCondition, DiagramBackgroundTask, APIResponse } from 'services/api/telegram_bots/types';
 
 export interface LoaderData {
 	diagramCommands: APIResponse.DiagramCommandsAPI.Get;
@@ -56,21 +51,13 @@ export interface LoaderData {
 export async function loader({ params }: { params: Params<'telegramBotID'> }): Promise<LoaderData | Response> {
 	const telegramBotID: number = parseInt(params.telegramBotID!);
 
-	const [
-		diagramCommandsResponse,
-		diagramConditionsResponse,
-		diagramBackgroundTasksResponse,
-	] = await Promise.all([
+	const [diagramCommandsResponse, diagramConditionsResponse, diagramBackgroundTasksResponse] = await Promise.all([
 		DiagramCommandsAPI.get(telegramBotID),
 		DiagramConditionsAPI.get(telegramBotID),
 		DiagramBackgroundTasksAPI.get(telegramBotID),
 	]);
 
-	if (
-		!diagramCommandsResponse.ok ||
-		!diagramConditionsResponse.ok ||
-		!diagramBackgroundTasksResponse.ok
-	) {
+	if (!diagramCommandsResponse.ok || !diagramConditionsResponse.ok || !diagramBackgroundTasksResponse.ok) {
 		throw Error('Failed to fetch data!');
 	}
 
@@ -78,7 +65,7 @@ export async function loader({ params }: { params: Params<'telegramBotID'> }): P
 		diagramCommands: diagramCommandsResponse.json,
 		diagramConditions: diagramConditionsResponse.json,
 		diagramBackgroundTasks: diagramBackgroundTasksResponse.json,
-	}
+	};
 }
 
 type SourceHandle = ['command' | 'condition' | 'background_task', string, 'left' | 'right', string];
@@ -88,27 +75,17 @@ const nodeTypes: NodeTypes = { command: CommandNode };
 
 function Constructor(): ReactElement {
 	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
-	const {
-		diagramCommands,
-		diagramConditions,
-		diagramBackgroundTasks,
-	} = useRouteLoaderData('telegram-bot-menu-constructor') as LoaderData;
+	const { diagramCommands, diagramConditions, diagramBackgroundTasks } = useRouteLoaderData(
+		'telegram-bot-menu-constructor',
+	) as LoaderData;
 
 	const { createMessageToast } = useToast();
 
 	const [nodes, setNodes, onNodesChange] = useNodesState(
-		parseNodes(
-			diagramCommands,
-			diagramConditions,
-			diagramBackgroundTasks,
-		)
+		parseNodes(diagramCommands, diagramConditions, diagramBackgroundTasks),
 	);
 	const [edges, setEdges, onEdgesChange] = useEdgesState(
-		parseEdges(
-			diagramCommands,
-			diagramConditions,
-			diagramBackgroundTasks,
-		)
+		parseEdges(diagramCommands, diagramConditions, diagramBackgroundTasks),
 	);
 	const edgeUpdating = useRef<Edge | null>(null);
 
@@ -119,9 +96,9 @@ function Constructor(): ReactElement {
 	): Edge[] {
 		const _edges: Edge[] = [];
 
-		diagramCommands?.forEach(diagramCommand => {
-			diagramCommand.keyboard?.buttons.forEach(button => {
-				button.source_connections.forEach(connection => {
+		diagramCommands?.forEach((diagramCommand) => {
+			diagramCommand.keyboard?.buttons.forEach((button) => {
+				button.source_connections.forEach((connection) => {
 					const source = `command:${diagramCommand.id}`;
 					const target = `${connection.target_object_type}:${connection.target_object_id}`;
 
@@ -136,26 +113,25 @@ function Constructor(): ReactElement {
 			});
 		});
 
-		diagramConditions?.forEach(diagramCondition => {
-			Object.assign(
-				diagramCondition.source_connections,
-				diagramCondition.target_connections,
-			).forEach(connection => {
-				const source = `${connection.source_object_type}:${connection.source_object_id}`;
-				const target = `${connection.target_object_type}:${connection.target_object_id}`;
+		diagramConditions?.forEach((diagramCondition) => {
+			Object.assign(diagramCondition.source_connections, diagramCondition.target_connections).forEach(
+				(connection) => {
+					const source = `${connection.source_object_type}:${connection.source_object_id}`;
+					const target = `${connection.target_object_type}:${connection.target_object_id}`;
 
-				_edges.push({
-					id: `reactflow__edge-${connection.id}`,
-					source: source,
-					sourceHandle: `${source}:${connection.source_handle_position}:0`,
-					target: target,
-					targetHandle: `${target}:${connection.target_handle_position}:0`,
-				});
-			});
+					_edges.push({
+						id: `reactflow__edge-${connection.id}`,
+						source: source,
+						sourceHandle: `${source}:${connection.source_handle_position}:0`,
+						target: target,
+						targetHandle: `${target}:${connection.target_handle_position}:0`,
+					});
+				},
+			);
 		});
 
-		diagramBackgroundTasks?.forEach(diagramBackgroundTask => {
-			diagramBackgroundTask.target_connections.forEach(connection => {
+		diagramBackgroundTasks?.forEach((diagramBackgroundTask) => {
+			diagramBackgroundTask.target_connections.forEach((connection) => {
 				const source = `${connection.source_object_type}:${connection.source_object_id}`;
 				const target = `${connection.target_object_type}:${connection.target_object_id}`;
 
@@ -173,21 +149,13 @@ function Constructor(): ReactElement {
 	}
 
 	const updateNodes = useCallback(async () => {
-		const [
-			diagramCommandsResponse,
-			diagramConditionsResponse,
-			diagramBackgroundTasksResponse,
-		] = await Promise.all([
+		const [diagramCommandsResponse, diagramConditionsResponse, diagramBackgroundTasksResponse] = await Promise.all([
 			DiagramCommandsAPI.get(telegramBot.id),
 			DiagramConditionsAPI.get(telegramBot.id),
 			DiagramBackgroundTasksAPI.get(telegramBot.id),
 		]);
 
-		if (
-			!diagramCommandsResponse.ok ||
-			!diagramConditionsResponse.ok ||
-			!diagramBackgroundTasksResponse.ok
-		) {
+		if (!diagramCommandsResponse.ok || !diagramConditionsResponse.ok || !diagramBackgroundTasksResponse.ok) {
 			createMessageToast({
 				message: gettext('Не удалось получить данные с сервера!'),
 				level: 'error',
@@ -200,27 +168,26 @@ function Constructor(): ReactElement {
 				diagramCommandsResponse.json,
 				diagramConditionsResponse.json,
 				diagramBackgroundTasksResponse.json,
-			)
+			),
 		);
 		setEdges(
 			parseEdges(
 				diagramCommandsResponse.json,
 				diagramConditionsResponse.json,
 				diagramBackgroundTasksResponse.json,
-			)
+			),
 		);
 	}, []);
 
 	const handleNodeDragStop = useCallback((event: React.MouseEvent, node: Node, nodes?: Node[]) => {
-		nodes?.forEach(node => {
+		nodes?.forEach((node) => {
 			const [type, id] = node.id.split(':') as ['command' | 'condition' | 'background_task', string];
 
-			let updateDiagramBlockPosition: (
-				typeof DiagramCommandAPI.update |
-				typeof DiagramConditionAPI.update |
-				typeof DiagramBackgroundTaskAPI.update |
-				undefined
-			) = undefined;
+			let updateDiagramBlockPosition:
+				| typeof DiagramCommandAPI.update
+				| typeof DiagramConditionAPI.update
+				| typeof DiagramBackgroundTaskAPI.update
+				| undefined = undefined;
 
 			if (type === 'command') {
 				updateDiagramBlockPosition = DiagramCommandAPI.update;
@@ -230,28 +197,16 @@ function Constructor(): ReactElement {
 				updateDiagramBlockPosition = DiagramBackgroundTaskAPI.update;
 			}
 
-			updateDiagramBlockPosition?.(
-				telegramBot.id,
-				parseInt(id),
-				node.position,
-			);
+			updateDiagramBlockPosition?.(telegramBot.id, parseInt(id), node.position);
 		});
 	}, []);
 
 	const addEdge = useCallback(async (connection: Connection, shouldUpdateEdges: boolean = true): Promise<void> => {
 		if (connection.source && connection.sourceHandle && connection.target && connection.targetHandle) {
-			const [
-				source_object_type,
-				source_object_id,
-				source_handle_position,
-				source_nested_object_id,
-			] = connection.sourceHandle.split(':') as SourceHandle;
-			const [
-				target_object_type,
-				target_object_id,
-				target_handle_position,
-				target_nested_object_id,
-			] = connection.targetHandle.split(':') as TargetHandle;
+			const [source_object_type, source_object_id, source_handle_position, source_nested_object_id] =
+				connection.sourceHandle.split(':') as SourceHandle;
+			const [target_object_type, target_object_id, target_handle_position, target_nested_object_id] =
+				connection.targetHandle.split(':') as TargetHandle;
 
 			let makeRequest: ReturnType<typeof ConnectionsAPI.create>;
 
@@ -279,7 +234,9 @@ function Constructor(): ReactElement {
 
 			if (response.ok) {
 				if (shouldUpdateEdges) {
-					setEdges(prevEdges => _addEdge({ ...connection, id: `reactflow__edge-${response.json.id}` }, prevEdges));
+					setEdges((prevEdges) =>
+						_addEdge({ ...connection, id: `reactflow__edge-${response.json.id}` }, prevEdges),
+					);
 				}
 			} else {
 				createMessageToast({
@@ -296,7 +253,7 @@ function Constructor(): ReactElement {
 
 			if (response.ok) {
 				if (shouldUpdateEdges) {
-					setEdges(prevEdges => prevEdges.filter(prevEdge => prevEdge.id !== edge.id));
+					setEdges((prevEdges) => prevEdges.filter((prevEdge) => prevEdge.id !== edge.id));
 				}
 			} else {
 				createMessageToast({
@@ -313,15 +270,14 @@ function Constructor(): ReactElement {
 
 	const handleEdgeUpdate = useCallback((oldEdge: Edge, newConnection: Connection): void => {
 		if (
-			edgeUpdating.current && (
-				edgeUpdating.current.sourceHandle !== newConnection.sourceHandle ||
-				edgeUpdating.current.targetHandle !== newConnection.targetHandle
-			)
+			edgeUpdating.current &&
+			(edgeUpdating.current.sourceHandle !== newConnection.sourceHandle ||
+				edgeUpdating.current.targetHandle !== newConnection.targetHandle)
 		) {
 			deleteEdge(oldEdge, false);
 			addEdge(newConnection, false);
 
-			setEdges(prevEdges => updateEdge(oldEdge, newConnection, prevEdges));
+			setEdges((prevEdges) => updateEdge(oldEdge, newConnection, prevEdges));
 		}
 
 		edgeUpdating.current = null;
@@ -335,24 +291,24 @@ function Constructor(): ReactElement {
 		edgeUpdating.current = null;
 	}, []);
 
-	const handleCheckValidConnection = useCallback((connection: Connection): boolean => {
-		if (!(connection.source && connection.sourceHandle && connection.target && connection.targetHandle)) {
-			return false;
-		}
+	const handleCheckValidConnection = useCallback(
+		(connection: Connection): boolean => {
+			if (!(connection.source && connection.sourceHandle && connection.target && connection.targetHandle)) {
+				return false;
+			}
 
-		if (connection.source === connection.target) {
-			return false;
-		}
+			if (connection.source === connection.target) {
+				return false;
+			}
 
-		return true;
-	}, [edges]);
+			return true;
+		},
+		[edges],
+	);
 
 	return (
 		<Title title={gettext('Конструктор')}>
-			<div
-				className='border rounded'
-				style={{ height: '100%', minHeight: '600px' }}
-			>
+			<div className='border rounded' style={{ height: '100%', minHeight: '600px' }}>
 				<ReactFlow
 					fitView
 					nodes={nodes}
@@ -375,16 +331,9 @@ function Constructor(): ReactElement {
 					onConnect={addEdge}
 				>
 					<Panel />
-					<Controls
-						showInteractive={false}
-						className='border rounded-1'
-					/>
+					<Controls showInteractive={false} className='border rounded-1' />
 					<MiniMap className='border rounded-1' />
-					<Background
-						variant={BackgroundVariant.Dots}
-						size={1}
-						gap={24}
-					/>
+					<Background variant={BackgroundVariant.Dots} size={1} gap={24} />
 				</ReactFlow>
 			</div>
 		</Title>

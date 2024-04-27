@@ -13,20 +13,27 @@ export interface DatabaseRecordBlockProps extends Omit<BlockProps, 'title' | 'on
 
 export const defaultValue: Value = JSON.stringify({ key: 'value' }, undefined, 4);
 
-function DatabaseRecordBlock({ value = defaultValue, onChange, ...props }: DatabaseRecordBlockProps): ReactElement<DatabaseRecordBlockProps> {
+function DatabaseRecordBlock({
+	value = defaultValue,
+	onChange,
+	...props
+}: DatabaseRecordBlockProps): ReactElement<DatabaseRecordBlockProps> {
 	return (
 		<Block {...props} title={gettext('Запись в базу данных')}>
 			<Block.Body>
 				<MonacoEditor
 					value={value}
 					defaultLanguage='json'
-					options={useMemo(() => ({
-						glyphMargin: false,
-						folding: false,
-						lineNumbers: 'off',
-						lineDecorationsWidth: 0,
-						lineNumbersMinChars: 0,
-					}), [])}
+					options={useMemo(
+						() => ({
+							glyphMargin: false,
+							folding: false,
+							lineNumbers: 'off',
+							lineDecorationsWidth: 0,
+							lineNumbersMinChars: 0,
+						}),
+						[],
+					)}
 					onChange={useCallback<NonNullable<MonacoEditorProps['onChange']>>(
 						(editor, newValue) => onChange(newValue),
 						[],

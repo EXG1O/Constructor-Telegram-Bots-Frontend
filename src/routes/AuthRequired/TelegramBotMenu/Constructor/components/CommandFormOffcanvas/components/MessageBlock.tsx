@@ -13,7 +13,11 @@ export interface MessageBlockProps extends Omit<BlockProps, 'title' | 'onChange'
 
 export const defaultMessage: Message = '';
 
-function MessageBlock({ message = defaultMessage, onChange, ...props }: MessageBlockProps): ReactElement<MessageBlockProps> {
+function MessageBlock({
+	message = defaultMessage,
+	onChange,
+	...props
+}: MessageBlockProps): ReactElement<MessageBlockProps> {
 	return (
 		<Block {...props} title={gettext('Сообщение')}>
 			<Block.Body>

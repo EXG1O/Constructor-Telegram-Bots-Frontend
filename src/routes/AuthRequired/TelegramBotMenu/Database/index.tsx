@@ -77,11 +77,13 @@ function Database(): ReactElement {
 					{gettext('Список записей')}
 				</Card.Header>
 				<Card.Body className='vstack gap-2'>
-					<RecordsContext.Provider value={{
-						records: paginationData.results,
-						filter: { search: paginationData.search },
-						updateRecords,
-					}}>
+					<RecordsContext.Provider
+						value={{
+							records: paginationData.results,
+							filter: { search: paginationData.search },
+							updateRecords,
+						}}
+					>
 						<Toolbar paginationData={paginationData} />
 						<RecordList loading={loading} />
 					</RecordsContext.Provider>

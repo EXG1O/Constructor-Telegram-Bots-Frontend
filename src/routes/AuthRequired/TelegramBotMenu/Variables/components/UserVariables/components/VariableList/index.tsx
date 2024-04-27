@@ -18,37 +18,28 @@ export interface VariableListProps extends Omit<BlockProps, 'children'> {
 function VariableList({ loading, className, ...props }: VariableListProps): ReactElement<VariableListProps> {
 	const { variables, filter } = useVariables();
 
-	return (
-		!loading ? (
-			variables.length ? (
-				<Block {...props} className={classNames('overflow-hidden', className)}>
-					<Table responsive striped borderless className='align-middle mb-0'>
-						<tbody>
-							{variables.map(variable => (
-								<VariableContext.Provider
-									key={variable.id}
-									value={{ variable }}
-								>
-									<VariableDisplay />
-								</VariableContext.Provider>
-							))}
-						</tbody>
-					</Table>
-				</Block>
-			) : filter.search ? (
-				<Block className='text-center px-3 py-2'>
-					{gettext('Не найдены переменные по поиску')}
-				</Block>
-			) : (
-				<Block className='text-center px-3 py-2'>
-					{gettext('Вы ещё не добавили переменные')}
-				</Block>
-			)
-		) : (
-			<Block className='d-flex justify-content-center p-3'>
-				<Loading size='md' />
+	return !loading ? (
+		variables.length ? (
+			<Block {...props} className={classNames('overflow-hidden', className)}>
+				<Table responsive striped borderless className='align-middle mb-0'>
+					<tbody>
+						{variables.map((variable) => (
+							<VariableContext.Provider key={variable.id} value={{ variable }}>
+								<VariableDisplay />
+							</VariableContext.Provider>
+						))}
+					</tbody>
+				</Table>
 			</Block>
+		) : filter.search ? (
+			<Block className='text-center px-3 py-2'>{gettext('Не найдены переменные по поиску')}</Block>
+		) : (
+			<Block className='text-center px-3 py-2'>{gettext('Вы ещё не добавили переменные')}</Block>
 		)
+	) : (
+		<Block className='d-flex justify-content-center p-3'>
+			<Loading size='md' />
+		</Block>
 	);
 }
 

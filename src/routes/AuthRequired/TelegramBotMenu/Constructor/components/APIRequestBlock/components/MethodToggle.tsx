@@ -1,11 +1,12 @@
-import React, { ReactElement, memo } from 'react'
+import React, { ReactElement, memo } from 'react';
 
 import ToggleButtonGroup, { ToggleButtonRadioProps } from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton, { ToggleButtonProps as _ToggleButtonProps } from 'react-bootstrap/ToggleButton';
 
 export type Value = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
-interface ToggleButtonProps extends Omit<_ToggleButtonProps, 'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange' | 'children'> {
+interface ToggleButtonProps
+	extends Omit<_ToggleButtonProps, 'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange' | 'children'> {
 	value: Value;
 }
 
@@ -21,11 +22,7 @@ export type MethodToggleProps = Omit<ToggleButtonRadioProps<Value>, 'type' | 'na
 
 function MethodToggle(props: MethodToggleProps): ReactElement<MethodToggleProps> {
 	return (
-		<ToggleButtonGroup
-			{...props}
-			type='radio'
-			name='api-request-methods'
-		>
+		<ToggleButtonGroup {...props} type='radio' name='api-request-methods'>
 			{toggleButtons.map((_props, index) => (
 				<ToggleButton
 					{..._props}

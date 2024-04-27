@@ -33,13 +33,7 @@ function Header(): ReactElement {
 						key={index}
 						{...props}
 						to={to}
-						className={
-							classNames(
-								'nav-link',
-								{ active:  location.pathname === to },
-								className,
-							)
-						}
+						className={classNames('nav-link', { active: location.pathname === to }, className)}
 					/>
 				);
 			})}

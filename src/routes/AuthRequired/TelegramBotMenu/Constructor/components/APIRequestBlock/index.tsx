@@ -16,14 +16,18 @@ export interface Data {
 	body?: BodyData;
 }
 
-export interface APIRequestBlockProps extends Omit<BlockProps, 'title' | 'onChange' | 'children'>  {
+export interface APIRequestBlockProps extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
 	data?: Data;
 	onChange: (data: Data) => void;
 }
 
 export const defaultData: Data = { url: '', method: 'get' };
 
-function APIRequestBlock({ data = defaultData, onChange, ...props }: APIRequestBlockProps): ReactElement<APIRequestBlockProps> {
+function APIRequestBlock({
+	data = defaultData,
+	onChange,
+	...props
+}: APIRequestBlockProps): ReactElement<APIRequestBlockProps> {
 	const [showHeaders, setShowHeaders] = useState<boolean>(Boolean(data.headers));
 	const [showBody, setShowBody] = useState<boolean>(Boolean(data.body));
 
@@ -33,7 +37,7 @@ function APIRequestBlock({ data = defaultData, onChange, ...props }: APIRequestB
 				<Form.Control
 					value={data.url}
 					placeholder={gettext('Введите URL-адрес')}
-					onChange={e => onChange({ ...data, url: e.target.value })}
+					onChange={(e) => onChange({ ...data, url: e.target.value })}
 				/>
 				<MethodToggle
 					value={data.method}
@@ -44,22 +48,25 @@ function APIRequestBlock({ data = defaultData, onChange, ...props }: APIRequestB
 					data={data.headers}
 					onShow={useCallback(() => setShowHeaders(true), [])}
 					onHide={useCallback(() => setShowHeaders(false), [])}
-					onChange={useCallback(headers => onChange({ ...data, headers }), [])}
+					onChange={useCallback((headers) => onChange({ ...data, headers }), [])}
 				/>
 				<Body
 					show={showBody}
 					value={data.body}
 					onShow={useCallback(() => setShowBody(true), [])}
 					onHide={useCallback(() => setShowBody(false), [])}
-					onChange={useCallback(body => onChange({ ...data, body }), [])}
+					onChange={useCallback((body) => onChange({ ...data, body }), [])}
 				/>
 				<Test
 					url={data.url}
-					data={useMemo(() => ({
-						method: data.method,
-						headers: data.headers?.map(header => [header.key, header.value]),
-						body: data.body,
-					}), [data])}
+					data={useMemo(
+						() => ({
+							method: data.method,
+							headers: data.headers?.map((header) => [header.key, header.value]),
+							body: data.body,
+						}),
+						[data],
+					)}
 				/>
 			</Block.Body>
 		</Block>

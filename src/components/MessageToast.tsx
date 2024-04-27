@@ -5,7 +5,8 @@ import CloseButton from 'react-bootstrap/CloseButton';
 
 type Level = 'success' | 'info' | 'error';
 
-export interface MessageToastProps extends Omit<ToastProps, 'autohide' | 'show' | 'delay' | 'className' | 'onClose' | 'children'> {
+export interface MessageToastProps
+	extends Omit<ToastProps, 'autohide' | 'show' | 'delay' | 'className' | 'onClose' | 'children'> {
 	message: string;
 	level: Level;
 }
@@ -14,12 +15,12 @@ const colors: Record<Level, string> = {
 	success: 'success',
 	info: 'primary',
 	error: 'danger',
-}
+};
 const icons: Record<Level, string> = {
 	success: 'check-circle-fill',
 	info: 'info-circle-fill',
 	error: 'exclamation-triangle-fill',
-}
+};
 
 function MessageToast({ message, level, ...props }: MessageToastProps): ReactElement<MessageToastProps> {
 	const [show, setShow] = useState<boolean>(false);

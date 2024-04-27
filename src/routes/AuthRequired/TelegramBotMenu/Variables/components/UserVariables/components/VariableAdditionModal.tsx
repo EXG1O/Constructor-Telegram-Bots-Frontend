@@ -12,9 +12,16 @@ import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired
 
 import { VariableAPI } from 'services/api/telegram_bots/main';
 
-export type VariableAdditionModalProps = Omit<VariableFormModalProps, 'loading' | 'data' | 'title' | 'onChange' | 'children'>;
+export type VariableAdditionModalProps = Omit<
+	VariableFormModalProps,
+	'loading' | 'data' | 'title' | 'onChange' | 'children'
+>;
 
-function VariableAdditionModal({ onHide, onExited, ...props }: VariableAdditionModalProps): ReactElement<VariableAdditionModalProps> {
+function VariableAdditionModal({
+	onHide,
+	onExited,
+	...props
+}: VariableAdditionModalProps): ReactElement<VariableAdditionModalProps> {
 	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
@@ -61,10 +68,7 @@ function VariableAdditionModal({ onHide, onExited, ...props }: VariableAdditionM
 			onExited={handleExited}
 		>
 			<VariableFormModal.Footer>
-				<Button
-					variant='success'
-					onClick={handleAddButtonClick}
-				>
+				<Button variant='success' onClick={handleAddButtonClick}>
 					{gettext('Добавить')}
 				</Button>
 			</VariableFormModal.Footer>

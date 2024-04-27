@@ -1,4 +1,4 @@
-import React, { ReactElement, memo, useState, useCallback } from 'react'
+import React, { ReactElement, memo, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Dropdown, { DropdownProps } from 'react-bootstrap/Dropdown';
@@ -56,30 +56,17 @@ function UserMenuDropdown({ user, ...props }: UserMenuDropdownProps): ReactEleme
 				{gettext('Вы точно хотите выйти из аккаунта?')}
 			</AskConfirmModal>
 			<Dropdown {...props}>
-				<Dropdown.Toggle
-					bsPrefix=' '
-					variant='light'
-					style={{ minWidth: '125px' }}
-				>
+				<Dropdown.Toggle bsPrefix=' ' variant='light' style={{ minWidth: '125px' }}>
 					{user.first_name}
 				</Dropdown.Toggle>
 				<Dropdown.Menu>
-					{user.is_staff && (
-						<Dropdown.Item href='/admin/'>
-							{gettext('Админ панель')}
-						</Dropdown.Item>
-					)}
+					{user.is_staff && <Dropdown.Item href='/admin/'>{gettext('Админ панель')}</Dropdown.Item>}
 					<Dropdown.Item onClick={() => navigate('/personal-cabinet/')}>
 						{gettext('Личный кабинет')}
 					</Dropdown.Item>
-					<Dropdown.Item>
-						{gettext('Настройки')}
-					</Dropdown.Item>
+					<Dropdown.Item>{gettext('Настройки')}</Dropdown.Item>
 					<Dropdown.Divider />
-					<Dropdown.Item
-						as='button'
-						onClick={() => setShowLogoutModal(true)}
-					>
+					<Dropdown.Item as='button' onClick={() => setShowLogoutModal(true)}>
 						{gettext('Выйти')}
 					</Dropdown.Item>
 				</Dropdown.Menu>

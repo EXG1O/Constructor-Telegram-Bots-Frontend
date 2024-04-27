@@ -13,11 +13,16 @@ import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired
 import { VariableAPI } from 'services/api/telegram_bots/main';
 import { Variable } from 'services/api/telegram_bots/types';
 
-export interface VariableEditModalProps extends Omit<VariableFormModalProps, 'loading' | 'data' | 'title' | 'onChange' | 'children'> {
+export interface VariableEditModalProps
+	extends Omit<VariableFormModalProps, 'loading' | 'data' | 'title' | 'onChange' | 'children'> {
 	variable: Variable;
 }
 
-function VariableEditModal({ variable, onHide, ...props }: VariableEditModalProps): ReactElement<VariableEditModalProps> {
+function VariableEditModal({
+	variable,
+	onHide,
+	...props
+}: VariableEditModalProps): ReactElement<VariableEditModalProps> {
 	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
@@ -58,10 +63,7 @@ function VariableEditModal({ variable, onHide, ...props }: VariableEditModalProp
 			onHide={onHide}
 		>
 			<VariableFormModal.Footer>
-				<Button
-					variant='success'
-					onClick={handleSaveButtonClick}
-				>
+				<Button variant='success' onClick={handleSaveButtonClick}>
 					{gettext('Сохранить')}
 				</Button>
 			</VariableFormModal.Footer>

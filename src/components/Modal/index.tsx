@@ -11,26 +11,22 @@ import Footer from './components/Footer';
 
 import ModalContext from './contexts/ModalContext';
 
-export interface ModalProps extends Omit<
-	BaseModalProps,
-	'role' |
-	'renderBackdrop' |
-	'renderDialog' |
-	'transition' |
-	'backdropTransition' |
-	'children'
-> {
+export interface ModalProps
+	extends Omit<
+		BaseModalProps,
+		'role' | 'renderBackdrop' | 'renderDialog' | 'transition' | 'backdropTransition' | 'children'
+	> {
 	loading?: boolean;
-    size?: 'sm' | 'lg' | 'xl';
-    fullscreen?: true | string | 'sm-down' | 'md-down' | 'lg-down' | 'xl-down' | 'xxl-down';
-    bsPrefix?: string;
-    centered?: boolean;
-    backdropClassName?: string;
-    animation?: boolean;
-    dialogClassName?: string;
-    contentClassName?: string;
-    dialogAs?: React.ElementType;
-    scrollable?: boolean;
+	size?: 'sm' | 'lg' | 'xl';
+	fullscreen?: true | string | 'sm-down' | 'md-down' | 'lg-down' | 'xl-down' | 'xxl-down';
+	bsPrefix?: string;
+	centered?: boolean;
+	backdropClassName?: string;
+	animation?: boolean;
+	dialogClassName?: string;
+	contentClassName?: string;
+	dialogAs?: React.ElementType;
+	scrollable?: boolean;
 	children?: ReactNode;
 }
 
@@ -38,11 +34,7 @@ export interface ModalProps extends Omit<
 function Modal({ loading = false, backdrop, keyboard, children, ...props }: ModalProps): ReactElement<ModalProps> {
 	return (
 		<ModalContext.Provider value={{ loading }}>
-			<BaseModal
-				{...props}
-				backdrop={loading ? 'static' : backdrop}
-				keyboard={!loading && keyboard}
-			>
+			<BaseModal {...props} backdrop={loading ? 'static' : backdrop} keyboard={!loading && keyboard}>
 				{children}
 				{loading && (
 					<BaseModal.Body className='d-flex justify-content-center'>

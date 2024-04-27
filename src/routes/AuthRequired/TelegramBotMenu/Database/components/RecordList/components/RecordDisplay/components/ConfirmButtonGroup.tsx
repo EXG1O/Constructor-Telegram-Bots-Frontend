@@ -8,7 +8,11 @@ export interface ConfirmButtonGroupProps extends Omit<ButtonGroupProps, 'childre
 	onCancel?: () => void;
 }
 
-function ConfirmButtonGroup({ onConfirm, onCancel, ...props }: ConfirmButtonGroupProps): ReactElement<ConfirmButtonGroupProps> {
+function ConfirmButtonGroup({
+	onConfirm,
+	onCancel,
+	...props
+}: ConfirmButtonGroupProps): ReactElement<ConfirmButtonGroupProps> {
 	return (
 		<ButtonGroup size='sm' {...props}>
 			<Button

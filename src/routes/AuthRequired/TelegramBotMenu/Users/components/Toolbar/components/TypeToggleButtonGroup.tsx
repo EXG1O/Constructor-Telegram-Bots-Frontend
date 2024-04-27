@@ -12,7 +12,8 @@ import { LoaderData as TelegramBotMenuRootLoaderData } from '../../../../Root';
 
 export type TypeToggleButtonGroupProps = Omit<ToggleButtonRadioProps<Type>, 'type' | 'name' | 'children'>;
 
-interface TypeToggleButtonProps extends Omit<ToggleButtonProps, 'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange'> {
+interface TypeToggleButtonProps
+	extends Omit<ToggleButtonProps, 'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange'> {
 	value: Type;
 }
 
@@ -33,9 +34,9 @@ function TypeToggleButtonGroup(props: TypeToggleButtonGroupProps): ReactElement<
 			type='radio'
 			name='user-types'
 			value={filter.type}
-			onChange={type => updateUsers(undefined, undefined, undefined, type)}
+			onChange={(type) => updateUsers(undefined, undefined, undefined, type)}
 		>
-			{typeToggleButtons.map((props, index) => (
+			{typeToggleButtons.map((props, index) =>
 				!(props.value === 'allowed' && !telegramBot.is_private) ? (
 					<ToggleButton
 						{...props}
@@ -44,8 +45,8 @@ function TypeToggleButtonGroup(props: TypeToggleButtonGroupProps): ReactElement<
 						size='sm'
 						variant='outline-dark'
 					/>
-				) : undefined
-			))}
+				) : undefined,
+			)}
 		</ToggleButtonGroup>
 	);
 }

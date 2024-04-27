@@ -7,7 +7,8 @@ import { Type } from '..';
 
 export type TypeToggleButtonGroupProps = Omit<ToggleButtonRadioProps<Type>, 'type' | 'name' | 'children'>;
 
-interface TypeToggleButtonProps extends Omit<ToggleButtonProps, 'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange'> {
+interface TypeToggleButtonProps
+	extends Omit<ToggleButtonProps, 'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange'> {
 	value: Type;
 }
 

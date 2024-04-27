@@ -1,4 +1,4 @@
-import React, { ReactElement, HTMLAttributes, memo, useState, useCallback } from 'react'
+import React, { ReactElement, HTMLAttributes, memo, useState, useCallback } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
 

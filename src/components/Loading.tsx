@@ -6,7 +6,7 @@ export interface LoadingProps extends Omit<SpinnerProps, 'size' | 'animation' | 
 	size: keyof typeof multipliers;
 }
 
-const multipliers = { 'xs': 1, 'sm': 2, 'md': 3, 'lg': 4, 'xl': 5 };
+const multipliers = { xs: 1, sm: 2, md: 3, lg: 4, xl: 5 };
 
 function Loading({ size, style, ...props }: LoadingProps): ReactElement<LoadingProps> {
 	const multiplier: number = multipliers[size];

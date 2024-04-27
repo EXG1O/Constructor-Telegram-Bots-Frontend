@@ -27,10 +27,14 @@ import { CommandAPI, DiagramCommandAPI } from 'services/api/telegram_bots/main';
 export interface CommandEditOffcanvasProps {
 	show: boolean;
 	commandID: number;
-	onHide: () => void
+	onHide: () => void;
 }
 
-function CommandEditOffcanvas({ show, commandID, onHide }: CommandEditOffcanvasProps): ReactElement<CommandEditOffcanvasProps> {
+function CommandEditOffcanvas({
+	show,
+	commandID,
+	onHide,
+}: CommandEditOffcanvasProps): ReactElement<CommandEditOffcanvasProps> {
 	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
@@ -49,7 +53,9 @@ function CommandEditOffcanvas({ show, commandID, onHide }: CommandEditOffcanvasP
 
 	const [loading, setLoading] = useState<boolean>(true);
 
-	useEffect(() => { show && updateInitialData() }, [show]);
+	useEffect(() => {
+		show && updateInitialData();
+	}, [show]);
 
 	async function updateInitialData(): Promise<void> {
 		setLoading(true);
@@ -57,18 +63,8 @@ function CommandEditOffcanvas({ show, commandID, onHide }: CommandEditOffcanvasP
 		const response = await CommandAPI.get(telegramBot.id, commandID);
 
 		if (response.ok) {
-			const {
-				id,
-				name,
-				settings,
-				images,
-				files,
-				trigger,
-				message,
-				keyboard,
-				api_request,
-				database_record,
-			} = response.json;
+			const { id, name, settings, images, files, trigger, message, keyboard, api_request, database_record } =
+				response.json;
 
 			setName(name);
 			setSettings({
@@ -76,28 +72,42 @@ function CommandEditOffcanvas({ show, commandID, onHide }: CommandEditOffcanvasP
 				isDeleteUserMessage: settings.is_delete_user_message,
 				isSendAsNewMessage: settings.is_send_as_new_message,
 			});
-			setTrigger(trigger ? {
-				text: trigger.text,
-				description: trigger.description ?? undefined,
-			} : undefined);
-			setImages(images.length ? images.map(image => ({ ...image, key: crypto.randomUUID() })) : undefined);
-			setFiles(files.length ? files.map(file => ({ ...file, key: crypto.randomUUID() })) : undefined);
+			setTrigger(
+				trigger
+					? {
+							text: trigger.text,
+							description: trigger.description ?? undefined,
+						}
+					: undefined,
+			);
+			setImages(images.length ? images.map((image) => ({ ...image, key: crypto.randomUUID() })) : undefined);
+			setFiles(files.length ? files.map((file) => ({ ...file, key: crypto.randomUUID() })) : undefined);
 			setMessage(message.text);
-			setKeyboard(keyboard ? {
-				type: keyboard.type,
-				buttons: keyboard.buttons.map(button => ({
-					id: button.id,
-					row: button.row ?? undefined,
-					text: button.text,
-					url: button.url ?? undefined,
-				})),
-			} : undefined);
-			setAPIRequest(api_request ? {
-				url: api_request.url,
-				method: api_request.method,
-				headers: api_request.headers ? Object.entries(api_request.headers).map(([key, value]) => ({ key, value })) : undefined,
-				body: api_request.body ? JSON.stringify(api_request.body, undefined, 4) : undefined,
-			} : undefined);
+			setKeyboard(
+				keyboard
+					? {
+							type: keyboard.type,
+							buttons: keyboard.buttons.map((button) => ({
+								id: button.id,
+								row: button.row ?? undefined,
+								text: button.text,
+								url: button.url ?? undefined,
+							})),
+						}
+					: undefined,
+			);
+			setAPIRequest(
+				api_request
+					? {
+							url: api_request.url,
+							method: api_request.method,
+							headers: api_request.headers
+								? Object.entries(api_request.headers).map(([key, value]) => ({ key, value }))
+								: undefined,
+							body: api_request.body ? JSON.stringify(api_request.body, undefined, 4) : undefined,
+						}
+					: undefined,
+			);
 			setDatabaseRecord(database_record ? JSON.stringify(database_record.data, undefined, 4) : undefined);
 
 			setLoading(false);
@@ -119,26 +129,34 @@ function CommandEditOffcanvas({ show, commandID, onHide }: CommandEditOffcanvasP
 				is_delete_user_message: settings.isDeleteUserMessage,
 				is_send_as_new_message: settings.isSendAsNewMessage,
 			},
-			trigger: trigger ? {
-				...trigger,
-				description: trigger.description ?? null,
-			} : null,
-			images: images?.map(image => image.file ?? image.id!),
-			files: files?.map(file => file.file ?? file.id!),
+			trigger: trigger
+				? {
+						...trigger,
+						description: trigger.description ?? null,
+					}
+				: null,
+			images: images?.map((image) => image.file ?? image.id!),
+			files: files?.map((file) => file.file ?? file.id!),
 			message: { text: message },
-			keyboard: keyboard ? {
-				...keyboard,
-				buttons: keyboard.buttons.map(button => ({
-					...button,
-					row: button.row ?? null,
-					url: button.url ?? null,
-				})),
-			} : null,
-			api_request: apiRequest ? {
-				...apiRequest,
-				headers: apiRequest.headers ? apiRequest.headers.map(header => ({ [header.key]: header.value })) : null,
-				body: apiRequest.body ? JSON.parse(apiRequest.body) : null,
-			} : null,
+			keyboard: keyboard
+				? {
+						...keyboard,
+						buttons: keyboard.buttons.map((button) => ({
+							...button,
+							row: button.row ?? null,
+							url: button.url ?? null,
+						})),
+					}
+				: null,
+			api_request: apiRequest
+				? {
+						...apiRequest,
+						headers: apiRequest.headers
+							? apiRequest.headers.map((header) => ({ [header.key]: header.value }))
+							: null,
+						body: apiRequest.body ? JSON.parse(apiRequest.body) : null,
+					}
+				: null,
 			database_record: databaseRecord ? { data: JSON.parse(databaseRecord) } : null,
 		});
 
@@ -146,9 +164,11 @@ function CommandEditOffcanvas({ show, commandID, onHide }: CommandEditOffcanvasP
 			const diagramCommandResponse = await DiagramCommandAPI.get(telegramBot.id, commandID);
 
 			if (diagramCommandResponse.ok) {
-				setNodes(prevNodes => prevNodes.map(
-					node => node.id === `command:${commandID}` ? parseNodes([diagramCommandResponse.json])[0] : node
-				));
+				setNodes((prevNodes) =>
+					prevNodes.map((node) =>
+						node.id === `command:${commandID}` ? parseNodes([diagramCommandResponse.json])[0] : node,
+					),
+				);
 				onHide();
 				createMessageToast({
 					message: gettext('Вы успешно сохранили команду.'),
@@ -196,10 +216,7 @@ function CommandEditOffcanvas({ show, commandID, onHide }: CommandEditOffcanvasP
 			onHide={onHide}
 		>
 			<CommandFormOffcanvas.Footer>
-				<Button
-					variant='success'
-					onClick={handleClick}
-				>
+				<Button variant='success' onClick={handleClick}>
 					{gettext('Сохранить')}
 				</Button>
 			</CommandFormOffcanvas.Footer>

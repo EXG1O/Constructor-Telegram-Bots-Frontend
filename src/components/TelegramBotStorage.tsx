@@ -8,7 +8,7 @@ import { TelegramBot } from 'services/api/telegram_bots/types';
 type Size = 'sm' | 'lg';
 
 export interface TelegramBotStorageProps extends HTMLAttributes<HTMLDivElement> {
-	size?: Size
+	size?: Size;
 	telegramBot: TelegramBot;
 	usedStorageSize?: number;
 }

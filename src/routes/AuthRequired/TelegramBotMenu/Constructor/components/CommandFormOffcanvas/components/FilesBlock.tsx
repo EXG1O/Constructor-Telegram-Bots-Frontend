@@ -24,7 +24,12 @@ export interface FilesBlockProps extends Omit<BlockProps, 'title' | 'onChange' |
 
 export const defaultData: Data = [];
 
-function FilesBlock({ data = defaultData, remainingStorageSize, onChange, ...props }: FilesBlockProps): ReactElement<FilesBlockProps> {
+function FilesBlock({
+	data = defaultData,
+	remainingStorageSize,
+	onChange,
+	...props
+}: FilesBlockProps): ReactElement<FilesBlockProps> {
 	const { createMessageToast } = useToast();
 
 	function handleFilesChange(event: ReactChangeEvent<HTMLInputElement>): void {
@@ -36,40 +41,44 @@ function FilesBlock({ data = defaultData, remainingStorageSize, onChange, ...pro
 
 			onChange([
 				...data,
-				...files.filter(file => {
-					if (file.size > 2621440) {
-						createMessageToast({
-							message: interpolate(
-								gettext('Файл %(name)s весит больше 2.5MB!'),
-								{ name: file.name },
-								true,
-							),
-							level: 'error',
-						});
-						return false;
-					}
+				...files
+					.filter((file) => {
+						if (file.size > 2621440) {
+							createMessageToast({
+								message: interpolate(
+									gettext('Файл %(name)s весит больше 2.5MB!'),
+									{ name: file.name },
+									true,
+								),
+								level: 'error',
+							});
+							return false;
+						}
 
-					if (availableStorageSize - file.size < 0) {
-						createMessageToast({
-							message: interpolate(
-								gettext('Невозможно добавить файл %(name)s, потому-что не хватает места в хранилище!'),
-								{ name: file.name },
-								true,
-							),
-							level: 'error',
-						});
-						return false;
-					}
+						if (availableStorageSize - file.size < 0) {
+							createMessageToast({
+								message: interpolate(
+									gettext(
+										'Невозможно добавить файл %(name)s, потому-что не хватает места в хранилище!',
+									),
+									{ name: file.name },
+									true,
+								),
+								level: 'error',
+							});
+							return false;
+						}
 
-					availableStorageSize -= file.size;
+						availableStorageSize -= file.size;
 
-					return true;
-				}).map(file => ({
-					key: crypto.randomUUID(),
-					file,
-					name: file.name,
-					size: file.size,
-				})),
+						return true;
+					})
+					.map((file) => ({
+						key: crypto.randomUUID(),
+						file,
+						name: file.name,
+						size: file.size,
+					})),
 			]);
 		}
 	}
@@ -100,7 +109,7 @@ function FilesBlock({ data = defaultData, remainingStorageSize, onChange, ...pro
 					<div className='d-flex flex-wrap border rounded-1 gap-1 p-1'>
 						<DragDropContext onDragEnd={handleFileDragEnd}>
 							<Droppable droppableId='command-offcanvas-files'>
-								{provided => (
+								{(provided) => (
 									<div
 										ref={provided.innerRef}
 										{...provided.droppableProps}
@@ -112,7 +121,7 @@ function FilesBlock({ data = defaultData, remainingStorageSize, onChange, ...pro
 												index={index}
 												draggableId={`command-offcanvas-file-${file.key}`}
 											>
-												{provided => (
+												{(provided) => (
 													<ButtonGroup
 														ref={provided.innerRef}
 														{...provided.draggableProps}
@@ -150,12 +159,7 @@ function FilesBlock({ data = defaultData, remainingStorageSize, onChange, ...pro
 					hidden
 					onChange={handleFilesChange}
 				/>
-				<Button
-					as='label'
-					htmlFor='command-offcanvas-files-input-file'
-					size='sm'
-					variant='dark'
-				>
+				<Button as='label' htmlFor='command-offcanvas-files-input-file' size='sm' variant='dark'>
 					{gettext('Добавить файл')}
 				</Button>
 			</Block.Body>

@@ -28,7 +28,8 @@ export interface KeyboardBlockProps extends Omit<BlockProps, 'title' | 'onChange
 
 export const defaultData: Data = { type: 'default', buttons: [] };
 
-interface KeyboardToggleButtonProps extends Omit<ToggleButtonProps, 'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange'> {
+interface KeyboardToggleButtonProps
+	extends Omit<ToggleButtonProps, 'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange'> {
 	value: Data['type'];
 }
 
@@ -38,7 +39,11 @@ const keyboardToggleButtons: KeyboardToggleButtonProps[] = [
 	{ value: 'payment', children: gettext('Платёжный') },
 ];
 
-function KeyboardBlock({ data = defaultData, onChange, ...props }: KeyboardBlockProps): ReactElement<KeyboardBlockProps> {
+function KeyboardBlock({
+	data = defaultData,
+	onChange,
+	...props
+}: KeyboardBlockProps): ReactElement<KeyboardBlockProps> {
 	function handleButtonChange(index: number, buttonData: Partial<ButtonData>): void {
 		const buttons = [...data.buttons];
 
@@ -87,7 +92,7 @@ function KeyboardBlock({ data = defaultData, onChange, ...props }: KeyboardBlock
 				<div>
 					<DragDropContext onDragEnd={handleButtonDragEnd}>
 						<Droppable droppableId='keyboard-buttons'>
-							{provided => (
+							{(provided) => (
 								<>
 									<div ref={provided.innerRef} {...provided.droppableProps}>
 										{data.buttons.map((button, index) => (
@@ -96,7 +101,7 @@ function KeyboardBlock({ data = defaultData, onChange, ...props }: KeyboardBlock
 												index={index}
 												draggableId={`keyboard-button-${index}`}
 											>
-												{provided => (
+												{(provided) => (
 													<InputGroup
 														ref={provided.innerRef}
 														className='mb-1'
@@ -108,23 +113,34 @@ function KeyboardBlock({ data = defaultData, onChange, ...props }: KeyboardBlock
 															size='sm'
 															variant='light'
 															className='border bi bi-grip-vertical d-flex justify-content-center align-items-center p-0'
-															style={{ width: '31px', height: '31px', cursor: 'grab', fontSize: '18px' }}
+															style={{
+																width: '31px',
+																height: '31px',
+																cursor: 'grab',
+																fontSize: '18px',
+															}}
 														/>
 														<Form.Control
 															value={button.text}
 															size='sm'
 															className='text-center'
 															placeholder={gettext('Название кнопки')}
-															onChange={e => handleButtonChange(index, { text: e.target.value })}
+															onChange={(e) =>
+																handleButtonChange(index, { text: e.target.value })
+															}
 														/>
-														{(data.type === 'inline' || data.type === 'payment') && (
-															button.url !== undefined ? (
+														{(data.type === 'inline' || data.type === 'payment') &&
+															(button.url !== undefined ? (
 																<Form.Control
 																	value={button.url ?? undefined}
 																	size='sm'
 																	className='text-center'
 																	placeholder='URL-адрес'
-																	onChange={e => handleButtonChange(index, { url: e.target.value })}
+																	onChange={(e) =>
+																		handleButtonChange(index, {
+																			url: e.target.value,
+																		})
+																	}
 																/>
 															) : (
 																<Button
@@ -132,11 +148,16 @@ function KeyboardBlock({ data = defaultData, onChange, ...props }: KeyboardBlock
 																	size='sm'
 																	variant='secondary'
 																	className='bi bi-link-45deg d-flex justify-content-center align-items-center p-0'
-																	style={{ width: '31px', height: '31px', fontSize: '18px' }}
-																	onClick={() => handleButtonChange(index, { url: '' })}
+																	style={{
+																		width: '31px',
+																		height: '31px',
+																		fontSize: '18px',
+																	}}
+																	onClick={() =>
+																		handleButtonChange(index, { url: '' })
+																	}
 																/>
-															)
-														)}
+															))}
 														<Button
 															as='i'
 															size='sm'

@@ -23,9 +23,15 @@ export const defaultData: Data = {
 	name: '',
 	value: '',
 	description: '',
-}
+};
 
-function VariableFormModal({ data, title, children, onChange, ...props }: VariableFormModalProps): ReactElement<VariableFormModalProps> {
+function VariableFormModal({
+	data,
+	title,
+	children,
+	onChange,
+	...props
+}: VariableFormModalProps): ReactElement<VariableFormModalProps> {
 	return (
 		<Modal {...props}>
 			<Modal.Header closeButton>
@@ -35,18 +41,18 @@ function VariableFormModal({ data, title, children, onChange, ...props }: Variab
 				<Form.Control
 					value={data.name}
 					placeholder={gettext('Придумайте название')}
-					onChange={e => onChange({ ...data, name: e.target.value })}
+					onChange={(e) => onChange({ ...data, name: e.target.value })}
 				/>
 				<TelegramQuillEditor
 					height={220}
 					value={data.value}
 					placeholder={gettext('Введите значение')}
-					onChange={value => onChange({ ...data, value })}
+					onChange={(value) => onChange({ ...data, value })}
 				/>
 				<Form.Control
 					value={data.description}
 					placeholder={gettext('Введите описание')}
-					onChange={e => onChange({ ...data, description: e.target.value })}
+					onChange={(e) => onChange({ ...data, description: e.target.value })}
 				/>
 			</Modal.Body>
 			{children}

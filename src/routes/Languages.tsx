@@ -24,5 +24,5 @@ export async function loader(): Promise<LoaderData> {
 			current: Cookies.get('lang') ?? 'ru',
 			available: response.json,
 		},
-	}
+	};
 }
