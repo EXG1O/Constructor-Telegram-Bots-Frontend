@@ -6,14 +6,19 @@ import Block, { BlockProps } from './Block';
 
 export type Value = string;
 
-export interface NameBlockProps extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
+export interface NameBlockProps
+	extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
 	value?: Value;
 	onChange: (value: Value) => void;
 }
 
 export const defaultValue: Value = '';
 
-function NameBlock({ value = defaultValue, onChange, ...props }: NameBlockProps): ReactElement<NameBlockProps> {
+function NameBlock({
+	value = defaultValue,
+	onChange,
+	...props
+}: NameBlockProps): ReactElement<NameBlockProps> {
 	return (
 		<Block {...props} title={gettext('Название')}>
 			<Block.Body>

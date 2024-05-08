@@ -1,6 +1,8 @@
 import React, { ReactElement, useContext } from 'react';
 
-import BaseBody, { OffcanvasBodyProps as BaseBodyProps } from 'react-bootstrap/OffcanvasBody';
+import BaseBody, {
+	OffcanvasBodyProps as BaseBodyProps,
+} from 'react-bootstrap/OffcanvasBody';
 
 import OffcanvasContext from '../contexts/OffcanvasContext';
 

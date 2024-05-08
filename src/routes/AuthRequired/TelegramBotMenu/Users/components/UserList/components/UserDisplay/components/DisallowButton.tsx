@@ -1,4 +1,10 @@
-import React, { ReactElement, HTMLAttributes, memo, useState, useCallback } from 'react';
+import React, {
+	ReactElement,
+	HTMLAttributes,
+	memo,
+	useState,
+	useCallback,
+} from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -20,7 +26,9 @@ function DisallowButton({
 	onClick,
 	...props
 }: DisallowButtonProps): ReactElement<DisallowButtonProps> {
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
 	const { updateUsers } = useUsers();
@@ -37,7 +45,9 @@ function DisallowButton({
 	const handleConfirm = useCallback(async () => {
 		setLoadingModal(true);
 
-		const response = await UserAPI.partialUpdate(telegramBot.id, user.id, { is_allowed: false });
+		const response = await UserAPI.partialUpdate(telegramBot.id, user.id, {
+			is_allowed: false,
+		});
 
 		if (response.ok) {
 			updateUsers();

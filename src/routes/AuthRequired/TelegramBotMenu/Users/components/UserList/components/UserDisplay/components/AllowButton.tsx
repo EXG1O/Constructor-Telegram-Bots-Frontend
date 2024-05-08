@@ -1,4 +1,10 @@
-import React, { ReactElement, HTMLAttributes, memo, useState, useCallback } from 'react';
+import React, {
+	ReactElement,
+	HTMLAttributes,
+	memo,
+	useState,
+	useCallback,
+} from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -14,8 +20,15 @@ import { UserAPI } from 'services/api/telegram_bots/main';
 
 export type AllowButtonProps = Omit<HTMLAttributes<HTMLElement>, 'children'>;
 
-function AllowButton({ className, style, onClick, ...props }: AllowButtonProps): ReactElement<AllowButtonProps> {
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
+function AllowButton({
+	className,
+	style,
+	onClick,
+	...props
+}: AllowButtonProps): ReactElement<AllowButtonProps> {
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
 	const { updateUsers } = useUsers();
@@ -32,7 +45,9 @@ function AllowButton({ className, style, onClick, ...props }: AllowButtonProps):
 	const handleConfirm = useCallback(async () => {
 		setLoadingModal(true);
 
-		const response = await UserAPI.partialUpdate(telegramBot.id, user.id, { is_allowed: true });
+		const response = await UserAPI.partialUpdate(telegramBot.id, user.id, {
+			is_allowed: true,
+		});
 
 		if (response.ok) {
 			updateUsers();

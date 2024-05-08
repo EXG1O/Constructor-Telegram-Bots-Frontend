@@ -20,8 +20,18 @@ export interface HeadersProps {
 	onChange: (data?: Data) => void;
 }
 
-function Headers({ show, data, onShow, onHide, onChange }: HeadersProps): ReactElement<HeadersProps> {
-	function handleHeaderChange<T extends keyof HeaderData>(index: number, name: T, value: HeaderData[T]): void {
+function Headers({
+	show,
+	data,
+	onShow,
+	onHide,
+	onChange,
+}: HeadersProps): ReactElement<HeadersProps> {
+	function handleHeaderChange<T extends keyof HeaderData>(
+		index: number,
+		name: T,
+		value: HeaderData[T],
+	): void {
 		if (data) {
 			const headers = [...data];
 
@@ -60,7 +70,12 @@ function Headers({ show, data, onShow, onHide, onChange }: HeadersProps): ReactE
 				aria-expanded={show}
 				onClick={show ? onHide : onShow}
 			/>
-			<Collapse in={show} unmountOnExit onEnter={() => onChange([])} onExited={() => onChange(undefined)}>
+			<Collapse
+				in={show}
+				unmountOnExit
+				onEnter={() => onChange([])}
+				onExited={() => onChange(undefined)}
+			>
 				<div id='command-offcanvas-api-request-headers-addon'>
 					<div className='vstack border border-top-0 rounded-1 rounded-top-0 gap-1 p-1'>
 						{data?.map((header, index) => (
@@ -69,25 +84,41 @@ function Headers({ show, data, onShow, onHide, onChange }: HeadersProps): ReactE
 									size='sm'
 									value={header.key}
 									placeholder={gettext('Ключ')}
-									onChange={(e) => handleHeaderChange(index, 'key', e.target.value)}
+									onChange={(e) =>
+										handleHeaderChange(index, 'key', e.target.value)
+									}
 								/>
 								<Form.Control
 									size='sm'
 									value={header.value}
 									placeholder={gettext('Значение')}
-									onChange={(e) => handleHeaderChange(index, 'value', e.target.value)}
+									onChange={(e) =>
+										handleHeaderChange(
+											index,
+											'value',
+											e.target.value,
+										)
+									}
 								/>
 								<Button
 									as='i'
 									size='sm'
 									variant='danger'
 									className='bi bi-trash d-flex justify-content-center align-items-center p-0'
-									style={{ width: '31px', height: '31px', fontSize: '18px' }}
+									style={{
+										width: '31px',
+										height: '31px',
+										fontSize: '18px',
+									}}
 									onClick={() => handleDeleteHeaderButtonClick(index)}
 								/>
 							</InputGroup>
 						))}
-						<Button size='sm' variant='dark' onClick={() => onChange([...data!, { key: '', value: '' }])}>
+						<Button
+							size='sm'
+							variant='dark'
+							onClick={() => onChange([...data!, { key: '', value: '' }])}
+						>
 							{gettext('Добавить заголовок')}
 						</Button>
 					</div>

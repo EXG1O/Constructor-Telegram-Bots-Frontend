@@ -4,7 +4,10 @@ import { APIResponse } from './types';
 const rootURL = '/api/donations/';
 
 export namespace DonationsAPI {
-	export const get = <Limit extends number | undefined>(limit?: Limit, offset?: number) => {
+	export const get = <Limit extends number | undefined>(
+		limit?: Limit,
+		offset?: number,
+	) => {
 		let url: string = rootURL;
 
 		if (limit || offset) {
@@ -16,7 +19,9 @@ export namespace DonationsAPI {
 		}
 
 		return makeRequest<
-			Limit extends number ? APIResponse.DonationsAPI.Get.Pagination : APIResponse.DonationsAPI.Get.Default
+			Limit extends number
+				? APIResponse.DonationsAPI.Get.Pagination
+				: APIResponse.DonationsAPI.Get.Default
 		>(url, 'GET');
 	};
 }

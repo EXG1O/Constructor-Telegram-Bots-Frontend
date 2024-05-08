@@ -11,7 +11,8 @@ export interface Trigger {
 	description?: string;
 }
 
-export interface TriggerBlockProps extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
+export interface TriggerBlockProps
+	extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
 	trigger?: Trigger;
 	onChange: (trigger: Trigger) => void;
 }
@@ -39,13 +40,16 @@ function TriggerBlock({
 								variant: 'dark',
 								className: 'w-100',
 								children: gettext('Добавить в меню'),
-								onClick: () => onChange({ ...trigger, description: '' }),
+								onClick: () =>
+									onChange({ ...trigger, description: '' }),
 							}
 						: {
 								variant: 'secondary',
-								className: 'w-100 border-bottom-0 rounded rounded-bottom-0',
+								className:
+									'w-100 border-bottom-0 rounded rounded-bottom-0',
 								children: gettext('Убрать из меню'),
-								onClick: () => onChange({ ...trigger, description: undefined }),
+								onClick: () =>
+									onChange({ ...trigger, description: undefined }),
 							})}
 				/>
 				<Collapse in={trigger?.description !== undefined} unmountOnExit>
@@ -54,7 +58,9 @@ function TriggerBlock({
 							value={trigger.description ?? ''}
 							className='border-top-0 rounded-top-0'
 							placeholder={gettext('Введите описание')}
-							onChange={(e) => onChange({ ...trigger, description: e.target.value })}
+							onChange={(e) =>
+								onChange({ ...trigger, description: e.target.value })
+							}
 						/>
 					</div>
 				</Collapse>

@@ -28,11 +28,12 @@ export interface LoaderData {
 }
 
 export async function loader(): Promise<LoaderData> {
-	const [usersStatsResponse, telegramBotsResponse, donationsResponse] = await Promise.all([
-		UsersStatsAPI.get(),
-		TelegramBotsStatsAPI.get(),
-		DonationsAPI.get(20),
-	]);
+	const [usersStatsResponse, telegramBotsResponse, donationsResponse] =
+		await Promise.all([
+			UsersStatsAPI.get(),
+			TelegramBotsStatsAPI.get(),
+			DonationsAPI.get(20),
+		]);
 
 	if (!usersStatsResponse.ok || !telegramBotsResponse.ok || !donationsResponse.ok) {
 		throw Error('Failed to fetch data!');

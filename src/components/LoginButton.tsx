@@ -6,7 +6,10 @@ import LoginModal from './LoginModal';
 
 export type LoginButtonProps = Omit<ButtonProps, 'as' | 'href' | 'target' | 'children'>;
 
-function LoginButton({ onClick, ...props }: LoginButtonProps): ReactElement<LoginButtonProps> {
+function LoginButton({
+	onClick,
+	...props
+}: LoginButtonProps): ReactElement<LoginButtonProps> {
 	const [showModal, setShowModal] = useState<boolean>(false);
 
 	function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
@@ -16,7 +19,10 @@ function LoginButton({ onClick, ...props }: LoginButtonProps): ReactElement<Logi
 
 	return (
 		<>
-			<LoginModal show={showModal} onHide={useCallback(() => setShowModal(false), [])} />
+			<LoginModal
+				show={showModal}
+				onHide={useCallback(() => setShowModal(false), [])}
+			/>
 			<Button
 				{...props}
 				as='a'

@@ -1,4 +1,10 @@
-import React, { ReactElement, HTMLAttributes, memo, useState, useCallback } from 'react';
+import React, {
+	ReactElement,
+	HTMLAttributes,
+	memo,
+	useState,
+	useCallback,
+} from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -14,8 +20,15 @@ import { VariableAPI } from 'services/api/telegram_bots/main';
 
 export type DeleteButtonProps = Omit<HTMLAttributes<HTMLElement>, 'children'>;
 
-function DeleteButton({ className, style, onClick, ...props }: DeleteButtonProps): ReactElement<DeleteButtonProps> {
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
+function DeleteButton({
+	className,
+	style,
+	onClick,
+	...props
+}: DeleteButtonProps): ReactElement<DeleteButtonProps> {
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
 	const { updateVariables } = useVariables();

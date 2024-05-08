@@ -15,7 +15,11 @@ export interface VariableListProps extends Omit<BlockProps, 'children'> {
 	loading: boolean;
 }
 
-function VariableList({ loading, className, ...props }: VariableListProps): ReactElement<VariableListProps> {
+function VariableList({
+	loading,
+	className,
+	...props
+}: VariableListProps): ReactElement<VariableListProps> {
 	const { variables, filter } = useVariables();
 
 	return !loading ? (
@@ -24,7 +28,10 @@ function VariableList({ loading, className, ...props }: VariableListProps): Reac
 				<Table responsive striped borderless className='align-middle mb-0'>
 					<tbody>
 						{variables.map((variable) => (
-							<VariableContext.Provider key={variable.id} value={{ variable }}>
+							<VariableContext.Provider
+								key={variable.id}
+								value={{ variable }}
+							>
 								<VariableDisplay />
 							</VariableContext.Provider>
 						))}
@@ -32,9 +39,13 @@ function VariableList({ loading, className, ...props }: VariableListProps): Reac
 				</Table>
 			</Block>
 		) : filter.search ? (
-			<Block className='text-center px-3 py-2'>{gettext('Не найдены переменные по поиску')}</Block>
+			<Block className='text-center px-3 py-2'>
+				{gettext('Не найдены переменные по поиску')}
+			</Block>
 		) : (
-			<Block className='text-center px-3 py-2'>{gettext('Вы ещё не добавили переменные')}</Block>
+			<Block className='text-center px-3 py-2'>
+				{gettext('Вы ещё не добавили переменные')}
+			</Block>
 		)
 	) : (
 		<Block className='d-flex justify-content-center p-3'>

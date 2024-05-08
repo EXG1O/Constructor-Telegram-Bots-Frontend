@@ -15,7 +15,11 @@ type HandlePositions = 'left' | 'right';
 
 export interface Connection {
 	id: number;
-	source_object_type: 'command' | 'command_keyboard_button' | 'condition' | 'background_task';
+	source_object_type:
+		| 'command'
+		| 'command_keyboard_button'
+		| 'condition'
+		| 'background_task';
 	source_object_id: number;
 	source_handle_position: HandlePositions;
 	target_object_type: 'command' | 'condition';
@@ -124,13 +128,16 @@ export interface DiagramCommandKeyboard extends Omit<CommandKeyboard, 'buttons'>
 	buttons: DiagramCommandKeyboardButton[];
 }
 
-export interface DiagramCommand extends Pick<Command, 'id' | 'name' | 'images' | 'files' | 'message'>, DiagramBlock {
+export interface DiagramCommand
+	extends Pick<Command, 'id' | 'name' | 'images' | 'files' | 'message'>,
+		DiagramBlock {
 	keyboard: DiagramCommandKeyboard | null;
 }
 
 export type DiagramCondition = Omit<Condition, 'parts'> & DiagramBlock;
 
-export type DiagramBackgroundTask = Omit<BackgroundTask, 'api_request'> & Omit<DiagramBlock, 'source_connections'>;
+export type DiagramBackgroundTask = Omit<BackgroundTask, 'api_request'> &
+	Omit<DiagramBlock, 'source_connections'>;
 
 export interface Variable {
 	id: number;
@@ -172,7 +179,8 @@ export namespace Data {
 			buttons: Omit<CommandKeyboardButton, 'id'>[];
 		}
 
-		export interface Create extends Omit<Command, 'id' | 'images' | 'files' | 'keyboard'> {
+		export interface Create
+			extends Omit<Command, 'id' | 'images' | 'files' | 'keyboard'> {
 			images?: File[];
 			files?: File[];
 			keyboard: CreateCommandKeyboard | null;
@@ -180,7 +188,8 @@ export namespace Data {
 	}
 
 	export namespace CommandAPI {
-		interface UpdateCommandKeyboardButton extends Omit<CommandKeyboardButton, 'id'> {
+		interface UpdateCommandKeyboardButton
+			extends Omit<CommandKeyboardButton, 'id'> {
 			id?: CommandKeyboardButton['id'];
 		}
 
@@ -188,7 +197,8 @@ export namespace Data {
 			buttons: UpdateCommandKeyboardButton[];
 		}
 
-		export interface Update extends Omit<Command, 'id' | 'images' | 'files' | 'keyboard'> {
+		export interface Update
+			extends Omit<Command, 'id' | 'images' | 'files' | 'keyboard'> {
 			images?: (File | number)[];
 			files?: (File | number)[];
 			keyboard: UpdateCommandKeyboard | null;

@@ -1,4 +1,9 @@
-import React, { ReactElement, ChangeEvent as ReactChangeEvent, memo, useState } from 'react';
+import React, {
+	ReactElement,
+	ChangeEvent as ReactChangeEvent,
+	memo,
+	useState,
+} from 'react';
 
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import Carousel from 'react-bootstrap/Carousel';
@@ -20,7 +25,8 @@ interface ImageData extends Pick<File, 'name' | 'size'> {
 
 export type Data = ImageData[];
 
-export interface ImagesBlockProps extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
+export interface ImagesBlockProps
+	extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
 	data?: Data;
 	remainingStorageSize: number;
 	onChange: (data: Data) => void;
@@ -190,7 +196,9 @@ function ImagesBlock({
 															>
 																<small
 																	className='text-bg-dark rounded-1 rounded-end-0 px-2 py-1'
-																	style={{ cursor: 'pointer' }}
+																	style={{
+																		cursor: 'pointer',
+																	}}
 																>
 																	{image.name}
 																</small>
@@ -199,8 +207,16 @@ function ImagesBlock({
 																	size='sm'
 																	variant='danger'
 																	className='bi bi-trash d-flex justify-content-center align-items-center p-0'
-																	style={{ width: '29px', fontSize: '18px' }}
-																	onClick={() => handleDeleteImageButtonClick(index)}
+																	style={{
+																		width: '29px',
+																		fontSize:
+																			'18px',
+																	}}
+																	onClick={() =>
+																		handleDeleteImageButtonClick(
+																			index,
+																		)
+																	}
 																/>
 															</ButtonGroup>
 														)}
@@ -215,7 +231,10 @@ function ImagesBlock({
 						</>
 					)
 				) : (
-					<div className='d-flex justify-content-center border rounded' style={{ height: '202px' }}>
+					<div
+						className='d-flex justify-content-center border rounded'
+						style={{ height: '202px' }}
+					>
 						<Loading size='md' className='align-self-center' />
 					</div>
 				)}
@@ -227,7 +246,12 @@ function ImagesBlock({
 					hidden
 					onChange={handleImagesChange}
 				/>
-				<Button as='label' htmlFor='command-offcanvas-images-input-file' size='sm' variant='dark'>
+				<Button
+					as='label'
+					htmlFor='command-offcanvas-images-input-file'
+					size='sm'
+					variant='dark'
+				>
 					{gettext('Добавить изображение')}
 				</Button>
 			</Block.Body>

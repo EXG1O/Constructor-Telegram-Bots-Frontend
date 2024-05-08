@@ -2,7 +2,8 @@ import React, { ReactElement, memo } from 'react';
 
 import Spinner, { SpinnerProps } from 'react-bootstrap/Spinner';
 
-export interface LoadingProps extends Omit<SpinnerProps, 'size' | 'animation' | 'children'> {
+export interface LoadingProps
+	extends Omit<SpinnerProps, 'size' | 'animation' | 'children'> {
 	size: keyof typeof multipliers;
 }
 

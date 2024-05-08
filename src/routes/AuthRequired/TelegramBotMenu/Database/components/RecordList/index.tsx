@@ -14,7 +14,11 @@ export interface RecordListProps extends Omit<ListGroupProps, 'children'> {
 	loading: boolean;
 }
 
-function RecordList({ loading, className, ...props }: RecordListProps): ReactElement<RecordListProps> {
+function RecordList({
+	loading,
+	className,
+	...props
+}: RecordListProps): ReactElement<RecordListProps> {
 	const { records, filter } = useRecords();
 
 	return !loading ? (
@@ -25,9 +29,13 @@ function RecordList({ loading, className, ...props }: RecordListProps): ReactEle
 				))}
 			</ListGroup>
 		) : filter.search ? (
-			<Block className='text-center px-3 py-2'>{gettext('Поиск по записям не дал результатов')}</Block>
+			<Block className='text-center px-3 py-2'>
+				{gettext('Поиск по записям не дал результатов')}
+			</Block>
 		) : (
-			<Block className='text-center px-3 py-2'>{gettext('Вы ещё не добавили записи')}</Block>
+			<Block className='text-center px-3 py-2'>
+				{gettext('Вы ещё не добавили записи')}
+			</Block>
 		)
 	) : (
 		<Block className='d-flex justify-content-center p-3'>

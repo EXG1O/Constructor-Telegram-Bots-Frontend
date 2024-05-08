@@ -12,7 +12,11 @@ export interface LoaderData {
 	telegramBot: APIResponse.TelegramBotAPI.Get;
 }
 
-export async function loader({ params }: { params: Params<'telegramBotID'> }): Promise<Response | LoaderData> {
+export async function loader({
+	params,
+}: {
+	params: Params<'telegramBotID'>;
+}): Promise<Response | LoaderData> {
 	const { telegramBotID } = params;
 
 	if (telegramBotID === undefined) {

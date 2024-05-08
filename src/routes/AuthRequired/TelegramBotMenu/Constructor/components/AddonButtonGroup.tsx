@@ -12,7 +12,8 @@ export interface AddonButtonProps<Name extends string = string>
 	children: string;
 }
 
-export interface AddonButtonGroupProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface AddonButtonGroupProps
+	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
 	addonButtons: AddonButtonProps[];
 	showAddons: Record<string, boolean>;
 }
@@ -43,16 +44,21 @@ function AddonButtonGroup({
 			/>
 			<Collapse in={show} unmountOnExit>
 				<div>
-					<Stack gap={1} className='border border-top-0 rounded-1 rounded-top-0 p-1'>
-						{addonButtons.map(({ name, onShow, onHide, ...props }, index) => (
-							<Button
-								{...props}
-								key={index}
-								size='sm'
-								variant={showAddons[name] ? 'secondary' : 'dark'}
-								onClick={showAddons[name] ? onHide : onShow}
-							/>
-						))}
+					<Stack
+						gap={1}
+						className='border border-top-0 rounded-1 rounded-top-0 p-1'
+					>
+						{addonButtons.map(
+							({ name, onShow, onHide, ...props }, index) => (
+								<Button
+									{...props}
+									key={index}
+									size='sm'
+									variant={showAddons[name] ? 'secondary' : 'dark'}
+									onClick={showAddons[name] ? onHide : onShow}
+								/>
+							),
+						)}
 					</Stack>
 				</div>
 			</Collapse>

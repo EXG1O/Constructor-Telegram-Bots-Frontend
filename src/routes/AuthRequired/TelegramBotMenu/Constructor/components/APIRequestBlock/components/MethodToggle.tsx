@@ -1,12 +1,19 @@
 import React, { ReactElement, memo } from 'react';
 
-import ToggleButtonGroup, { ToggleButtonRadioProps } from 'react-bootstrap/ToggleButtonGroup';
-import ToggleButton, { ToggleButtonProps as _ToggleButtonProps } from 'react-bootstrap/ToggleButton';
+import ToggleButtonGroup, {
+	ToggleButtonRadioProps,
+} from 'react-bootstrap/ToggleButtonGroup';
+import ToggleButton, {
+	ToggleButtonProps as _ToggleButtonProps,
+} from 'react-bootstrap/ToggleButton';
 
 export type Value = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
 interface ToggleButtonProps
-	extends Omit<_ToggleButtonProps, 'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange' | 'children'> {
+	extends Omit<
+		_ToggleButtonProps,
+		'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange' | 'children'
+	> {
 	value: Value;
 }
 
@@ -18,7 +25,10 @@ const toggleButtons: ToggleButtonProps[] = [
 	{ value: 'delete' },
 ];
 
-export type MethodToggleProps = Omit<ToggleButtonRadioProps<Value>, 'type' | 'name' | 'size' | 'vertical' | 'children'>;
+export type MethodToggleProps = Omit<
+	ToggleButtonRadioProps<Value>,
+	'type' | 'name' | 'size' | 'vertical' | 'children'
+>;
 
 function MethodToggle(props: MethodToggleProps): ReactElement<MethodToggleProps> {
 	return (

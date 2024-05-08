@@ -13,7 +13,8 @@ import { Data } from 'services/api/telegram_bots/types';
 
 type Data = Data.TelegramBotsAPI.Create;
 
-export interface TelegramBotAdditionModalProps extends Omit<ModalProps, 'loading' | 'children'> {
+export interface TelegramBotAdditionModalProps
+	extends Omit<ModalProps, 'loading' | 'children'> {
 	show: NonNullable<ModalProps['show']>;
 	onHide: NonNullable<ModalProps['onHide']>;
 }

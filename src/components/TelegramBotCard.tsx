@@ -42,7 +42,9 @@ function TelegramBotCard({
 
 	const [telegramBot, setTelegramBot] = useState<TelegramBot>(initialTelegramBot);
 
-	const [apiTokenInputValue, setAPITokenInputValue] = useState<string>(telegramBot.api_token);
+	const [apiTokenInputValue, setAPITokenInputValue] = useState<string>(
+		telegramBot.api_token,
+	);
 	const [apiTokenIsEditing, setAPITokenIsEditing] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -77,7 +79,9 @@ function TelegramBotCard({
 	}
 
 	async function handleSaveAPIToken(): Promise<void> {
-		const response = await TelegramBotAPI.partialUpdate(telegramBot.id, { api_token: apiTokenInputValue });
+		const response = await TelegramBotAPI.partialUpdate(telegramBot.id, {
+			api_token: apiTokenInputValue,
+		});
 
 		if (response.ok) {
 			setTelegramBot(response.json);
@@ -94,15 +98,23 @@ function TelegramBotCard({
 		}
 	}
 
-	async function handleIsPrivateChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
-		const response = await TelegramBotAPI.partialUpdate(telegramBot.id, { is_private: event.target.checked });
+	async function handleIsPrivateChange(
+		event: ChangeEvent<HTMLInputElement>,
+	): Promise<void> {
+		const response = await TelegramBotAPI.partialUpdate(telegramBot.id, {
+			is_private: event.target.checked,
+		});
 
 		if (response.ok) {
 			setTelegramBot(response.json);
 			createMessageToast({
 				message: interpolate(
 					gettext('Вы успешно сделали Telegram бота %(private)s.'),
-					{ private: response.json.is_private ? gettext('приватным') : gettext('не приватным') },
+					{
+						private: response.json.is_private
+							? gettext('приватным')
+							: gettext('не приватным'),
+					},
 					true,
 				),
 				level: 'success',
@@ -111,7 +123,11 @@ function TelegramBotCard({
 			createMessageToast({
 				message: interpolate(
 					gettext('Не удалось сделать Telegram бота %(private)s!'),
-					{ private: event.target.checked ? gettext('приватным') : gettext('не приватным') },
+					{
+						private: event.target.checked
+							? gettext('приватным')
+							: gettext('не приватным'),
+					},
 					true,
 				),
 				level: 'error',
@@ -125,16 +141,19 @@ function TelegramBotCard({
 				as='h5'
 				{...(telegramBot.is_loading
 					? {
-							className: 'd-flex justify-content-center text-bg-secondary border-secondary',
+							className:
+								'd-flex justify-content-center text-bg-secondary border-secondary',
 							children: <Loading size='xs' />,
 						}
 					: telegramBot.is_enabled
 						? {
-								className: 'text-bg-success border-success fw-semibold text-center',
+								className:
+									'text-bg-success border-success fw-semibold text-center',
 								children: gettext('Telegram бот включен'),
 							}
 						: {
-								className: 'text-bg-danger border-danger fw-semibold text-center',
+								className:
+									'text-bg-danger border-danger fw-semibold text-center',
 								children: gettext('Telegram бот выключен'),
 							})}
 			/>
@@ -163,10 +182,16 @@ function TelegramBotCard({
 											value={apiTokenInputValue}
 											placeholder={gettext('Введите API-токен')}
 											style={{ fontSize: '16px' }}
-											onChange={(event) => setAPITokenInputValue(event.target.value)}
+											onChange={(event) =>
+												setAPITokenInputValue(
+													event.target.value,
+												)
+											}
 										/>
 									) : (
-										<span className='text-break flex-fill'>{telegramBot.api_token}</span>
+										<span className='text-break flex-fill'>
+											{telegramBot.api_token}
+										</span>
 									)}
 									{apiTokenIsEditing ? (
 										<div className='d-flex'>
@@ -210,7 +235,10 @@ function TelegramBotCard({
 						<tr>
 							<th scope='row'>{gettext('Приватный')}:</th>
 							<td>
-								<Form.Switch checked={telegramBot.is_private} onChange={handleIsPrivateChange} />
+								<Form.Switch
+									checked={telegramBot.is_private}
+									onChange={handleIsPrivateChange}
+								/>
 							</td>
 						</tr>
 						<tr>

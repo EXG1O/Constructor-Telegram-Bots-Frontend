@@ -14,11 +14,23 @@ import ModalContext from './contexts/ModalContext';
 export interface ModalProps
 	extends Omit<
 		BaseModalProps,
-		'role' | 'renderBackdrop' | 'renderDialog' | 'transition' | 'backdropTransition' | 'children'
+		| 'role'
+		| 'renderBackdrop'
+		| 'renderDialog'
+		| 'transition'
+		| 'backdropTransition'
+		| 'children'
 	> {
 	loading?: boolean;
 	size?: 'sm' | 'lg' | 'xl';
-	fullscreen?: true | string | 'sm-down' | 'md-down' | 'lg-down' | 'xl-down' | 'xxl-down';
+	fullscreen?:
+		| true
+		| string
+		| 'sm-down'
+		| 'md-down'
+		| 'lg-down'
+		| 'xl-down'
+		| 'xxl-down';
 	bsPrefix?: string;
 	centered?: boolean;
 	backdropClassName?: string;
@@ -31,10 +43,20 @@ export interface ModalProps
 }
 
 /** The wrapper component adds support for the `loading` prop to the Modal component from `react-bootstrap`. */
-function Modal({ loading = false, backdrop, keyboard, children, ...props }: ModalProps): ReactElement<ModalProps> {
+function Modal({
+	loading = false,
+	backdrop,
+	keyboard,
+	children,
+	...props
+}: ModalProps): ReactElement<ModalProps> {
 	return (
 		<ModalContext.Provider value={{ loading }}>
-			<BaseModal {...props} backdrop={loading ? 'static' : backdrop} keyboard={!loading && keyboard}>
+			<BaseModal
+				{...props}
+				backdrop={loading ? 'static' : backdrop}
+				keyboard={!loading && keyboard}
+			>
 				{children}
 				{loading && (
 					<BaseModal.Body className='d-flex justify-content-center'>

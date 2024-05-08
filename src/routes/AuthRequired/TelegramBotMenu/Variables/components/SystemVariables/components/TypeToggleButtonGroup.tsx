@@ -1,14 +1,22 @@
 import React, { ReactElement } from 'react';
 
-import ToggleButtonGroup, { ToggleButtonRadioProps } from 'react-bootstrap/ToggleButtonGroup';
+import ToggleButtonGroup, {
+	ToggleButtonRadioProps,
+} from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton, { ToggleButtonProps } from 'react-bootstrap/ToggleButton';
 
 import { Type } from '..';
 
-export type TypeToggleButtonGroupProps = Omit<ToggleButtonRadioProps<Type>, 'type' | 'name' | 'children'>;
+export type TypeToggleButtonGroupProps = Omit<
+	ToggleButtonRadioProps<Type>,
+	'type' | 'name' | 'children'
+>;
 
 interface TypeToggleButtonProps
-	extends Omit<ToggleButtonProps, 'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange'> {
+	extends Omit<
+		ToggleButtonProps,
+		'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange'
+	> {
 	value: Type;
 }
 
@@ -17,7 +25,9 @@ const typeToggleButtons: TypeToggleButtonProps[] = [
 	{ value: 'global', children: gettext('Глобальные') },
 ];
 
-function TypeToggleButtonGroup(props: TypeToggleButtonGroupProps): ReactElement<TypeToggleButtonGroupProps> {
+function TypeToggleButtonGroup(
+	props: TypeToggleButtonGroupProps,
+): ReactElement<TypeToggleButtonGroupProps> {
 	return (
 		<ToggleButtonGroup {...props} type='radio' name='system-variables-types'>
 			{typeToggleButtons.map((props, index) => (

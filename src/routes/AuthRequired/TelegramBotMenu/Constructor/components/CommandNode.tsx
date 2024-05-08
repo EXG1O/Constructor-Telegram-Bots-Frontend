@@ -27,7 +27,9 @@ interface CommandNodeProps extends Omit<NodeProps, 'data'> {
 }
 
 function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodeProps> {
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
 
@@ -79,9 +81,17 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 					className='bg-light border rounded text-center text-break px-3 py-2'
 					style={{ position: 'relative' }}
 				>
-					<Handle id={`${id}:left:0`} type='target' position={Position.Left} />
+					<Handle
+						id={`${id}:left:0`}
+						type='target'
+						position={Position.Left}
+					/>
 					{data.name}
-					<Handle id={`${id}:right:0`} type='target' position={Position.Right} />
+					<Handle
+						id={`${id}:right:0`}
+						type='target'
+						position={Position.Right}
+					/>
 				</div>
 				<div
 					className='message-text-block bg-light border rounded px-3 py-2'
@@ -95,9 +105,17 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 								className='text-bg-dark rounded text-center text-break px-3 py-2'
 								style={{ position: 'relative' }}
 							>
-								<Handle id={`${id}:left:${button.id}`} type='source' position={Position.Left} />
+								<Handle
+									id={`${id}:left:${button.id}`}
+									type='source'
+									position={Position.Left}
+								/>
 								{button.text}
-								<Handle id={`${id}:right:${button.id}`} type='source' position={Position.Right} />
+								<Handle
+									id={`${id}:right:${button.id}`}
+									type='source'
+									position={Position.Right}
+								/>
 							</div>
 						))}
 					</Stack>

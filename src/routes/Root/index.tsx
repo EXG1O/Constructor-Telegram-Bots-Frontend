@@ -38,7 +38,11 @@ function Root(): ReactElement {
 	return (
 		<ToastProvider>
 			<Header />
-			{navigation.state === 'idle' ? <Outlet /> : <Loading size='lg' className='m-auto' />}
+			{navigation.state === 'idle' ? (
+				<Outlet />
+			) : (
+				<Loading size='lg' className='m-auto' />
+			)}
 			<Footer />
 		</ToastProvider>
 	);

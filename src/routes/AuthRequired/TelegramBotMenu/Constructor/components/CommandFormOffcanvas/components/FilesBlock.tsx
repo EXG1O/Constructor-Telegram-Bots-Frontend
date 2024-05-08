@@ -16,7 +16,8 @@ interface FileData extends Pick<File, 'name' | 'size'> {
 
 export type Data = FileData[];
 
-export interface FilesBlockProps extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
+export interface FilesBlockProps
+	extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
 	data?: Data;
 	remainingStorageSize: number;
 	onChange: (data: Data) => void;
@@ -129,7 +130,9 @@ function FilesBlock({
 													>
 														<small
 															className='text-bg-dark rounded-1 rounded-end-0 px-2 py-1'
-															style={{ cursor: 'pointer' }}
+															style={{
+																cursor: 'pointer',
+															}}
 														>
 															{file.name}
 														</small>
@@ -138,8 +141,15 @@ function FilesBlock({
 															size='sm'
 															variant='danger'
 															className='bi bi-trash d-flex justify-content-center align-items-center p-0'
-															style={{ width: '29px', fontSize: '18px' }}
-															onClick={() => handleDeleteFileButtonClick(index)}
+															style={{
+																width: '29px',
+																fontSize: '18px',
+															}}
+															onClick={() =>
+																handleDeleteFileButtonClick(
+																	index,
+																)
+															}
 														/>
 													</ButtonGroup>
 												)}
@@ -159,7 +169,12 @@ function FilesBlock({
 					hidden
 					onChange={handleFilesChange}
 				/>
-				<Button as='label' htmlFor='command-offcanvas-files-input-file' size='sm' variant='dark'>
+				<Button
+					as='label'
+					htmlFor='command-offcanvas-files-input-file'
+					size='sm'
+					variant='dark'
+				>
 					{gettext('Добавить файл')}
 				</Button>
 			</Block.Body>

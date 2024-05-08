@@ -10,7 +10,10 @@ import useTelegramBots from '../services/hooks/useTelegramBots';
 
 export type TelegramBotListProps = Omit<RowProps, 'children'>;
 
-function TelegramBotList({ className, ...props }: TelegramBotListProps): ReactElement<TelegramBotListProps> {
+function TelegramBotList({
+	className,
+	...props
+}: TelegramBotListProps): ReactElement<TelegramBotListProps> {
 	const [telegramBots] = useTelegramBots();
 
 	return (

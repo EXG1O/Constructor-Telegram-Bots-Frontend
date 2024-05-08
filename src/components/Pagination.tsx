@@ -1,6 +1,8 @@
 import React, { ReactElement, ReactNode, memo, useMemo } from 'react';
 
-import BasePagination, { PaginationProps as BasePaginationProps } from 'react-bootstrap/Pagination';
+import BasePagination, {
+	PaginationProps as BasePaginationProps,
+} from 'react-bootstrap/Pagination';
 
 export interface PaginationProps extends Omit<BasePaginationProps, 'children'> {
 	itemCount: number;
@@ -43,7 +45,8 @@ function Pagination({
 											active: true,
 										}
 									: {
-											onClick: () => onPageChange((pageNum - 1) * itemLimit),
+											onClick: () =>
+												onPageChange((pageNum - 1) * itemLimit),
 										})}
 								style={{ cursor: 'pointer' }}
 							>

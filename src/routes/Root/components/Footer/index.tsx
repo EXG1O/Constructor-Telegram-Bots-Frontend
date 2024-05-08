@@ -10,7 +10,11 @@ const linkGroups: LinkGroupProps[] = [
 	{
 		title: gettext('Проект'),
 		links: [
-			{ type: 'default', href: 'https://github.com/EXG1O/Constructor-Telegram-Bots', children: 'GitHub' },
+			{
+				type: 'default',
+				href: 'https://github.com/EXG1O/Constructor-Telegram-Bots',
+				children: 'GitHub',
+			},
 			{
 				type: 'default',
 				href: 'https://github.com/EXG1O/Constructor-Telegram-Bots/blob/master/LICENSE.md',
@@ -21,10 +25,22 @@ const linkGroups: LinkGroupProps[] = [
 	{
 		title: gettext('Контакты Основателя'),
 		links: [
-			{ type: 'default', href: 'mailto:helper.exg1o@gmail.com', children: 'helper.exg1o@gmail.com' },
+			{
+				type: 'default',
+				href: 'mailto:helper.exg1o@gmail.com',
+				children: 'helper.exg1o@gmail.com',
+			},
 			{ type: 'default', href: 'https://github.com/EXG1O', children: 'GitHub' },
-			{ type: 'default', href: 'tg://resolve?domain=exg1o', children: 'Telegram' },
-			{ type: 'default', href: 'tg://resolve?domain=exg1o_channel', children: 'Telegram Channel' },
+			{
+				type: 'default',
+				href: 'tg://resolve?domain=exg1o',
+				children: 'Telegram',
+			},
+			{
+				type: 'default',
+				href: 'tg://resolve?domain=exg1o_channel',
+				children: 'Telegram Channel',
+			},
 		],
 	},
 	{

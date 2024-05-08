@@ -30,7 +30,11 @@ export interface LoaderData {
 	paginationData: PaginationData;
 }
 
-export async function loader({ params }: { params: Params<'telegramBotID'> }): Promise<LoaderData | Response> {
+export async function loader({
+	params,
+}: {
+	params: Params<'telegramBotID'>;
+}): Promise<LoaderData | Response> {
 	const telegramBotID: number = parseInt(params.telegramBotID!);
 	const [limit, offset] = [20, 0];
 
@@ -40,16 +44,23 @@ export async function loader({ params }: { params: Params<'telegramBotID'> }): P
 		throw Error('Failed to fetch data!');
 	}
 
-	return { paginationData: { ...response.json, limit, offset, search: '', type: 'all' } };
+	return {
+		paginationData: { ...response.json, limit, offset, search: '', type: 'all' },
+	};
 }
 
 function Users(): ReactElement {
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
-	const { paginationData: initialPaginationData } = useRouteLoaderData('telegram-bot-menu-users') as LoaderData;
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
+	const { paginationData: initialPaginationData } = useRouteLoaderData(
+		'telegram-bot-menu-users',
+	) as LoaderData;
 
 	const { createMessageToast } = useToast();
 
-	const [paginationData, setPaginationData] = useState<PaginationData>(initialPaginationData);
+	const [paginationData, setPaginationData] =
+		useState<PaginationData>(initialPaginationData);
 	const [loading, setLoading] = useState<boolean>(false);
 
 	async function updateUsers(
@@ -68,7 +79,13 @@ function Users(): ReactElement {
 			filter = 'is_blocked';
 		}
 
-		const response = await UsersAPI.get(telegramBot.id, limit, offset, search, filter);
+		const response = await UsersAPI.get(
+			telegramBot.id,
+			limit,
+			offset,
+			search,
+			filter,
+		);
 
 		if (response.ok) {
 			setPaginationData({ ...response.json, limit, offset, search, type });

@@ -8,7 +8,11 @@ export type FooterProps = HTMLAttributes<HTMLDivElement>;
 function Footer({ className, ...props }: FooterProps): ReactElement<FooterProps> {
 	const context = useContext(OffcanvasContext);
 
-	return !context?.loading ? <div {...props} className={classNames('offcanvas-footer', className)} /> : <></>;
+	return !context?.loading ? (
+		<div {...props} className={classNames('offcanvas-footer', className)} />
+	) : (
+		<></>
+	);
 }
 
 export default Footer;

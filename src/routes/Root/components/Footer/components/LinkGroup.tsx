@@ -16,12 +16,18 @@ interface ReactLinkProps extends BaseReactLinkProps {
 
 type Link = DefaultLinkProps | ReactLinkProps;
 
-export interface LinkGroupProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title' | 'children'> {
+export interface LinkGroupProps
+	extends Omit<HTMLAttributes<HTMLDivElement>, 'title' | 'children'> {
 	title: ReactNode;
 	links: Link[];
 }
 
-function LinkGroup({ title, links, className, ...props }: LinkGroupProps): ReactElement<LinkGroupProps> {
+function LinkGroup({
+	title,
+	links,
+	className,
+	...props
+}: LinkGroupProps): ReactElement<LinkGroupProps> {
 	return (
 		<Col {...props} className={classNames('vstack', className)}>
 			<h5 className='mb-0'>{title}</h5>

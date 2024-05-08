@@ -27,7 +27,11 @@ export interface LoaderData {
 	paginationData: PaginationData;
 }
 
-export async function loader({ params }: { params: Params<'telegramBotID'> }): Promise<LoaderData> {
+export async function loader({
+	params,
+}: {
+	params: Params<'telegramBotID'>;
+}): Promise<LoaderData> {
 	const telegramBotID: number = parseInt(params.telegramBotID!);
 	const [limit, offset] = [10, 0];
 
@@ -41,12 +45,17 @@ export async function loader({ params }: { params: Params<'telegramBotID'> }): P
 }
 
 function Database(): ReactElement {
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
-	const { paginationData: initialPaginationData } = useRouteLoaderData('telegram-bot-menu-database') as LoaderData;
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
+	const { paginationData: initialPaginationData } = useRouteLoaderData(
+		'telegram-bot-menu-database',
+	) as LoaderData;
 
 	const { createMessageToast } = useToast();
 
-	const [paginationData, setPaginationData] = useState<PaginationData>(initialPaginationData);
+	const [paginationData, setPaginationData] =
+		useState<PaginationData>(initialPaginationData);
 	const [loading, setLoading] = useState<boolean>(false);
 
 	async function updateRecords(
@@ -56,7 +65,12 @@ function Database(): ReactElement {
 	): Promise<void> {
 		setLoading(true);
 
-		const response = await DatabaseRecordsAPI.get(telegramBot.id, limit, offset, search);
+		const response = await DatabaseRecordsAPI.get(
+			telegramBot.id,
+			limit,
+			offset,
+			search,
+		);
 
 		if (response.ok) {
 			setPaginationData({ ...response.json, limit, offset, search });

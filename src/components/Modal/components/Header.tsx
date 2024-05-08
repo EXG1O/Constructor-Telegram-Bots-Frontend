@@ -1,6 +1,8 @@
 import React, { ReactElement, useContext } from 'react';
 
-import BaseHeader, { ModalHeaderProps as BaseHeaderProps } from 'react-bootstrap/ModalHeader';
+import BaseHeader, {
+	ModalHeaderProps as BaseHeaderProps,
+} from 'react-bootstrap/ModalHeader';
 
 import ModalContext from '../contexts/ModalContext';
 

@@ -22,7 +22,11 @@ export interface LoaderData {
 	paginationData: PaginationData;
 }
 
-export async function loader({ params }: { params: Params<'telegramBotID'> }): Promise<LoaderData | Response> {
+export async function loader({
+	params,
+}: {
+	params: Params<'telegramBotID'>;
+}): Promise<LoaderData | Response> {
 	const telegramBotID: number = parseInt(params.telegramBotID!);
 	const [limit, offset] = [10, 0];
 
@@ -49,7 +53,9 @@ function Variables(): ReactElement {
 		);
 		clipboard.on('error', () =>
 			createMessageToast({
-				message: gettext('При попытки скопировать переменную в буфер обмена, непредвиденная ошибка!'),
+				message: gettext(
+					'При попытки скопировать переменную в буфер обмена, непредвиденная ошибка!',
+				),
 				level: 'error',
 			}),
 		);

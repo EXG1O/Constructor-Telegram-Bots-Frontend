@@ -17,7 +17,10 @@ export interface LoaderData {
 }
 
 export async function loader(): Promise<LoaderData> {
-	const [sectionsResponse, buttonsResponse] = await Promise.all([SectionsAPI.get(), ButtonsAPI.get()]);
+	const [sectionsResponse, buttonsResponse] = await Promise.all([
+		SectionsAPI.get(),
+		ButtonsAPI.get(),
+	]);
 
 	if (!sectionsResponse.ok || !buttonsResponse.ok) {
 		throw Error('Failed to fetch data!');

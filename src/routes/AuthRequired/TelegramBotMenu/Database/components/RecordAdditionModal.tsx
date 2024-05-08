@@ -3,7 +3,11 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
 
-import RecordFormModal, { RecordFormModalProps, Value, defaultValue } from './RecordFormModal';
+import RecordFormModal, {
+	RecordFormModalProps,
+	Value,
+	defaultValue,
+} from './RecordFormModal';
 
 import useToast from 'services/hooks/useToast';
 import useRecords from '../hooks/useRecords';
@@ -22,7 +26,9 @@ function RecordAdditionModal({
 	onExited,
 	...props
 }: RecordAdditionModalProps): ReactElement<RecordAdditionModalProps> {
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
 	const { updateRecords } = useRecords();

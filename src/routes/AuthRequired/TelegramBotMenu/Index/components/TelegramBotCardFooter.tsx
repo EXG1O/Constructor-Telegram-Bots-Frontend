@@ -1,4 +1,11 @@
-import React, { ReactElement, Dispatch, SetStateAction, memo, useState, useCallback } from 'react';
+import React, {
+	ReactElement,
+	Dispatch,
+	SetStateAction,
+	memo,
+	useState,
+	useCallback,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Card from 'react-bootstrap/Card';
@@ -50,7 +57,9 @@ function TelegramBotCardFooter({
 		setLoadingDeletingModal(false);
 	}
 
-	async function handleButtonClick(action: 'start' | 'restart' | 'stop'): Promise<void> {
+	async function handleButtonClick(
+		action: 'start' | 'restart' | 'stop',
+	): Promise<void> {
 		const response = await TelegramBotAPI[action](telegramBot.id);
 
 		if (response.ok) {
@@ -105,24 +114,44 @@ function TelegramBotCardFooter({
 			</AskConfirmModal>
 			<Card.Footer className='d-flex flex-wrap border border-top-0 p-3 gap-3'>
 				{telegramBot.is_loading ? (
-					<Button disabled variant='secondary' className='flex-fill d-flex justify-content-center'>
+					<Button
+						disabled
+						variant='secondary'
+						className='flex-fill d-flex justify-content-center'
+					>
 						<Loading size='xs' />
 					</Button>
 				) : telegramBot.is_enabled ? (
 					<>
-						<Button variant='danger' className='flex-fill' onClick={() => handleButtonClick('stop')}>
+						<Button
+							variant='danger'
+							className='flex-fill'
+							onClick={() => handleButtonClick('stop')}
+						>
 							{gettext('Выключить')}
 						</Button>
-						<Button variant='success' className='flex-fill' onClick={() => handleButtonClick('restart')}>
+						<Button
+							variant='success'
+							className='flex-fill'
+							onClick={() => handleButtonClick('restart')}
+						>
 							{gettext('Перезагрузить')}
 						</Button>
 					</>
 				) : (
-					<Button variant='success' className='flex-fill' onClick={() => handleButtonClick('start')}>
+					<Button
+						variant='success'
+						className='flex-fill'
+						onClick={() => handleButtonClick('start')}
+					>
 						{gettext('Включить')}
 					</Button>
 				)}
-				<Button variant='danger' className='flex-fill' onClick={() => setShowDeletingModal(true)}>
+				<Button
+					variant='danger'
+					className='flex-fill'
+					onClick={() => setShowDeletingModal(true)}
+				>
 					{gettext('Удалить')}
 				</Button>
 			</Card.Footer>

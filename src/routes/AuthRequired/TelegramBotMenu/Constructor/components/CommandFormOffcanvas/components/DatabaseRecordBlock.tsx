@@ -6,7 +6,8 @@ import Block, { BlockProps } from '../../Block';
 
 export type Value = string;
 
-export interface DatabaseRecordBlockProps extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
+export interface DatabaseRecordBlockProps
+	extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
 	value?: Value;
 	onChange: (value: Value) => void;
 }

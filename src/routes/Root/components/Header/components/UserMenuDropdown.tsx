@@ -14,7 +14,10 @@ export interface UserMenuDropdownProps extends Omit<DropdownProps, 'children'> {
 	user: User;
 }
 
-function UserMenuDropdown({ user, ...props }: UserMenuDropdownProps): ReactElement<UserMenuDropdownProps> {
+function UserMenuDropdown({
+	user,
+	...props
+}: UserMenuDropdownProps): ReactElement<UserMenuDropdownProps> {
 	const navigate = useNavigate();
 
 	const { createMessageToast } = useToast();
@@ -56,11 +59,19 @@ function UserMenuDropdown({ user, ...props }: UserMenuDropdownProps): ReactEleme
 				{gettext('Вы точно хотите выйти из аккаунта?')}
 			</AskConfirmModal>
 			<Dropdown {...props}>
-				<Dropdown.Toggle bsPrefix=' ' variant='light' style={{ minWidth: '125px' }}>
+				<Dropdown.Toggle
+					bsPrefix=' '
+					variant='light'
+					style={{ minWidth: '125px' }}
+				>
 					{user.first_name}
 				</Dropdown.Toggle>
 				<Dropdown.Menu>
-					{user.is_staff && <Dropdown.Item href='/admin/'>{gettext('Админ панель')}</Dropdown.Item>}
+					{user.is_staff && (
+						<Dropdown.Item href='/admin/'>
+							{gettext('Админ панель')}
+						</Dropdown.Item>
+					)}
 					<Dropdown.Item onClick={() => navigate('/personal-cabinet/')}>
 						{gettext('Личный кабинет')}
 					</Dropdown.Item>

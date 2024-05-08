@@ -8,7 +8,9 @@ import Loading from 'components/Loading';
 import MonacoEditor, { MonacoEditorProps } from 'components/MonacoEditor';
 
 import Block from '../Block';
-import ConfirmButtonGroup, { ConfirmButtonGroupProps } from './components/ConfirmButtonGroup';
+import ConfirmButtonGroup, {
+	ConfirmButtonGroupProps,
+} from './components/ConfirmButtonGroup';
 import DeleteButton from './components/DeleteButton';
 
 import useToast from 'services/hooks/useToast';
@@ -23,13 +25,22 @@ export interface RecordDisplayProps extends Omit<ListGroupItemProps, 'children'>
 	record: DatabaseRecord;
 }
 
-function RecordDisplay({ record, className, ...props }: RecordDisplayProps): ReactElement<RecordDisplayProps> {
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
+function RecordDisplay({
+	record,
+	className,
+	...props
+}: RecordDisplayProps): ReactElement<RecordDisplayProps> {
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
 	const { updateRecords } = useRecords();
 
-	const initialValue = useMemo<string>(() => JSON.stringify(record.data, undefined, 4), []);
+	const initialValue = useMemo<string>(
+		() => JSON.stringify(record.data, undefined, 4),
+		[],
+	);
 	const options = useMemo<NonNullable<MonacoEditorProps['options']>>(
 		() => ({
 			glyphMargin: false,
@@ -44,21 +55,30 @@ function RecordDisplay({ record, className, ...props }: RecordDisplayProps): Rea
 	const [value, setValue] = useState<string>(initialValue);
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const handleChange = useCallback<NonNullable<MonacoEditorProps['onChange']>>((editor, newValue) => {
-		if (initialValue === value && value !== newValue) {
-			editor.updateLayout(true);
-		}
+	const handleChange = useCallback<NonNullable<MonacoEditorProps['onChange']>>(
+		(editor, newValue) => {
+			if (initialValue === value && value !== newValue) {
+				editor.updateLayout(true);
+			}
 
-		setValue(newValue);
-	}, []);
+			setValue(newValue);
+		},
+		[],
+	);
 
-	const handleConfirm = useCallback<NonNullable<ConfirmButtonGroupProps['onConfirm']>>(async () => {
+	const handleConfirm = useCallback<
+		NonNullable<ConfirmButtonGroupProps['onConfirm']>
+	>(async () => {
 		setLoading(true);
 
 		try {
 			const data: Record<string, any> = JSON.parse(value);
 
-			const response = await DatabaseRecordAPI.partialUpdate(telegramBot.id, record.id, { data });
+			const response = await DatabaseRecordAPI.partialUpdate(
+				telegramBot.id,
+				record.id,
+				{ data },
+			);
 
 			if (response.ok) {
 				updateRecords();
@@ -96,9 +116,20 @@ function RecordDisplay({ record, className, ...props }: RecordDisplayProps): Rea
 
 	return !loading ? (
 		<ListGroupItem {...props} className={classNames(className, 'd-flex gap-3')}>
-			<MonacoEditor size='sm' value={value} language='json' options={options} onChange={handleChange} />
+			<MonacoEditor
+				size='sm'
+				value={value}
+				language='json'
+				options={options}
+				onChange={handleChange}
+			/>
 			<div className='d-flex align-items-center gap-2'>
-				{value !== initialValue && <ConfirmButtonGroup onConfirm={handleConfirm} onCancel={handleCancel} />}
+				{value !== initialValue && (
+					<ConfirmButtonGroup
+						onConfirm={handleConfirm}
+						onCancel={handleCancel}
+					/>
+				)}
 				<DeleteButton record={record} />
 			</div>
 		</ListGroupItem>

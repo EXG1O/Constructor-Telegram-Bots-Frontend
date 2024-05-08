@@ -26,7 +26,11 @@ function Links({ className, ...props }: LinksProps): ReactElement<LinksProps> {
 				<Link
 					key={index}
 					{...props}
-					className={classNames('nav-link pb-1', { active: location.pathname === props.to }, className)}
+					className={classNames(
+						'nav-link pb-1',
+						{ active: location.pathname === props.to },
+						className,
+					)}
 				/>
 			))}
 		</Nav>

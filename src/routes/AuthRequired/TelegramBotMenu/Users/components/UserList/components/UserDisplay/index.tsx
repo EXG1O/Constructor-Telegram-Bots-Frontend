@@ -14,7 +14,9 @@ import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired
 export type UserDisplayProps = Omit<HTMLAttributes<HTMLTableRowElement>, 'children'>;
 
 function UserDisplay(props: UserDisplayProps): ReactElement<UserDisplayProps> {
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
 
 	const { user } = useUser();
 
@@ -26,7 +28,8 @@ function UserDisplay(props: UserDisplayProps): ReactElement<UserDisplayProps> {
 			<td>
 				<div className='d-flex'>
 					<div className='d-flex gap-2'>
-						{telegramBot.is_private && (user.is_allowed ? <DisallowButton /> : <AllowButton />)}
+						{telegramBot.is_private &&
+							(user.is_allowed ? <DisallowButton /> : <AllowButton />)}
 						{user.is_blocked ? <UnblockButton /> : <BlockButton />}
 					</div>
 					<DeleteButton style={{ marginLeft: '5.5px' }} />

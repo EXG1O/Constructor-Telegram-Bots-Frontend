@@ -1,6 +1,8 @@
 import React, { ReactElement, useContext } from 'react';
 
-import BaseFooter, { ModalFooterProps as BaseFooterProps } from 'react-bootstrap/ModalFooter';
+import BaseFooter, {
+	ModalFooterProps as BaseFooterProps,
+} from 'react-bootstrap/ModalFooter';
 
 import ModalContext from '../contexts/ModalContext';
 

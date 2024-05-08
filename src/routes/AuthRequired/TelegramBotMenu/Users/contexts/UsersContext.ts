@@ -12,7 +12,12 @@ interface Filter {
 export interface UsersContextProps {
 	users: User[];
 	filter: Filter;
-	updateUsers: (limit?: number, offset?: number, search?: string, type?: Type) => Promise<void>;
+	updateUsers: (
+		limit?: number,
+		offset?: number,
+		search?: string,
+		type?: Type,
+	) => Promise<void>;
 }
 
 const UsersContext = createContext<UsersContextProps | undefined>(undefined);

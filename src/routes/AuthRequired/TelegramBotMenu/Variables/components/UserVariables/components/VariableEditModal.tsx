@@ -14,7 +14,10 @@ import { VariableAPI } from 'services/api/telegram_bots/main';
 import { Variable } from 'services/api/telegram_bots/types';
 
 export interface VariableEditModalProps
-	extends Omit<VariableFormModalProps, 'loading' | 'data' | 'title' | 'onChange' | 'children'> {
+	extends Omit<
+		VariableFormModalProps,
+		'loading' | 'data' | 'title' | 'onChange' | 'children'
+	> {
 	variable: Variable;
 }
 
@@ -23,7 +26,9 @@ function VariableEditModal({
 	onHide,
 	...props
 }: VariableEditModalProps): ReactElement<VariableEditModalProps> {
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
 	const { updateVariables } = useVariables();

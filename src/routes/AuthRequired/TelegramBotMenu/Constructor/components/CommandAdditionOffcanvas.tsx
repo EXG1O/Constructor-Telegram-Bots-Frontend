@@ -4,7 +4,9 @@ import { useRouteLoaderData } from 'react-router-dom';
 import { useReactFlow } from 'reactflow';
 import Button from 'react-bootstrap/Button';
 
-import CommandFormOffcanvas, { CommandFormOffcanvasProps } from './CommandFormOffcanvas';
+import CommandFormOffcanvas, {
+	CommandFormOffcanvasProps,
+} from './CommandFormOffcanvas';
 import { defaultValue as nameDefaultValue } from './NameBlock';
 import { defaultSettings } from './CommandFormOffcanvas/components/SettingsBlock';
 import { defaultMessage } from './CommandFormOffcanvas/components/MessageBlock';
@@ -36,7 +38,9 @@ function CommandAdditionOffcanvas({
 	onHide,
 	...props
 }: CommandAdditionOffcanvasProps): ReactElement<CommandAdditionOffcanvasProps> {
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
 
@@ -54,7 +58,9 @@ function CommandAdditionOffcanvas({
 
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const handleExited = useCallback<NonNullable<CommandFormOffcanvasProps['onExited']>>(() => {
+	const handleExited = useCallback<
+		NonNullable<CommandFormOffcanvasProps['onExited']>
+	>(() => {
 		setName(nameDefaultValue);
 		setSettings(defaultSettings);
 		setTrigger(undefined);
@@ -99,16 +105,23 @@ function CommandAdditionOffcanvas({
 				? {
 						...apiRequest,
 						headers: apiRequest.headers
-							? apiRequest.headers.map((header) => ({ [header.key]: header.value }))
+							? apiRequest.headers.map((header) => ({
+									[header.key]: header.value,
+								}))
 							: null,
 						body: apiRequest.body ? JSON.parse(apiRequest.body) : null,
 					}
 				: null,
-			database_record: databaseRecord ? { data: JSON.parse(databaseRecord) } : null,
+			database_record: databaseRecord
+				? { data: JSON.parse(databaseRecord) }
+				: null,
 		});
 
 		if (commandResponse.ok) {
-			const diagramCommandResponse = await DiagramCommandAPI.get(telegramBot.id, commandResponse.json.id);
+			const diagramCommandResponse = await DiagramCommandAPI.get(
+				telegramBot.id,
+				commandResponse.json.id,
+			);
 
 			if (diagramCommandResponse.ok) {
 				addNodes(parseNodes([diagramCommandResponse.json]));

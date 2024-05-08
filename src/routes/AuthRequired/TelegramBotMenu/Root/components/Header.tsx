@@ -7,7 +7,9 @@ import { NavLinkProps } from 'react-bootstrap/NavLink';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from '..';
 
-export interface HeaderLinkProps extends NavLinkProps, Omit<LinkProps, keyof AnchorHTMLAttributes<HTMLAnchorElement>> {
+export interface HeaderLinkProps
+	extends NavLinkProps,
+		Omit<LinkProps, keyof AnchorHTMLAttributes<HTMLAnchorElement>> {
 	children: ReactNode;
 }
 
@@ -21,7 +23,9 @@ const headerLinks: HeaderLinkProps[] = [
 
 function Header(): ReactElement {
 	const location = useLocation();
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
 
 	return (
 		<Nav variant='pills' className='nav-fill bg-light border rounded gap-2 p-2'>
@@ -33,7 +37,11 @@ function Header(): ReactElement {
 						key={index}
 						{...props}
 						to={to}
-						className={classNames('nav-link', { active: location.pathname === to }, className)}
+						className={classNames(
+							'nav-link',
+							{ active: location.pathname === to },
+							className,
+						)}
 					/>
 				);
 			})}

@@ -16,7 +16,11 @@ function SystemVariables(): ReactElement {
 				{gettext('Системные переменные')}
 			</Card.Header>
 			<Card.Body className='vstack gap-2'>
-				<TypeToggleButtonGroup value={type} className='col-lg-3' onChange={setType} />
+				<TypeToggleButtonGroup
+					value={type}
+					className='col-lg-3'
+					onChange={setType}
+				/>
 				<VariableList type={type} />
 			</Card.Body>
 		</Card>

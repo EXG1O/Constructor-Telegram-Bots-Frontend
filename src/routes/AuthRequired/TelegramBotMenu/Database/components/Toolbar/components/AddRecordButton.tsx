@@ -6,7 +6,10 @@ import RecordAdditionModal from '../../RecordAdditionModal';
 
 export type AddVariableButtonProps = Omit<AddButtonProps, 'variant' | 'children'>;
 
-function AddVariableButton({ onClick, ...props }: AddVariableButtonProps): ReactElement<AddVariableButtonProps> {
+function AddVariableButton({
+	onClick,
+	...props
+}: AddVariableButtonProps): ReactElement<AddVariableButtonProps> {
 	const [showModal, setShowModal] = useState<boolean>(false);
 
 	const handleClick = useCallback<NonNullable<AddVariableButtonProps['onClick']>>(
@@ -19,7 +22,10 @@ function AddVariableButton({ onClick, ...props }: AddVariableButtonProps): React
 
 	return (
 		<>
-			<RecordAdditionModal show={showModal} onHide={useCallback(() => setShowModal(false), [])} />
+			<RecordAdditionModal
+				show={showModal}
+				onHide={useCallback(() => setShowModal(false), [])}
+			/>
 			<AddButton {...props} variant='dark' onClick={handleClick}>
 				{gettext('Добавить запись')}
 			</AddButton>

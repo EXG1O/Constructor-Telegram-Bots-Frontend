@@ -16,7 +16,8 @@ export interface Data {
 	body?: BodyData;
 }
 
-export interface APIRequestBlockProps extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
+export interface APIRequestBlockProps
+	extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
 	data?: Data;
 	onChange: (data: Data) => void;
 }
@@ -41,14 +42,20 @@ function APIRequestBlock({
 				/>
 				<MethodToggle
 					value={data.method}
-					onChange={useCallback((method: MethodValue) => onChange({ ...data, method }), [])}
+					onChange={useCallback(
+						(method: MethodValue) => onChange({ ...data, method }),
+						[],
+					)}
 				/>
 				<Headers
 					show={showHeaders}
 					data={data.headers}
 					onShow={useCallback(() => setShowHeaders(true), [])}
 					onHide={useCallback(() => setShowHeaders(false), [])}
-					onChange={useCallback((headers) => onChange({ ...data, headers }), [])}
+					onChange={useCallback(
+						(headers) => onChange({ ...data, headers }),
+						[],
+					)}
 				/>
 				<Body
 					show={showBody}
@@ -62,7 +69,10 @@ function APIRequestBlock({
 					data={useMemo(
 						() => ({
 							method: data.method,
-							headers: data.headers?.map((header) => [header.key, header.value]),
+							headers: data.headers?.map((header) => [
+								header.key,
+								header.value,
+							]),
 							body: data.body,
 						}),
 						[data],

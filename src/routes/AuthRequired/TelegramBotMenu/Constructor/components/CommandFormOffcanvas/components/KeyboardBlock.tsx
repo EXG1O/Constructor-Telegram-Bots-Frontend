@@ -21,7 +21,8 @@ export interface Data {
 	buttons: ButtonData[];
 }
 
-export interface KeyboardBlockProps extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
+export interface KeyboardBlockProps
+	extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
 	data?: Data;
 	onChange: (data: Data) => void;
 }
@@ -29,7 +30,10 @@ export interface KeyboardBlockProps extends Omit<BlockProps, 'title' | 'onChange
 export const defaultData: Data = { type: 'default', buttons: [] };
 
 interface KeyboardToggleButtonProps
-	extends Omit<ToggleButtonProps, 'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange'> {
+	extends Omit<
+		ToggleButtonProps,
+		'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange'
+	> {
 	value: Data['type'];
 }
 
@@ -77,7 +81,11 @@ function KeyboardBlock({
 	return (
 		<Block {...props} title={gettext('Клавиатура')}>
 			<Block.Body className='vstack gap-2'>
-				<ToggleButtonGroup type='radio' name='keyboard-types' defaultValue='default'>
+				<ToggleButtonGroup
+					type='radio'
+					name='keyboard-types'
+					defaultValue='default'
+				>
 					{keyboardToggleButtons.map((props, index) => (
 						<ToggleButton
 							{...props}
@@ -94,7 +102,10 @@ function KeyboardBlock({
 						<Droppable droppableId='keyboard-buttons'>
 							{(provided) => (
 								<>
-									<div ref={provided.innerRef} {...provided.droppableProps}>
+									<div
+										ref={provided.innerRef}
+										{...provided.droppableProps}
+									>
 										{data.buttons.map((button, index) => (
 											<Draggable
 												key={index}
@@ -124,22 +135,40 @@ function KeyboardBlock({
 															value={button.text}
 															size='sm'
 															className='text-center'
-															placeholder={gettext('Название кнопки')}
+															placeholder={gettext(
+																'Название кнопки',
+															)}
 															onChange={(e) =>
-																handleButtonChange(index, { text: e.target.value })
+																handleButtonChange(
+																	index,
+																	{
+																		text: e.target
+																			.value,
+																	},
+																)
 															}
 														/>
-														{(data.type === 'inline' || data.type === 'payment') &&
-															(button.url !== undefined ? (
+														{(data.type === 'inline' ||
+															data.type === 'payment') &&
+															(button.url !==
+															undefined ? (
 																<Form.Control
-																	value={button.url ?? undefined}
+																	value={
+																		button.url ??
+																		undefined
+																	}
 																	size='sm'
 																	className='text-center'
 																	placeholder='URL-адрес'
 																	onChange={(e) =>
-																		handleButtonChange(index, {
-																			url: e.target.value,
-																		})
+																		handleButtonChange(
+																			index,
+																			{
+																				url: e
+																					.target
+																					.value,
+																			},
+																		)
 																	}
 																/>
 															) : (
@@ -151,10 +180,14 @@ function KeyboardBlock({
 																	style={{
 																		width: '31px',
 																		height: '31px',
-																		fontSize: '18px',
+																		fontSize:
+																			'18px',
 																	}}
 																	onClick={() =>
-																		handleButtonChange(index, { url: '' })
+																		handleButtonChange(
+																			index,
+																			{ url: '' },
+																		)
 																	}
 																/>
 															))}
@@ -163,8 +196,16 @@ function KeyboardBlock({
 															size='sm'
 															variant='danger'
 															className='bi bi-trash d-flex justify-content-center align-items-center p-0'
-															style={{ width: '31px', height: '31px', fontSize: '18px' }}
-															onClick={() => handleButtonDelete(index)}
+															style={{
+																width: '31px',
+																height: '31px',
+																fontSize: '18px',
+															}}
+															onClick={() =>
+																handleButtonDelete(
+																	index,
+																)
+															}
 														/>
 													</InputGroup>
 												)}
@@ -180,7 +221,12 @@ function KeyboardBlock({
 						size='sm'
 						variant='dark'
 						className='w-100'
-						onClick={() => onChange({ ...data, buttons: [...data.buttons, { text: '' }] })}
+						onClick={() =>
+							onChange({
+								...data,
+								buttons: [...data.buttons, { text: '' }],
+							})
+						}
 					>
 						{gettext('Добавить кнопку')}
 					</Button>

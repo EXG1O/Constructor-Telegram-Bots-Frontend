@@ -35,7 +35,9 @@ function CommandEditOffcanvas({
 	commandID,
 	onHide,
 }: CommandEditOffcanvasProps): ReactElement<CommandEditOffcanvasProps> {
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
 
@@ -63,8 +65,18 @@ function CommandEditOffcanvas({
 		const response = await CommandAPI.get(telegramBot.id, commandID);
 
 		if (response.ok) {
-			const { id, name, settings, images, files, trigger, message, keyboard, api_request, database_record } =
-				response.json;
+			const {
+				id,
+				name,
+				settings,
+				images,
+				files,
+				trigger,
+				message,
+				keyboard,
+				api_request,
+				database_record,
+			} = response.json;
 
 			setName(name);
 			setSettings({
@@ -80,8 +92,16 @@ function CommandEditOffcanvas({
 						}
 					: undefined,
 			);
-			setImages(images.length ? images.map((image) => ({ ...image, key: crypto.randomUUID() })) : undefined);
-			setFiles(files.length ? files.map((file) => ({ ...file, key: crypto.randomUUID() })) : undefined);
+			setImages(
+				images.length
+					? images.map((image) => ({ ...image, key: crypto.randomUUID() }))
+					: undefined,
+			);
+			setFiles(
+				files.length
+					? files.map((file) => ({ ...file, key: crypto.randomUUID() }))
+					: undefined,
+			);
 			setMessage(message.text);
 			setKeyboard(
 				keyboard
@@ -102,13 +122,21 @@ function CommandEditOffcanvas({
 							url: api_request.url,
 							method: api_request.method,
 							headers: api_request.headers
-								? Object.entries(api_request.headers).map(([key, value]) => ({ key, value }))
+								? Object.entries(api_request.headers).map(
+										([key, value]) => ({ key, value }),
+									)
 								: undefined,
-							body: api_request.body ? JSON.stringify(api_request.body, undefined, 4) : undefined,
+							body: api_request.body
+								? JSON.stringify(api_request.body, undefined, 4)
+								: undefined,
 						}
 					: undefined,
 			);
-			setDatabaseRecord(database_record ? JSON.stringify(database_record.data, undefined, 4) : undefined);
+			setDatabaseRecord(
+				database_record
+					? JSON.stringify(database_record.data, undefined, 4)
+					: undefined,
+			);
 
 			setLoading(false);
 		} else {
@@ -152,21 +180,30 @@ function CommandEditOffcanvas({
 				? {
 						...apiRequest,
 						headers: apiRequest.headers
-							? apiRequest.headers.map((header) => ({ [header.key]: header.value }))
+							? apiRequest.headers.map((header) => ({
+									[header.key]: header.value,
+								}))
 							: null,
 						body: apiRequest.body ? JSON.parse(apiRequest.body) : null,
 					}
 				: null,
-			database_record: databaseRecord ? { data: JSON.parse(databaseRecord) } : null,
+			database_record: databaseRecord
+				? { data: JSON.parse(databaseRecord) }
+				: null,
 		});
 
 		if (commandResponse.ok) {
-			const diagramCommandResponse = await DiagramCommandAPI.get(telegramBot.id, commandID);
+			const diagramCommandResponse = await DiagramCommandAPI.get(
+				telegramBot.id,
+				commandID,
+			);
 
 			if (diagramCommandResponse.ok) {
 				setNodes((prevNodes) =>
 					prevNodes.map((node) =>
-						node.id === `command:${commandID}` ? parseNodes([diagramCommandResponse.json])[0] : node,
+						node.id === `command:${commandID}`
+							? parseNodes([diagramCommandResponse.json])[0]
+							: node,
 					),
 				);
 				onHide();

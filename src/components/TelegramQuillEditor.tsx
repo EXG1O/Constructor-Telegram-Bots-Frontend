@@ -33,7 +33,10 @@ const baseToolbar: Toolbar = {
 	],
 };
 
-function TelegramQuillEditor({ toolbar, ...props }: TelegramQuillEditorProps): ReactElement<TelegramQuillEditorProps> {
+function TelegramQuillEditor({
+	toolbar,
+	...props
+}: TelegramQuillEditorProps): ReactElement<TelegramQuillEditorProps> {
 	return (
 		<QuillEditor
 			{...props}

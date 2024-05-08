@@ -15,7 +15,12 @@ function Donations(): ReactElement {
 		<Stack gap={2} className='donations align-self-center'>
 			<h3 className='mb-0'>{gettext('Список пожертвований')}</h3>
 			<div className='border rounded'>
-				<Table responsive striped borderless className='overflow-hidden align-middle rounded mb-0'>
+				<Table
+					responsive
+					striped
+					borderless
+					className='overflow-hidden align-middle rounded mb-0'
+				>
 					<thead className='border-bottom'>
 						<tr>
 							<th scope='col' style={{ width: '30%' }}>
@@ -48,7 +53,9 @@ function Donations(): ReactElement {
 							))
 						) : (
 							<tr>
-								<td colSpan={3}>{gettext('Ещё не было сделано пожертвований')}</td>
+								<td colSpan={3}>
+									{gettext('Ещё не было сделано пожертвований')}
+								</td>
 							</tr>
 						)}
 					</tbody>

@@ -5,11 +5,16 @@ import './UpdateDisplay.scss';
 
 import { Update } from 'services/api/updates/types';
 
-export interface UpdateDisplayProps extends Omit<HTMLAttributes<HTMLDivElement>, 'dangerouslySetInnerHTML'> {
+export interface UpdateDisplayProps
+	extends Omit<HTMLAttributes<HTMLDivElement>, 'dangerouslySetInnerHTML'> {
 	update: Update;
 }
 
-function UpdateDisplay({ update, className, ...props }: UpdateDisplayProps): ReactElement<UpdateDisplayProps> {
+function UpdateDisplay({
+	update,
+	className,
+	...props
+}: UpdateDisplayProps): ReactElement<UpdateDisplayProps> {
 	return (
 		<div
 			{...props}

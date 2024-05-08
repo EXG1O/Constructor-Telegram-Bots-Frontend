@@ -11,7 +11,9 @@ import { LanguagesAPI } from 'services/api/languages/main';
 
 export type LanguagesDropdownProps = Omit<DropdownProps, 'children'>;
 
-function LanguagesDropdown(props: LanguagesDropdownProps): ReactElement<LanguagesDropdownProps> {
+function LanguagesDropdown(
+	props: LanguagesDropdownProps,
+): ReactElement<LanguagesDropdownProps> {
 	const { languages } = useRouteLoaderData('languages') as LanguagesLoaderData;
 
 	const { createMessageToast } = useToast();

@@ -9,7 +9,11 @@ export interface NodeToolbarProps {
 	onDelete: () => void;
 }
 
-function NodeToolbar({ title, onEdit, onDelete }: NodeToolbarProps): ReactElement<NodeToolbarProps> {
+function NodeToolbar({
+	title,
+	onEdit,
+	onDelete,
+}: NodeToolbarProps): ReactElement<NodeToolbarProps> {
 	return (
 		<BaseNodeToolbar isVisible>
 			<div className='d-flex gap-2'>
@@ -21,7 +25,10 @@ function NodeToolbar({ title, onEdit, onDelete }: NodeToolbarProps): ReactElemen
 					style={{ fontSize: '16px' }}
 					onClick={onDelete}
 				/>
-				<span className='text-bg-dark rounded-1 px-2' style={{ cursor: 'default' }}>
+				<span
+					className='text-bg-dark rounded-1 px-2'
+					style={{ cursor: 'default' }}
+				>
 					{title}
 				</span>
 				<Button

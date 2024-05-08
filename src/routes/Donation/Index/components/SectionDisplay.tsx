@@ -9,7 +9,11 @@ export interface SectionDisplayProps extends HTMLAttributes<HTMLDivElement> {
 	section: Section;
 }
 
-function SectionDisplay({ section, className, ...props }: SectionDisplayProps): ReactElement<SectionDisplayProps> {
+function SectionDisplay({
+	section,
+	className,
+	...props
+}: SectionDisplayProps): ReactElement<SectionDisplayProps> {
 	return (
 		<div {...props} className={classNames('donation-section', className)}>
 			<h3 className='mb-1'>{section.title}</h3>

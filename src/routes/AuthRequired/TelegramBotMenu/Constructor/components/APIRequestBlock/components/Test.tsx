@@ -68,20 +68,30 @@ function Test({ url, data }: TestProps): ReactElement<TestProps> {
 			<Button
 				size='sm'
 				variant='dark'
-				className={classNames('w-100', result && 'border-bottom-0 rounded-bottom-0')}
+				className={classNames(
+					'w-100',
+					result && 'border-bottom-0 rounded-bottom-0',
+				)}
 				onClick={handleMakeTestAPIRequestButtonClick}
 			>
 				{gettext('Протестировать')}
 			</Button>
 			<Collapse in={Boolean(result)} unmountOnExit>
 				<div className='command-offcanvas-api-request-test-result'>
-					<Stack gap={1} className='border border-top-0 rounded-1 rounded-top-0 p-1'>
+					<Stack
+						gap={1}
+						className='border border-top-0 rounded-1 rounded-top-0 p-1'
+					>
 						{result && (
 							<>
 								<div className='d-flex gap-1'>
 									<div
 										className={`align-self-center bg-${result.status <= 399 ? 'success' : 'danger'}`}
-										style={{ width: '14px', height: '14px', borderRadius: '50%' }}
+										style={{
+											width: '14px',
+											height: '14px',
+											borderRadius: '50%',
+										}}
 									/>
 									{result.status}
 								</div>
@@ -89,7 +99,11 @@ function Test({ url, data }: TestProps): ReactElement<TestProps> {
 									<MonacoEditor
 										disablePadding
 										disableFocusEffect
-										value={JSON.stringify(result.json, undefined, 4)}
+										value={JSON.stringify(
+											result.json,
+											undefined,
+											4,
+										)}
 										defaultLanguage='json'
 										options={{
 											readOnly: true,

@@ -15,7 +15,13 @@ export interface BodyProps {
 	onChange: (value?: Value) => void;
 }
 
-function Body({ show, value, onShow, onHide, onChange }: BodyProps): ReactElement<BodyProps> {
+function Body({
+	show,
+	value,
+	onShow,
+	onHide,
+	onChange,
+}: BodyProps): ReactElement<BodyProps> {
 	return (
 		<div>
 			<Button

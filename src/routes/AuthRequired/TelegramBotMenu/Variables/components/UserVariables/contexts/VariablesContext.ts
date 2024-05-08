@@ -9,7 +9,11 @@ interface Filter {
 export interface VariablesContextProps {
 	variables: Variable[];
 	filter: Filter;
-	updateVariables: (limit?: number, offset?: number, search?: string) => Promise<void>;
+	updateVariables: (
+		limit?: number,
+		offset?: number,
+		search?: string,
+	) => Promise<void>;
 }
 
 const VariablesContext = createContext<VariablesContextProps | undefined>(undefined);

@@ -1,4 +1,10 @@
-import React, { ReactElement, HTMLAttributes, memo, useState, useCallback } from 'react';
+import React, {
+	ReactElement,
+	HTMLAttributes,
+	memo,
+	useState,
+	useCallback,
+} from 'react';
 import classNames from 'classnames';
 
 import AddButton from 'components/AddButton';
@@ -12,8 +18,17 @@ function Header({ className, ...props }: HeaderProps): ReactElement<HeaderProps>
 
 	return (
 		<>
-			<TelegramBotAdditionModal show={showModal} onHide={useCallback(() => setShowModal(false), [])} />
-			<div {...props} className={classNames('d-flex flex-wrap justify-content-between gap-2', className)}>
+			<TelegramBotAdditionModal
+				show={showModal}
+				onHide={useCallback(() => setShowModal(false), [])}
+			/>
+			<div
+				{...props}
+				className={classNames(
+					'd-flex flex-wrap justify-content-between gap-2',
+					className,
+				)}
+			>
 				<h1 className='flex-grow-1 flex-lg-grow-0 fw-semibold text-center mb-0'>
 					{gettext('Добавленные Telegram боты')}
 				</h1>

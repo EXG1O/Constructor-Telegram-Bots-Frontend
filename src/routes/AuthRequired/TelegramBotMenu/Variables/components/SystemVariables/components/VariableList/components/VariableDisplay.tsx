@@ -2,11 +2,15 @@ import React, { ReactElement, HTMLAttributes } from 'react';
 
 import { Variable } from '..';
 
-export interface VariableDisplayProps extends Omit<HTMLAttributes<HTMLTableRowElement>, 'children'> {
+export interface VariableDisplayProps
+	extends Omit<HTMLAttributes<HTMLTableRowElement>, 'children'> {
 	variable: Variable;
 }
 
-function VariableDisplay({ variable, ...props }: VariableDisplayProps): ReactElement<VariableDisplayProps> {
+function VariableDisplay({
+	variable,
+	...props
+}: VariableDisplayProps): ReactElement<VariableDisplayProps> {
 	return (
 		<tr {...props}>
 			<td className='w-50'>
@@ -16,7 +20,9 @@ function VariableDisplay({ variable, ...props }: VariableDisplayProps): ReactEle
 						data-clipboard-text={`{{ ${variable.name} }}`}
 						style={{ cursor: 'pointer' }}
 					/>
-					<span className='flex-fill text-info-emphasis'>{variable.name}</span>
+					<span className='flex-fill text-info-emphasis'>
+						{variable.name}
+					</span>
 				</div>
 			</td>
 			<td className='text-nowrap'>{variable.description}</td>

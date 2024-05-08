@@ -3,7 +3,11 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
 
-import VariableFormModal, { VariableFormModalProps, Data, defaultData } from './VariableFormModal';
+import VariableFormModal, {
+	VariableFormModalProps,
+	Data,
+	defaultData,
+} from './VariableFormModal';
 
 import useToast from 'services/hooks/useToast';
 import useVariables from '../hooks/useVariables';
@@ -22,7 +26,9 @@ function VariableAdditionModal({
 	onExited,
 	...props
 }: VariableAdditionModalProps): ReactElement<VariableAdditionModalProps> {
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
 	const { updateVariables } = useVariables();

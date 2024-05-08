@@ -10,7 +10,8 @@ export interface Settings {
 	isSendAsNewMessage: boolean;
 }
 
-export interface SettingsBlockProps extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
+export interface SettingsBlockProps
+	extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
 	settings?: Settings;
 	onChange: (settings: Settings) => void;
 }
@@ -32,17 +33,26 @@ function SettingsBlock({
 				<Form.Switch
 					checked={settings.isReplyToUserMessage}
 					label={gettext('Ответить на сообщение пользователя')}
-					onChange={(e) => onChange({ ...settings, isReplyToUserMessage: e.target.checked })}
+					onChange={(e) =>
+						onChange({
+							...settings,
+							isReplyToUserMessage: e.target.checked,
+						})
+					}
 				/>
 				<Form.Switch
 					checked={settings.isDeleteUserMessage}
 					label={gettext('Удалить сообщение пользователя')}
-					onChange={(e) => onChange({ ...settings, isDeleteUserMessage: e.target.checked })}
+					onChange={(e) =>
+						onChange({ ...settings, isDeleteUserMessage: e.target.checked })
+					}
 				/>
 				<Form.Switch
 					checked={settings.isSendAsNewMessage}
 					label={gettext('Отправить сообщение как новое')}
-					onChange={(e) => onChange({ ...settings, isSendAsNewMessage: e.target.checked })}
+					onChange={(e) =>
+						onChange({ ...settings, isSendAsNewMessage: e.target.checked })
+					}
 				/>
 			</Block.Body>
 		</Block>

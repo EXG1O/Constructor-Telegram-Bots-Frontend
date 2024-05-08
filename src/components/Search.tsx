@@ -8,7 +8,9 @@ import Button from 'react-bootstrap/Button';
 
 export type Value = string;
 
-export interface SearchProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>, Pick<InputGroupProps, 'size'> {
+export interface SearchProps
+	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>,
+		Pick<InputGroupProps, 'size'> {
 	onSearch: (value: Value) => void;
 	onClear: () => void;
 }
@@ -17,9 +19,18 @@ export const defaultValue: Value = '';
 
 type RoundedValue = 1 | 2 | 3;
 
-const roundedValues: Record<NonNullable<InputGroupProps['size']>, RoundedValue> = { sm: 1, lg: 3 };
+const roundedValues: Record<NonNullable<InputGroupProps['size']>, RoundedValue> = {
+	sm: 1,
+	lg: 3,
+};
 
-function Search({ size, className, onSearch, onClear, ...props }: SearchProps): ReactElement<SearchProps> {
+function Search({
+	size,
+	className,
+	onSearch,
+	onClear,
+	...props
+}: SearchProps): ReactElement<SearchProps> {
 	const [value, setValue] = useState<Value>(defaultValue);
 
 	const roundedValue: RoundedValue = size ? roundedValues[size] : 2;
@@ -36,7 +47,11 @@ function Search({ size, className, onSearch, onClear, ...props }: SearchProps): 
 					className={`d-flex align-items-center bi bi-search text-bg-light border rounded-start-${roundedValue} px-2`}
 					style={{ fontSize: '14px' }}
 				/>
-				<FormControl value={value} placeholder={gettext('Поиск')} onChange={(e) => setValue(e.target.value)} />
+				<FormControl
+					value={value}
+					placeholder={gettext('Поиск')}
+					onChange={(e) => setValue(e.target.value)}
+				/>
 				<Collapse in={Boolean(value)} unmountOnExit dimension='width'>
 					<div>
 						<Button
@@ -51,7 +66,12 @@ function Search({ size, className, onSearch, onClear, ...props }: SearchProps): 
 			<div>
 				<Collapse in={Boolean(value)} dimension='width'>
 					<div>
-						<Button size={size} variant='dark' className='ms-2' onClick={() => onSearch(value)}>
+						<Button
+							size={size}
+							variant='dark'
+							className='ms-2'
+							onClick={() => onSearch(value)}
+						>
 							{gettext('Найти')}
 						</Button>
 					</div>

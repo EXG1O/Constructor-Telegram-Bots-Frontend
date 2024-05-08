@@ -13,7 +13,8 @@ export interface Toolbar {
 	handlers?: Record<string, (value: any) => void>;
 }
 
-export interface QuillEditorProps extends Omit<ReactQuillProps, 'modules' | 'children'> {
+export interface QuillEditorProps
+	extends Omit<ReactQuillProps, 'modules' | 'children'> {
 	height?: number;
 	toolbar: Toolbar;
 	onMount?: (quillEditor: QuillEditor) => void;
@@ -47,12 +48,20 @@ function QuillEditor({
 		onMount?.(Object.assign(quillRef.current, reactQuillRef.current));
 	}, []);
 
-	function handleFocus(selection: Range, source: Sources, editor: UnprivilegedEditor): void {
+	function handleFocus(
+		selection: Range,
+		source: Sources,
+		editor: UnprivilegedEditor,
+	): void {
 		setFocus(true);
 		onFocus?.(selection, source, editor);
 	}
 
-	function handleBlur(selection: Range, source: Sources, editor: UnprivilegedEditor): void {
+	function handleBlur(
+		selection: Range,
+		source: Sources,
+		editor: UnprivilegedEditor,
+	): void {
 		setFocus(false);
 		onBlur?.(selection, source, editor);
 	}

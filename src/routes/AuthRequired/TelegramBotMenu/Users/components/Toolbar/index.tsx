@@ -14,7 +14,11 @@ export interface ToolbarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'chil
 	paginationData: Omit<PaginationData, 'results'>;
 }
 
-function Toolbar({ paginationData, className, ...props }: ToolbarProps): ReactElement<ToolbarProps> {
+function Toolbar({
+	paginationData,
+	className,
+	...props
+}: ToolbarProps): ReactElement<ToolbarProps> {
 	const { updateUsers } = useUsers();
 
 	return (
@@ -23,8 +27,14 @@ function Toolbar({ paginationData, className, ...props }: ToolbarProps): ReactEl
 			<Search
 				size='sm'
 				className='flex-fill'
-				onSearch={useCallback((value) => updateUsers(undefined, undefined, value), [])}
-				onClear={useCallback(() => updateUsers(undefined, undefined, searchDefaultValue), [])}
+				onSearch={useCallback(
+					(value) => updateUsers(undefined, undefined, value),
+					[],
+				)}
+				onClear={useCallback(
+					() => updateUsers(undefined, undefined, searchDefaultValue),
+					[],
+				)}
 			/>
 			<Pagination
 				itemCount={paginationData.count}
@@ -32,7 +42,10 @@ function Toolbar({ paginationData, className, ...props }: ToolbarProps): ReactEl
 				itemOffset={paginationData.offset}
 				size='sm'
 				className='justify-content-center ps-1'
-				onPageChange={useCallback((newOffset) => updateUsers(undefined, newOffset), [])}
+				onPageChange={useCallback(
+					(newOffset) => updateUsers(undefined, newOffset),
+					[],
+				)}
 			/>
 		</div>
 	);

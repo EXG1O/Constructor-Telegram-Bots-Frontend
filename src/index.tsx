@@ -73,7 +73,9 @@ const router = createBrowserRouter([
 								id: 'donation-index',
 								index: true,
 								async lazy() {
-									const module = await import('./routes/Donation/Index');
+									const module = await import(
+										'./routes/Donation/Index'
+									);
 
 									return {
 										Component: module.default,
@@ -84,7 +86,9 @@ const router = createBrowserRouter([
 							{
 								path: 'completed/',
 								async lazy() {
-									const module = await import('./routes/Donation/Completed');
+									const module = await import(
+										'./routes/Donation/Completed'
+									);
 
 									return { Component: module.default };
 								},
@@ -126,7 +130,9 @@ const router = createBrowserRouter([
 								id: 'personal-cabinet',
 								path: 'personal-cabinet/',
 								async lazy() {
-									const module = await import('./routes/AuthRequired/PersonalCabinet');
+									const module = await import(
+										'./routes/AuthRequired/PersonalCabinet'
+									);
 
 									return {
 										Component: module.default,
@@ -138,7 +144,9 @@ const router = createBrowserRouter([
 								id: 'telegram-bot-menu-root',
 								path: 'telegram-bot-menu/:telegramBotID/',
 								async lazy() {
-									const module = await import('./routes/AuthRequired/TelegramBotMenu/Root');
+									const module = await import(
+										'./routes/AuthRequired/TelegramBotMenu/Root'
+									);
 
 									return {
 										Component: module.default,
@@ -151,7 +159,9 @@ const router = createBrowserRouter([
 										id: 'telegram-bot-menu-index',
 										index: true,
 										async lazy() {
-											const module = await import('./routes/AuthRequired/TelegramBotMenu/Index');
+											const module = await import(
+												'./routes/AuthRequired/TelegramBotMenu/Index'
+											);
 
 											return { Component: module.default };
 										},
@@ -174,7 +184,9 @@ const router = createBrowserRouter([
 										id: 'telegram-bot-menu-users',
 										path: 'users/',
 										async lazy() {
-											const module = await import('./routes/AuthRequired/TelegramBotMenu/Users');
+											const module = await import(
+												'./routes/AuthRequired/TelegramBotMenu/Users'
+											);
 
 											return {
 												Component: module.default,
@@ -228,4 +240,6 @@ const router = createBrowserRouter([
 	},
 ]);
 
-createRoot(document.querySelector<HTMLDivElement>('#root')!).render(<RouterProvider router={router} />);
+createRoot(document.querySelector<HTMLDivElement>('#root')!).render(
+	<RouterProvider router={router} />,
+);

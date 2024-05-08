@@ -35,7 +35,11 @@ export interface OffcanvasProps
 }
 
 /** The wrapper component adds support for the `loading` prop to the Offcanvas component from `react-bootstrap`. */
-function Offcanvas({ loading = false, children, ...props }: OffcanvasProps): ReactElement<OffcanvasProps> {
+function Offcanvas({
+	loading = false,
+	children,
+	...props
+}: OffcanvasProps): ReactElement<OffcanvasProps> {
 	return (
 		<OffcanvasContext.Provider value={{ loading }}>
 			<BaseOffcanvas {...props}>

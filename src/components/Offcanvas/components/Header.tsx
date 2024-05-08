@@ -1,6 +1,8 @@
 import React, { ReactElement, useContext } from 'react';
 
-import BaseHeader, { OffcanvasHeaderProps as BaseHeaderProps } from 'react-bootstrap/OffcanvasHeader';
+import BaseHeader, {
+	OffcanvasHeaderProps as BaseHeaderProps,
+} from 'react-bootstrap/OffcanvasHeader';
 
 import OffcanvasContext from '../contexts/OffcanvasContext';
 

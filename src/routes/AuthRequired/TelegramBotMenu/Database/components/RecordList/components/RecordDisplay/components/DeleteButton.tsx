@@ -14,7 +14,8 @@ import { LoaderData as TelegramBotMenuRootLoaderData } from '../../../../../../R
 import { DatabaseRecordAPI } from 'services/api/telegram_bots/main';
 import { DatabaseRecord } from 'services/api/telegram_bots/types';
 
-export interface DeleteButtonProps extends Omit<ButtonProps, 'as' | 'size' | 'variant'> {
+export interface DeleteButtonProps
+	extends Omit<ButtonProps, 'as' | 'size' | 'variant'> {
 	record: DatabaseRecord;
 }
 
@@ -25,7 +26,9 @@ function DeleteButton({
 	onClick,
 	...props
 }: DeleteButtonProps): ReactElement<DeleteButtonProps> {
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
 
 	const { createMessageToast } = useToast();
 	const { updateRecords } = useRecords();
@@ -33,7 +36,9 @@ function DeleteButton({
 	const [show, setShow] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const handleConfirm = useCallback<NonNullable<AskConfirmModalProps['onConfirm']>>(async () => {
+	const handleConfirm = useCallback<
+		NonNullable<AskConfirmModalProps['onConfirm']>
+	>(async () => {
 		setLoading(true);
 
 		const response = await DatabaseRecordAPI._delete(telegramBot.id, record.id);
@@ -76,7 +81,10 @@ function DeleteButton({
 				as='i'
 				size='sm'
 				variant='danger'
-				className={classNames('d-flex justify-content-center align-items-center bi bi-trash p-0', className)}
+				className={classNames(
+					'd-flex justify-content-center align-items-center bi bi-trash p-0',
+					className,
+				)}
 				style={{ width: '25px', height: '25px', fontSize: '18px', ...style }}
 				onClick={handleClick}
 			/>

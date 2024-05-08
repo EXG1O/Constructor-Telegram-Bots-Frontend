@@ -1,7 +1,9 @@
 import React, { ReactElement } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 
-import ToggleButtonGroup, { ToggleButtonRadioProps } from 'react-bootstrap/ToggleButtonGroup';
+import ToggleButtonGroup, {
+	ToggleButtonRadioProps,
+} from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton, { ToggleButtonProps } from 'react-bootstrap/ToggleButton';
 
 import { Type } from '../../..';
@@ -10,10 +12,16 @@ import useUsers from '../../../hooks/useUsers';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from '../../../../Root';
 
-export type TypeToggleButtonGroupProps = Omit<ToggleButtonRadioProps<Type>, 'type' | 'name' | 'children'>;
+export type TypeToggleButtonGroupProps = Omit<
+	ToggleButtonRadioProps<Type>,
+	'type' | 'name' | 'children'
+>;
 
 interface TypeToggleButtonProps
-	extends Omit<ToggleButtonProps, 'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange'> {
+	extends Omit<
+		ToggleButtonProps,
+		'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange'
+	> {
 	value: Type;
 }
 
@@ -23,8 +31,12 @@ const typeToggleButtons: TypeToggleButtonProps[] = [
 	{ value: 'blocked', children: gettext('Заблокированные') },
 ];
 
-function TypeToggleButtonGroup(props: TypeToggleButtonGroupProps): ReactElement<TypeToggleButtonGroupProps> {
-	const { telegramBot } = useRouteLoaderData('telegram-bot-menu-root') as TelegramBotMenuRootLoaderData;
+function TypeToggleButtonGroup(
+	props: TypeToggleButtonGroupProps,
+): ReactElement<TypeToggleButtonGroupProps> {
+	const { telegramBot } = useRouteLoaderData(
+		'telegram-bot-menu-root',
+	) as TelegramBotMenuRootLoaderData;
 
 	const { updateUsers, filter } = useUsers();
 

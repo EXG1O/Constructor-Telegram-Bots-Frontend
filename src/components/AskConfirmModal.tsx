@@ -26,10 +26,18 @@ function AskConfirmModal({
 			</Modal.Header>
 			<Modal.Body>{children}</Modal.Body>
 			<Modal.Footer className='gap-3'>
-				<Button variant='success' className='flex-fill' onClick={() => onConfirm?.()}>
+				<Button
+					variant='success'
+					className='flex-fill'
+					onClick={() => onConfirm?.()}
+				>
 					{gettext('Да')}
 				</Button>
-				<Button variant='danger' className='flex-fill' onClick={() => onCancel?.()}>
+				<Button
+					variant='danger'
+					className='flex-fill'
+					onClick={() => onCancel?.()}
+				>
 					{gettext('Нет')}
 				</Button>
 			</Modal.Footer>

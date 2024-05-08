@@ -1,5 +1,10 @@
 import React, { ReactElement, useEffect } from 'react';
-import { Params, NavigateOptions, useNavigate, useRouteLoaderData } from 'react-router-dom';
+import {
+	Params,
+	NavigateOptions,
+	useNavigate,
+	useRouteLoaderData,
+} from 'react-router-dom';
 
 import Loading from 'components/Loading';
 import { MessageToastProps } from 'components/MessageToast';
@@ -10,7 +15,11 @@ import { UserAPI } from 'services/api/users/main';
 
 export type LoaderData = Pick<MessageToastProps, 'message' | 'level'>;
 
-export async function loader({ params }: { params: Params<'userID' | 'confirmCode'> }): Promise<LoaderData> {
+export async function loader({
+	params,
+}: {
+	params: Params<'userID' | 'confirmCode'>;
+}): Promise<LoaderData> {
 	const { userID, confirmCode } = params;
 
 	if (userID && confirmCode) {

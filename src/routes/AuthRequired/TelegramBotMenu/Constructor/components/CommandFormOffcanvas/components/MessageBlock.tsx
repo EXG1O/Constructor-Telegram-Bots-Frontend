@@ -6,7 +6,8 @@ import Block, { BlockProps } from '../../Block';
 
 export type Message = string;
 
-export interface MessageBlockProps extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
+export interface MessageBlockProps
+	extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
 	message?: Message;
 	onChange: (message: Message) => void;
 }
