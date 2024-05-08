@@ -1,14 +1,16 @@
 import { makeRequest } from 'services/api/base';
 import { APIResponse } from './types';
 
-const rootURL = '/api/updates/';
+const rootURL: string = '/api/updates/';
 
 export namespace UpdatesAPI {
-	export const get = <Limit extends number | undefined>(
+	export const url: string = rootURL;
+
+	export async function get<Limit extends number | undefined>(
 		limit?: Limit,
 		offset?: number,
-	) => {
-		let url: string = rootURL;
+	) {
+		let url: string = UpdatesAPI.url;
 
 		if (limit || offset) {
 			const params = new URLSearchParams();
@@ -18,10 +20,10 @@ export namespace UpdatesAPI {
 			url += `?${params.toString()}`;
 		}
 
-		return makeRequest<
+		return await makeRequest<
 			Limit extends number
 				? APIResponse.UpdatesAPI.Get.Pagination
 				: APIResponse.UpdatesAPI.Get.Default
 		>(url, 'GET');
-	};
+	}
 }

@@ -175,15 +175,29 @@ export namespace Data {
 	}
 
 	export namespace CommandsAPI {
-		interface CreateCommandKeyboard extends Omit<CommandKeyboard, 'buttons'> {
-			buttons: Omit<CommandKeyboardButton, 'id'>[];
+		interface CreateCommandKeyboardButton
+			extends Pick<CommandKeyboardButton, 'text'> {
+			row?: CommandKeyboardButton['row'];
+			url?: CommandKeyboardButton['url'];
 		}
 
-		export interface Create
-			extends Omit<Command, 'id' | 'images' | 'files' | 'keyboard'> {
+		interface CreateCommandKeyboard extends Omit<CommandKeyboard, 'buttons'> {
+			buttons: CreateCommandKeyboardButton[];
+		}
+
+		interface CreateCommandAPIRequest
+			extends Pick<CommandAPIRequest, 'url' | 'method'> {
+			headers?: CommandAPIRequest['headers'];
+			body?: CommandAPIRequest['body'];
+		}
+
+		export interface Create extends Pick<Command, 'name' | 'settings' | 'message'> {
+			trigger?: Command['trigger'];
 			images?: File[];
 			files?: File[];
-			keyboard: CreateCommandKeyboard | null;
+			keyboard?: CreateCommandKeyboard | null;
+			api_request?: CreateCommandAPIRequest | null;
+			database_record?: Command['database_record'];
 		}
 	}
 
@@ -199,9 +213,25 @@ export namespace Data {
 
 		export interface Update
 			extends Omit<Command, 'id' | 'images' | 'files' | 'keyboard'> {
-			images?: (File | number)[];
-			files?: (File | number)[];
+			images: (File | number)[];
+			files: (File | number)[];
 			keyboard: UpdateCommandKeyboard | null;
+		}
+
+		interface PartialUpdateCommandKeyboard
+			extends Partial<Omit<CommandKeyboard, 'buttons'>> {
+			buttons?: Partial<CommandKeyboard['buttons']>;
+		}
+
+		export interface PartialUpdate
+			extends Pick<CommandsAPI.Create, 'images' | 'files'> {
+			name?: Command['name'];
+			settings?: Partial<Command['settings']>;
+			trigger?: Partial<Command['trigger']>;
+			message?: Partial<Command['message']>;
+			keyboard?: PartialUpdateCommandKeyboard;
+			api_request?: Partial<Command['api_request']>;
+			database_record?: Partial<Command['database_record']>;
 		}
 	}
 
@@ -212,34 +242,63 @@ export namespace Data {
 	}
 
 	export namespace ConditionAPI {
-		export type Update = Omit<Condition, 'id'>;
+		interface UpdateConditionPart extends Omit<ConditionPart, 'id'> {
+			id?: ConditionPart['id'];
+		}
+
+		export interface Update extends Omit<Condition, 'id' | 'parts'> {
+			parts: UpdateConditionPart[];
+		}
+
+		export interface PartialUpdate
+			extends Partial<Omit<Condition, 'id' | 'parts'>> {
+			parts: Partial<ConditionPart>[];
+		}
 	}
 
 	export namespace BackgroundTasksAPI {
+		interface CreateBackgroundTaskAPIRequest
+			extends Pick<BackgroundTaskAPIRequest, 'url' | 'method'> {
+			headers?: BackgroundTaskAPIRequest['headers'];
+			body?: BackgroundTaskAPIRequest['body'];
+		}
+
 		export interface Create extends Omit<BackgroundTask, 'id' | 'api_request'> {
-			api_request: Omit<BackgroundTaskAPIRequest, 'id'>[];
+			api_request: CreateBackgroundTaskAPIRequest[];
 		}
 	}
 
 	export namespace BackgroundTaskAPI {
 		export type Update = Omit<BackgroundTask, 'id'>;
+
+		export interface PartialUpdate
+			extends Omit<BackgroundTask, 'id' | 'api_request'> {
+			api_request?: Partial<BackgroundTaskAPIRequest>;
+		}
 	}
 
 	export namespace DiagramCommandAPI {
 		export type Update = Pick<DiagramCommand, 'x' | 'y'>;
+		export type PartialUpdate = Partial<Update>;
 	}
 
 	export namespace DiagramConditionAPI {
 		export type Update = Pick<DiagramCondition, 'x' | 'y'>;
+		export type PartialUpdate = Partial<Update>;
 	}
 
 	export namespace DiagramBackgroundTaskAPI {
 		export type Update = Pick<DiagramBackgroundTask, 'x' | 'y'>;
+		export type PartialUpdate = Partial<Update>;
+	}
+
+	export namespace VariablesAPI {
+		export type Create = Omit<Variable, 'id'>;
 	}
 
 	export namespace VariableAPI {
-		export type Create = Omit<Variable, 'id'>;
-		export type Update = Create;
+		export type Update = VariablesAPI.Create;
+		export type PartialUpdate = Partial<Update>;
 	}
 
 	export namespace UserAPI {
@@ -247,9 +306,12 @@ export namespace Data {
 		export type PartialUpdate = Partial<Update>;
 	}
 
-	export namespace DatabaseRecordAPI {
+	export namespace DatabaseRecordsAPI {
 		export type Create = Omit<DatabaseRecord, 'id'>;
-		export type Update = Create;
+	}
+
+	export namespace DatabaseRecordAPI {
+		export type Update = DatabaseRecordsAPI.Create;
 		export type PartialUpdate = Partial<Update>;
 	}
 }
@@ -273,13 +335,13 @@ export namespace APIResponse {
 
 	export namespace TelegramBotsAPI {
 		export type Get = TelegramBot[];
-		export type Create = TelegramBot;
+		export type Create = TelegramBotAPI.Get;
 	}
 
 	export namespace TelegramBotAPI {
 		export type Get = TelegramBot;
-		export type Update = TelegramBot;
-		export type PartialUpdate = TelegramBot;
+		export type Update = Get;
+		export type PartialUpdate = Get;
 	}
 
 	export namespace ConnectionsAPI {
@@ -288,32 +350,35 @@ export namespace APIResponse {
 
 	export namespace CommandsAPI {
 		export type Get = Command[];
-		export type Create = Command;
+		export type Create = CommandAPI.Get;
 	}
 
 	export namespace CommandAPI {
 		export type Get = Command;
-		export type Update = Command;
+		export type Update = Get;
+		export type PartialUpdate = Get;
 	}
 
 	export namespace ConditionsAPI {
 		export type Get = Condition[];
-		export type Create = Condition;
+		export type Create = ConditionAPI.Get;
 	}
 
 	export namespace ConditionAPI {
 		export type Get = Condition;
-		export type Update = Condition;
+		export type Update = Get;
+		export type PartialUpdate = Get;
 	}
 
 	export namespace BackgroundTasksAPI {
 		export type Get = BackgroundTask[];
-		export type Create = BackgroundTask;
+		export type Create = BackgroundTaskAPI.Get;
 	}
 
 	export namespace BackgroundTaskAPI {
 		export type Get = BackgroundTask;
-		export type Update = BackgroundTask;
+		export type Update = Get;
+		export type PartialUpdate = Get;
 	}
 
 	export namespace DiagramCommandsAPI {
@@ -322,14 +387,28 @@ export namespace APIResponse {
 
 	export namespace DiagramCommandAPI {
 		export type Get = DiagramCommand;
+		export type Update = Get;
+		export type PartialUpdate = Get;
 	}
 
 	export namespace DiagramConditionsAPI {
 		export type Get = DiagramCondition[];
 	}
 
+	export namespace DiagramConditionAPI {
+		export type Get = DiagramCondition;
+		export type Update = Get;
+		export type PartialUpdate = Get;
+	}
+
 	export namespace DiagramBackgroundTasksAPI {
 		export type Get = DiagramBackgroundTask[];
+	}
+
+	export namespace DiagramBackgroundTaskAPI {
+		export type Get = DiagramBackgroundTask;
+		export type Update = Get;
+		export type PartialUpdate = Get;
 	}
 
 	export namespace VariablesAPI {
@@ -340,12 +419,13 @@ export namespace APIResponse {
 				results: Variable[];
 			}
 		}
+		export type Create = VariableAPI.Get;
 	}
 
 	export namespace VariableAPI {
 		export type Get = Variable;
-		export type Create = Variable;
-		export type Update = Variable;
+		export type Update = Get;
+		export type PartialUpdate = Get;
 	}
 
 	export namespace UsersAPI {
@@ -360,8 +440,8 @@ export namespace APIResponse {
 
 	export namespace UserAPI {
 		export type Get = User;
-		export type Update = User;
-		export type PartialUpdate = User;
+		export type Update = Get;
+		export type PartialUpdate = Get;
 	}
 
 	export namespace DatabaseRecordsAPI {
@@ -372,12 +452,12 @@ export namespace APIResponse {
 				results: DatabaseRecord[];
 			}
 		}
+		export type Create = DatabaseRecordAPI.Get;
 	}
 
 	export namespace DatabaseRecordAPI {
 		export type Get = DatabaseRecord;
-		export type Create = DatabaseRecord;
-		export type Update = DatabaseRecord;
-		export type PartialUpdate = DatabaseRecord;
+		export type Update = Get;
+		export type PartialUpdate = Get;
 	}
 }

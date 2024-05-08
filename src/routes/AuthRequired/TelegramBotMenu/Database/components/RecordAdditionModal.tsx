@@ -14,7 +14,7 @@ import useRecords from '../hooks/useRecords';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from '../../Root';
 
-import { DatabaseRecordAPI } from 'services/api/telegram_bots/main';
+import { DatabaseRecordsAPI } from 'services/api/telegram_bots/main';
 
 export type RecordAdditionModalProps = Omit<
 	RecordFormModalProps,
@@ -47,7 +47,7 @@ function RecordAdditionModal({
 		try {
 			const data: Record<string, any> = JSON.parse(value);
 
-			const response = await DatabaseRecordAPI.create(telegramBot.id, { data });
+			const response = await DatabaseRecordsAPI.create(telegramBot.id, { data });
 
 			if (response.ok) {
 				updateRecords();

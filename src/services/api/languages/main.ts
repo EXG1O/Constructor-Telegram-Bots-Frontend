@@ -1,10 +1,16 @@
 import { makeRequest } from 'services/api/base';
 import { Data, APIResponse } from './types';
 
-const rootURL = '/api/languages/';
+const rootURL: string = '/api/languages/';
 
 export namespace LanguagesAPI {
-	export const get = () => makeRequest<APIResponse.LanguagesAPI.Get>(rootURL, 'GET');
-	export const set = (data: Data.LanguagesAPI.Set) =>
-		makeRequest<APIResponse.LanguagesAPI.Set>(rootURL, 'POST', data);
+	const url: string = rootURL;
+
+	export async function get() {
+		return await makeRequest<APIResponse.LanguagesAPI.Get>(url, 'GET');
+	}
+
+	export async function set(data: Data.LanguagesAPI.Set) {
+		return await makeRequest<APIResponse.LanguagesAPI.Set>(url, 'POST', data);
+	}
 }

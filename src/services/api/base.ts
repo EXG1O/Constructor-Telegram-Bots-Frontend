@@ -5,21 +5,21 @@ export namespace APIResponse {
 		json: Json;
 	}
 
-	interface _Error {
+	interface ErrorDetail {
 		code: string;
 		detail: string;
 		attr: string | null;
 	}
 
-	export interface Error {
+	export interface ErrorList {
 		type: 'server_error' | 'client_error' | 'validation_error';
-		errors: _Error[];
+		errors: ErrorDetail[];
 	}
 }
 
 export async function makeRequest<
 	SuccessAPIResponse extends Record<string, any> = {},
-	ErrorAPIResponse extends Record<string, any> = APIResponse.Error,
+	ErrorAPIResponse extends Record<string, any> = APIResponse.ErrorList,
 >(
 	url: string,
 	method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
@@ -41,15 +41,13 @@ export async function makeRequest<
 		}
 	}
 
-	const response = await fetch(url, init);
+	const response: Response = await fetch(url, init);
 
-	let json: any;
+	let json: any = {};
 
 	try {
 		json = await response.json();
-	} catch {
-		json = {};
-	}
+	} catch {}
 
 	return Object.assign(response, { json });
 }

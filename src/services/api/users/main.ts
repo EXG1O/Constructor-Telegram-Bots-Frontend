@@ -1,19 +1,28 @@
 import { makeRequest } from 'services/api/base';
 import { Data, APIResponse } from './types';
 
-const rootURL = '/api/users/';
+const rootURL: string = '/api/users/';
 
 export namespace StatsAPI {
 	export const url = rootURL + 'stats/';
 
-	export const get = () => makeRequest<APIResponse.StatsAPI.Get>(url, 'GET');
+	export async function get() {
+		return await makeRequest<APIResponse.StatsAPI.Get>(url, 'GET');
+	}
 }
 
 export namespace UserAPI {
 	export const url = rootURL + '_/';
 
-	export const get = () => makeRequest<APIResponse.UserAPI.Get>(url, 'GET');
-	export const login = (data: Data.UserAPI.Login) =>
-		makeRequest(url + 'login/', 'POST', data);
-	export const logout = () => makeRequest(url + 'logout/', 'POST');
+	export async function get() {
+		return await makeRequest<APIResponse.UserAPI.Get>(url, 'GET');
+	}
+
+	export async function login(data: Data.UserAPI.Login) {
+		return await makeRequest(url + 'login/', 'POST', data);
+	}
+
+	export async function logout() {
+		return await makeRequest(url + 'logout/', 'POST');
+	}
 }

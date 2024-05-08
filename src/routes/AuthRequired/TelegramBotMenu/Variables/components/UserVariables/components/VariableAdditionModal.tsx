@@ -14,7 +14,7 @@ import useVariables from '../hooks/useVariables';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
-import { VariableAPI } from 'services/api/telegram_bots/main';
+import { VariablesAPI } from 'services/api/telegram_bots/main';
 
 export type VariableAdditionModalProps = Omit<
 	VariableFormModalProps,
@@ -44,7 +44,7 @@ function VariableAdditionModal({
 	async function handleAddButtonClick(): Promise<void> {
 		setLoading(true);
 
-		const response = await VariableAPI.create(telegramBot.id, data);
+		const response = await VariablesAPI.create(telegramBot.id, data);
 
 		if (response.ok) {
 			updateVariables();

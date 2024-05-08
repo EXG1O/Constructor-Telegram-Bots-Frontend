@@ -163,8 +163,8 @@ function CommandEditOffcanvas({
 						description: trigger.description ?? null,
 					}
 				: null,
-			images: images?.map((image) => image.file ?? image.id!),
-			files: files?.map((file) => file.file ?? file.id!),
+			images: images?.map((image) => image.file ?? image.id!) ?? [],
+			files: files?.map((file) => file.file ?? file.id!) ?? [],
 			message: { text: message },
 			keyboard: keyboard
 				? {

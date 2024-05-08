@@ -1,14 +1,16 @@
 import { makeRequest } from 'services/api/base';
 import { APIResponse } from './types';
 
-const rootURL = '/api/donations/';
+const rootURL: string = '/api/donation/';
 
 export namespace DonationsAPI {
-	export const get = <Limit extends number | undefined>(
+	export const url: string = rootURL + 'donations/';
+
+	export async function get<Limit extends number | undefined>(
 		limit?: Limit,
 		offset?: number,
-	) => {
-		let url: string = rootURL;
+	) {
+		let url: string = DonationsAPI.url;
 
 		if (limit || offset) {
 			const params = new URLSearchParams();
@@ -18,22 +20,26 @@ export namespace DonationsAPI {
 			url += `?${params.toString()}`;
 		}
 
-		return makeRequest<
+		return await makeRequest<
 			Limit extends number
 				? APIResponse.DonationsAPI.Get.Pagination
 				: APIResponse.DonationsAPI.Get.Default
 		>(url, 'GET');
-	};
+	}
 }
 
 export namespace SectionsAPI {
-	export const url = rootURL + 'sections/';
+	export const url: string = rootURL + 'sections/';
 
-	export const get = () => makeRequest<APIResponse.SectionsAPI.Get>(url, 'GET');
+	export async function get() {
+		return await makeRequest<APIResponse.SectionsAPI.Get>(url, 'GET');
+	}
 }
 
 export namespace ButtonsAPI {
-	export const url = rootURL + 'buttons/';
+	export const url: string = rootURL + 'buttons/';
 
-	export const get = () => makeRequest<APIResponse.ButtonsAPI.Get>(url, 'GET');
+	export async function get() {
+		return await makeRequest<APIResponse.ButtonsAPI.Get>(url, 'GET');
+	}
 }
