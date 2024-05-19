@@ -1,5 +1,6 @@
 import React, { ReactElement, useCallback, useRef } from 'react';
 import { Params, useRouteLoaderData } from 'react-router-dom';
+
 import ReactFlow, {
 	Controls,
 	MiniMap,
@@ -7,9 +8,10 @@ import ReactFlow, {
 	BackgroundVariant,
 	useEdgesState,
 	useNodesState,
-	addEdge as _addEdge,
+	addEdge as baseAddEdge,
 	updateEdge,
 	NodeTypes,
+	DefaultEdgeOptions,
 	MarkerType,
 	Connection,
 	Node,
@@ -28,7 +30,14 @@ import useToast from 'services/hooks/useToast';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
-import { parseNodes } from './utils';
+import {
+	parseDiagramCommandNodes,
+	parseDiagramConditionNodes,
+	parseDiagramBackgroundTaskNodes,
+	parseDiagramCommandEdges,
+	parseDiagramConditionEdges,
+	parseDiagramBackgroundTaskEdges,
+} from './utils';
 
 import {
 	ConnectionsAPI,
@@ -40,12 +49,7 @@ import {
 	DiagramBackgroundTasksAPI,
 	DiagramBackgroundTaskAPI,
 } from 'services/api/telegram_bots/main';
-import {
-	DiagramCommand,
-	DiagramCondition,
-	DiagramBackgroundTask,
-	APIResponse,
-} from 'services/api/telegram_bots/types';
+import { APIResponse } from 'services/api/telegram_bots/types';
 
 export interface LoaderData {
 	diagramCommands: APIResponse.DiagramCommandsAPI.Get;
@@ -75,7 +79,7 @@ export async function loader({
 		!diagramConditionsResponse.ok ||
 		!diagramBackgroundTasksResponse.ok
 	) {
-		throw Error('Failed to fetch data!');
+		throw Error('Failed to fetch data.');
 	}
 
 	return {
@@ -94,6 +98,12 @@ type SourceHandle = [
 type TargetHandle = ['command' | 'condition', string, 'left' | 'right', string];
 
 const nodeTypes: NodeTypes = { command: CommandNode };
+const defaultEdgeOptions: DefaultEdgeOptions = {
+	markerEnd: {
+		type: MarkerType.Arrow,
+		strokeWidth: 1.8,
+	},
+};
 
 function Constructor(): ReactElement {
 	const { telegramBot } = useRouteLoaderData(
@@ -105,149 +115,45 @@ function Constructor(): ReactElement {
 	const { createMessageToast } = useToast();
 
 	const [nodes, setNodes, onNodesChange] = useNodesState(
-		parseNodes(diagramCommands, diagramConditions, diagramBackgroundTasks),
+		Object.assign(
+			parseDiagramCommandNodes(diagramCommands),
+			parseDiagramConditionNodes(diagramConditions),
+			parseDiagramBackgroundTaskNodes(diagramBackgroundTasks),
+		),
 	);
 	const [edges, setEdges, onEdgesChange] = useEdgesState(
-		parseEdges(diagramCommands, diagramConditions, diagramBackgroundTasks),
+		Object.assign(
+			parseDiagramCommandEdges(diagramCommands),
+			parseDiagramConditionEdges(diagramConditions),
+			parseDiagramBackgroundTaskEdges(diagramBackgroundTasks),
+		),
 	);
 	const edgeUpdating = useRef<Edge | null>(null);
 
-	function parseEdges(
-		diagramCommands?: DiagramCommand[],
-		diagramConditions?: DiagramCondition[],
-		diagramBackgroundTasks?: DiagramBackgroundTask[],
-	): Edge[] {
-		const _edges: Edge[] = [];
-
-		diagramCommands?.forEach((diagramCommand) => {
-			diagramCommand.keyboard?.buttons.forEach((button) => {
-				button.source_connections.forEach((connection) => {
-					const source = `command:${diagramCommand.id}`;
-					const target = `${connection.target_object_type}:${connection.target_object_id}`;
-
-					_edges.push({
-						id: `reactflow__edge-${connection.id}`,
-						source: source,
-						sourceHandle: `${source}:${connection.source_handle_position}:${connection.source_object_id}`,
-						target: target,
-						targetHandle: `${target}:${connection.target_handle_position}:0`,
-					});
-				});
-			});
-		});
-
-		diagramConditions?.forEach((diagramCondition) => {
-			Object.assign(
-				diagramCondition.source_connections,
-				diagramCondition.target_connections,
-			).forEach((connection) => {
-				const source = `${connection.source_object_type}:${connection.source_object_id}`;
-				const target = `${connection.target_object_type}:${connection.target_object_id}`;
-
-				_edges.push({
-					id: `reactflow__edge-${connection.id}`,
-					source: source,
-					sourceHandle: `${source}:${connection.source_handle_position}:0`,
-					target: target,
-					targetHandle: `${target}:${connection.target_handle_position}:0`,
-				});
-			});
-		});
-
-		diagramBackgroundTasks?.forEach((diagramBackgroundTask) => {
-			diagramBackgroundTask.target_connections.forEach((connection) => {
-				const source = `${connection.source_object_type}:${connection.source_object_id}`;
-				const target = `${connection.target_object_type}:${connection.target_object_id}`;
-
-				_edges.push({
-					id: `reactflow__edge-${connection.id}`,
-					source: source,
-					sourceHandle: `${source}:${connection.source_handle_position}:0`,
-					target: target,
-					targetHandle: `${target}:${connection.target_handle_position}:0`,
-				});
-			});
-		});
-
-		return _edges;
-	}
-
-	const updateNodes = useCallback(async () => {
-		const [
-			diagramCommandsResponse,
-			diagramConditionsResponse,
-			diagramBackgroundTasksResponse,
-		] = await Promise.all([
-			DiagramCommandsAPI.get(telegramBot.id),
-			DiagramConditionsAPI.get(telegramBot.id),
-			DiagramBackgroundTasksAPI.get(telegramBot.id),
-		]);
-
-		if (
-			!diagramCommandsResponse.ok ||
-			!diagramConditionsResponse.ok ||
-			!diagramBackgroundTasksResponse.ok
-		) {
-			createMessageToast({
-				message: gettext('Не удалось получить данные с сервера!'),
-				level: 'error',
-			});
-			return;
-		}
-
-		setNodes(
-			parseNodes(
-				diagramCommandsResponse.json,
-				diagramConditionsResponse.json,
-				diagramBackgroundTasksResponse.json,
-			),
-		);
-		setEdges(
-			parseEdges(
-				diagramCommandsResponse.json,
-				diagramConditionsResponse.json,
-				diagramBackgroundTasksResponse.json,
-			),
-		);
-	}, []);
-
 	const handleNodeDragStop = useCallback(
 		(event: React.MouseEvent, node: Node, nodes?: Node[]) => {
-			nodes?.forEach((node) => {
+			nodes?.forEach(async (node) => {
 				const [type, id] = node.id.split(':') as [
 					'command' | 'condition' | 'background_task',
 					string,
 				];
 
-				let updateDiagramBlockPosition:
-					| typeof DiagramCommandAPI.update
-					| typeof DiagramConditionAPI.update
-					| typeof DiagramBackgroundTaskAPI.update
-					| undefined = undefined;
-
-				if (type === 'command') {
-					updateDiagramBlockPosition = DiagramCommandAPI.update;
-				} else if (type === 'condition') {
-					updateDiagramBlockPosition = DiagramConditionAPI.update;
-				} else if (type === 'background_task') {
-					updateDiagramBlockPosition = DiagramBackgroundTaskAPI.update;
-				}
-
-				updateDiagramBlockPosition?.(
-					telegramBot.id,
-					parseInt(id),
-					node.position,
-				);
+				await (
+					type === 'command'
+						? DiagramCommandAPI.update
+						: type === 'condition'
+							? DiagramConditionAPI.update
+							: type === 'background_task'
+								? DiagramBackgroundTaskAPI.update
+								: undefined
+				)?.(telegramBot.id, parseInt(id), node.position);
 			});
 		},
 		[],
 	);
 
 	const addEdge = useCallback(
-		async (
-			connection: Connection,
-			shouldUpdateEdges: boolean = true,
-		): Promise<void> => {
+		async (connection: Connection, shouldUpdateEdges: boolean = true) => {
 			if (
 				connection.source &&
 				connection.sourceHandle &&
@@ -267,37 +173,27 @@ function Constructor(): ReactElement {
 					target_nested_object_id,
 				] = connection.targetHandle.split(':') as TargetHandle;
 
-				let makeRequest: ReturnType<typeof ConnectionsAPI.create>;
-
-				if (
-					source_object_type === 'command' &&
+				const response = await ConnectionsAPI.create(telegramBot.id, {
+					...(source_object_type === 'command' &&
 					parseInt(source_nested_object_id) > 0
-				) {
-					makeRequest = ConnectionsAPI.create(telegramBot.id, {
-						source_object_type: 'command_keyboard_button',
-						source_object_id: parseInt(source_nested_object_id),
-						source_handle_position,
-						target_object_type,
-						target_object_id: parseInt(target_object_id),
-						target_handle_position,
-					});
-				} else {
-					makeRequest = ConnectionsAPI.create(telegramBot.id, {
-						source_object_type,
-						source_object_id: parseInt(source_object_id),
-						source_handle_position,
-						target_object_type,
-						target_object_id: parseInt(target_object_id),
-						target_handle_position,
-					});
-				}
-
-				const response = await makeRequest;
+						? {
+								source_object_type: 'command_keyboard_button',
+								source_object_id: parseInt(source_nested_object_id),
+							}
+						: {
+								source_object_type,
+								source_object_id: parseInt(source_object_id),
+							}),
+					source_handle_position,
+					target_object_type,
+					target_object_id: parseInt(target_object_id),
+					target_handle_position,
+				});
 
 				if (response.ok) {
 					if (shouldUpdateEdges) {
 						setEdges((prevEdges) =>
-							_addEdge(
+							baseAddEdge(
 								{
 									...connection,
 									id: `reactflow__edge-${response.json.id}`,
@@ -308,7 +204,7 @@ function Constructor(): ReactElement {
 					}
 				} else {
 					createMessageToast({
-						message: gettext('Не удалось подключить блок к другому блоку!'),
+						message: gettext('Не удалось подключить блок к другому блоку.'),
 						level: 'error',
 					});
 				}
@@ -335,40 +231,34 @@ function Constructor(): ReactElement {
 				}
 			} else {
 				createMessageToast({
-					message: gettext('Не удалось отключить блок от другого блока!'),
+					message: gettext('Не удалось отключить блок от другого блока.'),
 					level: 'error',
 				});
 			}
 		}
 	}
 
-	const handleEdgeUpdateStart = useCallback(
-		(event: React.MouseEvent, edge: Edge): void => {
-			edgeUpdating.current = edge;
-		},
-		[],
-	);
+	const handleEdgeUpdateStart = useCallback((event: React.MouseEvent, edge: Edge) => {
+		edgeUpdating.current = edge;
+	}, []);
 
-	const handleEdgeUpdate = useCallback(
-		(oldEdge: Edge, newConnection: Connection): void => {
-			if (
-				edgeUpdating.current &&
-				(edgeUpdating.current.sourceHandle !== newConnection.sourceHandle ||
-					edgeUpdating.current.targetHandle !== newConnection.targetHandle)
-			) {
-				deleteEdge(oldEdge, false);
-				addEdge(newConnection, false);
+	const handleEdgeUpdate = useCallback((oldEdge: Edge, newConnection: Connection) => {
+		if (
+			edgeUpdating.current &&
+			(edgeUpdating.current.sourceHandle !== newConnection.sourceHandle ||
+				edgeUpdating.current.targetHandle !== newConnection.targetHandle)
+		) {
+			deleteEdge(oldEdge, false);
+			addEdge(newConnection, false);
 
-				setEdges((prevEdges) => updateEdge(oldEdge, newConnection, prevEdges));
-			}
+			setEdges((prevEdges) => updateEdge(oldEdge, newConnection, prevEdges));
+		}
 
-			edgeUpdating.current = null;
-		},
-		[],
-	);
+		edgeUpdating.current = null;
+	}, []);
 
 	const handleEdgeUpdateEnd = useCallback(
-		(event: MouseEvent | TouchEvent, edge: Edge): void => {
+		(event: MouseEvent | TouchEvent, edge: Edge) => {
 			if (edgeUpdating.current) {
 				deleteEdge(edge);
 			}
@@ -379,25 +269,13 @@ function Constructor(): ReactElement {
 	);
 
 	const handleCheckValidConnection = useCallback(
-		(connection: Connection): boolean => {
-			if (
-				!(
-					connection.source &&
-					connection.sourceHandle &&
-					connection.target &&
-					connection.targetHandle
-				)
-			) {
-				return false;
-			}
-
-			if (connection.source === connection.target) {
-				return false;
-			}
-
-			return true;
-		},
-		[edges],
+		(connection: Connection): boolean =>
+			Boolean(connection.source) &&
+			Boolean(connection.sourceHandle) &&
+			Boolean(connection.target) &&
+			Boolean(connection.targetHandle) &&
+			connection.source !== connection.target,
+		[],
 	);
 
 	return (
@@ -411,12 +289,7 @@ function Constructor(): ReactElement {
 					nodes={nodes}
 					edges={edges}
 					nodeTypes={nodeTypes}
-					defaultEdgeOptions={{
-						markerEnd: {
-							type: MarkerType.Arrow,
-							strokeWidth: 1.8,
-						},
-					}}
+					defaultEdgeOptions={defaultEdgeOptions}
 					deleteKeyCode={null}
 					onNodesChange={onNodesChange}
 					onEdgesChange={onEdgesChange}

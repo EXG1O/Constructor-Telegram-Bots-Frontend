@@ -1,3 +1,5 @@
+@import 'styles/variables';
+
 .react-flow__attribution {
 	background: none;
 	padding: 0 15px;
@@ -8,18 +10,18 @@
 	box-shadow: none;
 
 	&-button {
-		transition: background-color 0.15s ease-in-out;
+		transition: $btn-transition;
 
 		&:last-child {
 			border-bottom: 0;
 		}
 
 		&:hover {
-			background-color: #f8f9fa;
+			background-color: $gray-100;
 		}
 
 		&:active {
-			background-color: #e9ecef;
+			background-color: $gray-200;
 		}
 	}
 }

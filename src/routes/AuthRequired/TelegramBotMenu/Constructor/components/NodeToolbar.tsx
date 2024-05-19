@@ -1,6 +1,7 @@
 import React, { ReactElement, memo } from 'react';
 
 import { NodeToolbar as BaseNodeToolbar } from 'reactflow';
+
 import Button from 'react-bootstrap/Button';
 
 export interface NodeToolbarProps {

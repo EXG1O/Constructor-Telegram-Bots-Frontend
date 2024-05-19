@@ -18,9 +18,7 @@ import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired
 import { CommandAPI } from 'services/api/telegram_bots/main';
 import { DiagramBlock, DiagramCommand } from 'services/api/telegram_bots/types';
 
-interface NodeData extends Omit<DiagramCommand, keyof DiagramBlock> {
-	updateNodes: () => Promise<void>;
-}
+type NodeData = Omit<DiagramCommand, keyof DiagramBlock>;
 
 interface CommandNodeProps extends Omit<NodeProps, 'data'> {
 	data: NodeData;

@@ -20,7 +20,7 @@ import useDatabaseRecordState from './CommandFormOffcanvas/hooks/useDatabaseReco
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
-import { parseNodes } from '../utils';
+import { parseDiagramCommandNodes } from '../utils';
 
 import { CommandAPI, DiagramCommandAPI } from 'services/api/telegram_bots/main';
 
@@ -202,7 +202,7 @@ function CommandEditOffcanvas({
 				setNodes((prevNodes) =>
 					prevNodes.map((node) =>
 						node.id === `command:${commandID}`
-							? parseNodes([diagramCommandResponse.json])[0]
+							? parseDiagramCommandNodes([diagramCommandResponse.json])[0]
 							: node,
 					),
 				);

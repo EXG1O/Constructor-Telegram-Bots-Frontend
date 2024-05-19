@@ -25,7 +25,7 @@ import useDatabaseRecordState from './CommandFormOffcanvas/hooks/useDatabaseReco
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
-import { parseNodes } from '../utils';
+import { parseDiagramCommandNodes } from '../utils';
 
 import { CommandsAPI, DiagramCommandAPI } from 'services/api/telegram_bots/main';
 
@@ -124,7 +124,7 @@ function CommandAdditionOffcanvas({
 			);
 
 			if (diagramCommandResponse.ok) {
-				addNodes(parseNodes([diagramCommandResponse.json]));
+				addNodes(parseDiagramCommandNodes([diagramCommandResponse.json]));
 				onHide();
 				createMessageToast({
 					message: gettext('Вы успешно добавили команду.'),
