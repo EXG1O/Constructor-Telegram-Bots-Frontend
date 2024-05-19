@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, memo, useMemo } from 'react';
+import React, { ReactElement, memo } from 'react';
 
 import BasePagination, {
 	PaginationProps as BasePaginationProps,
@@ -18,57 +18,55 @@ function Pagination({
 	onPageChange,
 	...props
 }: PaginationProps): ReactElement<PaginationProps> {
-	const items = useMemo<ReactNode[] | undefined>(() => {
-		const pageCount: number = Math.ceil(itemCount / itemLimit);
-		const activePageNum: number = Math.ceil(itemOffset / itemLimit) + 1;
+	const pageCount: number = Math.ceil(itemCount / itemLimit);
+	const activePage: number = Math.ceil(itemOffset / itemLimit) + 1;
 
-		return pageCount > 1
-			? Array.from({ length: pageCount }, (_, pageNum) => {
-					pageNum++;
+	return pageCount > 1 ? (
+		<BasePagination {...props}>
+			{Array.from({ length: pageCount }, (_, page) => {
+				page++;
 
-					if (
-						pageCount <= 7 ||
-						pageNum === 1 ||
-						pageNum === pageCount ||
-						(pageNum <= 5 && activePageNum <= 5 && activePageNum !== 5) ||
-						(pageNum >= pageCount - 4 &&
-							activePageNum >= pageCount - 4 &&
-							activePageNum !== pageCount - 4) ||
-						(pageNum >= activePageNum - 1 && pageNum <= activePageNum + 1)
-					) {
-						return (
-							<BasePagination.Item
-								key={pageNum}
-								as='span'
-								{...(activePageNum === pageNum
-									? {
-											active: true,
-										}
-									: {
-											onClick: () =>
-												onPageChange((pageNum - 1) * itemLimit),
-										})}
-								style={{ cursor: 'pointer' }}
-							>
-								{pageNum}
-							</BasePagination.Item>
-						);
-					} else if (pageNum === 2 || pageNum === pageCount - 2) {
-						return (
-							<BasePagination.Ellipsis
-								key={pageNum}
-								style={{
-									cursor: 'default',
-									pointerEvents: 'none',
-								}}
-							/>
-						);
-					}
-				})
-			: [];
-	}, [itemCount, itemLimit, itemOffset]);
-
-	return items?.length ? <BasePagination {...props}>{items}</BasePagination> : <></>;
+				if (
+					pageCount <= 7 ||
+					page === 1 ||
+					page === pageCount ||
+					(page <= 5 && activePage <= 5 && activePage !== 5) ||
+					(page >= pageCount - 4 &&
+						activePage >= pageCount - 4 &&
+						activePage !== pageCount - 4) ||
+					(page >= activePage - 1 && page <= activePage + 1)
+				) {
+					return (
+						<BasePagination.Item
+							key={page}
+							as='span'
+							{...(activePage === page
+								? { active: true }
+								: {
+										onClick: () =>
+											onPageChange((page - 1) * itemLimit),
+									})}
+							style={{ cursor: 'pointer' }}
+						>
+							{page}
+						</BasePagination.Item>
+					);
+				} else if (page === 2 || page === pageCount - 2) {
+					return (
+						<BasePagination.Ellipsis
+							key={page}
+							style={{
+								cursor: 'default',
+								pointerEvents: 'none',
+							}}
+						/>
+					);
+				}
+			})}
+		</BasePagination>
+	) : (
+		<></>
+	);
 }
 
 export default memo(Pagination);
