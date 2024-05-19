@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, HTMLAttributes, memo } from 'react';
+import React, { ReactElement, HTMLAttributes, memo } from 'react';
 
 export interface InfoAreaProps
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
