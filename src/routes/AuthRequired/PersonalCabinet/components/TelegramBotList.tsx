@@ -21,14 +21,12 @@ function TelegramBotList({
 			{telegramBots.length ? (
 				telegramBots.map((telegramBot) => (
 					<TelegramBotCard key={telegramBot.id} telegramBot={telegramBot}>
-						{() => (
-							<Link
-								to={`/telegram-bot-menu/${telegramBot.id}/`}
-								className='card-footer btn btn-light border border-top-0'
-							>
-								{gettext('Меню Telegram бота')}
-							</Link>
-						)}
+						<Link
+							to={`/telegram-bot-menu/${telegramBot.id}/`}
+							className='card-footer btn btn-light border border-top-0'
+						>
+							{gettext('Меню Telegram бота')}
+						</Link>
 					</TelegramBotCard>
 				))
 			) : (

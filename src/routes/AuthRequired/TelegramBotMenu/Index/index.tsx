@@ -21,7 +21,7 @@ function Index(): ReactElement {
 			<Row className='g-3 g-lg-4'>
 				<Col xs={12} lg={6}>
 					<TelegramBotCard telegramBot={telegramBot}>
-						{(props) => <TelegramBotCardFooter {...props} />}
+						<TelegramBotCardFooter />
 					</TelegramBotCard>
 				</Col>
 			</Row>
