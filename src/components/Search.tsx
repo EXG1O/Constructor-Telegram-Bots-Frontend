@@ -2,7 +2,7 @@ import React, { ReactElement, HTMLAttributes, memo, useState } from 'react';
 import classNames from 'classnames';
 
 import InputGroup, { InputGroupProps } from 'react-bootstrap/InputGroup';
-import FormControl from 'react-bootstrap/FormControl';
+import Input from 'react-bootstrap/FormControl';
 import Collapse from 'react-bootstrap/Collapse';
 import Button from 'react-bootstrap/Button';
 
@@ -17,13 +17,6 @@ export interface SearchProps
 
 export const defaultValue: Value = '';
 
-type RoundedValue = 1 | 2 | 3;
-
-const roundedValues: Record<NonNullable<InputGroupProps['size']>, RoundedValue> = {
-	sm: 1,
-	lg: 3,
-};
-
 function Search({
 	size,
 	className,
@@ -32,31 +25,46 @@ function Search({
 	...props
 }: SearchProps): ReactElement<SearchProps> {
 	const [value, setValue] = useState<Value>(defaultValue);
+	const [isActive, setActive] = useState<boolean>(false);
 
-	const roundedValue: RoundedValue = size ? roundedValues[size] : 2;
+	const show: boolean = isActive || Boolean(value);
+	const roundedValue: number = size === 'sm' ? 1 : size === 'lg' ? 3 : 2;
+
+	function handleSearch(): void {
+		onSearch(value);
+		setActive(true);
+	}
 
 	function handleClear(): void {
-		setValue(defaultValue);
 		onClear();
+		setActive(false);
+		setValue(defaultValue);
 	}
 
 	return (
 		<div {...props} className={classNames('d-flex', className)}>
 			<InputGroup size={size}>
 				<i
-					className={`d-flex align-items-center bi bi-search text-bg-light border rounded-start-${roundedValue} px-2`}
+					className={
+						'd-flex align-items-center bi bi-search ' +
+						`text-bg-light border rounded-start-${roundedValue} px-2`
+					}
 					style={{ fontSize: '14px' }}
 				/>
-				<FormControl
+				<Input
 					value={value}
 					placeholder={gettext('Поиск')}
 					onChange={(e) => setValue(e.target.value)}
+					onKeyUp={(e) => e.key === 'Enter' && handleSearch()}
 				/>
-				<Collapse in={Boolean(value)} unmountOnExit dimension='width'>
+				<Collapse in={show} unmountOnExit dimension='width'>
 					<div>
 						<Button
 							variant='light'
-							className={`d-flex align-items-center bi bi-x border rounded-start-0 rounded-end-${roundedValue} h-100 p-0`}
+							className={
+								'd-flex align-items-center bi bi-x border ' +
+								`rounded-start-0 rounded-end-${roundedValue} h-100 p-0`
+							}
 							style={{ fontSize: '21px' }}
 							onClick={handleClear}
 						/>
@@ -64,13 +72,13 @@ function Search({
 				</Collapse>
 			</InputGroup>
 			<div>
-				<Collapse in={Boolean(value)} dimension='width'>
+				<Collapse in={show} dimension='width'>
 					<div>
 						<Button
 							size={size}
 							variant='dark'
 							className='ms-2'
-							onClick={() => onSearch(value)}
+							onClick={handleSearch}
 						>
 							{gettext('Найти')}
 						</Button>
