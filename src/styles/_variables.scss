@@ -2,7 +2,9 @@
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/variables-dark';
 
-$form-check-margin-bottom: 0;
+$enable-validation-icons: false;
+
+$form-check-margin-bottom: none;
 
 $dropdown-link-active-color: $dropdown-link-color;
 $dropdown-link-active-bg: $gray-200;

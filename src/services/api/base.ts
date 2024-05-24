@@ -5,7 +5,7 @@ export namespace APIResponse {
 		json: Json;
 	}
 
-	interface ErrorDetail {
+	export interface ErrorDetail {
 		code: string;
 		detail: string;
 		attr: string | null;
