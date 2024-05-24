@@ -13,6 +13,7 @@
 		"paths": {
 			"styles/*": ["./src/styles/*"],
 			"components/*": ["./src/components/*"],
+			"routes": ["./src/routes"],
 			"routes/*": ["./src/routes/*"],
 			"services/*": ["./src/services/*"],
 			"utils/*": ["./src/utils/*"]

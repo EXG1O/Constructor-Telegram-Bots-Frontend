@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import { Link, useRouteLoaderData } from 'react-router-dom';
 
+import { reverse } from 'routes';
+
 import './Donations.scss';
 
 import Stack from 'react-bootstrap/Stack';
@@ -61,7 +63,10 @@ function Donations(): ReactElement {
 					</tbody>
 				</Table>
 			</div>
-			<Link to='/donation/' className='btn btn-success align-self-center'>
+			<Link
+				to={reverse('donation-index')}
+				className='btn btn-success align-self-center'
+			>
 				{gettext('Поддержать разработчика')}
 			</Link>
 		</Stack>

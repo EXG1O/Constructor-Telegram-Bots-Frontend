@@ -6,6 +6,8 @@ import {
 	useRouteLoaderData,
 } from 'react-router-dom';
 
+import { reverse } from 'routes';
+
 import Loading from 'components/Loading';
 import { MessageToastProps } from 'components/MessageToast';
 
@@ -62,9 +64,9 @@ function Login(): ReactElement {
 		const options: NavigateOptions = { replace: true };
 
 		if (level === 'success') {
-			navigate('/personal-cabinet/', options);
+			navigate(reverse('personal-cabinet'), options);
 		} else {
-			navigate('/', options);
+			navigate(reverse('home'), options);
 		}
 
 		createMessageToast({ message, level });

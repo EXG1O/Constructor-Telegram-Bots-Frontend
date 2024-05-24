@@ -1,6 +1,8 @@
 import React, { ReactElement, memo, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { reverse } from 'routes';
+
 import Dropdown, { DropdownProps } from 'react-bootstrap/Dropdown';
 
 import AskConfirmModal from 'components/AskConfirmModal';
@@ -32,7 +34,7 @@ function UserMenuDropdown({
 
 		if (response.ok) {
 			setShowLogoutModal(false);
-			navigate('/');
+			navigate(reverse('home'));
 			createMessageToast({
 				message: gettext('Вы успешно вышли из аккаунта.'),
 				level: 'success',
@@ -72,7 +74,9 @@ function UserMenuDropdown({
 							{gettext('Админ панель')}
 						</Dropdown.Item>
 					)}
-					<Dropdown.Item onClick={() => navigate('/personal-cabinet/')}>
+					<Dropdown.Item
+						onClick={() => navigate(reverse('personal-cabinet'))}
+					>
 						{gettext('Личный кабинет')}
 					</Dropdown.Item>
 					<Dropdown.Item>{gettext('Настройки')}</Dropdown.Item>

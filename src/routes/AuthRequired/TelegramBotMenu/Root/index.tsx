@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import { Outlet, Params, redirect } from 'react-router-dom';
 
+import { reverse } from 'routes';
+
 import Container from 'react-bootstrap/Container';
 
 import Header from './components/Header';
@@ -20,7 +22,7 @@ export async function loader({
 	const { telegramBotID } = params;
 
 	if (telegramBotID === undefined) {
-		return redirect('/personal-cabinet/');
+		return redirect(reverse('personal-cabinet'));
 	}
 
 	const response = await TelegramBotAPI.get(parseInt(telegramBotID));

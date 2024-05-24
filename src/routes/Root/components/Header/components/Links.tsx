@@ -2,6 +2,8 @@ import React, { ReactElement, ReactNode, memo } from 'react';
 import { Link, LinkProps as BaseLinkProps, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
+import { reverse } from 'routes';
+
 import Nav, { NavProps } from 'react-bootstrap/Nav';
 
 export type LinksProps = Omit<NavProps, 'variant' | 'children'>;
@@ -11,10 +13,10 @@ export interface LinkProps extends BaseLinkProps {
 }
 
 const links: LinkProps[] = [
-	{ to: '/', children: gettext('Главная') },
-	{ to: '/instruction/', children: gettext('Инструкция') },
-	{ to: '/updates/', children: gettext('Обновления') },
-	{ to: '/donation/', children: gettext('Пожертвование') },
+	{ to: reverse('home'), children: gettext('Главная') },
+	{ to: reverse('instruction'), children: gettext('Инструкция') },
+	{ to: reverse('updates'), children: gettext('Обновления') },
+	{ to: reverse('donation-index'), children: gettext('Пожертвование') },
 ];
 
 function Links({ className, ...props }: LinksProps): ReactElement<LinksProps> {

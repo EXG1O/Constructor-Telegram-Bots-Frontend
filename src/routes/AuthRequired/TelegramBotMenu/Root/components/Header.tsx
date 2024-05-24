@@ -1,6 +1,8 @@
-import React, { ReactElement, ReactNode, AnchorHTMLAttributes } from 'react';
+import React, { ReactElement, ReactNode, AnchorHTMLAttributes, useMemo } from 'react';
 import { Link, LinkProps, useLocation, useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
+
+import { reverse } from 'routes';
 
 import Nav from 'react-bootstrap/Nav';
 import { NavLinkProps } from 'react-bootstrap/NavLink';
@@ -13,38 +15,55 @@ export interface HeaderLinkProps
 	children: ReactNode;
 }
 
-const headerLinks: HeaderLinkProps[] = [
-	{ to: '', children: gettext('Telegram бот') },
-	{ to: 'variables/', children: gettext('Переменные') },
-	{ to: 'users/', children: gettext('Пользователи') },
-	{ to: 'database/', children: gettext('База данных') },
-	{ to: 'constructor/', children: gettext('Конструктор') },
-];
-
 function Header(): ReactElement {
 	const location = useLocation();
 	const { telegramBot } = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
 
+	const headerLinks = useMemo<HeaderLinkProps[]>(() => {
+		const baseID: string = 'telegram-bot-menu';
+		const params: Record<string, string | number> = {
+			telegramBotID: telegramBot.id,
+		};
+
+		return [
+			{
+				to: reverse(`${baseID}-index`, params),
+				children: gettext('Telegram бот'),
+			},
+			{
+				to: reverse(`${baseID}-variables`, params),
+				children: gettext('Переменные'),
+			},
+			{
+				to: reverse(`${baseID}-users`, params),
+				children: gettext('Пользователи'),
+			},
+			{
+				to: reverse(`${baseID}-database`, params),
+				children: gettext('База данных'),
+			},
+			{
+				to: reverse(`${baseID}-constructor`, params),
+				children: gettext('Конструктор'),
+			},
+		];
+	}, [telegramBot]);
+
 	return (
 		<Nav variant='pills' className='nav-fill bg-light border rounded gap-2 p-2'>
-			{headerLinks.map(({ className, ...props }, index) => {
-				const to: string = `/telegram-bot-menu/${telegramBot.id}/${props.to}`;
-
-				return (
-					<Link
-						key={index}
-						{...props}
-						to={to}
-						className={classNames(
-							'nav-link',
-							{ active: location.pathname === to },
-							className,
-						)}
-					/>
-				);
-			})}
+			{headerLinks.map(({ className, ...props }, index) => (
+				<Link
+					key={index}
+					{...props}
+					className={classNames(
+						'nav-link',
+						{ active: location.pathname === props.to },
+						className,
+					)}
+				/>
+			))}
 		</Nav>
 	);
 }

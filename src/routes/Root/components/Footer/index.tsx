@@ -1,5 +1,7 @@
 import React, { ReactElement, memo } from 'react';
 
+import { reverse } from 'routes';
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -45,7 +47,13 @@ const linkGroups: LinkGroupProps[] = [
 	},
 	{
 		title: gettext('Другое'),
-		links: [{ type: 'react', to: '/privacy-policy/', children: 'Privacy Policy' }],
+		links: [
+			{
+				type: 'react',
+				to: reverse('privacy-policy'),
+				children: 'Privacy Policy',
+			},
+		],
 	},
 ];
 
