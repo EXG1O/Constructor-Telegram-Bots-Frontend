@@ -6,6 +6,7 @@ import { BaseModalProps } from '@restart/ui/Modal';
 import Loading from '../Loading';
 
 import Header from './components/Header';
+import Title from './components/Title';
 import Body from './components/Body';
 import Footer from './components/Footer';
 
@@ -42,7 +43,6 @@ export interface ModalProps
 	children?: ReactNode;
 }
 
-/** The wrapper component adds support for the `loading` prop to the Modal component from `react-bootstrap`. */
 function Modal({
 	loading = false,
 	backdrop,
@@ -68,4 +68,4 @@ function Modal({
 	);
 }
 
-export default Object.assign(Modal, { Header, Title: BaseModal.Title, Body, Footer });
+export default Object.assign(Modal, { Header, Title, Body, Footer });

@@ -22,7 +22,7 @@ function AskConfirmModal({
 	return (
 		<Modal {...props} onHide={onHide}>
 			<Modal.Header closeButton>
-				<Modal.Title as='h5'>{title}</Modal.Title>
+				<Modal.Title>{title}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>{children}</Modal.Body>
 			<Modal.Footer className='gap-3'>
