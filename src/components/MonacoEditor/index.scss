@@ -3,7 +3,7 @@
 .monaco-editor-wrapper {
 	transition: $input-transition;
 
-	&.padding {
+	&.p-show {
 		padding: $input-padding-y $input-padding-x;
 	}
 
