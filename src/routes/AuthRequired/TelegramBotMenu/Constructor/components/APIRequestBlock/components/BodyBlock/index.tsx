@@ -32,14 +32,14 @@ function BodyBlock(props: BodyBlockProps): ReactElement<BodyBlockProps> {
 	);
 
 	return (
-		<BlockCollapse unmountOnExit>
+		<BlockCollapse>
 			<div {...props}>
 				<Button
 					size='sm'
 					{...(show ? hideButtonProps : showButtonProps)}
 					onClick={() => setShow(!show)}
 				/>
-				<Collapse in={show} unmountOnExit>
+				<Collapse in={show}>
 					<div>
 						<BodyEditor className='border-top-0 rounded-top-0' />
 					</div>

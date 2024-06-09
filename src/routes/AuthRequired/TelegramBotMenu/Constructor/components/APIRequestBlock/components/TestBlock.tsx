@@ -85,7 +85,7 @@ function TestBlock(props: TestBlockProps): ReactElement<TestBlockProps> {
 			>
 				{gettext('Протестировать')}
 			</Button>
-			<Collapse in={Boolean(result)} unmountOnExit>
+			<Collapse in={Boolean(result)}>
 				<div>
 					<div className='border border-top-0 rounded-1 rounded-top-0 py-1 px-2'>
 						{result && (

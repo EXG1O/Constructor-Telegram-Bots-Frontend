@@ -31,7 +31,7 @@ function URLInputCollapse({
 
 	return (
 		<div>
-			<Collapse in={keyboardType !== 'default'} unmountOnExit>
+			<Collapse in={keyboardType !== 'default'}>
 				<div>
 					<Button
 						size='sm'

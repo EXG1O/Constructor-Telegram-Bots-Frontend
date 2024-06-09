@@ -41,7 +41,7 @@ function AddonButtonGroup({
 				{...(show ? hideButtonProps : showButtonProps)}
 				onClick={() => setShow(!show)}
 			/>
-			<Collapse in={show} unmountOnExit>
+			<Collapse in={show}>
 				<div>
 					<div className='vstack bg-light border border-top-0 rounded-1 rounded-top-0 p-1 gap-1'>
 						<StoreContext.Provider value={store}>
