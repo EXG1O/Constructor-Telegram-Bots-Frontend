@@ -1,10 +1,10 @@
-import React, { ReactElement, memo, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, memo, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 
 import('./QuillEditor.scss');
 
-import Quill, { Sources } from 'quill';
-import ReactQuill, { ReactQuillProps, UnprivilegedEditor, Range } from 'react-quill';
+import Quill from 'quill';
+import ReactQuill, { ReactQuillProps } from 'react-quill';
 
 export type QuillEditor = Quill & ReactQuill;
 
@@ -32,8 +32,6 @@ function QuillEditor({
 	const quillRef = useRef<Quill | null>(null);
 	const reactQuillRef = useRef<ReactQuill | null>(null);
 
-	const [focus, setFocus] = useState<boolean>(false);
-
 	useEffect(() => {
 		if (!reactQuillRef.current) {
 			throw Error('reactQuillRef should not be null!');
@@ -48,32 +46,12 @@ function QuillEditor({
 		onMount?.(Object.assign(quillRef.current, reactQuillRef.current));
 	}, []);
 
-	function handleFocus(
-		selection: Range,
-		source: Sources,
-		editor: UnprivilegedEditor,
-	): void {
-		setFocus(true);
-		onFocus?.(selection, source, editor);
-	}
-
-	function handleBlur(
-		selection: Range,
-		source: Sources,
-		editor: UnprivilegedEditor,
-	): void {
-		setFocus(false);
-		onBlur?.(selection, source, editor);
-	}
-
 	return (
 		<ReactQuill
 			ref={reactQuillRef}
 			{...props}
 			modules={{ toolbar }}
-			className={classNames('border rounded', { focus }, className)}
-			onFocus={handleFocus}
-			onBlur={handleBlur}
+			className={classNames('border rounded', className)}
 		/>
 	);
 }

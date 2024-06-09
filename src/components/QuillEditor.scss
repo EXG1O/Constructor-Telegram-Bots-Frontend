@@ -4,7 +4,7 @@
 .quill {
 	transition: $input-transition;
 
-	&.focus {
+	&:focus-within {
 		border-color: $input-focus-border-color !important;
 		box-shadow: $input-focus-box-shadow;
 	}
