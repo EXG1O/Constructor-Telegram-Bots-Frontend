@@ -1,11 +1,4 @@
-import React, {
-	ReactElement,
-	memo,
-	useRef,
-	useMemo,
-	useState,
-	useCallback,
-} from 'react';
+import React, { ReactElement, memo, useRef, useMemo, useCallback } from 'react';
 import classNames from 'classnames';
 import monaco from 'monaco-editor';
 
@@ -64,8 +57,6 @@ function MonacoEditor({
 		[roundedValue],
 	);
 
-	const [focus, setFocus] = useState<boolean>(false);
-
 	function updateLayout(shouldResetWidth?: boolean): void {
 		if (editor.current) {
 			const editorModel: monaco.editor.ITextModel | null =
@@ -84,22 +75,6 @@ function MonacoEditor({
 		}
 	}
 
-	function handleFocus(): void {
-		if (!disableFocusEffect) {
-			setFocus(true);
-		}
-
-		onFocus?.();
-	}
-
-	function handleBlur(): void {
-		if (!disableFocusEffect) {
-			setFocus(false);
-		}
-
-		onBlur?.();
-	}
-
 	const handleChange = useCallback<NonNullable<BaseMonacoEditorProps['onChange']>>(
 		(value) => {
 			if (editor.current && value !== undefined) {
@@ -114,11 +89,7 @@ function MonacoEditor({
 		(baseEditor, monaco) => {
 			editor.current = Object.assign(baseEditor, { updateLayout });
 
-			editor.current.onDidFocusEditorText(handleFocus);
-			editor.current.onDidBlurEditorText(handleBlur);
-
 			updateLayout();
-
 			onMount?.(editor.current, monaco);
 		},
 		[onMount],
@@ -155,7 +126,7 @@ function MonacoEditor({
 			className={classNames(
 				baseClassName,
 				'monaco-editor-wrapper overflow-hidden',
-				{ padding: !disablePadding, focus },
+				{ padding: !disablePadding },
 				className,
 			)}
 			onChange={handleChange}
