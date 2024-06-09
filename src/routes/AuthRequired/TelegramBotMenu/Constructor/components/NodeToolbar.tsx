@@ -8,12 +8,17 @@ import Button from 'react-bootstrap/Button';
 export interface NodeToolbarProps
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
 	title: string;
-	onEdit: () => void;
-	onDelete: () => void;
+	onEdit: React.MouseEventHandler<HTMLButtonElement>;
+	onDelete: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const titleStyle: CSSProperties = { cursor: 'default' };
-const buttonStyle: CSSProperties = { fontSize: '16px' };
+const titleStyle: CSSProperties = {
+	cursor: 'default',
+	userSelect: 'none',
+	WebkitUserSelect: 'none',
+	padding: '2px 0',
+};
+const buttonStyle: CSSProperties = { fontSize: '18px' };
 
 function NodeToolbar({
 	title,
