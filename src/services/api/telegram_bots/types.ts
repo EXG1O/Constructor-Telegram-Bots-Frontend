@@ -30,7 +30,7 @@ export interface Connection {
 export interface APIRequest {
 	url: string;
 	method: 'get' | 'post' | 'put' | 'patch' | 'delete';
-	headers: Record<string, any> | null;
+	headers: Record<string, any>[] | null;
 	body: Record<string, any> | null;
 }
 
@@ -45,14 +45,17 @@ export interface CommandTrigger {
 	description: string | null;
 }
 
-export interface CommandImage {
+export interface CommandMedia {
 	id: number;
-	name: string;
-	size: number;
-	url: string;
+	position: number;
+	name: string | null;
+	size: number | null;
+	url: string | null;
+	from_url: string | null;
 }
 
-export type CommandFile = CommandImage;
+export type CommandImage = CommandMedia;
+export type CommandFile = CommandMedia;
 
 export interface CommandMessage {
 	text: string;
@@ -60,7 +63,8 @@ export interface CommandMessage {
 
 export interface CommandKeyboardButton {
 	id: number;
-	row: number | null;
+	row: number;
+	position: number;
 	text: string;
 	url: string | null;
 }
@@ -175,26 +179,41 @@ export namespace Data {
 	}
 
 	export namespace CommandsAPI {
-		interface CreateCommandKeyboardButton
-			extends Pick<CommandKeyboardButton, 'text'> {
-			row?: CommandKeyboardButton['row'];
+		export interface CreateCommandTrigger extends Omit<CommandTrigger, 'description'> {
+			description?: CommandTrigger['description'];
+		}
+
+		export interface CreateCommandMedia extends Pick<CommandMedia, 'position'> {
+			from_url?: CommandMedia['from_url'] | null;
+		}
+
+		export interface CreateCommandImage extends CreateCommandMedia {
+			image?: File | null;
+		}
+
+		export interface CreateCommandFile extends CreateCommandMedia {
+			file?: File | null;
+		}
+
+		export interface CreateCommandKeyboardButton
+			extends Omit<CommandKeyboardButton, 'id' | 'url'> {
 			url?: CommandKeyboardButton['url'];
 		}
 
-		interface CreateCommandKeyboard extends Omit<CommandKeyboard, 'buttons'> {
+		export interface CreateCommandKeyboard extends Omit<CommandKeyboard, 'buttons'> {
 			buttons: CreateCommandKeyboardButton[];
 		}
 
-		interface CreateCommandAPIRequest
+		export interface CreateCommandAPIRequest
 			extends Pick<CommandAPIRequest, 'url' | 'method'> {
 			headers?: CommandAPIRequest['headers'];
 			body?: CommandAPIRequest['body'];
 		}
 
 		export interface Create extends Pick<Command, 'name' | 'settings' | 'message'> {
-			trigger?: Command['trigger'];
-			images?: File[];
-			files?: File[];
+			trigger?: CreateCommandTrigger | null;
+			images?: CreateCommandImage[] | null;
+			files?: CreateCommandFile[] | null;
 			keyboard?: CreateCommandKeyboard | null;
 			api_request?: CreateCommandAPIRequest | null;
 			database_record?: Command['database_record'];
@@ -202,32 +221,44 @@ export namespace Data {
 	}
 
 	export namespace CommandAPI {
-		interface UpdateCommandKeyboardButton
+		export interface UpdateCommandMedia extends Pick<CommandMedia, 'position' | 'from_url'> {
+			id?: CommandMedia['id'];
+		}
+
+		export interface UpdateCommandImage extends UpdateCommandMedia {
+			image: File | null;
+		}
+
+		export interface UpdateCommandFile extends UpdateCommandMedia {
+			file: File | null;
+		}
+
+		export interface UpdateCommandKeyboardButton
 			extends Omit<CommandKeyboardButton, 'id'> {
 			id?: CommandKeyboardButton['id'];
 		}
 
-		interface UpdateCommandKeyboard extends Omit<CommandKeyboard, 'buttons'> {
+		export interface UpdateCommandKeyboard extends Omit<CommandKeyboard, 'buttons'> {
 			buttons: UpdateCommandKeyboardButton[];
 		}
 
 		export interface Update
 			extends Omit<Command, 'id' | 'images' | 'files' | 'keyboard'> {
-			images: (File | number)[];
-			files: (File | number)[];
+			images: UpdateCommandImage[] | null;
+			files: UpdateCommandFile[] | null;
 			keyboard: UpdateCommandKeyboard | null;
 		}
-
-		interface PartialUpdateCommandKeyboard
+		export interface PartialUpdateCommandKeyboard
 			extends Partial<Omit<CommandKeyboard, 'buttons'>> {
 			buttons?: Partial<CommandKeyboard['buttons']>;
 		}
 
-		export interface PartialUpdate
-			extends Pick<CommandsAPI.Create, 'images' | 'files'> {
+		export interface PartialUpdate {
 			name?: Command['name'];
 			settings?: Partial<Command['settings']>;
 			trigger?: Partial<Command['trigger']>;
+			images?: Partial<UpdateCommandImage>[] | null;
+			files?: Partial<UpdateCommandFile>[] | null;
 			message?: Partial<Command['message']>;
 			keyboard?: PartialUpdateCommandKeyboard;
 			api_request?: Partial<Command['api_request']>;

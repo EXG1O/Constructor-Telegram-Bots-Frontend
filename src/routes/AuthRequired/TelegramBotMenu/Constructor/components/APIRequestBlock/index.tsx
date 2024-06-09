@@ -1,83 +1,57 @@
-import React, { ReactElement, memo, useMemo, useState, useCallback } from 'react';
-
-import Form from 'react-bootstrap/Form';
+import React, { ReactElement, memo } from 'react';
 
 import Block, { BlockProps } from '../Block';
 
-import MethodToggle, { Value as MethodValue } from './components/MethodToggle';
-import Headers, { Data as HeadersData } from './components/Headers';
-import Body, { Value as BodyData } from './components/Body';
-import Test from './components/Test';
+import URLInput, { URL, defaultURL } from './components/URLInput';
+import MethodButtonGroup, {
+	Method,
+	defaultMethod,
+} from './components/MethodButtonGroup';
+import HeadersBlock, { Headers, defaultHeaders } from './components/HeadersBlock';
+import BodyBlock, { Body, defaultBody } from './components/BodyBlock';
+import TestBlock from './components/TestBlock';
 
-export interface Data {
-	url: string;
-	method: MethodValue;
-	headers?: HeadersData;
-	body?: BodyData;
+import StoreContext, { StoreContextType } from './contexts/StoreContext';
+
+export interface APIRequest {
+	url: URL;
+	method: Method;
+	headers: Headers;
+	body: Body;
 }
 
-export interface APIRequestBlockProps
-	extends Omit<BlockProps, 'title' | 'onChange' | 'children'> {
-	data?: Data;
-	onChange: (data: Data) => void;
+export interface APIRequestBlockProps extends Omit<BlockProps, 'title' | 'children'> {
+	store: StoreContextType;
 }
 
-export const defaultData: Data = { url: '', method: 'get' };
+export const defaultAPIRequest: APIRequest = {
+	url: defaultURL,
+	method: defaultMethod,
+	headers: defaultHeaders,
+	body: defaultBody,
+};
+
+export {
+	defaultURL as defaultAPIRequestURL,
+	defaultMethod as defaultAPIRequestMethod,
+	defaultHeaders as defaultAPIRequestHeaders,
+	defaultBody as defaultAPIRequestBody,
+};
 
 function APIRequestBlock({
-	data = defaultData,
-	onChange,
+	store,
 	...props
 }: APIRequestBlockProps): ReactElement<APIRequestBlockProps> {
-	const [showHeaders, setShowHeaders] = useState<boolean>(Boolean(data.headers));
-	const [showBody, setShowBody] = useState<boolean>(Boolean(data.body));
-
 	return (
 		<Block {...props} title={gettext('API-запрос')}>
 			<Block.Body className='vstack gap-2'>
-				<Form.Control
-					value={data.url}
-					placeholder={gettext('Введите URL-адрес')}
-					onChange={(e) => onChange({ ...data, url: e.target.value })}
-				/>
-				<MethodToggle
-					value={data.method}
-					onChange={useCallback(
-						(method: MethodValue) => onChange({ ...data, method }),
-						[],
-					)}
-				/>
-				<Headers
-					show={showHeaders}
-					data={data.headers}
-					onShow={useCallback(() => setShowHeaders(true), [])}
-					onHide={useCallback(() => setShowHeaders(false), [])}
-					onChange={useCallback(
-						(headers) => onChange({ ...data, headers }),
-						[],
-					)}
-				/>
-				<Body
-					show={showBody}
-					value={data.body}
-					onShow={useCallback(() => setShowBody(true), [])}
-					onHide={useCallback(() => setShowBody(false), [])}
-					onChange={useCallback((body) => onChange({ ...data, body }), [])}
-				/>
-				<Test
-					url={data.url}
-					data={useMemo(
-						() => ({
-							method: data.method,
-							headers: data.headers?.map((header) => [
-								header.key,
-								header.value,
-							]),
-							body: data.body,
-						}),
-						[data],
-					)}
-				/>
+				<StoreContext.Provider value={store}>
+					<URLInput />
+					<MethodButtonGroup />
+					<HeadersBlock />
+					<BodyBlock />
+					<TestBlock />
+				</StoreContext.Provider>
 			</Block.Body>
 		</Block>
 	);

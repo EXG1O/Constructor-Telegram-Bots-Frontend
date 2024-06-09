@@ -25,6 +25,7 @@ import Title from 'components/Title';
 
 import Panel from './components/Panel';
 import CommandNode from './components/CommandNode';
+import CommandOffcanvas from './components/CommandOffcanvas';
 
 import useToast from 'services/hooks/useToast';
 
@@ -284,27 +285,57 @@ function Constructor(): ReactElement {
 				className='border rounded'
 				style={{ height: '100%', minHeight: '600px' }}
 			>
-				<ReactFlow
-					fitView
-					nodes={nodes}
-					edges={edges}
-					nodeTypes={nodeTypes}
-					defaultEdgeOptions={defaultEdgeOptions}
-					deleteKeyCode={null}
-					onNodesChange={onNodesChange}
-					onEdgesChange={onEdgesChange}
-					onNodeDragStop={handleNodeDragStop}
-					onEdgeUpdateStart={handleEdgeUpdateStart}
-					onEdgeUpdate={handleEdgeUpdate}
-					onEdgeUpdateEnd={handleEdgeUpdateEnd}
-					isValidConnection={handleCheckValidConnection}
-					onConnect={addEdge}
+				<CommandOffcanvas.StoreProvider
+					onAdd={useCallback(
+						(diagramCommand) =>
+							setNodes((prevNodes) => [
+								...prevNodes,
+								...parseDiagramCommandNodes([diagramCommand]),
+							]),
+						[],
+					)}
+					onSave={useCallback(
+						(commandID, diagramCommand) =>
+							setNodes((prevNodes) =>
+								prevNodes.map((node) =>
+									node.id === `command:${commandID}`
+										? parseDiagramCommandNodes([diagramCommand])[0]
+										: node,
+								),
+							),
+						[],
+					)}
 				>
-					<Panel />
-					<Controls showInteractive={false} className='border rounded-1' />
-					<MiniMap className='border rounded-1' />
-					<Background variant={BackgroundVariant.Dots} size={1} gap={24} />
-				</ReactFlow>
+					<CommandOffcanvas />
+					<ReactFlow
+						fitView
+						nodes={nodes}
+						edges={edges}
+						nodeTypes={nodeTypes}
+						defaultEdgeOptions={defaultEdgeOptions}
+						deleteKeyCode={null}
+						onNodesChange={onNodesChange}
+						onEdgesChange={onEdgesChange}
+						onNodeDragStop={handleNodeDragStop}
+						onEdgeUpdateStart={handleEdgeUpdateStart}
+						onEdgeUpdate={handleEdgeUpdate}
+						onEdgeUpdateEnd={handleEdgeUpdateEnd}
+						isValidConnection={handleCheckValidConnection}
+						onConnect={addEdge}
+					>
+						<Panel />
+						<Controls
+							showInteractive={false}
+							className='border rounded-1'
+						/>
+						<MiniMap className='border rounded-1' />
+						<Background
+							variant={BackgroundVariant.Dots}
+							size={1}
+							gap={24}
+						/>
+					</ReactFlow>
+				</CommandOffcanvas.StoreProvider>
 			</div>
 		</Title>
 	);

@@ -2,22 +2,27 @@ import React, { ReactElement } from 'react';
 
 import Card, { CardProps } from 'react-bootstrap/Card';
 
-import Body from './components/Body';
+import BlockBody from './components/BlockBody';
+import BlockFooter from './components/BlockFooter';
 
 export interface BlockProps extends CardProps {
-	as?: any;
 	title: string;
 }
 
-function Block({ title, children, ...props }: BlockProps): ReactElement<BlockProps> {
+function Block({
+	title,
+	body,
+	children,
+	...props
+}: BlockProps): ReactElement<BlockProps> {
 	return (
 		<Card {...props}>
 			<Card.Header as='h6' className='text-center'>
 				{title}
 			</Card.Header>
-			{children}
+			{body ? <BlockBody>{children}</BlockBody> : children}
 		</Card>
 	);
 }
 
-export default Object.assign(Block, { Body });
+export default Object.assign(Block, { Body: BlockBody, Footer: BlockFooter });

@@ -125,16 +125,34 @@ export namespace CommandsAPI {
 		);
 	}
 
+	function parseMedia(
+		index: number,
+		formData: FormData,
+		mediaType: 'image' | 'file',
+		file: File | null | undefined,
+		{ from_url, ...extraData }: Data.CommandsAPI.CreateCommandMedia,
+	): void {
+		const name: string = `${mediaType}:${index}`;
+
+		if (file) {
+			formData.append(name, file, file.name);
+		} else if (from_url) {
+			formData.append(name, from_url);
+		}
+
+		formData.append(`${name}:extra_data`, JSON.stringify(extraData));
+	}
+
 	export async function create(
 		telegramBotID: TelegramBot['id'],
 		{ images, files, ...data }: Data.CommandsAPI.Create,
 	) {
 		const formData = new FormData();
-		images?.forEach((image, index) =>
-			formData.append(`image:${index}`, image, image.name),
+		images?.forEach(({ image, ...media }, index) =>
+			parseMedia(index, formData, 'image', image, media),
 		);
-		files?.forEach((file, index) =>
-			formData.append(`file:${index}`, file, file.name),
+		files?.forEach(({ file, ...media }, index) =>
+			parseMedia(index, formData, 'file', file, media),
 		);
 		formData.append('data', JSON.stringify(data));
 
@@ -162,30 +180,38 @@ export namespace CommandAPI {
 		);
 	}
 
+	function parseMedia(
+		index: number,
+		formData: FormData,
+		mediaType: 'image' | 'file',
+		file: File | null | undefined,
+		{ id, from_url, ...extraData }: Partial<Data.CommandAPI.UpdateCommandMedia>,
+	): void {
+		const name: string = `${mediaType}:${index}`;
+
+		if (file) {
+			formData.append(name, file, file.name);
+		} else if (id) {
+			formData.append(name, id.toString());
+		} else if (from_url) {
+			formData.append(name, from_url);
+		}
+
+		formData.append(`${name}:extra_data`, JSON.stringify(extraData));
+	}
+
 	export async function update(
 		telegramBotID: TelegramBot['id'],
 		commandID: Command['id'],
 		{ images, files, ...data }: Data.CommandAPI.Update,
 	) {
 		const formData = new FormData();
-		images.forEach((image, index) => {
-			const name: string = `image:${index}`;
-
-			if (typeof image === 'number') {
-				formData.append(name, image.toString());
-			} else {
-				formData.append(name, image, image.name);
-			}
-		});
-		files.forEach((file, index) => {
-			const name: string = `file:${index}`;
-
-			if (typeof file === 'number') {
-				formData.append(name, file.toString());
-			} else {
-				formData.append(name, file, file.name);
-			}
-		});
+		images?.forEach(({ image, ...media }, index) =>
+			parseMedia(index, formData, 'image', image, media),
+		);
+		files?.forEach(({ file, ...media }, index) =>
+			parseMedia(index, formData, 'file', file, media),
+		);
 		formData.append('data', JSON.stringify(data));
 
 		return await makeRequest<APIResponse.CommandAPI.Update>(
@@ -201,11 +227,11 @@ export namespace CommandAPI {
 		{ images, files, ...data }: Data.CommandAPI.PartialUpdate,
 	) {
 		const formData = new FormData();
-		images?.forEach((image, index) =>
-			formData.append(`image:${index}`, image, image.name),
+		images?.forEach(({ image, ...media }, index) =>
+			parseMedia(index, formData, 'image', image, media),
 		);
-		files?.forEach((file, index) =>
-			formData.append(`file:${index}`, file, file.name),
+		files?.forEach(({ file, ...media }, index) =>
+			parseMedia(index, formData, 'file', file, media),
 		);
 		formData.append('data', JSON.stringify(data));
 

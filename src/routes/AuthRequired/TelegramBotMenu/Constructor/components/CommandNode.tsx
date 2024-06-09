@@ -1,28 +1,28 @@
-import React, { ReactElement, useState, useCallback } from 'react';
+import React, { ReactElement, memo, useState, useCallback } from 'react';
 import { useRouteLoaderData } from 'react-router';
-import { NodeProps, Handle, Position, useReactFlow } from 'reactflow';
 
 import './CommandNode.scss';
+
+import { NodeProps, Handle, Position, useStore } from 'reactflow';
 
 import Stack from 'react-bootstrap/Stack';
 
 import AskConfirmModal from 'components/AskConfirmModal';
 
-import CommandEditOffcanvas from './CommandEditOffcanvas';
 import NodeToolbar from './NodeToolbar';
 
 import useToast from 'services/hooks/useToast';
+
+import useCommandOffcanvasStore from './CommandOffcanvas/hooks/useCommandOffcanvasStore';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
 import { CommandAPI } from 'services/api/telegram_bots/main';
 import { DiagramBlock, DiagramCommand } from 'services/api/telegram_bots/types';
 
-type NodeData = Omit<DiagramCommand, keyof DiagramBlock>;
+type Data = Omit<DiagramCommand, keyof DiagramBlock>;
 
-interface CommandNodeProps extends Omit<NodeProps, 'data'> {
-	data: NodeData;
-}
+export type CommandNodeProps = NodeProps<Data>;
 
 function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodeProps> {
 	const { telegramBot } = useRouteLoaderData(
@@ -31,17 +31,23 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 
 	const { createMessageToast } = useToast();
 
-	const { setNodes } = useReactFlow();
+	const onNodesChange = useStore((state) => state.onNodesChange);
 
-	const [showDeletionModal, setShowDeletionModal] = useState<boolean>(false);
-	const [showEditOffcanvas, setShowEditOffcanvas] = useState<boolean>(false);
+	const showEditCommandOffcanvas = useCommandOffcanvasStore(
+		(state) => state.showEdit,
+	);
+
+	const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+	const [loadingDeleteModal, setLoadingDeleteModal] = useState<boolean>(false);
 
 	const handleConfirmDelete = useCallback(async (): Promise<void> => {
+		setLoadingDeleteModal(true);
+
 		const response = await CommandAPI._delete(telegramBot.id, data.id);
 
 		if (response.ok) {
-			setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
-			setShowDeletionModal(false);
+			onNodesChange?.([{ id, type: 'remove' }]);
+			setShowDeleteModal(false);
 			createMessageToast({
 				message: gettext('Вы успешно удалили команду.'),
 				level: 'success',
@@ -52,27 +58,25 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 				level: 'error',
 			});
 		}
+
+		setLoadingDeleteModal(false);
 	}, []);
 
 	return (
 		<>
 			<AskConfirmModal
-				show={showDeletionModal}
+				show={showDeleteModal}
+				loading={loadingDeleteModal}
 				title={gettext('Удаление команды')}
 				onConfirm={handleConfirmDelete}
-				onHide={useCallback(() => setShowDeletionModal(false), [])}
+				onHide={useCallback(() => setShowDeleteModal(false), [])}
 			>
 				{gettext('Вы точно хотите удалить команду?')}
 			</AskConfirmModal>
-			<CommandEditOffcanvas
-				show={showEditOffcanvas}
-				commandID={data.id}
-				onHide={useCallback(() => setShowEditOffcanvas(false), [])}
-			/>
 			<NodeToolbar
 				title={gettext('Команда')}
-				onEdit={useCallback(() => setShowDeletionModal(true), [])}
-				onDelete={useCallback(() => setShowEditOffcanvas(true), [])}
+				onEdit={useCallback(() => showEditCommandOffcanvas(data.id), [data.id])}
+				onDelete={useCallback(() => setShowDeleteModal(true), [])}
 			/>
 			<Stack gap={2} style={{ width: '300px' }}>
 				<div
@@ -123,4 +127,4 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 	);
 }
 
-export default CommandNode;
+export default memo(CommandNode);
