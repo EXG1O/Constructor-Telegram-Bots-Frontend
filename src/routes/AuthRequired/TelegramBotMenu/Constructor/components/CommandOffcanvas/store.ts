@@ -162,7 +162,7 @@ export function createStore(initialProps: InitialProps) {
 
 			showAdd: () => set({ ...initialState, show: true }),
 			showEdit: async (commandID) => {
-				set({ type: 'edit', show: true, loading: true });
+				set({ ...initialState, type: 'edit', show: true, loading: true });
 
 				const { telegramBot, createMessageToast } = get();
 
