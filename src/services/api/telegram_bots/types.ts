@@ -179,7 +179,8 @@ export namespace Data {
 	}
 
 	export namespace CommandsAPI {
-		export interface CreateCommandTrigger extends Omit<CommandTrigger, 'description'> {
+		export interface CreateCommandTrigger
+			extends Omit<CommandTrigger, 'description'> {
 			description?: CommandTrigger['description'];
 		}
 
@@ -200,7 +201,8 @@ export namespace Data {
 			url?: CommandKeyboardButton['url'];
 		}
 
-		export interface CreateCommandKeyboard extends Omit<CommandKeyboard, 'buttons'> {
+		export interface CreateCommandKeyboard
+			extends Omit<CommandKeyboard, 'buttons'> {
 			buttons: CreateCommandKeyboardButton[];
 		}
 
@@ -221,7 +223,8 @@ export namespace Data {
 	}
 
 	export namespace CommandAPI {
-		export interface UpdateCommandMedia extends Pick<CommandMedia, 'position' | 'from_url'> {
+		export interface UpdateCommandMedia
+			extends Pick<CommandMedia, 'position' | 'from_url'> {
 			id?: CommandMedia['id'];
 		}
 
@@ -238,7 +241,8 @@ export namespace Data {
 			id?: CommandKeyboardButton['id'];
 		}
 
-		export interface UpdateCommandKeyboard extends Omit<CommandKeyboard, 'buttons'> {
+		export interface UpdateCommandKeyboard
+			extends Omit<CommandKeyboard, 'buttons'> {
 			buttons: UpdateCommandKeyboardButton[];
 		}
 
