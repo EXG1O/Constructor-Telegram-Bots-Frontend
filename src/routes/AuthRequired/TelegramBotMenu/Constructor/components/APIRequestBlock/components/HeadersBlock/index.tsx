@@ -24,7 +24,7 @@ function HeadersBlock(props: HeadersBlockProps): ReactElement<HeadersBlockProps>
 
 	return (
 		<BlockCollapse unmountOnExit>
-			<div className='vstack border rounded-1 gap-1 p-1'>
+			<div className='vstack border border-top-0 rounded-1 rounded-top-0 gap-1 p-1'>
 				{headers.map((header, index) => (
 					<HeaderInputGroup key={index} index={index} />
 				))}
