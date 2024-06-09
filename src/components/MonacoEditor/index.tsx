@@ -4,7 +4,7 @@ import monaco from 'monaco-editor';
 
 import('./index.scss');
 
-import Editor, { EditorProps, OnMount, OnChange } from '@monaco-editor/react';
+import Editor, { EditorProps, Monaco, OnMount, OnChange } from '@monaco-editor/react';
 
 import EditorLoading from './components/EditorLoading';
 
@@ -12,10 +12,11 @@ export interface Editor extends monaco.editor.IStandaloneCodeEditor {
 	updateLayout: (shouldResetWidth?: boolean) => void;
 }
 
-export interface MonacoEditorProps extends Omit<EditorProps, 'loading' | 'onChange'> {
+export interface MonacoEditorProps extends Omit<EditorProps, 'loading' | 'onChange' | 'onMount'> {
 	size?: 'sm' | 'lg';
 	disablePadding?: boolean;
 	onChange?: (editor: Editor, value: string) => void;
+	onMount?: (editor: Editor, monaco: Monaco) => void;
 }
 
 const lineHeights: Record<string, number> = { sm: 19, lg: 22 };
