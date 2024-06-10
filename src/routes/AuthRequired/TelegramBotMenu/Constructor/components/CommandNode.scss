@@ -1,5 +1,7 @@
 @use 'components/QuillEditor.content' as QuillEditorContent;
+@use 'components/TelegramQuillEditor.content' as TelegramQuillEditorContent;
 
 .message-text-block {
 	@include QuillEditorContent.styles;
+	@include TelegramQuillEditorContent.styles;
 }
