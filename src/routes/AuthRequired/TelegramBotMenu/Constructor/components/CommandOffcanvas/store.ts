@@ -459,10 +459,13 @@ export function createStore(initialProps: InitialProps) {
 					databaseRecord,
 
 					showTriggerBlock,
+					showTriggerDescriptionInput,
 					showImagesBlock,
 					showFilesBlock,
 					showKeyboardBlock,
 					showAPIRequestBlock,
+					showAPIRequestHeadersBlock,
+					showAPIRequestBodyBlock,
 					showDatabaseRecordBlock,
 
 					createMessageToast,
@@ -485,7 +488,14 @@ export function createStore(initialProps: InitialProps) {
 							is_delete_user_message: settings.isDeleteUserMessage,
 							is_send_as_new_message: settings.isSendAsNewMessage,
 						},
-						trigger: showTriggerBlock ? trigger : null,
+						trigger: showTriggerBlock
+							? {
+									...trigger,
+									description: showTriggerDescriptionInput
+										? trigger.description
+										: null,
+								}
+							: null,
 						images: showImagesBlock
 							? images.map<Data.CommandAPI.UpdateCommandImage>(
 									({ id, image, fromURL }, index) => ({
@@ -532,13 +542,14 @@ export function createStore(initialProps: InitialProps) {
 						api_request: showAPIRequestBlock
 							? {
 									...apiRequest,
-									headers:
-										apiRequest.headers &&
-										apiRequest.headers.map((header) => ({
-											[header.key]: header.value,
-										})),
-									body:
-										apiRequest.body && JSON.parse(apiRequest.body),
+									headers: showAPIRequestHeadersBlock
+										? apiRequest.headers.map((header) => ({
+												[header.key]: header.value,
+											}))
+										: null,
+									body: showAPIRequestBodyBlock
+										? JSON.parse(apiRequest.body)
+										: null,
 								}
 							: null,
 						database_record: showDatabaseRecordBlock
