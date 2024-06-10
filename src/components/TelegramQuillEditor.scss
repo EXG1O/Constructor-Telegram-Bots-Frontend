@@ -1,3 +1,4 @@
+@use 'TelegramQuillEditor.content' as content;
 @import 'styles/variables';
 
 .quill {
@@ -26,12 +27,7 @@
 
 	.ql-container {
 		.ql-editor {
-			tg-spoiler {
-				color: $light;
-				background-color: $secondary;
-				border-radius: 4px;
-				padding: 2px 4px;
-			}
+			@include content.styles;
 		}
 	}
 }
