@@ -12,7 +12,8 @@ export interface Editor extends monaco.editor.IStandaloneCodeEditor {
 	updateLayout: (shouldResetWidth?: boolean) => void;
 }
 
-export interface MonacoEditorProps extends Omit<EditorProps, 'loading' | 'onChange' | 'onMount'> {
+export interface MonacoEditorProps
+	extends Omit<EditorProps, 'loading' | 'onChange' | 'onMount'> {
 	size?: 'sm' | 'lg';
 	disablePadding?: boolean;
 	onChange?: (editor: Editor, value: string) => void;
