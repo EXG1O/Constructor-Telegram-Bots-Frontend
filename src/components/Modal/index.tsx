@@ -16,26 +16,18 @@ export interface ModalProps
 	extends Omit<
 		BaseModalProps,
 		| 'role'
-		| 'renderBackdrop'
-		| 'renderDialog'
 		| 'transition'
 		| 'backdropTransition'
+		| 'renderBackdrop'
+		| 'renderDialog'
 		| 'children'
 	> {
 	loading?: boolean;
 	size?: 'sm' | 'lg' | 'xl';
-	fullscreen?:
-		| true
-		| string
-		| 'sm-down'
-		| 'md-down'
-		| 'lg-down'
-		| 'xl-down'
-		| 'xxl-down';
-	bsPrefix?: string;
+	fullscreen?: 'sm-down' | 'md-down' | 'lg-down' | 'xl-down' | 'xxl-down';
+	animation?: boolean;
 	centered?: boolean;
 	backdropClassName?: string;
-	animation?: boolean;
 	dialogClassName?: string;
 	contentClassName?: string;
 	dialogAs?: React.ElementType;
