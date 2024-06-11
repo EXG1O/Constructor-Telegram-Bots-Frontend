@@ -1,4 +1,4 @@
-import React, { ReactElement, memo, useState, useCallback } from 'react';
+import React, { ReactElement, memo, useCallback } from 'react';
 import { useRouteLoaderData } from 'react-router';
 
 import './CommandNode.scss';
@@ -7,11 +7,11 @@ import { NodeProps, Handle, Position, useStore } from 'reactflow';
 
 import Stack from 'react-bootstrap/Stack';
 
-import AskConfirmModal from 'components/AskConfirmModal';
-
 import NodeToolbar from './NodeToolbar';
 
 import useToast from 'services/hooks/useToast';
+
+import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 
 import useCommandOffcanvasStore from './CommandOffcanvas/hooks/useCommandOffcanvasStore';
 
@@ -37,46 +37,49 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 		(state) => state.showEdit,
 	);
 
-	const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-	const [loadingDeleteModal, setLoadingDeleteModal] = useState<boolean>(false);
+	const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
+	const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
+	const setLoadingAskConfirmModal = useAskConfirmModalStore(
+		(state) => state.setLoading,
+	);
 
-	const handleConfirmDelete = useCallback(async (): Promise<void> => {
-		setLoadingDeleteModal(true);
+	const showDeleteModal = useCallback(
+		() =>
+			setShowAskConfirmModal({
+				title: gettext('Удаление команды'),
+				text: gettext('Вы точно хотите удалить команду?'),
+				onConfirm: async () => {
+					setLoadingAskConfirmModal(true);
 
-		const response = await CommandAPI._delete(telegramBot.id, data.id);
+					const response = await CommandAPI._delete(telegramBot.id, data.id);
 
-		if (response.ok) {
-			onNodesChange?.([{ id, type: 'remove' }]);
-			setShowDeleteModal(false);
-			createMessageToast({
-				message: gettext('Вы успешно удалили команду.'),
-				level: 'success',
-			});
-		} else {
-			createMessageToast({
-				message: gettext('Не удалось удалить команду!'),
-				level: 'error',
-			});
-		}
+					if (response.ok) {
+						onNodesChange?.([{ id, type: 'remove' }]);
+						hideAskConfirmModal();
+						createMessageToast({
+							message: gettext('Вы успешно удалили команду.'),
+							level: 'success',
+						});
+					} else {
+						createMessageToast({
+							message: gettext('Не удалось удалить команду.'),
+							level: 'error',
+						});
+					}
 
-		setLoadingDeleteModal(false);
-	}, []);
+					setLoadingAskConfirmModal(false);
+				},
+				onCancel: null,
+			}),
+		[],
+	);
 
 	return (
 		<>
-			<AskConfirmModal
-				show={showDeleteModal}
-				loading={loadingDeleteModal}
-				title={gettext('Удаление команды')}
-				onConfirm={handleConfirmDelete}
-				onHide={useCallback(() => setShowDeleteModal(false), [])}
-			>
-				{gettext('Вы точно хотите удалить команду?')}
-			</AskConfirmModal>
 			<NodeToolbar
 				title={gettext('Команда')}
 				onEdit={useCallback(() => showEditCommandOffcanvas(data.id), [data.id])}
-				onDelete={useCallback(() => setShowDeleteModal(true), [])}
+				onDelete={showDeleteModal}
 			/>
 			<Stack gap={2} style={{ width: '300px' }}>
 				<div

@@ -1,8 +1,15 @@
-import React, { ReactElement, useCallback, useMemo, useState } from 'react';
+import React, {
+	ReactElement,
+	CSSProperties,
+	useCallback,
+	useMemo,
+	useState,
+} from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
 
 import ListGroupItem, { ListGroupItemProps } from 'react-bootstrap/ListGroupItem';
+import Button from 'react-bootstrap/Button';
 
 import Loading from 'components/Loading';
 import MonacoEditor, { MonacoEditorProps } from 'components/MonacoEditor';
@@ -11,9 +18,11 @@ import Block from '../Block';
 import ConfirmButtonGroup, {
 	ConfirmButtonGroupProps,
 } from './components/ConfirmButtonGroup';
-import DeleteButton from './components/DeleteButton';
 
 import useToast from 'services/hooks/useToast';
+
+import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
+
 import useRecords from '../../../../hooks/useRecords';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from '../../../../../Root';
@@ -24,6 +33,12 @@ import { DatabaseRecord } from 'services/api/telegram_bots/types';
 export interface RecordDisplayProps extends Omit<ListGroupItemProps, 'children'> {
 	record: DatabaseRecord;
 }
+
+const deleteButtonStyle: CSSProperties = {
+	width: '25px',
+	height: '25px',
+	fontSize: '18px',
+};
 
 function RecordDisplay({
 	record,
@@ -54,6 +69,46 @@ function RecordDisplay({
 
 	const [value, setValue] = useState<string>(initialValue);
 	const [loading, setLoading] = useState<boolean>(false);
+
+	const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
+	const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
+	const setLoadingAskConfirmModal = useAskConfirmModalStore(
+		(state) => state.setLoading,
+	);
+
+	const showDeleteModal = useCallback(
+		() =>
+			setShowAskConfirmModal({
+				title: gettext('Удаление записи'),
+				text: gettext('Вы точно хотите удалить запись?'),
+				onConfirm: async () => {
+					setLoadingAskConfirmModal(true);
+
+					const response = await DatabaseRecordAPI._delete(
+						telegramBot.id,
+						record.id,
+					);
+
+					if (response.ok) {
+						updateRecords();
+						hideAskConfirmModal();
+						createMessageToast({
+							message: gettext('Вы успешно удалили запись.'),
+							level: 'success',
+						});
+					} else {
+						createMessageToast({
+							message: gettext('Не удалось удалить запись!'),
+							level: 'error',
+						});
+					}
+
+					setLoadingAskConfirmModal(false);
+				},
+				onCancel: null,
+			}),
+		[],
+	);
 
 	const handleChange = useCallback<NonNullable<MonacoEditorProps['onChange']>>(
 		(editor, newValue) => {
@@ -130,7 +185,14 @@ function RecordDisplay({
 						onCancel={handleCancel}
 					/>
 				)}
-				<DeleteButton record={record} />
+				<Button
+					as='i'
+					size='sm'
+					variant='danger'
+					className='d-flex justify-content-center align-items-center bi bi-trash p-0'
+					style={deleteButtonStyle}
+					onClick={showDeleteModal}
+				/>
 			</div>
 		</ListGroupItem>
 	) : (

@@ -1,4 +1,5 @@
-import React, { ReactElement, memo } from 'react';
+import React, { ReactElement, memo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import CardFooter, { CardFooterProps } from 'react-bootstrap/CardFooter';
 import Button from 'react-bootstrap/Button';
@@ -7,19 +8,59 @@ import Loading from 'components/Loading';
 
 import useToast from 'services/hooks/useToast';
 
+import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
+
 import useTelegramBot from 'components/TelegramBotCard/hooks/useTelegramBot';
 
 import { TelegramBotAPI } from 'services/api/telegram_bots/main';
-import DeleteButton from './components/DeleteButton';
 
 export type TelegramBotCardFooterProps = Omit<CardFooterProps, 'children'>;
 
 function TelegramBotCardFooter(
 	props: TelegramBotCardFooterProps,
 ): ReactElement<TelegramBotCardFooterProps> {
+	const navigate = useNavigate();
+
 	const { createMessageToast } = useToast();
 
 	const [telegramBot, setTelegramBot] = useTelegramBot();
+
+	const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
+	const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
+	const setLoadingAskConfirmModal = useAskConfirmModalStore(
+		(state) => state.setLoading,
+	);
+
+	const showDeleteModal = useCallback(
+		() =>
+			setShowAskConfirmModal({
+				title: gettext('Удаление Telegram бота'),
+				text: gettext('Вы точно хотите удалить Telegram бота?'),
+				onConfirm: async () => {
+					setLoadingAskConfirmModal(true);
+
+					const response = await TelegramBotAPI._delete(telegramBot.id);
+
+					if (response.ok) {
+						hideAskConfirmModal();
+						navigate('/personal-cabinet/');
+						createMessageToast({
+							message: gettext('Вы успешно удалили Telegram бота.'),
+							level: 'success',
+						});
+					} else {
+						createMessageToast({
+							message: gettext('Не удалось удалить Telegram бота.'),
+							level: 'error',
+						});
+					}
+
+					setLoadingAskConfirmModal(false);
+				},
+				onCancel: null,
+			}),
+		[],
+	);
 
 	async function handleButtonClick(
 		action: 'start' | 'restart' | 'stop',
@@ -102,7 +143,9 @@ function TelegramBotCardFooter(
 					{gettext('Включить')}
 				</Button>
 			)}
-			<DeleteButton className='flex-fill' />
+			<Button variant='danger' className='flex-fill' onClick={showDeleteModal}>
+				{gettext('Удалить')}
+			</Button>
 		</CardFooter>
 	);
 }

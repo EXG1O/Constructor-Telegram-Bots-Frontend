@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { Outlet, useNavigation } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
+import AskConfirmModal from 'components/AskConfirmModal';
 import Loading from 'components/Loading';
 
 import Header from './components/Header';
@@ -37,6 +38,7 @@ function Root(): ReactElement {
 
 	return (
 		<ToastProvider>
+			<AskConfirmModal />
 			<Header />
 			{navigation.state === 'idle' ? (
 				<Outlet />
