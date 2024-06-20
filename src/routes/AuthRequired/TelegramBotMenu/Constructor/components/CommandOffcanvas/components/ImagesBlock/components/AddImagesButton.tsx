@@ -4,7 +4,7 @@ import Button, { ButtonProps } from 'react-bootstrap/Button';
 
 import { Image } from '..';
 
-import useToast from 'services/hooks/useToast';
+import { createMessageToast } from 'components/ToastContainer';
 
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
 import useTelegramBotStorage from '../../../hooks/useTelegramBotStorage';
@@ -21,8 +21,6 @@ interface ProcessedImage extends File {
 function AddImagesButton(
 	props: AddImagesButtonProps,
 ): ReactElement<AddImagesButtonProps> {
-	const { createMessageToast } = useToast();
-
 	const id = useId();
 
 	const updateImages = useCommandOffcanvasStore((state) => state.updateImages);

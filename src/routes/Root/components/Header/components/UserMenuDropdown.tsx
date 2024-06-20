@@ -5,8 +5,7 @@ import { reverse } from 'routes';
 
 import Dropdown, { DropdownProps } from 'react-bootstrap/Dropdown';
 
-import useToast from 'services/hooks/useToast';
-
+import { createMessageToast } from 'components/ToastContainer';
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 
 import { UserAPI } from 'services/api/users/main';
@@ -21,8 +20,6 @@ function UserMenuDropdown({
 	...props
 }: UserMenuDropdownProps): ReactElement<UserMenuDropdownProps> {
 	const navigate = useNavigate();
-
-	const { createMessageToast } = useToast();
 
 	const setShowLogoutModal = useAskConfirmModalStore((state) => state.setShow);
 	const hideLogoutModal = useAskConfirmModalStore((state) => state.setHide);

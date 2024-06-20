@@ -7,12 +7,12 @@ import Form from 'react-bootstrap/Form';
 
 import TelegramBotStorage from '../TelegramBotStorage';
 
+import { createMessageToast } from 'components/ToastContainer';
+
 import Header from './components/Header';
 import APITokenDisplay from './components/APITokenDisplay';
 
 import TelegramBotContext from './contexts/TelegramBotContext';
-
-import useToast from 'services/hooks/useToast';
 
 import { TelegramBotAPI } from 'services/api/telegram_bots/main';
 import { TelegramBot } from 'services/api/telegram_bots/types';
@@ -27,8 +27,6 @@ function TelegramBotCard({
 	children,
 	...props
 }: TelegramBotCardProps): ReactElement<TelegramBotCardProps> {
-	const { createMessageToast } = useToast();
-
 	const [telegramBot, setTelegramBot] = useState<TelegramBot>(initialTelegramBot);
 
 	useEffect(() => setTelegramBot(initialTelegramBot), [initialTelegramBot]);

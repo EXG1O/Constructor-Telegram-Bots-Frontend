@@ -1,26 +1,15 @@
-import React, { ReactElement, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { redirect } from 'react-router-dom';
 
 import { reverse } from 'routes';
 
-import Loading from 'components/Loading';
+import { createMessageToast } from 'components/ToastContainer';
 
-import useToast from 'services/hooks/useToast';
+export type LoaderData = Response;
 
-function NotFound(): ReactElement {
-	const navigate = useNavigate();
-
-	const { createMessageToast } = useToast();
-
-	useEffect(() => {
-		navigate(reverse('home'), { replace: true });
-		createMessageToast({
-			message: gettext('Страница не найдена!'),
-			level: 'error',
-		});
+export async function loader(): Promise<LoaderData> {
+	createMessageToast({
+		message: gettext('Страница не найдена.'),
+		level: 'error',
 	});
-
-	return <Loading size='lg' className='m-auto' />;
+	return redirect(reverse('home'));
 }
-
-export default NotFound;

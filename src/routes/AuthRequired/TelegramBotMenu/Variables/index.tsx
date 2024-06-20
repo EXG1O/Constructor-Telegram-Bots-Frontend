@@ -4,10 +4,10 @@ import ClipboardJS from 'clipboard';
 
 import Title from 'components/Title';
 
+import { createMessageToast } from 'components/ToastContainer';
+
 import SystemVariables from './components/SystemVariables';
 import UserVariables from './components/UserVariables';
-
-import useToast from 'services/hooks/useToast';
 
 import { VariablesAPI } from 'services/api/telegram_bots/main';
 import { APIResponse } from 'services/api/telegram_bots/types';
@@ -40,8 +40,6 @@ export async function loader({
 }
 
 function Variables(): ReactElement {
-	const { createMessageToast } = useToast();
-
 	useEffect(() => {
 		const clipboard = new ClipboardJS('.btn-clipboard');
 

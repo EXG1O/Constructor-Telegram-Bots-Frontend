@@ -16,12 +16,12 @@ import Button from 'react-bootstrap/Button';
 import Loading from 'components/Loading';
 import MonacoEditor, { MonacoEditorProps } from 'components/MonacoEditor';
 
+import { createMessageToast } from 'components/ToastContainer';
+
 import Block from '../Block';
 import ConfirmButtonGroup, {
 	ConfirmButtonGroupProps,
 } from './components/ConfirmButtonGroup';
-
-import useToast from 'services/hooks/useToast';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 
@@ -50,7 +50,6 @@ function RecordDisplay({
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
 
-	const { createMessageToast } = useToast();
 	const { updateRecords } = useRecords();
 
 	const initialValue = useMemo<string>(

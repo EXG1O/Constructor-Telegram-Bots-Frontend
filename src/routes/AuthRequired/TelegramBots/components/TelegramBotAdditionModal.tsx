@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 
 import Modal, { ModalProps } from 'components/Modal';
 
-import useToast from 'services/hooks/useToast';
+import { createMessageToast } from 'components/ToastContainer';
 
 import useTelegramBots from '../services/hooks/useTelegramBots';
 
@@ -31,8 +31,6 @@ function TelegramBotAdditionModal({
 	onExited,
 	...props
 }: TelegramBotAdditionModalProps): ReactElement<TelegramBotAdditionModalProps> {
-	const { createMessageToast } = useToast();
-
 	const [telegramBots, setTelegramBots] = useTelegramBots();
 
 	const [data, setData] = useState<Data>(defaultData);

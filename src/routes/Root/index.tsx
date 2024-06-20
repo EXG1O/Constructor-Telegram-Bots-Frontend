@@ -2,13 +2,12 @@ import React, { ReactElement } from 'react';
 import { Outlet, useNavigation } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
+import ToastContainer from 'components/ToastContainer';
 import AskConfirmModal from 'components/AskConfirmModal';
 import Loading from 'components/Loading';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
-
-import ToastProvider from 'services/providers/ToastProvider';
 
 import { UserAPI } from 'services/api/users/main';
 import { User } from 'services/api/users/types';
@@ -37,7 +36,8 @@ function Root(): ReactElement {
 	const navigation = useNavigation();
 
 	return (
-		<ToastProvider>
+		<>
+			<ToastContainer />
 			<AskConfirmModal />
 			<Header />
 			{navigation.state === 'idle' ? (
@@ -46,7 +46,7 @@ function Root(): ReactElement {
 				<Loading size='lg' className='m-auto' />
 			)}
 			<Footer />
-		</ToastProvider>
+		</>
 	);
 }
 

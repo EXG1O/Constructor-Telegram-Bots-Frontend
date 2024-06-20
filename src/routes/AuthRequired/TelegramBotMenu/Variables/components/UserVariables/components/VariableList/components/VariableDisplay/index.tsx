@@ -12,7 +12,7 @@ import TrashIcon from 'assets/icons/trash.svg';
 
 import EditButton from './components/EditButton';
 
-import useToast from 'services/hooks/useToast';
+import { createMessageToast } from 'components/ToastContainer';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 
@@ -36,8 +36,6 @@ function VariableDisplay(
 	const { telegramBot } = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
-
-	const { createMessageToast } = useToast();
 
 	const { updateVariables } = useVariables();
 	const { variable } = useVariable();

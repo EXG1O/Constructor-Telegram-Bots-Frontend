@@ -8,7 +8,7 @@ import React, {
 import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
 
-import useToast from 'services/hooks/useToast';
+import { createMessageToast } from 'components/ToastContainer';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 
@@ -30,8 +30,6 @@ function UserDisplay(props: UserDisplayProps): ReactElement<UserDisplayProps> {
 	const { telegramBot } = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
-
-	const { createMessageToast } = useToast();
 
 	const { updateUsers } = useUsers();
 	const { user } = useUser();

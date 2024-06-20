@@ -67,14 +67,14 @@ import {
 	createDatabaseRecordBlockSlice,
 } from './components/DatabaseRecordBlock/store';
 
-import { ToastContextProps } from 'services/contexts/ToastContext';
-
 import {
 	CommandsAPI,
 	CommandAPI,
 	DiagramCommandAPI,
 } from 'services/api/telegram_bots/main';
 import { TelegramBot, DiagramCommand, Data } from 'services/api/telegram_bots/types';
+
+import { createMessageToast } from 'components/ToastContainer';
 
 export interface StateParams {
 	telegramBot: TelegramBot;
@@ -83,8 +83,6 @@ export interface StateParams {
 	type: 'add' | 'edit';
 	show: boolean;
 	loading: boolean;
-
-	createMessageToast: ToastContextProps['createMessageToast'];
 
 	onAdd: (diagramCommand: DiagramCommand) => void;
 	onSave: (commandID: number, diagramCommand: DiagramCommand) => void;
@@ -111,10 +109,7 @@ export type State = StateParams &
 	APIRequestBlockSlice &
 	DatabaseRecordBlockSlice;
 
-export type InitialProps = Pick<
-	StateParams,
-	'telegramBot' | 'createMessageToast' | 'onAdd' | 'onSave'
->;
+export type InitialProps = Pick<StateParams, 'telegramBot' | 'onAdd' | 'onSave'>;
 export type InitialState = Omit<StateParams, keyof InitialProps> &
 	NameBlockSliceState &
 	SettingsBlockSliceState &
@@ -164,7 +159,7 @@ export function createStore(initialProps: InitialProps) {
 			showEdit: async (commandID) => {
 				set({ ...initialState, type: 'edit', show: true, loading: true });
 
-				const { telegramBot, createMessageToast } = get();
+				const { telegramBot } = get();
 
 				const response = await CommandAPI.get(telegramBot.id, commandID);
 
@@ -331,7 +326,6 @@ export function createStore(initialProps: InitialProps) {
 					showAPIRequestBodyBlock,
 					showDatabaseRecordBlock,
 
-					createMessageToast,
 					onAdd,
 				} = get();
 
@@ -468,7 +462,6 @@ export function createStore(initialProps: InitialProps) {
 					showAPIRequestBodyBlock,
 					showDatabaseRecordBlock,
 
-					createMessageToast,
 					onSave,
 				} = get();
 

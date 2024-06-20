@@ -5,10 +5,10 @@ import Card from 'react-bootstrap/Card';
 
 import Title from 'components/Title';
 
+import { createMessageToast } from 'components/ToastContainer';
+
 import Toolbar from './components/Toolbar';
 import RecordList from './components/RecordList';
-
-import useToast from 'services/hooks/useToast';
 
 import RecordsContext from './contexts/RecordsContext';
 
@@ -51,8 +51,6 @@ function Database(): ReactElement {
 	const { paginationData: initialPaginationData } = useRouteLoaderData(
 		'telegram-bot-menu-database',
 	) as LoaderData;
-
-	const { createMessageToast } = useToast();
 
 	const [paginationData, setPaginationData] =
 		useState<PaginationData>(initialPaginationData);

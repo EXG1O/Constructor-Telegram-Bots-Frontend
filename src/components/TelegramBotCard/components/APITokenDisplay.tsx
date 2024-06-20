@@ -16,7 +16,8 @@ import XIcon from 'assets/icons/x.svg';
 
 import Input from 'react-bootstrap/FormControl';
 
-import useToast from 'services/hooks/useToast';
+import { createMessageToast } from 'components/ToastContainer';
+
 import useTelegramBot from '../hooks/useTelegramBot';
 
 import { TelegramBotAPI } from 'services/api/telegram_bots/main';
@@ -29,8 +30,6 @@ function APITokenDisplay({
 	className,
 	...props
 }: APITokenDisplayProps): ReactElement<APITokenDisplayProps> {
-	const { createMessageToast } = useToast();
-
 	const [telegramBot, setTelegramBot] = useTelegramBot();
 
 	const [inputValue, setInputValue] = useState<string>(telegramBot.api_token);

@@ -9,7 +9,7 @@ import Stack from 'react-bootstrap/Stack';
 
 import NodeToolbar from './NodeToolbar';
 
-import useToast from 'services/hooks/useToast';
+import { createMessageToast } from 'components/ToastContainer';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 
@@ -28,8 +28,6 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 	const { telegramBot } = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
-
-	const { createMessageToast } = useToast();
 
 	const onNodesChange = useStore((state) => state.onNodesChange);
 

@@ -4,7 +4,7 @@ import Button, { ButtonProps } from 'react-bootstrap/Button';
 
 import { _File } from '..';
 
-import useToast from 'services/hooks/useToast';
+import { createMessageToast } from 'components/ToastContainer';
 
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
 import useTelegramBotStorage from '../../../hooks/useTelegramBotStorage';
@@ -15,8 +15,6 @@ export type AddFilesButtonProps = Omit<
 >;
 
 function AddFilesButton(props: AddFilesButtonProps): ReactElement<AddFilesButtonProps> {
-	const { createMessageToast } = useToast();
-
 	const id = useId();
 
 	const updateFiles = useCommandOffcanvasStore((state) => state.updateFiles);

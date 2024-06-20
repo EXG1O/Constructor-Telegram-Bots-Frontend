@@ -3,8 +3,6 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 import { createStore, InitialProps } from '../store';
 
-import useToast from 'services/hooks/useToast';
-
 import StoreContext from '../contexts/StoreContext';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
@@ -22,12 +20,7 @@ function StoreProvider({
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
 
-	const { createMessageToast } = useToast();
-
-	const store = useMemo(
-		() => createStore({ telegramBot, createMessageToast, onAdd, onSave }),
-		[],
-	);
+	const store = useMemo(() => createStore({ telegramBot, onAdd, onSave }), []);
 
 	useEffect(() => store.setState({ onAdd, onSave }), [onAdd, onSave]);
 

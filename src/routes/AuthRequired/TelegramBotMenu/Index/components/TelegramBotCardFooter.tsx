@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 
 import Loading from 'components/Loading';
 
-import useToast from 'services/hooks/useToast';
+import { createMessageToast } from 'components/ToastContainer';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 
@@ -20,8 +20,6 @@ function TelegramBotCardFooter(
 	props: TelegramBotCardFooterProps,
 ): ReactElement<TelegramBotCardFooterProps> {
 	const navigate = useNavigate();
-
-	const { createMessageToast } = useToast();
 
 	const [telegramBot, setTelegramBot] = useTelegramBot();
 

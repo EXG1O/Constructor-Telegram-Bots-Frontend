@@ -31,10 +31,7 @@ export const routes: RouteObject[] = [
 						async lazy() {
 							const module = await import('./Login');
 
-							return {
-								Component: module.default,
-								loader: module.loader,
-							};
+							return { loader: module.loader };
 						},
 					},
 					{
@@ -223,7 +220,7 @@ export const routes: RouteObject[] = [
 						async lazy() {
 							const module = await import('./NotFound');
 
-							return { Component: module.default };
+							return { loader: module.loader };
 						},
 					},
 				],

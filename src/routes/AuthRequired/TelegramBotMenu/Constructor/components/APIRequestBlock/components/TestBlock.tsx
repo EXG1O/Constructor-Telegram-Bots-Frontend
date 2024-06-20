@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 
-import useToast from 'services/hooks/useToast';
+import { createMessageToast } from 'components/ToastContainer';
 
 import useAPIRequestBlockStore from '../hooks/useAPIRequestBlockStore';
 
@@ -28,8 +28,6 @@ const statusMarkerStyle: CSSProperties = {
 };
 
 function TestBlock(props: TestBlockProps): ReactElement<TestBlockProps> {
-	const { createMessageToast } = useToast();
-
 	const store = useAPIRequestBlockStore();
 
 	const [result, setResult] = useState<Result | null>(null);

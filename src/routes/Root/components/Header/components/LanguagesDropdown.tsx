@@ -3,7 +3,7 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 import Dropdown, { DropdownProps } from 'react-bootstrap/Dropdown';
 
-import useToast from 'services/hooks/useToast';
+import { createMessageToast } from 'components/ToastContainer';
 
 import { LoaderData as LanguagesLoaderData } from 'routes/Languages';
 
@@ -15,8 +15,6 @@ function LanguagesDropdown(
 	props: LanguagesDropdownProps,
 ): ReactElement<LanguagesDropdownProps> {
 	const { languages } = useRouteLoaderData('languages') as LanguagesLoaderData;
-
-	const { createMessageToast } = useToast();
 
 	async function setLanguage(langCode: string): Promise<void> {
 		const response = await LanguagesAPI.set({ lang_code: langCode });

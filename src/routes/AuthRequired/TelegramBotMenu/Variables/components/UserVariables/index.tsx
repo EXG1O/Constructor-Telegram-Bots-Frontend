@@ -3,12 +3,12 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 import Card from 'react-bootstrap/Card';
 
+import { createMessageToast } from 'components/ToastContainer';
+
 import Toolbar from './components/Toolbar';
 import VariableList from './components/VariableList';
 
 import VariablesContext from './contexts/VariablesContext';
-
-import useToast from 'services/hooks/useToast';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 import {
@@ -25,8 +25,6 @@ function UserVariables(): ReactElement {
 	const { paginationData: initialPaginationData } = useRouteLoaderData(
 		'telegram-bot-menu-variables',
 	) as TelegramBotMenuVariablesLoaderData;
-
-	const { createMessageToast } = useToast();
 
 	const [paginationData, setPaginationData] =
 		useState<PaginationData>(initialPaginationData);

@@ -36,7 +36,7 @@ export async function loader({
 
 function Root(): ReactElement {
 	return (
-		<Container as='main' className='vstack gap-3 gap-lg-4 my-3 my-lg-4'>
+		<Container as='main' className='vstack gap-3 gap-lg-4 my-2 my-lg-3'>
 			<Header />
 			<Outlet />
 		</Container>

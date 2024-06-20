@@ -1,27 +1,18 @@
-import React, { ReactElement, useEffect } from 'react';
-import {
-	Params,
-	NavigateOptions,
-	useNavigate,
-	useRouteLoaderData,
-} from 'react-router-dom';
+import { Params, redirect } from 'react-router-dom';
 
 import { reverse } from 'routes';
 
-import Loading from 'components/Loading';
-import { MessageToastProps } from 'components/MessageToast';
-
-import useToast from 'services/hooks/useToast';
+import { createMessageToast } from 'components/ToastContainer';
 
 import { UserAPI } from 'services/api/users/main';
 
-export type LoaderData = Pick<MessageToastProps, 'message' | 'level'>;
-
-export async function loader({
-	params,
-}: {
+export interface LoaderProps {
 	params: Params<'userID' | 'confirmCode'>;
-}): Promise<LoaderData> {
+}
+
+export type LoaderData = Response;
+
+export async function loader({ params }: LoaderProps): Promise<LoaderData> {
 	const { userID, confirmCode } = params;
 
 	if (userID && confirmCode) {
@@ -31,48 +22,28 @@ export async function loader({
 		});
 
 		if (response.ok) {
-			return {
+			createMessageToast({
 				message: gettext('Успешная авторизация.'),
 				level: 'success',
-			};
+			});
+			return redirect(reverse('telegram-bots'));
 		} else if (response.status === 404) {
-			return {
-				message: gettext('Пользователь не найден!'),
+			createMessageToast({
+				message: gettext('Пользователь не найден.'),
 				level: 'error',
-			};
+			});
 		} else if (response.status === 401) {
-			return {
-				message: gettext('Неверный код подтверждения!'),
+			createMessageToast({
+				message: gettext('Неверный код подтверждения.'),
 				level: 'error',
-			};
+			});
 		}
+	} else {
+		createMessageToast({
+			message: gettext('Не удалось пройти авторизацию по неизвестным причинам.'),
+			level: 'error',
+		});
 	}
 
-	return {
-		message: gettext('Не удалось пройти авторизацию!'),
-		level: 'error',
-	};
+	return redirect(reverse('home'));
 }
-
-function Login(): ReactElement {
-	const navigate = useNavigate();
-	const { message, level } = useRouteLoaderData('login') as LoaderData;
-
-	const { createMessageToast } = useToast();
-
-	useEffect(() => {
-		const options: NavigateOptions = { replace: true };
-
-		if (level === 'success') {
-			navigate(reverse('telegram-bots'), options);
-		} else {
-			navigate(reverse('home'), options);
-		}
-
-		createMessageToast({ message, level });
-	}, []);
-
-	return <Loading size='lg' className='m-auto' />;
-}
-
-export default Login;

@@ -5,9 +5,9 @@ import Page from 'components/Page';
 import Loading from 'components/Loading';
 import Pagination from 'components/Pagination';
 
-import UpdateDisplay from './components/UpdateDisplay';
+import { createMessageToast } from 'components/ToastContainer';
 
-import useToast from 'services/hooks/useToast';
+import UpdateDisplay from './components/UpdateDisplay';
 
 import { UpdatesAPI } from 'services/api/updates/main';
 import { APIResponse } from 'services/api/updates/types';
@@ -39,8 +39,6 @@ function Updates(): ReactElement {
 	const { paginationData: initialPaginationData } = useRouteLoaderData(
 		'updates',
 	) as LoaderData;
-
-	const { createMessageToast } = useToast();
 
 	const [paginationData, setPaginationData] =
 		useState<PaginationData>(initialPaginationData);

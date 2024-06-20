@@ -23,11 +23,11 @@ import './index.scss';
 
 import Title from 'components/Title';
 
+import { createMessageToast } from 'components/ToastContainer';
+
 import Panel from './components/Panel';
 import CommandNode from './components/CommandNode';
 import CommandOffcanvas from './components/CommandOffcanvas';
-
-import useToast from 'services/hooks/useToast';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
@@ -112,8 +112,6 @@ function Constructor(): ReactElement {
 	) as TelegramBotMenuRootLoaderData;
 	const { diagramCommands, diagramConditions, diagramBackgroundTasks } =
 		useRouteLoaderData('telegram-bot-menu-constructor') as LoaderData;
-
-	const { createMessageToast } = useToast();
 
 	const [nodes, setNodes, onNodesChange] = useNodesState(
 		Object.assign(

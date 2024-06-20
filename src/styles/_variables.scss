@@ -37,6 +37,8 @@ $form-check-margin-bottom: none;
 
 $card-border-color: $border-color;
 
+$toast-spacing: map-get($spacers, 2);
+
 $dropdown-padding-y: 4px;
 $dropdown-border-color: $border-color;
 $dropdown-divider-bg: $dropdown-border-color;
