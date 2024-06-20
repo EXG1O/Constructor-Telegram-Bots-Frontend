@@ -1,6 +1,9 @@
 import React, { ReactElement, HTMLAttributes, memo, useState } from 'react';
 import classNames from 'classnames';
 
+import SearchIcon from 'assets/icons/search.svg';
+import XIcon from 'assets/icons/x.svg';
+
 import InputGroup, { InputGroupProps } from 'react-bootstrap/InputGroup';
 import Input from 'react-bootstrap/FormControl';
 import Collapse from 'react-bootstrap/Collapse';
@@ -44,13 +47,11 @@ function Search({
 	return (
 		<div {...props} className={classNames('d-flex', className)}>
 			<InputGroup size={size}>
-				<i
-					className={
-						'd-flex align-items-center bi bi-search ' +
-						`text-bg-light border rounded-start-${roundedValue} px-2`
-					}
-					style={{ fontSize: '14px' }}
-				/>
+				<div
+					className={`text-bg-light border rounded-start-${roundedValue} px-2`}
+				>
+					<SearchIcon width={14} height='100%' />
+				</div>
 				<Input
 					value={value}
 					placeholder={gettext('Поиск')}
@@ -59,13 +60,11 @@ function Search({
 				/>
 				<Collapse in={show} unmountOnExit dimension='width'>
 					<div>
-						<Button
-							variant='light'
-							className={
-								'd-flex align-items-center bi bi-x border ' +
-								`rounded-start-0 rounded-end-${roundedValue} h-100 p-0`
-							}
-							style={{ fontSize: '21px' }}
+						<XIcon
+							width={21}
+							height='100%'
+							className={`text-bg-light rounded-end-${roundedValue} border border-start-0`}
+							style={{ cursor: 'pointer' }}
 							onClick={handleClear}
 						/>
 					</div>
