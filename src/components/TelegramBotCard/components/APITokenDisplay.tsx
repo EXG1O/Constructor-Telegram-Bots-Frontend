@@ -8,6 +8,12 @@ import React, {
 } from 'react';
 import classNames from 'classnames';
 
+import PencilSquareIcon from 'assets/icons/pencil-square.svg';
+import EyeIcon from 'assets/icons/eye.svg';
+import EyeSlashIcon from 'assets/icons/eye-slash.svg';
+import CheckIcon from 'assets/icons/check.svg';
+import XIcon from 'assets/icons/x.svg';
+
 import Input from 'react-bootstrap/FormControl';
 
 import useToast from 'services/hooks/useToast';
@@ -17,15 +23,7 @@ import { TelegramBotAPI } from 'services/api/telegram_bots/main';
 
 export type APITokenDisplayProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
-const baseIconButtonStyle: CSSProperties = { cursor: 'pointer' };
-const defaultIconButtonStyle: CSSProperties = {
-	...baseIconButtonStyle,
-	fontSize: '18px',
-};
-const bigIconButtonStyle: CSSProperties = {
-	...baseIconButtonStyle,
-	fontSize: '28px',
-};
+const iconStyle: CSSProperties = { cursor: 'pointer' };
 
 function APITokenDisplay({
 	className,
@@ -102,36 +100,48 @@ function APITokenDisplay({
 			)}
 			{isEditing ? (
 				<div className='d-flex'>
-					<i
-						className='d-flex bi bi-check text-success'
-						style={bigIconButtonStyle}
+					<CheckIcon
+						width={28}
+						height={28}
+						className='text-success'
+						style={iconStyle}
 						onClick={handleSave}
 					/>
-					<i
-						className='d-flex bi bi-x text-danger'
-						style={{
-							...bigIconButtonStyle,
-							WebkitTextStroke: '0.4px',
-						}}
+					<XIcon
+						width={28}
+						height={28}
+						className='text-danger'
+						style={iconStyle}
 						onClick={toggleEditingState}
 					/>
 				</div>
 			) : (
-				<>
-					<i
-						className='d-flex bi bi-pencil-square text-secondary'
-						style={defaultIconButtonStyle}
+				<div className='d-flex gap-2'>
+					<PencilSquareIcon
+						width={18}
+						height={18}
+						className='text-secondary'
+						style={iconStyle}
 						onClick={toggleEditingState}
 					/>
-					<i
-						className={classNames('d-flex bi text-primary-emphasis', {
-							'bi-eye': !isShow,
-							'bi-eye-slash': isShow,
-						})}
-						style={defaultIconButtonStyle}
-						onClick={() => setShow(!isShow)}
-					/>
-				</>
+					{isShow ? (
+						<EyeSlashIcon
+							width={18}
+							height={18}
+							className='text-primary-emphasis'
+							style={iconStyle}
+							onClick={() => setShow(!isShow)}
+						/>
+					) : (
+						<EyeIcon
+							width={18}
+							height={18}
+							className='text-primary-emphasis'
+							style={iconStyle}
+							onClick={() => setShow(!isShow)}
+						/>
+					)}
+				</div>
 			)}
 		</div>
 	);

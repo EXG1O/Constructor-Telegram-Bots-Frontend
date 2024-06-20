@@ -105,7 +105,7 @@ function TelegramBotCard({
 								<th scope='row'>@username:</th>
 								<td className='text-break w-100'>
 									<a
-										className='link-dark link-underline-opacity-0'
+										className='text-reset text-decoration-none'
 										href={`tg://resolve?domain=${telegramBot.username}`}
 									>
 										@{telegramBot.username}
