@@ -46,7 +46,7 @@ function MessageToast({
 			<Toast.Body className='d-flex align-items-center gap-2'>
 				<i className={`bi bi-${icons[level]}`} />
 				<strong className='flex-fill text-break'>{message}</strong>
-				<CloseButton onClick={() => setShow(false)} />
+				<CloseButton variant='white' onClick={() => setShow(false)} />
 			</Toast.Body>
 		</Toast>
 	);
