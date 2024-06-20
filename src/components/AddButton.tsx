@@ -18,8 +18,8 @@ function AddButton({
 	children,
 	...props
 }: AddButtonProps): ReactElement<AddButtonProps> {
-	const paddingStart = useMemo<number>(() => size === 'sm' ? 1 : 2, [size]);
-	const iconSize = useMemo<number>(() => size ? iconSizes[size] : 23, [size]);
+	const paddingStart = useMemo<number>(() => (size === 'sm' ? 1 : 2), [size]);
+	const iconSize = useMemo<number>(() => (size ? iconSizes[size] : 23), [size]);
 
 	return (
 		<Button
