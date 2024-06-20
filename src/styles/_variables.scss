@@ -1,23 +1,51 @@
+$blue: #0098ea;
+$red: #e34b3b;
+$green: #00a84e;
+$light: #f7f9fb;
+$dark: #1e2337;
+
+$body-color: #191f2f;
+$body-emphasis-color: $body-color;
+
+$min-contrast-ratio: 3;
+$color-contrast-dark: $body-color;
+
+$font-family-sans-serif: InterVariable, sans-serif;
+
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/variables-dark';
+// @import '~bootstrap/scss/variables-dark';
 
+$enable-caret: false;
 $enable-validation-icons: false;
+$enable-dark-mode: false;
 
+$new-theme-colors: (
+	'white': $white,
+);
+$theme-colors: map-merge($theme-colors, $new-theme-colors);
+
+$table-variants: ();
+
+$gradient: linear-gradient(90deg, rgba($white, 0), rgba($white, 0.25) 125%);
+
+$form-validation-states: map-remove($form-validation-states, 'valid');
+
+$headings-margin-bottom: unset;
+$paragraph-margin-bottom: unset;
 $form-check-margin-bottom: none;
-
-$dropdown-link-active-color: $dropdown-link-color;
-$dropdown-link-active-bg: $gray-200;
 
 $card-border-color: $border-color;
 
-$pagination-color: $dark;
+$dropdown-padding-y: 4px;
+$dropdown-border-color: $border-color;
+$dropdown-divider-bg: $dropdown-border-color;
+$dropdown-divider-margin-y: $dropdown-padding-y;
 
+$pagination-color: $dark;
+$pagination-hover-color: $dark;
 $pagination-focus-color: $dark;
 $pagination-focus-box-shadow: none;
-
-$pagination-hover-color: $dark;
-
 $pagination-active-bg: $dark;
 $pagination-active-border-color: $dark;
 

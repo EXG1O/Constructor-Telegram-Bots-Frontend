@@ -1,16 +1,21 @@
 @import '~bootstrap/scss/offcanvas';
 
-.offcanvas-header {
-	border-bottom: $border-width $border-style $border-color;
-}
+.offcanvas {
+	&-header {
+		border-bottom: var(--#{$prefix}offcanvas-border-width) solid
+			var(--#{$prefix}offcanvas-border-color);
+	}
 
-.offcanvas-footer {
-	display: flex;
-	flex-direction: column;
-	padding: $offcanvas-padding-y $offcanvas-padding-x;
-	border-top: $border-width $border-style $border-color;
+	&-footer {
+		display: flex;
+		flex-direction: column;
+		padding: var(--#{$prefix}offcanvas-padding-y)
+			var(--#{$prefix}offcanvas-padding-x);
+		border-top: var(--#{$prefix}offcanvas-border-width) solid
+			var(--#{$prefix}offcanvas-border-color);
 
-	& > * {
-		width: 100%;
+		& > * {
+			width: 100%;
+		}
 	}
 }

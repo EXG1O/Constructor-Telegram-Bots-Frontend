@@ -1,7 +1,7 @@
 @import '~bootstrap/scss/modal';
 
 .modal-footer {
-	padding: $modal-inner-padding;
+	padding: var(--#{$prefix}modal-padding);
 
 	& > * {
 		margin: unset;
