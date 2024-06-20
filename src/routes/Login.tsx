@@ -64,7 +64,7 @@ function Login(): ReactElement {
 		const options: NavigateOptions = { replace: true };
 
 		if (level === 'success') {
-			navigate(reverse('personal-cabinet'), options);
+			navigate(reverse('telegram-bots'), options);
 		} else {
 			navigate(reverse('home'), options);
 		}
