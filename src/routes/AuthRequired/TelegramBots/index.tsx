@@ -1,9 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 
-import Container from 'react-bootstrap/Container';
-
-import Title from 'components/Title';
+import Page from 'components/Page';
 
 import Header from './components/Header';
 import TelegramBotList from './components/TelegramBotList';
@@ -27,23 +25,21 @@ export async function loader(): Promise<LoaderData> {
 	return { telegramBots: response.json };
 }
 
-function PersonalCabinet(): ReactElement {
+function TelegramBots(): ReactElement {
 	const { telegramBots: initialTelegramBots } = useRouteLoaderData(
-		'personal-cabinet',
+		'telegram-bots',
 	) as LoaderData;
 
 	const telegramBotsState = useState<TelegramBot[]>(initialTelegramBots);
 
 	return (
-		<Title title={gettext('Личный кабинет')}>
-			<Container as='main' className='vstack gap-3 gap-lg-4 my-3 my-lg-4'>
-				<TelegramBotsContext.Provider value={telegramBotsState}>
-					<Header />
-					<TelegramBotList />
-				</TelegramBotsContext.Provider>
-			</Container>
-		</Title>
+		<Page title={gettext('Telegram боты')} grid>
+			<TelegramBotsContext.Provider value={telegramBotsState}>
+				<Header />
+				<TelegramBotList />
+			</TelegramBotsContext.Provider>
+		</Page>
 	);
 }
 
-export default PersonalCabinet;
+export default TelegramBots;

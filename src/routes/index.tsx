@@ -119,11 +119,11 @@ export const routes: RouteObject[] = [
 						},
 						children: [
 							{
-								id: 'personal-cabinet',
-								path: 'personal-cabinet/',
+								id: 'telegram-bots',
+								path: 'telegram-bots/',
 								async lazy() {
 									const module = await import(
-										'./AuthRequired/PersonalCabinet'
+										'./AuthRequired/TelegramBots'
 									);
 
 									return {
