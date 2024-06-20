@@ -1,9 +1,7 @@
 import React, { ReactElement, useState, useCallback } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 
-import Container from 'react-bootstrap/Container';
-
-import Title from 'components/Title';
+import Page from 'components/Page';
 import Loading from 'components/Loading';
 import Pagination from 'components/Pagination';
 
@@ -69,28 +67,26 @@ function Updates(): ReactElement {
 	}
 
 	return (
-		<Title title={title}>
-			<Container as='main' className='vstack gap-3 gap-lg-4 my-3 my-lg-4'>
-				<h1 className='fw-semibold text-center mb-0'>{title}</h1>
-				{!loading ? (
-					paginationData.results.map((update) => (
-						<UpdateDisplay key={update.id} update={update} />
-					))
-				) : (
-					<Loading size='lg' className='m-auto' />
+		<Page title={title} grid>
+			<h1 className='fw-semibold text-center'>{title}</h1>
+			{!loading ? (
+				paginationData.results.map((update) => (
+					<UpdateDisplay key={update.id} update={update} />
+				))
+			) : (
+				<Loading size='lg' className='m-auto' />
+			)}
+			<Pagination
+				itemCount={paginationData.count}
+				itemLimit={paginationData.limit}
+				itemOffset={paginationData.offset}
+				className='align-self-center'
+				onPageChange={useCallback(
+					(newItemOffset) => updateUpdates(undefined, newItemOffset),
+					[],
 				)}
-				<Pagination
-					itemCount={paginationData.count}
-					itemLimit={paginationData.limit}
-					itemOffset={paginationData.offset}
-					className='align-self-center'
-					onPageChange={useCallback(
-						(newItemOffset) => updateUpdates(undefined, newItemOffset),
-						[],
-					)}
-				/>
-			</Container>
-		</Title>
+			/>
+		</Page>
 	);
 }
 
