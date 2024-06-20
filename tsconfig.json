@@ -11,6 +11,7 @@
 		"allowUnreachableCode": false,
 		"noFallthroughCasesInSwitch": false,
 		"paths": {
+			"assets/*": ["./src/assets/*"],
 			"styles/*": ["./src/styles/*"],
 			"components/*": ["./src/components/*"],
 			"routes": ["./src/routes"],
