@@ -6,13 +6,18 @@
 		.ql-formats {
 			button {
 				$formats: (
-					'spoiler': '\F777',
+					'spoiler': url('assets/icons/incognito.svg'),
 				);
 
 				@each $name, $icon in $formats {
 					&.ql-#{$name} {
 						&::before {
-							content: $icon;
+							content: '';
+							display: inline-block;
+							mask: $icon no-repeat center;
+							background-color: currentColor;
+							width: 18px;
+							height: 18px;
 						}
 
 						&:hover,
