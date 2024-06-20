@@ -16,10 +16,7 @@ export type ImageCarouselProps = Omit<
 	'children' | 'onSelect'
 >;
 
-const carouselItemStyle: CSSProperties = {
-	height: '200px',
-	objectFit: 'contain',
-};
+const carouselItemStyle: CSSProperties = { height: '200px' };
 
 function ImageCarousel({
 	className,
@@ -48,7 +45,11 @@ function ImageCarousel({
 		>
 			{images.map((image) => (
 				<Carousel.Item key={image.key}>
-					<img src={image.url} className='w-100' style={carouselItemStyle} />
+					<img
+						src={image.url}
+						className='w-100 object-fit-contain'
+						style={carouselItemStyle}
+					/>
 				</Carousel.Item>
 			))}
 		</Carousel>

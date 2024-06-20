@@ -7,6 +7,9 @@ import React, {
 } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 
+import ClipboardIcon from 'assets/icons/clipboard.svg';
+import TrashIcon from 'assets/icons/trash.svg';
+
 import EditButton from './components/EditButton';
 
 import useToast from 'services/hooks/useToast';
@@ -25,11 +28,7 @@ export type VariableDisplayProps = Omit<
 	'children'
 >;
 
-const deleteButtonStyle: CSSProperties = {
-	fontSize: '18px',
-	cursor: 'pointer',
-	marginLeft: '5.5px',
-};
+const iconStyle: CSSProperties = { cursor: 'pointer' };
 
 function VariableDisplay(
 	props: VariableDisplayProps,
@@ -86,11 +85,11 @@ function VariableDisplay(
 	return (
 		<tr {...props}>
 			<td className='w-50'>
-				<div className='d-flex gap-2'>
-					<i
-						className='btn-clipboard bi bi-clipboard'
+				<div className='d-flex align-items-center gap-2'>
+					<ClipboardIcon
+						className='btn-clipboard'
 						data-clipboard-text={`{{ ${variable.name} }}`}
-						style={{ cursor: 'pointer' }}
+						style={iconStyle}
 					/>
 					<span className='flex-fill text-info-emphasis'>
 						{variable.name}
@@ -102,11 +101,13 @@ function VariableDisplay(
 					<span className='flex-fill text-nowrap'>
 						{variable.description}
 					</span>
-					<div className='d-flex'>
+					<div className='d-flex align-content-center gap-1'>
 						<EditButton className='my-auto' />
-						<i
-							className='d-flex text-danger bi bi-trash my-auto'
-							style={deleteButtonStyle}
+						<TrashIcon
+							width={18}
+							height='100%'
+							className='text-danger'
+							style={iconStyle}
 							onClick={showDeleteModal}
 						/>
 					</div>

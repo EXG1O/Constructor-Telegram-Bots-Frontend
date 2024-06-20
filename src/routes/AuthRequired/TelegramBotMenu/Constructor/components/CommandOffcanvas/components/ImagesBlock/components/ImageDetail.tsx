@@ -1,5 +1,7 @@
 import React, { ReactElement, HTMLAttributes, CSSProperties, memo } from 'react';
 
+import TrashIcon from 'assets/icons/trash.svg';
+
 import { Draggable } from 'react-beautiful-dnd';
 
 import Button from 'react-bootstrap/Button';
@@ -12,7 +14,6 @@ export interface ImageDetailProps
 }
 
 const imageNameStyle: CSSProperties = { cursor: 'pointer' };
-const deleteButtonStyle: CSSProperties = { fontSize: '18px', padding: '5px' };
 
 function ImageDetail({
 	index,
@@ -38,20 +39,17 @@ function ImageDetail({
 						{image.name}
 					</small>
 					<Button
-						as='i'
 						size='sm'
 						variant='danger'
-						className={
-							'd-flex justify-content-center align-items-center ' +
-							'bi bi-trash border-start-0 rounded-start-0'
-						}
-						style={deleteButtonStyle}
+						className='d-flex border-start-0 rounded-start-0 p-1'
 						onClick={() =>
 							updateImages((images) => {
 								images.splice(index, 1);
 							})
 						}
-					/>
+					>
+						<TrashIcon width={18} height={18} />
+					</Button>
 				</div>
 			)}
 		</Draggable>

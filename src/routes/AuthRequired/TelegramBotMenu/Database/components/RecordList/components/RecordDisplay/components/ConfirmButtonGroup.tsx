@@ -1,5 +1,8 @@
 import React, { ReactElement, memo } from 'react';
 
+import CheckIcon from 'assets/icons/check.svg';
+import XIcon from 'assets/icons/x.svg';
+
 import ButtonGroup, { ButtonGroupProps } from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 
@@ -15,20 +18,12 @@ function ConfirmButtonGroup({
 }: ConfirmButtonGroupProps): ReactElement<ConfirmButtonGroupProps> {
 	return (
 		<ButtonGroup size='sm' {...props}>
-			<Button
-				as='i'
-				variant='success'
-				className='d-flex bi bi-check p-0'
-				style={{ fontSize: '25px' }}
-				onClick={onConfirm}
-			/>
-			<Button
-				as='i'
-				variant='danger'
-				className='d-flex bi bi-x p-0'
-				style={{ fontSize: '25px', WebkitTextStroke: '0.4px' }}
-				onClick={onCancel}
-			/>
+			<Button variant='success' className='d-flex p-0' onClick={onConfirm}>
+				<CheckIcon width={25} height={25} />
+			</Button>
+			<Button variant='danger' className='d-flex p-0' onClick={onCancel}>
+				<XIcon width={25} height={25} />
+			</Button>
 		</ButtonGroup>
 	);
 }

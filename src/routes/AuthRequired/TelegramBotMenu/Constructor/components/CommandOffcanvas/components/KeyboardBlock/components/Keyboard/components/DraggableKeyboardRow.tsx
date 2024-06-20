@@ -1,5 +1,8 @@
 import React, { ReactElement, memo } from 'react';
 
+import GripVerticalIcon from 'assets/icons/grip-vertical.svg';
+import TrashIcon from 'assets/icons/trash.svg';
+
 import { Draggable, DraggableProps } from 'react-beautiful-dnd';
 
 import DroppableKeyboardButtons from './DroppableKeyboardButtons';
@@ -33,26 +36,20 @@ function DraggableKeyboardRow({
 					{...dragHandleProps}
 					className='d-flex'
 				>
-					<i
-						className={
-							'd-flex align-items-center ' +
-							'bi bi-grip-vertical text-bg-light ' +
-							'border border-end-0 rounded-start-1 px-1'
-						}
-					/>
+					<div className='d-flex align-items-center text-bg-light border border-end-0 rounded-start-1 px-1'>
+						<GripVerticalIcon />
+					</div>
 					<DroppableKeyboardButtons
 						rowIndex={rowIndex}
 						className='flex-fill border-top border-bottom py-1'
 					/>
-					<i
-						className={
-							'd-flex align-items-center ' +
-							'bi bi-trash bg-light text-danger ' +
-							'border border-start-0 rounded-end-1 px-1'
-						}
-						style={{ fontSize: 18, cursor: 'pointer' }}
+					<div
+						className='d-flex align-items-center bg-light text-danger border border-start-0 rounded-end-1 px-1'
+						style={{ cursor: 'pointer' }}
 						onClick={() => deleteRow(rowIndex)}
-					/>
+					>
+						<TrashIcon width={18} height={18} />
+					</div>
 				</div>
 			)}
 		</Draggable>

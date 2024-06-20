@@ -1,4 +1,6 @@
-import React, { ReactElement, HTMLAttributes } from 'react';
+import React, { ReactElement, HTMLAttributes, CSSProperties } from 'react';
+
+import ClipboardIcon from 'assets/icons/clipboard.svg';
 
 import { Variable } from '..';
 
@@ -7,6 +9,8 @@ export interface VariableDisplayProps
 	variable: Variable;
 }
 
+const iconStyle: CSSProperties = { cursor: 'pointer' };
+
 function VariableDisplay({
 	variable,
 	...props
@@ -14,11 +18,11 @@ function VariableDisplay({
 	return (
 		<tr {...props}>
 			<td className='w-50'>
-				<div className='d-flex gap-2'>
-					<i
-						className='btn-clipboard bi bi-clipboard'
+				<div className='d-flex align-items-center gap-2'>
+					<ClipboardIcon
+						className='btn-clipboard'
 						data-clipboard-text={`{{ ${variable.name} }}`}
-						style={{ cursor: 'pointer' }}
+						style={iconStyle}
 					/>
 					<span className='flex-fill text-info-emphasis'>
 						{variable.name}

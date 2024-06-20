@@ -7,11 +7,13 @@ import React, {
 } from 'react';
 import classNames from 'classnames';
 
+import PencilSquareIcon from 'assets/icons/pencil-square.svg';
+
 import VariableEditModal from '../../../../VariableEditModal';
 
 import useVariable from '../../../hooks/useVariables';
 
-export type EditButtonProps = Omit<HTMLAttributes<HTMLElement>, 'children'>;
+export type EditButtonProps = Omit<HTMLAttributes<SVGSVGElement>, 'children'>;
 
 function EditButton({
 	className,
@@ -23,7 +25,7 @@ function EditButton({
 
 	const [showModal, setShowModal] = useState<boolean>(false);
 
-	function handleClick(event: React.MouseEvent<HTMLElement>): void {
+	function handleClick(event: React.MouseEvent<SVGSVGElement>): void {
 		setShowModal(true);
 		onClick?.(event);
 	}
@@ -35,13 +37,12 @@ function EditButton({
 				show={showModal}
 				onHide={useCallback(() => setShowModal(false), [])}
 			/>
-			<i
+			<PencilSquareIcon
 				{...props}
-				className={classNames(
-					'd-flex text-secondary bi bi-pencil-square',
-					className,
-				)}
-				style={{ fontSize: '18px', cursor: 'pointer', ...style }}
+				width={18}
+				height='100%'
+				className={classNames('text-secondary', className)}
+				style={{ cursor: 'pointer', ...style }}
 				onClick={handleClick}
 			/>
 		</>

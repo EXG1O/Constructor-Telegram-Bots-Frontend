@@ -8,6 +8,8 @@ import React, {
 import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
 
+import TrashIcon from 'assets/icons/trash.svg';
+
 import ListGroupItem, { ListGroupItemProps } from 'react-bootstrap/ListGroupItem';
 import Button from 'react-bootstrap/Button';
 
@@ -37,7 +39,6 @@ export interface RecordDisplayProps extends Omit<ListGroupItemProps, 'children'>
 const deleteButtonStyle: CSSProperties = {
 	width: '25px',
 	height: '25px',
-	fontSize: '18px',
 };
 
 function RecordDisplay({
@@ -186,13 +187,14 @@ function RecordDisplay({
 					/>
 				)}
 				<Button
-					as='i'
 					size='sm'
 					variant='danger'
-					className='d-flex justify-content-center align-items-center bi bi-trash p-0'
+					className='d-flex justify-content-center align-items-center p-0'
 					style={deleteButtonStyle}
 					onClick={showDeleteModal}
-				/>
+				>
+					<TrashIcon width={18} height={18} />
+				</Button>
 			</div>
 		</ListGroupItem>
 	) : (
