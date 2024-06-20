@@ -33,7 +33,7 @@ $form-validation-states: map-remove($form-validation-states, 'valid');
 
 $headings-margin-bottom: unset;
 $paragraph-margin-bottom: unset;
-$form-check-margin-bottom: none;
+$form-check-margin-bottom: unset;
 
 $card-border-color: $border-color;
 
