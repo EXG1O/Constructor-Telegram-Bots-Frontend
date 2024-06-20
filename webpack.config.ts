@@ -41,7 +41,11 @@ const config = (env: any, argv: any): Configuration => {
 				},
 				{
 					test: /\.s?css$/,
-					use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+					use: [
+						isProduction ? 'style-loader' : MiniCssExtractPlugin.loader,
+						'css-loader',
+						'sass-loader',
+					],
 				},
 				{
 					test: /\.(png|jpg)$/,

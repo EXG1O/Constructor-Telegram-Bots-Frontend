@@ -47,6 +47,7 @@
     "reactflow": "^11.10.1",
     "sass": "^1.69.7",
     "sass-loader": "^14.0.0",
+    "style-loader": "^4.0.0",
     "ts-loader": "^9.5.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2",
