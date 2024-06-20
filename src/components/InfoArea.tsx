@@ -1,20 +1,65 @@
-import React, { ReactElement, HTMLAttributes, memo } from 'react';
+import React, {
+	ReactElement,
+	HTMLAttributes,
+	CSSProperties,
+	memo,
+	useMemo,
+} from 'react';
+import classNames from 'classnames';
 
 export interface InfoAreaProps
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
-	value: number | string;
+	number: number;
 	description: string;
 }
 
+const digitBlockStyle: CSSProperties = {
+	fontSize: '18px',
+	width: '36px',
+	padding: '12px',
+};
+
 function InfoArea({
-	value,
+	number,
 	description,
+	className,
 	...props
 }: InfoAreaProps): ReactElement<InfoAreaProps> {
+	const digitGroups = useMemo<string[][]>(() => {
+		const digits: string[] = number.toString().split('');
+
+		const remainder: number = digits.length % 3;
+		const groups: string[][] = [];
+
+		if (remainder > 0) {
+			groups.push(digits.slice(0, remainder));
+		}
+
+		for (let index = remainder; index < digits.length; index += 3) {
+			groups.push(digits.slice(index, index + 3));
+		}
+
+		return groups;
+	}, [number]);
+
 	return (
-		<div {...props}>
-			<div className='fw-semibold border border-2 rounded-4 p-2'>{value}</div>
-			<span>{description}</span>
+		<div {...props} className={classNames('text-center', className)}>
+			<div className='d-flex justify-content-center gap-2'>
+				{digitGroups.map((group, groupIndex) => (
+					<div key={groupIndex} className='d-flex fw-semibold gap-1'>
+						{group.map((digit, digitIndex) => (
+							<div
+								key={digitIndex}
+								className='text-bg-white rounded'
+								style={digitBlockStyle}
+							>
+								{digit}
+							</div>
+						))}
+					</div>
+				))}
+			</div>
+			<div>{description}</div>
 		</div>
 	);
 }
