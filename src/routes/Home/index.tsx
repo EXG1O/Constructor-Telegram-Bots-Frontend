@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
 
-import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-import Title from 'components/Title';
+import Page from 'components/Page';
 
 import Header from './components/Header';
 import Stats from './components/Stats';
@@ -50,15 +51,19 @@ export async function loader(): Promise<LoaderData> {
 
 function Home(): ReactElement {
 	return (
-		<Title title={gettext('Бесплатный конструктор Telegram ботов')}>
-			<main className='my-auto'>
-				<Container className='vstack justify-content-center align-items-center text-center gap-3 my-3 my-lg-4'>
+		<Page title={gettext('Бесплатный конструктор Telegram ботов')} align='center'>
+			<Row className='g-3 g-lg-4'>
+				<Col xs={12}>
 					<Header />
+				</Col>
+				<Col xs={12} lg={6}>
 					<Stats />
+				</Col>
+				<Col xs={12} lg={6}>
 					<Donations />
-				</Container>
-			</main>
-		</Title>
+				</Col>
+			</Row>
+		</Page>
 	);
 }
 

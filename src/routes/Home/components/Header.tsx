@@ -1,12 +1,16 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, HTMLAttributes, memo } from 'react';
+import classNames from 'classnames';
 
-import './Header.scss';
+export type HeaderProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
-function Header(): ReactElement {
+function Header({ className, ...props }: HeaderProps): ReactElement<HeaderProps> {
 	return (
-		<div className='header'>
-			<h1 className='fw-semibold mb-1'>Constructor Telegram Bots</h1>
-			<p className='lead mb-0'>
+		<div
+			{...props}
+			className={classNames('text-center text-bg-light rounded-4 p-3', className)}
+		>
+			<h1 className='fw-bold'>Constructor Telegram Bots</h1>
+			<p className='fs-5 w-100 w-xl-75 mx-xl-auto'>
 				{gettext(`
 					Сайт, с помощью которого вы можете легко,
 					бесплатно и без каких-либо знаний в программировании,
@@ -17,4 +21,4 @@ function Header(): ReactElement {
 	);
 }
 
-export default Header;
+export default memo(Header);
