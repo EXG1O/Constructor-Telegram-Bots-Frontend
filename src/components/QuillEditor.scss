@@ -10,16 +10,16 @@
 	}
 
 	.ql-toolbar {
-		font-family: 'bootstrap-icons';
-		font-size: 17px;
-		padding: 6px 12px;
+		padding: 6px 10px;
 		border-bottom: $border-width $border-style $border-color;
 
 		.ql-formats {
 			display: flex;
+			align-items: center;
 			gap: 6px;
 
 			button {
+				display: flex;
 				color: $dark;
 				background: none;
 				border: none;
@@ -27,21 +27,26 @@
 				transition: color 0.15s ease-in-out;
 
 				$formats: (
-					'bold': '\F5F0',
-					'italic': '\F5F4',
-					'underline': '\F5F6',
-					'strike': '\F5F5',
-					'link': '\F470',
-					'blockquote': '\F6B0',
-					'code': '\F2C8',
-					'code-block': '\F2C6',
-					'clean': '\F331',
+					'bold': url('assets/icons/type-bold.svg'),
+					'italic': url('assets/icons/type-italic.svg'),
+					'underline': url('assets/icons/type-underline.svg'),
+					'strike': url('assets/icons/type-strikethrough.svg'),
+					'link': url('assets/icons/link-45deg.svg'),
+					'blockquote': url('assets/icons/quote.svg'),
+					'code': url('assets/icons/code.svg'),
+					'code-block': url('assets/icons/code-slash.svg'),
+					'clean': url('assets/icons/eraser.svg'),
 				);
 
 				@each $name, $icon in $formats {
 					&.ql-#{$name} {
 						&::before {
-							content: $icon;
+							content: '';
+							display: inline-block;
+							mask: $icon no-repeat center;
+							background: currentColor;
+							width: 18px;
+							height: 18px;
 						}
 
 						&:hover,
@@ -63,6 +68,7 @@
 
 		.ql-editor {
 			overflow: auto;
+			scrollbar-width: thin;
 			padding: $input-padding-y $input-padding-x;
 			outline: 0;
 
@@ -84,7 +90,7 @@
 			display: flex;
 			align-items: center;
 			padding: 4px 12px;
-			background-color: $light;
+			background-color: $white;
 			border-radius: $border-radius-sm;
 			border: $border-width $border-style $border-color;
 			box-shadow: 0 0 10px 1px $secondary;
@@ -100,13 +106,19 @@
 			}
 
 			.ql-action {
+				display: flex;
+				align-items: center;
 				color: $secondary;
-				font-family: 'bootstrap-icons';
 				text-decoration-line: none;
-				cursor: pointer;
 
 				&::before {
-					content: '\F4CA';
+					content: '';
+					display: inline-block;
+					mask: url('assets/icons/pencil-square.svg') no-repeat center;
+					background-color: currentColor;
+					width: 16px;
+					height: 16px;
+					cursor: pointer;
 				}
 			}
 
@@ -138,11 +150,11 @@
 
 				.ql-action {
 					color: $success;
-					font-size: 18px;
-					-webkit-text-stroke: 0.6px;
 
 					&::before {
-						content: '\F633';
+						mask: url('assets/icons/check.svg') no-repeat center;
+						width: 30px;
+						height: 30px;
 					}
 				}
 			}
