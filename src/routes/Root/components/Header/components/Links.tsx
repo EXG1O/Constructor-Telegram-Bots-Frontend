@@ -1,41 +1,71 @@
-import React, { ReactElement, ReactNode, memo } from 'react';
-import { Link, LinkProps as BaseLinkProps, useLocation } from 'react-router-dom';
+import React, {
+	ReactElement,
+	ReactNode,
+	CSSProperties,
+	HTMLAttributes,
+	memo,
+	useId,
+} from 'react';
+import {
+	Link,
+	LinkProps as BaseLinkProps,
+	useLocation,
+	useNavigation,
+} from 'react-router-dom';
 import classNames from 'classnames';
 
 import { reverse } from 'routes';
 
-import Nav, { NavProps } from 'react-bootstrap/Nav';
+import { motion } from 'framer-motion';
 
-export type LinksProps = Omit<NavProps, 'variant' | 'children'>;
+export type LinksProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
 export interface LinkProps extends BaseLinkProps {
 	children: ReactNode;
 }
 
+const linkUnderlineStyle: CSSProperties = { height: '2px' };
+
 const links: LinkProps[] = [
-	{ to: reverse('home'), children: gettext('Главная') },
 	{ to: reverse('instruction'), children: gettext('Инструкция') },
+	{ to: reverse('privacy-policy'), children: gettext('Конфиденциальность') },
 	{ to: reverse('updates'), children: gettext('Обновления') },
 	{ to: reverse('donation-index'), children: gettext('Пожертвование') },
 ];
 
 function Links({ className, ...props }: LinksProps): ReactElement<LinksProps> {
+	const id = useId();
+
 	const location = useLocation();
+	const navigation = useNavigation();
 
 	return (
-		<Nav {...props} variant='underline' className={classNames('gap-0', className)}>
-			{links.map(({ className, ...props }, index) => (
-				<Link
-					key={index}
-					{...props}
-					className={classNames(
-						'nav-link pb-1',
-						{ active: location.pathname === props.to },
-						className,
-					)}
-				/>
-			))}
-		</Nav>
+		<div {...props} className={classNames('d-flex', className)}>
+			{links.map(({ className, ...props }, index) => {
+				const active: boolean = navigation.location
+					? navigation.location.pathname === props.to
+					: location.pathname === props.to;
+
+				return (
+					<div key={index}>
+						<Link
+							{...props}
+							className={classNames(
+								'd-block text-reset text-decoration-none p-2 pb-1',
+								className,
+							)}
+						/>
+						{active && (
+							<motion.div
+								layoutId={id}
+								className='bg-dark'
+								style={linkUnderlineStyle}
+							/>
+						)}
+					</div>
+				);
+			})}
+		</div>
 	);
 }
 

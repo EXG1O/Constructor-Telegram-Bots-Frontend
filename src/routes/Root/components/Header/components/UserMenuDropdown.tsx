@@ -1,5 +1,5 @@
 import React, { ReactElement, memo, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { reverse } from 'routes';
 
@@ -61,7 +61,11 @@ function UserMenuDropdown({
 
 	return (
 		<Dropdown {...props}>
-			<Dropdown.Toggle bsPrefix=' ' variant='light' style={{ minWidth: '125px' }}>
+			<Dropdown.Toggle
+				variant='dark'
+				className='text-truncate'
+				style={{ maxWidth: '150px' }}
+			>
 				{user.first_name}
 			</Dropdown.Toggle>
 			<Dropdown.Menu>
@@ -70,10 +74,9 @@ function UserMenuDropdown({
 						{gettext('Админ панель')}
 					</Dropdown.Item>
 				)}
-				<Dropdown.Item onClick={() => navigate(reverse('personal-cabinet'))}>
-					{gettext('Личный кабинет')}
+				<Dropdown.Item as={Link} to={reverse('telegram-bots')}>
+					{gettext('Telegram боты')}
 				</Dropdown.Item>
-				<Dropdown.Item>{gettext('Настройки')}</Dropdown.Item>
 				<Dropdown.Divider />
 				<Dropdown.Item as='button' onClick={showLogoutModal}>
 					{gettext('Выйти')}

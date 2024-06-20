@@ -33,7 +33,7 @@ function LanguagesDropdown(
 
 	return (
 		<Dropdown {...props}>
-			<Dropdown.Toggle bsPrefix=' ' variant='primary'>
+			<Dropdown.Toggle variant='primary'>
 				{languages.current.toUpperCase()}
 			</Dropdown.Toggle>
 			<Dropdown.Menu className='text-center'>

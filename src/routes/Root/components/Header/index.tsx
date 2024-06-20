@@ -1,39 +1,58 @@
-import React, { ReactElement, memo } from 'react';
-import { useRouteLoaderData } from 'react-router-dom';
+import React, { ReactElement, CSSProperties, memo, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import classNames from 'classnames';
+
+import Logo from 'assets/logo.svg';
+
+import { reverse } from 'routes';
 
 import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-
-import LoginButton from 'components/LoginButton';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import Links from './components/Links';
-import LanguagesDropdown from './components/LanguagesDropdown';
-import UserMenuDropdown from './components/UserMenuDropdown';
+import Buttons from './components/Buttons';
 
-import { LoaderData as RootLoaderData } from 'routes/Root';
+import useWindowSize from 'services/hooks/useWindowSize';
 
 function Header(): ReactElement {
-	const { user } = useRouteLoaderData('root') as RootLoaderData;
+	const windowSize = useWindowSize();
+
+	const isLargeWindowSize = useMemo<boolean>(
+		() => windowSize.width < 992,
+		[windowSize.width],
+	);
+
+	const linksColStyle = useMemo<CSSProperties>(
+		() => ({ width: isLargeWindowSize ? 'calc(100% - 46px)' : undefined }),
+		[isLargeWindowSize],
+	);
+	const linksClassName = useMemo<string>(
+		() =>
+			classNames('flex-nowrap justify-content-xl-center', {
+				'overflow-x-auto': isLargeWindowSize,
+			}),
+		[isLargeWindowSize],
+	);
 
 	return (
-		<Navbar expand='xxl' variant='dark' className='bg-dark'>
+		<nav className='py-2'>
 			<Container>
-				<Navbar.Brand>Constructor Telegram Bots</Navbar.Brand>
-				<Navbar.Toggle aria-controls='header' />
-				<Navbar.Collapse className='justify-content-between' id='header'>
-					<Links />
-					<hr className='d-xxl-none text-white-50 mt-0 mb-2'></hr>
-					<div className='d-flex flex-wrap gap-2'>
-						<LanguagesDropdown />
-						{user ? (
-							<UserMenuDropdown user={user} />
-						) : (
-							<LoginButton variant='success' />
-						)}
-					</div>
-				</Navbar.Collapse>
+				<Row className='g-2'>
+					<Col xs='auto' xl='3'>
+						<Link to={reverse('home')}>
+							<Logo width={38} height={38} />
+						</Link>
+					</Col>
+					<Col xs='auto' xl='6' style={linksColStyle}>
+						<Links className={linksClassName} />
+					</Col>
+					<Col xs='auto' xl='3' className='flex-fill'>
+						<Buttons />
+					</Col>
+				</Row>
 			</Container>
-		</Navbar>
+		</nav>
 	);
 }
 
