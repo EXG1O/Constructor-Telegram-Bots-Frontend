@@ -1,5 +1,7 @@
 import React, { ReactElement, memo, useState, useCallback } from 'react';
 
+import TelegramIcon from 'assets/icons/telegram.svg';
+
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 
 import LoginModal from './LoginModal';
@@ -27,9 +29,10 @@ function LoginButton({
 				{...props}
 				as='a'
 				href={`tg://resolve?domain=${process.env.TELEGRAM_BOT_USERNAME}&start=login`}
+				className='d-flex align-items-center gap-2'
 				onClick={handleClick}
 			>
-				<i className='bi bi-telegram me-1' />
+				<TelegramIcon />
 				{gettext('Войти через Telegram')}
 			</Button>
 		</>
