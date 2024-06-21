@@ -11,6 +11,6 @@ export namespace LanguagesAPI {
 	}
 
 	export async function set(data: Data.LanguagesAPI.Set) {
-		return await makeRequest<APIResponse.LanguagesAPI.Set>(url, 'POST', data);
+		return await makeRequest(url, 'POST', data);
 	}
 }

@@ -38,7 +38,7 @@ function HeadersBlock({
 					className,
 				)}
 			>
-				{headers.map((header, index) => (
+				{headers.map((_header, index) => (
 					<HeaderInputGroup key={index} index={index} />
 				))}
 				<AddHeaderButton />

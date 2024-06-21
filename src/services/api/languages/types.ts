@@ -9,6 +9,5 @@ export namespace Data {
 export namespace APIResponse {
 	export namespace LanguagesAPI {
 		export type Get = Record<string, string>;
-		export type Set = {};
 	}
 }

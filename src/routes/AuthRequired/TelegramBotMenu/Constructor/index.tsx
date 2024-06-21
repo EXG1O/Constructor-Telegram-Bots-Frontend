@@ -130,7 +130,7 @@ function Constructor(): ReactElement {
 	const edgeUpdating = useRef<Edge | null>(null);
 
 	const handleNodeDragStop = useCallback(
-		(event: React.MouseEvent, node: Node, nodes?: Node[]) => {
+		(_event: React.MouseEvent, _node: Node, nodes?: Node[]) => {
 			nodes?.forEach(async (node) => {
 				const [type, id] = node.id.split(':') as [
 					'command' | 'condition' | 'background_task',
@@ -169,7 +169,7 @@ function Constructor(): ReactElement {
 					target_object_type,
 					target_object_id,
 					target_handle_position,
-					target_nested_object_id,
+					_target_nested_object_id,
 				] = connection.targetHandle.split(':') as TargetHandle;
 
 				const response = await ConnectionsAPI.create(telegramBot.id, {
@@ -237,7 +237,7 @@ function Constructor(): ReactElement {
 		}
 	}
 
-	const handleEdgeUpdateStart = useCallback((event: React.MouseEvent, edge: Edge) => {
+	const handleEdgeUpdateStart = useCallback((_event: React.MouseEvent, edge: Edge) => {
 		edgeUpdating.current = edge;
 	}, []);
 
@@ -257,7 +257,7 @@ function Constructor(): ReactElement {
 	}, []);
 
 	const handleEdgeUpdateEnd = useCallback(
-		(event: MouseEvent | TouchEvent, edge: Edge) => {
+		(_event: MouseEvent | TouchEvent, edge: Edge) => {
 			if (edgeUpdating.current) {
 				deleteEdge(edge);
 			}

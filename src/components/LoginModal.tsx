@@ -42,6 +42,7 @@ function LoginModal(props: LoginModalProps): ReactElement<LoginModalProps> {
 				</p>
 				<a
 					href={`https://t.me/${process.env.TELEGRAM_BOT_USERNAME}?start=login`}
+					rel='noreferrer'
 					target='_blank'
 				>
 					{gettext('Перейти по ссылке')}

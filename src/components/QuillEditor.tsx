@@ -24,8 +24,6 @@ function QuillEditor({
 	height,
 	toolbar,
 	className,
-	onFocus,
-	onBlur,
 	onMount,
 	...props
 }: QuillEditorProps): ReactElement<QuillEditorProps> {

@@ -17,6 +17,7 @@ function Footer(): ReactElement {
 					<div className='d-flex gap-1'>
 						<a
 							href='https://t.me/exg1o_channel'
+							rel='noreferrer'
 							target='_blank'
 							className={classNames(
 								baseLinkClassName,
@@ -27,6 +28,7 @@ function Footer(): ReactElement {
 						</a>
 						<a
 							href='https://github.com/EXG1O/Constructor-Telegram-Bots'
+							rel='noreferrer'
 							target='_blank'
 							className={classNames(
 								baseLinkClassName,

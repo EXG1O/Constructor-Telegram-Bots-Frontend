@@ -53,13 +53,14 @@ function Header(): ReactElement {
 
 	return (
 		<Nav variant='pills' className='nav-fill bg-light border rounded gap-2 p-2'>
-			{headerLinks.map(({ className, ...props }, index) => (
+			{headerLinks.map(({ to, className, ...props }, index) => (
 				<Link
-					key={index}
 					{...props}
+					key={index}
+					to={to}
 					className={classNames(
 						'nav-link',
-						{ active: location.pathname === props.to },
+						{ active: location.pathname === to },
 						className,
 					)}
 				/>

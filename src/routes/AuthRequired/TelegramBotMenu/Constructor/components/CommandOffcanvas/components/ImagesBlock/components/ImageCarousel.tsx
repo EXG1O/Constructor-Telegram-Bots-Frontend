@@ -4,6 +4,8 @@ import React, {
 	CSSProperties,
 	memo,
 	useState,
+	useMemo,
+	useEffect,
 } from 'react';
 import classNames from 'classnames';
 
@@ -24,13 +26,17 @@ function ImageCarousel({
 }: ImageCarouselProps): ReactElement<ImageCarouselProps> {
 	const images = useCommandOffcanvasStore((state) => state.images);
 
-	let [activeIndex, setActiveIndex] = useState<number>(0);
+	const [rawActiveIndex, setActiveIndex] = useState<number>(0);
+	const activeIndex = useMemo<number>(
+		() => (images.length <= rawActiveIndex ? rawActiveIndex - 1 : rawActiveIndex),
+		[images, rawActiveIndex],
+	);
 
-	if (images.length <= activeIndex) {
-		activeIndex -= 1;
-
-		setActiveIndex(activeIndex);
-	}
+	useEffect(() => {
+		if (activeIndex !== rawActiveIndex) {
+			setActiveIndex(activeIndex);
+		}
+	}, [activeIndex]);
 
 	return images.length ? (
 		<Carousel

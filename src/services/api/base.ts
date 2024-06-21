@@ -18,7 +18,7 @@ export namespace APIResponse {
 }
 
 export async function makeRequest<
-	SuccessAPIResponse extends Record<string, any> = {},
+	SuccessAPIResponse extends Record<string, any> = Record<string, never>,
 	ErrorAPIResponse extends Record<string, any> = APIResponse.ErrorList,
 >(
 	url: string,
@@ -43,11 +43,13 @@ export async function makeRequest<
 
 	const response: Response = await fetch(url, init);
 
-	let json: any = {};
+	let json: any;
 
 	try {
 		json = await response.json();
-	} catch {}
+	} catch {
+		json = {};
+	}
 
 	return Object.assign(response, { json });
 }

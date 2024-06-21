@@ -41,7 +41,7 @@ function RecordFormModal({
 						[],
 					)}
 					onChange={useCallback<NonNullable<MonacoEditorProps['onChange']>>(
-						(editor, newValue) => onChange(newValue),
+						(_editor, newValue) => onChange(newValue),
 						[],
 					)}
 				/>

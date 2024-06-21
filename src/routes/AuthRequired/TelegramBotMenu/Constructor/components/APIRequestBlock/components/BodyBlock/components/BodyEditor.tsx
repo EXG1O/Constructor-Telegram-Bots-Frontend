@@ -23,7 +23,7 @@ function BodyEditor(props: BodyEditorProps): ReactElement<BodyEditorProps> {
 	const updateAPIRequest = useAPIRequestBlockStore((state) => state.updateAPIRequest);
 
 	const handleChange = useCallback<NonNullable<MonacoEditorProps['onChange']>>(
-		(editor, value) =>
+		(_editor, value) =>
 			updateAPIRequest((apiRequest) => {
 				apiRequest.body = value;
 			}),

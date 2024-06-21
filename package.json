@@ -55,5 +55,12 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
     "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.3",
+    "eslint-plugin-react-hooks": "^4.6.2"
   }
 }

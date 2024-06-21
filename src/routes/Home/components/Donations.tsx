@@ -32,9 +32,10 @@ function Donations({
 							<span>{`${donation.sum}€`}</span>
 							<span>
 								<a
-									className='text-white text-decoration-none'
 									href={donation.contact_link}
+									rel='noreferrer'
 									target='_blank'
+									className='text-white text-decoration-none'
 								>
 									{donation.contact_link}
 								</a>

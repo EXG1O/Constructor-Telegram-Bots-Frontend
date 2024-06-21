@@ -27,7 +27,7 @@ function DatabaseRecordEditor(
 	);
 
 	const handleChange = useCallback<NonNullable<MonacoEditorProps['onChange']>>(
-		(editor, value) => setDatabaseRecord(value),
+		(_editor, value) => setDatabaseRecord(value),
 		[],
 	);
 
