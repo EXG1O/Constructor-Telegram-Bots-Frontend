@@ -237,9 +237,12 @@ function Constructor(): ReactElement {
 		}
 	}
 
-	const handleEdgeUpdateStart = useCallback((_event: React.MouseEvent, edge: Edge) => {
-		edgeUpdating.current = edge;
-	}, []);
+	const handleEdgeUpdateStart = useCallback(
+		(_event: React.MouseEvent, edge: Edge) => {
+			edgeUpdating.current = edge;
+		},
+		[],
+	);
 
 	const handleEdgeUpdate = useCallback((oldEdge: Edge, newConnection: Connection) => {
 		if (
