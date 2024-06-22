@@ -5,8 +5,6 @@ import { reverse } from 'routes';
 
 import Container from 'react-bootstrap/Container';
 
-import Header from './components/Header';
-
 import { TelegramBotAPI } from 'services/api/telegram_bots/main';
 import { APIResponse } from 'services/api/telegram_bots/types';
 
@@ -37,7 +35,6 @@ export async function loader({
 function Root(): ReactElement {
 	return (
 		<Container as='main' className='vstack gap-3 gap-lg-4 my-2 my-lg-3'>
-			<Header />
 			<Outlet />
 		</Container>
 	);
