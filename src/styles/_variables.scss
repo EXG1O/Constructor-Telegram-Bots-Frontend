@@ -39,10 +39,12 @@ $card-border-color: $border-color;
 
 $toast-spacing: map-get($spacers, 2);
 
+$dropdown-min-width: unset;
 $dropdown-padding-y: 4px;
-$dropdown-border-color: $border-color;
-$dropdown-divider-bg: $dropdown-border-color;
+$dropdown-border-color: unset;
+$dropdown-divider-bg: $border-color;
 $dropdown-divider-margin-y: $dropdown-padding-y;
+$dropdown-box-shadow: 0 0 1rem rgba($black, 0.15);
 
 $pagination-color: $dark;
 $pagination-hover-color: $dark;

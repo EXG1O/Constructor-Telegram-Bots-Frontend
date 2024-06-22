@@ -34,7 +34,7 @@ function LanguagesDropdown(
 			<Dropdown.Toggle variant='primary'>
 				{languages.current.toUpperCase()}
 			</Dropdown.Toggle>
-			<Dropdown.Menu className='text-center'>
+			<Dropdown.Menu>
 				{Object.entries(languages.available).map((language, index) => (
 					<Dropdown.Item key={index} onClick={() => setLanguage(language[0])}>
 						{language[1]}
