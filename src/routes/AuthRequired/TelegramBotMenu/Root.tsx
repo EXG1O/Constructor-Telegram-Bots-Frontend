@@ -1,9 +1,6 @@
-import React, { ReactElement } from 'react';
-import { Outlet, Params, redirect } from 'react-router-dom';
+import { Params, redirect } from 'react-router-dom';
 
 import { reverse } from 'routes';
-
-import Container from 'react-bootstrap/Container';
 
 import { TelegramBotAPI } from 'services/api/telegram_bots/main';
 import { APIResponse } from 'services/api/telegram_bots/types';
@@ -31,13 +28,3 @@ export async function loader({
 
 	return { telegramBot: response.json };
 }
-
-function Root(): ReactElement {
-	return (
-		<Container as='main' className='vstack gap-3 gap-lg-4 my-2 my-lg-3'>
-			<Outlet />
-		</Container>
-	);
-}
-
-export default Root;

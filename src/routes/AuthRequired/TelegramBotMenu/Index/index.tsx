@@ -4,7 +4,7 @@ import { useRouteLoaderData } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import Title from 'components/Title';
+import Page from 'components/Page';
 import TelegramBotCard from 'components/TelegramBotCard';
 
 import TelegramBotCardFooter from './components/TelegramBotCardFooter';
@@ -17,7 +17,7 @@ function Index(): ReactElement {
 	) as TelegramBotMenuRootLoaderData;
 
 	return (
-		<Title title={gettext('Telegram бот')}>
+		<Page title={gettext('Telegram бот')} grid>
 			<Row className='g-3 g-lg-4'>
 				<Col xs={12} lg={6}>
 					<TelegramBotCard telegramBot={telegramBot}>
@@ -25,7 +25,7 @@ function Index(): ReactElement {
 					</TelegramBotCard>
 				</Col>
 			</Row>
-		</Title>
+		</Page>
 	);
 }
 

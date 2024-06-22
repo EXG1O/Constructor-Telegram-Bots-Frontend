@@ -137,10 +137,7 @@ export const routes: RouteObject[] = [
 										'./AuthRequired/TelegramBotMenu/Root'
 									);
 
-									return {
-										Component: module.default,
-										loader: module.loader,
-									};
+									return { loader: module.loader };
 								},
 								shouldRevalidate: () => true,
 								children: [

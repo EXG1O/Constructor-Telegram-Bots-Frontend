@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect } from 'react';
 import { Params } from 'react-router-dom';
 import ClipboardJS from 'clipboard';
 
-import Title from 'components/Title';
+import Page from 'components/Page';
 
 import { createMessageToast } from 'components/ToastContainer';
 
@@ -60,10 +60,10 @@ function Variables(): ReactElement {
 	}, []);
 
 	return (
-		<Title title={gettext('Переменные')}>
+		<Page title={gettext('Переменные')} grid>
 			<SystemVariables />
 			<UserVariables />
-		</Title>
+		</Page>
 	);
 }
 

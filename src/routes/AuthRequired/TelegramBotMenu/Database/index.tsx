@@ -3,7 +3,7 @@ import { Params, useRouteLoaderData } from 'react-router-dom';
 
 import Card from 'react-bootstrap/Card';
 
-import Title from 'components/Title';
+import Page from 'components/Page';
 
 import { createMessageToast } from 'components/ToastContainer';
 
@@ -12,7 +12,7 @@ import RecordList from './components/RecordList';
 
 import RecordsContext from './contexts/RecordsContext';
 
-import { LoaderData as TelegramBotMenuRootLoaderData } from '../Root';
+import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
 import { DatabaseRecordsAPI } from 'services/api/telegram_bots/main';
 import { APIResponse } from 'services/api/telegram_bots/types';
@@ -83,7 +83,7 @@ function Database(): ReactElement {
 	}
 
 	return (
-		<Title title={gettext('База данных')}>
+		<Page title={gettext('База данных')} grid>
 			<Card>
 				<Card.Header as='h5' className='text-center'>
 					{gettext('Список записей')}
@@ -101,7 +101,7 @@ function Database(): ReactElement {
 					</RecordsContext.Provider>
 				</Card.Body>
 			</Card>
-		</Title>
+		</Page>
 	);
 }
 

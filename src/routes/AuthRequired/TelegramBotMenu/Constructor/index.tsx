@@ -21,7 +21,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import './index.scss';
 
-import Title from 'components/Title';
+import Page from 'components/Page';
 
 import { createMessageToast } from 'components/ToastContainer';
 
@@ -281,7 +281,7 @@ function Constructor(): ReactElement {
 	);
 
 	return (
-		<Title title={gettext('Конструктор')}>
+		<Page title={gettext('Конструктор')} grid>
 			<div
 				className='border rounded'
 				style={{ height: '100%', minHeight: '600px' }}
@@ -338,7 +338,7 @@ function Constructor(): ReactElement {
 					</ReactFlow>
 				</CommandOffcanvas.StoreProvider>
 			</div>
-		</Title>
+		</Page>
 	);
 }
 

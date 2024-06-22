@@ -3,7 +3,7 @@ import { Params, useRouteLoaderData } from 'react-router-dom';
 
 import Card from 'react-bootstrap/Card';
 
-import Title from 'components/Title';
+import Page from 'components/Page';
 
 import { createMessageToast } from 'components/ToastContainer';
 
@@ -12,7 +12,7 @@ import UserList from './components/UserList';
 
 import UsersContext from './contexts/UsersContext';
 
-import { LoaderData as TelegramBotMenuRootLoaderData } from '../Root';
+import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
 import { UsersAPI } from 'services/api/telegram_bots/main';
 import { APIResponse } from 'services/api/telegram_bots/types';
@@ -98,7 +98,7 @@ function Users(): ReactElement {
 	}
 
 	return (
-		<Title title={gettext('Пользователи')}>
+		<Page title={gettext('Пользователи')} grid>
 			<Card>
 				<Card.Header as='h5' className='text-center'>
 					{gettext('Список пользователей')}
@@ -119,7 +119,7 @@ function Users(): ReactElement {
 					</UsersContext.Provider>
 				</Card.Body>
 			</Card>
-		</Title>
+		</Page>
 	);
 }
 
