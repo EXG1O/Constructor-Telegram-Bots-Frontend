@@ -1,13 +1,14 @@
 import React, { ReactElement, memo } from 'react';
+
 import classNames from 'classnames';
 
 import { CollapseProps } from 'react-bootstrap/Collapse';
 
+import useAPIRequestBlockStore from '../../hooks/useAPIRequestBlockStore';
+
+import AddHeaderButton from './components/AddHeaderButton';
 import BlockCollapse, { BlockCollapseProps } from './components/BlockCollapse';
 import HeaderInputGroup from './components/HeaderInputGroup';
-import AddHeaderButton from './components/AddHeaderButton';
-
-import useAPIRequestBlockStore from '../../hooks/useAPIRequestBlockStore';
 
 export interface Header {
 	key: string;

@@ -1,8 +1,8 @@
 import React, { ReactElement, CSSProperties, memo } from 'react';
 
-import InputGroup, { InputGroupProps } from 'react-bootstrap/InputGroup';
-import Input from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
+import Input from 'react-bootstrap/FormControl';
+import InputGroup, { InputGroupProps } from 'react-bootstrap/InputGroup';
 
 import useAPIRequestBlockStore from '../../../hooks/useAPIRequestBlockStore';
 

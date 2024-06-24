@@ -1,10 +1,10 @@
 import React, { ReactElement, HTMLAttributes, CSSProperties, memo } from 'react';
 
-import TrashIcon from 'assets/icons/trash.svg';
-
 import { Draggable } from 'react-beautiful-dnd';
 
 import Button from 'react-bootstrap/Button';
+
+import TrashIcon from 'assets/icons/trash.svg';
 
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
 

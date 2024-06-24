@@ -1,15 +1,16 @@
 import React, { HTMLAttributes, ReactElement, memo } from 'react';
-import { useRouteLoaderData } from 'react-router-dom';
+
 import classNames from 'classnames';
+import { useRouteLoaderData } from 'react-router-dom';
 
 import LoginButton from 'components/LoginButton';
 
-import LanguagesDropdown from './LanguagesDropdown';
-import UserMenuDropdown from './UserMenuDropdown';
-import TelegramBotMenuDropdown from './TelegramBotMenuDropdown';
-
-import { LoaderData as RootLoaderData } from 'routes/Root';
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
+import { LoaderData as RootLoaderData } from 'routes/Root';
+
+import LanguagesDropdown from './LanguagesDropdown';
+import TelegramBotMenuDropdown from './TelegramBotMenuDropdown';
+import UserMenuDropdown from './UserMenuDropdown';
 
 export type ButtonsProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 

@@ -1,10 +1,10 @@
 import React, { ReactElement, CSSProperties, memo } from 'react';
 
+import { QRCodeCanvas } from 'qrcode.react';
+
 import logoURL from 'assets/logo.svg?url';
 
 import Modal, { ModalProps } from './Modal';
-
-import { QRCodeCanvas } from 'qrcode.react';
 
 export type LoginModalProps = Omit<ModalProps, 'children'>;
 

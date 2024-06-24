@@ -1,4 +1,5 @@
 import React, { ReactElement, HTMLAttributes } from 'react';
+
 import classNames from 'classnames';
 
 import './UpdateDisplay.scss';

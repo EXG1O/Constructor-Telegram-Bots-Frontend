@@ -1,14 +1,14 @@
 import React, { ReactElement, HTMLAttributes, memo, useCallback } from 'react';
+
 import classNames from 'classnames';
 
-import Search, { defaultValue as searchDefaultValue } from 'components/Search';
 import Pagination from 'components/Pagination';
-
-import TypeToggleButtonGroup from './components/TypeToggleButtonGroup';
-
-import useUsers from '../../hooks/useUsers';
+import Search, { defaultValue as searchDefaultValue } from 'components/Search';
 
 import { PaginationData } from '../..';
+import useUsers from '../../hooks/useUsers';
+
+import TypeToggleButtonGroup from './components/TypeToggleButtonGroup';
 
 export interface ToolbarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
 	paginationData: Omit<PaginationData, 'results'>;

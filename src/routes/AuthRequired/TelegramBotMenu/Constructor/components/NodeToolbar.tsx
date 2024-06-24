@@ -1,12 +1,13 @@
 import React, { CSSProperties, HTMLAttributes, ReactElement, memo } from 'react';
-import classNames from 'classnames';
 
-import PencilSquareIcon from 'assets/icons/pencil-square.svg';
-import TrashIcon from 'assets/icons/trash.svg';
+import classNames from 'classnames';
 
 import { NodeToolbar as BaseNodeToolbar } from 'reactflow';
 
 import Button from 'react-bootstrap/Button';
+
+import PencilSquareIcon from 'assets/icons/pencil-square.svg';
+import TrashIcon from 'assets/icons/trash.svg';
 
 export interface NodeToolbarProps
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {

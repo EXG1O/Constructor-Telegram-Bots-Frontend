@@ -1,11 +1,12 @@
 import React, { ReactElement, HTMLAttributes, memo } from 'react';
+
 import classNames from 'classnames';
 
 import { Droppable, DroppableProps } from 'react-beautiful-dnd';
 
-import DraggableKeyboardRow from './DraggableKeyboardRow';
-
 import useCommandOffcanvasStore from '../../../../../hooks/useCommandOffcanvasStore';
+
+import DraggableKeyboardRow from './DraggableKeyboardRow';
 
 export type DroppableKeyboardRowsProps = Pick<
 	DroppableProps,

@@ -1,10 +1,11 @@
 import React, { ReactElement, memo } from 'react';
+
 import classNames from 'classnames';
 
-import TelegramIcon from 'assets/icons/telegram.svg';
-import GithubIcon from 'assets/icons/github.svg';
-
 import Container from 'react-bootstrap/Container';
+
+import GithubIcon from 'assets/icons/github.svg';
+import TelegramIcon from 'assets/icons/telegram.svg';
 
 const baseLinkClassName: string = 'text-reset';
 

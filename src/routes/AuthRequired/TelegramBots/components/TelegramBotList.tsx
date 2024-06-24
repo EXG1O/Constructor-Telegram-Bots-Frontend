@@ -1,6 +1,7 @@
 import React, { ReactElement, memo } from 'react';
-import { Link } from 'react-router-dom';
+
 import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
 import Row, { RowProps } from 'react-bootstrap/Row';
 

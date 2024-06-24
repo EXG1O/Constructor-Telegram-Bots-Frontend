@@ -1,7 +1,7 @@
 import React, { ReactElement, memo } from 'react';
 
-import Collapse, { CollapseProps } from 'react-bootstrap/Collapse';
 import Button, { ButtonProps } from 'react-bootstrap/Button';
+import Collapse, { CollapseProps } from 'react-bootstrap/Collapse';
 
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
 

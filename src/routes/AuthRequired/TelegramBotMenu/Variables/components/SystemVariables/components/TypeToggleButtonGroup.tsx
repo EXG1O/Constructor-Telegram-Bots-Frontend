@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 
+import ToggleButton, { ToggleButtonProps } from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup, {
 	ToggleButtonRadioProps,
 } from 'react-bootstrap/ToggleButtonGroup';
-import ToggleButton, { ToggleButtonProps } from 'react-bootstrap/ToggleButton';
 
 import { Type } from '..';
 

@@ -1,16 +1,17 @@
 import React, { ReactElement, memo, useMemo } from 'react';
 
+import classNames from 'classnames';
+
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 
 import Block, { BlockProps } from '../../../../../Block';
 
+import useCommandOffcanvasStore from '../../../../hooks/useCommandOffcanvasStore';
+
 import BlockCollapse from './components/BlockCollapse';
 import TextInput, { Text, defaultText } from './components/TextInput';
-import URLInputCollapse from './components/URLInputCollapse';
 import URLInput, { URL, defaultURL } from './components/URLInput';
-
-import useCommandOffcanvasStore from '../../../../hooks/useCommandOffcanvasStore';
-import classNames from 'classnames';
+import URLInputCollapse from './components/URLInputCollapse';
 
 export interface KeyboardButton {
 	text: Text;

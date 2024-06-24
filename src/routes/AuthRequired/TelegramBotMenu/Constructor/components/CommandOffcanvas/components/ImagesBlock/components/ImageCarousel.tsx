@@ -7,6 +7,7 @@ import React, {
 	useMemo,
 	useEffect,
 } from 'react';
+
 import classNames from 'classnames';
 
 import Carousel from 'react-bootstrap/Carousel';

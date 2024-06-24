@@ -1,21 +1,23 @@
 import React, { ReactElement, memo, useEffect, useState } from 'react';
+
 import classNames from 'classnames';
 
 import Card, { CardProps } from 'react-bootstrap/Card';
-import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
-
-import TelegramBotStorage from '../TelegramBotStorage';
+import Table from 'react-bootstrap/Table';
 
 import { createMessageToast } from 'components/ToastContainer';
 
-import Header from './components/Header';
+import { TelegramBotAPI } from 'services/api/telegram_bots/main';
+
+import { TelegramBot } from 'services/api/telegram_bots/types';
+
+import TelegramBotStorage from '../TelegramBotStorage';
+
 import APITokenDisplay from './components/APITokenDisplay';
+import Header from './components/Header';
 
 import TelegramBotContext from './contexts/TelegramBotContext';
-
-import { TelegramBotAPI } from 'services/api/telegram_bots/main';
-import { TelegramBot } from 'services/api/telegram_bots/types';
 
 export interface TelegramBotCardProps extends CardProps {
 	telegramBot: TelegramBot;

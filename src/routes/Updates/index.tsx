@@ -1,16 +1,17 @@
 import React, { ReactElement, useState, useCallback } from 'react';
+
 import { useRouteLoaderData } from 'react-router-dom';
 
-import Page from 'components/Page';
 import Loading from 'components/Loading';
+import Page from 'components/Page';
 import Pagination from 'components/Pagination';
 
 import { createMessageToast } from 'components/ToastContainer';
 
-import UpdateDisplay from './components/UpdateDisplay';
-
 import { UpdatesAPI } from 'services/api/updates/main';
 import { APIResponse } from 'services/api/updates/types';
+
+import UpdateDisplay from './components/UpdateDisplay';
 
 export interface PaginationData extends APIResponse.UpdatesAPI.Get.Pagination {
 	limit: number;

@@ -2,14 +2,14 @@ import React, { ReactElement, memo } from 'react';
 
 import Block, { BlockProps } from '../Block';
 
-import URLInput, { URL, defaultURL } from './components/URLInput';
+import BodyBlock, { Body, defaultBody } from './components/BodyBlock';
+import HeadersBlock, { Headers, defaultHeaders } from './components/HeadersBlock';
 import MethodButtonGroup, {
 	Method,
 	defaultMethod,
 } from './components/MethodButtonGroup';
-import HeadersBlock, { Headers, defaultHeaders } from './components/HeadersBlock';
-import BodyBlock, { Body, defaultBody } from './components/BodyBlock';
 import TestBlock from './components/TestBlock';
+import URLInput, { URL, defaultURL } from './components/URLInput';
 
 import StoreContext, { StoreContextType } from './contexts/StoreContext';
 

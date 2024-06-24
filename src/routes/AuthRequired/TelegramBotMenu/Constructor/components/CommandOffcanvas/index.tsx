@@ -4,24 +4,23 @@ import Button from 'react-bootstrap/Button';
 
 import Offcanvas, { OffcanvasProps } from 'components/Offcanvas';
 
-import StoreProvider from './providers/StoreProvider';
-
+import AddonButtonGroup, { AddonButtonProps } from '../AddonButtonGroup';
 import NameBlock from '../NameBlock';
-import SettingsBlock from './components/SettingsBlock';
-import TriggerBlock from './components/TriggerBlock';
-import ImagesBlock from './components/ImagesBlock';
-import FilesCard from './components/FilesBlock';
-import MessageBlock from './components/MessageBlock';
-import KeyboardBlock from './components/KeyboardBlock';
+
 import APIRequestBlock from './components/APIRequestBlock';
 import DatabaseRecordBlock from './components/DatabaseRecordBlock';
+import FilesCard from './components/FilesBlock';
+import ImagesBlock from './components/ImagesBlock';
+import KeyboardBlock from './components/KeyboardBlock';
+import MessageBlock from './components/MessageBlock';
+import SettingsBlock from './components/SettingsBlock';
 
 import TelegramBotStorage from './components/TelegramBotStorage';
-import AddonButtonGroup, { AddonButtonProps } from '../AddonButtonGroup';
-
-import { State } from './store';
+import TriggerBlock from './components/TriggerBlock';
 
 import useCommandOffcanvasStore from './hooks/useCommandOffcanvasStore';
+import StoreProvider from './providers/StoreProvider';
+import { State } from './store';
 
 export type CommandFormOffcanvasProps = Omit<
 	OffcanvasProps,

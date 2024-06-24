@@ -1,9 +1,10 @@
 import React, { ReactElement, useEffect } from 'react';
+
 import { Outlet, useNavigate, useRouteLoaderData } from 'react-router-dom';
 
-import { reverse } from 'routes';
-
 import Loading from 'components/Loading';
+
+import { reverse } from 'routes';
 
 import { LoaderData as RootLoaderData } from 'routes/Root';
 

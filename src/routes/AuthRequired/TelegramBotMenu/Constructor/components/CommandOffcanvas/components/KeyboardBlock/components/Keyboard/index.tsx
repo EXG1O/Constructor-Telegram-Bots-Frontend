@@ -2,9 +2,9 @@ import React, { HTMLAttributes, ReactElement, memo } from 'react';
 
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
-import DroppableKeyboardRows from './components/DroppableKeyboardRows';
-
 import useCommandOffcanvasStore from '../../../../hooks/useCommandOffcanvasStore';
+
+import DroppableKeyboardRows from './components/DroppableKeyboardRows';
 
 export type { KeyboardRow } from './components/DraggableKeyboardRow';
 export type { KeyboardButton } from './components/DraggableKeyboardButton';

@@ -6,17 +6,17 @@ import React, {
 	memo,
 	useId,
 } from 'react';
+
+import classNames from 'classnames';
+import { motion } from 'framer-motion';
 import {
 	Link,
 	LinkProps as BaseLinkProps,
 	useLocation,
 	useNavigation,
 } from 'react-router-dom';
-import classNames from 'classnames';
 
 import { reverse } from 'routes';
-
-import { motion } from 'framer-motion';
 
 export type LinksProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 

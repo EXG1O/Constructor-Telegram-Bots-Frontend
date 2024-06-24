@@ -1,4 +1,5 @@
 import React, { ReactElement, memo, useMemo } from 'react';
+
 import Quill from 'quill';
 
 import('./TelegramQuillEditor.scss');

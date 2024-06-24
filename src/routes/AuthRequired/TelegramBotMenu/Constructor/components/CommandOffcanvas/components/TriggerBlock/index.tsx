@@ -3,12 +3,12 @@ import React, { ReactElement, memo } from 'react';
 import Block, { BlockProps } from '../../../Block';
 
 import BlockCollapse from './components/BlockCollapse';
-import TextInput, { Text, defaultText } from './components/TextInput';
-import DescriptionInputCollapse from './components/DescriptionInputCollapse';
 import DescriptionInput, {
 	Description,
 	defaultDescription,
 } from './components/DescriptionInput';
+import DescriptionInputCollapse from './components/DescriptionInputCollapse';
+import TextInput, { Text, defaultText } from './components/TextInput';
 
 export interface Trigger {
 	text: Text;

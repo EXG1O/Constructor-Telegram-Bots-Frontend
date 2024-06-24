@@ -1,4 +1,5 @@
 import { makeRequest } from 'services/api/base';
+
 import { Data, APIResponse } from './types';
 
 const rootURL: string = '/api/languages/';

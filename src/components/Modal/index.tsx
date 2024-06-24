@@ -1,14 +1,15 @@
 import React, { ReactElement, ReactNode } from 'react';
 
-import BaseModal from 'react-bootstrap/Modal';
 import { BaseModalProps } from '@restart/ui/Modal';
+
+import BaseModal from 'react-bootstrap/Modal';
 
 import Loading from '../Loading';
 
-import Header from './components/Header';
-import Title from './components/Title';
 import Body from './components/Body';
 import Footer from './components/Footer';
+import Header from './components/Header';
+import Title from './components/Title';
 
 import ModalContext from './contexts/ModalContext';
 

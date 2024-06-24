@@ -1,8 +1,8 @@
 import React, { ReactElement, memo, useState, useCallback } from 'react';
 
-import TelegramIcon from 'assets/icons/telegram.svg';
-
 import Button, { ButtonProps } from 'react-bootstrap/Button';
+
+import TelegramIcon from 'assets/icons/telegram.svg';
 
 import LoginModal from './LoginModal';
 

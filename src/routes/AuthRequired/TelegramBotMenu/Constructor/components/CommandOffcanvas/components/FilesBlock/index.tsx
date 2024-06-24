@@ -2,9 +2,9 @@ import React, { ReactElement, memo } from 'react';
 
 import Block, { BlockProps } from '../../../Block';
 
+import AddFilesButton from './components/AddFilesButton';
 import BlockCollapse from './components/BlockCollapse';
 import FileList from './components/FileList';
-import AddFilesButton from './components/AddFilesButton';
 
 export interface _File extends Pick<File, 'name' | 'size'> {
 	id?: number;

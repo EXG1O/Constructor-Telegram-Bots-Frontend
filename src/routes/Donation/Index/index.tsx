@@ -1,14 +1,15 @@
 import React, { ReactElement } from 'react';
+
 import { useRouteLoaderData } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
 
 import Page from 'components/Page';
 
-import SectionDisplay from './components/SectionDisplay';
-
 import { SectionsAPI, ButtonsAPI } from 'services/api/donations/main';
 import { APIResponse } from 'services/api/donations/types';
+
+import SectionDisplay from './components/SectionDisplay';
 
 export interface LoaderData {
 	sections: APIResponse.SectionsAPI.Get;

@@ -5,6 +5,7 @@ import React, {
 	memo,
 	useMemo,
 } from 'react';
+
 import classNames from 'classnames';
 
 export interface InfoAreaProps

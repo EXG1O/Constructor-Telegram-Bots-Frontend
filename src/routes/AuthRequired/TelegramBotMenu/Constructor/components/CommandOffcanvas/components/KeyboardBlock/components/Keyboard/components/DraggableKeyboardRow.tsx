@@ -1,14 +1,14 @@
 import React, { ReactElement, memo } from 'react';
 
+import { Draggable, DraggableProps } from 'react-beautiful-dnd';
+
 import GripVerticalIcon from 'assets/icons/grip-vertical.svg';
 import TrashIcon from 'assets/icons/trash.svg';
 
-import { Draggable, DraggableProps } from 'react-beautiful-dnd';
-
-import DroppableKeyboardButtons from './DroppableKeyboardButtons';
-import { KeyboardButton } from './DraggableKeyboardButton';
-
 import useCommandOffcanvasStore from '../../../../../hooks/useCommandOffcanvasStore';
+
+import { KeyboardButton } from './DraggableKeyboardButton';
+import DroppableKeyboardButtons from './DroppableKeyboardButtons';
 
 export interface KeyboardRow {
 	draggableId: string;

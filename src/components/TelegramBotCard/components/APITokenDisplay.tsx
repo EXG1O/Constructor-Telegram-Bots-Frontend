@@ -6,21 +6,21 @@ import React, {
 	useEffect,
 	useState,
 } from 'react';
-import classNames from 'classnames';
 
-import PencilSquareIcon from 'assets/icons/pencil-square.svg';
-import EyeIcon from 'assets/icons/eye.svg';
-import EyeSlashIcon from 'assets/icons/eye-slash.svg';
-import CheckIcon from 'assets/icons/check.svg';
-import XIcon from 'assets/icons/x.svg';
+import classNames from 'classnames';
 
 import Input from 'react-bootstrap/FormControl';
 
+import CheckIcon from 'assets/icons/check.svg';
+import EyeSlashIcon from 'assets/icons/eye-slash.svg';
+import EyeIcon from 'assets/icons/eye.svg';
+import PencilSquareIcon from 'assets/icons/pencil-square.svg';
+import XIcon from 'assets/icons/x.svg';
 import { createMessageToast } from 'components/ToastContainer';
 
-import useTelegramBot from '../hooks/useTelegramBot';
-
 import { TelegramBotAPI } from 'services/api/telegram_bots/main';
+
+import useTelegramBot from '../hooks/useTelegramBot';
 
 export type APITokenDisplayProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 

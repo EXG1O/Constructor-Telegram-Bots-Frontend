@@ -1,11 +1,11 @@
 import React, { ReactElement, memo, useId } from 'react';
 
-import ToggleButtonGroup, {
-	ToggleButtonRadioProps,
-} from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton, {
 	ToggleButtonProps as BaseToggleButtonProps,
 } from 'react-bootstrap/ToggleButton';
+import ToggleButtonGroup, {
+	ToggleButtonRadioProps,
+} from 'react-bootstrap/ToggleButtonGroup';
 
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
 

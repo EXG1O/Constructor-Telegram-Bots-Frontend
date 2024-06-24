@@ -1,22 +1,20 @@
 import React, { ReactElement } from 'react';
 
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 import Page from 'components/Page';
 
-import Header from './components/Header';
-import Stats from './components/Stats';
-import Donations from './components/Donations';
-
+import { DonationsAPI } from 'services/api/donations/main';
+import { APIResponse as DonationsAPIResponse } from 'services/api/donations/types';
+import { StatsAPI as TelegramBotsStatsAPI } from 'services/api/telegram_bots/main';
+import { APIResponse as TelegramBotsAPIResponse } from 'services/api/telegram_bots/types';
 import { StatsAPI as UsersStatsAPI } from 'services/api/users/main';
 import { APIResponse as UsersAPIResponse } from 'services/api/users/types';
 
-import { StatsAPI as TelegramBotsStatsAPI } from 'services/api/telegram_bots/main';
-import { APIResponse as TelegramBotsAPIResponse } from 'services/api/telegram_bots/types';
-
-import { DonationsAPI } from 'services/api/donations/main';
-import { APIResponse as DonationsAPIResponse } from 'services/api/donations/types';
+import Donations from './components/Donations';
+import Header from './components/Header';
+import Stats from './components/Stats';
 
 interface LoaderDataStats {
 	users: UsersAPIResponse.StatsAPI.Get;

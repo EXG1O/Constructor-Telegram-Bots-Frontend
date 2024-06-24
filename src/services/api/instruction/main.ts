@@ -1,4 +1,5 @@
 import { makeRequest } from 'services/api/base';
+
 import { APIResponse } from './types';
 
 const rootUrl: string = '/api/instruction/';

@@ -1,15 +1,16 @@
 import React, { ReactElement } from 'react';
+
 import { useRouteLoaderData } from 'react-router-dom';
 
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 import Page from 'components/Page';
 import TelegramBotCard from 'components/TelegramBotCard';
 
-import TelegramBotCardFooter from './components/TelegramBotCardFooter';
-
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
+
+import TelegramBotCardFooter from './components/TelegramBotCardFooter';
 
 function Index(): ReactElement {
 	const { telegramBot } = useRouteLoaderData(

@@ -1,8 +1,8 @@
 import { redirect } from 'react-router-dom';
 
-import { reverse } from 'routes';
-
 import { createMessageToast } from 'components/ToastContainer';
+
+import { reverse } from 'routes';
 
 export type LoaderData = Response;
 

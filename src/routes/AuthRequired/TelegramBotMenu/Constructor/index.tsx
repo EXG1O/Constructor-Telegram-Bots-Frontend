@@ -1,4 +1,5 @@
 import React, { ReactElement, useCallback, useRef } from 'react';
+
 import { Params, useRouteLoaderData } from 'react-router-dom';
 
 import ReactFlow, {
@@ -25,20 +26,7 @@ import Page from 'components/Page';
 
 import { createMessageToast } from 'components/ToastContainer';
 
-import Panel from './components/Panel';
-import CommandNode from './components/CommandNode';
-import CommandOffcanvas from './components/CommandOffcanvas';
-
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
-
-import {
-	parseDiagramCommandNodes,
-	parseDiagramConditionNodes,
-	parseDiagramBackgroundTaskNodes,
-	parseDiagramCommandEdges,
-	parseDiagramConditionEdges,
-	parseDiagramBackgroundTaskEdges,
-} from './utils';
 
 import {
 	ConnectionsAPI,
@@ -50,7 +38,21 @@ import {
 	DiagramBackgroundTasksAPI,
 	DiagramBackgroundTaskAPI,
 } from 'services/api/telegram_bots/main';
+
 import { APIResponse } from 'services/api/telegram_bots/types';
+
+import CommandNode from './components/CommandNode';
+import CommandOffcanvas from './components/CommandOffcanvas';
+import Panel from './components/Panel';
+
+import {
+	parseDiagramCommandNodes,
+	parseDiagramConditionNodes,
+	parseDiagramBackgroundTaskNodes,
+	parseDiagramCommandEdges,
+	parseDiagramConditionEdges,
+	parseDiagramBackgroundTaskEdges,
+} from './utils';
 
 export interface LoaderData {
 	diagramCommands: APIResponse.DiagramCommandsAPI.Get;

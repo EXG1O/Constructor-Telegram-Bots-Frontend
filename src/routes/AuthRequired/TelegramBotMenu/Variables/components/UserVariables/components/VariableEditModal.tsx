@@ -1,18 +1,20 @@
 import React, { ReactElement, memo, useState } from 'react';
+
 import { useRouteLoaderData } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
 
 import { createMessageToast } from 'components/ToastContainer';
 
-import VariableFormModal, { VariableFormModalProps, Data } from './VariableFormModal';
-
-import useVariables from '../hooks/useVariables';
-
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
 import { VariableAPI } from 'services/api/telegram_bots/main';
+
 import { Variable } from 'services/api/telegram_bots/types';
+
+import useVariables from '../hooks/useVariables';
+
+import VariableFormModal, { VariableFormModalProps, Data } from './VariableFormModal';
 
 export interface VariableEditModalProps
 	extends Omit<

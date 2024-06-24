@@ -1,7 +1,7 @@
 import React, { ReactElement, memo } from 'react';
 
-import Switch from 'react-bootstrap/Switch';
 import { FormCheckProps as SwitchProps } from 'react-bootstrap/FormCheck';
+import Switch from 'react-bootstrap/Switch';
 
 import { Settings } from '..';
 

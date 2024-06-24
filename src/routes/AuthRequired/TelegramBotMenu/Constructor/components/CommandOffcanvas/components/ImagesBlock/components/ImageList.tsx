@@ -5,13 +5,14 @@ import React, {
 	memo,
 	useMemo,
 } from 'react';
+
 import classNames from 'classnames';
 
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
-import ImageDetail from './ImageDetail';
-
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
+
+import ImageDetail from './ImageDetail';
 
 export type ImageListProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 

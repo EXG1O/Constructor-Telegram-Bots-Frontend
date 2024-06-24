@@ -2,9 +2,9 @@ import React, { ReactElement, memo, useId } from 'react';
 
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 
-import { Image } from '..';
-
 import { createMessageToast } from 'components/ToastContainer';
+
+import { Image } from '..';
 
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
 import useTelegramBotStorage from '../../../hooks/useTelegramBotStorage';

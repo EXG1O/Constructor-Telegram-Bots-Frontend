@@ -1,6 +1,7 @@
 import React, { ReactElement, memo, useRef, useMemo, useCallback } from 'react';
+
 import classNames from 'classnames';
-import monaco from 'monaco-editor';
+import { editor } from 'monaco-editor';
 
 import('./index.scss');
 
@@ -8,7 +9,7 @@ import Editor, { EditorProps, Monaco, OnMount, OnChange } from '@monaco-editor/r
 
 import EditorLoading from './components/EditorLoading';
 
-export interface Editor extends monaco.editor.IStandaloneCodeEditor {
+export interface Editor extends editor.IStandaloneCodeEditor {
 	updateLayout: (shouldResetWidth?: boolean) => void;
 }
 
@@ -24,7 +25,7 @@ const lineHeights: Record<string, number> = { sm: 19, lg: 22 };
 const fontSizes: Record<string, number> = { sm: 14, lg: 18 };
 const roundedValues: Record<string, number> = { sm: 1, lg: 3 };
 
-const baseOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
+const baseOptions: editor.IStandaloneEditorConstructionOptions = {
 	minimap: { enabled: false },
 	renderLineHighlight: 'none',
 	lineNumbersMinChars: 3,
@@ -61,7 +62,7 @@ function MonacoEditor({
 	const updateLayout = useCallback((resetWidth?: boolean) => {
 		if (!editor.current) return;
 
-		const editorModel: monaco.editor.ITextModel | null = editor.current.getModel();
+		const editorModel: editor.ITextModel | null = editor.current.getModel();
 
 		if (editorModel === null) return;
 

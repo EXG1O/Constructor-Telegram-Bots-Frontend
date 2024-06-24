@@ -1,13 +1,14 @@
 import React, { ReactElement, HTMLAttributes, memo } from 'react';
+
 import classNames from 'classnames';
 
 import './DroppableKeyboardButtons.scss';
 
 import { Droppable, DroppableProps } from 'react-beautiful-dnd';
 
-import DraggableKeyboardButton from './DraggableKeyboardButton';
-
 import useCommandOffcanvasStore from '../../../../../hooks/useCommandOffcanvasStore';
+
+import DraggableKeyboardButton from './DraggableKeyboardButton';
 
 export interface DroppableKeyboardButtonsProps
 	extends Pick<

@@ -1,4 +1,5 @@
 import React, { ReactElement, memo, useCallback } from 'react';
+
 import { useRouteLoaderData } from 'react-router';
 
 import './CommandNode.scss';
@@ -7,18 +8,18 @@ import { NodeProps, Handle, Position, useStore } from 'reactflow';
 
 import Stack from 'react-bootstrap/Stack';
 
-import NodeToolbar from './NodeToolbar';
-
-import { createMessageToast } from 'components/ToastContainer';
-
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
-
-import useCommandOffcanvasStore from './CommandOffcanvas/hooks/useCommandOffcanvasStore';
+import { createMessageToast } from 'components/ToastContainer';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
 import { CommandAPI } from 'services/api/telegram_bots/main';
+
 import { DiagramBlock, DiagramCommand } from 'services/api/telegram_bots/types';
+
+import useCommandOffcanvasStore from './CommandOffcanvas/hooks/useCommandOffcanvasStore';
+
+import NodeToolbar from './NodeToolbar';
 
 type Data = Omit<DiagramCommand, keyof DiagramBlock>;
 

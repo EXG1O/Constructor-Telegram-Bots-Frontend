@@ -1,9 +1,10 @@
 import React, { ReactElement, memo, useMemo } from 'react';
+
 import { Link } from 'react-router-dom';
 
-import { reverse } from 'routes';
-
 import Dropdown, { DropdownProps } from 'react-bootstrap/Dropdown';
+
+import { reverse } from 'routes';
 
 import { TelegramBot } from 'services/api/telegram_bots/types';
 

@@ -1,10 +1,10 @@
 import React, { ReactElement, memo } from 'react';
 
+import Button from 'react-bootstrap/Button';
+import ButtonGroup, { ButtonGroupProps } from 'react-bootstrap/ButtonGroup';
+
 import CheckIcon from 'assets/icons/check.svg';
 import XIcon from 'assets/icons/x.svg';
-
-import ButtonGroup, { ButtonGroupProps } from 'react-bootstrap/ButtonGroup';
-import Button from 'react-bootstrap/Button';
 
 export interface ConfirmButtonGroupProps extends Omit<ButtonGroupProps, 'children'> {
 	onConfirm?: () => void;

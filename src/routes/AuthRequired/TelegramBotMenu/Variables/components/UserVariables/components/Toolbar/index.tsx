@@ -1,14 +1,14 @@
 import React, { ReactElement, HTMLAttributes, memo, useCallback } from 'react';
+
 import classNames from 'classnames';
 
-import Search, { defaultValue as searchDefaultValue } from 'components/Search';
 import Pagination from 'components/Pagination';
-
-import AddVariableButton from './components/AddVariableButton';
-
-import useVariables from '../../hooks/useVariables';
+import Search, { defaultValue as searchDefaultValue } from 'components/Search';
 
 import { PaginationData } from '../../../..';
+import useVariables from '../../hooks/useVariables';
+
+import AddVariableButton from './components/AddVariableButton';
 
 export interface ToolbarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
 	paginationData: Omit<PaginationData, 'results'>;

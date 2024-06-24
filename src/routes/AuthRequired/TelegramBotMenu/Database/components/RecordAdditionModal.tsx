@@ -1,21 +1,21 @@
 import React, { ReactElement, memo, useState } from 'react';
+
 import { useRouteLoaderData } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
 
 import { createMessageToast } from 'components/ToastContainer';
 
+import { DatabaseRecordsAPI } from 'services/api/telegram_bots/main';
+
+import { LoaderData as TelegramBotMenuRootLoaderData } from '../../Root';
+import useRecords from '../hooks/useRecords';
+
 import RecordFormModal, {
 	RecordFormModalProps,
 	Value,
 	defaultValue,
 } from './RecordFormModal';
-
-import useRecords from '../hooks/useRecords';
-
-import { LoaderData as TelegramBotMenuRootLoaderData } from '../../Root';
-
-import { DatabaseRecordsAPI } from 'services/api/telegram_bots/main';
 
 export type RecordAdditionModalProps = Omit<
 	RecordFormModalProps,

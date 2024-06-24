@@ -1,12 +1,13 @@
 import React, { ReactElement, memo, useEffect, useMemo, useState } from 'react';
+
 import classNames from 'classnames';
 
-import SuccessIcon from 'assets/icons/check-circle-fill.svg';
-import InfoIcon from 'assets/icons/info-circle-fill.svg';
-import ErrorIcon from 'assets/icons/exclamation-triangle-fill.svg';
-
-import Toast, { ToastProps } from 'react-bootstrap/Toast';
 import CloseButton from 'react-bootstrap/CloseButton';
+import Toast, { ToastProps } from 'react-bootstrap/Toast';
+
+import SuccessIcon from 'assets/icons/check-circle-fill.svg';
+import ErrorIcon from 'assets/icons/exclamation-triangle-fill.svg';
+import InfoIcon from 'assets/icons/info-circle-fill.svg';
 
 import { useToastContainerStore } from '../store';
 

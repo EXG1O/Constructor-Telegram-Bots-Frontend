@@ -1,53 +1,23 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
+import { createMessageToast } from 'components/ToastContainer';
+
+import {
+	CommandsAPI,
+	CommandAPI,
+	DiagramCommandAPI,
+} from 'services/api/telegram_bots/main';
+
+import { TelegramBot, DiagramCommand, Data } from 'services/api/telegram_bots/types';
+
 import {
 	NameBlockSliceState,
 	NameBlockSlice,
 	initialNameBlockSliceState,
 	createNameBlockSlice,
 } from '../NameBlock/store';
-import {
-	SettingsBlockSliceState,
-	SettingsBlockSlice,
-	initialSettingsBlockSliceState,
-	createSettingsBlockSlice,
-} from './components/SettingsBlock/store';
-import { defaultTrigger, defaultTriggerDescription } from './components/TriggerBlock';
-import {
-	TriggerBlockSliceState,
-	TriggerBlockSlice,
-	initialTriggerBlockSliceState,
-	createTriggerBlockSlice,
-} from './components/TriggerBlock/store';
-import { Image, defaultImages } from './components/ImagesBlock';
-import {
-	ImagesBlockSliceState,
-	ImagesBlockSlice,
-	initialImagesBlockSliceState,
-	createImagesBlockSlice,
-} from './components/ImagesBlock/store';
-import { _File, defaultFiles } from './components/FilesBlock';
-import {
-	FilesBlockSliceState,
-	FilesBlockSlice,
-	initialFilesBlockSliceState,
-	createFilesBlockSlice,
-} from './components/FilesBlock/store';
-import {
-	MessageBlockSliceState,
-	MessageBlockSlice,
-	initialMessageBlockSliceState,
-	createMessageBlockSlice,
-} from './components/MessageBlock/store';
-import { defaultKeyboard } from './components/KeyboardBlock';
-import { KeyboardRow } from './components/KeyboardBlock/components/Keyboard';
-import {
-	KeyboardBlockSliceState,
-	KeyboardBlockSlice,
-	initialKeyboardBlockSliceState,
-	createKeyboardBlockSlice,
-} from './components/KeyboardBlock/store';
+
 import {
 	defaultAPIRequest,
 	defaultAPIRequestHeaders,
@@ -66,15 +36,47 @@ import {
 	initialDatabaseRecordBlockSliceState,
 	createDatabaseRecordBlockSlice,
 } from './components/DatabaseRecordBlock/store';
-
+import { _File, defaultFiles } from './components/FilesBlock';
 import {
-	CommandsAPI,
-	CommandAPI,
-	DiagramCommandAPI,
-} from 'services/api/telegram_bots/main';
-import { TelegramBot, DiagramCommand, Data } from 'services/api/telegram_bots/types';
-
-import { createMessageToast } from 'components/ToastContainer';
+	FilesBlockSliceState,
+	FilesBlockSlice,
+	initialFilesBlockSliceState,
+	createFilesBlockSlice,
+} from './components/FilesBlock/store';
+import { Image, defaultImages } from './components/ImagesBlock';
+import {
+	ImagesBlockSliceState,
+	ImagesBlockSlice,
+	initialImagesBlockSliceState,
+	createImagesBlockSlice,
+} from './components/ImagesBlock/store';
+import { defaultKeyboard } from './components/KeyboardBlock';
+import { KeyboardRow } from './components/KeyboardBlock/components/Keyboard';
+import {
+	KeyboardBlockSliceState,
+	KeyboardBlockSlice,
+	initialKeyboardBlockSliceState,
+	createKeyboardBlockSlice,
+} from './components/KeyboardBlock/store';
+import {
+	MessageBlockSliceState,
+	MessageBlockSlice,
+	initialMessageBlockSliceState,
+	createMessageBlockSlice,
+} from './components/MessageBlock/store';
+import {
+	SettingsBlockSliceState,
+	SettingsBlockSlice,
+	initialSettingsBlockSliceState,
+	createSettingsBlockSlice,
+} from './components/SettingsBlock/store';
+import { defaultTrigger, defaultTriggerDescription } from './components/TriggerBlock';
+import {
+	TriggerBlockSliceState,
+	TriggerBlockSlice,
+	initialTriggerBlockSliceState,
+	createTriggerBlockSlice,
+} from './components/TriggerBlock/store';
 
 export interface StateParams {
 	telegramBot: TelegramBot;

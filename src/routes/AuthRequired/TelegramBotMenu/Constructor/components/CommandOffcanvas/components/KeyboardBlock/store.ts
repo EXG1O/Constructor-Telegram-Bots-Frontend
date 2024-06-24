@@ -1,12 +1,13 @@
 import { StateCreator } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-import { Keyboard, defaultKeyboard } from '.';
 import {
 	KeyboardButtonBlockSliceState,
 	KeyboardButtonBlockSliceActions,
 	initialKeyboardButtonBlockSliceState,
 } from './components/KeyboardButtonBlock/store';
+
+import { Keyboard, defaultKeyboard } from '.';
 
 export interface KeyboardBlockSliceState extends KeyboardButtonBlockSliceState {
 	keyboard: Keyboard;

@@ -5,21 +5,21 @@ import React, {
 	memo,
 	useCallback,
 } from 'react';
-import { useRouteLoaderData } from 'react-router-dom';
-import classNames from 'classnames';
 
-import { createMessageToast } from 'components/ToastContainer';
+import classNames from 'classnames';
+import { useRouteLoaderData } from 'react-router-dom';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
-
-import useUser from '../hooks/useUser';
-import useUsers from '../../../hooks/useUsers';
+import { createMessageToast } from 'components/ToastContainer';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
 import { makeRequest } from 'services/api/base';
 
 import { UserAPI } from 'services/api/telegram_bots/main';
+
+import useUsers from '../../../hooks/useUsers';
+import useUser from '../hooks/useUser';
 
 export type UserDisplayProps = Omit<HTMLAttributes<HTMLTableRowElement>, 'children'>;
 

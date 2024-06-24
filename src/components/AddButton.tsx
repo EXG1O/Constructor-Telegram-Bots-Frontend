@@ -1,9 +1,10 @@
 import React, { ReactElement, memo, useMemo } from 'react';
+
 import classNames from 'classnames';
 
-import PlusIcon from 'assets/icons/plus.svg';
-
 import Button, { ButtonProps } from 'react-bootstrap/Button';
+
+import PlusIcon from 'assets/icons/plus.svg';
 
 export type AddButtonProps = ButtonProps;
 

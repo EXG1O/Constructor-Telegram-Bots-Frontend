@@ -1,13 +1,14 @@
 import React, { ReactElement, HTMLAttributes, memo, useState } from 'react';
+
 import classNames from 'classnames';
+
+import Button from 'react-bootstrap/Button';
+import Collapse from 'react-bootstrap/Collapse';
+import Input from 'react-bootstrap/FormControl';
+import InputGroup, { InputGroupProps } from 'react-bootstrap/InputGroup';
 
 import SearchIcon from 'assets/icons/search.svg';
 import XIcon from 'assets/icons/x.svg';
-
-import InputGroup, { InputGroupProps } from 'react-bootstrap/InputGroup';
-import Input from 'react-bootstrap/FormControl';
-import Collapse from 'react-bootstrap/Collapse';
-import Button from 'react-bootstrap/Button';
 
 export type Value = string;
 

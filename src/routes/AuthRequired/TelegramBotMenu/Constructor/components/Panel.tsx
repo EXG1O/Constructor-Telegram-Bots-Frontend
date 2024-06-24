@@ -1,4 +1,5 @@
 import React, { ReactElement, HTMLAttributes, memo } from 'react';
+
 import classNames from 'classnames';
 
 import { Panel as BasePanel } from 'reactflow';

@@ -5,23 +5,23 @@ import React, {
 	memo,
 	useCallback,
 } from 'react';
+
 import { useRouteLoaderData } from 'react-router-dom';
 
 import ClipboardIcon from 'assets/icons/clipboard.svg';
 import TrashIcon from 'assets/icons/trash.svg';
-
-import EditButton from './components/EditButton';
-
-import { createMessageToast } from 'components/ToastContainer';
-
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
-
-import useVariables from '../../../../hooks/useVariables';
-import useVariable from '../../hooks/useVariables';
+import { createMessageToast } from 'components/ToastContainer';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
 import { VariableAPI } from 'services/api/telegram_bots/main';
+
+import useVariables from '../../../../hooks/useVariables';
+
+import useVariable from '../../hooks/useVariables';
+
+import EditButton from './components/EditButton';
 
 export type VariableDisplayProps = Omit<
 	HTMLAttributes<HTMLTableRowElement>,
