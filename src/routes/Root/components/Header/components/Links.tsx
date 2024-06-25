@@ -28,8 +28,8 @@ const linkUnderlineStyle: CSSProperties = { height: '2px' };
 
 const links: LinkProps[] = [
 	{ to: reverse('instruction'), children: gettext('Инструкция') },
-	{ to: reverse('privacy-policy'), children: gettext('Конфиденциальность') },
 	{ to: reverse('updates'), children: gettext('Обновления') },
+	{ to: reverse('privacy-policy'), children: gettext('Конфиденциальность') },
 	{ to: reverse('donation-index'), children: gettext('Пожертвование') },
 ];
 
