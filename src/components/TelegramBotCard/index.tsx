@@ -1,27 +1,43 @@
-import React, { ReactElement, memo, useEffect, useState } from 'react';
+import React, {
+	HTMLAttributes,
+	ReactElement,
+	TdHTMLAttributes,
+	memo,
+	useCallback,
+	useEffect,
+	useState,
+} from 'react';
 
 import classNames from 'classnames';
 
-import Card, { CardProps } from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 
+import TelegramBotStorage from 'components/TelegramBotStorage';
 import { createMessageToast } from 'components/ToastContainer';
-
 import { TelegramBotAPI } from 'services/api/telegram_bots/main';
-
 import { TelegramBot } from 'services/api/telegram_bots/types';
 
-import TelegramBotStorage from '../TelegramBotStorage';
-
 import APITokenDisplay from './components/APITokenDisplay';
-import Header from './components/Header';
-
+import APITokenEditing from './components/APITokenEditing';
+import PrivateSwitch from './components/PrivateSwitch';
 import TelegramBotContext from './contexts/TelegramBotContext';
 
-export interface TelegramBotCardProps extends CardProps {
+export interface TelegramBotCardProps extends HTMLAttributes<HTMLDivElement> {
 	telegramBot: TelegramBot;
 }
+
+const loadingStatusProps: TdHTMLAttributes<HTMLTableCellElement> = {
+	className: 'text-secondary',
+	children: gettext('Загрузка'),
+};
+const enabledStatusProps: TdHTMLAttributes<HTMLTableCellElement> = {
+	className: 'text-success',
+	children: gettext('Включен'),
+};
+const disabledStatusProps: TdHTMLAttributes<HTMLTableCellElement> = {
+	className: 'text-danger',
+	children: gettext('Выключен'),
+};
 
 function TelegramBotCard({
 	telegramBot: initialTelegramBot,
@@ -30,118 +46,103 @@ function TelegramBotCard({
 	...props
 }: TelegramBotCardProps): ReactElement<TelegramBotCardProps> {
 	const [telegramBot, setTelegramBot] = useState<TelegramBot>(initialTelegramBot);
+	const [apiTokenEditing, setAPITokenEditing] = useState<boolean>(false);
 
 	useEffect(() => setTelegramBot(initialTelegramBot), [initialTelegramBot]);
 
-	async function checkStatus(): Promise<void> {
-		if (!telegramBot.is_loading) return;
-
-		const response = await TelegramBotAPI.get(telegramBot.id);
-
-		if (!response.ok || response.json.is_loading) {
-			if (!response.ok) {
-				createMessageToast({
-					message: gettext('Не удалось получить данные о Telegram боте.'),
-					level: 'error',
-				});
-			}
-
-			setTimeout(checkStatus, 3000);
-			return;
-		}
-
-		setTelegramBot(response.json);
-	}
+	const toggleAPITokenState = useCallback(
+		() => setAPITokenEditing(!apiTokenEditing),
+		[apiTokenEditing],
+	);
 
 	useEffect(() => {
+		const checkStatus = async () => {
+			if (!telegramBot.is_loading) return;
+
+			const response = await TelegramBotAPI.get(telegramBot.id);
+
+			if (!response.ok || response.json.is_loading) {
+				if (!response.ok) {
+					createMessageToast({
+						message: gettext('Не удалось получить данные о Telegram боте.'),
+						level: 'error',
+					});
+				}
+
+				setTimeout(checkStatus, 3000);
+				return;
+			}
+
+			setTelegramBot(response.json);
+		};
+
 		checkStatus();
 	}, [telegramBot.is_loading]);
 
-	async function handleIsPrivateChange(
-		event: React.ChangeEvent<HTMLInputElement>,
-	): Promise<void> {
-		const response = await TelegramBotAPI.partialUpdate(telegramBot.id, {
-			is_private: event.target.checked,
-		});
-
-		if (response.ok) {
-			setTelegramBot(response.json);
-			createMessageToast({
-				message: interpolate(
-					gettext('Вы успешно сделали Telegram бота %(private)s.'),
-					{
-						private: response.json.is_private
-							? gettext('приватным')
-							: gettext('не приватным'),
-					},
-					true,
-				),
-				level: 'success',
-			});
-		} else {
-			createMessageToast({
-				message: interpolate(
-					gettext('Не удалось сделать Telegram бота %(private)s.'),
-					{
-						private: event.target.checked
-							? gettext('приватным')
-							: gettext('не приватным'),
-					},
-					true,
-				),
-				level: 'error',
-			});
-		}
-	}
-
 	return (
 		<TelegramBotContext.Provider value={[telegramBot, setTelegramBot]}>
-			<Card {...props} className={classNames('border-0', className)}>
-				<Header />
-				<Card.Body className='border p-2'>
-					<Table size='sm' borderless className='align-middle mb-0'>
-						<tbody>
-							<tr>
-								<th scope='row'>@username:</th>
-								<td className='text-break w-100'>
-									<a
-										className='text-reset text-decoration-none'
-										href={`tg://resolve?domain=${telegramBot.username}`}
-									>
-										@{telegramBot.username}
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<th scope='row'>{gettext('API-токен')}:</th>
-								<td>
-									<APITokenDisplay />
-								</td>
-							</tr>
-							<tr>
-								<th scope='row'>{gettext('Хранилище')}:</th>
-								<td>
-									<TelegramBotStorage telegramBot={telegramBot} />
-								</td>
-							</tr>
-							<tr>
-								<th scope='row'>{gettext('Приватный')}:</th>
-								<td>
-									<Form.Switch
-										checked={telegramBot.is_private}
-										onChange={handleIsPrivateChange}
+			<div
+				{...props}
+				className={classNames(
+					'd-flex flex-column text-bg-light rounded-4 p-3 gap-2',
+					className,
+				)}
+			>
+				<h4 className='fw-semibold text-center'>
+					<a
+						className='text-reset text-decoration-none'
+						href={`https://t.me/${telegramBot.username}`}
+						rel='noreferrer'
+						target='_blank'
+					>
+						{telegramBot.username}
+					</a>
+				</h4>
+				<Table size='sm' borderless className='align-middle mb-0'>
+					<tbody>
+						<tr>
+							<th scope='row'>{gettext('Статус')}:</th>
+							<td
+								{...(telegramBot.is_loading
+									? loadingStatusProps
+									: telegramBot.is_enabled
+										? enabledStatusProps
+										: disabledStatusProps)}
+							/>
+						</tr>
+						<tr>
+							<th scope='row'>{gettext('API-токен')}:</th>
+							<td className='w-100'>
+								{apiTokenEditing ? (
+									<APITokenEditing
+										onSaved={toggleAPITokenState}
+										onCancel={toggleAPITokenState}
 									/>
-								</td>
-							</tr>
-							<tr>
-								<th scope='row'>{gettext('Добавлен')}:</th>
-								<td>{telegramBot.added_date}</td>
-							</tr>
-						</tbody>
-					</Table>
-				</Card.Body>
+								) : (
+									<APITokenDisplay onEdit={toggleAPITokenState} />
+								)}
+							</td>
+						</tr>
+						<tr>
+							<th scope='row'>{gettext('Приватный')}:</th>
+							<td>
+								<PrivateSwitch />
+							</td>
+						</tr>
+						<tr>
+							<th scope='row'>{gettext('Хранилище')}:</th>
+							<td>
+								<TelegramBotStorage telegramBot={telegramBot} />
+							</td>
+						</tr>
+						<tr>
+							<th scope='row'>{gettext('Добавлен')}:</th>
+							<td>{telegramBot.added_date}</td>
+						</tr>
+					</tbody>
+				</Table>
 				{children}
-			</Card>
+			</div>
 		</TelegramBotContext.Provider>
 	);
 }

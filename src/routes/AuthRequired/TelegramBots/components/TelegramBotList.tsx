@@ -24,7 +24,7 @@ function TelegramBotList({
 					<TelegramBotCard key={telegramBot.id} telegramBot={telegramBot}>
 						<Link
 							to={`/telegram-bot-menu/${telegramBot.id}/`}
-							className='card-footer btn btn-light border border-top-0'
+							className='btn btn-dark'
 						>
 							{gettext('Меню Telegram бота')}
 						</Link>

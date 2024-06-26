@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import CardFooter, { CardFooterProps } from 'react-bootstrap/CardFooter';
 
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import Loading from 'components/Loading';
 
@@ -13,7 +16,7 @@ import { createMessageToast } from 'components/ToastContainer';
 
 import { TelegramBotAPI } from 'services/api/telegram_bots/main';
 
-export type TelegramBotCardFooterProps = Omit<CardFooterProps, 'children'>;
+export type TelegramBotCardFooterProps = Omit<CardFooterProps, 'as' | 'children'>;
 
 function TelegramBotCardFooter(
 	props: TelegramBotCardFooterProps,
@@ -59,9 +62,7 @@ function TelegramBotCardFooter(
 		[],
 	);
 
-	async function handleButtonClick(
-		action: 'start' | 'restart' | 'stop',
-	): Promise<void> {
+	async function handleAction(action: 'start' | 'restart' | 'stop'): Promise<void> {
 		const response = await TelegramBotAPI[action](telegramBot.id);
 
 		if (response.ok) {
@@ -102,47 +103,54 @@ function TelegramBotCardFooter(
 	}
 
 	return (
-		<CardFooter
-			{...props}
-			className='d-flex flex-wrap border border-top-0 p-3 gap-3'
-		>
+		<CardFooter {...props} as={Row} className='g-3'>
 			{telegramBot.is_loading ? (
-				<Button
-					disabled
-					variant='secondary'
-					className='flex-fill d-flex justify-content-center'
-				>
-					<Loading size='xs' />
-				</Button>
+				<Col>
+					<Button
+						disabled
+						variant='secondary'
+						className='w-100 d-flex justify-content-center'
+					>
+						<Loading size='xs' />
+					</Button>
+				</Col>
 			) : telegramBot.is_enabled ? (
 				<>
-					<Button
-						variant='danger'
-						className='flex-fill'
-						onClick={() => handleButtonClick('stop')}
-					>
-						{gettext('Выключить')}
-					</Button>
-					<Button
-						variant='success'
-						className='flex-fill'
-						onClick={() => handleButtonClick('restart')}
-					>
-						{gettext('Перезагрузить')}
-					</Button>
+					<Col>
+						<Button
+							variant='danger'
+							className='w-100'
+							onClick={() => handleAction('stop')}
+						>
+							{gettext('Выключить')}
+						</Button>
+					</Col>
+					<Col>
+						<Button
+							variant='success'
+							className='w-100'
+							onClick={() => handleAction('restart')}
+						>
+							{gettext('Перезагрузить')}
+						</Button>
+					</Col>
 				</>
 			) : (
-				<Button
-					variant='success'
-					className='flex-fill'
-					onClick={() => handleButtonClick('start')}
-				>
-					{gettext('Включить')}
-				</Button>
+				<Col>
+					<Button
+						variant='success'
+						className='w-100'
+						onClick={() => handleAction('start')}
+					>
+						{gettext('Включить')}
+					</Button>
+				</Col>
 			)}
-			<Button variant='danger' className='flex-fill' onClick={showDeleteModal}>
-				{gettext('Удалить')}
-			</Button>
+			<Col {...(telegramBot.is_enabled ? { xs: '12', sm: true } : {})}>
+				<Button variant='danger' className='w-100' onClick={showDeleteModal}>
+					{gettext('Удалить')}
+				</Button>
+			</Col>
 		</CardFooter>
 	);
 }

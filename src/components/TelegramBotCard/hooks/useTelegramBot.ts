@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 
 import TelegramBotContext, {
-	TelegramBotContextProps,
+	TelegramBotContextType,
 } from '../contexts/TelegramBotContext';
 
-function useTelegramBot(): TelegramBotContextProps {
-	const context = useContext<TelegramBotContextProps | undefined>(TelegramBotContext);
+function useTelegramBot(): TelegramBotContextType {
+	const context = useContext(TelegramBotContext);
 
 	if (context === undefined) {
 		throw new Error(
