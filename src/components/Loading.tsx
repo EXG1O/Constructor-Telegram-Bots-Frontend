@@ -1,28 +1,22 @@
-import React, { ReactElement, memo } from 'react';
+import React, { HTMLAttributes, ReactElement, memo } from 'react';
 
-import Spinner, { SpinnerProps } from 'react-bootstrap/Spinner';
+import classNames from 'classnames';
 
-export interface LoadingProps
-	extends Omit<SpinnerProps, 'size' | 'animation' | 'children'> {
-	size: keyof typeof multipliers;
+import('./Loading.scss');
+
+type Size = 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
+export interface LoadingProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+	size: Size;
 }
 
-const multipliers = { xs: 1, sm: 2, md: 3, lg: 4, xl: 5 };
-
-function Loading({ size, style, ...props }: LoadingProps): ReactElement<LoadingProps> {
-	const multiplier: number = multipliers[size];
-
+function Loading({
+	size,
+	className,
+	...props
+}: LoadingProps): ReactElement<LoadingProps> {
 	return (
-		<Spinner
-			{...props}
-			animation='border'
-			style={{
-				width: `${1 + 0.5 * multiplier}rem`,
-				height: `${1 + 0.5 * multiplier}rem`,
-				borderWidth: `${0.1 + 0.05 * multiplier}rem`,
-				...style,
-			}}
-		/>
+		<div {...props} className={classNames(`loading loading-${size}`, className)} />
 	);
 }
 
