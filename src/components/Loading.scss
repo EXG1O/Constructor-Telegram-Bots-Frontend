@@ -20,7 +20,7 @@
 		&-#{$size} {
 			--#{$prefix}loading-width: #{1 + 0.5 * $multiplier}rem;
 			--#{$prefix}loading-height: #{1 + 0.5 * $multiplier}rem;
-			--#{$prefix}loading-border-width: #{0.1 + 0.15 * $multiplier}rem;
+			--#{$prefix}loading-border-width: #{0.1 + 0.05 * $multiplier}rem;
 		}
 	}
 }
