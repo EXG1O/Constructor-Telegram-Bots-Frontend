@@ -19,7 +19,7 @@ function AskConfirmModal(): ReactElement {
 				<Modal.Title>{title}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>{text}</Modal.Body>
-			<Modal.Footer className='gap-3'>
+			<Modal.Footer>
 				<Button variant='success' className='flex-fill' onClick={handleConfirm}>
 					{gettext('Да')}
 				</Button>

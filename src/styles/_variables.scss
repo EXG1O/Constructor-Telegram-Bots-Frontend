@@ -12,6 +12,9 @@ $color-contrast-dark: $body-color;
 
 $font-family-sans-serif: InterVariable, sans-serif;
 
+$modal-content-border-width: none;
+$modal-footer-margin-between: 0;
+
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
 // @import '~bootstrap/scss/variables-dark';

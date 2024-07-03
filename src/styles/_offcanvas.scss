@@ -1,9 +1,14 @@
 @import '~bootstrap/scss/offcanvas';
 
 .offcanvas {
-	&-header {
-		border-bottom: var(--#{$prefix}offcanvas-border-width) solid
-			var(--#{$prefix}offcanvas-border-color);
+	&-body {
+		&:not(:first-child) {
+			padding-top: 0;
+		}
+
+		&:not(:last-child) {
+			padding-bottom: 0;
+		}
 	}
 
 	&-footer {
@@ -11,8 +16,6 @@
 		flex-direction: column;
 		padding: var(--#{$prefix}offcanvas-padding-y)
 			var(--#{$prefix}offcanvas-padding-x);
-		border-top: var(--#{$prefix}offcanvas-border-width) solid
-			var(--#{$prefix}offcanvas-border-color);
 
 		& > * {
 			width: 100%;

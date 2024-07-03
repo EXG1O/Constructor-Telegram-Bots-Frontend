@@ -1,31 +1,22 @@
 @import '~bootstrap/scss/modal';
 
 .modal {
-	&-content {
-		padding: var(--#{$prefix}modal-padding);
-		gap: var(--#{$prefix}modal-padding);
-	}
-
-	&-header {
-		border-bottom: unset;
-		padding: unset;
-	}
-
 	&-body {
-		padding: unset;
+		&:not(:first-child) {
+			padding-top: 0;
+		}
+
+		&:not(:last-child) {
+			padding-bottom: 0;
+		}
 	}
 
 	&-footer {
-		border-top: unset;
-		padding: unset;
-		gap: map-get($spacers, 2);
+		padding: var(--#{$prefix}modal-padding);
+		gap: var(--#{$prefix}modal-padding);
 
-		& > * {
-			margin: unset;
-
-			&:not(.flex-fill) {
-				width: 100%;
-			}
+		& > *:not(.flex-fill) {
+			width: 100%;
 		}
 	}
 }
