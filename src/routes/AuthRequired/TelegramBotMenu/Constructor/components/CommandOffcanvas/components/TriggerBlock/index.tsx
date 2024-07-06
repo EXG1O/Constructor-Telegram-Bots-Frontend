@@ -1,14 +1,14 @@
-import React, { ReactElement, memo } from 'react';
-
-import Block, { BlockProps } from '../../../Block';
+import React, { memo, ReactElement } from 'react';
 
 import BlockCollapse from './components/BlockCollapse';
 import DescriptionInput, {
-	Description,
 	defaultDescription,
+	Description,
 } from './components/DescriptionInput';
 import DescriptionInputCollapse from './components/DescriptionInputCollapse';
-import TextInput, { Text, defaultText } from './components/TextInput';
+import TextInput, { defaultText, Text } from './components/TextInput';
+
+import Block, { BlockProps } from '../../../Block';
 
 export interface Trigger {
 	text: Text;
@@ -23,8 +23,8 @@ export const defaultTrigger: Trigger = {
 };
 
 export {
-	defaultText as defaultTriggerText,
 	defaultDescription as defaultTriggerDescription,
+	defaultText as defaultTriggerText,
 };
 
 function TriggerBlock(props: TriggerBlockProps): ReactElement<TriggerBlockProps> {

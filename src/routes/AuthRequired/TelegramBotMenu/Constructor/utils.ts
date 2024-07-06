@@ -1,9 +1,9 @@
-import { Node, Edge } from 'reactflow';
+import { Edge, Node } from 'reactflow';
 
 import {
+	DiagramBackgroundTask,
 	DiagramCommand,
 	DiagramCondition,
-	DiagramBackgroundTask,
 } from 'services/api/telegram_bots/types';
 
 export function parseDiagramCommandNodes(diagramCommands: DiagramCommand[]): Node[] {

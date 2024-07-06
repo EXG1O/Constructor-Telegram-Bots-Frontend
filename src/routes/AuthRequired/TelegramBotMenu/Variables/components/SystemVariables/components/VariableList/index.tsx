@@ -1,12 +1,11 @@
-import React, { ReactElement, HTMLAttributes } from 'react';
-
+import React, { HTMLAttributes, ReactElement } from 'react';
 import classNames from 'classnames';
 
 import Table from 'react-bootstrap/Table';
 
-import { Type } from '../..';
-
 import VariableDisplay from './components/VariableDisplay';
+
+import { Type } from '../..';
 
 export interface VariableListProps extends HTMLAttributes<HTMLDivElement> {
 	type: Type;

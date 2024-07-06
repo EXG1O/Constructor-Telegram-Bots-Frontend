@@ -1,20 +1,19 @@
 import React, {
-	ReactElement,
-	ReactNode,
 	CSSProperties,
 	HTMLAttributes,
 	memo,
+	ReactElement,
+	ReactNode,
 	useId,
 } from 'react';
-
-import classNames from 'classnames';
-import { motion } from 'framer-motion';
 import {
 	Link,
 	LinkProps as BaseLinkProps,
 	useLocation,
 	useNavigation,
 } from 'react-router-dom';
+import classNames from 'classnames';
+import { motion } from 'framer-motion';
 
 import { reverse } from 'routes';
 

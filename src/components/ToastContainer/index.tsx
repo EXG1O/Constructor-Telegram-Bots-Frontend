@@ -1,4 +1,4 @@
-import React, { ReactElement, memo } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import BaseToastContainer from 'react-bootstrap/ToastContainer';
 

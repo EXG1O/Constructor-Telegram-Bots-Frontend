@@ -1,6 +1,4 @@
-import React, { ReactElement, memo } from 'react';
-
-import Block, { BlockProps } from '../../../Block';
+import React, { memo, ReactElement } from 'react';
 
 import AddKeyboardButtonButton from './components/AddKeyboardButtonButton';
 import AddKeyboardRowButton from './components/AddKeyboardRowButton';
@@ -8,9 +6,11 @@ import BlockCollapse from './components/BlockCollapse';
 import Keyboard, { KeyboardRow } from './components/Keyboard';
 import KeyboardButtonBlock from './components/KeyboardButtonBlock';
 import KeyboardTypeButtonGroup, {
-	Type,
 	defaultType,
+	Type,
 } from './components/KeyboardTypeButtonGroup';
+
+import Block, { BlockProps } from '../../../Block';
 
 export interface Keyboard {
 	type: Type;

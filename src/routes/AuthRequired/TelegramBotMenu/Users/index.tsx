@@ -1,23 +1,19 @@
 import React, { ReactElement, useState } from 'react';
-
 import { Params, useRouteLoaderData } from 'react-router-dom';
+
+import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
 import Card from 'react-bootstrap/Card';
 
 import Page from 'components/Page';
-
 import { createMessageToast } from 'components/ToastContainer';
-
-import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
-
-import { UsersAPI } from 'services/api/telegram_bots/main';
-
-import { APIResponse } from 'services/api/telegram_bots/types';
 
 import Toolbar from './components/Toolbar';
 import UserList from './components/UserList';
-
 import UsersContext from './contexts/UsersContext';
+
+import { UsersAPI } from 'services/api/telegram_bots/main';
+import { APIResponse } from 'services/api/telegram_bots/types';
 
 export type Type = 'all' | 'allowed' | 'blocked';
 

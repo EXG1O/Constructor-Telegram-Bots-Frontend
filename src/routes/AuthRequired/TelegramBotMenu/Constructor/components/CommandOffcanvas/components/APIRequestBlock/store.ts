@@ -1,10 +1,10 @@
 import { StateCreator } from 'zustand';
 
 import {
-	APIRequestBlockSliceState as BaseAPIRequestBlockSliceState,
 	APIRequestBlockSliceActions as BaseAPIRequestBlockSliceActions,
-	initialAPIRequestBlockSliceState as initialBaseAPIRequestBlockSliceState,
+	APIRequestBlockSliceState as BaseAPIRequestBlockSliceState,
 	createAPIRequestBlockSlice as createBaseAPIRequestBlockSlice,
+	initialAPIRequestBlockSliceState as initialBaseAPIRequestBlockSliceState,
 } from '../../../APIRequestBlock/store';
 
 export interface APIRequestBlockSliceState extends BaseAPIRequestBlockSliceState {

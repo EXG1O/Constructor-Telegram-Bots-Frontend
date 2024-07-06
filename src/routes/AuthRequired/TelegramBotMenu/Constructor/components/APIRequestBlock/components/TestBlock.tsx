@@ -1,11 +1,10 @@
 import React, {
-	ReactElement,
-	HTMLAttributes,
 	CSSProperties,
+	HTMLAttributes,
 	memo,
+	ReactElement,
 	useState,
 } from 'react';
-
 import classNames from 'classnames';
 
 import Button from 'react-bootstrap/Button';

@@ -1,12 +1,12 @@
-import React, { ReactElement, HTMLAttributes, memo } from 'react';
+import React, { HTMLAttributes, memo, ReactElement } from 'react';
 
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 
-import useAPIRequestBlockStore from '../../hooks/useAPIRequestBlockStore';
-
 import BlockCollapse from './components/BlockCollapse';
 import BodyEditor from './components/BodyEditor';
+
+import useAPIRequestBlockStore from '../../hooks/useAPIRequestBlockStore';
 
 export type Body = string;
 

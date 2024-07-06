@@ -1,10 +1,10 @@
-import React, { ReactElement, memo, useState, useCallback } from 'react';
+import React, { memo, ReactElement, useCallback, useState } from 'react';
 
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 
-import TelegramIcon from 'assets/icons/telegram.svg';
-
 import LoginModal from './LoginModal';
+
+import TelegramIcon from 'assets/icons/telegram.svg';
 
 export type LoginButtonProps = Omit<ButtonProps, 'as' | 'href' | 'target' | 'children'>;
 

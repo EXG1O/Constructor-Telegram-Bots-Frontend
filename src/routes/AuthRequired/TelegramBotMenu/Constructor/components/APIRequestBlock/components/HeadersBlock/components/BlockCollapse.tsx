@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactElement, memo } from 'react';
+import React, { HTMLAttributes, memo, ReactElement } from 'react';
 
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 import Collapse, { CollapseProps } from 'react-bootstrap/Collapse';

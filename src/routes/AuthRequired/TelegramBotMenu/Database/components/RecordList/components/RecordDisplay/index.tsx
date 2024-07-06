@@ -1,36 +1,34 @@
 import React, {
-	ReactElement,
 	CSSProperties,
+	ReactElement,
 	useCallback,
 	useMemo,
 	useState,
 } from 'react';
-
-import classNames from 'classnames';
 import { useRouteLoaderData } from 'react-router-dom';
+import classNames from 'classnames';
 
 import Button from 'react-bootstrap/Button';
 import ListGroupItem, { ListGroupItemProps } from 'react-bootstrap/ListGroupItem';
 
-import TrashIcon from 'assets/icons/trash.svg';
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import Loading from 'components/Loading';
-
 import MonacoEditor, { MonacoEditorProps } from 'components/MonacoEditor';
-
 import { createMessageToast } from 'components/ToastContainer';
-
-import { DatabaseRecordAPI } from 'services/api/telegram_bots/main';
-
-import { DatabaseRecord } from 'services/api/telegram_bots/types';
-
-import { LoaderData as TelegramBotMenuRootLoaderData } from '../../../../../Root';
-import useRecords from '../../../../hooks/useRecords';
-import Block from '../Block';
 
 import ConfirmButtonGroup, {
 	ConfirmButtonGroupProps,
 } from './components/ConfirmButtonGroup';
+
+import { LoaderData as TelegramBotMenuRootLoaderData } from '../../../../../Root';
+import Block from '../Block';
+
+import useRecords from '../../../../hooks/useRecords';
+
+import TrashIcon from 'assets/icons/trash.svg';
+
+import { DatabaseRecordAPI } from 'services/api/telegram_bots/main';
+import { DatabaseRecord } from 'services/api/telegram_bots/types';
 
 export interface RecordDisplayProps extends Omit<ListGroupItemProps, 'children'> {
 	record: DatabaseRecord;

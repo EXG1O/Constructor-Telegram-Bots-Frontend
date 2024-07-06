@@ -1,6 +1,6 @@
 import { StateCreator } from 'zustand';
 
-import { Message, defaultMessage } from '.';
+import { defaultMessage, Message } from '.';
 
 export interface MessageBlockSliceState {
 	message: Message;

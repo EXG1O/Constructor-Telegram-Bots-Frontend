@@ -1,17 +1,14 @@
 import React, { ReactElement, useState } from 'react';
-
 import { useRouteLoaderData } from 'react-router-dom';
 
 import Page from 'components/Page';
 
-import { TelegramBotsAPI } from 'services/api/telegram_bots/main';
-
-import { TelegramBot, APIResponse } from 'services/api/telegram_bots/types';
-
 import Header from './components/Header';
 import TelegramBotList from './components/TelegramBotList';
-
 import TelegramBotsContext from './services/contexts/TelegramBotsContext';
+
+import { TelegramBotsAPI } from 'services/api/telegram_bots/main';
+import { APIResponse, TelegramBot } from 'services/api/telegram_bots/types';
 
 export interface LoaderData {
 	telegramBots: APIResponse.TelegramBotsAPI.Get;

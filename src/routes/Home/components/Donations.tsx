@@ -1,11 +1,10 @@
-import React, { ReactElement, HTMLAttributes, CSSProperties, memo } from 'react';
-
-import classNames from 'classnames';
+import React, { CSSProperties, HTMLAttributes, memo, ReactElement } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
-
-import Row from 'react-bootstrap/Row';
+import classNames from 'classnames';
 
 import { LoaderData as HomeLoaderData } from '..';
+
+import Row from 'react-bootstrap/Row';
 
 export type DonationsProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 

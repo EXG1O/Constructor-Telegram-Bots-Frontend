@@ -1,13 +1,12 @@
-import React, { HTMLAttributes, ReactElement, memo } from 'react';
-
+import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-
-import useCommandOffcanvasStore from '../../../../hooks/useCommandOffcanvasStore';
 
 import DroppableKeyboardRows from './components/DroppableKeyboardRows';
 
-export type { KeyboardRow } from './components/DraggableKeyboardRow';
+import useCommandOffcanvasStore from '../../../../hooks/useCommandOffcanvasStore';
+
 export type { KeyboardButton } from './components/DraggableKeyboardButton';
+export type { KeyboardRow } from './components/DraggableKeyboardRow';
 
 export type KeyboardProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 

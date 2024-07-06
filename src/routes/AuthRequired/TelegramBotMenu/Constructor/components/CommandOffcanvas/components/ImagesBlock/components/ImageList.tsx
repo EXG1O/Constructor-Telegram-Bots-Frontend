@@ -1,18 +1,16 @@
 import React, {
-	ReactElement,
-	HTMLAttributes,
 	CSSProperties,
+	HTMLAttributes,
 	memo,
+	ReactElement,
 	useMemo,
 } from 'react';
-
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import ImageDetail from './ImageDetail';
 
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
-
-import ImageDetail from './ImageDetail';
 
 export type ImageListProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 

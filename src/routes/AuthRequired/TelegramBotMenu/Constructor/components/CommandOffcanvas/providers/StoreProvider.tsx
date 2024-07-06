@@ -1,10 +1,10 @@
-import React, { ReactElement, ReactNode, useMemo, useEffect } from 'react';
-
+import React, { ReactElement, ReactNode, useEffect, useMemo } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
 import StoreContext from '../contexts/StoreContext';
+
 import { createStore, InitialProps } from '../store';
 
 export interface StoreProviderProps extends Pick<InitialProps, 'onAdd' | 'onSave'> {

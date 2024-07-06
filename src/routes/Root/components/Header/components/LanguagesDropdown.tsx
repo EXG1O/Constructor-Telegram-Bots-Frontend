@@ -1,12 +1,11 @@
-import React, { ReactElement, memo } from 'react';
-
+import React, { memo, ReactElement } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
+
+import { LoaderData as LanguagesLoaderData } from 'routes/Languages';
 
 import Dropdown, { DropdownProps } from 'react-bootstrap/Dropdown';
 
 import { createMessageToast } from 'components/ToastContainer';
-
-import { LoaderData as LanguagesLoaderData } from 'routes/Languages';
 
 import { LanguagesAPI } from 'services/api/languages/main';
 

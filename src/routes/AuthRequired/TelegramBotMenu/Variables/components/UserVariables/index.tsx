@@ -1,12 +1,15 @@
 import React, { ReactElement, useState } from 'react';
-
 import { useRouteLoaderData } from 'react-router-dom';
+
+import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
 import Card from 'react-bootstrap/Card';
 
 import { createMessageToast } from 'components/ToastContainer';
 
-import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
+import Toolbar from './components/Toolbar';
+import VariableList from './components/VariableList';
+import VariablesContext from './contexts/VariablesContext';
 
 import { VariablesAPI } from 'services/api/telegram_bots/main';
 
@@ -14,11 +17,6 @@ import {
 	LoaderData as TelegramBotMenuVariablesLoaderData,
 	PaginationData,
 } from '../..';
-
-import Toolbar from './components/Toolbar';
-import VariableList from './components/VariableList';
-
-import VariablesContext from './contexts/VariablesContext';
 
 function UserVariables(): ReactElement {
 	const { telegramBot } = useRouteLoaderData(

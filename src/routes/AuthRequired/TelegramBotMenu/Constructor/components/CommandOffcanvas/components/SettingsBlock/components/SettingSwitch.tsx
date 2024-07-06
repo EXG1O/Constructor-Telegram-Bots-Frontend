@@ -1,9 +1,9 @@
-import React, { ReactElement, memo } from 'react';
+import React, { memo, ReactElement } from 'react';
+
+import { Settings } from '..';
 
 import { FormCheckProps as SwitchProps } from 'react-bootstrap/FormCheck';
 import Switch from 'react-bootstrap/Switch';
-
-import { Settings } from '..';
 
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
 

@@ -1,6 +1,6 @@
 import { makeRequest } from 'services/api/base';
 
-import { Data, APIResponse } from './types';
+import { APIResponse, Data } from './types';
 
 const rootURL: string = '/api/users/';
 

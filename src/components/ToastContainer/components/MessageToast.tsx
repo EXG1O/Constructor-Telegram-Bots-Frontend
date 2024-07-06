@@ -1,5 +1,4 @@
-import React, { ReactElement, memo, useEffect, useMemo, useState } from 'react';
-
+import React, { memo, ReactElement, useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 
 import CloseButton from 'react-bootstrap/CloseButton';

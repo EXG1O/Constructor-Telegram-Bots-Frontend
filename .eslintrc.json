@@ -12,13 +12,11 @@
 			"jsx": true
 		}
 	},
-	"plugins": ["react", "react-hooks", "@typescript-eslint", "import"],
+	"plugins": ["react", "react-hooks", "@typescript-eslint", "simple-import-sort"],
 	"extends": [
 		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended",
-		"plugin:react/recommended",
-		"plugin:import/recommended",
-		"plugin:import/typescript"
+		"plugin:react/recommended"
 	],
 	"rules": {
 		"no-inner-declarations": "off",
@@ -36,55 +34,30 @@
 				"ignoreRestSiblings": true
 			}
 		],
-		"import/no-named-as-default": "off",
-		"import/order": [
+		"simple-import-sort/exports": "error",
+		"simple-import-sort/imports": [
 			"error",
 			{
 				"groups": [
-					"builtin",
-					"external",
-					"internal",
-					"unknown",
-					"parent",
-					"sibling",
-					"index",
-					"object",
-					"type"
-				],
-				"alphabetize": {
-					"order": "asc",
-					"caseInsensitive": true
-				},
-				"newlines-between": "always-and-inside-groups",
-				"pathGroups": [
-					{
-						"pattern": "react",
-						"group": "external",
-						"position": "before"
-					},
-					{
-						"pattern": "@monaco-editor/react",
-						"group": "external",
-						"position": "after"
-					},
-					{
-						"pattern": "react-bootstrap/**",
-						"group": "external",
-						"position": "after"
-					}
-				],
-				"pathGroupsExcludedImportTypes": ["react"]
+					["^react(?!-bootstrap)", "^@?\\w"],
+					["^routes(/.+)*"],
+					["^\\.\\./?$", "^\\./?$"],
+					["/[A-Z]([a-z]+[A-Z]?)*"],
+					["^components/(.*/)*[A-Z]([a-z]+[A-Z]?)*"],
+					["^\\./(.*/)*[A-Z]([a-z]+[A-Z]?)*"],
+					["^\\.\\./(.*/)*[A-Z]([a-z]+[A-Z]?)*"],
+					["/hooks/.+"],
+					["/contexts/.+"],
+					["\\.s?css$"],
+					["^assets/.+"],
+					["^services/api/.+"]
+				]
 			}
 		]
 	},
 	"settings": {
 		"react": {
 			"version": "detect"
-		},
-		"import/resolver": {
-			"typescript": {
-				"project": "./tsconfig.json"
-			}
 		}
 	}
 }

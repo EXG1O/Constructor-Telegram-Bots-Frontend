@@ -1,12 +1,10 @@
-import React, { ReactElement, HTMLAttributes, memo, useState } from 'react';
-
-import { UseBoundStore, StoreApi } from 'zustand';
+import React, { HTMLAttributes, memo, ReactElement, useState } from 'react';
+import { StoreApi, UseBoundStore } from 'zustand';
 
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 
 import AddonButton, { AddonButtonProps } from './components/AddonButton';
-
 import StoreContext from './contexts/StoreContext';
 
 export interface AddonButtonGroupProps

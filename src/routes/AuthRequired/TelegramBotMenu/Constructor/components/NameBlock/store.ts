@@ -1,6 +1,6 @@
 import { StateCreator } from 'zustand';
 
-import { Name, defaultName } from '.';
+import { defaultName, Name } from '.';
 
 export interface NameBlockSliceState {
 	name: Name;

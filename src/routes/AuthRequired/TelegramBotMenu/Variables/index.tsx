@@ -1,18 +1,15 @@
 import React, { ReactElement, useEffect } from 'react';
-
-import ClipboardJS from 'clipboard';
 import { Params } from 'react-router-dom';
+import ClipboardJS from 'clipboard';
 
 import Page from 'components/Page';
-
 import { createMessageToast } from 'components/ToastContainer';
-
-import { VariablesAPI } from 'services/api/telegram_bots/main';
-
-import { APIResponse } from 'services/api/telegram_bots/types';
 
 import SystemVariables from './components/SystemVariables';
 import UserVariables from './components/UserVariables';
+
+import { VariablesAPI } from 'services/api/telegram_bots/main';
+import { APIResponse } from 'services/api/telegram_bots/types';
 
 export interface PaginationData extends APIResponse.VariablesAPI.Get.Pagination {
 	limit: number;

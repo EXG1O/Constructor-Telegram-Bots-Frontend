@@ -1,12 +1,11 @@
-import React, { ReactElement, memo } from 'react';
-
+import React, { memo, ReactElement } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
+
+import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
 import BaseTelegramBotStorage, {
 	TelegramBotStorageProps as BaseTelegramBotStorageProps,
 } from 'components/TelegramBotStorage';
-
-import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
 import useTelegramBotStorage from '../hooks/useTelegramBotStorage';
 

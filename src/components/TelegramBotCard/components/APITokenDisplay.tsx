@@ -1,20 +1,19 @@
 import React, {
-	ReactElement,
 	CSSProperties,
+	HTMLAttributes,
+	memo,
+	ReactElement,
+	SVGProps,
 	useMemo,
 	useState,
-	memo,
-	SVGProps,
-	HTMLAttributes,
 } from 'react';
-
 import classNames from 'classnames';
 
-import EyeSlashIcon from 'assets/icons/eye-slash.svg';
-import EyeIcon from 'assets/icons/eye.svg';
-import PencilSquareIcon from 'assets/icons/pencil-square.svg';
-
 import useTelegramBot from '../hooks/useTelegramBot';
+
+import EyeIcon from 'assets/icons/eye.svg';
+import EyeSlashIcon from 'assets/icons/eye-slash.svg';
+import PencilSquareIcon from 'assets/icons/pencil-square.svg';
 
 export interface APITokenDisplayProps
 	extends Pick<HTMLAttributes<HTMLElement>, 'className'> {

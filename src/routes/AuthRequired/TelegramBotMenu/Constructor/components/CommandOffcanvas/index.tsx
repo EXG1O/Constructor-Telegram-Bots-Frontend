@@ -4,9 +4,6 @@ import Button from 'react-bootstrap/Button';
 
 import Offcanvas, { OffcanvasProps } from 'components/Offcanvas';
 
-import AddonButtonGroup, { AddonButtonProps } from '../AddonButtonGroup';
-import NameBlock from '../NameBlock';
-
 import APIRequestBlock from './components/APIRequestBlock';
 import DatabaseRecordBlock from './components/DatabaseRecordBlock';
 import FilesCard from './components/FilesBlock';
@@ -14,12 +11,15 @@ import ImagesBlock from './components/ImagesBlock';
 import KeyboardBlock from './components/KeyboardBlock';
 import MessageBlock from './components/MessageBlock';
 import SettingsBlock from './components/SettingsBlock';
-
 import TelegramBotStorage from './components/TelegramBotStorage';
 import TriggerBlock from './components/TriggerBlock';
+import StoreProvider from './providers/StoreProvider';
+
+import AddonButtonGroup, { AddonButtonProps } from '../AddonButtonGroup';
+import NameBlock from '../NameBlock';
 
 import useCommandOffcanvasStore from './hooks/useCommandOffcanvasStore';
-import StoreProvider from './providers/StoreProvider';
+
 import { State } from './store';
 
 export type CommandFormOffcanvasProps = Omit<

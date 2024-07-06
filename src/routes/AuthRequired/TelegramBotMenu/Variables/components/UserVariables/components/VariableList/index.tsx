@@ -1,17 +1,15 @@
-import React, { ReactElement, memo } from 'react';
-
+import React, { memo, ReactElement } from 'react';
 import classNames from 'classnames';
 
 import Table from 'react-bootstrap/Table';
 
 import Loading from 'components/Loading';
 
-import useVariables from '../../hooks/useVariables';
-
 import Block, { BlockProps } from './components/Block';
 import VariableDisplay from './components/VariableDisplay';
-
 import VariableContext from './contexts/VariableContext';
+
+import useVariables from '../../hooks/useVariables';
 
 export interface VariableListProps extends Omit<BlockProps, 'children'> {
 	loading: boolean;

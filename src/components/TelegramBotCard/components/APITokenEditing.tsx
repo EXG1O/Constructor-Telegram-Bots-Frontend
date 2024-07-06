@@ -1,26 +1,26 @@
 import React, {
 	CSSProperties,
 	HTMLAttributes,
+	memo,
 	ReactElement,
 	SVGProps,
-	memo,
 	useEffect,
 	useState,
 } from 'react';
-
 import classNames from 'classnames';
-
 import { AnimatePresence, AnimationProps, motion } from 'framer-motion';
 
 import Input from 'react-bootstrap/FormControl';
 
-import CheckIcon from 'assets/icons/check.svg';
-import XIcon from 'assets/icons/x.svg';
 import Loading from 'components/Loading';
 import { createMessageToast } from 'components/ToastContainer';
-import { TelegramBotAPI } from 'services/api/telegram_bots/main';
 
 import useTelegramBot from '../hooks/useTelegramBot';
+
+import CheckIcon from 'assets/icons/check.svg';
+import XIcon from 'assets/icons/x.svg';
+
+import { TelegramBotAPI } from 'services/api/telegram_bots/main';
 
 const inputStyle: CSSProperties = { fontSize: '16px' };
 const iconStyle: CSSProperties = { cursor: 'pointer' };

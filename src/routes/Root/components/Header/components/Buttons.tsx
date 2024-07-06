@@ -1,12 +1,11 @@
-import React, { HTMLAttributes, ReactElement, memo } from 'react';
-
-import classNames from 'classnames';
+import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
-
-import LoginButton from 'components/LoginButton';
+import classNames from 'classnames';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 import { LoaderData as RootLoaderData } from 'routes/Root';
+
+import LoginButton from 'components/LoginButton';
 
 import LanguagesDropdown from './LanguagesDropdown';
 import TelegramBotMenuDropdown from './TelegramBotMenuDropdown';

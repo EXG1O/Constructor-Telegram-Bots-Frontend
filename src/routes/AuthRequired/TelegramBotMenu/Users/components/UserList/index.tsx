@@ -1,17 +1,15 @@
 import React, { ReactElement } from 'react';
-
 import classNames from 'classnames';
 
 import Table from 'react-bootstrap/Table';
 
 import Loading from 'components/Loading';
 
-import useUsers from '../../hooks/useUsers';
-
 import Block, { BlockProps } from './components/Block';
 import UserDisplay from './components/UserDisplay';
-
 import UserContext from './contexts/UserContext';
+
+import useUsers from '../../hooks/useUsers';
 
 export interface UserListProps extends Omit<BlockProps, 'children'> {
 	loading: boolean;

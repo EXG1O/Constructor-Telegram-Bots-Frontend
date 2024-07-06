@@ -1,7 +1,7 @@
 import { StateCreator } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-import { Trigger, defaultTrigger } from '.';
+import { defaultTrigger, Trigger } from '.';
 
 export interface TriggerBlockSliceState {
 	trigger: Trigger;

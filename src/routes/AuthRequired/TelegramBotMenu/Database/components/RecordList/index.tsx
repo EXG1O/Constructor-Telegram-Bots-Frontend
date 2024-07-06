@@ -1,15 +1,14 @@
-import React, { ReactElement, memo } from 'react';
-
+import React, { memo, ReactElement } from 'react';
 import classNames from 'classnames';
 
 import ListGroup, { ListGroupProps } from 'react-bootstrap/ListGroup';
 
 import Loading from 'components/Loading';
 
-import useRecords from '../../hooks/useRecords';
-
 import Block from './components/Block';
 import RecordDisplay from './components/RecordDisplay';
+
+import useRecords from '../../hooks/useRecords';
 
 export interface RecordListProps extends Omit<ListGroupProps, 'children'> {
 	loading: boolean;

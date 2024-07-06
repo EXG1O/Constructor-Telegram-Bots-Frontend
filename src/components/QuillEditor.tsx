@@ -1,11 +1,9 @@
-import React, { ReactElement, memo, useEffect, useRef } from 'react';
-
+import React, { memo, ReactElement, useEffect, useRef } from 'react';
+import ReactQuill, { ReactQuillProps } from 'react-quill';
 import classNames from 'classnames';
+import Quill from 'quill';
 
 import('./QuillEditor.scss');
-
-import Quill from 'quill';
-import ReactQuill, { ReactQuillProps } from 'react-quill';
 
 export type QuillEditor = Quill & ReactQuill;
 

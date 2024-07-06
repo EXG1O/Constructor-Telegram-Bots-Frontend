@@ -1,4 +1,4 @@
-import React, { ReactElement, memo } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import ButtonGroup, { ButtonGroupProps } from 'react-bootstrap/ButtonGroup';

@@ -1,5 +1,4 @@
-import React, { ReactElement, memo, useCallback } from 'react';
-
+import React, { memo, ReactElement, useCallback } from 'react';
 import monaco from 'monaco-editor';
 
 import MonacoEditor, { MonacoEditorProps } from 'components/MonacoEditor';

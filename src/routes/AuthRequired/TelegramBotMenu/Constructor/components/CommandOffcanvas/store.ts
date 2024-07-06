@@ -4,79 +4,78 @@ import { immer } from 'zustand/middleware/immer';
 import { createMessageToast } from 'components/ToastContainer';
 
 import {
-	CommandsAPI,
-	CommandAPI,
-	DiagramCommandAPI,
-} from 'services/api/telegram_bots/main';
-
-import { TelegramBot, DiagramCommand, Data } from 'services/api/telegram_bots/types';
-
-import {
-	NameBlockSliceState,
-	NameBlockSlice,
-	initialNameBlockSliceState,
-	createNameBlockSlice,
-} from '../NameBlock/store';
-
-import {
 	defaultAPIRequest,
-	defaultAPIRequestHeaders,
 	defaultAPIRequestBody,
+	defaultAPIRequestHeaders,
 } from './components/APIRequestBlock';
 import {
-	APIRequestBlockSliceState,
 	APIRequestBlockSlice,
-	initialAPIRequestBlockSliceState,
+	APIRequestBlockSliceState,
 	createAPIRequestBlockSlice,
+	initialAPIRequestBlockSliceState,
 } from './components/APIRequestBlock/store';
 import { defaultDatabaseRecord } from './components/DatabaseRecordBlock';
 import {
-	DatabaseRecordBlockSliceState,
-	DatabaseRecordBlockSlice,
-	initialDatabaseRecordBlockSliceState,
 	createDatabaseRecordBlockSlice,
+	DatabaseRecordBlockSlice,
+	DatabaseRecordBlockSliceState,
+	initialDatabaseRecordBlockSliceState,
 } from './components/DatabaseRecordBlock/store';
 import { _File, defaultFiles } from './components/FilesBlock';
 import {
-	FilesBlockSliceState,
-	FilesBlockSlice,
-	initialFilesBlockSliceState,
 	createFilesBlockSlice,
+	FilesBlockSlice,
+	FilesBlockSliceState,
+	initialFilesBlockSliceState,
 } from './components/FilesBlock/store';
-import { Image, defaultImages } from './components/ImagesBlock';
+import { defaultImages, Image } from './components/ImagesBlock';
 import {
-	ImagesBlockSliceState,
-	ImagesBlockSlice,
-	initialImagesBlockSliceState,
 	createImagesBlockSlice,
+	ImagesBlockSlice,
+	ImagesBlockSliceState,
+	initialImagesBlockSliceState,
 } from './components/ImagesBlock/store';
 import { defaultKeyboard } from './components/KeyboardBlock';
 import { KeyboardRow } from './components/KeyboardBlock/components/Keyboard';
 import {
-	KeyboardBlockSliceState,
-	KeyboardBlockSlice,
-	initialKeyboardBlockSliceState,
 	createKeyboardBlockSlice,
+	initialKeyboardBlockSliceState,
+	KeyboardBlockSlice,
+	KeyboardBlockSliceState,
 } from './components/KeyboardBlock/store';
 import {
-	MessageBlockSliceState,
-	MessageBlockSlice,
-	initialMessageBlockSliceState,
 	createMessageBlockSlice,
+	initialMessageBlockSliceState,
+	MessageBlockSlice,
+	MessageBlockSliceState,
 } from './components/MessageBlock/store';
 import {
-	SettingsBlockSliceState,
-	SettingsBlockSlice,
-	initialSettingsBlockSliceState,
 	createSettingsBlockSlice,
+	initialSettingsBlockSliceState,
+	SettingsBlockSlice,
+	SettingsBlockSliceState,
 } from './components/SettingsBlock/store';
 import { defaultTrigger, defaultTriggerDescription } from './components/TriggerBlock';
 import {
-	TriggerBlockSliceState,
-	TriggerBlockSlice,
-	initialTriggerBlockSliceState,
 	createTriggerBlockSlice,
+	initialTriggerBlockSliceState,
+	TriggerBlockSlice,
+	TriggerBlockSliceState,
 } from './components/TriggerBlock/store';
+
+import {
+	createNameBlockSlice,
+	initialNameBlockSliceState,
+	NameBlockSlice,
+	NameBlockSliceState,
+} from '../NameBlock/store';
+
+import {
+	CommandAPI,
+	CommandsAPI,
+	DiagramCommandAPI,
+} from 'services/api/telegram_bots/main';
+import { Data, DiagramCommand, TelegramBot } from 'services/api/telegram_bots/types';
 
 export interface StateParams {
 	telegramBot: TelegramBot;

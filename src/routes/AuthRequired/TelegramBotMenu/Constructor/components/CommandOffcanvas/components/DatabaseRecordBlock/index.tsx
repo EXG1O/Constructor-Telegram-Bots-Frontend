@@ -1,9 +1,9 @@
-import React, { ReactElement, memo } from 'react';
-
-import Block, { BlockProps } from '../../../Block';
+import React, { memo, ReactElement } from 'react';
 
 import BlockCollapse from './components/BlockCollapse';
 import DatabaseRecordEditor from './components/DatabaseRecordEditor';
+
+import Block, { BlockProps } from '../../../Block';
 
 export type DatabaseRecord = string;
 

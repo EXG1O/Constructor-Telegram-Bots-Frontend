@@ -1,13 +1,12 @@
 import React, {
-	ReactElement,
-	HTMLAttributes,
 	CSSProperties,
+	HTMLAttributes,
 	memo,
-	useState,
-	useMemo,
+	ReactElement,
 	useEffect,
+	useMemo,
+	useState,
 } from 'react';
-
 import classNames from 'classnames';
 
 import Carousel from 'react-bootstrap/Carousel';

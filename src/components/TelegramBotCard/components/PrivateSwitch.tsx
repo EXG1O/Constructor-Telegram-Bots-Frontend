@@ -1,21 +1,21 @@
 import React, {
-	ReactElement,
-	HTMLAttributes,
 	ChangeEventHandler,
+	HTMLAttributes,
 	memo,
+	ReactElement,
 	useCallback,
 	useState,
 } from 'react';
-
-import { AnimatePresence, motion, AnimationProps } from 'framer-motion';
+import { AnimatePresence, AnimationProps, motion } from 'framer-motion';
 
 import Switch from 'react-bootstrap/Switch';
 
 import Loading from 'components/Loading';
 import { createMessageToast } from 'components/ToastContainer';
-import { TelegramBotAPI } from 'services/api/telegram_bots/main';
 
 import useTelegramBot from '../hooks/useTelegramBot';
+
+import { TelegramBotAPI } from 'services/api/telegram_bots/main';
 
 export type PrivateSwitchProps = Pick<HTMLAttributes<HTMLElement>, 'className'>;
 

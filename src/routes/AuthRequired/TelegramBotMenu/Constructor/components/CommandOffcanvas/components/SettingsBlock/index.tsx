@@ -1,8 +1,8 @@
-import React, { ReactElement, memo } from 'react';
-
-import Block, { BlockProps } from '../../../Block';
+import React, { memo, ReactElement } from 'react';
 
 import SettingSwitch from './components/SettingSwitch';
+
+import Block, { BlockProps } from '../../../Block';
 
 export interface Settings {
 	isReplyToUserMessage: boolean;

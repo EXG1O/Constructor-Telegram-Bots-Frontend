@@ -1,27 +1,26 @@
 import React, {
-	ReactElement,
-	HTMLAttributes,
 	CSSProperties,
+	HTMLAttributes,
 	memo,
+	ReactElement,
 	useCallback,
 } from 'react';
-
 import { useRouteLoaderData } from 'react-router-dom';
-
-import ClipboardIcon from 'assets/icons/clipboard.svg';
-import TrashIcon from 'assets/icons/trash.svg';
-import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
-import { createMessageToast } from 'components/ToastContainer';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
-import { VariableAPI } from 'services/api/telegram_bots/main';
-
-import useVariables from '../../../../hooks/useVariables';
-
-import useVariable from '../../hooks/useVariables';
+import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
+import { createMessageToast } from 'components/ToastContainer';
 
 import EditButton from './components/EditButton';
+
+import useVariables from '../../../../hooks/useVariables';
+import useVariable from '../../hooks/useVariables';
+
+import ClipboardIcon from 'assets/icons/clipboard.svg';
+import TrashIcon from 'assets/icons/trash.svg';
+
+import { VariableAPI } from 'services/api/telegram_bots/main';
 
 export type VariableDisplayProps = Omit<
 	HTMLAttributes<HTMLTableRowElement>,

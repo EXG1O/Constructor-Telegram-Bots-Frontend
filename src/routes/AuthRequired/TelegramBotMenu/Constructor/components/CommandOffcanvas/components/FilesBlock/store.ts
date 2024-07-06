@@ -1,7 +1,7 @@
 import { StateCreator } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-import { Files, defaultFiles } from '.';
+import { defaultFiles, Files } from '.';
 
 export interface FilesBlockSliceState {
 	files: Files;

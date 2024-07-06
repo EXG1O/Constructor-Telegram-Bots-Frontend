@@ -1,8 +1,8 @@
 import { createContext } from 'react';
 
-import { User } from 'services/api/telegram_bots/types';
-
 import { Type } from '..';
+
+import { User } from 'services/api/telegram_bots/types';
 
 interface Filter {
 	search: string;

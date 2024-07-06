@@ -1,11 +1,10 @@
-import React, { ReactElement, memo, useRef, useMemo, useCallback } from 'react';
-
+import React, { memo, ReactElement, useCallback, useMemo, useRef } from 'react';
 import classNames from 'classnames';
 import { editor } from 'monaco-editor';
 
 import('./index.scss');
 
-import Editor, { EditorProps, Monaco, OnMount, OnChange } from '@monaco-editor/react';
+import Editor, { EditorProps, Monaco, OnChange, OnMount } from '@monaco-editor/react';
 
 import EditorLoading from './components/EditorLoading';
 

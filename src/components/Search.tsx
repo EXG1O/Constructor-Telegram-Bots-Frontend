@@ -1,5 +1,4 @@
-import React, { ReactElement, HTMLAttributes, memo, useState } from 'react';
-
+import React, { HTMLAttributes, memo, ReactElement, useState } from 'react';
 import classNames from 'classnames';
 
 import Button from 'react-bootstrap/Button';

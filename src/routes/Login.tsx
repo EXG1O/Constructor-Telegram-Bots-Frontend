@@ -1,8 +1,8 @@
 import { Params, redirect } from 'react-router-dom';
 
-import { createMessageToast } from 'components/ToastContainer';
-
 import { reverse } from 'routes';
+
+import { createMessageToast } from 'components/ToastContainer';
 
 import { UserAPI } from 'services/api/users/main';
 

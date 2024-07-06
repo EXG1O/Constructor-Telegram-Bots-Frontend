@@ -1,7 +1,7 @@
 import { StateCreator } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-import { Settings, defaultSettings } from '.';
+import { defaultSettings, Settings } from '.';
 
 export interface SettingsBlockSliceState {
 	settings: Settings;

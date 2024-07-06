@@ -1,25 +1,21 @@
-import React, { ReactElement, memo, useCallback } from 'react';
-
+import React, { memo, ReactElement, useCallback } from 'react';
 import { useRouteLoaderData } from 'react-router';
+import { Handle, NodeProps, Position, useStore } from 'reactflow';
+
+import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
 import './CommandNode.scss';
-
-import { NodeProps, Handle, Position, useStore } from 'reactflow';
-
 import Stack from 'react-bootstrap/Stack';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import { createMessageToast } from 'components/ToastContainer';
 
-import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
-
-import { CommandAPI } from 'services/api/telegram_bots/main';
-
-import { DiagramBlock, DiagramCommand } from 'services/api/telegram_bots/types';
+import NodeToolbar from './NodeToolbar';
 
 import useCommandOffcanvasStore from './CommandOffcanvas/hooks/useCommandOffcanvasStore';
 
-import NodeToolbar from './NodeToolbar';
+import { CommandAPI } from 'services/api/telegram_bots/main';
+import { DiagramBlock, DiagramCommand } from 'services/api/telegram_bots/types';
 
 type Data = Omit<DiagramCommand, keyof DiagramBlock>;
 

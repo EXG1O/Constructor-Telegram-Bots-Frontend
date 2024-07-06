@@ -1,7 +1,7 @@
 import { StateCreator } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-import { Images, defaultImages } from '.';
+import { defaultImages, Images } from '.';
 
 export interface ImagesBlockSliceState {
 	images: Images;

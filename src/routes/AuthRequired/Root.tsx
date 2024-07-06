@@ -1,12 +1,10 @@
 import React, { ReactElement, useEffect } from 'react';
-
 import { Outlet, useNavigate, useRouteLoaderData } from 'react-router-dom';
 
-import Loading from 'components/Loading';
-
 import { reverse } from 'routes';
-
 import { LoaderData as RootLoaderData } from 'routes/Root';
+
+import Loading from 'components/Loading';
 
 function Root(): ReactElement {
 	const navigate = useNavigate();

@@ -1,10 +1,9 @@
-import React, { ReactElement, CSSProperties, memo } from 'react';
-
+import React, { CSSProperties, memo, ReactElement } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 
-import logoURL from 'assets/logo.svg?url';
-
 import Modal, { ModalProps } from './Modal';
+
+import logoURL from 'assets/logo.svg?url';
 
 export type LoginModalProps = Omit<ModalProps, 'children'>;
 

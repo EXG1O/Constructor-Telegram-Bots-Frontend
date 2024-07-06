@@ -1,10 +1,9 @@
-import React, { ReactElement, memo, useMemo } from 'react';
-
+import React, { memo, ReactElement, useMemo } from 'react';
 import Quill from 'quill';
 
-import('./TelegramQuillEditor.scss');
-
 import QuillEditor, { QuillEditorProps, Toolbar } from './QuillEditor';
+
+import('./TelegramQuillEditor.scss');
 
 const Inline = Quill.import('blots/inline');
 

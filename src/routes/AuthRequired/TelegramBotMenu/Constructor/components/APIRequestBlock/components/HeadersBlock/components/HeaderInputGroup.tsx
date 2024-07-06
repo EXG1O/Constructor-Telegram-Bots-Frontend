@@ -1,4 +1,4 @@
-import React, { ReactElement, CSSProperties, memo } from 'react';
+import React, { CSSProperties, memo, ReactElement } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Input from 'react-bootstrap/FormControl';

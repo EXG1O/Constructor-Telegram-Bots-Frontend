@@ -1,17 +1,16 @@
-import React, { ReactElement, memo } from 'react';
-
-import Block, { BlockProps } from '../Block';
+import React, { memo, ReactElement } from 'react';
 
 import BodyBlock, { Body, defaultBody } from './components/BodyBlock';
-import HeadersBlock, { Headers, defaultHeaders } from './components/HeadersBlock';
+import HeadersBlock, { defaultHeaders, Headers } from './components/HeadersBlock';
 import MethodButtonGroup, {
-	Method,
 	defaultMethod,
+	Method,
 } from './components/MethodButtonGroup';
 import TestBlock from './components/TestBlock';
-import URLInput, { URL, defaultURL } from './components/URLInput';
-
+import URLInput, { defaultURL, URL } from './components/URLInput';
 import StoreContext, { StoreContextType } from './contexts/StoreContext';
+
+import Block, { BlockProps } from '../Block';
 
 export interface APIRequest {
 	url: URL;
@@ -32,10 +31,10 @@ export const defaultAPIRequest: APIRequest = {
 };
 
 export {
-	defaultURL as defaultAPIRequestURL,
-	defaultMethod as defaultAPIRequestMethod,
-	defaultHeaders as defaultAPIRequestHeaders,
 	defaultBody as defaultAPIRequestBody,
+	defaultHeaders as defaultAPIRequestHeaders,
+	defaultMethod as defaultAPIRequestMethod,
+	defaultURL as defaultAPIRequestURL,
 };
 
 function APIRequestBlock({

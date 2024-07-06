@@ -1,8 +1,6 @@
-import React, { CSSProperties, HTMLAttributes, ReactElement, memo } from 'react';
-
-import classNames from 'classnames';
-
+import React, { CSSProperties, HTMLAttributes, memo, ReactElement } from 'react';
 import { NodeToolbar as BaseNodeToolbar } from 'reactflow';
+import classNames from 'classnames';
 
 import Button from 'react-bootstrap/Button';
 

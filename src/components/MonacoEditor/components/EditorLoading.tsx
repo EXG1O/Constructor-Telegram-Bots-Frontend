@@ -1,5 +1,4 @@
-import React, { ReactElement, HTMLAttributes, memo } from 'react';
-
+import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import classNames from 'classnames';
 
 import Loading from '../../Loading';

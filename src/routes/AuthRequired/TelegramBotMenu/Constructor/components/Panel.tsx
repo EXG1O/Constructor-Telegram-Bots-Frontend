@@ -1,8 +1,6 @@
-import React, { ReactElement, HTMLAttributes, memo } from 'react';
-
-import classNames from 'classnames';
-
+import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import { Panel as BasePanel } from 'reactflow';
+import classNames from 'classnames';
 
 import AddButton from 'components/AddButton';
 

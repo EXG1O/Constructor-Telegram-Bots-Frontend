@@ -1,16 +1,13 @@
-import React, { ReactElement, memo, useCallback } from 'react';
-
+import React, { memo, ReactElement, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
 import CardFooter, { CardFooterProps } from 'react-bootstrap/CardFooter';
-
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import Loading from 'components/Loading';
-
 import useTelegramBot from 'components/TelegramBotCard/hooks/useTelegramBot';
 import { createMessageToast } from 'components/ToastContainer';
 

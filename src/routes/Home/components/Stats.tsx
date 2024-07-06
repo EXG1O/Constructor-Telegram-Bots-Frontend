@@ -1,13 +1,12 @@
-import React, { ReactElement, HTMLAttributes, memo } from 'react';
-
-import classNames from 'classnames';
+import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
+import classNames from 'classnames';
+
+import { LoaderData as HomeLoaderData } from '..';
 
 import Stack from 'react-bootstrap/Stack';
 
 import InfoArea from 'components/InfoArea';
-
-import { LoaderData as HomeLoaderData } from '..';
 
 export type StatsProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 

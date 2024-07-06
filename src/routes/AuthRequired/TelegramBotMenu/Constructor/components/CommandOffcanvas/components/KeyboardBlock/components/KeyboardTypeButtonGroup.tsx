@@ -1,4 +1,4 @@
-import React, { ReactElement, memo, useId } from 'react';
+import React, { memo, ReactElement, useId } from 'react';
 
 import ToggleButton, {
 	ToggleButtonProps as BaseToggleButtonProps,

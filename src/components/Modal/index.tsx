@@ -1,17 +1,15 @@
 import React, { ReactElement, ReactNode } from 'react';
 
 import { BaseModalProps } from '@restart/ui/Modal';
-
 import BaseModal from 'react-bootstrap/Modal';
-
-import Loading from '../Loading';
 
 import Body from './components/Body';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Title from './components/Title';
-
 import ModalContext from './contexts/ModalContext';
+
+import Loading from '../Loading';
 
 export interface ModalProps
 	extends Omit<

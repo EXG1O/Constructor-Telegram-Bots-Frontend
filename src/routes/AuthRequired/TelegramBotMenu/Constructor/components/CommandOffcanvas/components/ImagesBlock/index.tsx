@@ -1,13 +1,12 @@
-import React, { ReactElement, memo } from 'react';
-
-import Block, { BlockProps } from '../../../Block';
+import React, { memo, ReactElement } from 'react';
 
 import AddImagesButton from './components/AddImagesButton';
 import BlockCollapse from './components/BlockCollapse';
 import ImageCarousel from './components/ImageCarousel';
-
 import ImageList from './components/ImageList';
 import ImagesLoading from './components/ImagesLoading';
+
+import Block, { BlockProps } from '../../../Block';
 
 export interface Image {
 	id?: number;

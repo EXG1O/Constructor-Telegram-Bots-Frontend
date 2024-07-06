@@ -1,18 +1,17 @@
 import React, {
-	ReactElement,
 	HTMLAttributes,
 	memo,
-	useState,
+	ReactElement,
 	useCallback,
+	useState,
 } from 'react';
-
 import classNames from 'classnames';
-
-import PencilSquareIcon from 'assets/icons/pencil-square.svg';
 
 import VariableEditModal from '../../../../VariableEditModal';
 
 import useVariable from '../../../hooks/useVariables';
+
+import PencilSquareIcon from 'assets/icons/pencil-square.svg';
 
 export type EditButtonProps = Omit<HTMLAttributes<SVGSVGElement>, 'children'>;
 

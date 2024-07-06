@@ -1,11 +1,10 @@
 import React, {
-	ReactElement,
-	HTMLAttributes,
 	CSSProperties,
+	HTMLAttributes,
 	memo,
+	ReactElement,
 	useMemo,
 } from 'react';
-
 import classNames from 'classnames';
 
 export interface InfoAreaProps

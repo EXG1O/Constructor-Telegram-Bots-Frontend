@@ -1,11 +1,10 @@
 import React, {
-	ReactElement,
 	HTMLAttributes,
 	memo,
-	useState,
+	ReactElement,
 	useCallback,
+	useState,
 } from 'react';
-
 import classNames from 'classnames';
 
 import AddButton from 'components/AddButton';

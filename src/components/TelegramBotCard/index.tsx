@@ -1,26 +1,26 @@
 import React, {
 	HTMLAttributes,
+	memo,
 	ReactElement,
 	TdHTMLAttributes,
-	memo,
 	useCallback,
 	useEffect,
 	useState,
 } from 'react';
-
 import classNames from 'classnames';
 
 import Table from 'react-bootstrap/Table';
 
 import TelegramBotStorage from 'components/TelegramBotStorage';
 import { createMessageToast } from 'components/ToastContainer';
-import { TelegramBotAPI } from 'services/api/telegram_bots/main';
-import { TelegramBot } from 'services/api/telegram_bots/types';
 
 import APITokenDisplay from './components/APITokenDisplay';
 import APITokenEditing from './components/APITokenEditing';
 import PrivateSwitch from './components/PrivateSwitch';
 import TelegramBotContext from './contexts/TelegramBotContext';
+
+import { TelegramBotAPI } from 'services/api/telegram_bots/main';
+import { TelegramBot } from 'services/api/telegram_bots/types';
 
 export interface TelegramBotCardProps extends HTMLAttributes<HTMLDivElement> {
 	telegramBot: TelegramBot;

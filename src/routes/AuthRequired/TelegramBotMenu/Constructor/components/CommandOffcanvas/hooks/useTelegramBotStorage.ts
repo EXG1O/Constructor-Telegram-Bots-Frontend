@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-
 import { useRouteLoaderData } from 'react-router-dom';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';

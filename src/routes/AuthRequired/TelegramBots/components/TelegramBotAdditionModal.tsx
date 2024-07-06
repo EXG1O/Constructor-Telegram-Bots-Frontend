@@ -1,4 +1,4 @@
-import React, { ReactElement, memo, useMemo, useState } from 'react';
+import React, { memo, ReactElement, useMemo, useState } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Feedback from 'react-bootstrap/Feedback';
@@ -6,15 +6,13 @@ import Input from 'react-bootstrap/FormControl';
 import Switch from 'react-bootstrap/Switch';
 
 import Modal, { ModalProps } from 'components/Modal';
-
 import { createMessageToast } from 'components/ToastContainer';
 
-import { APIResponse } from 'services/api/base';
+import useTelegramBots from '../services/hooks/useTelegramBots';
 
+import { APIResponse } from 'services/api/base';
 import { TelegramBotsAPI } from 'services/api/telegram_bots/main';
 import { Data } from 'services/api/telegram_bots/types';
-
-import useTelegramBots from '../services/hooks/useTelegramBots';
 
 type Data = Data.TelegramBotsAPI.Create;
 

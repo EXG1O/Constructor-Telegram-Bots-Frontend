@@ -1,6 +1,5 @@
-import React, { ReactElement, memo } from 'react';
-
-import { UseBoundStore, StoreApi } from 'zustand';
+import React, { memo, ReactElement } from 'react';
+import { StoreApi, UseBoundStore } from 'zustand';
 
 import Input from 'react-bootstrap/FormControl';
 

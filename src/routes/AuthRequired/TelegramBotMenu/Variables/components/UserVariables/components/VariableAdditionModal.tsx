@@ -1,22 +1,21 @@
-import React, { ReactElement, memo, useState } from 'react';
-
+import React, { memo, ReactElement, useState } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
+
+import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
 import Button from 'react-bootstrap/Button';
 
 import { createMessageToast } from 'components/ToastContainer';
 
-import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
-
-import { VariablesAPI } from 'services/api/telegram_bots/main';
+import VariableFormModal, {
+	Data,
+	defaultData,
+	VariableFormModalProps,
+} from './VariableFormModal';
 
 import useVariables from '../hooks/useVariables';
 
-import VariableFormModal, {
-	VariableFormModalProps,
-	Data,
-	defaultData,
-} from './VariableFormModal';
+import { VariablesAPI } from 'services/api/telegram_bots/main';
 
 export type VariableAdditionModalProps = Omit<
 	VariableFormModalProps,

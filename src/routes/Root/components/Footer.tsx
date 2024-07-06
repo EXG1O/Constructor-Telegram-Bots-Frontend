@@ -1,5 +1,4 @@
-import React, { ReactElement, memo } from 'react';
-
+import React, { memo, ReactElement } from 'react';
 import classNames from 'classnames';
 
 import Container from 'react-bootstrap/Container';

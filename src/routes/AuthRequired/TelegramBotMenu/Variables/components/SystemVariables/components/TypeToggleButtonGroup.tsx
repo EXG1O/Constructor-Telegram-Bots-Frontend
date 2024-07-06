@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
 
+import { Type } from '..';
+
 import ToggleButton, { ToggleButtonProps } from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup, {
 	ToggleButtonRadioProps,
 } from 'react-bootstrap/ToggleButtonGroup';
-
-import { Type } from '..';
 
 export type TypeToggleButtonGroupProps = Omit<
 	ToggleButtonRadioProps<Type>,

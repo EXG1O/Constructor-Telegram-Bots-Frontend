@@ -1,14 +1,14 @@
-import React, { ReactElement, memo } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import Collapse from 'react-bootstrap/Collapse';
 
 import BaseAPIRequestBlock, {
 	APIRequestBlockProps as BaseAPIRequestBlockProps,
 	defaultAPIRequest,
-	defaultAPIRequestURL,
-	defaultAPIRequestMethod,
-	defaultAPIRequestHeaders,
 	defaultAPIRequestBody,
+	defaultAPIRequestHeaders,
+	defaultAPIRequestMethod,
+	defaultAPIRequestURL,
 } from '../../../APIRequestBlock';
 
 import useCommandOffcanvasStore from '../../hooks/useCommandOffcanvasStore';
@@ -17,10 +17,10 @@ export type APIRequestBlockProps = Omit<BaseAPIRequestBlockProps, 'store'>;
 
 export {
 	defaultAPIRequest,
-	defaultAPIRequestURL,
-	defaultAPIRequestMethod,
-	defaultAPIRequestHeaders,
 	defaultAPIRequestBody,
+	defaultAPIRequestHeaders,
+	defaultAPIRequestMethod,
+	defaultAPIRequestURL,
 };
 
 function APIRequestBlock(

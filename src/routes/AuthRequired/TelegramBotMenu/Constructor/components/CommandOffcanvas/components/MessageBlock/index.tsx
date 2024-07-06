@@ -1,8 +1,8 @@
-import React, { ReactElement, memo } from 'react';
-
-import Block, { BlockProps } from '../../../Block';
+import React, { memo, ReactElement } from 'react';
 
 import MessageEditor from './components/MessageEditor';
+
+import Block, { BlockProps } from '../../../Block';
 
 export type Message = string;
 

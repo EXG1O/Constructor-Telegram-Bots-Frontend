@@ -1,16 +1,16 @@
 import { makeRequest } from 'services/api/base';
 
 import {
-	TelegramBot,
-	Connection,
+	APIResponse,
+	BackgroundTask,
 	Command,
 	Condition,
-	BackgroundTask,
-	Variable,
-	User,
-	DatabaseRecord,
+	Connection,
 	Data,
-	APIResponse,
+	DatabaseRecord,
+	TelegramBot,
+	User,
+	Variable,
 } from './types';
 
 const rootURL: string = '/api/telegram-bots/';

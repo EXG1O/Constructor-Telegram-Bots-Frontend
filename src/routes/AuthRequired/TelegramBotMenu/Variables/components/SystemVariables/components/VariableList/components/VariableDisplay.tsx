@@ -1,8 +1,8 @@
-import React, { ReactElement, HTMLAttributes, CSSProperties } from 'react';
-
-import ClipboardIcon from 'assets/icons/clipboard.svg';
+import React, { CSSProperties, HTMLAttributes, ReactElement } from 'react';
 
 import { Variable } from '..';
+
+import ClipboardIcon from 'assets/icons/clipboard.svg';
 
 export interface VariableDisplayProps
 	extends Omit<HTMLAttributes<HTMLTableRowElement>, 'children'> {

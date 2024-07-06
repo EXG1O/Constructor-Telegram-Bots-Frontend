@@ -1,25 +1,23 @@
 import React, {
-	ReactElement,
-	HTMLAttributes,
 	CSSProperties,
+	HTMLAttributes,
 	memo,
+	ReactElement,
 	useCallback,
 } from 'react';
-
-import classNames from 'classnames';
 import { useRouteLoaderData } from 'react-router-dom';
+import classNames from 'classnames';
+
+import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import { createMessageToast } from 'components/ToastContainer';
 
-import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
-
-import { makeRequest } from 'services/api/base';
-
-import { UserAPI } from 'services/api/telegram_bots/main';
-
 import useUsers from '../../../hooks/useUsers';
 import useUser from '../hooks/useUser';
+
+import { makeRequest } from 'services/api/base';
+import { UserAPI } from 'services/api/telegram_bots/main';
 
 export type UserDisplayProps = Omit<HTMLAttributes<HTMLTableRowElement>, 'children'>;
 

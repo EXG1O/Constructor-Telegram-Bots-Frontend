@@ -1,4 +1,4 @@
-import React, { ReactElement, useMemo, useCallback } from 'react';
+import React, { ReactElement, useCallback, useMemo } from 'react';
 
 import Modal, { ModalProps } from 'components/Modal';
 import MonacoEditor, { MonacoEditorProps } from 'components/MonacoEditor';

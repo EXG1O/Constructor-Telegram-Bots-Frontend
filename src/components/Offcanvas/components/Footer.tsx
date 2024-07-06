@@ -1,5 +1,4 @@
-import React, { ReactElement, HTMLAttributes, useContext } from 'react';
-
+import React, { HTMLAttributes, ReactElement, useContext } from 'react';
 import classNames from 'classnames';
 
 import OffcanvasContext from '../contexts/OffcanvasContext';

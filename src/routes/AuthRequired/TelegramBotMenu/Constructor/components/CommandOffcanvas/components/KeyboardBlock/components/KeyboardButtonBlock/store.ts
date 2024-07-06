@@ -1,4 +1,4 @@
-import { KeyboardButton, defaultKeyboardButton } from '.';
+import { defaultKeyboardButton, KeyboardButton } from '.';
 
 export interface KeyboardButtonBlockSliceState {
 	keyboardButtonBlockType: 'add' | 'edit';

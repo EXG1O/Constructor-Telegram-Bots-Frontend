@@ -1,57 +1,53 @@
 import React, { ReactElement, useCallback, useRef } from 'react';
-
 import { Params, useRouteLoaderData } from 'react-router-dom';
-
 import ReactFlow, {
-	Controls,
-	MiniMap,
+	addEdge as baseAddEdge,
 	Background,
 	BackgroundVariant,
+	Connection,
+	Controls,
+	DefaultEdgeOptions,
+	Edge,
+	MarkerType,
+	MiniMap,
+	Node,
+	NodeTypes,
+	updateEdge,
 	useEdgesState,
 	useNodesState,
-	addEdge as baseAddEdge,
-	updateEdge,
-	NodeTypes,
-	DefaultEdgeOptions,
-	MarkerType,
-	Connection,
-	Node,
-	Edge,
 } from 'reactflow';
-
-import 'reactflow/dist/style.css';
-import './index.scss';
-
-import Page from 'components/Page';
-
-import { createMessageToast } from 'components/ToastContainer';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
-import {
-	ConnectionsAPI,
-	ConnectionAPI,
-	DiagramCommandsAPI,
-	DiagramCommandAPI,
-	DiagramConditionsAPI,
-	DiagramConditionAPI,
-	DiagramBackgroundTasksAPI,
-	DiagramBackgroundTaskAPI,
-} from 'services/api/telegram_bots/main';
-
-import { APIResponse } from 'services/api/telegram_bots/types';
+import Page from 'components/Page';
+import { createMessageToast } from 'components/ToastContainer';
 
 import CommandNode from './components/CommandNode';
 import CommandOffcanvas from './components/CommandOffcanvas';
 import Panel from './components/Panel';
 
+import 'reactflow/dist/style.css';
+import './index.scss';
+
 import {
-	parseDiagramCommandNodes,
-	parseDiagramConditionNodes,
+	ConnectionAPI,
+	ConnectionsAPI,
+	DiagramBackgroundTaskAPI,
+	DiagramBackgroundTasksAPI,
+	DiagramCommandAPI,
+	DiagramCommandsAPI,
+	DiagramConditionAPI,
+	DiagramConditionsAPI,
+} from 'services/api/telegram_bots/main';
+import { APIResponse } from 'services/api/telegram_bots/types';
+
+import {
+	parseDiagramBackgroundTaskEdges,
 	parseDiagramBackgroundTaskNodes,
 	parseDiagramCommandEdges,
+	parseDiagramCommandNodes,
 	parseDiagramConditionEdges,
-	parseDiagramBackgroundTaskEdges,
+	parseDiagramConditionNodes,
 } from './utils';
 
 export interface LoaderData {

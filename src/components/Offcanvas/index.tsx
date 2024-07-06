@@ -1,17 +1,15 @@
 import React, { ReactElement, ReactNode } from 'react';
 
 import { BaseModalProps } from '@restart/ui/Modal';
-
 import BaseOffcanvas from 'react-bootstrap/Offcanvas';
 import Title from 'react-bootstrap/OffcanvasTitle';
-
-import Loading from '../Loading';
 
 import Body from './components/Body';
 import Footer from './components/Footer';
 import Header from './components/Header';
-
 import OffcanvasContext from './contexts/OffcanvasContext';
+
+import Loading from '../Loading';
 
 export interface OffcanvasProps
 	extends Omit<

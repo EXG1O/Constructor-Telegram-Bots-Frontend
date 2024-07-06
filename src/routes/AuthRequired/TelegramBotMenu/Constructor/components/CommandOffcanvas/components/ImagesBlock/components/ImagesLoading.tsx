@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, CSSProperties, memo } from 'react';
+import React, { CSSProperties, memo, ReactElement, ReactNode } from 'react';
 
 import Loading from 'components/Loading';
 

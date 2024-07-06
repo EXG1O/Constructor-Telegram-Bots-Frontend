@@ -1,14 +1,14 @@
-import React, { ReactElement, HTMLAttributes, memo, useCallback } from 'react';
-
+import React, { HTMLAttributes, memo, ReactElement, useCallback } from 'react';
 import classNames from 'classnames';
 
 import Pagination from 'components/Pagination';
 import Search, { defaultValue as searchDefaultValue } from 'components/Search';
 
-import { PaginationData } from '../..';
+import AddRecordButton from './components/AddRecordButton';
+
 import useRecords from '../../hooks/useRecords';
 
-import AddRecordButton from './components/AddRecordButton';
+import { PaginationData } from '../..';
 
 export interface ToolbarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
 	paginationData: Omit<PaginationData, 'results'>;

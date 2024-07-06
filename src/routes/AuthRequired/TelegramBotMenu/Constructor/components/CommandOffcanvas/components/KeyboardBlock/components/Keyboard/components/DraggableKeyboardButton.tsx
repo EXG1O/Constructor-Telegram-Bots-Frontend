@@ -1,8 +1,6 @@
-import React, { HTMLAttributes, ReactElement, memo } from 'react';
-
-import classNames from 'classnames';
-
+import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import classNames from 'classnames';
 
 import useCommandOffcanvasStore from '../../../../../hooks/useCommandOffcanvasStore';
 

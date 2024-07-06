@@ -1,12 +1,11 @@
-import React, { ReactElement, HTMLAttributes, CSSProperties, memo } from 'react';
-
+import React, { CSSProperties, HTMLAttributes, memo, ReactElement } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
 import Button from 'react-bootstrap/Button';
 
-import TrashIcon from 'assets/icons/trash.svg';
-
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
+
+import TrashIcon from 'assets/icons/trash.svg';
 
 export interface FileDetailProps
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {

@@ -1,13 +1,12 @@
 import React, { ReactElement } from 'react';
-
 import { useRouteLoaderData } from 'react-router-dom';
 
 import Page from 'components/Page';
 
+import SectionDisplay from './components/SectionDisplay';
+
 import { SectionsAPI } from 'services/api/instruction/main';
 import { APIResponse } from 'services/api/instruction/types';
-
-import SectionDisplay from './components/SectionDisplay';
 
 export interface LoaderData {
 	sections: APIResponse.SectionsAPI.Get;

@@ -1,18 +1,16 @@
 import React, { ReactElement } from 'react';
-
-import Cookies from 'js-cookie';
 import { Outlet, useNavigation } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 import AskConfirmModal from 'components/AskConfirmModal';
 import Loading from 'components/Loading';
 import ToastContainer from 'components/ToastContainer';
 
-import { UserAPI } from 'services/api/users/main';
-
-import { User } from 'services/api/users/types';
-
 import Footer from './components/Footer';
 import Header from './components/Header';
+
+import { UserAPI } from 'services/api/users/main';
+import { User } from 'services/api/users/types';
 
 export interface LoaderData {
 	user: User | null;

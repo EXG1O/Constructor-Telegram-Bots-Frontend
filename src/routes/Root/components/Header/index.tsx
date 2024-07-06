@@ -1,21 +1,19 @@
-import React, { ReactElement, CSSProperties, memo, useMemo } from 'react';
-
-import classNames from 'classnames';
+import React, { CSSProperties, memo, ReactElement, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-
-import Row from 'react-bootstrap/Row';
-
-import Logo from 'assets/logo.svg';
+import classNames from 'classnames';
 
 import { reverse } from 'routes';
 
-import useWindowSize from 'services/hooks/useWindowSize';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 
 import Buttons from './components/Buttons';
 import Links from './components/Links';
+
+import useWindowSize from 'services/hooks/useWindowSize';
+
+import Logo from 'assets/logo.svg';
 
 function Header(): ReactElement {
 	const windowSize = useWindowSize();
