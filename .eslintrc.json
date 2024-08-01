@@ -50,6 +50,7 @@
 					["/contexts/.+"],
 					["\\.s?css$"],
 					["^assets/.+"],
+					["^utils/.+"],
 					["^services/api/.+"]
 				]
 			}
