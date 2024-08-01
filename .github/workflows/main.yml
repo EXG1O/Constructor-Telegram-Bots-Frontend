@@ -20,7 +20,7 @@ jobs:
         run: npm i
 
       - name: Run ESLint
-        run: npx prettier ./src
+        run: npx eslint ./src
 
       - name: Run Prettier check
         run: npx prettier ./src --check
