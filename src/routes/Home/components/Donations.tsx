@@ -8,7 +8,8 @@ import Row from 'react-bootstrap/Row';
 
 export type DonationsProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
-const wrapperStyle: CSSProperties = { height: '324px', scrollbarWidth: 'thin' };
+const baseStyle: CSSProperties = { height: '324px' };
+const wrapperStyle: CSSProperties = { ...baseStyle, scrollbarWidth: 'thin' };
 
 function Donations({
 	className,
@@ -25,26 +26,32 @@ function Donations({
 			)}
 		>
 			<h3 className='fw-semibold mb-3'>{gettext('Пожертвования')}</h3>
-			<div className='overflow-auto' style={wrapperStyle}>
-				<Row xs={3} className='mx-0'>
-					{donations.results.map((donation) => (
-						<React.Fragment key={donation.id}>
-							<span>{`${donation.sum}€`}</span>
-							<span>
-								<a
-									href={donation.contact_link}
-									rel='noreferrer'
-									target='_blank'
-									className='text-white text-decoration-none'
-								>
-									{donation.contact_link}
-								</a>
-							</span>
-							<span>{donation.date}</span>
-						</React.Fragment>
-					))}
-				</Row>
-			</div>
+			{donations.count ? (
+				<div className='overflow-auto' style={wrapperStyle}>
+					<Row xs={3} className='mx-0'>
+						{donations.results.map((donation) => (
+							<React.Fragment key={donation.id}>
+								<span>{`${donation.sum}€`}</span>
+								<span>
+									<a
+										href={donation.contact_link}
+										rel='noreferrer'
+										target='_blank'
+										className='text-white text-decoration-none'
+									>
+										{donation.contact_link}
+									</a>
+								</span>
+								<span>{donation.date}</span>
+							</React.Fragment>
+						))}
+					</Row>
+				</div>
+			) : (
+				<div style={baseStyle}>
+					{gettext('Ещё не было сделано пожертвований')}
+				</div>
+			)}
 		</div>
 	);
 }
