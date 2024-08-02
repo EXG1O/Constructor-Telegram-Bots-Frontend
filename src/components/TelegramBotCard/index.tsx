@@ -1,5 +1,4 @@
 import React, {
-	HTMLAttributes,
 	memo,
 	ReactElement,
 	TdHTMLAttributes,
@@ -11,6 +10,7 @@ import classNames from 'classnames';
 
 import Table from 'react-bootstrap/Table';
 
+import Block, { BlockProps } from 'components/Block';
 import TelegramBotStorage from 'components/TelegramBotStorage';
 import { createMessageToast } from 'components/ToastContainer';
 
@@ -22,7 +22,7 @@ import TelegramBotContext from './contexts/TelegramBotContext';
 import { TelegramBotAPI } from 'services/api/telegram_bots/main';
 import { TelegramBot } from 'services/api/telegram_bots/types';
 
-export interface TelegramBotCardProps extends HTMLAttributes<HTMLDivElement> {
+export interface TelegramBotCardProps extends Omit<BlockProps, 'variant' | 'gradient'> {
 	telegramBot: TelegramBot;
 }
 
@@ -81,12 +81,10 @@ function TelegramBotCard({
 
 	return (
 		<TelegramBotContext.Provider value={[telegramBot, setTelegramBot]}>
-			<div
+			<Block
 				{...props}
-				className={classNames(
-					'd-flex flex-column text-bg-light rounded-4 p-3 gap-2',
-					className,
-				)}
+				variant='light'
+				className={classNames(className, 'd-flex flex-column gap-2')}
 			>
 				<h4 className='fw-semibold text-center'>
 					<a
@@ -142,7 +140,7 @@ function TelegramBotCard({
 					</tbody>
 				</Table>
 				{children}
-			</div>
+			</Block>
 		</TelegramBotContext.Provider>
 	);
 }

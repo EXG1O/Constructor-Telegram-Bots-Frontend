@@ -1,13 +1,16 @@
-import React, { HTMLAttributes, memo, ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 import classNames from 'classnames';
 
-export type HeaderProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+import Block, { BlockProps } from 'components/Block';
+
+export type HeaderProps = Omit<BlockProps, 'variant' | 'gradient' | 'children'>;
 
 function Header({ className, ...props }: HeaderProps): ReactElement<HeaderProps> {
 	return (
-		<div
+		<Block
 			{...props}
-			className={classNames('text-center text-bg-light rounded-4 p-3', className)}
+			variant='light'
+			className={classNames(className, 'text-center')}
 		>
 			<h1 className='fw-bold'>Constructor Telegram Bots</h1>
 			<p className='fs-5 w-100 w-xl-75 mx-xl-auto'>
@@ -17,7 +20,7 @@ function Header({ className, ...props }: HeaderProps): ReactElement<HeaderProps>
 					создать своего многофункционального Telegram бота.
 				`)}
 			</p>
-		</div>
+		</Block>
 	);
 }
 
