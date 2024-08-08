@@ -8,16 +8,16 @@ import Row from 'react-bootstrap/Row';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import Loading from 'components/Loading';
-import useTelegramBot from 'components/TelegramBotCard/hooks/useTelegramBot';
+import useTelegramBot from 'components/TelegramBotBlock/hooks/useTelegramBot';
 import { createMessageToast } from 'components/ToastContainer';
 
 import { TelegramBotAPI } from 'services/api/telegram_bots/main';
 
-export type TelegramBotCardFooterProps = Omit<CardFooterProps, 'as' | 'children'>;
+export type TelegramBotBlockFooterProps = Omit<CardFooterProps, 'as' | 'children'>;
 
-function TelegramBotCardFooter(
-	props: TelegramBotCardFooterProps,
-): ReactElement<TelegramBotCardFooterProps> {
+function TelegramBotBlockFooter(
+	props: TelegramBotBlockFooterProps,
+): ReactElement<TelegramBotBlockFooterProps> {
 	const navigate = useNavigate();
 
 	const [telegramBot, setTelegramBot] = useTelegramBot();
@@ -152,4 +152,4 @@ function TelegramBotCardFooter(
 	);
 }
 
-export default memo(TelegramBotCardFooter);
+export default memo(TelegramBotBlockFooter);

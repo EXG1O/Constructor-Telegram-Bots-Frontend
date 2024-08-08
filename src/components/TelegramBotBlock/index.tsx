@@ -22,7 +22,8 @@ import TelegramBotContext from './contexts/TelegramBotContext';
 import { TelegramBotAPI } from 'services/api/telegram_bots/main';
 import { TelegramBot } from 'services/api/telegram_bots/types';
 
-export interface TelegramBotCardProps extends Omit<BlockProps, 'variant' | 'gradient'> {
+export interface TelegramBotBlockProps
+	extends Omit<BlockProps, 'variant' | 'gradient'> {
 	telegramBot: TelegramBot;
 }
 
@@ -39,12 +40,12 @@ const disabledStatusProps: TdHTMLAttributes<HTMLTableCellElement> = {
 	children: gettext('Выключен'),
 };
 
-function TelegramBotCard({
+function TelegramBotBlock({
 	telegramBot: initialTelegramBot,
 	className,
 	children,
 	...props
-}: TelegramBotCardProps): ReactElement<TelegramBotCardProps> {
+}: TelegramBotBlockProps): ReactElement<TelegramBotBlockProps> {
 	const [telegramBot, setTelegramBot] = useState<TelegramBot>(initialTelegramBot);
 	const [apiTokenEditing, setAPITokenEditing] = useState<boolean>(false);
 
@@ -145,4 +146,4 @@ function TelegramBotCard({
 	);
 }
 
-export default memo(TelegramBotCard);
+export default memo(TelegramBotBlock);

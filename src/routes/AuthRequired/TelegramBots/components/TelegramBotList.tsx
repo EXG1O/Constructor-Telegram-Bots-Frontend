@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import Row, { RowProps } from 'react-bootstrap/Row';
 
-import TelegramBotCard from 'components/TelegramBotCard';
+import TelegramBotBlock from 'components/TelegramBotBlock';
 
 import useTelegramBots from '../services/hooks/useTelegramBots';
 
@@ -20,14 +20,14 @@ function TelegramBotList({
 		<Row xs={1} md={2} xl={3} {...props} className={classNames('g-3', className)}>
 			{telegramBots.length ? (
 				telegramBots.map((telegramBot) => (
-					<TelegramBotCard key={telegramBot.id} telegramBot={telegramBot}>
+					<TelegramBotBlock key={telegramBot.id} telegramBot={telegramBot}>
 						<Link
 							to={`/telegram-bot-menu/${telegramBot.id}/`}
 							className='btn btn-dark'
 						>
 							{gettext('Меню Telegram бота')}
 						</Link>
-					</TelegramBotCard>
+					</TelegramBotBlock>
 				))
 			) : (
 				<div className='border rounded text-center px-3 py-2'>

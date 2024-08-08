@@ -7,9 +7,9 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import Page from 'components/Page';
-import TelegramBotCard from 'components/TelegramBotCard';
+import TelegramBotBlock from 'components/TelegramBotBlock';
 
-import TelegramBotCardFooter from './components/TelegramBotCardFooter';
+import TelegramBotBlockFooter from './components/TelegramBotBlockFooter';
 
 function Index(): ReactElement {
 	const { telegramBot } = useRouteLoaderData(
@@ -20,9 +20,9 @@ function Index(): ReactElement {
 		<Page title={gettext('Telegram бот')} grid>
 			<Row className='g-3 g-lg-4'>
 				<Col xs={12} lg={6}>
-					<TelegramBotCard telegramBot={telegramBot}>
-						<TelegramBotCardFooter />
-					</TelegramBotCard>
+					<TelegramBotBlock telegramBot={telegramBot}>
+						<TelegramBotBlockFooter />
+					</TelegramBotBlock>
 				</Col>
 			</Row>
 		</Page>
