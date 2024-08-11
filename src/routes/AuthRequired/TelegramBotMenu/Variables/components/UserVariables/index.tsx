@@ -3,8 +3,9 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
-import Card from 'react-bootstrap/Card';
+import Stack from 'react-bootstrap/Stack';
 
+import Block from 'components/Block';
 import { createMessageToast } from 'components/ToastContainer';
 
 import Toolbar from './components/Toolbar';
@@ -52,11 +53,11 @@ function UserVariables(): ReactElement {
 	}
 
 	return (
-		<Card>
-			<Card.Header as='h5' className='text-center'>
+		<Block variant='light'>
+			<h3 className='fw-semibold text-center mb-3'>
 				{gettext('Пользовательские переменные')}
-			</Card.Header>
-			<Card.Body className='vstack gap-2'>
+			</h3>
+			<Stack gap={2}>
 				<VariablesContext.Provider
 					value={{
 						variables: paginationData.results,
@@ -67,8 +68,8 @@ function UserVariables(): ReactElement {
 					<Toolbar paginationData={paginationData} />
 					<VariableList loading={loading} />
 				</VariablesContext.Provider>
-			</Card.Body>
-		</Card>
+			</Stack>
+		</Block>
 	);
 }
 

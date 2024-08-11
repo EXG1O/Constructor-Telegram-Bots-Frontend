@@ -25,7 +25,13 @@ function VariableList({
 	return !loading ? (
 		variables.length ? (
 			<Block {...props} className={classNames('overflow-hidden', className)}>
-				<Table responsive striped borderless className='align-middle mb-0'>
+				<Table
+					responsive
+					striped
+					borderless
+					variant='white'
+					className='align-middle mb-0'
+				>
 					<tbody>
 						{variables.map((variable) => (
 							<VariableContext.Provider
