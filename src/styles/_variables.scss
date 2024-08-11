@@ -28,7 +28,9 @@ $new-theme-colors: (
 );
 $theme-colors: map-merge($theme-colors, $new-theme-colors);
 
-$table-variants: ();
+$table-variants: (
+	'white': $white,
+);
 
 $gradient: linear-gradient(90deg, rgba($white, 0), rgba($white, 0.25) 125%);
 
