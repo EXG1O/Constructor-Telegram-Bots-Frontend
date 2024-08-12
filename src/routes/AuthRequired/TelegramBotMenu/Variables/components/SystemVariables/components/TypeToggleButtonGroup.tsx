@@ -36,7 +36,7 @@ function TypeToggleButtonGroup(
 					key={index}
 					id={`system-variables-${props.value}`}
 					size='sm'
-					variant='outline-dark'
+					variant='dark'
 				/>
 			))}
 		</ToggleButtonGroup>

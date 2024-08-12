@@ -1,6 +1,8 @@
 import React, { ReactElement, useState } from 'react';
 
-import Card from 'react-bootstrap/Card';
+import Stack from 'react-bootstrap/Stack';
+
+import Block from 'components/Block';
 
 import TypeToggleButtonGroup from './components/TypeToggleButtonGroup';
 import VariableList from './components/VariableList';
@@ -11,19 +13,19 @@ function SystemVariables(): ReactElement {
 	const [type, setType] = useState<Type>('personal');
 
 	return (
-		<Card>
-			<Card.Header as='h5' className='text-center'>
+		<Block variant='light'>
+			<h3 className='fw-semibold text-center mb-3'>
 				{gettext('Системные переменные')}
-			</Card.Header>
-			<Card.Body className='vstack gap-2'>
+			</h3>
+			<Stack gap={2}>
 				<TypeToggleButtonGroup
 					value={type}
 					className='col-lg-3'
 					onChange={setType}
 				/>
 				<VariableList type={type} />
-			</Card.Body>
-		</Card>
+			</Stack>
+		</Block>
 	);
 }
 

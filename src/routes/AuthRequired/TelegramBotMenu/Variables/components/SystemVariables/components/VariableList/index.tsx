@@ -53,7 +53,7 @@ function VariableList({
 			{...props}
 			className={classNames('overflow-hidden border rounded-1', className)}
 		>
-			<Table responsive borderless striped className='mb-0'>
+			<Table responsive borderless striped variant='white' className='mb-0'>
 				<tbody>
 					{variables[type].map((variable, index) => (
 						<VariableDisplay key={index} variable={variable} />
