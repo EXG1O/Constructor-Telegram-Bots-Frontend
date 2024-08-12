@@ -4,17 +4,14 @@ import { Variable } from '..';
 
 import ClipboardIcon from 'assets/icons/clipboard.svg';
 
-export interface VariableDisplayProps
+export interface TableRowProps
 	extends Omit<HTMLAttributes<HTMLTableRowElement>, 'children'> {
 	variable: Variable;
 }
 
 const iconStyle: CSSProperties = { cursor: 'pointer' };
 
-function VariableDisplay({
-	variable,
-	...props
-}: VariableDisplayProps): ReactElement<VariableDisplayProps> {
+function TableRow({ variable, ...props }: TableRowProps): ReactElement<TableRowProps> {
 	return (
 		<tr {...props}>
 			<td className='w-50'>
@@ -34,4 +31,4 @@ function VariableDisplay({
 	);
 }
 
-export default VariableDisplay;
+export default TableRow;

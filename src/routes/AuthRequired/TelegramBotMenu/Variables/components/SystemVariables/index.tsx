@@ -5,7 +5,7 @@ import Stack from 'react-bootstrap/Stack';
 import Block from 'components/Block';
 
 import TypeToggleButtonGroup from './components/TypeToggleButtonGroup';
-import VariableList from './components/VariableList';
+import VariablesTable from './components/VariablesTable';
 
 export type Type = 'personal' | 'global';
 
@@ -23,7 +23,7 @@ function SystemVariables(): ReactElement {
 					className='col-lg-3'
 					onChange={setType}
 				/>
-				<VariableList type={type} />
+				<VariablesTable type={type} />
 			</Stack>
 		</Block>
 	);

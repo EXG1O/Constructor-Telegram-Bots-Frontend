@@ -3,11 +3,11 @@ import classNames from 'classnames';
 
 import Table from 'react-bootstrap/Table';
 
-import VariableDisplay from './components/VariableDisplay';
+import TableRow from './components/TableRow';
 
 import { Type } from '../..';
 
-export interface VariableListProps extends HTMLAttributes<HTMLDivElement> {
+export interface VariablesTableProps extends HTMLAttributes<HTMLDivElement> {
 	type: Type;
 }
 
@@ -43,11 +43,11 @@ const variables: Record<Type, Variable[]> = {
 	],
 };
 
-function VariableList({
+function VariablesTable({
 	type,
 	className,
 	...props
-}: VariableListProps): ReactElement<VariableListProps> {
+}: VariablesTableProps): ReactElement<VariablesTableProps> {
 	return (
 		<div
 			{...props}
@@ -56,7 +56,7 @@ function VariableList({
 			<Table responsive borderless striped variant='white' className='mb-0'>
 				<tbody>
 					{variables[type].map((variable, index) => (
-						<VariableDisplay key={index} variable={variable} />
+						<TableRow key={index} variable={variable} />
 					))}
 				</tbody>
 			</Table>
@@ -64,4 +64,4 @@ function VariableList({
 	);
 }
 
-export default VariableList;
+export default VariablesTable;
