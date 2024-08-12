@@ -6,7 +6,7 @@ import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import { createMessageToast } from 'components/ToastContainer';
 
-import useVariables from '../../../hooks/useVariables';
+import useUserVariablesStore from '../../../hooks/useUserVariablesStore';
 import useVariableModalStore from '../../VariableModal/hooks/useVariableModalStore';
 
 import ClipboardIcon from 'assets/icons/clipboard.svg';
@@ -27,7 +27,7 @@ function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
 
-	const { updateVariables } = useVariables();
+	const updateVariables = useUserVariablesStore((state) => state.updateVariables);
 
 	const showAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
 	const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);

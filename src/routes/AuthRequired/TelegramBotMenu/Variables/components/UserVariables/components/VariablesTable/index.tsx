@@ -7,21 +7,16 @@ import Loading from 'components/Loading';
 import TableRow from './components/TableRow';
 import TableWrapper from './components/TableWrapper';
 
-import useVariables from '../../hooks/useVariables';
+import useUserVariablesStore from '../../hooks/useUserVariablesStore';
 
-export interface VariablesTableProps {
-	loading: boolean;
-}
-
-function VariablesTable({
-	loading,
-	...props
-}: VariablesTableProps): ReactElement<VariablesTableProps> {
-	const { variables, filter } = useVariables();
+function VariablesTable(): ReactElement {
+	const loading = useUserVariablesStore((state) => state.loading);
+	const search = useUserVariablesStore((state) => state.search);
+	const variables = useUserVariablesStore((state) => state.variables);
 
 	return !loading ? (
 		variables.length ? (
-			<TableWrapper {...props} className='overflow-hidden'>
+			<TableWrapper className='overflow-hidden'>
 				<Table
 					responsive
 					striped
@@ -36,7 +31,7 @@ function VariablesTable({
 					</tbody>
 				</Table>
 			</TableWrapper>
-		) : filter.search ? (
+		) : search ? (
 			<TableWrapper className='text-center px-3 py-2'>
 				{gettext('Не найдены переменные по поиску')}
 			</TableWrapper>

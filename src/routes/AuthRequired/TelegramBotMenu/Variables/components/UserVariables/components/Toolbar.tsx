@@ -6,19 +6,16 @@ import AddButton from 'components/AddButton';
 import Pagination from 'components/Pagination';
 import Search, { defaultValue as searchDefaultValue } from 'components/Search';
 
-import useVariables from '../hooks/useVariables';
+import useUserVariablesStore from '../hooks/useUserVariablesStore';
 import useVariableModalStore from './VariableModal/hooks/useVariableModalStore';
 
-import { PaginationData } from '../../..';
-
-export interface ToolbarProps {
-	paginationData: Omit<PaginationData, 'results'>;
-}
-
-function Toolbar({ paginationData }: ToolbarProps): ReactElement<ToolbarProps> {
-	const { updateVariables } = useVariables();
-
+function Toolbar(): ReactElement {
 	const showAddVariableModal = useVariableModalStore((state) => state.showAdd);
+
+	const itemCount = useUserVariablesStore((state) => state.count);
+	const itemLimit = useUserVariablesStore((state) => state.limit);
+	const itemOffset = useUserVariablesStore((state) => state.offset);
+	const updateVariables = useUserVariablesStore((state) => state.updateVariables);
 
 	return (
 		<Row md='auto' className='g-2'>
@@ -41,9 +38,9 @@ function Toolbar({ paginationData }: ToolbarProps): ReactElement<ToolbarProps> {
 			/>
 			<Pagination
 				size='sm'
-				itemCount={paginationData.count}
-				itemLimit={paginationData.limit}
-				itemOffset={paginationData.offset}
+				itemCount={itemCount}
+				itemLimit={itemLimit}
+				itemOffset={itemOffset}
 				className='justify-content-center ps-1'
 				onPageChange={useCallback(
 					(newOffset) => updateVariables(undefined, newOffset),

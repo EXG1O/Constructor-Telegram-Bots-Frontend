@@ -61,7 +61,9 @@ function Variables(): ReactElement {
 	return (
 		<Page title={gettext('Переменные')} grid>
 			<SystemVariables />
-			<UserVariables />
+			<UserVariables.StoreProvider>
+				<UserVariables />
+			</UserVariables.StoreProvider>
 		</Page>
 	);
 }
