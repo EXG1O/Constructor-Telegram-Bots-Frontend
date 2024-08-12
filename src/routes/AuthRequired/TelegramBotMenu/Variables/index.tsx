@@ -14,7 +14,6 @@ import { APIResponse } from 'services/api/telegram_bots/types';
 export interface PaginationData extends APIResponse.VariablesAPI.Get.Pagination {
 	limit: number;
 	offset: number;
-	search: string;
 }
 
 export interface LoaderData {
@@ -35,7 +34,7 @@ export async function loader({
 		throw Error('Failed to fetch data!');
 	}
 
-	return { paginationData: { ...response.json, limit, offset, search: '' } };
+	return { paginationData: { ...response.json, limit, offset } };
 }
 
 function Variables(): ReactElement {
