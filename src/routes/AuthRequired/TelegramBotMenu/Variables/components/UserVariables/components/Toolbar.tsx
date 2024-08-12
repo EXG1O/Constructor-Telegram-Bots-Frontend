@@ -1,30 +1,31 @@
-import React, { HTMLAttributes, memo, ReactElement, useCallback } from 'react';
-import classNames from 'classnames';
+import React, { memo, ReactElement, useCallback } from 'react';
 
+import Row from 'react-bootstrap/Row';
+
+import AddButton from 'components/AddButton';
 import Pagination from 'components/Pagination';
 import Search, { defaultValue as searchDefaultValue } from 'components/Search';
 
-import AddVariableButton from './components/AddVariableButton';
+import useVariables from '../hooks/useVariables';
+import useVariableModalStore from './VariableModal/hooks/useVariableModalStore';
 
-import useVariables from '../../hooks/useVariables';
+import { PaginationData } from '../../..';
 
-import { PaginationData } from '../../../..';
-
-export interface ToolbarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface ToolbarProps {
 	paginationData: Omit<PaginationData, 'results'>;
 }
 
-function Toolbar({
-	paginationData,
-	className,
-	...props
-}: ToolbarProps): ReactElement<ToolbarProps> {
+function Toolbar({ paginationData }: ToolbarProps): ReactElement<ToolbarProps> {
 	const { updateVariables } = useVariables();
 
+	const showAddVariableModal = useVariableModalStore((state) => state.showAdd);
+
 	return (
-		<div {...props} className={classNames('row row-cols-md-auto g-2', className)}>
+		<Row md='auto' className='g-2'>
 			<div>
-				<AddVariableButton size='sm' variant='dark' className='w-100' />
+				<AddButton size='sm' variant='dark' onClick={showAddVariableModal}>
+					{gettext('Добавить переменную')}
+				</AddButton>
 			</div>
 			<Search
 				size='sm'
@@ -39,17 +40,17 @@ function Toolbar({
 				)}
 			/>
 			<Pagination
+				size='sm'
 				itemCount={paginationData.count}
 				itemLimit={paginationData.limit}
 				itemOffset={paginationData.offset}
-				size='sm'
 				className='justify-content-center ps-1'
 				onPageChange={useCallback(
 					(newOffset) => updateVariables(undefined, newOffset),
 					[],
 				)}
 			/>
-		</div>
+		</Row>
 	);
 }
 

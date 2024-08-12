@@ -1,10 +1,4 @@
-import React, {
-	CSSProperties,
-	HTMLAttributes,
-	memo,
-	ReactElement,
-	useCallback,
-} from 'react';
+import React, { CSSProperties, memo, ReactElement, useCallback } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
@@ -12,34 +6,30 @@ import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import { createMessageToast } from 'components/ToastContainer';
 
-import EditButton from './components/EditButton';
-
-import useVariables from '../../../../hooks/useVariables';
-import useVariable from '../../hooks/useVariables';
+import useVariables from '../../../hooks/useVariables';
+import useVariableModalStore from '../../VariableModal/hooks/useVariableModalStore';
 
 import ClipboardIcon from 'assets/icons/clipboard.svg';
+import PencilSquareIcon from 'assets/icons/pencil-square.svg';
 import TrashIcon from 'assets/icons/trash.svg';
 
 import { VariableAPI } from 'services/api/telegram_bots/main';
+import { Variable } from 'services/api/telegram_bots/types';
 
-export type VariableDisplayProps = Omit<
-	HTMLAttributes<HTMLTableRowElement>,
-	'children'
->;
+export interface TableRowProps {
+	variable: Variable;
+}
 
 const iconStyle: CSSProperties = { cursor: 'pointer' };
 
-function VariableDisplay(
-	props: VariableDisplayProps,
-): ReactElement<VariableDisplayProps> {
+function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
 	const { telegramBot } = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
 
 	const { updateVariables } = useVariables();
-	const { variable } = useVariable();
 
-	const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
+	const showAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
 	const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
 	const setLoadingAskConfirmModal = useAskConfirmModalStore(
 		(state) => state.setLoading,
@@ -47,7 +37,7 @@ function VariableDisplay(
 
 	const showDeleteModal = useCallback(
 		() =>
-			setShowAskConfirmModal({
+			showAskConfirmModal({
 				title: gettext('Удаление переменной'),
 				text: gettext('Вы точно хотите удалить переменную?'),
 				onConfirm: async () => {
@@ -79,8 +69,10 @@ function VariableDisplay(
 		[],
 	);
 
+	const showEditModal = useVariableModalStore((state) => state.showEdit);
+
 	return (
-		<tr {...props}>
+		<tr>
 			<td className='w-50'>
 				<div className='d-flex align-items-center gap-2'>
 					<ClipboardIcon
@@ -99,7 +91,13 @@ function VariableDisplay(
 						{variable.description}
 					</span>
 					<div className='d-flex align-content-center gap-1'>
-						<EditButton className='my-auto' />
+						<PencilSquareIcon
+							width={18}
+							height='100%'
+							className='text-secondary'
+							style={iconStyle}
+							onClick={() => showEditModal(variable.id)}
+						/>
 						<TrashIcon
 							width={18}
 							height='100%'
@@ -114,4 +112,4 @@ function VariableDisplay(
 	);
 }
 
-export default memo(VariableDisplay);
+export default memo(TableRow);
