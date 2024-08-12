@@ -17,13 +17,7 @@ function VariablesTable(): ReactElement {
 	return !loading ? (
 		variables.length ? (
 			<TableWrapper className='overflow-hidden'>
-				<Table
-					responsive
-					striped
-					borderless
-					variant='white'
-					className='align-middle mb-0'
-				>
+				<Table responsive striped borderless className='align-middle mb-0'>
 					<tbody>
 						{variables.map((variable) => (
 							<TableRow key={variable.id} variable={variable} />

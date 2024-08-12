@@ -7,7 +7,12 @@ function TableWrapper({
 	className,
 	...props
 }: TableWrapperProps): ReactElement<TableWrapperProps> {
-	return <div {...props} className={classNames('border rounded-1', className)} />;
+	return (
+		<div
+			{...props}
+			className={classNames('text-bg-white border rounded-1', className)}
+		/>
+	);
 }
 
 export default memo(TableWrapper);
