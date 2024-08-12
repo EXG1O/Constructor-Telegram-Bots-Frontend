@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useEffect, useMemo } from 'react';
+import React, { memo, ReactElement, ReactNode, useEffect, useMemo } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
@@ -27,4 +27,4 @@ function StoreProvider({
 	return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
 }
 
-export default StoreProvider;
+export default memo(StoreProvider);

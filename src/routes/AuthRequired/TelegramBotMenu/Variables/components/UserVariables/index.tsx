@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from 'react';
+import React, { memo, ReactElement, useCallback } from 'react';
 
 import Stack from 'react-bootstrap/Stack';
 
@@ -34,4 +34,4 @@ function UserVariables(): ReactElement {
 	);
 }
 
-export default Object.assign(UserVariables, { StoreProvider });
+export default Object.assign(memo(UserVariables), { StoreProvider });

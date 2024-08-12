@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import Button from 'react-bootstrap/Button';
 
@@ -51,4 +51,4 @@ function VariableModal(): ReactElement {
 	);
 }
 
-export default Object.assign(VariableModal, { StoreProvider });
+export default Object.assign(memo(VariableModal), { StoreProvider });
