@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 
 import AddButton from 'components/AddButton';
 import Pagination from 'components/Pagination';
-import Search, { defaultValue as searchDefaultValue } from 'components/Search';
+import Search from 'components/Search';
 
 import useUserVariablesStore from '../hooks/useUserVariablesStore';
 import useVariableModalStore from './VariableModal/hooks/useVariableModalStore';
@@ -32,7 +32,7 @@ function Toolbar(): ReactElement {
 					[],
 				)}
 				onClear={useCallback(
-					() => updateVariables(undefined, undefined, searchDefaultValue),
+					() => updateVariables(undefined, undefined, null),
 					[],
 				)}
 			/>

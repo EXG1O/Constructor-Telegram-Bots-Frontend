@@ -20,9 +20,9 @@ export interface StateParams {
 
 export interface StateActions {
 	updateVariables: (
-		limit?: number,
-		offset?: number,
-		search?: string,
+		limit?: StateParams['limit'],
+		offset?: StateParams['offset'],
+		search?: StateParams['search'],
 	) => Promise<void>;
 
 	setLoading: (loading: boolean) => void;
