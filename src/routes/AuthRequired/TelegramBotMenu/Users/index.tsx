@@ -9,7 +9,7 @@ import Page from 'components/Page';
 import { createMessageToast } from 'components/ToastContainer';
 
 import Toolbar from './components/Toolbar';
-import UserList from './components/UserList';
+import UsersTable from './components/UsersTable';
 import UsersContext from './contexts/UsersContext';
 
 import { UsersAPI } from 'services/api/telegram_bots/main';
@@ -113,7 +113,7 @@ function Users(): ReactElement {
 						}}
 					>
 						<Toolbar paginationData={paginationData} />
-						<UserList loading={loading} />
+						<UsersTable loading={loading} />
 					</UsersContext.Provider>
 				</Card.Body>
 			</Card>

@@ -11,15 +11,15 @@ import UserContext from './contexts/UserContext';
 
 import useUsers from '../../hooks/useUsers';
 
-export interface UserListProps extends Omit<BlockProps, 'children'> {
+export interface UsersTableProps extends Omit<BlockProps, 'children'> {
 	loading: boolean;
 }
 
-function UserList({
+function UsersTable({
 	loading,
 	className,
 	...props
-}: UserListProps): ReactElement<UserListProps> {
+}: UsersTableProps): ReactElement<UsersTableProps> {
 	const { users, filter } = useUsers();
 
 	return !loading ? (
@@ -64,4 +64,4 @@ function UserList({
 	);
 }
 
-export default UserList;
+export default UsersTable;
