@@ -5,8 +5,8 @@ import Table from 'react-bootstrap/Table';
 
 import Loading from 'components/Loading';
 
-import Block, { BlockProps } from './components/Block';
 import TableRow from './components/TableRow';
+import TableWrapper, { BlockProps } from './components/TableWrapper';
 import UserContext from './contexts/UserContext';
 
 import useUsers from '../../hooks/useUsers';
@@ -24,7 +24,10 @@ function UsersTable({
 
 	return !loading ? (
 		users.length ? (
-			<Block {...props} className={classNames('overflow-hidden', className)}>
+			<TableWrapper
+				{...props}
+				className={classNames('overflow-hidden', className)}
+			>
 				<Table
 					responsive
 					striped
@@ -39,28 +42,28 @@ function UsersTable({
 						))}
 					</tbody>
 				</Table>
-			</Block>
+			</TableWrapper>
 		) : filter.search ? (
-			<Block className='text-center px-3 py-2'>
+			<TableWrapper className='text-center px-3 py-2'>
 				{gettext('Не найдены пользователи по поиску')}
-			</Block>
+			</TableWrapper>
 		) : filter.type === 'allowed' ? (
-			<Block className='text-center px-3 py-2'>
+			<TableWrapper className='text-center px-3 py-2'>
 				{gettext('У вас нет разрешённых пользователей')}
-			</Block>
+			</TableWrapper>
 		) : filter.type === 'blocked' ? (
-			<Block className='text-center px-3 py-2'>
+			<TableWrapper className='text-center px-3 py-2'>
 				{gettext('У вас нет заблокированных пользователей')}
-			</Block>
+			</TableWrapper>
 		) : (
-			<Block className='text-center px-3 py-2'>
+			<TableWrapper className='text-center px-3 py-2'>
 				{gettext('Вашего Telegram бота ещё никто не активировал')}
-			</Block>
+			</TableWrapper>
 		)
 	) : (
-		<Block className='d-flex justify-content-center p-3'>
+		<TableWrapper className='d-flex justify-content-center p-3'>
 			<Loading size='md' />
-		</Block>
+		</TableWrapper>
 	);
 }
 
