@@ -47,6 +47,7 @@ function TypeToggleButtonGroup(
 			type='radio'
 			name='user-types'
 			value={type}
+			className='bg-white'
 			onChange={(type) => updateUsers(undefined, undefined, undefined, type)}
 		>
 			{typeToggleButtons.map((props, index) =>

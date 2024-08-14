@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 import { Params } from 'react-router-dom';
+import { Stack } from 'react-bootstrap';
 
-import Card from 'react-bootstrap/Card';
-
+import Block from 'components/Block';
 import Page from 'components/Page';
 
 import Toolbar from './components/Toolbar';
@@ -44,19 +44,19 @@ export async function loader({
 	};
 }
 
+const title: string = gettext('Пользователи');
+
 function Users(): ReactElement {
 	return (
-		<Page title={gettext('Пользователи')} grid>
+		<Page title={title} grid>
 			<StoreProvider>
-				<Card>
-					<Card.Header as='h5' className='text-center'>
-						{gettext('Список пользователей')}
-					</Card.Header>
-					<Card.Body className='vstack gap-2'>
+				<Block variant='light'>
+					<h3 className='fw-semibold text-center mb-3'>{title}</h3>
+					<Stack gap={2}>
 						<Toolbar />
 						<UsersTable />
-					</Card.Body>
-				</Card>
+					</Stack>
+				</Block>
 			</StoreProvider>
 		</Page>
 	);

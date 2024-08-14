@@ -3,10 +3,11 @@ import React, {
 	HTMLAttributes,
 	memo,
 	ReactElement,
+	SVGProps,
 	useCallback,
+	useMemo,
 } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
-import classNames from 'classnames';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
@@ -14,6 +15,12 @@ import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import { createMessageToast } from 'components/ToastContainer';
 
 import useUsersStore from '../../../hooks/useUsersStore';
+
+import BanIcon from 'assets/icons/ban.svg';
+import BanFillIcon from 'assets/icons/ban-fill.svg';
+import KeyIcon from 'assets/icons/key.svg';
+import KeyFillIcon from 'assets/icons/key-fill.svg';
+import TrashIcon from 'assets/icons/trash.svg';
 
 import { makeRequest } from 'services/api/base';
 import { UserAPI } from 'services/api/telegram_bots/main';
@@ -24,8 +31,14 @@ export interface TableRowProps
 	user: User;
 }
 
-const buttonStyle: CSSProperties = { fontSize: '18px', cursor: 'pointer' };
-const deleteButtonStyle: CSSProperties = { ...buttonStyle, marginLeft: '5.5px' };
+const iconStyle: CSSProperties = { cursor: 'pointer' };
+const trashIconStyle: CSSProperties = { ...iconStyle, marginLeft: '5.5px' };
+
+const iconProps: SVGProps<SVGSVGElement> = {
+	width: 18,
+	height: '100%',
+	style: iconStyle,
+};
 
 function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps> {
 	const { telegramBot } = useRouteLoaderData(
@@ -149,6 +162,12 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
 		[],
 	);
 
+	const AllowedIcon = useMemo(
+		() => (user.is_allowed ? KeyFillIcon : KeyIcon),
+		[user],
+	);
+	const BlockIcon = useMemo(() => (user.is_blocked ? BanFillIcon : BanIcon), [user]);
+
 	return (
 		<tr {...props}>
 			<td className='text-success-emphasis'>{`[${user.activated_date}]`}</td>
@@ -158,31 +177,26 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
 				<div className='d-flex'>
 					<div className='d-flex gap-2'>
 						{telegramBot.is_private && (
-							<i
-								className={classNames('d-flex bi text-warning', {
-									'bi-key-fill': user.is_allowed,
-									'bi-key': !user.is_allowed,
-								})}
-								style={buttonStyle}
+							<AllowedIcon
+								{...iconProps}
+								className='text-warning'
 								onClick={
 									user.is_allowed ? showDisallowModal : showAllowModal
 								}
 							/>
 						)}
-						<i
-							className={classNames('d-flex bi text-danger', {
-								'bi-ban-fill': user.is_blocked,
-								'bi-ban': !user.is_blocked,
-							})}
-							style={buttonStyle}
+						<BlockIcon
+							{...iconProps}
+							className='text-danger'
 							onClick={
 								user.is_blocked ? showUnblockModal : showBlockModal
 							}
 						/>
 					</div>
-					<i
-						className='d-flex bi bi-trash text-danger'
-						style={deleteButtonStyle}
+					<TrashIcon
+						{...iconProps}
+						className='text-danger'
+						style={trashIconStyle}
 						onClick={showDeleteModal}
 					/>
 				</div>
