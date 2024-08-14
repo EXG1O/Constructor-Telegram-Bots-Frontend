@@ -19,12 +19,12 @@ import useUser from '../hooks/useUser';
 import { makeRequest } from 'services/api/base';
 import { UserAPI } from 'services/api/telegram_bots/main';
 
-export type UserDisplayProps = Omit<HTMLAttributes<HTMLTableRowElement>, 'children'>;
+export type TableRowProps = Omit<HTMLAttributes<HTMLTableRowElement>, 'children'>;
 
 const buttonStyle: CSSProperties = { fontSize: '18px', cursor: 'pointer' };
 const deleteButtonStyle: CSSProperties = { ...buttonStyle, marginLeft: '5.5px' };
 
-function UserDisplay(props: UserDisplayProps): ReactElement<UserDisplayProps> {
+function TableRow(props: TableRowProps): ReactElement<TableRowProps> {
 	const { telegramBot } = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
@@ -189,4 +189,4 @@ function UserDisplay(props: UserDisplayProps): ReactElement<UserDisplayProps> {
 	);
 }
 
-export default memo(UserDisplay);
+export default memo(TableRow);

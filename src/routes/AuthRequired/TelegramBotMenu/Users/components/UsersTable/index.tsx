@@ -6,7 +6,7 @@ import Table from 'react-bootstrap/Table';
 import Loading from 'components/Loading';
 
 import Block, { BlockProps } from './components/Block';
-import UserDisplay from './components/UserDisplay';
+import TableRow from './components/TableRow';
 import UserContext from './contexts/UserContext';
 
 import useUsers from '../../hooks/useUsers';
@@ -34,7 +34,7 @@ function UsersTable({
 					<tbody>
 						{users.map((user) => (
 							<UserContext.Provider key={user.id} value={{ user }}>
-								<UserDisplay key={user.id} />
+								<TableRow key={user.id} />
 							</UserContext.Provider>
 						))}
 					</tbody>
