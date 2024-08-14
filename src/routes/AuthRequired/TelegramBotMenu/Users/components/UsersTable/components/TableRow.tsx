@@ -13,24 +13,26 @@ import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import { createMessageToast } from 'components/ToastContainer';
 
-import useUsers from '../../../hooks/useUsers';
-import useUser from '../hooks/useUser';
+import useUsersStore from '../../../hooks/useUsersStore';
 
 import { makeRequest } from 'services/api/base';
 import { UserAPI } from 'services/api/telegram_bots/main';
+import { User } from 'services/api/telegram_bots/types';
 
-export type TableRowProps = Omit<HTMLAttributes<HTMLTableRowElement>, 'children'>;
+export interface TableRowProps
+	extends Omit<HTMLAttributes<HTMLTableRowElement>, 'children'> {
+	user: User;
+}
 
 const buttonStyle: CSSProperties = { fontSize: '18px', cursor: 'pointer' };
 const deleteButtonStyle: CSSProperties = { ...buttonStyle, marginLeft: '5.5px' };
 
-function TableRow(props: TableRowProps): ReactElement<TableRowProps> {
+function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps> {
 	const { telegramBot } = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
 
-	const { updateUsers } = useUsers();
-	const { user } = useUser();
+	const updateUsers = useUsersStore((state) => state.updateUsers);
 
 	const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
 	const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);

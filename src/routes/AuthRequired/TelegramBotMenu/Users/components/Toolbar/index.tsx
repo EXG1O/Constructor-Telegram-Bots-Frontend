@@ -6,20 +6,16 @@ import Search, { defaultValue as searchDefaultValue } from 'components/Search';
 
 import TypeToggleButtonGroup from './components/TypeToggleButtonGroup';
 
-import useUsers from '../../hooks/useUsers';
+import useUsersStore from '../../hooks/useUsersStore';
 
-import { PaginationData } from '../..';
+export interface ToolbarProps
+	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
 
-export interface ToolbarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
-	paginationData: Omit<PaginationData, 'results'>;
-}
-
-function Toolbar({
-	paginationData,
-	className,
-	...props
-}: ToolbarProps): ReactElement<ToolbarProps> {
-	const { updateUsers } = useUsers();
+function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarProps> {
+	const itemCount = useUsersStore((state) => state.count);
+	const itemLimit = useUsersStore((state) => state.limit);
+	const itemOffset = useUsersStore((state) => state.offset);
+	const updateUsers = useUsersStore((state) => state.updateUsers);
 
 	return (
 		<div {...props} className={classNames('row row-cols-lg-auto g-2', className)}>
@@ -37,10 +33,10 @@ function Toolbar({
 				)}
 			/>
 			<Pagination
-				itemCount={paginationData.count}
-				itemLimit={paginationData.limit}
-				itemOffset={paginationData.offset}
 				size='sm'
+				itemCount={itemCount}
+				itemLimit={itemLimit}
+				itemOffset={itemOffset}
 				className='justify-content-center ps-1'
 				onPageChange={useCallback(
 					(newOffset) => updateUsers(undefined, newOffset),

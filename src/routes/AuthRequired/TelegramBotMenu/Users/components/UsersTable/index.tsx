@@ -7,20 +7,19 @@ import Loading from 'components/Loading';
 
 import TableRow from './components/TableRow';
 import TableWrapper, { BlockProps } from './components/TableWrapper';
-import UserContext from './contexts/UserContext';
 
-import useUsers from '../../hooks/useUsers';
+import useUsersStore from '../../hooks/useUsersStore';
 
-export interface UsersTableProps extends Omit<BlockProps, 'children'> {
-	loading: boolean;
-}
+export interface UsersTableProps extends Omit<BlockProps, 'children'> {}
 
 function UsersTable({
-	loading,
 	className,
 	...props
 }: UsersTableProps): ReactElement<UsersTableProps> {
-	const { users, filter } = useUsers();
+	const loading = useUsersStore((state) => state.loading);
+	const search = useUsersStore((state) => state.search);
+	const type = useUsersStore((state) => state.type);
+	const users = useUsersStore((state) => state.users);
 
 	return !loading ? (
 		users.length ? (
@@ -36,22 +35,20 @@ function UsersTable({
 				>
 					<tbody>
 						{users.map((user) => (
-							<UserContext.Provider key={user.id} value={{ user }}>
-								<TableRow key={user.id} />
-							</UserContext.Provider>
+							<TableRow key={user.id} user={user} />
 						))}
 					</tbody>
 				</Table>
 			</TableWrapper>
-		) : filter.search ? (
+		) : search ? (
 			<TableWrapper className='text-center px-3 py-2'>
 				{gettext('Не найдены пользователи по поиску')}
 			</TableWrapper>
-		) : filter.type === 'allowed' ? (
+		) : type === 'allowed' ? (
 			<TableWrapper className='text-center px-3 py-2'>
 				{gettext('У вас нет разрешённых пользователей')}
 			</TableWrapper>
-		) : filter.type === 'blocked' ? (
+		) : type === 'blocked' ? (
 			<TableWrapper className='text-center px-3 py-2'>
 				{gettext('У вас нет заблокированных пользователей')}
 			</TableWrapper>

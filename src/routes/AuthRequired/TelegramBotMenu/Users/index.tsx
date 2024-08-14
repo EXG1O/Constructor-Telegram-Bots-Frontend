@@ -1,16 +1,13 @@
-import React, { ReactElement, useState } from 'react';
-import { Params, useRouteLoaderData } from 'react-router-dom';
-
-import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
+import React, { ReactElement } from 'react';
+import { Params } from 'react-router-dom';
 
 import Card from 'react-bootstrap/Card';
 
 import Page from 'components/Page';
-import { createMessageToast } from 'components/ToastContainer';
 
 import Toolbar from './components/Toolbar';
 import UsersTable from './components/UsersTable';
-import UsersContext from './contexts/UsersContext';
+import StoreProvider from './providers/StoreProvider';
 
 import { UsersAPI } from 'services/api/telegram_bots/main';
 import { APIResponse } from 'services/api/telegram_bots/types';
@@ -20,7 +17,7 @@ export type Type = 'all' | 'allowed' | 'blocked';
 export interface PaginationData extends APIResponse.UsersAPI.Get.Pagination {
 	limit: number;
 	offset: number;
-	search: string;
+	search: string | null;
 	type: Type;
 }
 
@@ -48,75 +45,19 @@ export async function loader({
 }
 
 function Users(): ReactElement {
-	const { telegramBot } = useRouteLoaderData(
-		'telegram-bot-menu-root',
-	) as TelegramBotMenuRootLoaderData;
-	const { paginationData: initialPaginationData } = useRouteLoaderData(
-		'telegram-bot-menu-users',
-	) as LoaderData;
-
-	const [paginationData, setPaginationData] =
-		useState<PaginationData>(initialPaginationData);
-	const [loading, setLoading] = useState<boolean>(false);
-
-	async function updateUsers(
-		limit: number = paginationData.limit,
-		offset: number = paginationData.offset,
-		search: string = paginationData.search,
-		type: Type = paginationData.type,
-	): Promise<void> {
-		setLoading(true);
-
-		let filter: Parameters<typeof UsersAPI.get>[4];
-
-		if (type === 'allowed') {
-			filter = 'is_allowed';
-		} else if (type === 'blocked') {
-			filter = 'is_blocked';
-		}
-
-		const response = await UsersAPI.get(
-			telegramBot.id,
-			limit,
-			offset,
-			search,
-			filter,
-		);
-
-		if (response.ok) {
-			setPaginationData({ ...response.json, limit, offset, search, type });
-		} else {
-			createMessageToast({
-				message: gettext('Не удалось получить список пользователей!'),
-				level: 'error',
-			});
-		}
-
-		setLoading(false);
-	}
-
 	return (
 		<Page title={gettext('Пользователи')} grid>
-			<Card>
-				<Card.Header as='h5' className='text-center'>
-					{gettext('Список пользователей')}
-				</Card.Header>
-				<Card.Body className='vstack gap-2'>
-					<UsersContext.Provider
-						value={{
-							users: paginationData.results,
-							filter: {
-								search: paginationData.search,
-								type: paginationData.type,
-							},
-							updateUsers,
-						}}
-					>
-						<Toolbar paginationData={paginationData} />
-						<UsersTable loading={loading} />
-					</UsersContext.Provider>
-				</Card.Body>
-			</Card>
+			<StoreProvider>
+				<Card>
+					<Card.Header as='h5' className='text-center'>
+						{gettext('Список пользователей')}
+					</Card.Header>
+					<Card.Body className='vstack gap-2'>
+						<Toolbar />
+						<UsersTable />
+					</Card.Body>
+				</Card>
+			</StoreProvider>
 		</Page>
 	);
 }
