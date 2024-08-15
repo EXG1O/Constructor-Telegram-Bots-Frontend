@@ -116,7 +116,7 @@ function RecordDisplay({
 
 			setValue(newValue);
 		},
-		[],
+		[value],
 	);
 
 	const handleConfirm = useCallback<
