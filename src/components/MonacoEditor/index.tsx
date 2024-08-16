@@ -16,6 +16,7 @@ export interface MonacoEditorProps
 	extends Omit<EditorProps, 'loading' | 'onChange' | 'onMount'> {
 	size?: 'sm' | 'lg';
 	disablePadding?: boolean;
+	disableFocus?: boolean;
 	onChange?: (editor: Editor, value: string) => void;
 	onMount?: (editor: Editor, monaco: Monaco) => void;
 }
@@ -38,6 +39,7 @@ const baseOptions: editor.IStandaloneEditorConstructionOptions = {
 function MonacoEditor({
 	size,
 	disablePadding,
+	disableFocus,
 	options,
 	className,
 	onChange,
@@ -105,7 +107,7 @@ function MonacoEditor({
 			className={classNames(
 				baseClassName,
 				'monaco-editor-wrapper overflow-hidden',
-				{ 'p-show': !disablePadding },
+				{ 'p-show': !disablePadding, 'f-show': !disableFocus },
 				className,
 			)}
 			onChange={handleChange}
