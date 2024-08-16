@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import classNames from 'classnames';
 
 import { Type } from '..';
 
@@ -25,18 +26,24 @@ const typeToggleButtons: TypeToggleButtonProps[] = [
 	{ value: 'global', children: gettext('Глобальные') },
 ];
 
-function TypeToggleButtonGroup(
-	props: TypeToggleButtonGroupProps,
-): ReactElement<TypeToggleButtonGroupProps> {
+function TypeToggleButtonGroup({
+	className,
+	...props
+}: TypeToggleButtonGroupProps): ReactElement<TypeToggleButtonGroupProps> {
 	return (
-		<ToggleButtonGroup {...props} type='radio' name='system-variables-types'>
+		<ToggleButtonGroup
+			{...props}
+			type='radio'
+			name='system-variables-types'
+			className={classNames('bg-white', className)}
+		>
 			{typeToggleButtons.map((props, index) => (
 				<ToggleButton
 					{...props}
 					key={index}
 					id={`system-variables-${props.value}`}
 					size='sm'
-					variant='dark'
+					variant='outline-dark'
 				/>
 			))}
 		</ToggleButtonGroup>
