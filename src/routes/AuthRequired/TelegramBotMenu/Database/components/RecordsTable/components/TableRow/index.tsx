@@ -30,7 +30,7 @@ import TrashIcon from 'assets/icons/trash.svg';
 import { DatabaseRecordAPI } from 'services/api/telegram_bots/main';
 import { DatabaseRecord } from 'services/api/telegram_bots/types';
 
-export interface RecordDisplayProps extends Omit<ListGroupItemProps, 'children'> {
+export interface TableRowProps extends Omit<ListGroupItemProps, 'children'> {
 	record: DatabaseRecord;
 }
 
@@ -39,11 +39,11 @@ const deleteButtonStyle: CSSProperties = {
 	height: '25px',
 };
 
-function RecordDisplay({
+function TableRow({
 	record,
 	className,
 	...props
-}: RecordDisplayProps): ReactElement<RecordDisplayProps> {
+}: TableRowProps): ReactElement<TableRowProps> {
 	const { telegramBot } = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
@@ -201,4 +201,4 @@ function RecordDisplay({
 	);
 }
 
-export default RecordDisplay;
+export default TableRow;
