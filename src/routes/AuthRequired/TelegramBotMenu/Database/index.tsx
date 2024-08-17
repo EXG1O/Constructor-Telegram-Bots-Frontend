@@ -1,16 +1,13 @@
-import React, { ReactElement, useState } from 'react';
-import { Params, useRouteLoaderData } from 'react-router-dom';
-
-import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
+import React, { ReactElement } from 'react';
+import { Params } from 'react-router-dom';
 
 import Card from 'react-bootstrap/Card';
 
 import Page from 'components/Page';
-import { createMessageToast } from 'components/ToastContainer';
 
 import RecordList from './components/RecordList';
 import Toolbar from './components/Toolbar';
-import RecordsContext from './contexts/RecordsContext';
+import StoreProvider from './providers/StoreProvider';
 
 import { DatabaseRecordsAPI } from 'services/api/telegram_bots/main';
 import { APIResponse } from 'services/api/telegram_bots/types';
@@ -18,7 +15,7 @@ import { APIResponse } from 'services/api/telegram_bots/types';
 export interface PaginationData extends APIResponse.DatabaseRecordsAPI.Get.Pagination {
 	limit: number;
 	offset: number;
-	search: string;
+	search: string | null;
 }
 
 export interface LoaderData {
@@ -39,66 +36,23 @@ export async function loader({
 		throw Error('Failed to fetch data!');
 	}
 
-	return { paginationData: { ...response.json, limit, offset, search: '' } };
+	return { paginationData: { ...response.json, limit, offset, search: null } };
 }
 
 function Database(): ReactElement {
-	const { telegramBot } = useRouteLoaderData(
-		'telegram-bot-menu-root',
-	) as TelegramBotMenuRootLoaderData;
-	const { paginationData: initialPaginationData } = useRouteLoaderData(
-		'telegram-bot-menu-database',
-	) as LoaderData;
-
-	const [paginationData, setPaginationData] =
-		useState<PaginationData>(initialPaginationData);
-	const [loading, setLoading] = useState<boolean>(false);
-
-	async function updateRecords(
-		limit: number = paginationData.limit,
-		offset: number = paginationData.offset,
-		search: string = paginationData.search,
-	): Promise<void> {
-		setLoading(true);
-
-		const response = await DatabaseRecordsAPI.get(
-			telegramBot.id,
-			limit,
-			offset,
-			search,
-		);
-
-		if (response.ok) {
-			setPaginationData({ ...response.json, limit, offset, search });
-		} else {
-			createMessageToast({
-				message: gettext('Не удалось получить список записей!'),
-				level: 'error',
-			});
-		}
-
-		setLoading(false);
-	}
-
 	return (
 		<Page title={gettext('База данных')} grid>
-			<Card>
-				<Card.Header as='h5' className='text-center'>
-					{gettext('Список записей')}
-				</Card.Header>
-				<Card.Body className='vstack gap-2'>
-					<RecordsContext.Provider
-						value={{
-							records: paginationData.results,
-							filter: { search: paginationData.search },
-							updateRecords,
-						}}
-					>
-						<Toolbar paginationData={paginationData} />
-						<RecordList loading={loading} />
-					</RecordsContext.Provider>
-				</Card.Body>
-			</Card>
+			<StoreProvider>
+				<Card>
+					<Card.Header as='h5' className='text-center'>
+						{gettext('Список записей')}
+					</Card.Header>
+					<Card.Body className='vstack gap-2'>
+						<Toolbar />
+						<RecordList />
+					</Card.Body>
+				</Card>
+			</StoreProvider>
 		</Page>
 	);
 }

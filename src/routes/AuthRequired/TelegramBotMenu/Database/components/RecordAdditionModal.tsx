@@ -13,7 +13,7 @@ import RecordFormModal, {
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from '../../Root';
 
-import useRecords from '../hooks/useRecords';
+import useDatabaseRecordsStore from '../hooks/useDatabaseRecordsStore';
 
 import { DatabaseRecordsAPI } from 'services/api/telegram_bots/main';
 
@@ -31,7 +31,7 @@ function RecordAdditionModal({
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
 
-	const { updateRecords } = useRecords();
+	const updateRecords = useDatabaseRecordsStore((state) => state.updateRecords);
 
 	const [value, setValue] = useState<Value>(defaultValue);
 	const [loading, setLoading] = useState<boolean>(false);

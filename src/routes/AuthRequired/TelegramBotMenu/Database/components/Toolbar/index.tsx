@@ -6,20 +6,16 @@ import Search, { defaultValue as searchDefaultValue } from 'components/Search';
 
 import AddRecordButton from './components/AddRecordButton';
 
-import useRecords from '../../hooks/useRecords';
+import useDatabaseRecordsStore from '../../hooks/useDatabaseRecordsStore';
 
-import { PaginationData } from '../..';
+export interface ToolbarProps
+	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
 
-export interface ToolbarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
-	paginationData: Omit<PaginationData, 'results'>;
-}
-
-function Toolbar({
-	paginationData,
-	className,
-	...props
-}: ToolbarProps): ReactElement<ToolbarProps> {
-	const { updateRecords } = useRecords();
+function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarProps> {
+	const itemCount = useDatabaseRecordsStore((state) => state.count);
+	const itemLimit = useDatabaseRecordsStore((state) => state.limit);
+	const itemOffset = useDatabaseRecordsStore((state) => state.offset);
+	const updateRecords = useDatabaseRecordsStore((state) => state.updateRecords);
 
 	return (
 		<div {...props} className={classNames('row row-cols-lg-auto g-2', className)}>
@@ -40,9 +36,9 @@ function Toolbar({
 			/>
 			<Pagination
 				size='sm'
-				itemCount={paginationData.count}
-				itemLimit={paginationData.limit}
-				itemOffset={paginationData.offset}
+				itemCount={itemCount}
+				itemLimit={itemLimit}
+				itemOffset={itemOffset}
 				className='justify-content-center ps-1'
 				onPageChange={useCallback(
 					(newOffset) => updateRecords(undefined, newOffset),

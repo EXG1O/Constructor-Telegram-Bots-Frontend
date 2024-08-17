@@ -8,18 +8,17 @@ import Loading from 'components/Loading';
 import Block from './components/Block';
 import RecordDisplay from './components/RecordDisplay';
 
-import useRecords from '../../hooks/useRecords';
+import useDatabaseRecordsStore from '../../hooks/useDatabaseRecordsStore';
 
-export interface RecordListProps extends Omit<ListGroupProps, 'children'> {
-	loading: boolean;
-}
+export interface RecordListProps extends Omit<ListGroupProps, 'children'> {}
 
 function RecordList({
-	loading,
 	className,
 	...props
 }: RecordListProps): ReactElement<RecordListProps> {
-	const { records, filter } = useRecords();
+	const loading = useDatabaseRecordsStore((state) => state.loading);
+	const search = useDatabaseRecordsStore((state) => state.search);
+	const records = useDatabaseRecordsStore((state) => state.records);
 
 	return !loading ? (
 		records.length ? (
@@ -28,7 +27,7 @@ function RecordList({
 					<RecordDisplay key={record.id} record={record} />
 				))}
 			</ListGroup>
-		) : filter.search ? (
+		) : search ? (
 			<Block className='text-center px-3 py-2'>
 				{gettext('Поиск по записям не дал результатов')}
 			</Block>

@@ -23,7 +23,7 @@ import ConfirmButtonGroup, {
 import { LoaderData as TelegramBotMenuRootLoaderData } from '../../../../../Root';
 import Block from '../Block';
 
-import useRecords from '../../../../hooks/useRecords';
+import useDatabaseRecordsStore from '../../../../hooks/useDatabaseRecordsStore';
 
 import TrashIcon from 'assets/icons/trash.svg';
 
@@ -48,7 +48,7 @@ function RecordDisplay({
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
 
-	const { updateRecords } = useRecords();
+	const updateRecords = useDatabaseRecordsStore((state) => state.updateRecords);
 
 	const initialValue = useMemo<string>(
 		() => JSON.stringify(record.data, undefined, 4),
