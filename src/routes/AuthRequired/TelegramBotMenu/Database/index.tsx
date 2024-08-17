@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 
 import Page from 'components/Page';
 
-import RecordList from './components/RecordList';
+import RecordsTable from './components/RecordsTable';
 import Toolbar from './components/Toolbar';
 import StoreProvider from './providers/StoreProvider';
 
@@ -49,7 +49,7 @@ function Database(): ReactElement {
 					</Card.Header>
 					<Card.Body className='vstack gap-2'>
 						<Toolbar />
-						<RecordList />
+						<RecordsTable />
 					</Card.Body>
 				</Card>
 			</StoreProvider>

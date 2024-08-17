@@ -10,12 +10,12 @@ import RecordDisplay from './components/RecordDisplay';
 
 import useDatabaseRecordsStore from '../../hooks/useDatabaseRecordsStore';
 
-export interface RecordListProps extends Omit<ListGroupProps, 'children'> {}
+export interface RecordsTableProps extends Omit<ListGroupProps, 'children'> {}
 
-function RecordList({
+function RecordsTable({
 	className,
 	...props
-}: RecordListProps): ReactElement<RecordListProps> {
+}: RecordsTableProps): ReactElement<RecordsTableProps> {
 	const loading = useDatabaseRecordsStore((state) => state.loading);
 	const search = useDatabaseRecordsStore((state) => state.search);
 	const records = useDatabaseRecordsStore((state) => state.records);
@@ -43,4 +43,4 @@ function RecordList({
 	);
 }
 
-export default memo(RecordList);
+export default memo(RecordsTable);
