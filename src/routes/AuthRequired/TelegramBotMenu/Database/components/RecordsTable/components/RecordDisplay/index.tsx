@@ -21,7 +21,7 @@ import ConfirmButtonGroup, {
 } from './components/ConfirmButtonGroup';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from '../../../../../Root';
-import Block from '../Block';
+import Block from '../TableWrapper';
 
 import useDatabaseRecordsStore from '../../../../hooks/useDatabaseRecordsStore';
 
