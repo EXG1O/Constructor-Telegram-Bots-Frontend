@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 
 import Page from 'components/Page';
 
+import RecordModal from './components/RecordModal';
 import RecordsTable from './components/RecordsTable';
 import Toolbar from './components/Toolbar';
 import StoreProvider from './providers/StoreProvider';
@@ -43,15 +44,18 @@ function Database(): ReactElement {
 	return (
 		<Page title={gettext('База данных')} grid>
 			<StoreProvider>
-				<Card>
-					<Card.Header as='h5' className='text-center'>
-						{gettext('Список записей')}
-					</Card.Header>
-					<Card.Body className='vstack gap-2'>
-						<Toolbar />
-						<RecordsTable />
-					</Card.Body>
-				</Card>
+				<RecordModal.StoreProvider>
+					<RecordModal />
+					<Card>
+						<Card.Header as='h5' className='text-center'>
+							{gettext('Список записей')}
+						</Card.Header>
+						<Card.Body className='vstack gap-2'>
+							<Toolbar />
+							<RecordsTable />
+						</Card.Body>
+					</Card>
+				</RecordModal.StoreProvider>
 			</StoreProvider>
 		</Page>
 	);
