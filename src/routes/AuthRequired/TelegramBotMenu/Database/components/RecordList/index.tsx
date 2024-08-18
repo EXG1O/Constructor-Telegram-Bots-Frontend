@@ -5,7 +5,7 @@ import ListGroup, { ListGroupProps } from 'react-bootstrap/ListGroup';
 
 import Loading from 'components/Loading';
 
-import TableRow from './components/TableRow';
+import RecordDisplay from './components/RecordDisplay';
 import Wrapper from './components/Wrapper';
 
 import useDatabaseRecordsStore from '../../hooks/useDatabaseRecordsStore';
@@ -24,7 +24,7 @@ function RecordList({
 		records.length ? (
 			<ListGroup {...props} className={classNames(className, 'rounded-1')}>
 				{records.map((record) => (
-					<TableRow key={record.id} record={record} />
+					<RecordDisplay key={record.id} record={record} />
 				))}
 			</ListGroup>
 		) : search ? (
