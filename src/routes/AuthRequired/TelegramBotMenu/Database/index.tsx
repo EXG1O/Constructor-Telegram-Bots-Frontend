@@ -5,8 +5,8 @@ import Card from 'react-bootstrap/Card';
 
 import Page from 'components/Page';
 
+import RecordList from './components/RecordList';
 import RecordModal from './components/RecordModal';
-import RecordsTable from './components/RecordsTable';
 import Toolbar from './components/Toolbar';
 import StoreProvider from './providers/StoreProvider';
 
@@ -52,7 +52,7 @@ function Database(): ReactElement {
 						</Card.Header>
 						<Card.Body className='vstack gap-2'>
 							<Toolbar />
-							<RecordsTable />
+							<RecordList />
 						</Card.Body>
 					</Card>
 				</RecordModal.StoreProvider>
