@@ -6,7 +6,7 @@ import ListGroup, { ListGroupProps } from 'react-bootstrap/ListGroup';
 import Loading from 'components/Loading';
 
 import TableRow from './components/TableRow';
-import TableWrapper from './components/TableWrapper';
+import Wrapper from './components/Wrapper';
 
 import useDatabaseRecordsStore from '../../hooks/useDatabaseRecordsStore';
 
@@ -28,18 +28,18 @@ function RecordList({
 				))}
 			</ListGroup>
 		) : search ? (
-			<TableWrapper className='text-center px-3 py-2'>
+			<Wrapper className='text-center px-3 py-2'>
 				{gettext('Поиск по записям не дал результатов')}
-			</TableWrapper>
+			</Wrapper>
 		) : (
-			<TableWrapper className='text-center px-3 py-2'>
+			<Wrapper className='text-center px-3 py-2'>
 				{gettext('Вы ещё не добавили записи')}
-			</TableWrapper>
+			</Wrapper>
 		)
 	) : (
-		<TableWrapper className='d-flex justify-content-center p-3'>
+		<Wrapper className='d-flex justify-content-center p-3'>
 			<Loading size='md' />
-		</TableWrapper>
+		</Wrapper>
 	);
 }
 

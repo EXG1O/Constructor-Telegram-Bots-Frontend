@@ -21,7 +21,7 @@ import ConfirmButtonGroup, {
 } from './components/ConfirmButtonGroup';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from '../../../../../Root';
-import Block from '../TableWrapper';
+import Wrapper from '../Wrapper';
 
 import useDatabaseRecordsStore from '../../../../hooks/useDatabaseRecordsStore';
 
@@ -195,9 +195,9 @@ function TableRow({
 			</div>
 		</ListGroupItem>
 	) : (
-		<Block className='d-flex justify-content-center p-3'>
+		<Wrapper className='d-flex justify-content-center p-3'>
 			<Loading size='sm' />
-		</Block>
+		</Wrapper>
 	);
 }
 
