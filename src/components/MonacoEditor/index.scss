@@ -1,13 +1,10 @@
 @import 'styles/variables';
 
 .monaco-editor-wrapper {
+	padding: $input-padding-y $input-padding-x;
 	transition: $input-transition;
 
-	&.p-show {
-		padding: $input-padding-y $input-padding-x;
-	}
-
-	&.f-show:focus-within {
+	&:focus-within {
 		border-color: $input-focus-border-color !important;
 		box-shadow: $input-focus-box-shadow;
 	}

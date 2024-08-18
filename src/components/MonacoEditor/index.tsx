@@ -15,8 +15,7 @@ export interface Editor extends editor.IStandaloneCodeEditor {
 export interface MonacoEditorProps
 	extends Omit<EditorProps, 'loading' | 'onChange' | 'onMount'> {
 	size?: 'sm' | 'lg';
-	disablePadding?: boolean;
-	disableFocus?: boolean;
+	isChild?: boolean;
 	onChange?: (editor: Editor, value: string) => void;
 	onMount?: (editor: Editor, monaco: Monaco) => void;
 }
@@ -38,8 +37,7 @@ const baseOptions: editor.IStandaloneEditorConstructionOptions = {
 
 function MonacoEditor({
 	size,
-	disablePadding,
-	disableFocus,
+	isChild,
 	options,
 	className,
 	onChange,
@@ -104,12 +102,15 @@ function MonacoEditor({
 				() => ({ ...baseOptions, fontSize, ...options }),
 				[options],
 			)}
-			className={classNames(
-				baseClassName,
-				'monaco-editor-wrapper overflow-hidden',
-				{ 'p-show': !disablePadding, 'f-show': !disableFocus },
-				className,
-			)}
+			className={
+				isChild
+					? className
+					: classNames(
+							baseClassName,
+							'monaco-editor-wrapper overflow-hidden',
+							className,
+						)
+			}
 			onChange={handleChange}
 			onMount={handleMount}
 		/>
