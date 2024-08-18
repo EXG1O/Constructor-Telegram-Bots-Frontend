@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
 import { Params } from 'react-router-dom';
 
-import Card from 'react-bootstrap/Card';
+import Stack from 'react-bootstrap/Stack';
 
+import Block from 'components/Block';
 import Page from 'components/Page';
 
 import RecordList from './components/RecordList';
@@ -46,15 +47,15 @@ function Database(): ReactElement {
 			<StoreProvider>
 				<RecordModal.StoreProvider>
 					<RecordModal />
-					<Card>
-						<Card.Header as='h5' className='text-center'>
+					<Block variant='light'>
+						<h3 className='fw-semibold text-center mb-3'>
 							{gettext('Список записей')}
-						</Card.Header>
-						<Card.Body className='vstack gap-2'>
+						</h3>
+						<Stack gap={2}>
 							<Toolbar />
 							<RecordList />
-						</Card.Body>
-					</Card>
+						</Stack>
+					</Block>
 				</RecordModal.StoreProvider>
 			</StoreProvider>
 		</Page>
