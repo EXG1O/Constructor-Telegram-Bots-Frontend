@@ -78,7 +78,7 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 			/>
 			<Stack gap={2} style={{ width: '300px' }}>
 				<div
-					className='bg-light border rounded text-center text-break px-3 py-2'
+					className='bg-white border rounded text-center text-break px-3 py-2'
 					style={{ position: 'relative' }}
 				>
 					<Handle
@@ -94,7 +94,7 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 					/>
 				</div>
 				<div
-					className='message-text-block bg-light border rounded px-3 py-2'
+					className='message-text-block bg-white border rounded px-3 py-2'
 					dangerouslySetInnerHTML={{ __html: data.message.text }}
 				/>
 				{data.keyboard?.buttons && (

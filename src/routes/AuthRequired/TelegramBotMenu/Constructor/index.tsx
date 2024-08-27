@@ -26,7 +26,7 @@ import CommandNode from './components/CommandNode';
 import CommandOffcanvas from './components/CommandOffcanvas';
 import Panel from './components/Panel';
 
-import 'reactflow/dist/style.css';
+import 'reactflow/dist/base.css';
 import './index.scss';
 
 import {
@@ -281,7 +281,7 @@ function Constructor(): ReactElement {
 	return (
 		<Page title={gettext('Конструктор')} grid>
 			<div
-				className='border rounded'
+				className='bg-light rounded-4 overflow-hidden'
 				style={{ height: '100%', minHeight: '600px' }}
 			>
 				<CommandOffcanvas.StoreProvider
@@ -325,13 +325,16 @@ function Constructor(): ReactElement {
 						<Panel />
 						<Controls
 							showInteractive={false}
-							className='border rounded-1'
+							className='border rounded-1 overflow-hidden'
 						/>
-						<MiniMap className='border rounded-1' />
+						<MiniMap
+							maskColor='rgba(var(--bs-light-rgb), var(--bs-bg-opacity))'
+							className='border rounded-1 overflow-hidden'
+						/>
 						<Background
 							variant={BackgroundVariant.Dots}
 							size={1}
-							gap={24}
+							gap={20}
 						/>
 					</ReactFlow>
 				</CommandOffcanvas.StoreProvider>

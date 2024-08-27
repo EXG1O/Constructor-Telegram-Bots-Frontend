@@ -13,13 +13,7 @@ function Panel({ className, ...props }: PanelProps): ReactElement<PanelProps> {
 
 	return (
 		<BasePanel position='top-right'>
-			<div
-				{...props}
-				className={classNames(
-					'vstack bg-light border rounded-1 gap-1 p-1',
-					className,
-				)}
-			>
+			<div {...props} className={classNames('vstack gap-1', className)}>
 				<AddButton size='sm' variant='dark' onClick={showAddCommandOffcanvas}>
 					{gettext('Добавить команду')}
 				</AddButton>
