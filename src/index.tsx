@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import 'styles/bootstrap.scss';
 
+import './i18n';
 import { routes } from './routes';
 
 const router = createBrowserRouter(routes);

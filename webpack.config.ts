@@ -5,6 +5,7 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
+import CopyPlugin from 'copy-webpack-plugin';
 
 interface Configuration extends WebpackConfiguration {
 	devServer?: WebpackDevServerConfiguration;
@@ -101,6 +102,9 @@ const config = (env: any, argv: any): Configuration => {
 		},
 		plugins: [
 			new Dotenv(),
+			new CopyPlugin({
+				patterns: [{ from: './src/locale', to: 'locale' }],
+			}),
 			new ForkTsCheckerWebpackPlugin(),
 			new HtmlWebpackPlugin(
 				isProduction

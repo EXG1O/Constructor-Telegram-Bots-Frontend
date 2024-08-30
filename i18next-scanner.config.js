@@ -1,0 +1,41 @@
+module.exports = {
+	input: ['./tmp/**/*.{js,jsx}'],
+	output: './',
+	options: {
+		debug: true,
+		func: {
+			list: ['i18next.t', 'i18n.t', 't'],
+			extensions: ['.js', '.jsx'],
+		},
+		trans: {
+			component: 'Trans',
+			i18nKey: 'i18nKey',
+			defaultsKey: 'defaults',
+			extensions: ['.js', '.jsx'],
+			fallbackKey: false,
+		},
+		lngs: ['en', 'uk', 'ru'],
+		ns: [
+			'global',
+			'home',
+			'updates',
+			'donation-index',
+			'donation-completed',
+			'instruction',
+			'privacy-policy',
+			'telegram-bots',
+			'telegram-bot-menu-index',
+			'telegram-bot-menu-variables',
+			'telegram-bot-menu-users',
+			'telegram-bot-menu-database',
+			'telegram-bot-menu-constructor',
+		],
+		defaultLng: 'ru',
+		defaultNs: 'global',
+		resource: {
+			loadPath: './src/locale/{{lng}}/{{ns}}.json',
+			savePath: './src/locale/{{lng}}/{{ns}}.json',
+			jsonIndent: 2,
+		},
+	},
+};
