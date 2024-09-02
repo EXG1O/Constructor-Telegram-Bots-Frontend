@@ -4,8 +4,7 @@
   "scripts": {
     "start": "webpack serve --mode=development",
     "dev": "webpack --mode=development",
-    "build": "webpack --mode=production",
-    "i18n": "npx tsc --jsx preserve --noEmit false --outDir ./tmp; npx i18next-scanner; rm -rf ./tmp"
+    "build": "webpack --mode=production"
   },
   "dependencies": {
     "@babel/core": "^7.23.5",
@@ -67,7 +66,6 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "i18next-scanner": "^4.5.0"
+    "eslint-plugin-simple-import-sort": "^12.1.1"
   }
 }
