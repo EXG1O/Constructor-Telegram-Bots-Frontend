@@ -1,1 +1,171 @@
-{}
+{
+	"title": "Constructor",
+	"messages": {
+		"getCommand": {
+			"error": "Failed to retrieve command data."
+		},
+		"createCommand": {
+			"success": "You have successfully added the command.",
+			"error": "Failed to add the command.",
+			"error_getDiagramCommand": "Failed to retrieve the previously added command."
+		},
+		"updateCommand": {
+			"success": "You have successfully saved the command.",
+			"error": "Failed to save the command.",
+			"error_getDiagramCommand": "Failed to retrieve the previously saved command."
+		},
+		"createConnection": {
+			"error": "Failed to connect the block to another block."
+		},
+		"deleteConnection": {
+			"error": "Failed to disconnect the block from another block."
+		}
+	},
+	"nameBlock": {
+		"title": "Name",
+		"inputPlaceholder": "Come up with a name"
+	},
+	"apiRequestBlock": {
+		"title": "API-request",
+		"urlInput": {
+			"placeholder": "Enter a URL-address"
+		},
+		"headersBlock": {
+			"showButton": "Add a headers",
+			"hideButton": "Remove the headers",
+			"headerInputGroup": {
+				"keyInputPlaceholder": "Key",
+				"valueInputPlaceholder": "Value"
+			},
+			"addHeaderButton": {
+				"text": "Add a header"
+			}
+		},
+		"bodyBlock": {
+			"showButton": "Add a data",
+			"hideButton": "Remove the data"
+		},
+		"testBlock": {
+			"messages": {
+				"makeTest": {
+					"error": "An error occurred while sending the API-request.",
+					"error_emptyURL": "Enter URL-address.",
+					"error_validURL": "Enter a valid URL-address."
+				}
+			},
+			"testButton": "Test"
+		}
+	},
+	"addonButtonGroup": {
+		"showButton": "Show addons",
+		"hideButton": "Hide addons"
+	},
+	"commandOffcanvas": {
+		"title_add": "Adding a command",
+		"title_edit": "Editing the command",
+		"settingsBlock": {
+			"title": "Settings",
+			"replyToUserMessageSwitch": "Reply to user message",
+			"deleteUserMessageSwitch": "Delete user message",
+			"sendAsNewMessageSwitch": "Send message as new"
+		},
+		"triggerBlock": {
+			"title": "Trigger",
+			"textInput": {
+				"placeholder": "Enter a text"
+			},
+			"descriptionInputCollapse": {
+				"showButton": "Add to menu",
+				"hideButton": "Remove from menu"
+			},
+			"descriptionInput": {
+				"placeholder": "Enter a description"
+			}
+		},
+		"imagesBlock": {
+			"title": "Images",
+			"addImagesButton": {
+				"messages": {
+					"addImages": {
+						"error_tooLarge": "Image {{name}} is larger than 2.5MB.",
+						"error_notEnoughStorage": "Unable to add image {{name}}, not enough storage space."
+					}
+				},
+				"text": "Add a images"
+			}
+		},
+		"filesBlock": {
+			"title": "Files",
+			"addFilesButton": {
+				"messages": {
+					"addFiles": {
+						"error_tooLarge": "File {{name}} is larger than 2.5MB.",
+						"error_notEnoughStorage": "Unable to add file {{name}}, not enough storage space."
+					}
+				},
+				"text": "Add a files"
+			}
+		},
+		"messageBlock": {
+			"title": "Message",
+			"messageEditor": {
+				"placeholder": "Enter a text"
+			}
+		},
+		"keyboardBlock": {
+			"title": "Keyboard",
+			"typeButtonGroup": {
+				"default": "Regular",
+				"inline": "Inline",
+				"payment": "Payment"
+			},
+			"keyboardButtonBlock": {
+				"title_add": "Adding a button",
+				"title_edit": "Editing the button",
+				"textInput": {
+					"placeholder": "Enter a text"
+				},
+				"urlInputCollapse": {
+					"showButton": "Add a URL-address",
+					"hideButton": "Remove the URL-address"
+				},
+				"urlInput": {
+					"placeholder": "Enter a URL-address"
+				},
+				"actionButton_add": "Add",
+				"actionButton_edit": "Save",
+				"deleteButton": "Delete",
+				"cancelButton": "Cancel"
+			},
+			"addButtonButton": {
+				"text": "Add a button"
+			},
+			"addRowButton": {
+				"text": "Add a row"
+			}
+		},
+		"databaseRecordBlock": {
+			"title": "Record to database"
+		},
+		"button_add": "Add",
+		"button_edit": "Save"
+	},
+	"panel": {
+		"addCommandButton": "Add a command"
+	},
+	"nodes": {
+		"command": {
+			"title": "Command",
+			"messages": {
+				"deleteCommand": {
+					"success": "You have successfully deleted the command.",
+					"error": "Failed to delete the command."
+				}
+			},
+			"deleteModal": {
+				"title": "Deleting the command",
+				"text": "Are you sure you want to delete the command?"
+			}
+		}
+	}
+}

@@ -1,1 +1,67 @@
-{}
+{
+	"title": "Users",
+	"messages": {
+		"getUsers": {
+			"error": "Failed to retrieve the list of users."
+		}
+	},
+	"toolbar": {
+		"typeButtonGroup": {
+			"all": "All",
+			"allowed": "Allowed",
+			"blocked": "Blocked"
+		}
+	},
+	"table": {
+		"placeholders": {
+			"notFound": "No results found for the user search",
+			"notAllowed": "You have no allowed users",
+			"notBlocked": "You have no blocked users",
+			"notActivated": "Your Telegram bot has not been activated by anyone yet"
+		},
+		"row": {
+			"messages": {
+				"allowUser": {
+					"success": "You have successfully allowed the user.",
+					"error": "Failed to allow the user."
+				},
+				"disallowUser": {
+					"success": "You have successfully disallowed the user.",
+					"error": "Failed to disallow the user."
+				},
+				"blockUser": {
+					"success": "You have successfully blocked the user.",
+					"error": "Failed to block the user."
+				},
+				"unblockUser": {
+					"success": "You have successfully unblocked the user.",
+					"error": "Failed to unblock the user."
+				},
+				"deleteUser": {
+					"success": "You have successfully deleted the user.",
+					"error": "Failed to delete the user."
+				}
+			},
+			"allowModal": {
+				"title": "Allow the user",
+				"text": "Are you sure you want to allow the user?"
+			},
+			"disallowModal": {
+				"title": "Disallow the user",
+				"text": "Are you sure you want to disallow the user?"
+			},
+			"blockModal": {
+				"title": "Blocking the user",
+				"text": "Are you sure you want to block the user?"
+			},
+			"unblockModal": {
+				"title": "Unblocking the user",
+				"text": "Are you sure you want to unblock the user?"
+			},
+			"deleteModal": {
+				"title": "Deleting the user",
+				"text": "Are you sure you want to delete the user?"
+			}
+		}
+	}
+}

@@ -1,1 +1,8 @@
-{}
+{
+	"title": "Updates",
+	"messages": {
+		"getUpdates": {
+			"error": "Failed to retrieve the list of updates."
+		}
+	}
+}
