@@ -6,6 +6,7 @@ import React, {
 	useCallback,
 	useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnimatePresence, AnimationProps, motion } from 'framer-motion';
 
 import Switch from 'react-bootstrap/Switch';
@@ -27,6 +28,10 @@ const animationProps: AnimationProps = {
 };
 
 function PrivateSwitch(props: PrivateSwitchProps): ReactElement<PrivateSwitchProps> {
+	const { t } = useTranslation('components', {
+		keyPrefix: 'telegramBotBlock.table.private',
+	});
+
 	const [telegramBot, setTelegramBot] = useTelegramBot();
 
 	const [loading, setLoading] = useState<boolean>(false);
@@ -42,28 +47,16 @@ function PrivateSwitch(props: PrivateSwitchProps): ReactElement<PrivateSwitchPro
 			if (response.ok) {
 				setTelegramBot(response.json);
 				createMessageToast({
-					message: interpolate(
-						gettext('Вы успешно сделали Telegram бота %(private)s.'),
-						{
-							private: response.json.is_private
-								? gettext('приватным')
-								: gettext('не приватным'),
-						},
-						true,
-					),
+					message: t('messages.updateTelegramBotPrivate.success', {
+						context: String(response.json.is_private),
+					}),
 					level: 'success',
 				});
 			} else {
 				createMessageToast({
-					message: interpolate(
-						gettext('Не удалось сделать Telegram бота %(private)s.'),
-						{
-							private: event.target.checked
-								? gettext('приватным')
-								: gettext('не приватным'),
-						},
-						true,
-					),
+					message: t('messages.updateTelegramBotPrivate.error', {
+						context: String(event.target.checked),
+					}),
 					level: 'error',
 				});
 			}

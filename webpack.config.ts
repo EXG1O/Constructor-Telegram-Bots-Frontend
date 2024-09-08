@@ -95,6 +95,7 @@ const config = (env: any, argv: any): Configuration => {
 				routes: `${__dirname}/src/routes/`,
 				services: `${__dirname}/src/services/`,
 				utils: `${__dirname}/src/utils/`,
+				i18n: `${__dirname}/src/i18n/`,
 			},
 		},
 		optimization: {

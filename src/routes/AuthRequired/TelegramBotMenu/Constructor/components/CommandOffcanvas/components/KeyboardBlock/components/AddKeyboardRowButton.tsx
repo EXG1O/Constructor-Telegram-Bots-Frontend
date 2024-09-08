@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 
@@ -12,6 +13,10 @@ export type AddKeyboardRowButtonProps = Omit<
 function AddKeyboardRowButton(
 	props: AddKeyboardRowButtonProps,
 ): ReactElement<AddKeyboardRowButtonProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.keyboardBlock.addRowButton',
+	});
+
 	const updateKeyboard = useCommandOffcanvasStore((state) => state.updateKeyboard);
 
 	return (
@@ -28,7 +33,7 @@ function AddKeyboardRowButton(
 				})
 			}
 		>
-			{gettext('Добавить ряд')}
+			{t('text')}
 		</Button>
 	);
 }

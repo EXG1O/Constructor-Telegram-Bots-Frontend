@@ -1,4 +1,5 @@
 import React, { ReactElement, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Params, useRouteLoaderData } from 'react-router-dom';
 import ReactFlow, {
 	addEdge as baseAddEdge,
@@ -105,6 +106,8 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 };
 
 function Constructor(): ReactElement {
+	const { t, i18n } = useTranslation('telegram-bot-menu-constructor');
+
 	const { telegramBot } = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
@@ -201,13 +204,13 @@ function Constructor(): ReactElement {
 					}
 				} else {
 					createMessageToast({
-						message: gettext('Не удалось подключить блок к другому блоку.'),
+						message: t('messages.createConnection.error'),
 						level: 'error',
 					});
 				}
 			}
 		},
-		[],
+		[i18n.language],
 	);
 
 	async function deleteEdge(
@@ -228,7 +231,7 @@ function Constructor(): ReactElement {
 				}
 			} else {
 				createMessageToast({
-					message: gettext('Не удалось отключить блок от другого блока.'),
+					message: t('messages.deleteConnection.error'),
 					level: 'error',
 				});
 			}
@@ -279,7 +282,7 @@ function Constructor(): ReactElement {
 	);
 
 	return (
-		<Page title={gettext('Конструктор')} grid>
+		<Page title={t('title')} grid>
 			<div
 				className='bg-light rounded-4 overflow-hidden'
 				style={{ height: '100%', minHeight: '600px' }}

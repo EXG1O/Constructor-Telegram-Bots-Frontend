@@ -1,4 +1,5 @@
 import React, { ReactElement, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Stack from 'react-bootstrap/Stack';
 
@@ -10,13 +11,15 @@ import VariablesTable from './components/VariablesTable';
 export type Type = 'personal' | 'global';
 
 function SystemVariables(): ReactElement {
+	const { t } = useTranslation('telegram-bot-menu-variables', {
+		keyPrefix: 'system',
+	});
+
 	const [type, setType] = useState<Type>('personal');
 
 	return (
 		<Block variant='light'>
-			<h3 className='fw-semibold text-center mb-3'>
-				{gettext('Системные переменные')}
-			</h3>
+			<h3 className='fw-semibold text-center mb-3'>{t('title')}</h3>
 			<Stack gap={2}>
 				<TypeToggleButtonGroup
 					value={type}

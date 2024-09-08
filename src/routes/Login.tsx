@@ -1,4 +1,6 @@
 import { Params, redirect } from 'react-router-dom';
+import i18n from 'i18n';
+import { TOptions } from 'i18next';
 
 import { reverse } from 'routes';
 
@@ -12,7 +14,12 @@ export interface LoaderProps {
 
 export type LoaderData = Response;
 
+const langNamespace: string = 'login';
+const langOptions: TOptions = { ns: langNamespace };
+
 export async function loader({ params }: LoaderProps): Promise<LoaderData> {
+	await i18n.loadNamespaces(langNamespace);
+
 	const { userID, confirmCode } = params;
 
 	if (userID && confirmCode) {
@@ -23,24 +30,22 @@ export async function loader({ params }: LoaderProps): Promise<LoaderData> {
 
 		if (response.ok) {
 			createMessageToast({
-				message: gettext('Успешная авторизация.'),
+				message: i18n.t('messages.loginUser.success', langOptions),
 				level: 'success',
 			});
 			return redirect(reverse('telegram-bots'));
-		} else if (response.status === 404) {
+		} else {
 			createMessageToast({
-				message: gettext('Пользователь не найден.'),
-				level: 'error',
-			});
-		} else if (response.status === 401) {
-			createMessageToast({
-				message: gettext('Неверный код подтверждения.'),
+				message: i18n.t('messages.loginUser.error', {
+					...langOptions,
+					context: response.status,
+				}),
 				level: 'error',
 			});
 		}
 	} else {
 		createMessageToast({
-			message: gettext('Не удалось пройти авторизацию по неизвестным причинам.'),
+			message: i18n.t('messages.loginUser.error', langOptions),
 			level: 'error',
 		});
 	}

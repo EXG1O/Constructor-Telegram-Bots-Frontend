@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Params } from 'react-router-dom';
 
 import Stack from 'react-bootstrap/Stack';
@@ -35,21 +36,23 @@ export async function loader({
 	const response = await DatabaseRecordsAPI.get(telegramBotID, limit, offset);
 
 	if (!response.ok) {
-		throw Error('Failed to fetch data!');
+		throw Error('Failed to fetch data.');
 	}
 
 	return { paginationData: { ...response.json, limit, offset, search: null } };
 }
 
 function Database(): ReactElement {
+	const { t } = useTranslation('telegram-bot-menu-database');
+
 	return (
-		<Page title={gettext('База данных')} grid>
+		<Page title={t('title')} grid>
 			<StoreProvider>
 				<RecordModal.StoreProvider>
 					<RecordModal />
 					<Block variant='light'>
 						<h3 className='fw-semibold text-center mb-3'>
-							{gettext('Список записей')}
+							{t('records.title')}
 						</h3>
 						<Stack gap={2}>
 							<Toolbar />

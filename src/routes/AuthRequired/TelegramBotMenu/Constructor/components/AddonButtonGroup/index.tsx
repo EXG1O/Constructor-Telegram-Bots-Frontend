@@ -1,4 +1,5 @@
-import React, { HTMLAttributes, memo, ReactElement, useState } from 'react';
+import React, { HTMLAttributes, memo, ReactElement, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StoreApi, UseBoundStore } from 'zustand';
 
 import Button, { ButtonProps } from 'react-bootstrap/Button';
@@ -15,23 +16,33 @@ export interface AddonButtonGroupProps
 
 export type { AddonButtonProps };
 
-const showButtonProps: ButtonProps = {
-	variant: 'dark',
-	className: 'w-100',
-	children: gettext('Показать дополнения'),
-};
-const hideButtonProps: ButtonProps = {
-	variant: 'secondary',
-	className: 'w-100 border-bottom-0 rounded-bottom-0',
-	children: gettext('Скрыть дополнения'),
-};
-
 function AddonButtonGroup({
 	store,
 	addonButtons,
 	...props
 }: AddonButtonGroupProps): ReactElement<AddonButtonGroupProps> {
+	const { t, i18n } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'addonButtonGroup',
+	});
+
 	const [show, setShow] = useState<boolean>(false);
+
+	const showButtonProps = useMemo<ButtonProps>(
+		() => ({
+			variant: 'dark',
+			className: 'w-100',
+			children: t('showButton'),
+		}),
+		[i18n.language],
+	);
+	const hideButtonProps = useMemo<ButtonProps>(
+		() => ({
+			variant: 'secondary',
+			className: 'w-100 border-bottom-0 rounded-bottom-0',
+			children: t('hideButton'),
+		}),
+		[i18n.language],
+	);
 
 	return (
 		<div {...props}>

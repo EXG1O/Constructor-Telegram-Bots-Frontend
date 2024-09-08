@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import BlockCollapse from './components/BlockCollapse';
 import DescriptionInput, {
@@ -28,9 +29,13 @@ export {
 };
 
 function TriggerBlock(props: TriggerBlockProps): ReactElement<TriggerBlockProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.triggerBlock',
+	});
+
 	return (
 		<BlockCollapse>
-			<Block {...props} title={gettext('Триггер')} body>
+			<Block {...props} title={t('title')} body>
 				<TextInput className='mb-2' />
 				<DescriptionInputCollapse>
 					<DescriptionInput />

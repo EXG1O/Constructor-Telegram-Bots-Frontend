@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router-dom';
 
 import Page from 'components/Page';
@@ -16,16 +17,18 @@ export async function loader(): Promise<LoaderData> {
 	const response = await SectionsAPI.get();
 
 	if (!response.ok) {
-		throw Error('Failed to fetch data!');
+		throw Error('Failed to fetch data.');
 	}
 
 	return { sections: response.json };
 }
 
-const title: string = gettext('Политика конфиденциальности');
-
 function PrivacyPolicy(): ReactElement {
+	const { t, i18n } = useTranslation('privacy-policy');
+
 	const { sections } = useRouteLoaderData('privacy-policy') as LoaderData;
+
+	const title = useMemo<string>(() => t('title'), [i18n.language]);
 
 	return (
 		<Page title={title} grid>

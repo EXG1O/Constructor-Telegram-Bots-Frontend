@@ -15,7 +15,7 @@ function useUsersStore<Selector>(
 	const store = useContext(StoreContext);
 
 	if (store === undefined) {
-		throw new Error('useUsersStore must be used with a StoreProvider!');
+		throw new Error('useUsersStore must be used with a StoreProvider.');
 	}
 
 	return selector ? useStore(store, selector) : store;

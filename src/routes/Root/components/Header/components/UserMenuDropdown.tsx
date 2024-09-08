@@ -1,4 +1,5 @@
 import React, { memo, ReactElement, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { reverse } from 'routes';
@@ -19,6 +20,8 @@ function UserMenuDropdown({
 	user,
 	...props
 }: UserMenuDropdownProps): ReactElement<UserMenuDropdownProps> {
+	const { t, i18n } = useTranslation('root', { keyPrefix: 'userMenuDropdown' });
+
 	const navigate = useNavigate();
 
 	const setShowLogoutModal = useAskConfirmModalStore((state) => state.setShow);
@@ -28,8 +31,8 @@ function UserMenuDropdown({
 	const showLogoutModal = useCallback(
 		() =>
 			setShowLogoutModal({
-				title: gettext('Выход из аккаунта'),
-				text: gettext('Вы точно хотите выйти из аккаунта?'),
+				title: t('logoutModal.title'),
+				text: t('logoutModal.text'),
 				onConfirm: async () => {
 					setLoadingLogoutModal(true);
 
@@ -39,12 +42,12 @@ function UserMenuDropdown({
 						hideLogoutModal();
 						navigate(reverse('home'));
 						createMessageToast({
-							message: gettext('Вы успешно вышли из аккаунта.'),
+							message: t('messages.logout.success'),
 							level: 'success',
 						});
 					} else {
 						createMessageToast({
-							message: gettext('Не удалось выйти из аккаунта.'),
+							message: t('messages.logout.error'),
 							level: 'error',
 						});
 					}
@@ -53,7 +56,7 @@ function UserMenuDropdown({
 				},
 				onCancel: null,
 			}),
-		[],
+		[i18n.language],
 	);
 
 	return (
@@ -67,16 +70,14 @@ function UserMenuDropdown({
 			</Dropdown.Toggle>
 			<Dropdown.Menu>
 				{user.is_staff && (
-					<Dropdown.Item href='/admin/'>
-						{gettext('Админ панель')}
-					</Dropdown.Item>
+					<Dropdown.Item href='/admin/'>{t('adminPanel')}</Dropdown.Item>
 				)}
 				<Dropdown.Item as={Link} to={reverse('telegram-bots')}>
-					{gettext('Telegram боты')}
+					{t('telegramBots')}
 				</Dropdown.Item>
 				<Dropdown.Divider />
 				<Dropdown.Item as='button' onClick={showLogoutModal}>
-					{gettext('Выйти')}
+					{t('exit')}
 				</Dropdown.Item>
 			</Dropdown.Menu>
 		</Dropdown>

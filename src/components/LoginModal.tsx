@@ -1,4 +1,5 @@
 import React, { CSSProperties, memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { QRCodeCanvas } from 'qrcode.react';
 
 import Modal, { ModalProps } from './Modal';
@@ -19,6 +20,8 @@ const imageSettings: ImageSettings = {
 };
 
 function LoginModal(props: LoginModalProps): ReactElement<LoginModalProps> {
+	const { t } = useTranslation('components', { keyPrefix: 'loginModal' });
+
 	return (
 		<Modal {...props}>
 			<Modal.Header closeButton className='border-bottom-0' />
@@ -32,19 +35,14 @@ function LoginModal(props: LoginModalProps): ReactElement<LoginModalProps> {
 					imageSettings={imageSettings}
 					className='align-self-center'
 				/>
-				<h3 className='fw-semibold'>{gettext('Telegram не открылся?')}</h3>
-				<p>
-					{gettext(
-						'Отсканируйте QR-код с устройства на ' +
-							'котором установлен Telegram.',
-					)}
-				</p>
+				<h3 className='fw-semibold'>{t('title')}</h3>
+				<p>{t('text')}</p>
 				<a
 					href={`https://t.me/${process.env.TELEGRAM_BOT_USERNAME}?start=login`}
 					rel='noreferrer'
 					target='_blank'
 				>
-					{gettext('Перейти по ссылке')}
+					{t('link')}
 				</a>
 			</Modal.Body>
 		</Modal>

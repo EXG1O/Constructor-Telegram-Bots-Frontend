@@ -1,3 +1,5 @@
+import i18n from 'i18n';
+import { TOptions } from 'i18next';
 import { create } from 'zustand';
 
 import { createMessageToast } from 'components/ToastContainer';
@@ -33,6 +35,8 @@ export type State = StateParams & StateActions;
 export type InitialProps = Pick<StateParams, 'telegramBot' | 'onAdd'>;
 export type InitialState = Omit<StateParams, keyof InitialProps>;
 
+const langOptions: TOptions = { ns: 'telegram-bot-menu-database' };
+
 export function createStore(initialProps: InitialProps) {
 	const initialState: InitialState = {
 		type: 'add',
@@ -63,7 +67,10 @@ export function createStore(initialProps: InitialProps) {
 
 				if (!response.ok) {
 					createMessageToast({
-						message: gettext('Не удалось добавить запись.'),
+						message: i18n.t(
+							'records.messages.partialUpdateRecord.error',
+							langOptions,
+						),
 						level: 'error',
 					});
 					set({ loading: false });
@@ -72,19 +79,28 @@ export function createStore(initialProps: InitialProps) {
 
 				onAdd(response.json);
 				createMessageToast({
-					message: gettext('Вы успешно добавили запись.'),
+					message: i18n.t(
+						'records.messages.partialUpdateRecord.success',
+						langOptions,
+					),
 					level: 'success',
 				});
 				set({ show: false, loading: false });
 			} catch (error) {
 				if (error instanceof SyntaxError) {
 					createMessageToast({
-						message: gettext('Введите правильно данные в формате JSON.'),
+						message: i18n.t('records.messages.partialUpdateRecord.error', {
+							...langOptions,
+							context: 'validJSON',
+						}),
 						level: 'error',
 					});
 				} else {
 					createMessageToast({
-						message: gettext('Произошла непредвиденная ошибка.'),
+						message: i18n.t('records.messages.partialUpdateRecord.error', {
+							...langOptions,
+							context: 'other',
+						}),
 						level: 'error',
 					});
 				}

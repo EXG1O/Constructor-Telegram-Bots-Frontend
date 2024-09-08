@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Button from 'react-bootstrap/Button';
 
@@ -27,42 +28,11 @@ export type CommandFormOffcanvasProps = Omit<
 	'show' | 'children' | 'onHide'
 >;
 
-const addonButtons: AddonButtonProps<State>[] = [
-	{
-		stateName: 'showTriggerBlock',
-		actionName: 'setShowTriggerBlock',
-		children: gettext('Триггер'),
-	},
-	{
-		stateName: 'showImagesBlock',
-		actionName: 'setShowImagesBlock',
-		children: gettext('Изображения'),
-	},
-	{
-		stateName: 'showFilesBlock',
-		actionName: 'setShowFilesBlock',
-		children: gettext('Файлы'),
-	},
-	{
-		stateName: 'showKeyboardBlock',
-		actionName: 'setShowKeyboardBlock',
-		children: gettext('Клавиатура'),
-	},
-	{
-		stateName: 'showAPIRequestBlock',
-		actionName: 'setShowAPIRequestBlock',
-		children: gettext('API-запрос'),
-	},
-	{
-		stateName: 'showDatabaseRecordBlock',
-		actionName: 'setShowDatabaseRecordBlock',
-		children: gettext('Запись в базу данных'),
-	},
-];
-
 function CommandOffcanvas(
 	props: CommandFormOffcanvasProps,
 ): ReactElement<CommandFormOffcanvasProps> {
+	const { t, i18n } = useTranslation('telegram-bot-menu-constructor');
+
 	const store = useCommandOffcanvasStore();
 
 	const type = useCommandOffcanvasStore((state) => state.type);
@@ -74,13 +44,47 @@ function CommandOffcanvas(
 
 	const hide = useCommandOffcanvasStore((state) => state.hide);
 
+	const addonButtons = useMemo<AddonButtonProps<State>[]>(
+		() => [
+			{
+				stateName: 'showTriggerBlock',
+				actionName: 'setShowTriggerBlock',
+				children: t('commandOffcanvas.triggerBlock.title'),
+			},
+			{
+				stateName: 'showImagesBlock',
+				actionName: 'setShowImagesBlock',
+				children: t('commandOffcanvas.imagesBlock.title'),
+			},
+			{
+				stateName: 'showFilesBlock',
+				actionName: 'setShowFilesBlock',
+				children: t('commandOffcanvas.filesBlock.title'),
+			},
+			{
+				stateName: 'showKeyboardBlock',
+				actionName: 'setShowKeyboardBlock',
+				children: t('commandOffcanvas.keyboardBlock.title'),
+			},
+			{
+				stateName: 'showAPIRequestBlock',
+				actionName: 'setShowAPIRequestBlock',
+				children: t('apiRequestBlock.title'),
+			},
+			{
+				stateName: 'showDatabaseRecordBlock',
+				actionName: 'setShowDatabaseRecordBlock',
+				children: t('commandOffcanvas.databaseRecordBlock.title'),
+			},
+		],
+		[i18n.language],
+	);
+
 	return (
 		<Offcanvas {...props} show={show} loading={loading} onHide={hide}>
 			<Offcanvas.Header closeButton>
 				<Offcanvas.Title as='h5'>
-					{type === 'add'
-						? gettext('Добавление команды')
-						: gettext('Редактирование команды')}
+					{t('commandOffcanvas.title', { context: type })}
 				</Offcanvas.Title>
 			</Offcanvas.Header>
 			<Offcanvas.Body>
@@ -99,18 +103,9 @@ function CommandOffcanvas(
 				<AddonButtonGroup store={store} addonButtons={addonButtons} />
 			</Offcanvas.Footer>
 			<Offcanvas.Footer>
-				<Button
-					variant='success'
-					{...(type === 'add'
-						? {
-								children: gettext('Добавить'),
-								onClick: add,
-							}
-						: {
-								children: gettext('Сохранить'),
-								onClick: save,
-							})}
-				/>
+				<Button variant='success' onClick={type === 'add' ? add : save}>
+					{t('commandOffcanvas.button', { context: type })}
+				</Button>
 			</Offcanvas.Footer>
 		</Offcanvas>
 	);

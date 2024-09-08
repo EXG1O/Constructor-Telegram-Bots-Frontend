@@ -1,4 +1,5 @@
 import React, { memo, ReactElement, useId } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { _File } from '..';
 
@@ -16,6 +17,10 @@ export type AddFilesButtonProps = Omit<
 
 function AddFilesButton(props: AddFilesButtonProps): ReactElement<AddFilesButtonProps> {
 	const id = useId();
+
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.filesBlock.addFilesButton',
+	});
 
 	const updateFiles = useCommandOffcanvasStore((state) => state.updateFiles);
 
@@ -36,11 +41,10 @@ function AddFilesButton(props: AddFilesButtonProps): ReactElement<AddFilesButton
 					.filter((file) => {
 						if (file.size > 2621440) {
 							createMessageToast({
-								message: interpolate(
-									gettext('Файл %(name)s весит больше 2.5MB!'),
-									{ name: file.name },
-									true,
-								),
+								message: t('messages.addImages.error', {
+									context: 'tooLarge',
+									name: file.name,
+								}),
 								level: 'error',
 							});
 							return false;
@@ -48,14 +52,10 @@ function AddFilesButton(props: AddFilesButtonProps): ReactElement<AddFilesButton
 
 						if (availableStorageSize - file.size < 0) {
 							createMessageToast({
-								message: interpolate(
-									gettext(
-										'Невозможно добавить файл %(name)s, ' +
-											'потому-что не хватает места в хранилище!',
-									),
-									{ name: file.name },
-									true,
-								),
+								message: t('messages.addImages.error', {
+									context: 'notEnoughStorage',
+									name: file.name,
+								}),
 								level: 'error',
 							});
 							return false;
@@ -80,7 +80,7 @@ function AddFilesButton(props: AddFilesButtonProps): ReactElement<AddFilesButton
 		<>
 			<input id={id} type='file' multiple hidden onChange={handleChange} />
 			<Button {...props} as='label' htmlFor={id} size='sm' variant='dark'>
-				{gettext('Добавить файл')}
+				{t('text')}
 			</Button>
 		</>
 	);

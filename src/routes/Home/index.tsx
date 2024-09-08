@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -35,7 +36,7 @@ export async function loader(): Promise<LoaderData> {
 		]);
 
 	if (!usersStatsResponse.ok || !telegramBotsResponse.ok || !donationsResponse.ok) {
-		throw Error('Failed to fetch data!');
+		throw Error('Failed to fetch data.');
 	}
 
 	return {
@@ -48,8 +49,10 @@ export async function loader(): Promise<LoaderData> {
 }
 
 function Home(): ReactElement {
+	const { t } = useTranslation('home');
+
 	return (
-		<Page title={gettext('Бесплатный конструктор Telegram ботов')} align='center'>
+		<Page title={t('title')} align='center'>
 			<Row className='g-3 g-lg-4'>
 				<Col xs={12}>
 					<Header />

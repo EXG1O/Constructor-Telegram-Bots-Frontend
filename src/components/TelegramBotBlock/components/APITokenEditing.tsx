@@ -7,6 +7,7 @@ import React, {
 	useEffect,
 	useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { AnimatePresence, AnimationProps, motion } from 'framer-motion';
 
@@ -45,6 +46,10 @@ function APITokenEditing({
 	onCancel,
 	...props
 }: APITokenEditingProps): ReactElement<APITokenEditingProps> {
+	const { t } = useTranslation('components', {
+		keyPrefix: 'telegramBotBlock.table.apiToken',
+	});
+
 	const [telegramBot, setTelegramBot] = useTelegramBot();
 
 	const [loading, setLoading] = useState<boolean>(false);
@@ -63,12 +68,12 @@ function APITokenEditing({
 			onSaved();
 			setTelegramBot(response.json);
 			createMessageToast({
-				message: gettext('Вы успешно обновили API-токен Telegram бота.'),
+				message: t('messages.updateTelegramBotAPIToken.success'),
 				level: 'success',
 			});
 		} else {
 			createMessageToast({
-				message: gettext('Не удалось обновить API-токен Telegram бота.'),
+				message: t('messages.updateTelegramBotAPIToken.error'),
 				level: 'error',
 			});
 		}
@@ -85,7 +90,7 @@ function APITokenEditing({
 				autoFocus
 				size='sm'
 				value={inputValue}
-				placeholder={gettext('Введите API-токен')}
+				placeholder={t('inputPlaceholder')}
 				style={inputStyle}
 				onChange={(event) => setInputValue(event.target.value)}
 			/>

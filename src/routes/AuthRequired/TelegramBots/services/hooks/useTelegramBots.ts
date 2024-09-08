@@ -10,7 +10,7 @@ function useTelegramBots(): TelegramBotsContextProps {
 	);
 
 	if (context === undefined) {
-		throw new Error('useTelegramBots must be used with a TelegramBotsContext!');
+		throw new Error('useTelegramBots must be used with a TelegramBotsContext.');
 	}
 
 	return context;

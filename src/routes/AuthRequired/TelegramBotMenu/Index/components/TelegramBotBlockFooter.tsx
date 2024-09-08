@@ -1,4 +1,5 @@
 import React, { memo, ReactElement, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
@@ -18,6 +19,10 @@ export type TelegramBotBlockFooterProps = Omit<CardFooterProps, 'as' | 'children
 function TelegramBotBlockFooter(
 	props: TelegramBotBlockFooterProps,
 ): ReactElement<TelegramBotBlockFooterProps> {
+	const { t, i18n } = useTranslation('telegram-bot-menu-index', {
+		keyPrefix: 'telegramBotBlockFooter',
+	});
+
 	const navigate = useNavigate();
 
 	const [telegramBot, setTelegramBot] = useTelegramBot();
@@ -31,8 +36,8 @@ function TelegramBotBlockFooter(
 	const showDeleteModal = useCallback(
 		() =>
 			setShowAskConfirmModal({
-				title: gettext('Удаление Telegram бота'),
-				text: gettext('Вы точно хотите удалить Telegram бота?'),
+				title: t('deleteModal.title'),
+				text: t('deleteModal.text'),
 				onConfirm: async () => {
 					setLoadingAskConfirmModal(true);
 
@@ -42,12 +47,12 @@ function TelegramBotBlockFooter(
 						hideAskConfirmModal();
 						navigate('/personal-cabinet/');
 						createMessageToast({
-							message: gettext('Вы успешно удалили Telegram бота.'),
+							message: t('messages.deleteTelegramBot.success'),
 							level: 'success',
 						});
 					} else {
 						createMessageToast({
-							message: gettext('Не удалось удалить Telegram бота.'),
+							message: t('messages.deleteTelegramBot.error'),
 							level: 'error',
 						});
 					}
@@ -56,7 +61,7 @@ function TelegramBotBlockFooter(
 				},
 				onCancel: null,
 			}),
-		[],
+		[i18n.language],
 	);
 
 	async function handleAction(action: 'start' | 'restart' | 'stop'): Promise<void> {
@@ -64,36 +69,13 @@ function TelegramBotBlockFooter(
 
 		if (response.ok) {
 			setTelegramBot({ ...telegramBot, is_loading: true });
-
-			const actionText: string =
-				action === 'start'
-					? gettext('включение')
-					: action === 'restart'
-						? gettext('перезагрузка')
-						: gettext('выключение');
-
 			createMessageToast({
-				message: interpolate(
-					gettext('Выполняется %(action)s Telegram бота.'),
-					{ action: actionText },
-					true,
-				),
+				message: t(`messages.${action}TelegramBot.success`),
 				level: 'info',
 			});
 		} else {
-			const actionText: string =
-				action === 'start'
-					? gettext('включить')
-					: action === 'restart'
-						? gettext('перезагрузить')
-						: gettext('выключить');
-
 			createMessageToast({
-				message: interpolate(
-					gettext('Не удалось %(action)s Telegram бота.'),
-					{ action: actionText },
-					true,
-				),
+				message: t(`messages.${action}TelegramBot.error`),
 				level: 'error',
 			});
 		}
@@ -119,7 +101,7 @@ function TelegramBotBlockFooter(
 							className='w-100'
 							onClick={() => handleAction('stop')}
 						>
-							{gettext('Выключить')}
+							{t('stopButton')}
 						</Button>
 					</Col>
 					<Col>
@@ -128,7 +110,7 @@ function TelegramBotBlockFooter(
 							className='w-100'
 							onClick={() => handleAction('restart')}
 						>
-							{gettext('Перезагрузить')}
+							{t('restartButton')}
 						</Button>
 					</Col>
 				</>
@@ -139,13 +121,13 @@ function TelegramBotBlockFooter(
 						className='w-100'
 						onClick={() => handleAction('start')}
 					>
-						{gettext('Включить')}
+						{t('startButton')}
 					</Button>
 				</Col>
 			)}
 			<Col {...(telegramBot.is_enabled ? { xs: '12', sm: true } : {})}>
 				<Button variant='danger' className='w-100' onClick={showDeleteModal}>
-					{gettext('Удалить')}
+					{t('deleteButton')}
 				</Button>
 			</Col>
 		</CardFooter>

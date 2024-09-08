@@ -1,4 +1,5 @@
 import React, { HTMLAttributes, memo, ReactElement, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import AddButton from 'components/AddButton';
@@ -12,6 +13,10 @@ export interface ToolbarProps
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
 
 function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarProps> {
+	const { t } = useTranslation('telegram-bot-menu-database', {
+		keyPrefix: 'records.toolbar',
+	});
+
 	const itemCount = useDatabaseRecordsStore((state) => state.count);
 	const itemLimit = useDatabaseRecordsStore((state) => state.limit);
 	const itemOffset = useDatabaseRecordsStore((state) => state.offset);
@@ -28,7 +33,7 @@ function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarPro
 					className='w-100'
 					onClick={showAddRecordModal}
 				>
-					{gettext('Добавить запись')}
+					{t('addRecordButton')}
 				</AddButton>
 			</div>
 			<Search

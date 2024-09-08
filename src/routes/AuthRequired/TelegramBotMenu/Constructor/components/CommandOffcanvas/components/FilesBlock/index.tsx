@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import AddFilesButton from './components/AddFilesButton';
 import BlockCollapse from './components/BlockCollapse';
@@ -22,9 +23,13 @@ export type FilesBlockProps = Omit<BlockProps, 'title' | 'children'>;
 export const defaultFiles: Files = [];
 
 function FilesBlock(props: FilesBlockProps): ReactElement<FilesBlockProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.filesBlock',
+	});
+
 	return (
 		<BlockCollapse>
-			<Block {...props} title={gettext('Файлы')}>
+			<Block {...props} title={t('title')}>
 				<Block.Body className='vstack gap-2'>
 					<FileList />
 					<AddFilesButton />

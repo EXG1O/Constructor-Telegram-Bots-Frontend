@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import BlockCollapse from './components/BlockCollapse';
 import DatabaseRecordEditor from './components/DatabaseRecordEditor';
@@ -18,9 +19,13 @@ export const defaultDatabaseRecord: DatabaseRecord = JSON.stringify(
 function DatabaseRecordBlock(
 	props: DatabaseRecordBlockProps,
 ): ReactElement<DatabaseRecordBlockProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.databaseRecordBlock',
+	});
+
 	return (
 		<BlockCollapse>
-			<Block {...props} title={gettext('Запись в базу данных')} body>
+			<Block {...props} title={t('title')} body>
 				<DatabaseRecordEditor />
 			</Block>
 		</BlockCollapse>

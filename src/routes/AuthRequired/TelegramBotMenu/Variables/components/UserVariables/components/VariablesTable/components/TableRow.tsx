@@ -1,4 +1,5 @@
 import React, { CSSProperties, memo, ReactElement, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router-dom';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
@@ -23,6 +24,10 @@ export interface TableRowProps {
 const iconStyle: CSSProperties = { cursor: 'pointer' };
 
 function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
+	const { t } = useTranslation('telegram-bot-menu-variables', {
+		keyPrefix: 'user.table.row',
+	});
+
 	const { telegramBot } = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
@@ -38,8 +43,8 @@ function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
 	const showDeleteModal = useCallback(
 		() =>
 			showAskConfirmModal({
-				title: gettext('Удаление переменной'),
-				text: gettext('Вы точно хотите удалить переменную?'),
+				title: t('deleteModal.title'),
+				text: t('deleteModal.text'),
 				onConfirm: async () => {
 					setLoadingAskConfirmModal(true);
 
@@ -52,12 +57,12 @@ function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
 						updateVariables();
 						hideAskConfirmModal();
 						createMessageToast({
-							message: gettext('Вы успешно удалили переменную.'),
+							message: t('messages.deleteVariable.success'),
 							level: 'success',
 						});
 					} else {
 						createMessageToast({
-							message: gettext('Не удалось удалить переменную.'),
+							message: t('messages.deleteVariable.error'),
 							level: 'error',
 						});
 					}

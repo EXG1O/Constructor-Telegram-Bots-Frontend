@@ -23,7 +23,7 @@ export async function loader({
 	const response = await TelegramBotAPI.get(parseInt(telegramBotID));
 
 	if (!response.ok) {
-		throw Error('Failed to fetch data!');
+		throw Error('Failed to fetch data.');
 	}
 
 	return { telegramBot: response.json };

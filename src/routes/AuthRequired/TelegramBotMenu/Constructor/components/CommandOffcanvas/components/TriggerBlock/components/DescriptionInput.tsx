@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import Input, { FormControlProps as InputProps } from 'react-bootstrap/FormControl';
@@ -18,6 +19,10 @@ function DescriptionInput({
 	className,
 	...props
 }: DescriptionInputProps): ReactElement<DescriptionInputProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.triggerBlock.descriptionInput',
+	});
+
 	const description = useCommandOffcanvasStore((state) => state.trigger.description);
 	const updateTrigger = useCommandOffcanvasStore((state) => state.updateTrigger);
 
@@ -26,7 +31,7 @@ function DescriptionInput({
 			{...props}
 			value={description}
 			className={classNames('border-top-0 rounded-top-0', className)}
-			placeholder={gettext('Введите описание')}
+			placeholder={t('placeholder')}
 			onChange={(e) =>
 				updateTrigger((trigger) => {
 					trigger.description = e.target.value;

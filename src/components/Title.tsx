@@ -8,7 +8,7 @@ export interface TitleProps {
 function Title({ title, children }: TitleProps): ReactNode {
 	useEffect(() => {
 		document.title = `${title} - Constructor Telegram Bots`;
-	}, []);
+	}, [title]);
 
 	return children;
 }

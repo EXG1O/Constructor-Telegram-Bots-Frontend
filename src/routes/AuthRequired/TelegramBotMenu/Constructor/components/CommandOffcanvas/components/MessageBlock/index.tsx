@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import MessageEditor from './components/MessageEditor';
 
@@ -11,8 +12,12 @@ export type MessageBlockProps = Omit<BlockProps, 'title' | 'children'>;
 export const defaultMessage: Message = '';
 
 function MessageBlock(props: MessageBlockProps): ReactElement<MessageBlockProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.messageBlock',
+	});
+
 	return (
-		<Block {...props} title={gettext('Сообщение')} body>
+		<Block {...props} title={t('title')} body>
 			<MessageEditor />
 		</Block>
 	);

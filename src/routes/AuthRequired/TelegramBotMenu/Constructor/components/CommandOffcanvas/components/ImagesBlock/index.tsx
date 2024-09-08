@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import AddImagesButton from './components/AddImagesButton';
 import BlockCollapse from './components/BlockCollapse';
@@ -25,9 +26,13 @@ export type ImagesBlockProps = Omit<BlockProps, 'title' | 'children'>;
 export const defaultImages: Images = [];
 
 function ImagesBlock(props: ImagesBlockProps): ReactElement<ImagesBlockProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.imagesBlock',
+	});
+
 	return (
 		<BlockCollapse>
-			<Block {...props} title={gettext('Изображение')}>
+			<Block {...props} title={t('title')}>
 				<Block.Body className='vstack gap-2'>
 					<ImagesLoading>
 						<ImageCarousel />

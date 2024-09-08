@@ -1,3 +1,5 @@
+import i18n from 'i18n';
+import { TOptions } from 'i18next';
 import { create } from 'zustand';
 
 import { createMessageToast } from 'components/ToastContainer';
@@ -36,6 +38,8 @@ export type InitialProps = Pick<
 >;
 export type InitialState = Omit<StateParams, keyof InitialProps>;
 
+const langOptions: TOptions = { ns: 'telegram-bot-menu-database' };
+
 export function createStore(initialProps: InitialProps) {
 	const initialState: InitialState = { loading: false };
 
@@ -66,7 +70,7 @@ export function createStore(initialProps: InitialProps) {
 
 			if (!response.ok) {
 				createMessageToast({
-					message: gettext('Не удалось получить записи базы данных.'),
+					message: i18n.t('messages.getRecords.error', langOptions),
 					level: 'error',
 				});
 				set({ loading: false });

@@ -1,1 +1,171 @@
-{}
+{
+	"title": "Конструктор",
+	"messages": {
+		"getCommand": {
+			"error": "Не удалось получить данные команды."
+		},
+		"createCommand": {
+			"success": "Вы успешно добавили команду.",
+			"error": "Не удалось добавить команду.",
+			"error_getDiagramCommand": "Не удалось получить добавленную ранее команду."
+		},
+		"updateCommand": {
+			"success": "Вы успешно сохранили команду.",
+			"error": "Не удалось сохранить команду.",
+			"error_getDiagramCommand": "Не удалось получить сохранённую ранее команду."
+		},
+		"createConnection": {
+			"error": "Не удалось подключить блок к другому блоку."
+		},
+		"deleteConnection": {
+			"error": "Не удалось отключить блок от другого блока."
+		}
+	},
+	"nameBlock": {
+		"title": "Название",
+		"inputPlaceholder": "Придумайте название"
+	},
+	"apiRequestBlock": {
+		"title": "API-запрос",
+		"urlInput": {
+			"placeholder": "Введите URL-адрес"
+		},
+		"headersBlock": {
+			"showButton": "Добавить заголовки",
+			"hideButton": "Убрать заголовки",
+			"headerInputGroup": {
+				"keyInputPlaceholder": "Ключ",
+				"valueInputPlaceholder": "Значение"
+			},
+			"addHeaderButton": {
+				"text": "Добавить заголовок"
+			}
+		},
+		"bodyBlock": {
+			"showButton": "Добавить данные",
+			"hideButton": "Убрать данные"
+		},
+		"testBlock": {
+			"messages": {
+				"makeTest": {
+					"error": "Произошла ошибка во время отправки API-запроса.",
+					"error_emptyURL": "Введите URL-адрес.",
+					"error_validURL": "Введите правильный URL-адрес."
+				}
+			},
+			"testButton": "Протестировать"
+		}
+	},
+	"addonButtonGroup": {
+		"showButton": "Показать дополнения",
+		"hideButton": "Скрыть дополнения"
+	},
+	"commandOffcanvas": {
+		"title_add": "Добавление команды",
+		"title_edit": "Редактирование команды",
+		"settingsBlock": {
+			"title": "Настройки",
+			"replyToUserMessageSwitch": "Ответить на сообщение пользователя",
+			"deleteUserMessageSwitch": "Удалить сообщение пользователя",
+			"sendAsNewMessageSwitch": "Отправить сообщение как новое"
+		},
+		"triggerBlock": {
+			"title": "Триггер",
+			"textInput": {
+				"placeholder": "Введите текст"
+			},
+			"descriptionInputCollapse": {
+				"showButton": "Добавить в меню",
+				"hideButton": "Убрать из меню"
+			},
+			"descriptionInput": {
+				"placeholder": "Введите описание"
+			}
+		},
+		"imagesBlock": {
+			"title": "Изображение",
+			"addImagesButton": {
+				"messages": {
+					"addImages": {
+						"error_tooLarge": "Изображение {{name}} весит больше 2.5МБ.",
+						"error_notEnoughStorage": "Невозможно добавить изображение {{name}}, потому-что не хватает места в хранилище."
+					}
+				},
+				"text": "Добавить изображение"
+			}
+		},
+		"filesBlock": {
+			"title": "Файлы",
+			"addFilesButton": {
+				"messages": {
+					"addImages": {
+						"error_tooLarge": "Файл {{name}} весит больше 2.5MB.",
+						"error_notEnoughStorage": "Невозможно добавить файл {{name}}, потому-что не хватает места в хранилище."
+					}
+				},
+				"text": "Добавить файл"
+			}
+		},
+		"messageBlock": {
+			"title": "Сообщение",
+			"messageEditor": {
+				"placeholder": "Введите текст"
+			}
+		},
+		"keyboardBlock": {
+			"title": "Клавиатура",
+			"typeButtonGroup": {
+				"default": "Обычный",
+				"inline": "Встроенный",
+				"payment": "Платёжный"
+			},
+			"keyboardButtonBlock": {
+				"title_add": "Добавление кнопки",
+				"title_edit": "Редактирование кнопки",
+				"textInput": {
+					"placeholder": "Введите текст"
+				},
+				"urlInputCollapse": {
+					"showButton": "Добавить URL-адрес",
+					"hideButton": "Удалить URL-адрес"
+				},
+				"urlInput": {
+					"placeholder": "Введите URL-адрес"
+				},
+				"actionButton_add": "Добавить",
+				"actionButton_edit": "Сохранить",
+				"deleteButton": "Удалить",
+				"cancelButton": "Отменить"
+			},
+			"addButtonButton": {
+				"text": "Добавить кнопку"
+			},
+			"addRowButton": {
+				"text": "Добавить ряд"
+			}
+		},
+		"databaseRecordBlock": {
+			"title": "Запись в базу данных"
+		},
+		"button_add": "Добавить",
+		"button_edit": "Сохранить"
+	},
+	"panel": {
+		"addCommandButton": "Добавить команду"
+	},
+	"nodes": {
+		"command": {
+			"title": "Команда",
+			"messages": {
+				"deleteCommand": {
+					"success": "Вы успешно удалили команду.",
+					"error": "Не удалось удалить команду."
+				}
+			},
+			"deleteModal": {
+				"title": "Удаление команды",
+				"text": "Вы точно хотите удалить команду?"
+			}
+		}
+	}
+}

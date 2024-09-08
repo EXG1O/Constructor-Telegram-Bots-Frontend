@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 
@@ -12,6 +13,10 @@ export type AddKeyboardButtonButtonProps = Omit<
 function AddKeyboardButtonButton(
 	props: AddKeyboardButtonButtonProps,
 ): ReactElement<AddKeyboardButtonButtonProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.keyboardBlock.addButtonButton',
+	});
+
 	const disabled = useCommandOffcanvasStore(
 		(state) =>
 			state.showKeyboardButtonBlock && state.keyboardButtonBlockType === 'add',
@@ -28,7 +33,7 @@ function AddKeyboardButtonButton(
 			disabled={disabled}
 			onClick={() => showAddKeyboardButtonBlock()}
 		>
-			{gettext('Добавить кнопку')}
+			{t('text')}
 		</Button>
 	);
 }

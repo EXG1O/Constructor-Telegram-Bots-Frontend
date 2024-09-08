@@ -1,4 +1,5 @@
-import React, { ReactElement, useCallback, useState } from 'react';
+import React, { ReactElement, useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router-dom';
 
 import Loading from 'components/Loading';
@@ -26,15 +27,15 @@ export async function loader(): Promise<LoaderData> {
 	const response = await UpdatesAPI.get(limit, offset);
 
 	if (!response.ok) {
-		throw Error('Failed to fetch data!');
+		throw Error('Failed to fetch data.');
 	}
 
 	return { paginationData: { ...response.json, limit, offset } };
 }
 
-const title: string = gettext('Обновления');
-
 function Updates(): ReactElement {
+	const { t, i18n } = useTranslation('updates');
+
 	const { paginationData: initialPaginationData } = useRouteLoaderData(
 		'updates',
 	) as LoaderData;
@@ -42,6 +43,8 @@ function Updates(): ReactElement {
 	const [paginationData, setPaginationData] =
 		useState<PaginationData>(initialPaginationData);
 	const [loading, setLoading] = useState<boolean>(false);
+
+	const title = useMemo<string>(() => t('title'), [i18n.language]);
 
 	async function updateUpdates(
 		limit: number = paginationData.limit,
@@ -55,7 +58,7 @@ function Updates(): ReactElement {
 			setPaginationData({ ...response.json, limit, offset });
 		} else {
 			createMessageToast({
-				message: gettext('Не удалось получить список обновлений!'),
+				message: t('messages.getUpdates.error'),
 				level: 'error',
 			});
 		}

@@ -1,6 +1,8 @@
 import React, { CSSProperties, memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
+import formatDate from 'i18n/formatDate';
 
 import { LoaderData as HomeLoaderData } from '..';
 
@@ -17,6 +19,8 @@ function Donations({
 	className,
 	...props
 }: DonationsProps): ReactElement<DonationsProps> {
+	const { t } = useTranslation('home', { keyPrefix: 'donations' });
+
 	const { donations } = useRouteLoaderData('home') as HomeLoaderData;
 
 	return (
@@ -26,7 +30,7 @@ function Donations({
 			gradient
 			className={classNames(className, 'text-center')}
 		>
-			<h3 className='fw-semibold mb-3'>{gettext('Пожертвования')}</h3>
+			<h3 className='fw-semibold mb-3'>{t('title')}</h3>
 			{donations.count ? (
 				<div className='overflow-auto' style={wrapperStyle}>
 					<Row xs={3} className='mx-0'>
@@ -43,15 +47,13 @@ function Donations({
 										{donation.contact_link}
 									</a>
 								</span>
-								<span>{donation.date}</span>
+								<span>{formatDate(donation.date)}</span>
 							</React.Fragment>
 						))}
 					</Row>
 				</div>
 			) : (
-				<div style={baseStyle}>
-					{gettext('Ещё не было сделано пожертвований')}
-				</div>
+				<div style={baseStyle}>{t('noDonations')}</div>
 			)}
 		</Block>
 	);

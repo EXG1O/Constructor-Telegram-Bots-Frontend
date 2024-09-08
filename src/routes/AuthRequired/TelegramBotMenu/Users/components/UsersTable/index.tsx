@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import Table from 'react-bootstrap/Table';
@@ -16,6 +17,8 @@ function UsersTable({
 	className,
 	...props
 }: UsersTableProps): ReactElement<UsersTableProps> {
+	const { t } = useTranslation('telegram-bot-menu-users', { keyPrefix: 'table' });
+
 	const loading = useUsersStore((state) => state.loading);
 	const search = useUsersStore((state) => state.search);
 	const type = useUsersStore((state) => state.type);
@@ -42,19 +45,19 @@ function UsersTable({
 			</TableWrapper>
 		) : search ? (
 			<TableWrapper className='text-center px-3 py-2'>
-				{gettext('Не найдены пользователи по поиску')}
+				{t('placeholders.notFound')}
 			</TableWrapper>
 		) : type === 'allowed' ? (
 			<TableWrapper className='text-center px-3 py-2'>
-				{gettext('У вас нет разрешённых пользователей')}
+				{t('placeholders.notAllowed')}
 			</TableWrapper>
 		) : type === 'blocked' ? (
 			<TableWrapper className='text-center px-3 py-2'>
-				{gettext('У вас нет заблокированных пользователей')}
+				{t('placeholders.notBlocked')}
 			</TableWrapper>
 		) : (
 			<TableWrapper className='text-center px-3 py-2'>
-				{gettext('Вашего Telegram бота ещё никто не активировал')}
+				{t('placeholders.notActivated')}
 			</TableWrapper>
 		)
 	) : (

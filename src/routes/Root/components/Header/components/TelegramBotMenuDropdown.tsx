@@ -1,4 +1,5 @@
 import React, { memo, ReactElement, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { reverse } from 'routes';
@@ -17,6 +18,8 @@ function TelegramBotMenuDropdown({
 	telegramBot,
 	...props
 }: TelegramBotMenuDropdownProps): ReactElement<TelegramBotMenuDropdownProps> {
+	const { t } = useTranslation('root', { keyPrefix: 'telegramBotMenuDropdown' });
+
 	const params = useMemo(() => ({ telegramBotID: telegramBot.id }), [telegramBot.id]);
 
 	return (
@@ -30,19 +33,19 @@ function TelegramBotMenuDropdown({
 			</Dropdown.Toggle>
 			<Dropdown.Menu>
 				<Dropdown.Item as={Link} to={reverse(`${baseID}-index`, params)}>
-					{gettext('Telegram бот')}
+					{t('telegramBot')}
 				</Dropdown.Item>
 				<Dropdown.Item as={Link} to={reverse(`${baseID}-variables`, params)}>
-					{gettext('Переменные')}
+					{t('variables')}
 				</Dropdown.Item>
 				<Dropdown.Item as={Link} to={reverse(`${baseID}-users`, params)}>
-					{gettext('Пользователи')}
+					{t('users')}
 				</Dropdown.Item>
 				<Dropdown.Item as={Link} to={reverse(`${baseID}-database`, params)}>
-					{gettext('База данных')}
+					{t('database')}
 				</Dropdown.Item>
 				<Dropdown.Item as={Link} to={reverse(`${baseID}-constructor`, params)}>
-					{gettext('Конструктор')}
+					{t('constructor')}
 				</Dropdown.Item>
 			</Dropdown.Menu>
 		</Dropdown>

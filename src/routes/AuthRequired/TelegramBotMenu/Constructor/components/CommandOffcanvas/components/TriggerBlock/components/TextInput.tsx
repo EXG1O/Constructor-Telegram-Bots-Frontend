@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Input, { FormControlProps as InputProps } from 'react-bootstrap/FormControl';
 
@@ -14,6 +15,10 @@ export type Text = string;
 export const defaultText: Text = '';
 
 function TextInput(props: TextInputProps): ReactElement<TextInputProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.triggerBlock.textInput',
+	});
+
 	const text = useCommandOffcanvasStore((state) => state.trigger.text);
 	const updateTrigger = useCommandOffcanvasStore((state) => state.updateTrigger);
 
@@ -21,7 +26,7 @@ function TextInput(props: TextInputProps): ReactElement<TextInputProps> {
 		<Input
 			{...props}
 			value={text}
-			placeholder={gettext('Введите текст')}
+			placeholder={t('placeholder')}
 			onChange={(e) =>
 				updateTrigger((trigger) => {
 					trigger.text = e.target.value;

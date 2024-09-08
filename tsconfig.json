@@ -17,7 +17,9 @@
 			"routes": ["./src/routes"],
 			"routes/*": ["./src/routes/*"],
 			"services/*": ["./src/services/*"],
-			"utils/*": ["./src/utils/*"]
+			"utils/*": ["./src/utils/*"],
+			"i18n": ["./src/i18n"],
+			"i18n/*": ["./src/i18n/*"]
 		}
 	},
 	"include": ["./**/*.ts", "./**/*.tsx"],

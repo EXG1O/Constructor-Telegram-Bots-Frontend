@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router-dom';
 
 import ToggleButton, { ToggleButtonProps } from 'react-bootstrap/ToggleButton';
@@ -26,14 +27,18 @@ interface TypeToggleButtonProps
 }
 
 const typeToggleButtons: TypeToggleButtonProps[] = [
-	{ value: 'all', children: gettext('Все') },
-	{ value: 'allowed', children: gettext('Разрешённые') },
-	{ value: 'blocked', children: gettext('Заблокированные') },
+	{ value: 'all' },
+	{ value: 'allowed' },
+	{ value: 'blocked' },
 ];
 
 function TypeToggleButtonGroup(
 	props: TypeToggleButtonGroupProps,
 ): ReactElement<TypeToggleButtonGroupProps> {
+	const { t } = useTranslation('telegram-bot-menu-users', {
+		keyPrefix: 'toolbar.typeButtonGroup',
+	});
+
 	const { telegramBot } = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
@@ -50,15 +55,18 @@ function TypeToggleButtonGroup(
 			className='bg-white'
 			onChange={(type) => updateUsers(undefined, undefined, undefined, type)}
 		>
-			{typeToggleButtons.map((props, index) =>
-				!(props.value === 'allowed' && !telegramBot.is_private) ? (
+			{typeToggleButtons.map(({ value, ...props }, index) =>
+				!(value === 'allowed' && !telegramBot.is_private) ? (
 					<ToggleButton
 						{...props}
 						key={index}
-						id={`user-types-${props.value}`}
+						id={`user-types-${value}`}
+						value={value}
 						size='sm'
 						variant='outline-dark'
-					/>
+					>
+						{t(value)}
+					</ToggleButton>
 				) : undefined,
 			)}
 		</ToggleButtonGroup>

@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import { Type } from '..';
@@ -22,14 +23,18 @@ interface TypeToggleButtonProps
 }
 
 const typeToggleButtons: TypeToggleButtonProps[] = [
-	{ value: 'personal', children: gettext('Персональные') },
-	{ value: 'global', children: gettext('Глобальные') },
+	{ value: 'personal' },
+	{ value: 'global' },
 ];
 
 function TypeToggleButtonGroup({
 	className,
 	...props
 }: TypeToggleButtonGroupProps): ReactElement<TypeToggleButtonGroupProps> {
+	const { t } = useTranslation('telegram-bot-menu-variables', {
+		keyPrefix: 'system.typeButtonGroup',
+	});
+
 	return (
 		<ToggleButtonGroup
 			{...props}
@@ -37,14 +42,17 @@ function TypeToggleButtonGroup({
 			name='system-variables-types'
 			className={classNames('bg-white', className)}
 		>
-			{typeToggleButtons.map((props, index) => (
+			{typeToggleButtons.map(({ value, ...props }, index) => (
 				<ToggleButton
 					{...props}
 					key={index}
-					id={`system-variables-${props.value}`}
+					id={`system-variables-${value}`}
+					value={value}
 					size='sm'
 					variant='outline-dark'
-				/>
+				>
+					{t(value)}
+				</ToggleButton>
 			))}
 		</ToggleButtonGroup>
 	);

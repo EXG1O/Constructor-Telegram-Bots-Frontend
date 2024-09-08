@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
@@ -22,7 +23,7 @@ export async function loader(): Promise<LoaderData> {
 	]);
 
 	if (!sectionsResponse.ok || !buttonsResponse.ok) {
-		throw Error('Failed to fetch data!');
+		throw Error('Failed to fetch data.');
 	}
 
 	return {
@@ -31,10 +32,12 @@ export async function loader(): Promise<LoaderData> {
 	};
 }
 
-const title: string = gettext('Пожертвование');
-
 function Index(): ReactElement {
+	const { t, i18n } = useTranslation('donation-index');
+
 	const { sections, buttons } = useRouteLoaderData('donation-index') as LoaderData;
+
+	const title = useMemo<string>(() => t('title'), [i18n.language]);
 
 	return (
 		<Page title={title} grid>

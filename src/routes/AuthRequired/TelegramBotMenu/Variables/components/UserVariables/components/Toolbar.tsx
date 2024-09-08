@@ -1,4 +1,5 @@
 import React, { memo, ReactElement, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Row from 'react-bootstrap/Row';
 
@@ -10,6 +11,10 @@ import useUserVariablesStore from '../hooks/useUserVariablesStore';
 import useVariableModalStore from './VariableModal/hooks/useVariableModalStore';
 
 function Toolbar(): ReactElement {
+	const { t } = useTranslation('telegram-bot-menu-variables', {
+		keyPrefix: 'user.toolbar',
+	});
+
 	const showAddVariableModal = useVariableModalStore((state) => state.showAdd);
 
 	const itemCount = useUserVariablesStore((state) => state.count);
@@ -21,7 +26,7 @@ function Toolbar(): ReactElement {
 		<Row md='auto' className='g-2'>
 			<div>
 				<AddButton size='sm' variant='dark' onClick={showAddVariableModal}>
-					{gettext('Добавить переменную')}
+					{t('addVariableButton')}
 				</AddButton>
 			</div>
 			<Search

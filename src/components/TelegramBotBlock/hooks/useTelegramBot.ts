@@ -9,7 +9,7 @@ function useTelegramBot(): TelegramBotContextType {
 
 	if (context === undefined) {
 		throw new Error(
-			'useTelegramBot must be used with a TelegramBotContext.Provider!',
+			'useTelegramBot must be used with a TelegramBotContext.Provider.',
 		);
 	}
 

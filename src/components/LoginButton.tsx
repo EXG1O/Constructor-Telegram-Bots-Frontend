@@ -1,4 +1,5 @@
 import React, { memo, ReactElement, useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 
@@ -12,6 +13,8 @@ function LoginButton({
 	onClick,
 	...props
 }: LoginButtonProps): ReactElement<LoginButtonProps> {
+	const { t } = useTranslation('components', { keyPrefix: 'loginButton' });
+
 	const [showModal, setShowModal] = useState<boolean>(false);
 
 	function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
@@ -33,7 +36,7 @@ function LoginButton({
 				onClick={handleClick}
 			>
 				<TelegramIcon />
-				{gettext('Войти через Telegram')}
+				{t('text')}
 			</Button>
 		</>
 	);

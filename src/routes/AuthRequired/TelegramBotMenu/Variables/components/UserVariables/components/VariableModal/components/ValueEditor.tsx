@@ -1,4 +1,5 @@
 import React, { memo, ReactElement, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import TelegramQuillEditor, {
 	TelegramQuillEditorProps,
@@ -13,6 +14,10 @@ export const defaultValue: Value = '';
 type HandleChangeFunc = NonNullable<TelegramQuillEditorProps['onChange']>;
 
 function ValueEditor(): ReactElement {
+	const { t } = useTranslation('telegram-bot-menu-variables', {
+		keyPrefix: 'user.variableModal.valueInput',
+	});
+
 	const value = useVariableModalStore((state) => state.value);
 	const setValue = useVariableModalStore((state) => state.setValue);
 
@@ -25,7 +30,7 @@ function ValueEditor(): ReactElement {
 		<TelegramQuillEditor
 			height={220}
 			value={value}
-			placeholder={gettext('Введите значение')}
+			placeholder={t('placeholder')}
 			onChange={handleChange}
 		/>
 	);

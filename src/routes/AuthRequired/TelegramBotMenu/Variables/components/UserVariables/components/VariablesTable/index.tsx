@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Table from 'react-bootstrap/Table';
 
@@ -10,6 +11,10 @@ import TableWrapper from './components/TableWrapper';
 import useUserVariablesStore from '../../hooks/useUserVariablesStore';
 
 function VariablesTable(): ReactElement {
+	const { t } = useTranslation('telegram-bot-menu-variables', {
+		keyPrefix: 'user.table',
+	});
+
 	const loading = useUserVariablesStore((state) => state.loading);
 	const search = useUserVariablesStore((state) => state.search);
 	const variables = useUserVariablesStore((state) => state.variables);
@@ -27,11 +32,11 @@ function VariablesTable(): ReactElement {
 			</TableWrapper>
 		) : search ? (
 			<TableWrapper className='text-center px-3 py-2'>
-				{gettext('Не найдены переменные по поиску')}
+				{t('placeholders.notFound')}
 			</TableWrapper>
 		) : (
 			<TableWrapper className='text-center px-3 py-2'>
-				{gettext('Вы ещё не добавили переменные')}
+				{t('placeholders.notAdded')}
 			</TableWrapper>
 		)
 	) : (

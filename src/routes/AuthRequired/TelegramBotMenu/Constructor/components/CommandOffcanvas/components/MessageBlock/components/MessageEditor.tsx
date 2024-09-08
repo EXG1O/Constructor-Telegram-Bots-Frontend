@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import TelegramQuillEditor, {
 	TelegramQuillEditorProps,
@@ -12,6 +13,10 @@ export type MessageEditorProps = Omit<
 >;
 
 function MessageEditor(props: MessageEditorProps): ReactElement<MessageEditorProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.messageBlock.messageEditor',
+	});
+
 	const message = useCommandOffcanvasStore((state) => state.message);
 	const setMessage = useCommandOffcanvasStore((state) => state.setMessage);
 
@@ -20,7 +25,7 @@ function MessageEditor(props: MessageEditorProps): ReactElement<MessageEditorPro
 			{...props}
 			height={220}
 			value={message}
-			placeholder={gettext('Введите текст')}
+			placeholder={t('placeholder')}
 			onChange={setMessage}
 		/>
 	);

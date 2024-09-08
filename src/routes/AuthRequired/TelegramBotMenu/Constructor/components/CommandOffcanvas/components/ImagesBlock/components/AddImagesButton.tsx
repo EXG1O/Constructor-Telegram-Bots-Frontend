@@ -1,4 +1,5 @@
 import React, { memo, ReactElement, useId } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Image } from '..';
 
@@ -23,6 +24,10 @@ function AddImagesButton(
 ): ReactElement<AddImagesButtonProps> {
 	const id = useId();
 
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.imagesBlock.addImagesButton',
+	});
+
 	const updateImages = useCommandOffcanvasStore((state) => state.updateImages);
 	const setImagesLoading = useCommandOffcanvasStore(
 		(state) => state.setImagesLoading,
@@ -44,11 +49,10 @@ function AddImagesButton(
 			.filter((image) => {
 				if (image.size > 2621440) {
 					createMessageToast({
-						message: interpolate(
-							gettext('Изображение %(name)s весит больше 2.5МБ!'),
-							{ name: image.name },
-							true,
-						),
+						message: t('messages.addImages.error', {
+							context: 'tooLarge',
+							name: image.name,
+						}),
 						level: 'error',
 					});
 					return false;
@@ -56,14 +60,10 @@ function AddImagesButton(
 
 				if (availableStorageSize - image.size < 0) {
 					createMessageToast({
-						message: interpolate(
-							gettext(
-								'Невозможно добавить изображение %(name)s, ' +
-									'потому-что не хватает места в хранилище!',
-							),
-							{ name: image.name },
-							true,
-						),
+						message: t('messages.addImages.error', {
+							context: 'notEnoughStorage',
+							name: image.name,
+						}),
 						level: 'error',
 					});
 					return false;
@@ -125,7 +125,7 @@ function AddImagesButton(
 				onChange={handleChange}
 			/>
 			<Button {...props} as='label' size='sm' variant='dark' htmlFor={id}>
-				{gettext('Добавить изображение')}
+				{t('text')}
 			</Button>
 		</>
 	);

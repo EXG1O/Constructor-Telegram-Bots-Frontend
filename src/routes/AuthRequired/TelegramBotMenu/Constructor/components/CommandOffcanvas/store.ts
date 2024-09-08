@@ -1,3 +1,5 @@
+import i18n from 'i18n';
+import { TOptions } from 'i18next';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
@@ -121,6 +123,8 @@ export type InitialState = Omit<StateParams, keyof InitialProps> &
 	KeyboardBlockSliceState &
 	APIRequestBlockSliceState &
 	DatabaseRecordBlockSliceState;
+
+const langOptions: TOptions = { ns: 'telegram-bot-menu-constructor' };
 
 export function createStore(initialProps: InitialProps) {
 	const initialState: InitialState = {
@@ -294,7 +298,7 @@ export function createStore(initialProps: InitialProps) {
 					});
 				} else {
 					createMessageToast({
-						message: gettext('Не удалось получить данные команды.'),
+						message: i18n.t('messages.getCommand.error', langOptions),
 						level: 'error',
 					});
 				}
@@ -415,21 +419,25 @@ export function createStore(initialProps: InitialProps) {
 						set({ show: false });
 
 						createMessageToast({
-							message: gettext('Вы успешно добавили команду.'),
+							message: i18n.t(
+								'messages.createCommand.success',
+								langOptions,
+							),
 							level: 'success',
 						});
 						return;
 					} else {
 						createMessageToast({
-							message: gettext(
-								'Не удалось получить добавленную ранее команду.',
-							),
+							message: i18n.t('messages.createCommand.error', {
+								...langOptions,
+								context: 'getDiagramCommand',
+							}),
 							level: 'error',
 						});
 					}
 				} else {
 					createMessageToast({
-						message: gettext('Не удалось добавить команду.'),
+						message: i18n.t('messages.createCommand.error', langOptions),
 						level: 'error',
 					});
 				}
@@ -564,21 +572,25 @@ export function createStore(initialProps: InitialProps) {
 						set({ show: false });
 
 						createMessageToast({
-							message: gettext('Вы успешно сохранили команду.'),
+							message: i18n.t(
+								'messages.updateCommand.success',
+								langOptions,
+							),
 							level: 'success',
 						});
 						return;
 					} else {
 						createMessageToast({
-							message: gettext(
-								'Не удалось получить сохранённую ранее команду.',
-							),
+							message: i18n.t('messages.updateCommand.error', {
+								...langOptions,
+								context: 'getDiagramCommand',
+							}),
 							level: 'error',
 						});
 					}
 				} else {
 					createMessageToast({
-						message: gettext('Не удалось сохранить команду.'),
+						message: i18n.t('messages.updateCommand.error', langOptions),
 						level: 'error',
 					});
 				}

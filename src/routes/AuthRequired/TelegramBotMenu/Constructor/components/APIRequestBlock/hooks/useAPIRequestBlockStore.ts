@@ -18,7 +18,7 @@ function useAPIRequestBlockStore<Selector>(
 
 	if (store === undefined) {
 		throw new Error(
-			'useAPIRequestBlockStore must be used with a StoreContext.Provider!',
+			'useAPIRequestBlockStore must be used with a StoreContext.Provider.',
 		);
 	}
 

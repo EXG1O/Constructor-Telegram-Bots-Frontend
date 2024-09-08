@@ -5,6 +5,7 @@ import React, {
 	useMemo,
 	useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -44,6 +45,10 @@ function RecordDisplay({
 	className,
 	...props
 }: RecordDisplayProps): ReactElement<RecordDisplayProps> {
+	const { t, i18n } = useTranslation('telegram-bot-menu-database', {
+		keyPrefix: 'records',
+	});
+
 	const { telegramBot } = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
@@ -77,8 +82,8 @@ function RecordDisplay({
 	const showDeleteModal = useCallback(
 		() =>
 			setShowAskConfirmModal({
-				title: gettext('Удаление записи'),
-				text: gettext('Вы точно хотите удалить запись?'),
+				title: t('list.display.deleteModal.title'),
+				text: t('list.display.deleteModal.text'),
 				onConfirm: async () => {
 					setLoadingAskConfirmModal(true);
 
@@ -91,12 +96,12 @@ function RecordDisplay({
 						updateRecords();
 						hideAskConfirmModal();
 						createMessageToast({
-							message: gettext('Вы успешно удалили запись.'),
+							message: t('list.display.messages.deleteRecord.success'),
 							level: 'success',
 						});
 					} else {
 						createMessageToast({
-							message: gettext('Не удалось удалить запись!'),
+							message: t('list.display.messages.deleteRecord.error'),
 							level: 'error',
 						});
 					}
@@ -105,7 +110,7 @@ function RecordDisplay({
 				},
 				onCancel: null,
 			}),
-		[],
+		[telegramBot.id, i18n.language],
 	);
 
 	const handleChange = useCallback<NonNullable<MonacoEditorProps['onChange']>>(
@@ -136,31 +141,35 @@ function RecordDisplay({
 			if (response.ok) {
 				updateRecords();
 				createMessageToast({
-					message: gettext('Вы успешно обновили запись.'),
+					message: t('messages.partialUpdateRecord.success'),
 					level: 'success',
 				});
 			} else {
 				createMessageToast({
-					message: gettext('Не удалось обновить запись!'),
+					message: t('messages.partialUpdateRecord.error'),
 					level: 'error',
 				});
 			}
 		} catch (error) {
 			if (error instanceof SyntaxError) {
 				createMessageToast({
-					message: gettext('Введите правильно данные в формате JSON!'),
+					message: t('messages.partialUpdateRecord.error', {
+						context: 'validJSON',
+					}),
 					level: 'error',
 				});
 			} else {
 				createMessageToast({
-					message: gettext('Произошла непредвиденная ошибка!'),
+					message: t('messages.partialUpdateRecord.error', {
+						context: 'other',
+					}),
 					level: 'error',
 				});
 			}
 		}
 
 		setLoading(false);
-	}, [telegramBot, record, value]);
+	}, [telegramBot.id, record.id, value]);
 
 	const handleCancel = useCallback<NonNullable<ConfirmButtonGroupProps['onCancel']>>(
 		() => setValue(initialValue),

@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import BodyBlock, { Body, defaultBody } from './components/BodyBlock';
 import HeadersBlock, { defaultHeaders, Headers } from './components/HeadersBlock';
@@ -41,8 +42,12 @@ function APIRequestBlock({
 	store,
 	...props
 }: APIRequestBlockProps): ReactElement<APIRequestBlockProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'apiRequestBlock',
+	});
+
 	return (
-		<Block {...props} title={gettext('API-запрос')}>
+		<Block {...props} title={t('title')}>
 			<Block.Body className='vstack gap-2'>
 				<StoreContext.Provider value={store}>
 					<URLInput />

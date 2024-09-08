@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Params } from 'react-router-dom';
 import ClipboardJS from 'clipboard';
 
@@ -31,34 +32,34 @@ export async function loader({
 	const response = await VariablesAPI.get(telegramBotID, limit, offset);
 
 	if (!response.ok) {
-		throw Error('Failed to fetch data!');
+		throw Error('Failed to fetch data.');
 	}
 
 	return { paginationData: { ...response.json, limit, offset } };
 }
 
 function Variables(): ReactElement {
+	const { t } = useTranslation('telegram-bot-menu-variables');
+
 	useEffect(() => {
 		const clipboard = new ClipboardJS('.btn-clipboard');
 
 		clipboard.on('success', () =>
 			createMessageToast({
-				message: gettext('Вы успешно скопировали переменную в буфер обмена.'),
+				message: t('messages.copy.success'),
 				level: 'success',
 			}),
 		);
 		clipboard.on('error', () =>
 			createMessageToast({
-				message: gettext(
-					'При попытки скопировать переменную в буфер обмена, непредвиденная ошибка!',
-				),
+				message: t('messages.copy.error'),
 				level: 'error',
 			}),
 		);
 	}, []);
 
 	return (
-		<Page title={gettext('Переменные')} grid>
+		<Page title={t('title')} grid>
 			<SystemVariables />
 			<UserVariables.StoreProvider>
 				<UserVariables />

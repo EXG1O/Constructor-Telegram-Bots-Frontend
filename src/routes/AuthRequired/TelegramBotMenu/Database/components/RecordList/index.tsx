@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import ListGroup, { ListGroupProps } from 'react-bootstrap/ListGroup';
@@ -16,6 +17,10 @@ function RecordList({
 	className,
 	...props
 }: RecordListProps): ReactElement<RecordListProps> {
+	const { t } = useTranslation('telegram-bot-menu-database', {
+		keyPrefix: 'records.list',
+	});
+
 	const loading = useDatabaseRecordsStore((state) => state.loading);
 	const search = useDatabaseRecordsStore((state) => state.search);
 	const records = useDatabaseRecordsStore((state) => state.records);
@@ -29,11 +34,11 @@ function RecordList({
 			</ListGroup>
 		) : search ? (
 			<Wrapper className='text-center px-3 py-2'>
-				{gettext('Поиск по записям не дал результатов')}
+				{t('placeholders.notFound')}
 			</Wrapper>
 		) : (
 			<Wrapper className='text-center px-3 py-2'>
-				{gettext('Вы ещё не добавили записи')}
+				{t('placeholders.notAdded')}
 			</Wrapper>
 		)
 	) : (

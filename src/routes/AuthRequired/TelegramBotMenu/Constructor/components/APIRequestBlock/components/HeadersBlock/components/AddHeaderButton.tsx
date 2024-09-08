@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 
@@ -12,6 +13,10 @@ export type AddHeaderButtonProps = Omit<
 function AddHeaderButton(
 	props: AddHeaderButtonProps,
 ): ReactElement<AddHeaderButtonProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'apiRequestBlock.headersBlock.addHeaderButton',
+	});
+
 	const updateAPIRequest = useAPIRequestBlockStore((state) => state.updateAPIRequest);
 
 	return (
@@ -25,7 +30,7 @@ function AddHeaderButton(
 				})
 			}
 		>
-			{gettext('Добавить заголовок')}
+			{t('text')}
 		</Button>
 	);
 }

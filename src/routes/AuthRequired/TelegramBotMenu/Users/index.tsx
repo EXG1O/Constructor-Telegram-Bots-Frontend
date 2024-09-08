@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Params } from 'react-router-dom';
 import { Stack } from 'react-bootstrap';
 
@@ -36,7 +37,7 @@ export async function loader({
 	const response = await UsersAPI.get(telegramBotID, limit, offset);
 
 	if (!response.ok) {
-		throw Error('Failed to fetch data!');
+		throw Error('Failed to fetch data.');
 	}
 
 	return {
@@ -44,9 +45,11 @@ export async function loader({
 	};
 }
 
-const title: string = gettext('Пользователи');
-
 function Users(): ReactElement {
+	const { t, i18n } = useTranslation('telegram-bot-menu-users');
+
+	const title = useMemo<string>(() => t('title'), [i18n.language]);
+
 	return (
 		<Page title={title} grid>
 			<StoreProvider>

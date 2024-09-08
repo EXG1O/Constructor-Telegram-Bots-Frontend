@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Button from 'react-bootstrap/Button';
 
@@ -10,6 +11,10 @@ import StoreProvider from './providers/StoreProvider';
 import useRecordModalStore from './hooks/useRecordModalStore';
 
 function RecordModal(): ReactElement {
+	const { t } = useTranslation('telegram-bot-menu-database', {
+		keyPrefix: 'records.recordModal',
+	});
+
 	const type = useRecordModalStore((state) => state.type);
 	const show = useRecordModalStore((state) => state.show);
 	const loading = useRecordModalStore((state) => state.loading);
@@ -19,21 +24,15 @@ function RecordModal(): ReactElement {
 	return (
 		<Modal show={show} loading={loading} onHide={hide}>
 			<Modal.Header closeButton>
-				<Modal.Title>
-					{type === 'add' && gettext('Добавление записи')}
-				</Modal.Title>
+				<Modal.Title>{t('title', { context: type })}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<DataEditor />
 			</Modal.Body>
 			<Modal.Footer>
-				<Button
-					variant='success'
-					{...(type === 'add' && {
-						children: gettext('Добавить'),
-						onClick: add,
-					})}
-				/>
+				<Button variant='success' onClick={type === 'add' ? add : undefined}>
+					{t('actionButton', { context: type })}
+				</Button>
 			</Modal.Footer>
 		</Modal>
 	);

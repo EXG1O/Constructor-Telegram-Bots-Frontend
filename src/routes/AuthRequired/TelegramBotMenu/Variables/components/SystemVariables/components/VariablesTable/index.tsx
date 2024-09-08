@@ -1,4 +1,5 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
+import React, { HTMLAttributes, ReactElement, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import Table from 'react-bootstrap/Table';
@@ -16,38 +17,45 @@ export interface Variable {
 	description: string;
 }
 
-const variables: Record<Type, Variable[]> = {
-	personal: [
-		{ name: 'USER_ID', description: gettext('ID пользователя') },
-		{ name: 'USER_USERNAME', description: gettext('@username пользователя') },
-		{ name: 'USER_FIRST_NAME', description: gettext('Имя пользователя') },
-		{ name: 'USER_LAST_NAME', description: gettext('Фамилия пользователя') },
-		{ name: 'USER_FULL_NAME', description: gettext('Имя и фамилия пользователя') },
-		{
-			name: 'USER_LANGUAGE_CODE',
-			description: gettext('Языковой тег пользователя'),
-		},
-		{ name: 'USER_MESSAGE_ID', description: gettext('ID сообщения пользователя') },
-		{
-			name: 'USER_MESSAGE_TEXT',
-			description: gettext('Текст сообщения пользователя'),
-		},
-		{
-			name: 'USER_MESSAGE_DATE',
-			description: gettext('Дата отправки сообщения пользователя'),
-		},
-	],
-	global: [
-		{ name: 'BOT_NAME', description: gettext('Название бота') },
-		{ name: 'BOT_USERNAME', description: gettext('@username бота') },
-	],
-};
-
 function VariablesTable({
 	type,
 	className,
 	...props
 }: VariablesTableProps): ReactElement<VariablesTableProps> {
+	const { t, i18n } = useTranslation('telegram-bot-menu-variables', {
+		keyPrefix: 'system.variables',
+	});
+
+	const variables = useMemo<Record<Type, Variable[]>>(
+		() => ({
+			personal: [
+				{ name: 'USER_ID', description: t('personal.userID') },
+				{ name: 'USER_USERNAME', description: t('personal.userUsername') },
+				{ name: 'USER_FIRST_NAME', description: t('personal.userFirstName') },
+				{ name: 'USER_LAST_NAME', description: t('personal.userLastName') },
+				{ name: 'USER_FULL_NAME', description: t('personal.userFullName') },
+				{
+					name: 'USER_LANGUAGE_CODE',
+					description: t('personal.userLanguageCode'),
+				},
+				{ name: 'USER_MESSAGE_ID', description: t('personal.userMessageID') },
+				{
+					name: 'USER_MESSAGE_TEXT',
+					description: t('personal.userMessageText'),
+				},
+				{
+					name: 'USER_MESSAGE_DATE',
+					description: t('personal.userMessageDate'),
+				},
+			],
+			global: [
+				{ name: 'BOT_NAME', description: t('global.botName') },
+				{ name: 'BOT_USERNAME', description: t('global.botUsername') },
+			],
+		}),
+		[i18n.language],
+	);
+
 	return (
 		<div
 			{...props}

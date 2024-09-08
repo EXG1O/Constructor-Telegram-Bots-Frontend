@@ -4,9 +4,13 @@ import React, {
 	TdHTMLAttributes,
 	useCallback,
 	useEffect,
+	useMemo,
 	useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import i18n from 'i18n';
+import formatDate from 'i18n/formatDate';
 
 import Table from 'react-bootstrap/Table';
 
@@ -27,25 +31,14 @@ export interface TelegramBotBlockProps
 	telegramBot: TelegramBot;
 }
 
-const loadingStatusProps: TdHTMLAttributes<HTMLTableCellElement> = {
-	className: 'text-secondary',
-	children: gettext('Загрузка'),
-};
-const enabledStatusProps: TdHTMLAttributes<HTMLTableCellElement> = {
-	className: 'text-success',
-	children: gettext('Включен'),
-};
-const disabledStatusProps: TdHTMLAttributes<HTMLTableCellElement> = {
-	className: 'text-danger',
-	children: gettext('Выключен'),
-};
-
 function TelegramBotBlock({
 	telegramBot: initialTelegramBot,
 	className,
 	children,
 	...props
 }: TelegramBotBlockProps): ReactElement<TelegramBotBlockProps> {
+	const { t } = useTranslation('components', { keyPrefix: 'telegramBotBlock' });
+
 	const [telegramBot, setTelegramBot] = useState<TelegramBot>(initialTelegramBot);
 	const [apiTokenEditing, setAPITokenEditing] = useState<boolean>(false);
 
@@ -65,7 +58,7 @@ function TelegramBotBlock({
 			if (!response.ok || response.json.is_loading) {
 				if (!response.ok) {
 					createMessageToast({
-						message: gettext('Не удалось получить данные о Telegram боте.'),
+						message: t('messages..getTelegramBot.error'),
 						level: 'error',
 					});
 				}
@@ -79,6 +72,28 @@ function TelegramBotBlock({
 
 		checkStatus();
 	}, [telegramBot.is_loading]);
+
+	const loadingStatusProps = useMemo<TdHTMLAttributes<HTMLTableCellElement>>(
+		() => ({
+			className: 'text-secondary',
+			children: t('table.status.loading'),
+		}),
+		[i18n.language],
+	);
+	const enabledStatusProps = useMemo<TdHTMLAttributes<HTMLTableCellElement>>(
+		() => ({
+			className: 'text-success',
+			children: t('table.status.enabled'),
+		}),
+		[i18n.language],
+	);
+	const disabledStatusProps = useMemo<TdHTMLAttributes<HTMLTableCellElement>>(
+		() => ({
+			className: 'text-danger',
+			children: t('table.status.disabled'),
+		}),
+		[i18n.language],
+	);
 
 	return (
 		<TelegramBotContext.Provider value={[telegramBot, setTelegramBot]}>
@@ -100,7 +115,7 @@ function TelegramBotBlock({
 				<Table size='sm' borderless className='align-middle mb-0'>
 					<tbody>
 						<tr>
-							<th scope='row'>{gettext('Статус')}:</th>
+							<th scope='row'>{t('table.status.header')}:</th>
 							<td
 								{...(telegramBot.is_loading
 									? loadingStatusProps
@@ -110,7 +125,7 @@ function TelegramBotBlock({
 							/>
 						</tr>
 						<tr>
-							<th scope='row'>{gettext('API-токен')}:</th>
+							<th scope='row'>{t('table.apiToken.header')}:</th>
 							<td className='w-100'>
 								{apiTokenEditing ? (
 									<APITokenEditing
@@ -123,20 +138,20 @@ function TelegramBotBlock({
 							</td>
 						</tr>
 						<tr>
-							<th scope='row'>{gettext('Приватный')}:</th>
+							<th scope='row'>{t('table.private.header')}:</th>
 							<td>
 								<PrivateSwitch />
 							</td>
 						</tr>
 						<tr>
-							<th scope='row'>{gettext('Хранилище')}:</th>
+							<th scope='row'>{t('table.storage.header')}:</th>
 							<td>
 								<TelegramBotStorage telegramBot={telegramBot} />
 							</td>
 						</tr>
 						<tr>
-							<th scope='row'>{gettext('Добавлен')}:</th>
-							<td>{telegramBot.added_date}</td>
+							<th scope='row'>{t('table.addedDate.header')}:</th>
+							<td>{formatDate(telegramBot.added_date)}</td>
 						</tr>
 					</tbody>
 				</Table>

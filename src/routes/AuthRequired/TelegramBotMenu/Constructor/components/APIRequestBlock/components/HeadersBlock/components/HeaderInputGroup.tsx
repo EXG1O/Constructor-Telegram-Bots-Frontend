@@ -1,4 +1,5 @@
 import React, { CSSProperties, memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Button from 'react-bootstrap/Button';
 import Input from 'react-bootstrap/FormControl';
@@ -20,6 +21,10 @@ function HeaderDetail({
 	index,
 	...props
 }: HeaderDetailProps): ReactElement<HeaderDetailProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'apiRequestBlock.headersBlock.headerInputGroup',
+	});
+
 	const header = useAPIRequestBlockStore((state) => state.apiRequest.headers[index]);
 	const updateAPIRequest = useAPIRequestBlockStore((state) => state.updateAPIRequest);
 
@@ -28,7 +33,7 @@ function HeaderDetail({
 			<Input
 				size='sm'
 				value={header.key}
-				placeholder={gettext('Ключ')}
+				placeholder={t('keyInputPlaceholder')}
 				onChange={(e) =>
 					updateAPIRequest((apiRequest) => {
 						apiRequest.headers[index].key = e.target.value;
@@ -38,7 +43,7 @@ function HeaderDetail({
 			<Input
 				size='sm'
 				value={header.value}
-				placeholder={gettext('Значение')}
+				placeholder={t('valueInputPlaceholder')}
 				onChange={(e) =>
 					updateAPIRequest((apiRequest) => {
 						apiRequest.headers[index].value = e.target.value;

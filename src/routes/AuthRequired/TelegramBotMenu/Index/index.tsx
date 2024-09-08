@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router-dom';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
@@ -12,12 +13,14 @@ import TelegramBotBlock from 'components/TelegramBotBlock';
 import TelegramBotBlockFooter from './components/TelegramBotBlockFooter';
 
 function Index(): ReactElement {
+	const { t } = useTranslation('telegram-bot-menu-index');
+
 	const { telegramBot } = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
 
 	return (
-		<Page title={gettext('Telegram бот')} grid>
+		<Page title={t('title')} grid>
 			<Row className='g-3 g-lg-4'>
 				<Col xs={12} lg={6}>
 					<TelegramBotBlock telegramBot={telegramBot}>

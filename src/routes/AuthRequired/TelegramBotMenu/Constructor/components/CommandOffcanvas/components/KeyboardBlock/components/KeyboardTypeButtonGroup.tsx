@@ -1,4 +1,5 @@
-import React, { memo, ReactElement, useId } from 'react';
+import React, { memo, ReactElement, useId, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import ToggleButton, {
 	ToggleButtonProps as BaseToggleButtonProps,
@@ -26,19 +27,26 @@ interface ToggleButtonProps
 
 export const defaultType: Type = 'default';
 
-const toggleButtons: ToggleButtonProps[] = [
-	{ value: 'default', className: 'w-50', children: gettext('Обычный') },
-	{ value: 'inline', className: 'w-50', children: gettext('Встроенный') },
-	// { value: 'payment', children: gettext('Платёжный') },  # TODO: For future feature
-];
-
 function KeyboardTypeButtonGroup(
 	props: KeyboardTypeButtonGroupProps,
 ): ReactElement<KeyboardTypeButtonGroupProps> {
 	const id = useId();
 
+	const { t, i18n } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.keyboardBlock.typeButtonGroup',
+	});
+
 	const type = useCommandOffcanvasStore((state) => state.keyboard.type);
 	const updateKeyboard = useCommandOffcanvasStore((state) => state.updateKeyboard);
+
+	const toggleButtons = useMemo<ToggleButtonProps[]>(
+		() => [
+			{ value: 'default', className: 'w-50', children: t('default') },
+			{ value: 'inline', className: 'w-50', children: t('inline') },
+			// { value: 'payment', children: t('payment') },  # TODO: For future feature
+		],
+		[i18n.language],
+	);
 
 	return (
 		<ToggleButtonGroup

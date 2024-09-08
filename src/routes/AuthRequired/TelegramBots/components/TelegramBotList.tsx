@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -14,6 +15,8 @@ function TelegramBotList({
 	className,
 	...props
 }: TelegramBotListProps): ReactElement<TelegramBotListProps> {
+	const { t } = useTranslation('telegram-bots');
+
 	const [telegramBots] = useTelegramBots();
 
 	return (
@@ -25,13 +28,13 @@ function TelegramBotList({
 							to={`/telegram-bot-menu/${telegramBot.id}/`}
 							className='btn btn-dark'
 						>
-							{gettext('Меню Telegram бота')}
+							{t('telegramBotMenuLink')}
 						</Link>
 					</TelegramBotBlock>
 				))
 			) : (
 				<div className='border rounded text-center px-3 py-2'>
-					{gettext('Вы ещё не добавили Telegram бота')}
+					{t('notTelegramBots')}
 				</div>
 			)}
 		</Row>

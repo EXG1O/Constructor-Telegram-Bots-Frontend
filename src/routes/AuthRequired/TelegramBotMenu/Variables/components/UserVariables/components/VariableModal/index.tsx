@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Button from 'react-bootstrap/Button';
 
@@ -12,6 +13,10 @@ import StoreProvider from './providers/StoreProvider';
 import useVariableModalStore from './hooks/useVariableModalStore';
 
 function VariableModal(): ReactElement {
+	const { t } = useTranslation('telegram-bot-menu-variables', {
+		keyPrefix: 'user.variableModal',
+	});
+
 	const type = useVariableModalStore((state) => state.type);
 	const show = useVariableModalStore((state) => state.show);
 	const loading = useVariableModalStore((state) => state.loading);
@@ -22,11 +27,7 @@ function VariableModal(): ReactElement {
 	return (
 		<Modal show={show} loading={loading} onHide={hide}>
 			<Modal.Header closeButton>
-				<Modal.Title>
-					{type === 'add'
-						? gettext('Добавление переменной')
-						: gettext('Редактирование переменной')}
-				</Modal.Title>
+				<Modal.Title>{t('title', { context: type })}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body className='vstack gap-2'>
 				<NameInput />
@@ -34,18 +35,9 @@ function VariableModal(): ReactElement {
 				<DescriptionInput />
 			</Modal.Body>
 			<Modal.Footer>
-				<Button
-					variant='success'
-					{...(type === 'add'
-						? {
-								children: gettext('Добавить'),
-								onClick: add,
-							}
-						: {
-								children: gettext('Сохранить'),
-								onClick: save,
-							})}
-				/>
+				<Button variant='success' onClick={type === 'add' ? add : save}>
+					{t('actionButton', { context: type })}
+				</Button>
 			</Modal.Footer>
 		</Modal>
 	);

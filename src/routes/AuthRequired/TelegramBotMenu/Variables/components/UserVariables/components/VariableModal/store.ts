@@ -1,3 +1,5 @@
+import i18n from 'i18n';
+import { TOptions } from 'i18next';
 import { create } from 'zustand';
 
 import { createMessageToast } from 'components/ToastContainer';
@@ -43,6 +45,8 @@ export type State = StateParams & StateActions;
 export type InitialProps = Pick<StateParams, 'telegramBot' | 'onAdd' | 'onSave'>;
 export type InitialState = Omit<StateParams, keyof InitialProps>;
 
+const langOptions: TOptions = { ns: 'telegram-bot-menu-variables' };
+
 export function createStore(initialProps: InitialProps) {
 	const initialState: InitialState = {
 		variableID: null,
@@ -70,7 +74,7 @@ export function createStore(initialProps: InitialProps) {
 
 			if (!response.ok) {
 				createMessageToast({
-					message: gettext('Не удалось получить данные переменной.'),
+					message: i18n.t('user.messages.getVariable.error', langOptions),
 					level: 'error',
 				});
 				set({ show: false });
@@ -96,7 +100,7 @@ export function createStore(initialProps: InitialProps) {
 
 			if (!response.ok) {
 				createMessageToast({
-					message: gettext('Не удалось добавить переменную.'),
+					message: i18n.t('user.messages.createVariable.error', langOptions),
 					level: 'error',
 				});
 				set({ loading: false });
@@ -105,7 +109,7 @@ export function createStore(initialProps: InitialProps) {
 
 			onAdd(response.json);
 			createMessageToast({
-				message: gettext('Вы успешно добавили переменную.'),
+				message: i18n.t('user.messages.createVariable.success', langOptions),
 				level: 'success',
 			});
 			set({ show: false, loading: false });
@@ -129,7 +133,7 @@ export function createStore(initialProps: InitialProps) {
 
 			if (!response.ok) {
 				createMessageToast({
-					message: gettext('Не удалось сохранить переменную.'),
+					message: i18n.t('user.messages.updateVariable.error', langOptions),
 					level: 'error',
 				});
 				set({ loading: false });
@@ -138,7 +142,7 @@ export function createStore(initialProps: InitialProps) {
 
 			onSave(response.json);
 			createMessageToast({
-				message: gettext('Вы успешно сохранили переменную.'),
+				message: i18n.t('user.messages.updateVariable.success', langOptions),
 				level: 'success',
 			});
 			set({ show: false, loading: false });

@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Button from 'react-bootstrap/Button';
 
@@ -7,6 +8,8 @@ import Modal from '../Modal';
 import { useAskConfirmModalStore } from './store';
 
 function AskConfirmModal(): ReactElement {
+	const { t } = useTranslation('components', { keyPrefix: 'askConfirmModal' });
+
 	const { show, loading, title, text, onConfirm, onCancel, setHide } =
 		useAskConfirmModalStore();
 
@@ -21,10 +24,10 @@ function AskConfirmModal(): ReactElement {
 			<Modal.Body>{text}</Modal.Body>
 			<Modal.Footer>
 				<Button variant='success' className='flex-fill' onClick={handleConfirm}>
-					{gettext('Да')}
+					{t('yesButton')}
 				</Button>
 				<Button variant='danger' className='flex-fill' onClick={handleCancel}>
-					{gettext('Нет')}
+					{t('noButton')}
 				</Button>
 			</Modal.Footer>
 		</Modal>

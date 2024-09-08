@@ -1,4 +1,5 @@
 import React, { ReactElement, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router-dom';
 
 import Page from 'components/Page';
@@ -18,13 +19,15 @@ export async function loader(): Promise<LoaderData> {
 	const response = await TelegramBotsAPI.get();
 
 	if (!response.ok) {
-		throw Error('Failed to fetch data!');
+		throw Error('Failed to fetch data.');
 	}
 
 	return { telegramBots: response.json };
 }
 
 function TelegramBots(): ReactElement {
+	const { t } = useTranslation('telegram-bots');
+
 	const { telegramBots: initialTelegramBots } = useRouteLoaderData(
 		'telegram-bots',
 	) as LoaderData;
@@ -32,7 +35,7 @@ function TelegramBots(): ReactElement {
 	const telegramBotsState = useState<TelegramBot[]>(initialTelegramBots);
 
 	return (
-		<Page title={gettext('Telegram боты')} grid>
+		<Page title={t('title')} grid>
 			<TelegramBotsContext.Provider value={telegramBotsState}>
 				<Header />
 				<TelegramBotList />

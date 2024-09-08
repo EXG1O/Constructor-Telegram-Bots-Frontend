@@ -31,7 +31,7 @@ function QuillEditor({
 
 	useEffect(() => {
 		if (!reactQuillRef.current) {
-			throw Error('reactQuillRef should not be null!');
+			throw Error('reactQuillRef should not be null.');
 		}
 
 		quillRef.current = reactQuillRef.current.getEditor() as unknown as Quill;

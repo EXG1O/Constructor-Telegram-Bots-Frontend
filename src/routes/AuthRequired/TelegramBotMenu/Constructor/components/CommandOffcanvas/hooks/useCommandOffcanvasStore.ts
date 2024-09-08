@@ -18,7 +18,7 @@ function useCommandOffcanvasStore<Selector>(
 
 	if (store === undefined) {
 		throw new Error(
-			'useCommandOffcanvasStore must be used with a StoreContext.Provider!',
+			'useCommandOffcanvasStore must be used with a StoreContext.Provider.',
 		);
 	}
 

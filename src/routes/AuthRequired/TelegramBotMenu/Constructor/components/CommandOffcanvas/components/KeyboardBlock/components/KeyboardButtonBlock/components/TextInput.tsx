@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Input, { FormControlProps as InputProps } from 'react-bootstrap/FormControl';
 
@@ -14,6 +15,10 @@ export type Text = string;
 export const defaultText: Text = '';
 
 function TextInput(props: TextInputProps): ReactElement<TextInputProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardBlock.textInput',
+	});
+
 	const text = useCommandOffcanvasStore((state) => state.keyboardButton.text);
 	const updateKeyboardButton = useCommandOffcanvasStore(
 		(state) => state.updateKeyboardButton,
@@ -24,7 +29,7 @@ function TextInput(props: TextInputProps): ReactElement<TextInputProps> {
 			{...props}
 			size='sm'
 			value={text}
-			placeholder={gettext('Введите текст')}
+			placeholder={t('placeholder')}
 			onChange={(e) =>
 				updateKeyboardButton((keyboardButton) => {
 					keyboardButton.text = e.target.value;

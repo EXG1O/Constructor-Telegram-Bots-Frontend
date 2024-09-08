@@ -1,4 +1,5 @@
 import React, { memo, ReactElement, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Button from 'react-bootstrap/Button';
 import Feedback from 'react-bootstrap/Feedback';
@@ -29,6 +30,10 @@ function TelegramBotAdditionModal({
 	onExited,
 	...props
 }: TelegramBotAdditionModalProps): ReactElement<TelegramBotAdditionModalProps> {
+	const { t } = useTranslation('telegram-bots', {
+		keyPrefix: 'telegramBotAdditionModal',
+	});
+
 	const [telegramBots, setTelegramBots] = useTelegramBots();
 
 	const [data, setData] = useState<Data>(defaultData);
@@ -58,17 +63,14 @@ function TelegramBotAdditionModal({
 			setTelegramBots([...telegramBots, response.json]);
 			onHide();
 			createMessageToast({
-				message: gettext('Вы успешно добавили Telegram бота.'),
+				message: t('messages.createTelegramBot.success'),
 				level: 'success',
 			});
 		} else if (response.json.type === 'validation_error') {
 			setErrors(response.json.errors);
 		} else {
 			createMessageToast({
-				message: gettext(
-					'Произошла непредвиденная ошибка ' +
-						'из-за чего не удалось добавить Telegram бота.',
-				),
+				message: t('messages.createTelegramBot.error'),
 				level: 'error',
 			});
 		}
@@ -79,14 +81,14 @@ function TelegramBotAdditionModal({
 	return (
 		<Modal {...props} loading={loading} onHide={onHide} onExited={handleExited}>
 			<Modal.Header closeButton>
-				<Modal.Title>{gettext('Добавление Telegram бота')}</Modal.Title>
+				<Modal.Title>{t('title')}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body className='vstack gap-2'>
 				<div>
 					<Input
 						value={data.api_token}
 						isInvalid={Boolean(apiTokenError)}
-						placeholder={gettext('Введите API-токен')}
+						placeholder={t('apiTokenInputPlaceholder')}
 						onChange={(e) =>
 							setData({ ...data, api_token: e.target.value })
 						}
@@ -99,7 +101,7 @@ function TelegramBotAdditionModal({
 					<Switch
 						checked={data.is_private}
 						isInvalid={Boolean(privateError)}
-						label={gettext('Сделать приватным')}
+						label={t('privateSwitchLabel')}
 						onChange={(e) =>
 							setData({ ...data, is_private: e.target.checked })
 						}
@@ -111,7 +113,7 @@ function TelegramBotAdditionModal({
 			</Modal.Body>
 			<Modal.Footer>
 				<Button variant='success' onClick={handleAdd}>
-					{gettext('Добавить')}
+					{t('addButton')}
 				</Button>
 			</Modal.Footer>
 		</Modal>

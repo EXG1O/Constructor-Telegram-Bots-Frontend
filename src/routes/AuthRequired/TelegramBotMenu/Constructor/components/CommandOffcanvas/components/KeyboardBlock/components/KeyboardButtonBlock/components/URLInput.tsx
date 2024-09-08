@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import Input, { FormControlProps as InputProps } from 'react-bootstrap/FormControl';
@@ -15,6 +16,10 @@ export type URL = string;
 export const defaultURL: URL = '';
 
 function URLInput({ className, ...props }: URLInputProps): ReactElement<URLInputProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardBlock.urlInput',
+	});
+
 	const url = useCommandOffcanvasStore((state) => state.keyboardButton.url);
 	const updateKeyboardButton = useCommandOffcanvasStore(
 		(state) => state.updateKeyboardButton,
@@ -26,7 +31,7 @@ function URLInput({ className, ...props }: URLInputProps): ReactElement<URLInput
 			size='sm'
 			value={url}
 			className={classNames('border-top-0 rounded-top-0', className)}
-			placeholder={gettext('Введите URL-адрес')}
+			placeholder={t('placeholder')}
 			onChange={(e) =>
 				updateKeyboardButton((keyboardButton) => {
 					keyboardButton.url = e.target.value;

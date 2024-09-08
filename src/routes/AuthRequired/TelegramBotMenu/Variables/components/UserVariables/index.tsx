@@ -1,4 +1,5 @@
 import React, { memo, ReactElement, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Stack from 'react-bootstrap/Stack';
 
@@ -12,6 +13,8 @@ import StoreProvider from './providers/StoreProvider';
 import useUserVariablesStore from './hooks/useUserVariablesStore';
 
 function UserVariables(): ReactElement {
+	const { t } = useTranslation('telegram-bot-menu-variables', { keyPrefix: 'user' });
+
 	const updateVariables = useUserVariablesStore((state) => state.updateVariables);
 	const handleAddOrSaveVariable = useCallback(() => updateVariables(), []);
 
@@ -22,9 +25,7 @@ function UserVariables(): ReactElement {
 		>
 			<VariableModal />
 			<Block variant='light'>
-				<h3 className='fw-semibold text-center mb-3'>
-					{gettext('Пользовательские переменные')}
-				</h3>
+				<h3 className='fw-semibold text-center mb-3'>{t('title')}</h3>
 				<Stack gap={2}>
 					<Toolbar />
 					<VariablesTable />

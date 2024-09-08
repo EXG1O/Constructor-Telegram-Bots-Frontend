@@ -1,4 +1,5 @@
 import React, { memo, ReactElement, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router';
 import { Handle, NodeProps, Position, useStore } from 'reactflow';
 
@@ -22,6 +23,10 @@ type Data = Omit<DiagramCommand, keyof DiagramBlock>;
 export type CommandNodeProps = NodeProps<Data>;
 
 function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodeProps> {
+	const { t, i18n } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'nodes.command',
+	});
+
 	const { telegramBot } = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
@@ -41,8 +46,8 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 	const showDeleteModal = useCallback(
 		() =>
 			setShowAskConfirmModal({
-				title: gettext('Удаление команды'),
-				text: gettext('Вы точно хотите удалить команду?'),
+				title: t('deleteModal.title'),
+				text: t('deleteModal.text'),
 				onConfirm: async () => {
 					setLoadingAskConfirmModal(true);
 
@@ -52,12 +57,12 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 						onNodesChange?.([{ id, type: 'remove' }]);
 						hideAskConfirmModal();
 						createMessageToast({
-							message: gettext('Вы успешно удалили команду.'),
+							message: t('messages.deleteCommand.success'),
 							level: 'success',
 						});
 					} else {
 						createMessageToast({
-							message: gettext('Не удалось удалить команду.'),
+							message: t('messages.deleteCommand.error'),
 							level: 'error',
 						});
 					}
@@ -66,13 +71,13 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 				},
 				onCancel: null,
 			}),
-		[],
+		[i18n.language],
 	);
 
 	return (
 		<>
 			<NodeToolbar
-				title={gettext('Команда')}
+				title={t('title')}
 				onEdit={useCallback(() => showEditCommandOffcanvas(data.id), [data.id])}
 				onDelete={showDeleteModal}
 			/>

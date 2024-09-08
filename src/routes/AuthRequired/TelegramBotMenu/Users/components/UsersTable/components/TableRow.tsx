@@ -7,7 +7,9 @@ import React, {
 	useCallback,
 	useMemo,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router-dom';
+import formatDate from 'i18n/formatDate';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
 
@@ -41,6 +43,10 @@ const iconProps: SVGProps<SVGSVGElement> = {
 };
 
 function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps> {
+	const { t, i18n } = useTranslation('telegram-bot-menu-users', {
+		keyPrefix: 'table.row',
+	});
+
 	const { telegramBot } = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData;
@@ -93,73 +99,73 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
 	const showAllowModal = useCallback(
 		() =>
 			showAskConfirmModal(
-				gettext('Разрешение пользователя'),
-				gettext('Вы точно хотите разрешить пользователя?'),
+				t('allowModal.title'),
+				t('allowModal.text'),
 				() =>
 					UserAPI.partialUpdate(telegramBot.id, user.id, {
 						is_allowed: true,
 					}),
-				gettext('Вы успешно разрешили пользователя.'),
-				gettext('Не удалось разрешить пользователя.'),
+				t('messages.allowUser.success'),
+				t('messages.allowUser.error'),
 			),
-		[],
+		[i18n.language, telegramBot.id],
 	);
 
 	const showDisallowModal = useCallback(
 		() =>
 			showAskConfirmModal(
-				gettext('Запрещение пользователя'),
-				gettext('Вы точно хотите запретить пользователя?'),
+				t('disallowModal.title'),
+				t('disallowModal.text'),
 				() =>
 					UserAPI.partialUpdate(telegramBot.id, user.id, {
 						is_allowed: false,
 					}),
-				gettext('Вы успешно запретили пользователя.'),
-				gettext('Не удалось запретить пользователя.'),
+				t('messages.disallowUser.success'),
+				t('messages.disallowUser.error'),
 			),
-		[],
+		[i18n.language, telegramBot.id],
 	);
 
 	const showBlockModal = useCallback(
 		() =>
 			showAskConfirmModal(
-				gettext('Блокирование пользователя'),
-				gettext('Вы точно хотите заблокировать пользователя?'),
+				t('blockModal.title'),
+				t('blockModal.text'),
 				() =>
 					UserAPI.partialUpdate(telegramBot.id, user.id, {
 						is_blocked: true,
 					}),
-				gettext('Вы успешно заблокировали пользователя.'),
-				gettext('Не удалось заблокировать пользователя.'),
+				t('messages.blockUser.success'),
+				t('messages.blockUser.error'),
 			),
-		[],
+		[i18n.language, telegramBot.id],
 	);
 
 	const showUnblockModal = useCallback(
 		() =>
 			showAskConfirmModal(
-				gettext('Разблокирование пользователя'),
-				gettext('Вы точно хотите разблокировать пользователя?'),
+				t('unblockModal.title'),
+				t('unblockModal.text'),
 				() =>
 					UserAPI.partialUpdate(telegramBot.id, user.id, {
 						is_blocked: false,
 					}),
-				gettext('Вы успешно разблокировали пользователя.'),
-				gettext('Не удалось разблокировать пользователя.'),
+				t('messages.unblockUser.success'),
+				t('messages.unblockUser.error'),
 			),
-		[],
+		[i18n.language, telegramBot.id],
 	);
 
 	const showDeleteModal = useCallback(
 		() =>
 			showAskConfirmModal(
-				gettext('Удаление пользователя'),
-				gettext('Вы точно хотите удалить пользователя?'),
+				t('deleteModal.title'),
+				t('deleteModal.text'),
 				() => UserAPI._delete(telegramBot.id, user.id),
-				gettext('Вы успешно удалили пользователя.'),
-				gettext('Не удалось удалить пользователя.'),
+				t('messages.deleteUser.success'),
+				t('messages.deleteUser.error'),
 			),
-		[],
+		[i18n.language, telegramBot.id],
 	);
 
 	const AllowedIcon = useMemo(
@@ -170,7 +176,7 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
 
 	return (
 		<tr {...props}>
-			<td className='text-success-emphasis'>{`[${user.activated_date}]`}</td>
+			<td className='text-success-emphasis'>{`[${formatDate(user.activated_date)}]`}</td>
 			<td className='text-primary-emphasis'>{user.telegram_id}</td>
 			<td className='w-100'>{user.full_name}</td>
 			<td>

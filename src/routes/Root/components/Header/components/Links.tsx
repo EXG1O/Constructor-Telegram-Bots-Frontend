@@ -5,7 +5,9 @@ import React, {
 	ReactElement,
 	ReactNode,
 	useId,
+	useMemo,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
 	Link,
 	LinkProps as BaseLinkProps,
@@ -25,18 +27,23 @@ export interface LinkProps extends BaseLinkProps {
 
 const linkUnderlineStyle: CSSProperties = { height: '2px' };
 
-const links: LinkProps[] = [
-	{ to: reverse('instruction'), children: gettext('Инструкция') },
-	{ to: reverse('updates'), children: gettext('Обновления') },
-	{ to: reverse('privacy-policy'), children: gettext('Конфиденциальность') },
-	{ to: reverse('donation-index'), children: gettext('Пожертвование') },
-];
-
 function Links({ className, ...props }: LinksProps): ReactElement<LinksProps> {
 	const id = useId();
 
+	const { t, i18n } = useTranslation('root', { keyPrefix: 'links' });
+
 	const location = useLocation();
 	const navigation = useNavigation();
+
+	const links = useMemo<LinkProps[]>(
+		() => [
+			{ to: reverse('instruction'), children: t('instruction') },
+			{ to: reverse('updates'), children: t('updates') },
+			{ to: reverse('privacy-policy'), children: t('privacyPolicy') },
+			{ to: reverse('donation-index'), children: t('donation') },
+		],
+		[i18n.language],
+	);
 
 	return (
 		<div {...props} className={classNames('d-flex', className)}>

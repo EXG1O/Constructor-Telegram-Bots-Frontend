@@ -1,4 +1,5 @@
 import React, { HTMLAttributes, memo, ReactElement, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import Button from 'react-bootstrap/Button';
@@ -27,6 +28,8 @@ function Search({
 	onClear,
 	...props
 }: SearchProps): ReactElement<SearchProps> {
+	const { t } = useTranslation('components', { keyPrefix: 'search' });
+
 	const [value, setValue] = useState<Value>(defaultValue);
 	const [isActive, setActive] = useState<boolean>(false);
 
@@ -54,7 +57,7 @@ function Search({
 				</div>
 				<Input
 					value={value}
-					placeholder={gettext('Поиск')}
+					placeholder={t('inputPlaceholder')}
 					onChange={(e) => setValue(e.target.value)}
 					onKeyUp={(e) => e.key === 'Enter' && handleSearch()}
 				/>
@@ -79,7 +82,7 @@ function Search({
 							className='ms-2'
 							onClick={handleSearch}
 						>
-							{gettext('Найти')}
+							{t('button')}
 						</Button>
 					</div>
 				</Collapse>

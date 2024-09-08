@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import SettingSwitch from './components/SettingSwitch';
 
@@ -19,20 +20,24 @@ export const defaultSettings: Settings = {
 };
 
 function SettingsBlock(props: SettingsBlockProps): ReactElement<SettingsBlockProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.settingsBlock',
+	});
+
 	return (
-		<Block {...props} title={gettext('Настройки')}>
+		<Block {...props} title={t('title')}>
 			<Block.Body className='vstack gap-2'>
 				<SettingSwitch
 					settingName='isReplyToUserMessage'
-					label={gettext('Ответить на сообщение пользователя')}
+					label={t('replyToUserMessageSwitch')}
 				/>
 				<SettingSwitch
 					settingName='isDeleteUserMessage'
-					label={gettext('Удалить сообщение пользователя')}
+					label={t('deleteUserMessageSwitch')}
 				/>
 				<SettingSwitch
 					settingName='isSendAsNewMessage'
-					label={gettext('Отправить сообщение как новое')}
+					label={t('sendAsNewMessageSwitch')}
 				/>
 			</Block.Body>
 		</Block>

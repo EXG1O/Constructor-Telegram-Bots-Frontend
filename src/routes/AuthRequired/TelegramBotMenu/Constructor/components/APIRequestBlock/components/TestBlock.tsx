@@ -5,6 +5,7 @@ import React, {
 	ReactElement,
 	useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import Button from 'react-bootstrap/Button';
@@ -28,6 +29,10 @@ const statusMarkerStyle: CSSProperties = {
 };
 
 function TestBlock(props: TestBlockProps): ReactElement<TestBlockProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'apiRequestBlock.testBlock',
+	});
+
 	const store = useAPIRequestBlockStore();
 
 	const [result, setResult] = useState<Result | null>(null);
@@ -39,7 +44,7 @@ function TestBlock(props: TestBlockProps): ReactElement<TestBlockProps> {
 
 		if (!url) {
 			createMessageToast({
-				message: gettext('Введите URL-адрес.'),
+				message: t('messages.makeTest.error', { context: 'emptyURL' }),
 				level: 'error',
 			});
 			return;
@@ -49,7 +54,7 @@ function TestBlock(props: TestBlockProps): ReactElement<TestBlockProps> {
 			new URL(url);
 		} catch {
 			createMessageToast({
-				message: gettext('Введите правильный URL-адрес.'),
+				message: t('messages.makeTest.error', { context: 'validURL' }),
 				level: 'error',
 			});
 			return;
@@ -65,7 +70,7 @@ function TestBlock(props: TestBlockProps): ReactElement<TestBlockProps> {
 			setResult({ status: response.status, body: await response.text() });
 		} catch {
 			createMessageToast({
-				message: gettext('Произошла ошибка во время отправки API-запроса.'),
+				message: t('messages.makeTest.error'),
 				level: 'error',
 			});
 		}
@@ -81,7 +86,7 @@ function TestBlock(props: TestBlockProps): ReactElement<TestBlockProps> {
 				})}
 				onClick={handleClick}
 			>
-				{gettext('Протестировать')}
+				{t('testButton')}
 			</Button>
 			<Collapse in={Boolean(result)}>
 				<div>

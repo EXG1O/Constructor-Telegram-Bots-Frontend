@@ -1,4 +1,5 @@
-import React, { HTMLAttributes, memo, ReactElement } from 'react';
+import React, { HTMLAttributes, memo, ReactElement, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 import Collapse, { CollapseProps } from 'react-bootstrap/Collapse';
@@ -7,17 +8,6 @@ import useAPIRequestBlockStore from '../../../hooks/useAPIRequestBlockStore';
 
 export type BlockCollapseProps = Omit<CollapseProps, 'in'> &
 	Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
-
-const showButtonProps: ButtonProps = {
-	variant: 'dark',
-	className: 'w-100',
-	children: gettext('Добавить заголовки'),
-};
-const hideButtonProps: ButtonProps = {
-	variant: 'secondary',
-	className: 'w-100 border-bottom-0 rounded-bottom-0',
-	children: gettext('Убрать заголовки'),
-};
 
 function BlockCollapse({
 	mountOnEnter,
@@ -29,9 +19,30 @@ function BlockCollapse({
 	children,
 	...props
 }: BlockCollapseProps): ReactElement<BlockCollapseProps> {
+	const { t, i18n } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'apiRequestBlock.headersBlock',
+	});
+
 	const show = useAPIRequestBlockStore((state) => state.showAPIRequestHeadersBlock);
 	const setShow = useAPIRequestBlockStore(
 		(state) => state.setShowAPIRequestHeadersBlock,
+	);
+
+	const showButtonProps = useMemo<ButtonProps>(
+		() => ({
+			variant: 'dark',
+			className: 'w-100',
+			children: t('showButton'),
+		}),
+		[i18n.language],
+	);
+	const hideButtonProps = useMemo<ButtonProps>(
+		() => ({
+			variant: 'secondary',
+			className: 'w-100 border-bottom-0 rounded-bottom-0',
+			children: t('hideButton'),
+		}),
+		[i18n.language],
 	);
 
 	return (

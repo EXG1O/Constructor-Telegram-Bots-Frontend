@@ -1,7 +1,8 @@
-import React, { memo, ReactElement, useMemo } from 'react';
+import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import Button, { ButtonProps } from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button';
 
 import BlockCollapse from './components/BlockCollapse';
 import TextInput, { defaultText, Text } from './components/TextInput';
@@ -32,31 +33,19 @@ export {
 function KeyboardButtonBlock(
 	props: KeyboardButtonBlockProps,
 ): ReactElement<KeyboardButtonBlockProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardBlock',
+	});
+
 	const type = useCommandOffcanvasStore((state) => state.keyboardButtonBlockType);
 	const add = useCommandOffcanvasStore((state) => state.addKeyboardButton);
 	const save = useCommandOffcanvasStore((state) => state.saveKeyboardButton);
 	const _delete = useCommandOffcanvasStore((state) => state.deleteKeyboardButton);
 	const hide = useCommandOffcanvasStore((state) => state.hideKeyboardButtonBlock);
 
-	const addButtonProps = useMemo<ButtonProps>(
-		() => ({ children: gettext('Добавить'), onClick: add }),
-		[add],
-	);
-	const saveButtonProps = useMemo<ButtonProps>(
-		() => ({ children: gettext('Сохранить'), onClick: save }),
-		[save],
-	);
-
 	return (
 		<BlockCollapse>
-			<Block
-				{...props}
-				title={
-					type == 'add'
-						? gettext('Добавление кнопки')
-						: gettext('Редактирование кнопки')
-				}
-			>
+			<Block {...props} title={t('title', { context: type })}>
 				<Block.Body>
 					<TextInput />
 					<URLInputCollapse>
@@ -70,8 +59,10 @@ function KeyboardButtonBlock(
 								size='sm'
 								variant='success'
 								className='w-100'
-								{...(type === 'add' ? addButtonProps : saveButtonProps)}
-							/>
+								onClick={type === 'add' ? add : save}
+							>
+								{t('actionButton', { context: type })}
+							</Button>
 						</div>
 						{type === 'edit' && (
 							<div className='col-6'>
@@ -81,7 +72,7 @@ function KeyboardButtonBlock(
 									className='w-100'
 									onClick={_delete}
 								>
-									{gettext('Удалить')}
+									{t('deleteButton')}
 								</Button>
 							</div>
 						)}
@@ -97,7 +88,7 @@ function KeyboardButtonBlock(
 								className='w-100'
 								onClick={hide}
 							>
-								{gettext('Отменить')}
+								{t('cancelButton')}
 							</Button>
 						</div>
 					</div>

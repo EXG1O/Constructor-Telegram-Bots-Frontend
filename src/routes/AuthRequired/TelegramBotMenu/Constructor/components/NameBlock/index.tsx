@@ -1,4 +1,5 @@
 import React, { memo, ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StoreApi, UseBoundStore } from 'zustand';
 
 import Input from 'react-bootstrap/FormControl';
@@ -16,14 +17,18 @@ export interface NameBlockProps extends Omit<BlockProps, 'title' | 'children'> {
 export const defaultName: Name = '';
 
 function NameBlock({ store, ...props }: NameBlockProps): ReactElement<NameBlockProps> {
+	const { t } = useTranslation('telegram-bot-menu-constructor', {
+		keyPrefix: 'nameBlock',
+	});
+
 	const name = store((state) => state.name);
 	const setName = store((state) => state.setName);
 
 	return (
-		<Block {...props} title={gettext('Название')} body>
+		<Block {...props} title={t('title')} body>
 			<Input
 				value={name}
-				placeholder={gettext('Придумайте название')}
+				placeholder={t('inputPlaceholder')}
 				onChange={(e) => setName(e.target.value)}
 			/>
 		</Block>
