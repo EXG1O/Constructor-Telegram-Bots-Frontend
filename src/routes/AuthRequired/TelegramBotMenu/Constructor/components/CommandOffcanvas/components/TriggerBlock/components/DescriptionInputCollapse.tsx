@@ -13,7 +13,7 @@ function DescriptionInputCollapse({
 	...props
 }: DescriptionInputCollapseProps): ReactElement<DescriptionInputCollapseProps> {
 	const { t, i18n } = useTranslation('telegram-bot-menu-constructor', {
-		keyPrefix: 'commandOffcanvas.descriptionInputCollapse',
+		keyPrefix: 'commandOffcanvas.triggerBlock.descriptionInputCollapse',
 	});
 
 	const show = useCommandOffcanvasStore((state) => state.showTriggerDescriptionInput);

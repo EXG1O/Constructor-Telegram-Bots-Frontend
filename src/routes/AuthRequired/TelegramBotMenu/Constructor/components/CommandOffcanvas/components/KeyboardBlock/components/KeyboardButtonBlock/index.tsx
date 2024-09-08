@@ -34,7 +34,7 @@ function KeyboardButtonBlock(
 	props: KeyboardButtonBlockProps,
 ): ReactElement<KeyboardButtonBlockProps> {
 	const { t } = useTranslation('telegram-bot-menu-constructor', {
-		keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardBlock',
+		keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardButtonBlock',
 	});
 
 	const type = useCommandOffcanvasStore((state) => state.keyboardButtonBlockType);

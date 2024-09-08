@@ -16,7 +16,7 @@ export const defaultText: Text = '';
 
 function TextInput(props: TextInputProps): ReactElement<TextInputProps> {
 	const { t } = useTranslation('telegram-bot-menu-constructor', {
-		keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardBlock.textInput',
+		keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardButtonBlock.textInput',
 	});
 
 	const text = useCommandOffcanvasStore((state) => state.keyboardButton.text);

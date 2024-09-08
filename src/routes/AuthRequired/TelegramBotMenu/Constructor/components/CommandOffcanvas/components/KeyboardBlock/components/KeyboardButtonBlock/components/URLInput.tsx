@@ -17,7 +17,7 @@ export const defaultURL: URL = '';
 
 function URLInput({ className, ...props }: URLInputProps): ReactElement<URLInputProps> {
 	const { t } = useTranslation('telegram-bot-menu-constructor', {
-		keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardBlock.urlInput',
+		keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardButtonBlock.urlInput',
 	});
 
 	const url = useCommandOffcanvasStore((state) => state.keyboardButton.url);
