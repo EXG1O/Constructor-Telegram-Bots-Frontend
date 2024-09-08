@@ -13,7 +13,8 @@ function URLInputCollapse({
 	...props
 }: URLInputCollapseProps): ReactElement<URLInputCollapseProps> {
 	const { t, i18n } = useTranslation('telegram-bot-menu-constructor', {
-		keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardButtonBlock.urlInputCollapse',
+		keyPrefix:
+			'commandOffcanvas.keyboardBlock.keyboardButtonBlock.urlInputCollapse',
 	});
 
 	const keyboardType = useCommandOffcanvasStore((state) => state.keyboard.type);
