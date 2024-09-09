@@ -36,6 +36,10 @@ const config = (env: any, argv: any): Configuration => {
 		module: {
 			rules: [
 				{
+					test: /\.html$/,
+					use: 'html-loader',
+				},
+				{
 					test: /\.[jt]sx?$/,
 					exclude: /node_modules/,
 					use: 'babel-loader',
