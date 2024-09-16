@@ -1,1 +1,171 @@
-{}
+{
+	"title": "Конструктор",
+	"messages": {
+		"getCommand": {
+			"error": "Не вдалося отримати дані команди."
+		},
+		"createCommand": {
+			"success": "Ви успішно додали команду.",
+			"error": "Не вдалося додати команду.",
+			"error_getDiagramCommand": "Не вдалося отримати додану раніше команду."
+		},
+		"updateCommand": {
+			"success": "Ви успішно зберегли команду.",
+			"error": "Не вдалося зберегти команду.",
+			"error_getDiagramCommand": "Не вдалося отримати збережену раніше команду."
+		},
+		"createConnection": {
+			"error": "Не вдалося підключити блок до іншого блоку."
+		},
+		"deleteConnection": {
+			"error": "Не вдалося відключити блок від іншого блоку."
+		}
+	},
+	"nameBlock": {
+		"title": "Назва",
+		"inputPlaceholder": "Придумайте назву"
+	},
+	"apiRequestBlock": {
+		"title": "API-запит",
+		"urlInput": {
+			"placeholder": "Введіть URL-адресу"
+		},
+		"headersBlock": {
+			"showButton": "Додати заголовки",
+			"hideButton": "Прибрати заголовки",
+			"headerInputGroup": {
+				"keyInputPlaceholder": "Ключ",
+				"valueInputPlaceholder": "Значення"
+			},
+			"addHeaderButton": {
+				"text": "Додати заголовок"
+			}
+		},
+		"bodyBlock": {
+			"showButton": "Додати дані",
+			"hideButton": "Прибрати дані"
+		},
+		"testBlock": {
+			"messages": {
+				"makeTest": {
+					"error": "Сталася помилка під час відправки API-запиту.",
+					"error_emptyURL": "Введіть URL-адресу.",
+					"error_validURL": "Введіть правильну URL-адресу."
+				}
+			},
+			"testButton": "Протестувати"
+		}
+	},
+	"addonButtonGroup": {
+		"showButton": "Показати доповнення",
+		"hideButton": "Приховати доповнення"
+	},
+	"commandOffcanvas": {
+		"title_add": "Додавання команди",
+		"title_edit": "Редагування команди",
+		"settingsBlock": {
+			"title": "Налаштування",
+			"replyToUserMessageSwitch": "Відповісти на повідомлення користувача",
+			"deleteUserMessageSwitch": "Видалити повідомлення користувача",
+			"sendAsNewMessageSwitch": "Відправити повідомлення як нове"
+		},
+		"triggerBlock": {
+			"title": "Тригер",
+			"textInput": {
+				"placeholder": "Введіть текст"
+			},
+			"descriptionInputCollapse": {
+				"showButton": "Додати в меню",
+				"hideButton": "Прибрати з меню"
+			},
+			"descriptionInput": {
+				"placeholder": "Введіть опис"
+			}
+		},
+		"imagesBlock": {
+			"title": "Зображення",
+			"addImagesButton": {
+				"messages": {
+					"addImages": {
+						"error_tooLarge": "Зображення {{name}} важить більше 2.5МБ.",
+						"error_notEnoughStorage": "Неможливо додати зображення {{name}}, тому що недостатньо місця в сховищі."
+					}
+				},
+				"text": "Додати зображення"
+			}
+		},
+		"filesBlock": {
+			"title": "Файли",
+			"addFilesButton": {
+				"messages": {
+					"addImages": {
+						"error_tooLarge": "Файл {{name}} важить більше 2.5МБ.",
+						"error_notEnoughStorage": "Неможливо додати файл {{name}}, тому що недостатньо місця в сховищі."
+					}
+				},
+				"text": "Додати файли"
+			}
+		},
+		"messageBlock": {
+			"title": "Повідомлення",
+			"messageEditor": {
+				"placeholder": "Введіть текст"
+			}
+		},
+		"keyboardBlock": {
+			"title": "Клавіатура",
+			"typeButtonGroup": {
+				"default": "Звичайна",
+				"inline": "Вбудована",
+				"payment": "Платіжна"
+			},
+			"keyboardButtonBlock": {
+				"title_add": "Додавання кнопки",
+				"title_edit": "Редагування кнопки",
+				"textInput": {
+					"placeholder": "Введіть текст"
+				},
+				"urlInputCollapse": {
+					"showButton": "Додати URL-адресу",
+					"hideButton": "Видалити URL-адресу"
+				},
+				"urlInput": {
+					"placeholder": "Введіть URL-адресу"
+				},
+				"actionButton_add": "Додати",
+				"actionButton_edit": "Зберегти",
+				"deleteButton": "Видалити",
+				"cancelButton": "Скасувати"
+			},
+			"addButtonButton": {
+				"text": "Додати кнопку"
+			},
+			"addRowButton": {
+				"text": "Додати ряд"
+			}
+		},
+		"databaseRecordBlock": {
+			"title": "Запис у базу даних"
+		},
+		"button_add": "Додати",
+		"button_edit": "Зберегти"
+	},
+	"panel": {
+		"addCommandButton": "Додати команду"
+	},
+	"nodes": {
+		"command": {
+			"title": "Команда",
+			"messages": {
+				"deleteCommand": {
+					"success": "Ви успішно видалили команду.",
+					"error": "Не вдалося видалити команду."
+				}
+			},
+			"deleteModal": {
+				"title": "Видалення команди",
+				"text": "Ви точно хочете видалити команду?"
+			}
+		}
+	}
+}

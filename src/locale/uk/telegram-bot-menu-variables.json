@@ -1,1 +1,88 @@
-{}
+{
+	"title": "Змінні",
+	"messages": {
+		"copy": {
+			"success": "Ви успішно скопіювали змінну в буфер обміну.",
+			"error": "При спробі скопіювати змінну в буфер обміну сталася помилка."
+		}
+	},
+	"system": {
+		"title": "Системні змінні",
+		"typeButtonGroup": {
+			"personal": "Персональні",
+			"global": "Глобальні"
+		},
+		"variables": {
+			"personal": {
+				"userID": "ID користувача",
+				"userUsername": "@username користувача",
+				"userFirstName": "Ім'я користувача",
+				"userLastName": "Прізвище користувача",
+				"userFullName": "Ім'я та прізвище користувача",
+				"userLanguageCode": "Мовний тег користувача",
+				"userMessageID": "ID повідомлення користувача",
+				"userMessageText": "Текст повідомлення користувача",
+				"userMessageDate": "Дата надсилання повідомлення користувача"
+			},
+			"global": {
+				"botName": "Назва бота",
+				"botUsername": "@username бота"
+			}
+		}
+	},
+	"user": {
+		"title": "Користувацькі змінні",
+		"messages": {
+			"getVariables": {
+				"error": "Не вдалося отримати список змінних."
+			},
+			"getVariable": {
+				"error": "Не вдалося отримати дані змінної."
+			},
+			"createVariable": {
+				"success": "Ви успішно додали змінну.",
+				"error": "Не вдалося додати змінну."
+			},
+			"updateVariable": {
+				"success": "Ви успішно зберегли змінну.",
+				"error": "Не вдалося зберегти змінну."
+			}
+		},
+		"variableModal": {
+			"title_add": "Додавання змінної",
+			"title_edit": "Редагування змінної",
+			"nameInput": {
+				"placeholder": "Придумайте назву"
+			},
+			"valueInput": {
+				"placeholder": "Введіть значення"
+			},
+			"descriptionInput": {
+				"placeholder": "Введіть опис"
+			},
+			"actionButton_add": "Додати",
+			"actionButton_edit": "Зберегти"
+		},
+		"toolbar": {
+			"addVariableButton": "Додати змінну"
+		},
+		"table": {
+			"placeholders": {
+				"notFound": "Пошук за змінними не дав результатів",
+				"notAdded": "Ви ще не додали змінні"
+			},
+			"row": {
+				"messages": {
+					"deleteVariable": {
+						"success": "Ви успішно видалили змінну.",
+						"error": "Не вдалося видалити змінну."
+					}
+				},
+				"deleteModal": {
+					"title": "Видалення змінної",
+					"text": "Ви точно хочете видалити змінну?"
+				}
+			}
+		}
+	}
+}

@@ -1,1 +1,31 @@
-{}
+{
+	"title": "Telegram бот",
+	"telegramBotBlockFooter": {
+		"messages": {
+			"startTelegramBot": {
+				"success": "Виконується увімкнення Telegram бота.",
+				"error": "Не вдалося увімкнути Telegram бота."
+			},
+			"restartTelegramBot": {
+				"success": "Виконується перезавантаження Telegram бота.",
+				"error": "Не вдалося перезавантажити Telegram бота."
+			},
+			"stopTelegramBot": {
+				"success": "Виконується вимкнення Telegram бота.",
+				"error": "Не вдалося вимкнути Telegram бота."
+			},
+			"deleteTelegramBot": {
+				"success": "Ви успішно видалили Telegram бота.",
+				"error": "Не вдалося видалити Telegram бота."
+			}
+		},
+		"deleteModal": {
+			"title": "Видалення Telegram бота",
+			"text": "Ви точно хочете видалити Telegram бота?"
+		},
+		"startButton": "Увімкнути",
+		"restartButton": "Перезавантажити",
+		"stopButton": "Вимкнути",
+		"deleteButton": "Видалити"
+	}
+}

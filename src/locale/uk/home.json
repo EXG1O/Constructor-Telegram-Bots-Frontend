@@ -1,1 +1,17 @@
-{}
+{
+	"title": "Безкоштовний конструктор Telegram ботів",
+	"header": {
+		"text": "Сайт, за допомогою якого ви можете легко, безкоштовно та без жодних знань у програмуванні, створити свого багатофункціонального Telegram бота."
+	},
+	"stats": {
+		"title": "Статистика",
+		"usersTotal": "Користувачів",
+		"telegramBotsTotal": "Доданих Telegram ботів",
+		"telegramBotsEnabled": "Увімкнених Telegram ботів",
+		"telegramBotsUsers": "Користувачів Telegram ботів"
+	},
+	"donations": {
+		"title": "Пожертви",
+		"noDonations": "Ще не було зроблено пожертв"
+	}
+}

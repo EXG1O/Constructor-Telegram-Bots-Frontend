@@ -1,1 +1,44 @@
-{}
+{
+	"title": "База даних",
+	"messages": {
+		"getRecords": {
+			"error": "Не вдалося отримати записи бази даних."
+		}
+	},
+	"records": {
+		"title": "Записи бази даних",
+		"messages": {
+			"partialUpdateRecord": {
+				"success": "Ви успішно оновили запис.",
+				"error": "Не вдалося оновити запис.",
+				"error_validJSON": "Введіть правильно дані у форматі JSON.",
+				"error_other": "Сталася непередбачена помилка."
+			}
+		},
+		"recordModal": {
+			"title_add": "Додавання запису",
+			"actionButton_add": "Додати"
+		},
+		"toolbar": {
+			"addRecordButton": "Додати запис"
+		},
+		"list": {
+			"placeholders": {
+				"notFound": "Пошук за записами не дав результатів",
+				"notAdded": "Ви ще не додали записів"
+			},
+			"display": {
+				"messages": {
+					"deleteRecord": {
+						"success": "Ви успішно видалили запис.",
+						"error": "Не вдалося видалити запис."
+					}
+				},
+				"deleteModal": {
+					"title": "Видалення запису",
+					"text": "Ви точно хочете видалити запис?"
+				}
+			}
+		}
+	}
+}
