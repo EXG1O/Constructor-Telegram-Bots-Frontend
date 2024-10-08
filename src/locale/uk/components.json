@@ -7,12 +7,13 @@
 		"inputPlaceholder": "Пошук",
 		"button": "Знайти"
 	},
-	"loginModal": {
-		"title": "Telegram не відкрився?",
-		"text": "Відскануйте QR-код з пристрою, на якому встановлено Telegram.",
-		"link": "Перейти за посиланням"
-	},
 	"loginButton": {
+		"messages": {
+			"userLogin": {
+				"success": "Успішна авторизація.",
+				"error": "Не вдалося пройти авторизацію з невідомих причин."
+			}
+		},
 		"text": "Увійти через Telegram"
 	},
 	"telegramBotBlock": {

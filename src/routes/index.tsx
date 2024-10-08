@@ -26,15 +26,6 @@ export const routes: RouteObject[] = [
 				shouldRevalidate: () => true,
 				children: [
 					{
-						id: 'login',
-						path: 'login/:userID/:confirmCode/',
-						async lazy() {
-							const module = await import('./Login');
-
-							return { loader: module.loader };
-						},
-					},
-					{
 						id: 'home',
 						index: true,
 						async lazy() {

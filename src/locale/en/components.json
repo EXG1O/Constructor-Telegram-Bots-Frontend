@@ -7,12 +7,13 @@
 		"inputPlaceholder": "Search",
 		"button": "Find"
 	},
-	"loginModal": {
-		"title": "Telegram didn`t open?",
-		"text": "Scan the QR-code with the device where Telegram is installed.",
-		"link": "Follow the link"
-	},
 	"loginButton": {
+		"messages": {
+			"userLogin": {
+				"success": "Successful authorization.",
+				"error": "Authorization failed for unknown reasons."
+			}
+		},
 		"text": "Login via Telegram"
 	},
 	"telegramBotBlock": {

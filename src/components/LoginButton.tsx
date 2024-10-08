@@ -1,44 +1,114 @@
-import React, { memo, ReactElement, useCallback, useState } from 'react';
+import React, { memo, ReactElement, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import classNames from 'classnames';
+
+import { reverse } from 'routes';
 
 import Button, { ButtonProps } from 'react-bootstrap/Button';
 
-import LoginModal from './LoginModal';
+import Loading from './Loading';
+import { createMessageToast } from './ToastContainer';
 
 import TelegramIcon from 'assets/icons/telegram.svg';
 
-export type LoginButtonProps = Omit<ButtonProps, 'as' | 'href' | 'target' | 'children'>;
+import { UsersAPI } from 'services/api/users/main';
+import { Data } from 'services/api/users/types';
+
+type AuthData = Data.UsersAPI.Login;
+
+declare global {
+	interface Window {
+		Telegram: {
+			Login: {
+				init: (
+					options?: Record<string, any>,
+					callback?: (authData: AuthData) => void,
+				) => void;
+				open: () => void;
+			};
+		};
+	}
+}
+
+export type LoginButtonProps = Omit<ButtonProps, 'children'>;
 
 function LoginButton({
-	onClick,
+	className,
 	...props
 }: LoginButtonProps): ReactElement<LoginButtonProps> {
 	const { t } = useTranslation('components', { keyPrefix: 'loginButton' });
 
-	const [showModal, setShowModal] = useState<boolean>(false);
+	const navigate = useNavigate();
 
-	function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
-		setShowModal(true);
-		onClick?.(event);
+	const [loading, setLoading] = useState<boolean>(true);
+
+	const buttonRef = useRef<HTMLButtonElement | null>(null);
+
+	async function login(authData: AuthData): Promise<void> {
+		setLoading(true);
+
+		const response = await UsersAPI.login(authData);
+
+		if (!response.ok) {
+			createMessageToast({
+				message: t('messages.userLogin.error'),
+				level: 'error',
+			});
+			setLoading(false);
+			return;
+		}
+
+		createMessageToast({
+			message: t('messages.userLogin.success'),
+			level: 'success',
+		});
+		navigate(reverse('telegram-bots'));
 	}
 
+	useEffect(() => {
+		const createScript = (): void => {
+			if (buttonRef.current) {
+				const script = document.createElement('script');
+				script.src = `https://telegram.org/js/telegram-widget.js?22`;
+				script.onload = () => {
+					window.Telegram.Login.init(
+						{
+							bot_id: process.env.TELEGRAM_BOT_ID,
+							request_access: 'write',
+						},
+						login,
+					);
+					buttonRef.current!.onclick = () => window.Telegram.Login.open();
+					setLoading(false);
+				};
+				buttonRef.current.appendChild(script);
+			} else {
+				setTimeout(createScript, 500);
+			}
+		};
+
+		createScript();
+	}, []);
+
 	return (
-		<>
-			<LoginModal
-				show={showModal}
-				onHide={useCallback(() => setShowModal(false), [])}
-			/>
-			<Button
-				{...props}
-				as='a'
-				href={`tg://resolve?domain=${process.env.TELEGRAM_BOT_USERNAME}&start=login`}
-				className='d-flex align-items-center gap-2'
-				onClick={handleClick}
-			>
-				<TelegramIcon />
-				{t('text')}
-			</Button>
-		</>
+		<Button
+			{...props}
+			ref={buttonRef}
+			disabled={loading}
+			className={classNames(className, 'd-flex align-items-center', {
+				'gap-2': !loading,
+			})}
+		>
+			{!loading ? (
+				<>
+					<TelegramIcon />
+					{t('text')}
+				</>
+			) : (
+				<Loading size='xxs' />
+			)}
+		</Button>
 	);
 }
 

@@ -9,10 +9,15 @@ export interface User {
 }
 
 export namespace Data {
-	export namespace UserAPI {
+	export namespace UsersAPI {
 		export interface Login {
-			user_id: number;
-			confirm_code: string;
+			id: number;
+			first_name: string;
+			last_name?: string;
+			username?: string;
+			photo_url?: string;
+			auth_date: number;
+			hash: string;
 		}
 	}
 }

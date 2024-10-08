@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import { Outlet, useNavigation } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 import AskConfirmModal from 'components/AskConfirmModal';
 import Loading from 'components/Loading';
@@ -17,19 +16,9 @@ export interface LoaderData {
 }
 
 export async function loader(): Promise<LoaderData> {
-	let user: LoaderData['user'] = null;
+	const response = await UserAPI.get();
 
-	if (Cookies.get('auth-token') !== undefined) {
-		const response = await UserAPI.get();
-
-		if (response.ok) {
-			user = response.json;
-		} else {
-			Cookies.remove('auth-token');
-		}
-	}
-
-	return { user };
+	return { user: response.ok ? response.json : null };
 }
 
 function Root(): ReactElement {
