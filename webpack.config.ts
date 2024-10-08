@@ -24,13 +24,14 @@ const config = (env: any, argv: any): Configuration => {
 		},
 		devServer: env.WEBPACK_SERVE
 			? {
+					hot: true,
+					allowedHosts: 'all',
 					historyApiFallback: true,
 					proxy: {
-						context: ['/api/', '/media/'],
+						context: ['/api/', '/media/', '/admin/'],
 						target: 'http://localhost:8000/',
 					},
 					static: `${__dirname}/dist/frontend`,
-					hot: true,
 				}
 			: undefined,
 		module: {
