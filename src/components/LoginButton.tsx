@@ -69,20 +69,31 @@ function LoginButton({
 	useEffect(() => {
 		const createScript = (): void => {
 			if (buttonRef.current) {
-				const script = document.createElement('script');
-				script.src = `https://telegram.org/js/telegram-widget.js?22`;
-				script.onload = () => {
-					window.Telegram.Login.init(
-						{
-							bot_id: process.env.TELEGRAM_BOT_ID,
-							request_access: 'write',
-						},
-						login,
-					);
-					buttonRef.current!.onclick = () => window.Telegram.Login.open();
+				if (process.env.ENABLE_TELEGRAM_AUTH === 'true') {
+					const script = document.createElement('script');
+					script.src = `https://telegram.org/js/telegram-widget.js?22`;
+					script.onload = () => {
+						window.Telegram.Login.init(
+							{
+								bot_id: process.env.TELEGRAM_BOT_ID,
+								request_access: 'write',
+							},
+							login,
+						);
+						buttonRef.current!.onclick = () => window.Telegram.Login.open();
+						setLoading(false);
+					};
+					buttonRef.current.appendChild(script);
+				} else {
+					buttonRef.current.onclick = () =>
+						login({
+							id: 1,
+							first_name: 'Anonymous',
+							auth_date: 0,
+							hash: '*'.repeat(64),
+						});
 					setLoading(false);
-				};
-				buttonRef.current.appendChild(script);
+				}
 			} else {
 				setTimeout(createScript, 500);
 			}
