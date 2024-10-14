@@ -27,11 +27,21 @@ export namespace TelegramBotsAPI {
 	export const url: string = rootURL;
 
 	export async function get() {
-		return await makeRequest<APIResponse.TelegramBotsAPI.Get>(url, 'GET');
+		return await makeRequest<APIResponse.TelegramBotsAPI.Get>(
+			url,
+			'GET',
+			undefined,
+			true,
+		);
 	}
 
 	export async function create(data: Data.TelegramBotsAPI.Create) {
-		return await makeRequest<APIResponse.TelegramBotsAPI.Create>(url, 'POST', data);
+		return await makeRequest<APIResponse.TelegramBotsAPI.Create>(
+			url,
+			'POST',
+			data,
+			true,
+		);
 	}
 }
 
@@ -43,6 +53,8 @@ export namespace TelegramBotAPI {
 		return await makeRequest<APIResponse.TelegramBotAPI.Get>(
 			url(telegramBotID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 
@@ -54,6 +66,7 @@ export namespace TelegramBotAPI {
 			url(telegramBotID),
 			'PUT',
 			data,
+			true,
 		);
 	}
 
@@ -65,23 +78,34 @@ export namespace TelegramBotAPI {
 			url(telegramBotID),
 			'PATCH',
 			data,
+			true,
 		);
 	}
 
 	export async function _delete(telegramBotID: TelegramBot['id']) {
-		return await makeRequest(url(telegramBotID), 'DELETE');
+		return await makeRequest(url(telegramBotID), 'DELETE', undefined, true);
 	}
 
 	export async function start(telegramBotID: TelegramBot['id']) {
-		return await makeRequest(url(telegramBotID) + 'start/', 'POST');
+		return await makeRequest(
+			url(telegramBotID) + 'start/',
+			'POST',
+			undefined,
+			true,
+		);
 	}
 
 	export async function restart(telegramBotID: TelegramBot['id']) {
-		return await makeRequest(url(telegramBotID) + 'restart/', 'POST');
+		return await makeRequest(
+			url(telegramBotID) + 'restart/',
+			'POST',
+			undefined,
+			true,
+		);
 	}
 
 	export async function stop(telegramBotID: TelegramBot['id']) {
-		return await makeRequest(url(telegramBotID) + 'stop/', 'POST');
+		return await makeRequest(url(telegramBotID) + 'stop/', 'POST', undefined, true);
 	}
 }
 
@@ -97,6 +121,7 @@ export namespace ConnectionsAPI {
 			url(telegramBotID),
 			'POST',
 			data,
+			true,
 		);
 	}
 }
@@ -111,7 +136,12 @@ export namespace ConnectionAPI {
 		telegramBotID: TelegramBot['id'],
 		connectionID: Connection['id'],
 	) {
-		return await makeRequest(url(telegramBotID, connectionID), 'DELETE');
+		return await makeRequest(
+			url(telegramBotID, connectionID),
+			'DELETE',
+			undefined,
+			true,
+		);
 	}
 }
 
@@ -123,6 +153,8 @@ export namespace CommandsAPI {
 		return await makeRequest<APIResponse.CommandsAPI.Get>(
 			url(telegramBotID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 
@@ -161,6 +193,7 @@ export namespace CommandsAPI {
 			url(telegramBotID),
 			'POST',
 			formData,
+			true,
 		);
 	}
 }
@@ -178,6 +211,8 @@ export namespace CommandAPI {
 		return await makeRequest<APIResponse.CommandAPI.Get>(
 			url(telegramBotID, commandID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 
@@ -219,6 +254,7 @@ export namespace CommandAPI {
 			url(telegramBotID, commandID),
 			'PUT',
 			formData,
+			true,
 		);
 	}
 
@@ -240,6 +276,7 @@ export namespace CommandAPI {
 			url(telegramBotID, commandID),
 			'PATCH',
 			formData,
+			true,
 		);
 	}
 
@@ -247,7 +284,12 @@ export namespace CommandAPI {
 		telegramBotID: TelegramBot['id'],
 		commandID: Command['id'],
 	) {
-		return await makeRequest(url(telegramBotID, commandID), 'DELETE');
+		return await makeRequest(
+			url(telegramBotID, commandID),
+			'DELETE',
+			undefined,
+			true,
+		);
 	}
 }
 
@@ -259,6 +301,8 @@ export namespace ConditionsAPI {
 		return await makeRequest<APIResponse.ConditionsAPI.Get>(
 			url(telegramBotID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 
@@ -270,6 +314,7 @@ export namespace ConditionsAPI {
 			url(telegramBotID),
 			'POST',
 			data,
+			true,
 		);
 	}
 }
@@ -287,6 +332,8 @@ export namespace ConditionAPI {
 		return await makeRequest<APIResponse.ConditionAPI.Get>(
 			url(telegramBotID, conditionID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 
@@ -299,6 +346,7 @@ export namespace ConditionAPI {
 			url(telegramBotID, conditionID),
 			'PUT',
 			data,
+			true,
 		);
 	}
 
@@ -311,6 +359,7 @@ export namespace ConditionAPI {
 			url(telegramBotID, conditionID),
 			'PATCH',
 			data,
+			true,
 		);
 	}
 
@@ -318,7 +367,12 @@ export namespace ConditionAPI {
 		telegramBotID: TelegramBot['id'],
 		conditionID: Condition['id'],
 	) {
-		return await makeRequest(url(telegramBotID, conditionID), 'DELETE');
+		return await makeRequest(
+			url(telegramBotID, conditionID),
+			'DELETE',
+			undefined,
+			true,
+		);
 	}
 }
 
@@ -330,6 +384,8 @@ export namespace BackgroundTasksAPI {
 		return await makeRequest<APIResponse.BackgroundTasksAPI.Get>(
 			url(telegramBotID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 
@@ -341,6 +397,7 @@ export namespace BackgroundTasksAPI {
 			url(telegramBotID),
 			'POST',
 			data,
+			true,
 		);
 	}
 }
@@ -358,6 +415,8 @@ export namespace BackgroundTaskAPI {
 		return await makeRequest<APIResponse.BackgroundTaskAPI.Get>(
 			url(telegramBotID, backgroundTaskID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 
@@ -370,6 +429,7 @@ export namespace BackgroundTaskAPI {
 			url(telegramBotID, backgroundTaskID),
 			'PUT',
 			data,
+			true,
 		);
 	}
 
@@ -382,6 +442,7 @@ export namespace BackgroundTaskAPI {
 			url(telegramBotID, backgroundTaskID),
 			'PATCH',
 			data,
+			true,
 		);
 	}
 
@@ -389,7 +450,12 @@ export namespace BackgroundTaskAPI {
 		telegramBotID: TelegramBot['id'],
 		backgroundTaskID: BackgroundTask['id'],
 	) {
-		return await makeRequest(url(telegramBotID, backgroundTaskID), 'DELETE');
+		return await makeRequest(
+			url(telegramBotID, backgroundTaskID),
+			'DELETE',
+			undefined,
+			true,
+		);
 	}
 }
 
@@ -401,6 +467,8 @@ export namespace DiagramCommandsAPI {
 		return await makeRequest<APIResponse.DiagramCommandsAPI.Get>(
 			url(telegramBotID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 }
@@ -418,6 +486,8 @@ export namespace DiagramCommandAPI {
 		return await makeRequest<APIResponse.DiagramCommandAPI.Get>(
 			url(telegramBotID, commandID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 
@@ -430,6 +500,7 @@ export namespace DiagramCommandAPI {
 			url(telegramBotID, commandID),
 			'PUT',
 			data,
+			true,
 		);
 	}
 
@@ -442,6 +513,7 @@ export namespace DiagramCommandAPI {
 			url(telegramBotID, commandID),
 			'PATCH',
 			data,
+			true,
 		);
 	}
 }
@@ -454,6 +526,8 @@ export namespace DiagramConditionsAPI {
 		return await makeRequest<APIResponse.DiagramConditionsAPI.Get>(
 			url(telegramBotID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 }
@@ -471,6 +545,8 @@ export namespace DiagramConditionAPI {
 		return await makeRequest<APIResponse.DiagramConditionAPI.Get>(
 			url(telegramBotID, conditionID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 
@@ -483,6 +559,7 @@ export namespace DiagramConditionAPI {
 			url(telegramBotID, conditionID),
 			'PUT',
 			data,
+			true,
 		);
 	}
 
@@ -495,6 +572,7 @@ export namespace DiagramConditionAPI {
 			url(telegramBotID, conditionID),
 			'PATCH',
 			data,
+			true,
 		);
 	}
 }
@@ -507,6 +585,8 @@ export namespace DiagramBackgroundTasksAPI {
 		return await makeRequest<APIResponse.DiagramBackgroundTasksAPI.Get>(
 			url(telegramBotID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 }
@@ -524,6 +604,8 @@ export namespace DiagramBackgroundTaskAPI {
 		return await makeRequest<APIResponse.DiagramBackgroundTaskAPI.Get>(
 			url(telegramBotID, backgroundTaskID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 
@@ -536,6 +618,7 @@ export namespace DiagramBackgroundTaskAPI {
 			url(telegramBotID, backgroundTaskID),
 			'PUT',
 			data,
+			true,
 		);
 	}
 
@@ -548,6 +631,7 @@ export namespace DiagramBackgroundTaskAPI {
 			url(telegramBotID, backgroundTaskID),
 			'PATCH',
 			data,
+			true,
 		);
 	}
 }
@@ -577,7 +661,7 @@ export namespace VariablesAPI {
 			Limit extends number
 				? APIResponse.VariablesAPI.Get.Pagination
 				: APIResponse.VariablesAPI.Get.Default
-		>(url, 'GET');
+		>(url, 'GET', undefined, true);
 	}
 
 	export async function create(
@@ -588,6 +672,7 @@ export namespace VariablesAPI {
 			VariablesAPI.url(telegramBotID),
 			'POST',
 			data,
+			true,
 		);
 	}
 }
@@ -605,6 +690,8 @@ export namespace VariableAPI {
 		return await makeRequest<APIResponse.VariableAPI.Get>(
 			url(telegramBotID, variableID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 
@@ -617,6 +704,7 @@ export namespace VariableAPI {
 			url(telegramBotID, variableID),
 			'PUT',
 			data,
+			true,
 		);
 	}
 
@@ -629,6 +717,7 @@ export namespace VariableAPI {
 			url(telegramBotID, variableID),
 			'PATCH',
 			data,
+			true,
 		);
 	}
 
@@ -636,7 +725,12 @@ export namespace VariableAPI {
 		telegramBotID: TelegramBot['id'],
 		variableID: Variable['id'],
 	) {
-		return await makeRequest(url(telegramBotID, variableID), 'DELETE');
+		return await makeRequest(
+			url(telegramBotID, variableID),
+			'DELETE',
+			undefined,
+			true,
+		);
 	}
 }
 
@@ -667,7 +761,7 @@ export namespace UsersAPI {
 			Limit extends number
 				? APIResponse.UsersAPI.Get.Pagination
 				: APIResponse.UsersAPI.Get.Default
-		>(url, 'GET');
+		>(url, 'GET', undefined, true);
 	}
 }
 
@@ -679,6 +773,8 @@ export namespace UserAPI {
 		return await makeRequest<APIResponse.UserAPI.Get>(
 			url(telegramBotID, userID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 
@@ -691,6 +787,7 @@ export namespace UserAPI {
 			url(telegramBotID, userID),
 			'PUT',
 			data,
+			true,
 		);
 	}
 
@@ -703,6 +800,7 @@ export namespace UserAPI {
 			url(telegramBotID, userID),
 			'PATCH',
 			data,
+			true,
 		);
 	}
 
@@ -710,7 +808,7 @@ export namespace UserAPI {
 		telegramBotID: TelegramBot['id'],
 		userID: User['id'],
 	) {
-		return await makeRequest(url(telegramBotID, userID), 'DELETE');
+		return await makeRequest(url(telegramBotID, userID), 'DELETE', undefined, true);
 	}
 }
 
@@ -739,7 +837,7 @@ export namespace DatabaseRecordsAPI {
 			Limit extends number
 				? APIResponse.DatabaseRecordsAPI.Get.Pagination
 				: APIResponse.DatabaseRecordsAPI.Get.Default
-		>(url, 'GET');
+		>(url, 'GET', undefined, true);
 	}
 
 	export async function create(
@@ -750,6 +848,7 @@ export namespace DatabaseRecordsAPI {
 			DatabaseRecordsAPI.url(telegramBotID),
 			'POST',
 			data,
+			true,
 		);
 	}
 }
@@ -767,6 +866,8 @@ export namespace DatabaseRecordAPI {
 		return await makeRequest<APIResponse.DatabaseRecordAPI.Get>(
 			url(telegramBotID, databaseRecordID),
 			'GET',
+			undefined,
+			true,
 		);
 	}
 
@@ -779,6 +880,7 @@ export namespace DatabaseRecordAPI {
 			url(telegramBotID, databaseRecordID),
 			'PUT',
 			data,
+			true,
 		);
 	}
 
@@ -791,6 +893,7 @@ export namespace DatabaseRecordAPI {
 			url(telegramBotID, databaseRecordID),
 			'PATCH',
 			data,
+			true,
 		);
 	}
 
@@ -798,6 +901,11 @@ export namespace DatabaseRecordAPI {
 		telegramBotID: TelegramBot['id'],
 		databaseRecordID: DatabaseRecord['id'],
 	) {
-		return await makeRequest(url(telegramBotID, databaseRecordID), 'DELETE');
+		return await makeRequest(
+			url(telegramBotID, databaseRecordID),
+			'DELETE',
+			undefined,
+			true,
+		);
 	}
 }

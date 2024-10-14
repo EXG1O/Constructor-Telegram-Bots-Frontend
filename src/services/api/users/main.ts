@@ -24,18 +24,22 @@ export namespace UserAPI {
 	export const url = rootURL + 'me/';
 
 	export async function get() {
-		return await makeRequest<APIResponse.UserAPI.Get>(url, 'GET');
+		return await makeRequest<APIResponse.UserAPI.Get>(url, 'GET', undefined, true);
 	}
 
 	export async function logout() {
-		return await makeRequest(url + 'logout/', 'POST');
+		return await makeRequest(url + 'logout/', 'POST', undefined, true);
 	}
 
 	export async function logoutAll() {
-		return await makeRequest(url + 'logout-all/', 'POST');
+		return await makeRequest(url + 'logout-all/', 'POST', undefined, true);
+	}
+
+	export async function tokenRefresh() {
+		return await makeRequest(url + 'token-refresh/', 'POST', undefined);
 	}
 
 	export async function _delete() {
-		return await makeRequest(url, 'DELETE');
+		return await makeRequest(url, 'DELETE', undefined, true);
 	}
 }

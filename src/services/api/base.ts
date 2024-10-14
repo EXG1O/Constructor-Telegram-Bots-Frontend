@@ -1,3 +1,5 @@
+import { UserAPI } from './users/main';
+
 export namespace APIResponse {
 	export interface Base<Ok extends boolean, Json extends Record<string, any>>
 		extends Omit<Response, 'ok' | 'json'> {
@@ -24,6 +26,7 @@ export async function makeRequest<
 	url: string,
 	method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
 	data?: Record<string, any> | FormData,
+	authRequired: boolean = false,
 ): Promise<
 	| APIResponse.Base<true, SuccessAPIResponse>
 	| APIResponse.Base<false, ErrorAPIResponse>
@@ -41,15 +44,22 @@ export async function makeRequest<
 		}
 	}
 
-	const response: Response = await fetch(url, init);
+	const customFetch = async (): Promise<Response> => {
+		const response: Response = await fetch(url, init);
 
-	let json: any;
+		if (authRequired && response.status === 403) {
+			const refreshResponse = await UserAPI.tokenRefresh();
 
-	try {
-		json = await response.json();
-	} catch {
-		json = {};
-	}
+			if (refreshResponse.ok) {
+				return await fetch(url, init);
+			}
+		}
+
+		return response;
+	};
+
+	const response: Response = await customFetch();
+	const json: any = await response.json().catch(() => ({}));
 
 	return Object.assign(response, { json });
 }
