@@ -63,7 +63,10 @@ function TestBlock(props: TestBlockProps): ReactElement<TestBlockProps> {
 		try {
 			const response = await fetch(url, {
 				method,
-				headers: headers.map((header) => [header.key, header.value]),
+				headers: headers.map<[string, string]>((header) => [
+					header.key,
+					header.value,
+				]),
 				body: method !== 'get' ? body : undefined,
 			});
 
