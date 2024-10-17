@@ -9,7 +9,7 @@ i18n.use(Backend)
 		lng: document.querySelector('html')?.getAttribute('lang') ?? 'ru',
 		ns: 'global',
 		defaultNS: 'global',
-		fallbackLng: 'ru',
+		fallbackLng: false,
 		backend: { loadPath: '/locale/{{lng}}/{{ns}}.json' },
 	});
 
