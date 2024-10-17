@@ -101,8 +101,6 @@ function CommandOffcanvas(
 			<Offcanvas.Footer className='gap-2'>
 				<TelegramBotStorage size='sm' />
 				<AddonButtonGroup store={store} addonButtons={addonButtons} />
-			</Offcanvas.Footer>
-			<Offcanvas.Footer>
 				<Button variant='success' onClick={type === 'add' ? add : save}>
 					{t('commandOffcanvas.button', { context: type })}
 				</Button>
