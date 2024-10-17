@@ -1,18 +1,27 @@
-import { Configuration as WebpackConfiguration } from 'webpack';
+import { DefinePlugin, Configuration as WebpackConfiguration } from 'webpack';
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import Dotenv from 'dotenv-webpack';
 import CopyPlugin from 'copy-webpack-plugin';
+import dotenv from 'dotenv';
 
 interface Configuration extends WebpackConfiguration {
 	devServer?: WebpackDevServerConfiguration;
 }
 
 const config = (env: any, argv: any): Configuration => {
-	const isProduction: boolean = argv.mode !== 'production';
+	const isProduction: boolean = argv.mode === 'production';
+	const publicPath: string = isProduction ? '/static/frontend/' : '/';
+	const envVars: Record<string, string> = Object.assign(
+		dotenv.config().parsed || {},
+		{
+			DEBUG: (!isProduction).toString(),
+			WEBPACK_SERVE: Boolean(env.WEBPACK_SERVE).toString(),
+			PUBLIC_PATH: publicPath,
+		},
+	);
 
 	return {
 		entry: './src/index.tsx',
@@ -48,7 +57,7 @@ const config = (env: any, argv: any): Configuration => {
 				{
 					test: /\.s?css$/,
 					use: [
-						isProduction ? 'style-loader' : MiniCssExtractPlugin.loader,
+						isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
 						'css-loader',
 						'sass-loader',
 					],
@@ -108,22 +117,17 @@ const config = (env: any, argv: any): Configuration => {
 			minimizer: ['...', new CssMinimizerPlugin()],
 		},
 		plugins: [
-			new Dotenv(),
+			new DefinePlugin({
+				'process.env': JSON.stringify(envVars),
+			}),
 			new CopyPlugin({
 				patterns: [{ from: './src/locale', to: 'locale' }],
 			}),
 			new ForkTsCheckerWebpackPlugin(),
-			new HtmlWebpackPlugin(
-				isProduction
-					? {
-							template: './src/dev.html',
-							publicPath: '/',
-						}
-					: {
-							template: './src/prod.html',
-							publicPath: '/static/frontend/',
-						},
-			),
+			new HtmlWebpackPlugin({
+				template: `./src/${isProduction ? 'prod' : 'dev'}.html`,
+				publicPath,
+			}),
 			new MiniCssExtractPlugin({
 				filename: '[name].[contenthash].css',
 			}),

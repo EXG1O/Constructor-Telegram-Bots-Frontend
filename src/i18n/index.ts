@@ -12,7 +12,9 @@ i18n.use(Backend)
 		ns: 'global',
 		defaultNS: 'global',
 		fallbackLng: false,
-		backend: { loadPath: '/locale/{{lng}}/{{ns}}.json' },
+		backend: {
+			loadPath: `${settings.PUBLIC_PATH}locale/{{lng}}/{{ns}}.json`,
+		},
 	});
 
 export default i18n;
