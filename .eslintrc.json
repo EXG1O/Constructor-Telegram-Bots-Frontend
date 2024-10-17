@@ -51,7 +51,8 @@
 					["\\.s?css$"],
 					["^assets/.+"],
 					["^utils/.+"],
-					["^services/api/.+"]
+					["^services/api/.+"],
+					["^settings$"]
 				]
 			}
 		]

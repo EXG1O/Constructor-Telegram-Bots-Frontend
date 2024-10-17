@@ -99,6 +99,7 @@ const config = (env: any, argv: any): Configuration => {
 				components: `${__dirname}/src/components/`,
 				routes: `${__dirname}/src/routes/`,
 				services: `${__dirname}/src/services/`,
+				settings: `${__dirname}/src/settings`,
 				utils: `${__dirname}/src/utils/`,
 				i18n: `${__dirname}/src/i18n/`,
 			},

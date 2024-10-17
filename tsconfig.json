@@ -17,6 +17,7 @@
 			"routes": ["./src/routes"],
 			"routes/*": ["./src/routes/*"],
 			"services/*": ["./src/services/*"],
+			"settings": ["./src/settings"],
 			"utils/*": ["./src/utils/*"],
 			"i18n": ["./src/i18n"],
 			"i18n/*": ["./src/i18n/*"]

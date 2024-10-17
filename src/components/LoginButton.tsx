@@ -15,6 +15,8 @@ import TelegramIcon from 'assets/icons/telegram.svg';
 import { UsersAPI } from 'services/api/users/main';
 import { Data } from 'services/api/users/types';
 
+import settings from 'settings';
+
 type AuthData = Data.UsersAPI.Login;
 
 declare global {
@@ -69,7 +71,7 @@ function LoginButton({
 	useEffect(() => {
 		const createScript = (): void => {
 			if (buttonRef.current) {
-				if (process.env.ENABLE_TELEGRAM_AUTH === 'true') {
+				if (settings.ENABLE_TELEGRAM_AUTH) {
 					const script = document.createElement('script');
 					script.src = `https://telegram.org/js/telegram-widget.js?22`;
 					script.onload = () => {
