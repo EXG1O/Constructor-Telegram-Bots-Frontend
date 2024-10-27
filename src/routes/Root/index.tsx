@@ -8,19 +8,6 @@ import ToastContainer from 'components/ToastContainer';
 import Footer from './components/Footer';
 import Header from './components/Header';
 
-import { UserAPI } from 'services/api/users/main';
-import { User } from 'services/api/users/types';
-
-export interface LoaderData {
-	user: User | null;
-}
-
-export async function loader(): Promise<LoaderData> {
-	const response = await UserAPI.get();
-
-	return { user: response.ok ? response.json : null };
-}
-
 function Root(): ReactElement {
 	const navigation = useNavigation();
 

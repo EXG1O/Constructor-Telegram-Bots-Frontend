@@ -3,7 +3,7 @@ import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
-import { LoaderData as RootLoaderData } from 'routes/Root';
+import useRootRouteLoaderData from 'routes/Root/hooks/useRootRouteLoaderData';
 
 import LoginButton from 'components/LoginButton';
 
@@ -14,7 +14,7 @@ import UserMenuDropdown from './UserMenuDropdown';
 export type ButtonsProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
 function Buttons({ className, ...props }: ButtonsProps): ReactElement<ButtonsProps> {
-	const { user } = useRouteLoaderData('root') as RootLoaderData;
+	const { user } = useRootRouteLoaderData();
 	const telegramBotMenuRootLoaderData = useRouteLoaderData(
 		'telegram-bot-menu-root',
 	) as TelegramBotMenuRootLoaderData | undefined;

@@ -1,14 +1,14 @@
 import React, { ReactElement, useEffect } from 'react';
-import { Outlet, useNavigate, useRouteLoaderData } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 import { reverse } from 'routes';
-import { LoaderData as RootLoaderData } from 'routes/Root';
+import useRootRouteLoaderData from 'routes/Root/hooks/useRootRouteLoaderData';
 
 import Loading from 'components/Loading';
 
 function Root(): ReactElement {
 	const navigate = useNavigate();
-	const { user } = useRouteLoaderData('root') as RootLoaderData;
+	const { user } = useRootRouteLoaderData();
 
 	useEffect(() => {
 		!user && navigate(reverse('home'));

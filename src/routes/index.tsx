@@ -3,6 +3,7 @@ import { RouteObject } from 'react-router-dom';
 import ErrorBoundary from './ErrorBoundary';
 
 export enum RouteID {
+	Root = 'root',
 	Languages = 'languages',
 }
 
@@ -16,15 +17,16 @@ export const routes: RouteObject[] = [
 		},
 		children: [
 			{
-				id: 'root',
+				id: RouteID.Root,
 				path: '/',
 				ErrorBoundary,
 				async lazy() {
-					const module = await import('./Root');
+					const component = await import('./Root');
+					const loader = await import('./Root/loader');
 
 					return {
-						Component: module.default,
-						loader: module.loader,
+						Component: component.default,
+						loader: loader.default,
 					};
 				},
 				shouldRevalidate: () => true,
