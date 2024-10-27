@@ -1,14 +1,13 @@
 import React, { CSSProperties, memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
 import formatDate from 'i18n/formatDate';
-
-import { LoaderData as HomeLoaderData } from '..';
 
 import Row from 'react-bootstrap/Row';
 
 import Block, { BlockProps } from 'components/Block';
+
+import useHomeRouteLoaderData from '../hooks/useHomeRouteLoaderData';
 
 export type DonationsProps = Omit<BlockProps, 'variant' | 'gradient' | 'children'>;
 
@@ -21,7 +20,7 @@ function Donations({
 }: DonationsProps): ReactElement<DonationsProps> {
 	const { t } = useTranslation('home', { keyPrefix: 'donations' });
 
-	const { donations } = useRouteLoaderData('home') as HomeLoaderData;
+	const { donations } = useHomeRouteLoaderData();
 
 	return (
 		<Block

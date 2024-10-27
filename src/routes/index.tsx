@@ -5,6 +5,7 @@ import ErrorBoundary from './ErrorBoundary';
 export enum RouteID {
 	Root = 'root',
 	Languages = 'languages',
+	Home = 'home',
 }
 
 export const routes: RouteObject[] = [
@@ -32,14 +33,15 @@ export const routes: RouteObject[] = [
 				shouldRevalidate: () => true,
 				children: [
 					{
-						id: 'home',
+						id: RouteID.Home,
 						index: true,
 						async lazy() {
-							const module = await import('./Home');
+							const component = await import('./Home');
+							const loader = await import('./Home/loader');
 
 							return {
-								Component: module.default,
-								loader: module.loader,
+								Component: component.default,
+								loader: loader.default,
 							};
 						},
 					},

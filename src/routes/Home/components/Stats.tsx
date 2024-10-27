@@ -1,20 +1,19 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouteLoaderData } from 'react-router-dom';
-
-import { LoaderData as HomeLoaderData } from '..';
 
 import Stack from 'react-bootstrap/Stack';
 
 import Block, { BlockProps } from 'components/Block';
 import InfoArea from 'components/InfoArea';
 
+import useHomeRouteLoaderData from '../hooks/useHomeRouteLoaderData';
+
 export type StatsProps = Omit<BlockProps, 'variant' | 'gradient' | 'children'>;
 
 function Stats({ className, ...props }: StatsProps): ReactElement<StatsProps> {
 	const { t } = useTranslation('home', { keyPrefix: 'stats' });
 
-	const { stats } = useRouteLoaderData('home') as HomeLoaderData;
+	const { stats } = useHomeRouteLoaderData();
 
 	return (
 		<Block {...props} variant='primary' gradient>
