@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import Card, { CardProps } from 'react-bootstrap/Card';
+import Card, { CardProps } from 'components/Card';
 
 import BlockBody from './components/BlockBody';
 import BlockFooter from './components/BlockFooter';
