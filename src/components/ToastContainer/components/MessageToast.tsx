@@ -1,8 +1,9 @@
 import React, { memo, ReactElement, useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 
-import CloseButton from 'react-bootstrap/CloseButton';
 import Toast, { ToastProps } from 'react-bootstrap/Toast';
+
+import CloseButton from 'components/CloseButton';
 
 import SuccessIcon from 'assets/icons/check-circle-fill.svg';
 import ErrorIcon from 'assets/icons/exclamation-triangle-fill.svg';
