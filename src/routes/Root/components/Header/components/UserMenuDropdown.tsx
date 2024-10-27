@@ -4,9 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { reverse } from 'routes';
 
-import Dropdown, { DropdownProps } from 'react-bootstrap/Dropdown';
-
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
+import Dropdown, { DropdownProps } from 'components/Dropdown';
 import { createMessageToast } from 'components/ToastContainer';
 
 import { UserAPI } from 'services/api/users/main';

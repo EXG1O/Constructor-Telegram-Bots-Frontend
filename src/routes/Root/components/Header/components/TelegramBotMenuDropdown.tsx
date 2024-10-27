@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { reverse } from 'routes';
 
-import Dropdown, { DropdownProps } from 'react-bootstrap/Dropdown';
+import Dropdown, { DropdownProps } from 'components/Dropdown';
 
 import { TelegramBot } from 'services/api/telegram_bots/types';
 

@@ -4,8 +4,7 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 import { LoaderData as LanguagesLoaderData } from 'routes/Languages';
 
-import Dropdown, { DropdownProps } from 'react-bootstrap/Dropdown';
-
+import Dropdown, { DropdownProps } from 'components/Dropdown';
 import { createMessageToast } from 'components/ToastContainer';
 
 import { LanguagesAPI } from 'services/api/languages/main';
