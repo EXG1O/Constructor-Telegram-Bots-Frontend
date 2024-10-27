@@ -1,8 +1,7 @@
 import React, { memo, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 
-import Container, { ContainerProps } from 'react-bootstrap/Container';
-
+import Container, { ContainerProps } from './Container';
 import Title from './Title';
 
 export interface PageProps {

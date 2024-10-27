@@ -5,8 +5,9 @@ import classNames from 'classnames';
 import { reverse } from 'routes';
 
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+
+import Container from 'components/Container';
 
 import Buttons from './components/Buttons';
 import Links from './components/Links';

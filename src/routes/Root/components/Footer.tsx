@@ -1,7 +1,7 @@
 import React, { memo, ReactElement } from 'react';
 import classNames from 'classnames';
 
-import Container from 'react-bootstrap/Container';
+import Container from 'components/Container';
 
 import GithubIcon from 'assets/icons/github.svg';
 import TelegramIcon from 'assets/icons/telegram.svg';
