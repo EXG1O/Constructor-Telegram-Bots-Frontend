@@ -2,9 +2,13 @@ import { RouteObject } from 'react-router-dom';
 
 import ErrorBoundary from './ErrorBoundary';
 
+export enum RouteID {
+	Languages = 'languages',
+}
+
 export const routes: RouteObject[] = [
 	{
-		id: 'languages',
+		id: RouteID.Languages,
 		async lazy() {
 			const loader = await import('./Languages/loader');
 
