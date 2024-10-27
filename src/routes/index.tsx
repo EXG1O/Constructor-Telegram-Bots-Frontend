@@ -6,9 +6,9 @@ export const routes: RouteObject[] = [
 	{
 		id: 'languages',
 		async lazy() {
-			const module = await import('./Languages');
+			const loader = await import('./Languages/loader');
 
-			return { loader: module.loader };
+			return { loader: loader.default };
 		},
 		children: [
 			{

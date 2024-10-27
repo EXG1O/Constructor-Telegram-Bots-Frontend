@@ -1,8 +1,7 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouteLoaderData } from 'react-router-dom';
 
-import { LoaderData as LanguagesLoaderData } from 'routes/Languages';
+import useLanguagesRouteLoaderData from 'routes/Languages/hooks/useLanguagesRouteLoaderData';
 
 import Dropdown, { DropdownProps } from 'components/Dropdown';
 import { createMessageToast } from 'components/ToastContainer';
@@ -16,7 +15,7 @@ function LanguagesDropdown(
 ): ReactElement<LanguagesDropdownProps> {
 	const { t, i18n } = useTranslation('root', { keyPrefix: 'languagesDropdown' });
 
-	const { languages } = useRouteLoaderData('languages') as LanguagesLoaderData;
+	const { languages } = useLanguagesRouteLoaderData();
 
 	async function setLanguage(langCode: string): Promise<void> {
 		const response = await LanguagesAPI.set({ lang_code: langCode });

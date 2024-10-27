@@ -5,7 +5,7 @@ export interface LoaderData {
 	languages: APIResponse.LanguagesAPI.Get;
 }
 
-export async function loader(): Promise<LoaderData> {
+async function loader(): Promise<LoaderData> {
 	const response = await LanguagesAPI.get();
 
 	if (!response.ok) {
@@ -14,3 +14,5 @@ export async function loader(): Promise<LoaderData> {
 
 	return { languages: response.json };
 }
+
+export default loader;
