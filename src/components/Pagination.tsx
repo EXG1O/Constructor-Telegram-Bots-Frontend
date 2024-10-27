@@ -4,6 +4,8 @@ import BasePagination, {
 	PaginationProps as BasePaginationProps,
 } from 'react-bootstrap/Pagination';
 
+import('./Pagination.scss');
+
 export interface PaginationProps extends Omit<BasePaginationProps, 'children'> {
 	itemCount: number;
 	itemLimit: number;

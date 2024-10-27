@@ -1,16 +1,10 @@
-@import '~bootstrap/scss/mixins/banner';
-@include bsBanner('');
-
-// Configuration
-@import 'variables';
-@import '~bootstrap/scss/maps';
-@import '~bootstrap/scss/mixins';
-@import 'utilities';
-
-// Layout & components
+@import 'base';
 @import 'root';
 @import '~bootstrap/scss/reboot';
 @import '~bootstrap/scss/type';
+@import '~bootstrap/scss/helpers';
+@import '~bootstrap/scss/utilities/api';
+
 // @import '~bootstrap/scss/images';
 @import '~bootstrap/scss/containers';
 @import '~bootstrap/scss/grid';
@@ -25,7 +19,6 @@
 @import '~bootstrap/scss/card';
 // @import '~bootstrap/scss/accordion';
 // @import '~bootstrap/scss/breadcrumb';
-@import 'pagination';
 // @import '~bootstrap/scss/badge';
 // @import '~bootstrap/scss/alert';
 @import '~bootstrap/scss/progress';
@@ -39,9 +32,3 @@
 // @import '~bootstrap/scss/spinners';
 @import 'offcanvas';
 // @import '~bootstrap/scss/placeholders';
-
-// Helpers
-@import '~bootstrap/scss/helpers';
-
-// Utilities
-@import '~bootstrap/scss/utilities/api';
