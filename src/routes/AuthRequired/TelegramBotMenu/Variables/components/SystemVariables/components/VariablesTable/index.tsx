@@ -2,7 +2,7 @@ import React, { HTMLAttributes, ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import Table from 'react-bootstrap/Table';
+import Table from 'components/Table';
 
 import TableRow from './components/TableRow';
 

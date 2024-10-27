@@ -2,9 +2,8 @@ import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import Table from 'react-bootstrap/Table';
-
 import Loading from 'components/Loading';
+import Table from 'components/Table';
 
 import TableRow from './components/TableRow';
 import TableWrapper, { BlockProps } from './components/TableWrapper';

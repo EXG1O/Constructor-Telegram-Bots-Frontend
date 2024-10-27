@@ -1,9 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Table from 'react-bootstrap/Table';
-
 import Loading from 'components/Loading';
+import Table from 'components/Table';
 
 import TableRow from './components/TableRow';
 import TableWrapper from './components/TableWrapper';
