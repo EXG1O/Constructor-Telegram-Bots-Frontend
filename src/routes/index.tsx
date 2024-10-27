@@ -11,6 +11,7 @@ export enum RouteID {
 	DonationCompleted = 'donation-completed',
 	Instruction = 'instruction',
 	PrivacyPolicy = 'privacy-policy',
+	TelegramBots = 'telegram-bots',
 }
 
 export const routes: RouteObject[] = [
@@ -126,16 +127,19 @@ export const routes: RouteObject[] = [
 						},
 						children: [
 							{
-								id: 'telegram-bots',
+								id: RouteID.TelegramBots,
 								path: 'telegram-bots/',
 								async lazy() {
-									const module = await import(
+									const component = await import(
 										'./AuthRequired/TelegramBots'
+									);
+									const loader = await import(
+										'./AuthRequired/TelegramBots/loader'
 									);
 
 									return {
-										Component: module.default,
-										loader: module.loader,
+										Component: component.default,
+										loader: loader.default,
 									};
 								},
 							},
