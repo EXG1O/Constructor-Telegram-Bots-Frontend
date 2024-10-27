@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import classNames from 'classnames';
 
-import Carousel from 'react-bootstrap/Carousel';
+import Carousel from 'components/Carousel';
 
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
 
