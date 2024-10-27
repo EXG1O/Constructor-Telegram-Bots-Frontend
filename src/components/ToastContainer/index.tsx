@@ -6,6 +6,8 @@ export { createMessageToast } from './components/MessageToast';
 
 import { useToastContainerStore } from './store';
 
+import('./index.scss');
+
 function ToastContainer(): ReactElement {
 	const toasts = useToastContainerStore((state) => state.toasts);
 
