@@ -11,7 +11,7 @@ import { createMessageToast } from 'components/ToastContainer';
 
 import useTelegramBots from '../services/hooks/useTelegramBots';
 
-import { APIResponse } from 'services/api/base';
+import { APIResponse } from 'services/api/core';
 import { TelegramBotsAPI } from 'services/api/telegram_bots/main';
 import { Data } from 'services/api/telegram_bots/types';
 

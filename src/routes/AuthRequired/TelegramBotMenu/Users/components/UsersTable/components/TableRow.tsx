@@ -24,7 +24,7 @@ import KeyIcon from 'assets/icons/key.svg';
 import KeyFillIcon from 'assets/icons/key-fill.svg';
 import TrashIcon from 'assets/icons/trash.svg';
 
-import { makeRequest } from 'services/api/base';
+import { makeRequest } from 'services/api/core';
 import { UserAPI } from 'services/api/telegram_bots/main';
 import { User } from 'services/api/telegram_bots/types';
 
