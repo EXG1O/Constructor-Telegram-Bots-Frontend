@@ -1,32 +1,16 @@
 import React, { ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouteLoaderData } from 'react-router-dom';
 
 import Page from 'components/Page';
 
 import SectionDisplay from './components/SectionDisplay';
 
-import { SectionsAPI } from 'services/api/privacy_policy/main';
-import { APIResponse } from 'services/api/privacy_policy/types';
-
-export interface LoaderData {
-	sections: APIResponse.SectionsAPI.Get;
-}
-
-export async function loader(): Promise<LoaderData> {
-	const response = await SectionsAPI.get();
-
-	if (!response.ok) {
-		throw Error('Failed to fetch data.');
-	}
-
-	return { sections: response.json };
-}
+import usePrivacyPolicyRouteLoaderData from './hooks/usePrivacyPolicyRouteLoaderData';
 
 function PrivacyPolicy(): ReactElement {
 	const { t, i18n } = useTranslation('privacy-policy');
 
-	const { sections } = useRouteLoaderData('privacy-policy') as LoaderData;
+	const { sections } = usePrivacyPolicyRouteLoaderData();
 
 	const title = useMemo<string>(() => t('title'), [i18n.language]);
 

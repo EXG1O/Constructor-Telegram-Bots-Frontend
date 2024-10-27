@@ -10,6 +10,7 @@ export enum RouteID {
 	Donation = 'donation-index',
 	DonationCompleted = 'donation-completed',
 	Instruction = 'instruction',
+	PrivacyPolicy = 'privacy-policy',
 }
 
 export const routes: RouteObject[] = [
@@ -105,14 +106,15 @@ export const routes: RouteObject[] = [
 						},
 					},
 					{
-						id: 'privacy-policy',
+						id: RouteID.PrivacyPolicy,
 						path: 'privacy-policy/',
 						async lazy() {
-							const module = await import('./PrivacyPolicy');
+							const component = await import('./PrivacyPolicy');
+							const loader = await import('./PrivacyPolicy/loader');
 
 							return {
-								Component: module.default,
-								loader: module.loader,
+								Component: component.default,
+								loader: loader.default,
 							};
 						},
 					},
