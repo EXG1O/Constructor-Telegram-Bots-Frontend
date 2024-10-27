@@ -2,13 +2,17 @@
 @import 'root';
 @import '~bootstrap/scss/reboot';
 @import '~bootstrap/scss/type';
+@import '~bootstrap/scss/grid';
+@import '~bootstrap/scss/transitions';
 @import '~bootstrap/scss/helpers';
 @import '~bootstrap/scss/utilities/api';
 
+@import 'forms'; // FIXME: Add lazy loading in the future.
+
+// If you need the styles of the components below, then add lazy loading...
+// support for this component first.
+
 // @import '~bootstrap/scss/images';
-@import '~bootstrap/scss/grid';
-@import 'forms';
-@import '~bootstrap/scss/transitions';
 // @import '~bootstrap/scss/nav';
 // @import '~bootstrap/scss/navbar';
 // @import '~bootstrap/scss/accordion';
