@@ -4,6 +4,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import dotenv from 'dotenv';
 
@@ -114,7 +115,7 @@ const config = (env: any, argv: any): Configuration => {
 			},
 		},
 		optimization: {
-			minimizer: ['...', new CssMinimizerPlugin()],
+			minimizer: ['...', new JsonMinimizerPlugin(), new CssMinimizerPlugin()],
 		},
 		plugins: [
 			new DefinePlugin({
