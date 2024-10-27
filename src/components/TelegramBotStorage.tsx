@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import classNames from 'classnames';
 
-import ProgressBar from 'react-bootstrap/ProgressBar';
+import ProgressBar from './ProgressBar';
 
 import { TelegramBot } from 'services/api/telegram_bots/types';
 
