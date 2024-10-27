@@ -1,9 +1,10 @@
 import React, { CSSProperties, memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Button from 'react-bootstrap/Button';
 import Input from 'react-bootstrap/FormControl';
 import InputGroup, { InputGroupProps } from 'react-bootstrap/InputGroup';
+
+import Button from 'components/Button';
 
 import useAPIRequestBlockStore from '../../../hooks/useAPIRequestBlockStore';
 

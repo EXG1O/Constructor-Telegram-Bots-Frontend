@@ -1,8 +1,7 @@
 import React, { ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Button from 'react-bootstrap/Button';
-
+import Button from 'components/Button';
 import Offcanvas, { OffcanvasProps } from 'components/Offcanvas';
 
 import APIRequestBlock from './components/APIRequestBlock';

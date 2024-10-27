@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import { reverse } from 'routes';
 
-import Button, { ButtonProps } from 'react-bootstrap/Button';
+import Button, { ButtonProps } from 'components/Button';
 
 import Loading from './Loading';
 import { createMessageToast } from './ToastContainer';

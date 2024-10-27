@@ -1,11 +1,11 @@
 import React, { memo, ReactElement, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Button from 'react-bootstrap/Button';
 import Feedback from 'react-bootstrap/Feedback';
 import Input from 'react-bootstrap/FormControl';
 import Switch from 'react-bootstrap/Switch';
 
+import Button from 'components/Button';
 import Modal, { ModalProps } from 'components/Modal';
 import { createMessageToast } from 'components/ToastContainer';
 

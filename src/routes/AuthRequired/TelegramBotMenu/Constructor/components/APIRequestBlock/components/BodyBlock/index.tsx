@@ -1,8 +1,9 @@
 import React, { HTMLAttributes, memo, ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Button, { ButtonProps } from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
+
+import Button, { ButtonProps } from 'components/Button';
 
 import BlockCollapse from './components/BlockCollapse';
 import BodyEditor from './components/BodyEditor';

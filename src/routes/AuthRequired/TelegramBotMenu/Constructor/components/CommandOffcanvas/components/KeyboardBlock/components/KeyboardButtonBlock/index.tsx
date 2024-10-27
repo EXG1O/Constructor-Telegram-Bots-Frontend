@@ -2,7 +2,7 @@ import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import Button from 'react-bootstrap/Button';
+import Button from 'components/Button';
 
 import BlockCollapse from './components/BlockCollapse';
 import TextInput, { defaultText, Text } from './components/TextInput';

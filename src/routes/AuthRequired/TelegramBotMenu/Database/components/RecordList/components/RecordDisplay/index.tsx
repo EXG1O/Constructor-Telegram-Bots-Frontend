@@ -9,10 +9,10 @@ import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
 
-import Button from 'react-bootstrap/Button';
 import ListGroupItem, { ListGroupItemProps } from 'react-bootstrap/ListGroupItem';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
+import Button from 'components/Button';
 import Loading from 'components/Loading';
 import MonacoEditor, { MonacoEditorProps } from 'components/MonacoEditor';
 import { createMessageToast } from 'components/ToastContainer';

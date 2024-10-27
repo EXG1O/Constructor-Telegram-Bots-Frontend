@@ -1,6 +1,6 @@
 import React, { memo, ReactElement } from 'react';
 
-import Button, { ButtonProps } from 'react-bootstrap/Button';
+import Button, { ButtonProps } from 'components/Button';
 
 import useAddonButtonGroupStore from '../hooks/useAddonButtonGroupStore';
 

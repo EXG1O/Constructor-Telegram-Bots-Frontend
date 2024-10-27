@@ -8,9 +8,9 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 
+import Button from 'components/Button';
 import { createMessageToast } from 'components/ToastContainer';
 
 import useAPIRequestBlockStore from '../hooks/useAPIRequestBlockStore';

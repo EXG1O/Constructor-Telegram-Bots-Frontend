@@ -2,10 +2,11 @@ import React, { HTMLAttributes, memo, ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 import Input from 'react-bootstrap/FormControl';
 import InputGroup, { InputGroupProps } from 'react-bootstrap/InputGroup';
+
+import Button from 'components/Button';
 
 import SearchIcon from 'assets/icons/search.svg';
 import XIcon from 'assets/icons/x.svg';

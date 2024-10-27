@@ -2,8 +2,9 @@ import React, { HTMLAttributes, memo, ReactElement, useMemo, useState } from 're
 import { useTranslation } from 'react-i18next';
 import { StoreApi, UseBoundStore } from 'zustand';
 
-import Button, { ButtonProps } from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
+
+import Button, { ButtonProps } from 'components/Button';
 
 import AddonButton, { AddonButtonProps } from './components/AddonButton';
 import StoreContext from './contexts/StoreContext';

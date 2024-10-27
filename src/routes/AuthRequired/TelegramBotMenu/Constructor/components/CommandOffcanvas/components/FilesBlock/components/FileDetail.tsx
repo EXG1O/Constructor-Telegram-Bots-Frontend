@@ -1,7 +1,7 @@
 import React, { CSSProperties, HTMLAttributes, memo, ReactElement } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
-import Button from 'react-bootstrap/Button';
+import Button from 'components/Button';
 
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
 

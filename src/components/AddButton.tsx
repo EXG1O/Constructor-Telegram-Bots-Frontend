@@ -1,7 +1,7 @@
 import React, { memo, ReactElement, useMemo } from 'react';
 import classNames from 'classnames';
 
-import Button, { ButtonProps } from 'react-bootstrap/Button';
+import Button, { ButtonProps } from 'components/Button';
 
 import PlusIcon from 'assets/icons/plus.svg';
 

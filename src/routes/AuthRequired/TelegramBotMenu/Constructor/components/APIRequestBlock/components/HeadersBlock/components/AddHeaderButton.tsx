@@ -1,7 +1,7 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Button, { ButtonProps } from 'react-bootstrap/Button';
+import Button, { ButtonProps } from 'components/Button';
 
 import useAPIRequestBlockStore from '../../../hooks/useAPIRequestBlockStore';
 

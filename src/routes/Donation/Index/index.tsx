@@ -2,8 +2,7 @@ import React, { ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router-dom';
 
-import Button from 'react-bootstrap/Button';
-
+import Button from 'components/Button';
 import Page from 'components/Page';
 
 import SectionDisplay from './components/SectionDisplay';

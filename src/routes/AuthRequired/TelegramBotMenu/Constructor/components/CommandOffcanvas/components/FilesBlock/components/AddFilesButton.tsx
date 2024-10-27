@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { _File } from '..';
 
-import Button, { ButtonProps } from 'react-bootstrap/Button';
-
+import Button, { ButtonProps } from 'components/Button';
 import { createMessageToast } from 'components/ToastContainer';
 
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
