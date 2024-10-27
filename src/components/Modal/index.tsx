@@ -11,6 +11,8 @@ import ModalContext from './contexts/ModalContext';
 
 import Loading from '../Loading';
 
+import('./index.scss');
+
 export interface ModalProps
 	extends Omit<
 		BaseModalProps,
