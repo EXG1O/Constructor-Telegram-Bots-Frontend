@@ -1,6 +1,5 @@
 import React, { ReactElement, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouteLoaderData } from 'react-router-dom';
 
 import Loading from 'components/Loading';
 import Page from 'components/Page';
@@ -9,36 +8,16 @@ import { createMessageToast } from 'components/ToastContainer';
 
 import UpdateDisplay from './components/UpdateDisplay';
 
+import useUpdatesRouteLoaderData from './hooks/useUpdatesRouteLoaderData';
+
 import { UpdatesAPI } from 'services/api/updates/main';
-import { APIResponse } from 'services/api/updates/types';
 
-export interface PaginationData extends APIResponse.UpdatesAPI.Get.Pagination {
-	limit: number;
-	offset: number;
-}
-
-export interface LoaderData {
-	paginationData: PaginationData;
-}
-
-export async function loader(): Promise<LoaderData> {
-	const [limit, offset] = [3, 0];
-
-	const response = await UpdatesAPI.get(limit, offset);
-
-	if (!response.ok) {
-		throw Error('Failed to fetch data.');
-	}
-
-	return { paginationData: { ...response.json, limit, offset } };
-}
+import { PaginationData } from './loader';
 
 function Updates(): ReactElement {
 	const { t, i18n } = useTranslation('updates');
 
-	const { paginationData: initialPaginationData } = useRouteLoaderData(
-		'updates',
-	) as LoaderData;
+	const { paginationData: initialPaginationData } = useUpdatesRouteLoaderData();
 
 	const [paginationData, setPaginationData] =
 		useState<PaginationData>(initialPaginationData);

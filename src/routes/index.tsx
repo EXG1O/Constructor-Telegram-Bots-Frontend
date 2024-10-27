@@ -6,6 +6,7 @@ export enum RouteID {
 	Root = 'root',
 	Languages = 'languages',
 	Home = 'home',
+	Updates = 'updates',
 }
 
 export const routes: RouteObject[] = [
@@ -46,14 +47,15 @@ export const routes: RouteObject[] = [
 						},
 					},
 					{
-						id: 'updates',
+						id: RouteID.Updates,
 						path: 'updates/',
 						async lazy() {
-							const module = await import('./Updates');
+							const component = await import('./Updates');
+							const loader = await import('./Updates/loader');
 
 							return {
-								Component: module.default,
-								loader: module.loader,
+								Component: component.default,
+								loader: loader.default,
 							};
 						},
 					},
