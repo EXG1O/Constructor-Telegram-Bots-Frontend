@@ -11,6 +11,8 @@ import OffcanvasContext from './contexts/OffcanvasContext';
 
 import Loading from '../Loading';
 
+import('./index.scss');
+
 export interface OffcanvasProps
 	extends Omit<
 		BaseModalProps,
