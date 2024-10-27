@@ -1,32 +1,16 @@
 import React, { ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouteLoaderData } from 'react-router-dom';
 
 import Page from 'components/Page';
 
 import SectionDisplay from './components/SectionDisplay';
 
-import { SectionsAPI } from 'services/api/instruction/main';
-import { APIResponse } from 'services/api/instruction/types';
-
-export interface LoaderData {
-	sections: APIResponse.SectionsAPI.Get;
-}
-
-export async function loader(): Promise<LoaderData> {
-	const response = await SectionsAPI.get();
-
-	if (!response.ok) {
-		throw Error('Failed to fetch data.');
-	}
-
-	return { sections: response.json };
-}
+import useInstructionRouteLoaderData from './hooks/useInstructionRouteLoaderData';
 
 function Instruction(): ReactElement {
 	const { t, i18n } = useTranslation('instruction');
 
-	const { sections } = useRouteLoaderData('instruction') as LoaderData;
+	const { sections } = useInstructionRouteLoaderData();
 
 	const title = useMemo<string>(() => t('title'), [i18n.language]);
 
