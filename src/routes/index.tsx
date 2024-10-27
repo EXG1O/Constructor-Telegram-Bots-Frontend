@@ -7,6 +7,8 @@ export enum RouteID {
 	Languages = 'languages',
 	Home = 'home',
 	Updates = 'updates',
+	Donation = 'donation-index',
+	DonationCompleted = 'donation-completed',
 }
 
 export const routes: RouteObject[] = [
@@ -63,19 +65,22 @@ export const routes: RouteObject[] = [
 						path: 'donation/',
 						children: [
 							{
-								id: 'donation-index',
+								id: RouteID.Donation,
 								index: true,
 								async lazy() {
-									const module = await import('./Donation/Index');
+									const component = await import('./Donation/Index');
+									const loader = await import(
+										'./Donation/Index/loader'
+									);
 
 									return {
-										Component: module.default,
-										loader: module.loader,
+										Component: component.default,
+										loader: loader.default,
 									};
 								},
 							},
 							{
-								id: 'donation-completed',
+								id: RouteID.DonationCompleted,
 								path: 'completed/',
 								async lazy() {
 									const module = await import('./Donation/Completed');
