@@ -2,8 +2,7 @@ import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import ListGroup, { ListGroupProps } from 'react-bootstrap/ListGroup';
-
+import ListGroup, { ListGroupProps } from 'components/ListGroup';
 import Loading from 'components/Loading';
 
 import RecordDisplay from './components/RecordDisplay';
