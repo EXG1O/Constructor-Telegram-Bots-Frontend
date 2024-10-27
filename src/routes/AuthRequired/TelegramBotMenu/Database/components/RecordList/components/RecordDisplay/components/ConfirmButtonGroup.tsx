@@ -1,8 +1,7 @@
 import React, { memo, ReactElement } from 'react';
 
-import ButtonGroup, { ButtonGroupProps } from 'react-bootstrap/ButtonGroup';
-
 import Button from 'components/Button';
+import ButtonGroup, { ButtonGroupProps } from 'components/ButtonGroup';
 
 import CheckIcon from 'assets/icons/check.svg';
 import XIcon from 'assets/icons/x.svg';
