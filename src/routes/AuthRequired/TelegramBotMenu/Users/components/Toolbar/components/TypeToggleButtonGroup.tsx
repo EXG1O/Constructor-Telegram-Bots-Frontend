@@ -1,13 +1,12 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouteLoaderData } from 'react-router-dom';
+
+import useTelegramBotMenuRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRouteLoaderData';
 
 import ToggleButton, { ToggleButtonProps } from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup, {
 	ToggleButtonRadioProps,
 } from 'react-bootstrap/ToggleButtonGroup';
-
-import { LoaderData as TelegramBotMenuRootLoaderData } from '../../../../Root';
 
 import useUsersStore from '../../../hooks/useUsersStore';
 
@@ -39,9 +38,7 @@ function TypeToggleButtonGroup(
 		keyPrefix: 'toolbar.typeButtonGroup',
 	});
 
-	const { telegramBot } = useRouteLoaderData(
-		'telegram-bot-menu-root',
-	) as TelegramBotMenuRootLoaderData;
+	const { telegramBot } = useTelegramBotMenuRouteLoaderData();
 
 	const type = useUsersStore((state) => state.type);
 	const updateUsers = useUsersStore((state) => state.updateUsers);

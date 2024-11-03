@@ -1,7 +1,6 @@
 import React, { memo, ReactElement, ReactNode, useEffect, useMemo } from 'react';
-import { useRouteLoaderData } from 'react-router-dom';
 
-import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
+import useTelegramBotMenuRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRouteLoaderData';
 
 import StoreContext from '../contexts/StoreContext';
 
@@ -16,9 +15,7 @@ function StoreProvider({
 	onAdd,
 	onSave,
 }: StoreProviderProps): ReactElement<StoreProviderProps> {
-	const { telegramBot } = useRouteLoaderData(
-		'telegram-bot-menu-root',
-	) as TelegramBotMenuRootLoaderData;
+	const { telegramBot } = useTelegramBotMenuRouteLoaderData();
 
 	const store = useMemo(() => createStore({ telegramBot, onAdd, onSave }), []);
 

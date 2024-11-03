@@ -1,6 +1,6 @@
 import { Params, redirect } from 'react-router-dom';
 
-import { reverse } from 'routes';
+import { reverse, RouteID } from 'routes';
 
 import { TelegramBotAPI } from 'services/api/telegram_bots/main';
 import { APIResponse } from 'services/api/telegram_bots/types';
@@ -9,7 +9,7 @@ export interface LoaderData {
 	telegramBot: APIResponse.TelegramBotAPI.Get;
 }
 
-export async function loader({
+async function loader({
 	params,
 }: {
 	params: Params<'telegramBotID'>;
@@ -17,7 +17,7 @@ export async function loader({
 	const { telegramBotID } = params;
 
 	if (telegramBotID === undefined) {
-		return redirect(reverse('personal-cabinet'));
+		return redirect(reverse(RouteID.TelegramBots));
 	}
 
 	const response = await TelegramBotAPI.get(parseInt(telegramBotID));
@@ -28,3 +28,5 @@ export async function loader({
 
 	return { telegramBot: response.json };
 }
+
+export default loader;

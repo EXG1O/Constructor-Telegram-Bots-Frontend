@@ -6,8 +6,9 @@ import React, {
 	useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
+
+import useTelegramBotMenuRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRouteLoaderData';
 
 import ListGroupItem, { ListGroupItemProps } from 'react-bootstrap/ListGroupItem';
 
@@ -21,7 +22,6 @@ import ConfirmButtonGroup, {
 	ConfirmButtonGroupProps,
 } from './components/ConfirmButtonGroup';
 
-import { LoaderData as TelegramBotMenuRootLoaderData } from '../../../../../Root';
 import Wrapper from '../Wrapper';
 
 import useDatabaseRecordsStore from '../../../../hooks/useDatabaseRecordsStore';
@@ -49,9 +49,7 @@ function RecordDisplay({
 		keyPrefix: 'records',
 	});
 
-	const { telegramBot } = useRouteLoaderData(
-		'telegram-bot-menu-root',
-	) as TelegramBotMenuRootLoaderData;
+	const { telegramBot } = useTelegramBotMenuRouteLoaderData();
 
 	const updateRecords = useDatabaseRecordsStore((state) => state.updateRecords);
 

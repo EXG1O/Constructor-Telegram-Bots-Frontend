@@ -8,10 +8,9 @@ import React, {
 	useMemo,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouteLoaderData } from 'react-router-dom';
 import formatDate from 'i18n/formatDate';
 
-import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
+import useTelegramBotMenuRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRouteLoaderData';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import { createMessageToast } from 'components/ToastContainer';
@@ -47,9 +46,7 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
 		keyPrefix: 'table.row',
 	});
 
-	const { telegramBot } = useRouteLoaderData(
-		'telegram-bot-menu-root',
-	) as TelegramBotMenuRootLoaderData;
+	const { telegramBot } = useTelegramBotMenuRouteLoaderData();
 
 	const updateUsers = useUsersStore((state) => state.updateUsers);
 

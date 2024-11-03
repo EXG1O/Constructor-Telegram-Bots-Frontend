@@ -1,8 +1,7 @@
 import React, { HTMLAttributes, memo, ReactElement } from 'react';
-import { useRouteLoaderData } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
+import useTelegramBotMenuRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRouteLoaderData';
 import useRootRouteLoaderData from 'routes/Root/hooks/useRootRouteLoaderData';
 
 import LoginButton from 'components/LoginButton';
@@ -11,14 +10,17 @@ import LanguagesDropdown from './LanguagesDropdown';
 import TelegramBotMenuDropdown from './TelegramBotMenuDropdown';
 import UserMenuDropdown from './UserMenuDropdown';
 
+import { TelegramBot } from 'services/api/telegram_bots/types';
+
 export type ButtonsProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
 function Buttons({ className, ...props }: ButtonsProps): ReactElement<ButtonsProps> {
 	const { user } = useRootRouteLoaderData();
-	const telegramBotMenuRootLoaderData = useRouteLoaderData(
-		'telegram-bot-menu-root',
-	) as TelegramBotMenuRootLoaderData | undefined;
-	const telegramBot = telegramBotMenuRootLoaderData?.telegramBot;
+	const telegramBotMenuRootLoaderData = useTelegramBotMenuRouteLoaderData() as
+		| ReturnType<typeof useTelegramBotMenuRouteLoaderData>
+		| undefined;
+	const telegramBot: TelegramBot | undefined =
+		telegramBotMenuRootLoaderData?.telegramBot;
 
 	return (
 		<div

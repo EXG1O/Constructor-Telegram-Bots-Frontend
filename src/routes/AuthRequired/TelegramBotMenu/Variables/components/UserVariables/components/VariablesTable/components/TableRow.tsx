@@ -1,8 +1,7 @@
 import React, { CSSProperties, memo, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouteLoaderData } from 'react-router-dom';
 
-import { LoaderData as TelegramBotMenuRootLoaderData } from 'routes/AuthRequired/TelegramBotMenu/Root';
+import useTelegramBotMenuRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRouteLoaderData';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import { createMessageToast } from 'components/ToastContainer';
@@ -28,9 +27,7 @@ function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
 		keyPrefix: 'user.table.row',
 	});
 
-	const { telegramBot } = useRouteLoaderData(
-		'telegram-bot-menu-root',
-	) as TelegramBotMenuRootLoaderData;
+	const { telegramBot } = useTelegramBotMenuRouteLoaderData();
 
 	const updateVariables = useUserVariablesStore((state) => state.updateVariables);
 

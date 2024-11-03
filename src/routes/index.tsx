@@ -12,6 +12,7 @@ export enum RouteID {
 	Instruction = 'instruction',
 	PrivacyPolicy = 'privacy-policy',
 	TelegramBots = 'telegram-bots',
+	TelegramBotMenu = 'telegram-bot-menu-root',
 }
 
 export const routes: RouteObject[] = [
@@ -144,14 +145,14 @@ export const routes: RouteObject[] = [
 								},
 							},
 							{
-								id: 'telegram-bot-menu-root',
+								id: RouteID.TelegramBotMenu,
 								path: 'telegram-bot-menu/:telegramBotID/',
 								async lazy() {
-									const module = await import(
-										'./AuthRequired/TelegramBotMenu/Root'
+									const loader = await import(
+										'./AuthRequired/TelegramBotMenu/Root/loader'
 									);
 
-									return { loader: module.loader };
+									return { loader: loader.default };
 								},
 								shouldRevalidate: () => true,
 								children: [
