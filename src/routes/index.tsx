@@ -13,6 +13,7 @@ export enum RouteID {
 	PrivacyPolicy = 'privacy-policy',
 	TelegramBots = 'telegram-bots',
 	TelegramBotMenu = 'telegram-bot-menu-root',
+	TelegramBotMenuVariables = 'telegram-bot-menu-variables',
 }
 
 export const routes: RouteObject[] = [
@@ -168,16 +169,19 @@ export const routes: RouteObject[] = [
 										},
 									},
 									{
-										id: 'telegram-bot-menu-variables',
+										id: RouteID.TelegramBotMenuVariables,
 										path: 'variables/',
 										async lazy() {
-											const module = await import(
+											const component = await import(
 												'./AuthRequired/TelegramBotMenu/Variables'
+											);
+											const loader = await import(
+												'./AuthRequired/TelegramBotMenu/Variables/loader'
 											);
 
 											return {
-												Component: module.default,
-												loader: module.loader,
+												Component: component.default,
+												loader: loader.default,
 											};
 										},
 									},
