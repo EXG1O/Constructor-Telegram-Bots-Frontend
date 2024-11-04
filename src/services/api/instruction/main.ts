@@ -4,10 +4,10 @@ import { APIResponse } from './types';
 
 const rootUrl: string = '/api/instruction/';
 
-export namespace SectionsAPI {
-	const url: string = rootUrl + 'sections/';
+export class SectionsAPI {
+	static url: string = rootUrl + 'sections/';
 
-	export async function get() {
-		return await makeRequest<APIResponse.SectionsAPI.Get>(url, 'GET');
+	static async get() {
+		return makeRequest<APIResponse.SectionsAPI.Get>(this.url, 'GET');
 	}
 }
