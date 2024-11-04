@@ -4,42 +4,38 @@ import { APIResponse, Data } from './types';
 
 const rootURL: string = '/api/users/';
 
-export namespace StatsAPI {
-	export const url = rootURL + 'stats/';
+export class StatsAPI {
+	static url: string = rootURL + 'stats/';
 
-	export async function get() {
-		return await makeRequest<APIResponse.StatsAPI.Get>(url, 'GET');
+	static async get() {
+		return makeRequest<APIResponse.StatsAPI.Get>(this.url, 'GET');
 	}
 }
 
-export namespace UsersAPI {
-	export const url = rootURL;
+export class UsersAPI {
+	static url: string = rootURL;
 
-	export async function login(data: Data.UsersAPI.Login) {
-		return await makeRequest(url + 'login/', 'POST', data);
+	static async login(data: Data.UsersAPI.Login) {
+		return makeRequest(this.url + 'login/', 'POST', data);
 	}
 }
 
-export namespace UserAPI {
-	export const url = rootURL + 'me/';
+export class UserAPI {
+	static url: string = rootURL + 'me/';
 
-	export async function get() {
-		return await makeRequest<APIResponse.UserAPI.Get>(url, 'GET', undefined, true);
+	static async get() {
+		return makeRequest<APIResponse.UserAPI.Get>(this.url, 'GET', undefined, true);
 	}
-
-	export async function logout() {
-		return await makeRequest(url + 'logout/', 'POST', undefined, true);
+	static async logout() {
+		return makeRequest(this.url + 'logout/', 'POST', undefined, true);
 	}
-
-	export async function logoutAll() {
-		return await makeRequest(url + 'logout-all/', 'POST', undefined, true);
+	static async logoutAll() {
+		return makeRequest(this.url + 'logout-all/', 'POST', undefined, true);
 	}
-
-	export async function tokenRefresh() {
-		return await makeRequest(url + 'token-refresh/', 'POST', undefined);
+	static async tokenRefresh() {
+		return makeRequest(this.url + 'token-refresh/', 'POST', undefined);
 	}
-
-	export async function _delete() {
-		return await makeRequest(url, 'DELETE', undefined, true);
+	static async delete() {
+		return makeRequest(this.url, 'DELETE', undefined, true);
 	}
 }
