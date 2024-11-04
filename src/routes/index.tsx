@@ -3,8 +3,8 @@ import { RouteObject } from 'react-router-dom';
 import ErrorBoundary from './ErrorBoundary';
 
 export enum RouteID {
-	Root = 'root',
 	Languages = 'languages',
+	Root = 'root',
 	Home = 'home',
 	Updates = 'updates',
 	Donation = 'donation-index',
@@ -12,8 +12,12 @@ export enum RouteID {
 	Instruction = 'instruction',
 	PrivacyPolicy = 'privacy-policy',
 	TelegramBots = 'telegram-bots',
-	TelegramBotMenu = 'telegram-bot-menu-root',
+	TelegramBotMenuRoot = 'telegram-bot-menu-root',
+	TelegramBotMenu = 'telegram-bot-menu-index',
 	TelegramBotMenuVariables = 'telegram-bot-menu-variables',
+	TelegramBotMenuUsers = 'telegram-bot-menu-users',
+	TelegramBotMenuDatabase = 'telegram-bot-menu-database',
+	TelegramBotMenuConstructor = 'telegram-bot-menu-constructor',
 }
 
 export const routes: RouteObject[] = [
@@ -30,8 +34,10 @@ export const routes: RouteObject[] = [
 				path: '/',
 				ErrorBoundary,
 				async lazy() {
-					const component = await import('./Root');
-					const loader = await import('./Root/loader');
+					const [component, loader] = await Promise.all([
+						await import('./Root'),
+						await import('./Root/loader'),
+					]);
 
 					return {
 						Component: component.default,
@@ -44,8 +50,10 @@ export const routes: RouteObject[] = [
 						id: RouteID.Home,
 						index: true,
 						async lazy() {
-							const component = await import('./Home');
-							const loader = await import('./Home/loader');
+							const [component, loader] = await Promise.all([
+								await import('./Home'),
+								await import('./Home/loader'),
+							]);
 
 							return {
 								Component: component.default,
@@ -57,8 +65,10 @@ export const routes: RouteObject[] = [
 						id: RouteID.Updates,
 						path: 'updates/',
 						async lazy() {
-							const component = await import('./Updates');
-							const loader = await import('./Updates/loader');
+							const [component, loader] = await Promise.all([
+								await import('./Updates'),
+								await import('./Updates/loader'),
+							]);
 
 							return {
 								Component: component.default,
@@ -73,10 +83,10 @@ export const routes: RouteObject[] = [
 								id: RouteID.Donation,
 								index: true,
 								async lazy() {
-									const component = await import('./Donation/Index');
-									const loader = await import(
-										'./Donation/Index/loader'
-									);
+									const [component, loader] = await Promise.all([
+										await import('./Donation/Index'),
+										await import('./Donation/Index/loader'),
+									]);
 
 									return {
 										Component: component.default,
@@ -99,8 +109,10 @@ export const routes: RouteObject[] = [
 						id: RouteID.Instruction,
 						path: 'instruction/',
 						async lazy() {
-							const component = await import('./Instruction');
-							const loader = await import('./Instruction/loader');
+							const [component, loader] = await Promise.all([
+								await import('./Instruction'),
+								await import('./Instruction/loader'),
+							]);
 
 							return {
 								Component: component.default,
@@ -112,8 +124,10 @@ export const routes: RouteObject[] = [
 						id: RouteID.PrivacyPolicy,
 						path: 'privacy-policy/',
 						async lazy() {
-							const component = await import('./PrivacyPolicy');
-							const loader = await import('./PrivacyPolicy/loader');
+							const [component, loader] = await Promise.all([
+								await import('./PrivacyPolicy'),
+								await import('./PrivacyPolicy/loader'),
+							]);
 
 							return {
 								Component: component.default,
@@ -132,12 +146,12 @@ export const routes: RouteObject[] = [
 								id: RouteID.TelegramBots,
 								path: 'telegram-bots/',
 								async lazy() {
-									const component = await import(
-										'./AuthRequired/TelegramBots'
-									);
-									const loader = await import(
-										'./AuthRequired/TelegramBots/loader'
-									);
+									const [component, loader] = await Promise.all([
+										await import('./AuthRequired/TelegramBots'),
+										await import(
+											'./AuthRequired/TelegramBots/loader'
+										),
+									]);
 
 									return {
 										Component: component.default,
@@ -146,7 +160,7 @@ export const routes: RouteObject[] = [
 								},
 							},
 							{
-								id: RouteID.TelegramBotMenu,
+								id: RouteID.TelegramBotMenuRoot,
 								path: 'telegram-bot-menu/:telegramBotID/',
 								async lazy() {
 									const loader = await import(
@@ -158,7 +172,7 @@ export const routes: RouteObject[] = [
 								shouldRevalidate: () => true,
 								children: [
 									{
-										id: 'telegram-bot-menu-index',
+										id: RouteID.TelegramBotMenu,
 										index: true,
 										async lazy() {
 											const module = await import(
@@ -172,12 +186,15 @@ export const routes: RouteObject[] = [
 										id: RouteID.TelegramBotMenuVariables,
 										path: 'variables/',
 										async lazy() {
-											const component = await import(
-												'./AuthRequired/TelegramBotMenu/Variables'
-											);
-											const loader = await import(
-												'./AuthRequired/TelegramBotMenu/Variables/loader'
-											);
+											const [component, loader] =
+												await Promise.all([
+													await import(
+														'./AuthRequired/TelegramBotMenu/Variables'
+													),
+													await import(
+														'./AuthRequired/TelegramBotMenu/Variables/loader'
+													),
+												]);
 
 											return {
 												Component: component.default,
@@ -186,7 +203,7 @@ export const routes: RouteObject[] = [
 										},
 									},
 									{
-										id: 'telegram-bot-menu-users',
+										id: RouteID.TelegramBotMenuUsers,
 										path: 'users/',
 										async lazy() {
 											const module = await import(
@@ -200,7 +217,7 @@ export const routes: RouteObject[] = [
 										},
 									},
 									{
-										id: 'telegram-bot-menu-database',
+										id: RouteID.TelegramBotMenuDatabase,
 										path: 'database/',
 										async lazy() {
 											const module = await import(
@@ -214,7 +231,7 @@ export const routes: RouteObject[] = [
 										},
 									},
 									{
-										id: 'telegram-bot-menu-constructor',
+										id: RouteID.TelegramBotMenuConstructor,
 										path: 'constructor/',
 										async lazy() {
 											const module = await import(

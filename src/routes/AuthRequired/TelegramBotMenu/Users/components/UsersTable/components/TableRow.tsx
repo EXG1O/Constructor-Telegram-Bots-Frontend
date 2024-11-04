@@ -10,7 +10,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import formatDate from 'i18n/formatDate';
 
-import useTelegramBotMenuRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRouteLoaderData';
+import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import { createMessageToast } from 'components/ToastContainer';
@@ -46,7 +46,7 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
 		keyPrefix: 'table.row',
 	});
 
-	const { telegramBot } = useTelegramBotMenuRouteLoaderData();
+	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
 	const updateUsers = useUsersStore((state) => state.updateUsers);
 

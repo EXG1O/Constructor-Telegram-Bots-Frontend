@@ -2,7 +2,7 @@ import React, { memo, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Handle, NodeProps, Position, useStore } from 'reactflow';
 
-import useTelegramBotMenuRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRouteLoaderData';
+import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import './CommandNode.scss';
 import Stack from 'react-bootstrap/Stack';
@@ -26,7 +26,7 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 		keyPrefix: 'nodes.command',
 	});
 
-	const { telegramBot } = useTelegramBotMenuRouteLoaderData();
+	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
 	const onNodesChange = useStore((state) => state.onNodesChange);
 

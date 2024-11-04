@@ -1,6 +1,6 @@
 import React, { memo, ReactElement, ReactNode, useCallback, useMemo } from 'react';
 
-import useTelegramBotMenuRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRouteLoaderData';
+import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import StoreContext from '../contexts/StoreContext';
 
@@ -15,7 +15,7 @@ export interface StoreProviderProps {
 function StoreProvider({
 	children,
 }: StoreProviderProps): ReactElement<StoreProviderProps> {
-	const { telegramBot } = useTelegramBotMenuRouteLoaderData();
+	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
 	const updateRecords = useDatabaseRecordsStore((state) => state.updateRecords);
 

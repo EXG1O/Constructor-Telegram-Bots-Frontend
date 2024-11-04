@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import classNames from 'classnames';
 
-import useTelegramBotMenuRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRouteLoaderData';
+import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 import useRootRouteLoaderData from 'routes/Root/hooks/useRootRouteLoaderData';
 
 import LoginButton from 'components/LoginButton';
@@ -16,8 +16,8 @@ export type ButtonsProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
 function Buttons({ className, ...props }: ButtonsProps): ReactElement<ButtonsProps> {
 	const { user } = useRootRouteLoaderData();
-	const telegramBotMenuRootLoaderData = useTelegramBotMenuRouteLoaderData() as
-		| ReturnType<typeof useTelegramBotMenuRouteLoaderData>
+	const telegramBotMenuRootLoaderData = useTelegramBotMenuRootRouteLoaderData() as
+		| ReturnType<typeof useTelegramBotMenuRootRouteLoaderData>
 		| undefined;
 	const telegramBot: TelegramBot | undefined =
 		telegramBotMenuRootLoaderData?.telegramBot;

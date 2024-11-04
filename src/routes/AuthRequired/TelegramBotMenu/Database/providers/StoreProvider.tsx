@@ -1,7 +1,7 @@
 import React, { memo, ReactElement, ReactNode, useEffect, useMemo } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 
-import useTelegramBotMenuRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRouteLoaderData';
+import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import { LoaderData as TelegramBotMenuDatabaseLoaderData } from '..';
 
@@ -16,7 +16,7 @@ export interface StoreProviderProps {
 function StoreProvider({
 	children,
 }: StoreProviderProps): ReactElement<StoreProviderProps> {
-	const { telegramBot } = useTelegramBotMenuRouteLoaderData();
+	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 	const { paginationData: initialPaginationData } = useRouteLoaderData(
 		'telegram-bot-menu-database',
 	) as TelegramBotMenuDatabaseLoaderData;

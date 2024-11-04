@@ -18,7 +18,7 @@ import ReactFlow, {
 	useNodesState,
 } from 'reactflow';
 
-import useTelegramBotMenuRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRouteLoaderData';
+import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import Page from 'components/Page';
 import { createMessageToast } from 'components/ToastContainer';
@@ -108,7 +108,7 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 function Constructor(): ReactElement {
 	const { t, i18n } = useTranslation('telegram-bot-menu-constructor');
 
-	const { telegramBot } = useTelegramBotMenuRouteLoaderData();
+	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 	const { diagramCommands, diagramConditions, diagramBackgroundTasks } =
 		useRouteLoaderData('telegram-bot-menu-constructor') as LoaderData;
 

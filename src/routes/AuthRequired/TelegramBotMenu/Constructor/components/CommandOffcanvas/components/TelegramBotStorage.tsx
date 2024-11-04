@@ -1,6 +1,6 @@
 import React, { memo, ReactElement } from 'react';
 
-import useTelegramBotMenuRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRouteLoaderData';
+import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import BaseTelegramBotStorage, {
 	TelegramBotStorageProps as BaseTelegramBotStorageProps,
@@ -16,7 +16,7 @@ export type TelegramBotStorageProps = Omit<
 function TelegramBotStorage(
 	props: TelegramBotStorageProps,
 ): ReactElement<TelegramBotStorageProps> {
-	const { telegramBot } = useTelegramBotMenuRouteLoaderData();
+	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
 	const { usedStorageSize } = useTelegramBotStorage();
 

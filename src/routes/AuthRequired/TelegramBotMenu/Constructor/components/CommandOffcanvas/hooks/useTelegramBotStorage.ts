@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import useTelegramBotMenuRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRouteLoaderData';
+import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import useCommandOffcanvasStore from './useCommandOffcanvasStore';
 
@@ -11,7 +11,7 @@ export interface TelegramBotStorage {
 }
 
 function useTelegramBotStorage(): TelegramBotStorage {
-	const { telegramBot } = useTelegramBotMenuRouteLoaderData();
+	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
 	const images = useCommandOffcanvasStore((state) => state.images);
 	const files = useCommandOffcanvasStore((state) => state.files);

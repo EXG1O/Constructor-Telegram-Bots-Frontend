@@ -8,7 +8,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import useTelegramBotMenuRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRouteLoaderData';
+import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import ListGroupItem, { ListGroupItemProps } from 'react-bootstrap/ListGroupItem';
 
@@ -49,7 +49,7 @@ function RecordDisplay({
 		keyPrefix: 'records',
 	});
 
-	const { telegramBot } = useTelegramBotMenuRouteLoaderData();
+	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
 	const updateRecords = useDatabaseRecordsStore((state) => state.updateRecords);
 
