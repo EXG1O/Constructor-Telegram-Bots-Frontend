@@ -4,14 +4,11 @@ import { APIResponse } from './types';
 
 const rootURL: string = '/api/updates/';
 
-export namespace UpdatesAPI {
-	export const url: string = rootURL;
+export class UpdatesAPI {
+	static url: string = rootURL;
 
-	export async function get<Limit extends number | undefined>(
-		limit?: Limit,
-		offset?: number,
-	) {
-		let url: string = UpdatesAPI.url;
+	static async get<Limit extends number | undefined>(limit?: Limit, offset?: number) {
+		let url: string = this.url;
 
 		if (limit || offset) {
 			const params = new URLSearchParams();
@@ -21,7 +18,7 @@ export namespace UpdatesAPI {
 			url += `?${params.toString()}`;
 		}
 
-		return await makeRequest<
+		return makeRequest<
 			Limit extends number
 				? APIResponse.UpdatesAPI.Get.Pagination
 				: APIResponse.UpdatesAPI.Get.Default
