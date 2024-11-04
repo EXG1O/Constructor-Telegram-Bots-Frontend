@@ -10,7 +10,7 @@ import ToggleButtonGroup, {
 
 import useUsersStore from '../../../hooks/useUsersStore';
 
-import { Type } from '../../..';
+import { Type } from '../../../loader';
 
 export type TypeToggleButtonGroupProps = Omit<
 	ToggleButtonRadioProps<Type>,

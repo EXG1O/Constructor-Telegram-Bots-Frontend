@@ -2,12 +2,12 @@ import i18n from 'i18n';
 import { TOptions } from 'i18next';
 import { create } from 'zustand';
 
-import { Type } from '.';
-
 import { createMessageToast } from 'components/ToastContainer';
 
 import { UsersAPI } from 'services/api/telegram_bots/main';
 import { TelegramBot, User } from 'services/api/telegram_bots/types';
+
+import { Type } from './loader';
 
 export interface StateParams {
 	telegramBot: TelegramBot;
