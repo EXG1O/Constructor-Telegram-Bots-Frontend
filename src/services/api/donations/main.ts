@@ -4,14 +4,11 @@ import { APIResponse } from './types';
 
 const rootURL: string = '/api/donation/';
 
-export namespace DonationsAPI {
-	export const url: string = rootURL + 'donations/';
+export class DonationsAPI {
+	static url: string = rootURL + 'donations/';
 
-	export async function get<Limit extends number | undefined>(
-		limit?: Limit,
-		offset?: number,
-	) {
-		let url: string = DonationsAPI.url;
+	static async get<Limit extends number | undefined>(limit?: Limit, offset?: number) {
+		let url: string = this.url;
 
 		if (limit || offset) {
 			const params = new URLSearchParams();
@@ -21,7 +18,7 @@ export namespace DonationsAPI {
 			url += `?${params.toString()}`;
 		}
 
-		return await makeRequest<
+		return makeRequest<
 			Limit extends number
 				? APIResponse.DonationsAPI.Get.Pagination
 				: APIResponse.DonationsAPI.Get.Default
@@ -29,18 +26,18 @@ export namespace DonationsAPI {
 	}
 }
 
-export namespace SectionsAPI {
-	export const url: string = rootURL + 'sections/';
+export class SectionsAPI {
+	static url: string = rootURL + 'sections/';
 
-	export async function get() {
-		return await makeRequest<APIResponse.SectionsAPI.Get>(url, 'GET');
+	static async get() {
+		return makeRequest<APIResponse.SectionsAPI.Get>(this.url, 'GET');
 	}
 }
 
-export namespace ButtonsAPI {
-	export const url: string = rootURL + 'buttons/';
+export class ButtonsAPI {
+	static url: string = rootURL + 'buttons/';
 
-	export async function get() {
-		return await makeRequest<APIResponse.ButtonsAPI.Get>(url, 'GET');
+	static async get() {
+		return makeRequest<APIResponse.ButtonsAPI.Get>(this.url, 'GET');
 	}
 }
