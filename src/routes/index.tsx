@@ -246,13 +246,19 @@ export const routes: RouteObject[] = [
 										id: RouteID.TelegramBotMenuConstructor,
 										path: 'constructor/',
 										async lazy() {
-											const module = await import(
-												'./AuthRequired/TelegramBotMenu/Constructor'
-											);
+											const [component, loader] =
+												await Promise.all([
+													await import(
+														'./AuthRequired/TelegramBotMenu/Constructor'
+													),
+													await import(
+														'./AuthRequired/TelegramBotMenu/Constructor/loader'
+													),
+												]);
 
 											return {
-												Component: module.default,
-												loader: module.loader,
+												Component: component.default,
+												loader: loader.default,
 											};
 										},
 									},

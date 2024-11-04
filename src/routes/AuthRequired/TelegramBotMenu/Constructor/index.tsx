@@ -1,6 +1,5 @@
 import React, { ReactElement, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Params, useRouteLoaderData } from 'react-router-dom';
 import ReactFlow, {
 	addEdge as baseAddEdge,
 	Background,
@@ -27,6 +26,8 @@ import CommandNode from './components/CommandNode';
 import CommandOffcanvas from './components/CommandOffcanvas';
 import Panel from './components/Panel';
 
+import useTelegramBotMenuConstructorRouteLoaderData from './hooks/useTelegramBotMenuConstructorRouteLoaderData';
+
 import 'reactflow/dist/base.css';
 import './index.scss';
 
@@ -34,13 +35,9 @@ import {
 	ConnectionAPI,
 	ConnectionsAPI,
 	DiagramBackgroundTaskAPI,
-	DiagramBackgroundTasksAPI,
 	DiagramCommandAPI,
-	DiagramCommandsAPI,
 	DiagramConditionAPI,
-	DiagramConditionsAPI,
 } from 'services/api/telegram_bots/main';
-import { APIResponse } from 'services/api/telegram_bots/types';
 
 import {
 	parseDiagramBackgroundTaskEdges,
@@ -50,44 +47,6 @@ import {
 	parseDiagramConditionEdges,
 	parseDiagramConditionNodes,
 } from './utils';
-
-export interface LoaderData {
-	diagramCommands: APIResponse.DiagramCommandsAPI.Get;
-	diagramConditions: APIResponse.DiagramConditionsAPI.Get;
-	diagramBackgroundTasks: APIResponse.DiagramBackgroundTasksAPI.Get;
-}
-
-export async function loader({
-	params,
-}: {
-	params: Params<'telegramBotID'>;
-}): Promise<LoaderData | Response> {
-	const telegramBotID: number = parseInt(params.telegramBotID!);
-
-	const [
-		diagramCommandsResponse,
-		diagramConditionsResponse,
-		diagramBackgroundTasksResponse,
-	] = await Promise.all([
-		DiagramCommandsAPI.get(telegramBotID),
-		DiagramConditionsAPI.get(telegramBotID),
-		DiagramBackgroundTasksAPI.get(telegramBotID),
-	]);
-
-	if (
-		!diagramCommandsResponse.ok ||
-		!diagramConditionsResponse.ok ||
-		!diagramBackgroundTasksResponse.ok
-	) {
-		throw Error('Failed to fetch data.');
-	}
-
-	return {
-		diagramCommands: diagramCommandsResponse.json,
-		diagramConditions: diagramConditionsResponse.json,
-		diagramBackgroundTasks: diagramBackgroundTasksResponse.json,
-	};
-}
 
 type SourceHandle = [
 	'command' | 'condition' | 'background_task',
@@ -110,7 +69,7 @@ function Constructor(): ReactElement {
 
 	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 	const { diagramCommands, diagramConditions, diagramBackgroundTasks } =
-		useRouteLoaderData('telegram-bot-menu-constructor') as LoaderData;
+		useTelegramBotMenuConstructorRouteLoaderData();
 
 	const [nodes, setNodes, onNodesChange] = useNodesState(
 		Object.assign(
