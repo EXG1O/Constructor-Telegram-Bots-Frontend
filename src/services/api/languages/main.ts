@@ -4,14 +4,13 @@ import { APIResponse, Data } from './types';
 
 const rootURL: string = '/api/languages/';
 
-export namespace LanguagesAPI {
-	const url: string = rootURL;
+export class LanguagesAPI {
+	static url: string = rootURL;
 
-	export async function get() {
-		return await makeRequest<APIResponse.LanguagesAPI.Get>(url, 'GET');
+	static async get() {
+		return makeRequest<APIResponse.LanguagesAPI.Get>(this.url, 'GET');
 	}
-
-	export async function set(data: Data.LanguagesAPI.Set) {
-		return await makeRequest(url, 'POST', data);
+	static async set(data: Data.LanguagesAPI.Set) {
+		return makeRequest(this.url, 'POST', data);
 	}
 }
