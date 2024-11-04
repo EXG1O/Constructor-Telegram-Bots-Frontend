@@ -85,7 +85,7 @@ function RecordDisplay({
 				onConfirm: async () => {
 					setLoadingAskConfirmModal(true);
 
-					const response = await DatabaseRecordAPI._delete(
+					const response = await DatabaseRecordAPI.delete(
 						telegramBot.id,
 						record.id,
 					);

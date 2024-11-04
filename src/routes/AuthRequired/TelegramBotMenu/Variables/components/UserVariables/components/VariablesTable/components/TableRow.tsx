@@ -45,7 +45,7 @@ function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
 				onConfirm: async () => {
 					setLoadingAskConfirmModal(true);
 
-					const response = await VariableAPI._delete(
+					const response = await VariableAPI.delete(
 						telegramBot.id,
 						variable.id,
 					);

@@ -158,7 +158,7 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
 			showAskConfirmModal(
 				t('deleteModal.title'),
 				t('deleteModal.text'),
-				() => UserAPI._delete(telegramBot.id, user.id),
+				() => UserAPI.delete(telegramBot.id, user.id),
 				t('messages.deleteUser.success'),
 				t('messages.deleteUser.error'),
 			),

@@ -43,7 +43,7 @@ function TelegramBotBlockFooter(
 				onConfirm: async () => {
 					setLoadingAskConfirmModal(true);
 
-					const response = await TelegramBotAPI._delete(telegramBot.id);
+					const response = await TelegramBotAPI.delete(telegramBot.id);
 
 					if (response.ok) {
 						hideAskConfirmModal();

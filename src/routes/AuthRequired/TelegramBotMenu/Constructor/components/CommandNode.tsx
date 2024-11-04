@@ -48,7 +48,7 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 				onConfirm: async () => {
 					setLoadingAskConfirmModal(true);
 
-					const response = await CommandAPI._delete(telegramBot.id, data.id);
+					const response = await CommandAPI.delete(telegramBot.id, data.id);
 
 					if (response.ok) {
 						onNodesChange?.([{ id, type: 'remove' }]);

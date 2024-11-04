@@ -175,7 +175,7 @@ function Constructor(): ReactElement {
 		shouldUpdateEdges: boolean = true,
 	): Promise<void> {
 		if (edge.sourceHandle) {
-			const response = await ConnectionAPI._delete(
+			const response = await ConnectionAPI.delete(
 				telegramBot.id,
 				parseInt(edge.id.split('-')[1]),
 			);
