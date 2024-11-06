@@ -1,14 +1,26 @@
 import React, { memo, ReactElement, useCallback, useMemo, useRef } from 'react';
 import classNames from 'classnames';
-import { editor } from 'monaco-editor';
+import * as monacoCore from 'monaco-editor';
 
 import('./index.scss');
 
-import Editor, { EditorProps, Monaco, OnChange, OnMount } from '@monaco-editor/react';
+import Editor, {
+	EditorProps,
+	loader,
+	Monaco,
+	OnChange,
+	OnMount,
+} from '@monaco-editor/react';
 
 import EditorLoading from './components/EditorLoading';
 
-export interface Editor extends editor.IStandaloneCodeEditor {
+import settings from 'settings';
+
+if (!settings.WEBPACK_SERVE) {
+	loader.config({ monaco: monacoCore });
+}
+
+export interface Editor extends monacoCore.editor.IStandaloneCodeEditor {
 	updateLayout: (shouldResetWidth?: boolean) => void;
 }
 
@@ -24,7 +36,7 @@ const lineHeights: Record<string, number> = { sm: 19, lg: 22 };
 const fontSizes: Record<string, number> = { sm: 14, lg: 18 };
 const roundedValues: Record<string, number> = { sm: 1, lg: 3 };
 
-const baseOptions: editor.IStandaloneEditorConstructionOptions = {
+const baseOptions: monacoCore.editor.IStandaloneEditorConstructionOptions = {
 	minimap: { enabled: false },
 	renderLineHighlight: 'none',
 	lineNumbersMinChars: 3,
@@ -61,7 +73,8 @@ function MonacoEditor({
 	const updateLayout = useCallback((resetWidth?: boolean) => {
 		if (!editor.current) return;
 
-		const editorModel: editor.ITextModel | null = editor.current.getModel();
+		const editorModel: monacoCore.editor.ITextModel | null =
+			editor.current.getModel();
 
 		if (editorModel === null) return;
 
