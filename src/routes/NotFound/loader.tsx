@@ -11,7 +11,7 @@ export type LoaderData = Response;
 const langNamespace: string = 'not-found';
 const langOptions: TOptions = { ns: langNamespace };
 
-export async function loader(): Promise<LoaderData> {
+async function loader(): Promise<LoaderData> {
 	await i18n.loadNamespaces(langNamespace);
 
 	createMessageToast({
@@ -21,3 +21,5 @@ export async function loader(): Promise<LoaderData> {
 
 	return redirect(reverse('home'));
 }
+
+export default loader;

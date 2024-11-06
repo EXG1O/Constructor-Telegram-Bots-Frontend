@@ -269,9 +269,9 @@ export const routes: RouteObject[] = [
 					{
 						path: '*',
 						async lazy() {
-							const module = await import('./NotFound');
+							const loader = await import('./NotFound/loader');
 
-							return { loader: module.loader };
+							return { loader: loader.default };
 						},
 					},
 				],
