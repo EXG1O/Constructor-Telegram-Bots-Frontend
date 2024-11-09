@@ -1,9 +1,9 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
 import classNames from 'classnames';
 
-import './SectionDisplay.scss';
-
 import { Section } from 'services/api/privacy_policy/types';
+
+import('styles/dynamic-content.scss');
 
 export interface SectionDisplayProps
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
@@ -16,7 +16,7 @@ function SectionDisplay({
 	...props
 }: SectionDisplayProps): ReactElement<SectionDisplayProps> {
 	return (
-		<div {...props} className={classNames('privacy-policy-section', className)}>
+		<div {...props} className={classNames('dynamic-content', className)}>
 			<h3 className='mb-1'>{section.title}</h3>
 			<div dangerouslySetInnerHTML={{ __html: section.text }} />
 		</div>

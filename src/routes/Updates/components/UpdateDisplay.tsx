@@ -1,9 +1,9 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
 import classNames from 'classnames';
 
-import './UpdateDisplay.scss';
-
 import { Update } from 'services/api/updates/types';
+
+import('styles/dynamic-content.scss');
 
 export interface UpdateDisplayProps
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'dangerouslySetInnerHTML'> {
@@ -18,7 +18,7 @@ function UpdateDisplay({
 	return (
 		<div
 			{...props}
-			className={classNames('update-block border rounded p-3', className)}
+			className={classNames('dynamic-content border rounded p-3', className)}
 			dangerouslySetInnerHTML={{ __html: update.description }}
 		/>
 	);
