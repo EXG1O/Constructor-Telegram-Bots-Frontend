@@ -1,12 +1,10 @@
 import React, { memo, ReactElement, useId, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import ToggleButton, {
-	ToggleButtonProps as BaseToggleButtonProps,
-} from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup, {
+	ToggleButtonProps,
 	ToggleButtonRadioProps,
-} from 'react-bootstrap/ToggleButtonGroup';
+} from 'components/ToggleButtonGroup';
 
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
 
@@ -17,11 +15,8 @@ export type KeyboardTypeButtonGroupProps = Omit<
 	'id' | 'type' | 'name' | 'value' | 'children' | 'onChange'
 >;
 
-interface ToggleButtonProps
-	extends Omit<
-		BaseToggleButtonProps,
-		'key' | 'id' | 'size' | 'variant' | 'onChange'
-	> {
+interface TypeToggleButtonProps
+	extends Omit<ToggleButtonProps, 'key' | 'id' | 'size' | 'variant' | 'onChange'> {
 	value: Type;
 }
 
@@ -39,7 +34,7 @@ function KeyboardTypeButtonGroup(
 	const type = useCommandOffcanvasStore((state) => state.keyboard.type);
 	const updateKeyboard = useCommandOffcanvasStore((state) => state.updateKeyboard);
 
-	const toggleButtons = useMemo<ToggleButtonProps[]>(
+	const toggleButtons = useMemo<TypeToggleButtonProps[]>(
 		() => [
 			{ value: 'default', className: 'w-50', children: t('default') },
 			{ value: 'inline', className: 'w-50', children: t('inline') },
@@ -61,7 +56,7 @@ function KeyboardTypeButtonGroup(
 			}
 		>
 			{toggleButtons.map((props, index) => (
-				<ToggleButton
+				<ToggleButtonGroup.Button
 					{...props}
 					key={index}
 					id={id + props.value}

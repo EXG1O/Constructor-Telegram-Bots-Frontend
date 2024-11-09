@@ -4,10 +4,10 @@ import classNames from 'classnames';
 
 import { Type } from '..';
 
-import ToggleButton, { ToggleButtonProps } from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup, {
+	ToggleButtonProps,
 	ToggleButtonRadioProps,
-} from 'react-bootstrap/ToggleButtonGroup';
+} from 'components/ToggleButtonGroup';
 
 export type TypeToggleButtonGroupProps = Omit<
 	ToggleButtonRadioProps<Type>,
@@ -43,7 +43,7 @@ function TypeToggleButtonGroup({
 			className={classNames('bg-white', className)}
 		>
 			{typeToggleButtons.map(({ value, ...props }, index) => (
-				<ToggleButton
+				<ToggleButtonGroup.Button
 					{...props}
 					key={index}
 					id={`system-variables-${value}`}
@@ -52,7 +52,7 @@ function TypeToggleButtonGroup({
 					variant='outline-dark'
 				>
 					{t(value)}
-				</ToggleButton>
+				</ToggleButtonGroup.Button>
 			))}
 		</ToggleButtonGroup>
 	);

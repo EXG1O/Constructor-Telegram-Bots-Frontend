@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import ToggleButton, { ToggleButtonProps } from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup, {
+	ToggleButtonProps,
 	ToggleButtonRadioProps,
-} from 'react-bootstrap/ToggleButtonGroup';
+} from 'components/ToggleButtonGroup';
 
 import useUsersStore from '../../../hooks/useUsersStore';
 
@@ -54,7 +54,7 @@ function TypeToggleButtonGroup(
 		>
 			{typeToggleButtons.map(({ value, ...props }, index) =>
 				!(value === 'allowed' && !telegramBot.is_private) ? (
-					<ToggleButton
+					<ToggleButtonGroup.Button
 						{...props}
 						key={index}
 						id={`user-types-${value}`}
@@ -63,7 +63,7 @@ function TypeToggleButtonGroup(
 						variant='outline-dark'
 					>
 						{t(value)}
-					</ToggleButton>
+					</ToggleButtonGroup.Button>
 				) : undefined,
 			)}
 		</ToggleButtonGroup>

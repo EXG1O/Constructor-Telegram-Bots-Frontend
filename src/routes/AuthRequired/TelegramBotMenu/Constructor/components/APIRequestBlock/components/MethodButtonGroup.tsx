@@ -1,11 +1,9 @@
 import React, { memo, ReactElement, useId } from 'react';
 
-import ToggleButton, {
-	ToggleButtonProps as BaseToggleButtonProps,
-} from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup, {
+	ToggleButtonProps,
 	ToggleButtonRadioProps,
-} from 'react-bootstrap/ToggleButtonGroup';
+} from 'components/ToggleButtonGroup';
 
 import useAPIRequestBlockStore from '../hooks/useAPIRequestBlockStore';
 
@@ -16,9 +14,9 @@ export type MethodButtonGroupProps = Omit<
 	'size' | 'type' | 'name' | 'value' | 'children' | 'onChange'
 >;
 
-interface ToggleButtonProps
+interface MethodToggleButtonProps
 	extends Omit<
-		BaseToggleButtonProps,
+		ToggleButtonProps,
 		'key' | 'id' | 'value' | 'size' | 'variant' | 'children' | 'onChange'
 	> {
 	value: Method;
@@ -26,7 +24,7 @@ interface ToggleButtonProps
 
 export const defaultMethod: Method = 'get';
 
-const toggleButtons: ToggleButtonProps[] = [
+const methodToggleButtons: MethodToggleButtonProps[] = [
 	{ value: 'get' },
 	{ value: 'post' },
 	{ value: 'put' },
@@ -55,15 +53,15 @@ function MethodButtonGroup(
 				})
 			}
 		>
-			{toggleButtons.map((props, index) => (
-				<ToggleButton
+			{methodToggleButtons.map((props, index) => (
+				<ToggleButtonGroup.Button
 					{...props}
 					key={index}
 					id={id + props.value}
 					variant='outline-dark'
 				>
 					{props.value.toUpperCase()}
-				</ToggleButton>
+				</ToggleButtonGroup.Button>
 			))}
 		</ToggleButtonGroup>
 	);
