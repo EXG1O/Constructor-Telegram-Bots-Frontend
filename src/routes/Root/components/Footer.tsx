@@ -1,12 +1,11 @@
 import React, { memo, ReactElement } from 'react';
-import classNames from 'classnames';
 
 import Container from 'components/Container';
 
 import GithubIcon from 'assets/icons/github.svg';
 import TelegramIcon from 'assets/icons/telegram.svg';
 
-const baseLinkClassName: string = 'text-reset';
+const linkClassName: string = 'd-flex align-items-center text-reset';
 
 function Footer(): ReactElement {
 	return (
@@ -19,10 +18,7 @@ function Footer(): ReactElement {
 							href='https://t.me/exg1o_channel'
 							rel='noreferrer'
 							target='_blank'
-							className={classNames(
-								baseLinkClassName,
-								'd-flex align-items-center',
-							)}
+							className={linkClassName}
 						>
 							<TelegramIcon />
 						</a>
@@ -30,10 +26,7 @@ function Footer(): ReactElement {
 							href='https://github.com/EXG1O/Constructor-Telegram-Bots'
 							rel='noreferrer'
 							target='_blank'
-							className={classNames(
-								baseLinkClassName,
-								'd-flex align-items-center',
-							)}
+							className={linkClassName}
 						>
 							<GithubIcon />
 						</a>

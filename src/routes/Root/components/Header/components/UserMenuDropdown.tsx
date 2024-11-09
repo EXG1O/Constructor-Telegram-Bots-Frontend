@@ -2,7 +2,7 @@ import React, { memo, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { reverse } from 'routes';
+import { reverse, RouteID } from 'routes';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import Dropdown, { DropdownProps } from 'components/Dropdown';
@@ -19,27 +19,29 @@ function UserMenuDropdown({
 	user,
 	...props
 }: UserMenuDropdownProps): ReactElement<UserMenuDropdownProps> {
-	const { t, i18n } = useTranslation('root', { keyPrefix: 'userMenuDropdown' });
+	const { t, i18n } = useTranslation(RouteID.Root, { keyPrefix: 'userMenuDropdown' });
 
 	const navigate = useNavigate();
 
-	const setShowLogoutModal = useAskConfirmModalStore((state) => state.setShow);
-	const hideLogoutModal = useAskConfirmModalStore((state) => state.setHide);
-	const setLoadingLogoutModal = useAskConfirmModalStore((state) => state.setLoading);
+	const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
+	const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
+	const setLoadingAskConfirmModal = useAskConfirmModalStore(
+		(state) => state.setLoading,
+	);
 
 	const showLogoutModal = useCallback(
 		() =>
-			setShowLogoutModal({
+			setShowAskConfirmModal({
 				title: t('logoutModal.title'),
 				text: t('logoutModal.text'),
 				onConfirm: async () => {
-					setLoadingLogoutModal(true);
+					setLoadingAskConfirmModal(true);
 
 					const response = await UserAPI.logout();
 
 					if (response.ok) {
-						hideLogoutModal();
-						navigate(reverse('home'));
+						hideAskConfirmModal();
+						navigate(reverse(RouteID.Home));
 						createMessageToast({
 							message: t('messages.logout.success'),
 							level: 'success',
@@ -51,7 +53,7 @@ function UserMenuDropdown({
 						});
 					}
 
-					setLoadingLogoutModal(false);
+					setLoadingAskConfirmModal(false);
 				},
 				onCancel: null,
 			}),
@@ -71,7 +73,7 @@ function UserMenuDropdown({
 				{user.is_staff && (
 					<Dropdown.Item href='/admin/'>{t('adminPanel')}</Dropdown.Item>
 				)}
-				<Dropdown.Item as={Link} to={reverse('telegram-bots')}>
+				<Dropdown.Item as={Link} to={reverse(RouteID.TelegramBots)}>
 					{t('telegramBots')}
 				</Dropdown.Item>
 				<Dropdown.Divider />
