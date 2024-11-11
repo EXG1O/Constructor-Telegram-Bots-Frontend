@@ -2,6 +2,8 @@ import i18n from 'i18n';
 import { TOptions } from 'i18next';
 import { create } from 'zustand';
 
+import { RouteID } from 'routes';
+
 import { createMessageToast } from 'components/ToastContainer';
 
 import { UsersAPI } from 'services/api/telegram_bots/main';
@@ -42,7 +44,7 @@ export type InitialProps = Pick<
 >;
 export type InitialState = Omit<StateParams, keyof InitialProps>;
 
-const langOptions: TOptions = { ns: 'telegram-bot-menu-users' };
+const langOptions: TOptions = { ns: RouteID.TelegramBotMenuUsers };
 
 export function createStore(initialProps: InitialProps) {
 	const initialState: InitialState = { loading: false };

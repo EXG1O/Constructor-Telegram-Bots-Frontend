@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
+import { RouteID } from 'routes';
+
 import Loading from 'components/Loading';
 import Table from 'components/Table';
 
@@ -16,7 +18,7 @@ function UsersTable({
 	className,
 	...props
 }: UsersTableProps): ReactElement<UsersTableProps> {
-	const { t } = useTranslation('telegram-bot-menu-users', { keyPrefix: 'table' });
+	const { t } = useTranslation(RouteID.TelegramBotMenuUsers, { keyPrefix: 'table' });
 
 	const loading = useUsersStore((state) => state.loading);
 	const search = useUsersStore((state) => state.search);

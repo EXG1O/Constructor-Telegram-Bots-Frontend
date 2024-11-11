@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import ToggleButtonGroup, {
@@ -34,7 +35,7 @@ const typeToggleButtons: TypeToggleButtonProps[] = [
 function TypeToggleButtonGroup(
 	props: TypeToggleButtonGroupProps,
 ): ReactElement<TypeToggleButtonGroupProps> {
-	const { t } = useTranslation('telegram-bot-menu-users', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuUsers, {
 		keyPrefix: 'toolbar.typeButtonGroup',
 	});
 

@@ -2,6 +2,8 @@ import React, { ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Stack } from 'react-bootstrap';
 
+import { RouteID } from 'routes';
+
 import Block from 'components/Block';
 import Page from 'components/Page';
 
@@ -10,7 +12,7 @@ import UsersTable from './components/UsersTable';
 import StoreProvider from './providers/StoreProvider';
 
 function Users(): ReactElement {
-	const { t, i18n } = useTranslation('telegram-bot-menu-users');
+	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuUsers);
 
 	const title = useMemo<string>(() => t('title'), [i18n.language]);
 

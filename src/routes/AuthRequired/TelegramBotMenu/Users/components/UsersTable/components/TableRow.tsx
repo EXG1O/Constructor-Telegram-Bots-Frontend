@@ -10,6 +10,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import formatDate from 'i18n/formatDate';
 
+import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
@@ -42,7 +43,7 @@ const iconProps: SVGProps<SVGSVGElement> = {
 };
 
 function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps> {
-	const { t, i18n } = useTranslation('telegram-bot-menu-users', {
+	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuUsers, {
 		keyPrefix: 'table.row',
 	});
 
