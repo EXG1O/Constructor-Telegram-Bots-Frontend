@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { reverse } from 'routes';
+import { reverse, RouteID } from 'routes';
 
 import Button, { ButtonProps } from 'components/Button';
 
@@ -65,7 +65,7 @@ function LoginButton({
 			message: t('messages.userLogin.success'),
 			level: 'success',
 		});
-		navigate(reverse('telegram-bots'));
+		navigate(reverse(RouteID.TelegramBots));
 	}
 
 	useEffect(() => {
