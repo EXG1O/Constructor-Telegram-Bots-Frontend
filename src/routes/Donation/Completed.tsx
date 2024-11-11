@@ -1,10 +1,12 @@
 import React, { ReactElement, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Page from 'components/Page';
 
 function Completed(): ReactElement {
-	const { t, i18n } = useTranslation('donation-completed');
+	const { t, i18n } = useTranslation(RouteID.DonationCompleted);
 
 	const title = useMemo<string>(() => t('title'), [i18n.language]);
 
