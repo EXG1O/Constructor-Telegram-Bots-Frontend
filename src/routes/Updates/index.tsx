@@ -1,6 +1,8 @@
 import React, { ReactElement, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Loading from 'components/Loading';
 import Page from 'components/Page';
 import Pagination from 'components/Pagination';
@@ -15,7 +17,7 @@ import { UpdatesAPI } from 'services/api/updates/main';
 import { PaginationData } from './loader';
 
 function Updates(): ReactElement {
-	const { t, i18n } = useTranslation('updates');
+	const { t, i18n } = useTranslation(RouteID.Updates);
 
 	const { paginationData: initialPaginationData } = useUpdatesRouteLoaderData();
 
