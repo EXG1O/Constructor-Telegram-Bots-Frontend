@@ -2,7 +2,7 @@ import { redirect } from 'react-router-dom';
 import i18n from 'i18n';
 import { TOptions } from 'i18next';
 
-import { reverse } from 'routes';
+import { reverse, RouteID } from 'routes';
 
 import { createMessageToast } from 'components/ToastContainer';
 
@@ -19,7 +19,7 @@ async function loader(): Promise<LoaderData> {
 		level: 'error',
 	});
 
-	return redirect(reverse('home'));
+	return redirect(reverse(RouteID.Home));
 }
 
 export default loader;
