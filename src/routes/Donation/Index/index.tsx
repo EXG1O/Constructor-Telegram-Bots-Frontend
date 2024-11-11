@@ -1,6 +1,8 @@
 import React, { ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Button from 'components/Button';
 import Page from 'components/Page';
 
@@ -9,7 +11,7 @@ import SectionDisplay from './components/SectionDisplay';
 import useDonationRouteLoaderData from './hooks/useDonationRouteLoaderData';
 
 function Index(): ReactElement {
-	const { t, i18n } = useTranslation('donation-index');
+	const { t, i18n } = useTranslation(RouteID.Donation);
 
 	const { sections, buttons } = useDonationRouteLoaderData();
 
