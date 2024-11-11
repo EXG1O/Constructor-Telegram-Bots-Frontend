@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import { reverse } from 'routes';
+import { reverse, RouteID } from 'routes';
 import useRootRouteLoaderData from 'routes/Root/hooks/useRootRouteLoaderData';
 
 import Loading from 'components/Loading';
@@ -11,7 +11,7 @@ function Root(): ReactElement {
 	const { user } = useRootRouteLoaderData();
 
 	useEffect(() => {
-		!user && navigate(reverse('home'));
+		!user && navigate(reverse(RouteID.Home));
 	}, [user]);
 
 	return user ? <Outlet /> : <Loading size='xl' className='m-auto' />;
