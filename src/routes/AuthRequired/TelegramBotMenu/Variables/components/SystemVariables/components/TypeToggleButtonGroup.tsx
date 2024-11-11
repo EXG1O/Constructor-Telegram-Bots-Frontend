@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
+import { RouteID } from 'routes';
+
 import { Type } from '..';
 
 import ToggleButtonGroup, {
@@ -31,7 +33,7 @@ function TypeToggleButtonGroup({
 	className,
 	...props
 }: TypeToggleButtonGroupProps): ReactElement<TypeToggleButtonGroupProps> {
-	const { t } = useTranslation('telegram-bot-menu-variables', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
 		keyPrefix: 'system.typeButtonGroup',
 	});
 

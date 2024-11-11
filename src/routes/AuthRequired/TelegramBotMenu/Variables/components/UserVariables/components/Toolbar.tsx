@@ -1,6 +1,8 @@
 import React, { memo, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Row from 'react-bootstrap/Row';
 
 import AddButton from 'components/AddButton';
@@ -11,7 +13,7 @@ import useUserVariablesStore from '../hooks/useUserVariablesStore';
 import useVariableModalStore from './VariableModal/hooks/useVariableModalStore';
 
 function Toolbar(): ReactElement {
-	const { t } = useTranslation('telegram-bot-menu-variables', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
 		keyPrefix: 'user.toolbar',
 	});
 

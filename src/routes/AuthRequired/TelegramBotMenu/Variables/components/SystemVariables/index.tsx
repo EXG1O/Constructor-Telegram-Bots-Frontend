@@ -1,6 +1,8 @@
 import React, { ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Stack from 'react-bootstrap/Stack';
 
 import Block from 'components/Block';
@@ -11,7 +13,7 @@ import VariablesTable from './components/VariablesTable';
 export type Type = 'personal' | 'global';
 
 function SystemVariables(): ReactElement {
-	const { t } = useTranslation('telegram-bot-menu-variables', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
 		keyPrefix: 'system',
 	});
 

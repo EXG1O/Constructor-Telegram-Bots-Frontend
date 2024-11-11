@@ -2,6 +2,8 @@ import React, { HTMLAttributes, ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
+import { RouteID } from 'routes';
+
 import Table from 'components/Table';
 
 import TableRow from './components/TableRow';
@@ -22,7 +24,7 @@ function VariablesTable({
 	className,
 	...props
 }: VariablesTableProps): ReactElement<VariablesTableProps> {
-	const { t, i18n } = useTranslation('telegram-bot-menu-variables', {
+	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuVariables, {
 		keyPrefix: 'system.variables',
 	});
 

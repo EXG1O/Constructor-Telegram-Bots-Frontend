@@ -1,6 +1,8 @@
 import React, { memo, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import TelegramQuillEditor, {
 	TelegramQuillEditorProps,
 } from 'components/TelegramQuillEditor';
@@ -14,7 +16,7 @@ export const defaultValue: Value = '';
 type HandleChangeFunc = NonNullable<TelegramQuillEditorProps['onChange']>;
 
 function ValueEditor(): ReactElement {
-	const { t } = useTranslation('telegram-bot-menu-variables', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
 		keyPrefix: 'user.variableModal.valueInput',
 	});
 

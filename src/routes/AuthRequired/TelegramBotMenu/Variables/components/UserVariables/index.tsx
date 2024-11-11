@@ -1,6 +1,8 @@
 import React, { memo, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Stack from 'react-bootstrap/Stack';
 
 import Block from 'components/Block';
@@ -13,7 +15,9 @@ import StoreProvider from './providers/StoreProvider';
 import useUserVariablesStore from './hooks/useUserVariablesStore';
 
 function UserVariables(): ReactElement {
-	const { t } = useTranslation('telegram-bot-menu-variables', { keyPrefix: 'user' });
+	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
+		keyPrefix: 'user',
+	});
 
 	const updateVariables = useUserVariablesStore((state) => state.updateVariables);
 	const handleAddOrSaveVariable = useCallback(() => updateVariables(), []);

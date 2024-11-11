@@ -1,6 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Button from 'components/Button';
 import Modal from 'components/Modal';
 
@@ -12,7 +14,7 @@ import StoreProvider from './providers/StoreProvider';
 import useVariableModalStore from './hooks/useVariableModalStore';
 
 function VariableModal(): ReactElement {
-	const { t } = useTranslation('telegram-bot-menu-variables', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
 		keyPrefix: 'user.variableModal',
 	});
 

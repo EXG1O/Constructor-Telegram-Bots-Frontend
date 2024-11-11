@@ -1,6 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Loading from 'components/Loading';
 import Table from 'components/Table';
 
@@ -10,7 +12,7 @@ import TableWrapper from './components/TableWrapper';
 import useUserVariablesStore from '../../hooks/useUserVariablesStore';
 
 function VariablesTable(): ReactElement {
-	const { t } = useTranslation('telegram-bot-menu-variables', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
 		keyPrefix: 'user.table',
 	});
 

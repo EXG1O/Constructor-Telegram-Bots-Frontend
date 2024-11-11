@@ -1,6 +1,7 @@
 import React, { CSSProperties, memo, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
@@ -23,7 +24,7 @@ export interface TableRowProps {
 const iconStyle: CSSProperties = { cursor: 'pointer' };
 
 function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
-	const { t } = useTranslation('telegram-bot-menu-variables', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
 		keyPrefix: 'user.table.row',
 	});
 

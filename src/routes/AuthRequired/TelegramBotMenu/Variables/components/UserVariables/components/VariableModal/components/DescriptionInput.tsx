@@ -1,6 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Input from 'react-bootstrap/FormControl';
 
 import useVariableModalStore from '../hooks/useVariableModalStore';
@@ -10,7 +12,7 @@ export type Description = string;
 export const defaultDescription: Description = '';
 
 function DescriptionInput(): ReactElement {
-	const { t } = useTranslation('telegram-bot-menu-variables', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
 		keyPrefix: 'user.variableModal.descriptionInput',
 	});
 
