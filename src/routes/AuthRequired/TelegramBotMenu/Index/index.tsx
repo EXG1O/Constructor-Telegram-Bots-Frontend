@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import Col from 'react-bootstrap/Col';
@@ -12,7 +13,7 @@ import TelegramBotBlock from 'components/TelegramBotBlock';
 import TelegramBotBlockFooter from './components/TelegramBotBlockFooter';
 
 function Index(): ReactElement {
-	const { t } = useTranslation('telegram-bot-menu-index');
+	const { t } = useTranslation(RouteID.TelegramBotMenu);
 
 	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 

@@ -2,7 +2,7 @@ import React, { memo, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { reverse } from 'routes';
+import { reverse, RouteID } from 'routes';
 
 import CardFooter, { CardFooterProps } from 'react-bootstrap/CardFooter';
 import Col from 'react-bootstrap/Col';
@@ -21,7 +21,7 @@ export type TelegramBotBlockFooterProps = Omit<CardFooterProps, 'as' | 'children
 function TelegramBotBlockFooter(
 	props: TelegramBotBlockFooterProps,
 ): ReactElement<TelegramBotBlockFooterProps> {
-	const { t, i18n } = useTranslation('telegram-bot-menu-index', {
+	const { t, i18n } = useTranslation(RouteID.TelegramBotMenu, {
 		keyPrefix: 'telegramBotBlockFooter',
 	});
 
@@ -47,7 +47,7 @@ function TelegramBotBlockFooter(
 
 					if (response.ok) {
 						hideAskConfirmModal();
-						navigate(reverse('telegram-bots'));
+						navigate(reverse(RouteID.TelegramBots));
 						createMessageToast({
 							message: t('messages.deleteTelegramBot.success'),
 							level: 'success',
