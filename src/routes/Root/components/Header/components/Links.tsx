@@ -17,7 +17,7 @@ import {
 import classNames from 'classnames';
 import { motion } from 'framer-motion';
 
-import { reverse } from 'routes';
+import { reverse, RouteID } from 'routes';
 
 export type LinksProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
@@ -30,17 +30,17 @@ const linkUnderlineStyle: CSSProperties = { height: '2px' };
 function Links({ className, ...props }: LinksProps): ReactElement<LinksProps> {
 	const id = useId();
 
-	const { t, i18n } = useTranslation('root', { keyPrefix: 'links' });
+	const { t, i18n } = useTranslation(RouteID.Root, { keyPrefix: 'links' });
 
 	const location = useLocation();
 	const navigation = useNavigation();
 
 	const links = useMemo<LinkProps[]>(
 		() => [
-			{ to: reverse('instruction'), children: t('instruction') },
-			{ to: reverse('updates'), children: t('updates') },
-			{ to: reverse('privacy-policy'), children: t('privacyPolicy') },
-			{ to: reverse('donation-index'), children: t('donation') },
+			{ to: reverse(RouteID.Instruction), children: t('instruction') },
+			{ to: reverse(RouteID.Updates), children: t('updates') },
+			{ to: reverse(RouteID.PrivacyPolicy), children: t('privacyPolicy') },
+			{ to: reverse(RouteID.Donation), children: t('donation') },
 		],
 		[i18n.language],
 	);
