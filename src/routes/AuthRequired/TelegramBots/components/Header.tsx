@@ -8,6 +8,8 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
+import { RouteID } from 'routes';
+
 import AddButton from 'components/AddButton';
 
 import TelegramBotAdditionModal from './TelegramBotAdditionModal';
@@ -15,7 +17,7 @@ import TelegramBotAdditionModal from './TelegramBotAdditionModal';
 export type HeaderProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
 function Header({ className, ...props }: HeaderProps): ReactElement<HeaderProps> {
-	const { t } = useTranslation('telegram-bots', { keyPrefix: 'header' });
+	const { t } = useTranslation(RouteID.TelegramBots, { keyPrefix: 'header' });
 
 	const [showModal, setShowModal] = useState<boolean>(false);
 

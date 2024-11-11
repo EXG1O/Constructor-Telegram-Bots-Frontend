@@ -1,6 +1,8 @@
 import React, { memo, ReactElement, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Feedback from 'react-bootstrap/Feedback';
 import Input from 'react-bootstrap/FormControl';
 import Switch from 'react-bootstrap/Switch';
@@ -9,7 +11,7 @@ import Button from 'components/Button';
 import Modal, { ModalProps } from 'components/Modal';
 import { createMessageToast } from 'components/ToastContainer';
 
-import useTelegramBots from '../services/hooks/useTelegramBots';
+import useTelegramBots from '../hooks/useTelegramBots';
 
 import { APIResponse } from 'services/api/core';
 import { TelegramBotsAPI } from 'services/api/telegram_bots/main';
@@ -30,7 +32,7 @@ function TelegramBotAdditionModal({
 	onExited,
 	...props
 }: TelegramBotAdditionModalProps): ReactElement<TelegramBotAdditionModalProps> {
-	const { t } = useTranslation('telegram-bots', {
+	const { t } = useTranslation(RouteID.TelegramBots, {
 		keyPrefix: 'telegramBotAdditionModal',
 	});
 

@@ -3,11 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
+import { reverse, RouteID } from 'routes';
+
 import Row, { RowProps } from 'react-bootstrap/Row';
 
 import TelegramBotBlock from 'components/TelegramBotBlock';
 
-import useTelegramBots from '../services/hooks/useTelegramBots';
+import useTelegramBots from '../hooks/useTelegramBots';
 
 export type TelegramBotListProps = Omit<RowProps, 'children'>;
 
@@ -15,7 +17,7 @@ function TelegramBotList({
 	className,
 	...props
 }: TelegramBotListProps): ReactElement<TelegramBotListProps> {
-	const { t } = useTranslation('telegram-bots');
+	const { t } = useTranslation(RouteID.TelegramBots);
 
 	const [telegramBots] = useTelegramBots();
 
@@ -25,7 +27,9 @@ function TelegramBotList({
 				telegramBots.map((telegramBot) => (
 					<TelegramBotBlock key={telegramBot.id} telegramBot={telegramBot}>
 						<Link
-							to={`/telegram-bot-menu/${telegramBot.id}/`}
+							to={reverse(RouteID.TelegramBotMenu, {
+								telegramBotID: telegramBot.id,
+							})}
 							className='btn btn-dark'
 						>
 							{t('telegramBotMenuLink')}
