@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Stack from 'react-bootstrap/Stack';
 
 import Block from 'components/Block';
@@ -12,7 +14,7 @@ import Toolbar from './components/Toolbar';
 import StoreProvider from './providers/StoreProvider';
 
 function Database(): ReactElement {
-	const { t } = useTranslation('telegram-bot-menu-database');
+	const { t } = useTranslation(RouteID.TelegramBotMenuDatabase);
 
 	return (
 		<Page title={t('title')} grid>

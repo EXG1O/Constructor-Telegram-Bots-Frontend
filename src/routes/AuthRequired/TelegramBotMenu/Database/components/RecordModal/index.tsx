@@ -1,6 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Button from 'components/Button';
 import Modal from 'components/Modal';
 
@@ -10,7 +12,7 @@ import StoreProvider from './providers/StoreProvider';
 import useRecordModalStore from './hooks/useRecordModalStore';
 
 function RecordModal(): ReactElement {
-	const { t } = useTranslation('telegram-bot-menu-database', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
 		keyPrefix: 'records.recordModal',
 	});
 

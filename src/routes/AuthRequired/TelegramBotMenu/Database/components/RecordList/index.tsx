@@ -2,6 +2,8 @@ import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
+import { RouteID } from 'routes';
+
 import ListGroup, { ListGroupProps } from 'components/ListGroup';
 import Loading from 'components/Loading';
 
@@ -16,7 +18,7 @@ function RecordList({
 	className,
 	...props
 }: RecordListProps): ReactElement<RecordListProps> {
-	const { t } = useTranslation('telegram-bot-menu-database', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
 		keyPrefix: 'records.list',
 	});
 

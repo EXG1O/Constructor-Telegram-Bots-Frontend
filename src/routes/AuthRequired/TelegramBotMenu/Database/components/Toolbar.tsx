@@ -2,6 +2,8 @@ import React, { HTMLAttributes, memo, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
+import { RouteID } from 'routes';
+
 import AddButton from 'components/AddButton';
 import Pagination from 'components/Pagination';
 import Search, { defaultValue as searchDefaultValue } from 'components/Search';
@@ -13,7 +15,7 @@ export interface ToolbarProps
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
 
 function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarProps> {
-	const { t } = useTranslation('telegram-bot-menu-database', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
 		keyPrefix: 'records.toolbar',
 	});
 

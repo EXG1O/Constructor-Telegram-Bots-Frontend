@@ -8,6 +8,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
+import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import ListGroupItem, { ListGroupItemProps } from 'react-bootstrap/ListGroupItem';
@@ -35,6 +36,14 @@ export interface RecordDisplayProps extends Omit<ListGroupItemProps, 'children'>
 	record: DatabaseRecord;
 }
 
+const options: NonNullable<MonacoEditorProps['options']> = {
+	glyphMargin: false,
+	folding: false,
+	lineNumbers: 'off',
+	lineDecorationsWidth: 0,
+	lineNumbersMinChars: 0,
+};
+
 const deleteButtonStyle: CSSProperties = {
 	width: '25px',
 	height: '25px',
@@ -45,7 +54,7 @@ function RecordDisplay({
 	className,
 	...props
 }: RecordDisplayProps): ReactElement<RecordDisplayProps> {
-	const { t, i18n } = useTranslation('telegram-bot-menu-database', {
+	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuDatabase, {
 		keyPrefix: 'records',
 	});
 
@@ -55,16 +64,6 @@ function RecordDisplay({
 
 	const initialValue = useMemo<string>(
 		() => JSON.stringify(record.data, undefined, 4),
-		[],
-	);
-	const options = useMemo<NonNullable<MonacoEditorProps['options']>>(
-		() => ({
-			glyphMargin: false,
-			folding: false,
-			lineNumbers: 'off',
-			lineDecorationsWidth: 0,
-			lineNumbersMinChars: 0,
-		}),
 		[],
 	);
 
