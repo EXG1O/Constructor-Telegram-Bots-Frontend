@@ -1,6 +1,8 @@
 import React, { ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Page from 'components/Page';
 
 import SectionDisplay from './components/SectionDisplay';
@@ -8,7 +10,7 @@ import SectionDisplay from './components/SectionDisplay';
 import useInstructionRouteLoaderData from './hooks/useInstructionRouteLoaderData';
 
 function Instruction(): ReactElement {
-	const { t, i18n } = useTranslation('instruction');
+	const { t, i18n } = useTranslation(RouteID.Instruction);
 
 	const { sections } = useInstructionRouteLoaderData();
 
