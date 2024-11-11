@@ -1,6 +1,8 @@
 import React, { ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Page from 'components/Page';
 
 import SectionDisplay from './components/SectionDisplay';
@@ -8,7 +10,7 @@ import SectionDisplay from './components/SectionDisplay';
 import usePrivacyPolicyRouteLoaderData from './hooks/usePrivacyPolicyRouteLoaderData';
 
 function PrivacyPolicy(): ReactElement {
-	const { t, i18n } = useTranslation('privacy-policy');
+	const { t, i18n } = useTranslation(RouteID.PrivacyPolicy);
 
 	const { sections } = usePrivacyPolicyRouteLoaderData();
 
