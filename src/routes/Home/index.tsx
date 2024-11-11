@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
@@ -11,7 +13,7 @@ import Header from './components/Header';
 import Stats from './components/Stats';
 
 function Home(): ReactElement {
-	const { t } = useTranslation('home');
+	const { t } = useTranslation(RouteID.Home);
 
 	return (
 		<Page title={t('title')} align='center'>

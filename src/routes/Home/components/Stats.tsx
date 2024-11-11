@@ -1,6 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Stack from 'react-bootstrap/Stack';
 
 import Block, { BlockProps } from 'components/Block';
@@ -11,7 +13,7 @@ import useHomeRouteLoaderData from '../hooks/useHomeRouteLoaderData';
 export type StatsProps = Omit<BlockProps, 'variant' | 'gradient' | 'children'>;
 
 function Stats({ className, ...props }: StatsProps): ReactElement<StatsProps> {
-	const { t } = useTranslation('home', { keyPrefix: 'stats' });
+	const { t } = useTranslation(RouteID.Home, { keyPrefix: 'stats' });
 
 	const { stats } = useHomeRouteLoaderData();
 

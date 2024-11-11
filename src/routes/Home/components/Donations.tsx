@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import formatDate from 'i18n/formatDate';
 
+import { RouteID } from 'routes';
+
 import Row from 'react-bootstrap/Row';
 
 import Block, { BlockProps } from 'components/Block';
@@ -18,7 +20,7 @@ function Donations({
 	className,
 	...props
 }: DonationsProps): ReactElement<DonationsProps> {
-	const { t } = useTranslation('home', { keyPrefix: 'donations' });
+	const { t } = useTranslation(RouteID.Home, { keyPrefix: 'donations' });
 
 	const { donations } = useHomeRouteLoaderData();
 
