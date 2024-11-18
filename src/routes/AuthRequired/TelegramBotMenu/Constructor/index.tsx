@@ -17,6 +17,7 @@ import ReactFlow, {
 	useNodesState,
 } from 'reactflow';
 
+import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import Page from 'components/Page';
@@ -65,7 +66,7 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 };
 
 function Constructor(): ReactElement {
-	const { t, i18n } = useTranslation('telegram-bot-menu-constructor');
+	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor);
 
 	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 	const { diagramCommands, diagramConditions, diagramBackgroundTasks } =

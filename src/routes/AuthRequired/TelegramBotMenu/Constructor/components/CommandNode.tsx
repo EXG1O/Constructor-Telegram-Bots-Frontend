@@ -2,6 +2,7 @@ import React, { memo, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Handle, NodeProps, Position, useStore } from 'reactflow';
 
+import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import './CommandNode.scss';
@@ -22,7 +23,7 @@ type Data = Omit<DiagramCommand, keyof DiagramBlock>;
 export type CommandNodeProps = NodeProps<Data>;
 
 function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodeProps> {
-	const { t, i18n } = useTranslation('telegram-bot-menu-constructor', {
+	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'nodes.command',
 	});
 

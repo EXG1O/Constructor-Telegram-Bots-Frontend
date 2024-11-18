@@ -1,6 +1,8 @@
 import React, { HTMLAttributes, memo, ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Collapse, { CollapseProps } from 'react-bootstrap/Collapse';
 
 import Button, { ButtonProps } from 'components/Button';
@@ -20,7 +22,7 @@ function BlockCollapse({
 	children,
 	...props
 }: BlockCollapseProps): ReactElement<BlockCollapseProps> {
-	const { t, i18n } = useTranslation('telegram-bot-menu-constructor', {
+	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'apiRequestBlock.headersBlock',
 	});
 

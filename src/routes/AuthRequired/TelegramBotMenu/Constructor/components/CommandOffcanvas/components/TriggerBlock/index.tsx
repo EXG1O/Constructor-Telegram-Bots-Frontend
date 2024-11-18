@@ -1,6 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import BlockCollapse from './components/BlockCollapse';
 import DescriptionInput, {
 	defaultDescription,
@@ -29,7 +31,7 @@ export {
 };
 
 function TriggerBlock(props: TriggerBlockProps): ReactElement<TriggerBlockProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'commandOffcanvas.triggerBlock',
 	});
 

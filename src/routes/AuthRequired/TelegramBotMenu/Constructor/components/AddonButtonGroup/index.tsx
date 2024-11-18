@@ -2,6 +2,8 @@ import React, { HTMLAttributes, memo, ReactElement, useMemo, useState } from 're
 import { useTranslation } from 'react-i18next';
 import { StoreApi, UseBoundStore } from 'zustand';
 
+import { RouteID } from 'routes';
+
 import Collapse from 'react-bootstrap/Collapse';
 
 import Button, { ButtonProps } from 'components/Button';
@@ -22,7 +24,7 @@ function AddonButtonGroup({
 	addonButtons,
 	...props
 }: AddonButtonGroupProps): ReactElement<AddonButtonGroupProps> {
-	const { t, i18n } = useTranslation('telegram-bot-menu-constructor', {
+	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'addonButtonGroup',
 	});
 

@@ -1,6 +1,8 @@
 import React, { HTMLAttributes, memo, ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Collapse from 'react-bootstrap/Collapse';
 
 import Button, { ButtonProps } from 'components/Button';
@@ -17,7 +19,7 @@ export type BodyBlockProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 export const defaultBody: Body = JSON.stringify({ key: 'value' }, undefined, 4);
 
 function BodyBlock(props: BodyBlockProps): ReactElement<BodyBlockProps> {
-	const { t, i18n } = useTranslation('telegram-bot-menu-constructor', {
+	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'apiRequestBlock.bodyBlock',
 	});
 

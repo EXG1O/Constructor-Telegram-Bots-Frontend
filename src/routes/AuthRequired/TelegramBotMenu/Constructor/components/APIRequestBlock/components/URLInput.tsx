@@ -1,6 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Input, { FormControlProps as InputProps } from 'react-bootstrap/FormControl';
 
 import useAPIRequestBlockStore from '../hooks/useAPIRequestBlockStore';
@@ -15,7 +17,7 @@ export type URLInputProps = Omit<
 export const defaultURL: URL = '';
 
 function URLInput(props: URLInputProps): ReactElement<URLInputProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'apiRequestBlock.urlInput',
 	});
 

@@ -2,6 +2,8 @@ import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StoreApi, UseBoundStore } from 'zustand';
 
+import { RouteID } from 'routes';
+
 import Input from 'react-bootstrap/FormControl';
 
 import Block, { BlockProps } from '../Block';
@@ -17,7 +19,7 @@ export interface NameBlockProps extends Omit<BlockProps, 'title' | 'children'> {
 export const defaultName: Name = '';
 
 function NameBlock({ store, ...props }: NameBlockProps): ReactElement<NameBlockProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'nameBlock',
 	});
 

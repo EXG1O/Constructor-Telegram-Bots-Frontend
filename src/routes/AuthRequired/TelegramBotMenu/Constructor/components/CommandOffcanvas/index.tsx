@@ -1,6 +1,8 @@
 import React, { ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Button from 'components/Button';
 import Offcanvas, { OffcanvasProps } from 'components/Offcanvas';
 
@@ -30,7 +32,7 @@ export type CommandFormOffcanvasProps = Omit<
 function CommandOffcanvas(
 	props: CommandFormOffcanvasProps,
 ): ReactElement<CommandFormOffcanvasProps> {
-	const { t, i18n } = useTranslation('telegram-bot-menu-constructor');
+	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor);
 
 	const store = useCommandOffcanvasStore();
 

@@ -1,6 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Input, { FormControlProps as InputProps } from 'react-bootstrap/FormControl';
 
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
@@ -15,7 +17,7 @@ export type Text = string;
 export const defaultText: Text = '';
 
 function TextInput(props: TextInputProps): ReactElement<TextInputProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'commandOffcanvas.triggerBlock.textInput',
 	});
 

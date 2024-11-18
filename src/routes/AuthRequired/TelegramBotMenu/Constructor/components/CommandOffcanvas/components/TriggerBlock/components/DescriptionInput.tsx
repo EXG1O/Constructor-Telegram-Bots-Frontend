@@ -2,6 +2,8 @@ import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
+import { RouteID } from 'routes';
+
 import Input, { FormControlProps as InputProps } from 'react-bootstrap/FormControl';
 
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
@@ -19,7 +21,7 @@ function DescriptionInput({
 	className,
 	...props
 }: DescriptionInputProps): ReactElement<DescriptionInputProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'commandOffcanvas.triggerBlock.descriptionInput',
 	});
 

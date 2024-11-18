@@ -1,6 +1,8 @@
 import React, { memo, ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Collapse, { CollapseProps } from 'react-bootstrap/Collapse';
 
 import Button, { ButtonProps } from 'components/Button';
@@ -13,7 +15,7 @@ function DescriptionInputCollapse({
 	children,
 	...props
 }: DescriptionInputCollapseProps): ReactElement<DescriptionInputCollapseProps> {
-	const { t, i18n } = useTranslation('telegram-bot-menu-constructor', {
+	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'commandOffcanvas.triggerBlock.descriptionInputCollapse',
 	});
 

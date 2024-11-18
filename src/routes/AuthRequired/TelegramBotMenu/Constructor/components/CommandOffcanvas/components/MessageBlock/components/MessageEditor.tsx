@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import TelegramQuillEditor, {
 	TelegramQuillEditorProps,
 } from 'components/TelegramQuillEditor';
@@ -13,7 +15,7 @@ export type MessageEditorProps = Omit<
 >;
 
 function MessageEditor(props: MessageEditorProps): ReactElement<MessageEditorProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'commandOffcanvas.messageBlock.messageEditor',
 	});
 

@@ -1,6 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import BlockCollapse from './components/BlockCollapse';
 import DatabaseRecordEditor from './components/DatabaseRecordEditor';
 
@@ -19,7 +21,7 @@ export const defaultDatabaseRecord: DatabaseRecord = JSON.stringify(
 function DatabaseRecordBlock(
 	props: DatabaseRecordBlockProps,
 ): ReactElement<DatabaseRecordBlockProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'commandOffcanvas.databaseRecordBlock',
 	});
 

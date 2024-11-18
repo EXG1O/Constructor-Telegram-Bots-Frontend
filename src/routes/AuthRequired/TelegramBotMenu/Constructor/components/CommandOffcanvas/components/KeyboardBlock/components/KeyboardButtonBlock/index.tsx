@@ -2,6 +2,8 @@ import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
+import { RouteID } from 'routes';
+
 import Button from 'components/Button';
 
 import BlockCollapse from './components/BlockCollapse';
@@ -33,7 +35,7 @@ export {
 function KeyboardButtonBlock(
 	props: KeyboardButtonBlockProps,
 ): ReactElement<KeyboardButtonBlockProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardButtonBlock',
 	});
 

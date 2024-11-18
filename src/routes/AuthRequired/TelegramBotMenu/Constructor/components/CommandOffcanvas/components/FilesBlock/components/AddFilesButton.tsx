@@ -1,6 +1,8 @@
 import React, { memo, ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import { _File } from '..';
 
 import Button, { ButtonProps } from 'components/Button';
@@ -17,7 +19,7 @@ export type AddFilesButtonProps = Omit<
 function AddFilesButton(props: AddFilesButtonProps): ReactElement<AddFilesButtonProps> {
 	const id = useId();
 
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'commandOffcanvas.filesBlock.addFilesButton',
 	});
 

@@ -1,6 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import SettingSwitch from './components/SettingSwitch';
 
 import Block, { BlockProps } from '../../../Block';
@@ -20,7 +22,7 @@ export const defaultSettings: Settings = {
 };
 
 function SettingsBlock(props: SettingsBlockProps): ReactElement<SettingsBlockProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'commandOffcanvas.settingsBlock',
 	});
 

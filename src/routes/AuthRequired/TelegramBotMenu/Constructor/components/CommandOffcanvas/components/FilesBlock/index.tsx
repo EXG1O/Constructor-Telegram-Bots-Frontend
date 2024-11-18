@@ -1,6 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import AddFilesButton from './components/AddFilesButton';
 import BlockCollapse from './components/BlockCollapse';
 import FileList from './components/FileList';
@@ -23,7 +25,7 @@ export type FilesBlockProps = Omit<BlockProps, 'title' | 'children'>;
 export const defaultFiles: Files = [];
 
 function FilesBlock(props: FilesBlockProps): ReactElement<FilesBlockProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'commandOffcanvas.filesBlock',
 	});
 

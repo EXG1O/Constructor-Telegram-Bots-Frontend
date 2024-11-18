@@ -1,6 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Button, { ButtonProps } from 'components/Button';
 
 import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
@@ -13,7 +15,7 @@ export type AddKeyboardButtonButtonProps = Omit<
 function AddKeyboardButtonButton(
 	props: AddKeyboardButtonButtonProps,
 ): ReactElement<AddKeyboardButtonButtonProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'commandOffcanvas.keyboardBlock.addButtonButton',
 	});
 

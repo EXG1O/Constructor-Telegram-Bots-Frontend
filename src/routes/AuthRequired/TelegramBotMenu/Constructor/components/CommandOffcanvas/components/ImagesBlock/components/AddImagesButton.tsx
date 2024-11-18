@@ -1,6 +1,8 @@
 import React, { memo, ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import { Image } from '..';
 
 import Button, { ButtonProps } from 'components/Button';
@@ -23,7 +25,7 @@ function AddImagesButton(
 ): ReactElement<AddImagesButtonProps> {
 	const id = useId();
 
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'commandOffcanvas.imagesBlock.addImagesButton',
 	});
 

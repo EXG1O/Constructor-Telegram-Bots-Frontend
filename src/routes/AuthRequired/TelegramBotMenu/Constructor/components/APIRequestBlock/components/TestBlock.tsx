@@ -8,6 +8,8 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
+import { RouteID } from 'routes';
+
 import Collapse from 'react-bootstrap/Collapse';
 
 import Button from 'components/Button';
@@ -29,7 +31,7 @@ const statusMarkerStyle: CSSProperties = {
 };
 
 function TestBlock(props: TestBlockProps): ReactElement<TestBlockProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'apiRequestBlock.testBlock',
 	});
 

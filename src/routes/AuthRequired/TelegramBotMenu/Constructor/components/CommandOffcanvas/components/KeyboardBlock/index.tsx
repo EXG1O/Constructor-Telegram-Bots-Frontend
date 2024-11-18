@@ -1,6 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import AddKeyboardButtonButton from './components/AddKeyboardButtonButton';
 import AddKeyboardRowButton from './components/AddKeyboardRowButton';
 import BlockCollapse from './components/BlockCollapse';
@@ -25,7 +27,7 @@ export const defaultKeyboard: Keyboard = { type: defaultType, rows: [] };
 export { defaultType as defaultKeyboardType };
 
 function KeyboardBlock(props: KeyboardBlockProps): ReactElement<KeyboardBlockProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'commandOffcanvas.keyboardBlock',
 	});
 

@@ -1,6 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import BodyBlock, { Body, defaultBody } from './components/BodyBlock';
 import HeadersBlock, { defaultHeaders, Headers } from './components/HeadersBlock';
 import MethodButtonGroup, {
@@ -42,7 +44,7 @@ function APIRequestBlock({
 	store,
 	...props
 }: APIRequestBlockProps): ReactElement<APIRequestBlockProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'apiRequestBlock',
 	});
 

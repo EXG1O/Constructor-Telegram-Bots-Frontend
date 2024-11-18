@@ -1,6 +1,8 @@
 import React, { CSSProperties, memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Input from 'react-bootstrap/FormControl';
 import InputGroup, { InputGroupProps } from 'react-bootstrap/InputGroup';
 
@@ -22,7 +24,7 @@ function HeaderDetail({
 	index,
 	...props
 }: HeaderDetailProps): ReactElement<HeaderDetailProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'apiRequestBlock.headersBlock.headerInputGroup',
 	});
 

@@ -3,6 +3,8 @@ import { TOptions } from 'i18next';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
+import { RouteID } from 'routes';
+
 import { createMessageToast } from 'components/ToastContainer';
 
 import {
@@ -124,7 +126,7 @@ export type InitialState = Omit<StateParams, keyof InitialProps> &
 	APIRequestBlockSliceState &
 	DatabaseRecordBlockSliceState;
 
-const langOptions: TOptions = { ns: 'telegram-bot-menu-constructor' };
+const langOptions: TOptions = { ns: RouteID.TelegramBotMenuConstructor };
 
 export function createStore(initialProps: InitialProps) {
 	const initialState: InitialState = {

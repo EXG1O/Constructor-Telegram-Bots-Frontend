@@ -1,6 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import Button, { ButtonProps } from 'components/Button';
 
 import useAPIRequestBlockStore from '../../../hooks/useAPIRequestBlockStore';
@@ -13,7 +15,7 @@ export type AddHeaderButtonProps = Omit<
 function AddHeaderButton(
 	props: AddHeaderButtonProps,
 ): ReactElement<AddHeaderButtonProps> {
-	const { t } = useTranslation('telegram-bot-menu-constructor', {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'apiRequestBlock.headersBlock.addHeaderButton',
 	});
 

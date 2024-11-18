@@ -1,6 +1,8 @@
 import React, { memo, ReactElement, useId, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RouteID } from 'routes';
+
 import ToggleButtonGroup, {
 	ToggleButtonProps,
 	ToggleButtonRadioProps,
@@ -27,7 +29,7 @@ function KeyboardTypeButtonGroup(
 ): ReactElement<KeyboardTypeButtonGroupProps> {
 	const id = useId();
 
-	const { t, i18n } = useTranslation('telegram-bot-menu-constructor', {
+	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'commandOffcanvas.keyboardBlock.typeButtonGroup',
 	});
 
