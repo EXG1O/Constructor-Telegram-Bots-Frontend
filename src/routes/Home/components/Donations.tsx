@@ -38,16 +38,7 @@ function Donations({
 						{donations.results.map((donation) => (
 							<React.Fragment key={donation.id}>
 								<span>{`${donation.sum}€`}</span>
-								<span>
-									<a
-										href={donation.contact_link}
-										rel='noreferrer'
-										target='_blank'
-										className='text-white text-decoration-none'
-									>
-										{donation.contact_link}
-									</a>
-								</span>
+								<span>{donation.sender}</span>
 								<span>{formatDate(donation.date)}</span>
 							</React.Fragment>
 						))}

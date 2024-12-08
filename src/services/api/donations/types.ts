@@ -1,7 +1,7 @@
 export interface Donation {
 	id: number;
 	sum: number;
-	contact_link: string;
+	sender: string;
 	date: string;
 }
 
@@ -11,10 +11,11 @@ export interface Section {
 	text: string;
 }
 
-export interface Button {
+export interface Method {
 	id: number;
 	text: string;
-	url: string;
+	link: string | null;
+	value: string | null;
 }
 
 export namespace APIResponse {
@@ -32,7 +33,7 @@ export namespace APIResponse {
 		export type Get = Section[];
 	}
 
-	export namespace ButtonsAPI {
-		export type Get = Button[];
+	export namespace MethodsAPI {
+		export type Get = Method[];
 	}
 }

@@ -34,10 +34,10 @@ export class SectionsAPI {
 	}
 }
 
-export class ButtonsAPI {
-	static url: string = rootURL + 'buttons/';
+export class MethodsAPI {
+	static url: string = rootURL + 'methods/';
 
 	static async get() {
-		return makeRequest<APIResponse.ButtonsAPI.Get>(this.url, 'GET');
+		return makeRequest<APIResponse.MethodsAPI.Get>(this.url, 'GET');
 	}
 }

@@ -1,24 +1,24 @@
-import { ButtonsAPI, SectionsAPI } from 'services/api/donations/main';
+import { MethodsAPI, SectionsAPI } from 'services/api/donations/main';
 import { APIResponse } from 'services/api/donations/types';
 
 export interface LoaderData {
 	sections: APIResponse.SectionsAPI.Get;
-	buttons: APIResponse.ButtonsAPI.Get;
+	methods: APIResponse.MethodsAPI.Get;
 }
 
 async function loader(): Promise<LoaderData> {
-	const [sectionsResponse, buttonsResponse] = await Promise.all([
+	const [sectionsResponse, methodsResponse] = await Promise.all([
 		SectionsAPI.get(),
-		ButtonsAPI.get(),
+		MethodsAPI.get(),
 	]);
 
-	if (!sectionsResponse.ok || !buttonsResponse.ok) {
+	if (!sectionsResponse.ok || !methodsResponse.ok) {
 		throw Error('Failed to fetch data.');
 	}
 
 	return {
 		sections: sectionsResponse.json,
-		buttons: buttonsResponse.json,
+		methods: methodsResponse.json,
 	};
 }
 
