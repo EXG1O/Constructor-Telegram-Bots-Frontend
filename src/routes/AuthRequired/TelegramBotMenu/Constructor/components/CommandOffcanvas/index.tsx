@@ -84,7 +84,7 @@ function CommandOffcanvas(
 	return (
 		<Offcanvas {...props} show={show} loading={loading} onHide={hide}>
 			<Offcanvas.Header closeButton>
-				<Offcanvas.Title as='h5'>
+				<Offcanvas.Title>
 					{t('commandOffcanvas.title', { context: type })}
 				</Offcanvas.Title>
 			</Offcanvas.Header>

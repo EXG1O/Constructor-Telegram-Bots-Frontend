@@ -35,7 +35,8 @@ export interface OffcanvasProps
 	children?: ReactNode;
 }
 
-/** The wrapper component adds support for the `loading` prop to the Offcanvas component from `react-bootstrap`. */
+/** The wrapper component adds support for the `loading` prop to the...
+ *  Offcanvas component from `react-bootstrap`. */
 function Offcanvas({
 	loading = false,
 	children,
@@ -54,5 +55,7 @@ function Offcanvas({
 		</OffcanvasContext.Provider>
 	);
 }
+
+Title.defaultProps = { as: 'h5' };
 
 export default Object.assign(Offcanvas, { Header, Title, Body, Footer });
