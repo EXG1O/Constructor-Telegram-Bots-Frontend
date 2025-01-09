@@ -1,9 +1,12 @@
 import React, { memo, ReactElement, useMemo } from 'react';
 import Quill from 'quill';
 
-import QuillEditor, { QuillEditorProps, Toolbar } from './QuillEditor';
+import FormQuillEditorFeedback, {
+	FormQuillEditorFeedbackProps,
+} from './FormQuillEditorFeedback';
+import { Toolbar } from './QuillEditor';
 
-import('./TelegramQuillEditor.scss');
+import('./FormTelegramQuillEditorFeedback.scss');
 
 const Inline = Quill.import('blots/inline');
 
@@ -14,7 +17,8 @@ class SpoilerBlot extends Inline {
 
 Quill.register(SpoilerBlot);
 
-export interface TelegramQuillEditorProps extends Omit<QuillEditorProps, 'toolbar'> {
+export interface FormTelegramQuillEditorFeedbackProps
+	extends Omit<FormQuillEditorFeedbackProps, 'toolbar'> {
 	toolbar?: Toolbar;
 }
 
@@ -33,12 +37,12 @@ const baseToolbar: Toolbar = {
 	],
 };
 
-function TelegramQuillEditor({
+function FormTelegramQuillEditorFeedback({
 	toolbar,
 	...props
-}: TelegramQuillEditorProps): ReactElement<TelegramQuillEditorProps> {
+}: FormTelegramQuillEditorFeedbackProps): ReactElement<FormTelegramQuillEditorFeedbackProps> {
 	return (
-		<QuillEditor
+		<FormQuillEditorFeedback
 			{...props}
 			toolbar={useMemo(
 				() =>
@@ -57,4 +61,4 @@ function TelegramQuillEditor({
 	);
 }
 
-export default memo(TelegramQuillEditor);
+export default memo(FormTelegramQuillEditorFeedback);
