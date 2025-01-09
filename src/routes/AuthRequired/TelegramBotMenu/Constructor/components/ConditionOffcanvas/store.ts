@@ -83,7 +83,7 @@ export function createStore(initialProps: InitialProps) {
 				const response = await ConditionAPI.get(telegramBot.id, conditionID);
 
 				if (response.ok) {
-					const { name } = response.json;
+					const { name, parts } = response.json;
 
 					set({
 						conditionID,
@@ -91,6 +91,19 @@ export function createStore(initialProps: InitialProps) {
 						loading: false,
 
 						name,
+						parts: parts.map(
+							({
+								first_value,
+								second_value,
+								next_part_operator,
+								...part
+							}) => ({
+								...part,
+								firstValue: first_value,
+								secondValue: second_value,
+								nextPartOperator: next_part_operator ?? 'null',
+							}),
+						),
 					});
 				} else {
 					createMessageToast({
