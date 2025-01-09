@@ -8,10 +8,9 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 
 import Button from 'components/Button';
 import FormInputFeedback from 'components/FormInputFeedback';
+import FormTelegramQuillEditorFeedback from 'components/FormTelegramQuillEditorFeedback';
 import Modal from 'components/Modal';
 import { createMessageToast } from 'components/ToastContainer';
-
-import FormValueEditor from './components/FormValueEditor';
 
 import { VariableAPI, VariablesAPI } from 'services/api/telegram_bots/main';
 import { Variable } from 'services/api/telegram_bots/types';
@@ -80,7 +79,11 @@ function InnerVariableModal(): ReactElement {
 						name='name'
 						placeholder={t('nameInput.placeholder')}
 					/>
-					<FormValueEditor />
+					<FormTelegramQuillEditorFeedback
+						height={220}
+						name='value'
+						placeholder={t('valueInput.placeholder')}
+					/>
 					<FormInputFeedback
 						name='description'
 						placeholder={t('descriptionInput.placeholder')}
