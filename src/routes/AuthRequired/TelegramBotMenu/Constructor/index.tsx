@@ -25,6 +25,7 @@ import { createMessageToast } from 'components/ToastContainer';
 
 import CommandNode from './components/CommandNode';
 import CommandOffcanvas from './components/CommandOffcanvas';
+import ConditionNode from './components/ConditionNode';
 import Panel from './components/Panel';
 import ConditionOffcanvasProvider from './providers/ConditionOffcanvasProvider';
 
@@ -58,7 +59,7 @@ type SourceHandle = [
 ];
 type TargetHandle = ['command' | 'condition', string, 'left' | 'right', string];
 
-const nodeTypes: NodeTypes = { command: CommandNode };
+const nodeTypes: NodeTypes = { command: CommandNode, condition: ConditionNode };
 const defaultEdgeOptions: DefaultEdgeOptions = {
 	markerEnd: {
 		type: MarkerType.Arrow,
