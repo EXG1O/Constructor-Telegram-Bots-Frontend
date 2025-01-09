@@ -9,25 +9,28 @@ import AddButton from 'components/AddButton';
 import Pagination from 'components/Pagination';
 import Search from 'components/Search';
 
+import { useVariableModalStore } from './VariableModal/store';
+
 import useUserVariablesStore from '../hooks/useUserVariablesStore';
-import useVariableModalStore from './VariableModal/hooks/useVariableModalStore';
 
 function Toolbar(): ReactElement {
 	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
 		keyPrefix: 'user.toolbar',
 	});
 
-	const showAddVariableModal = useVariableModalStore((state) => state.showAdd);
+	const showVariableModal = useVariableModalStore((state) => state.showModal);
 
 	const itemCount = useUserVariablesStore((state) => state.count);
 	const itemLimit = useUserVariablesStore((state) => state.limit);
 	const itemOffset = useUserVariablesStore((state) => state.offset);
 	const updateVariables = useUserVariablesStore((state) => state.updateVariables);
 
+	const handleAddButtonClick = useCallback(() => showVariableModal(), []);
+
 	return (
 		<Row md='auto' className='g-2'>
 			<div>
-				<AddButton size='sm' variant='dark' onClick={showAddVariableModal}>
+				<AddButton size='sm' variant='dark' onClick={handleAddButtonClick}>
 					{t('addVariableButton')}
 				</AddButton>
 			</div>

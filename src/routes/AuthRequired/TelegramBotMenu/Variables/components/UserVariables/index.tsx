@@ -23,11 +23,11 @@ function UserVariables(): ReactElement {
 	const handleAddOrSaveVariable = useCallback(() => updateVariables(), []);
 
 	return (
-		<VariableModal.StoreProvider
-			onAdd={handleAddOrSaveVariable}
-			onSave={handleAddOrSaveVariable}
-		>
-			<VariableModal />
+		<>
+			<VariableModal
+				onAdd={handleAddOrSaveVariable}
+				onSave={handleAddOrSaveVariable}
+			/>
 			<Block variant='light'>
 				<h3 className='fw-semibold text-center mb-3'>{t('title')}</h3>
 				<Stack gap={2}>
@@ -35,7 +35,7 @@ function UserVariables(): ReactElement {
 					<VariablesTable />
 				</Stack>
 			</Block>
-		</VariableModal.StoreProvider>
+		</>
 	);
 }
 

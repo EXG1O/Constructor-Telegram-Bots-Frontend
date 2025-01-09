@@ -1,5 +1,6 @@
 import React, { memo, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useField, useFormikContext } from 'formik';
 
 import { RouteID } from 'routes';
 
@@ -7,31 +8,31 @@ import TelegramQuillEditor, {
 	TelegramQuillEditorProps,
 } from 'components/TelegramQuillEditor';
 
-import useVariableModalStore from '../hooks/useVariableModalStore';
-
 export type Value = string;
 
-export const defaultValue: Value = '';
-
 type HandleChangeFunc = NonNullable<TelegramQuillEditorProps['onChange']>;
+
+const fieldName: string = 'value';
+
+export const defaultValue: Value = '';
 
 function ValueEditor(): ReactElement {
 	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
 		keyPrefix: 'user.variableModal.valueInput',
 	});
 
-	const value = useVariableModalStore((state) => state.value);
-	const setValue = useVariableModalStore((state) => state.setValue);
+	const { setFieldValue } = useFormikContext();
+	const [field] = useField({ name: fieldName });
 
 	const handleChange = useCallback<HandleChangeFunc>(
-		(value) => setValue(value),
-		[setValue],
+		(value) => setFieldValue(fieldName, value),
+		[],
 	);
 
 	return (
 		<TelegramQuillEditor
 			height={220}
-			value={value}
+			value={field.value}
 			placeholder={t('placeholder')}
 			onChange={handleChange}
 		/>

@@ -7,8 +7,9 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import { createMessageToast } from 'components/ToastContainer';
 
+import { useVariableModalStore } from '../../VariableModal/store';
+
 import useUserVariablesStore from '../../../hooks/useUserVariablesStore';
-import useVariableModalStore from '../../VariableModal/hooks/useVariableModalStore';
 
 import ClipboardIcon from 'assets/icons/clipboard.svg';
 import PencilSquareIcon from 'assets/icons/pencil-square.svg';
@@ -72,7 +73,7 @@ function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
 		[],
 	);
 
-	const showEditModal = useVariableModalStore((state) => state.showEdit);
+	const showVariableModal = useVariableModalStore((state) => state.showModal);
 
 	return (
 		<tr>
@@ -99,7 +100,7 @@ function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
 							height='100%'
 							className='text-secondary'
 							style={iconStyle}
-							onClick={() => showEditModal(variable.id)}
+							onClick={() => showVariableModal(variable.id)}
 						/>
 						<TrashIcon
 							width={18}
