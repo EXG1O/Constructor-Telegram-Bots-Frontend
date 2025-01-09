@@ -1,11 +1,11 @@
 @use 'QuillEditor.content' as content;
-@import 'styles/variables';
+@import 'styles/base';
 
 .quill {
 	transition: $input-transition;
 
 	&:focus-within {
-		border-color: $input-focus-border-color !important;
+		border-color: $input-focus-border-color;
 		box-shadow: $input-focus-box-shadow;
 	}
 
