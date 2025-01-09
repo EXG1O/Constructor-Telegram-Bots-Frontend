@@ -4,6 +4,8 @@ import Input, { InputProps } from './Input';
 
 import { FCA } from 'utils/helpers';
 
+import('./InputFeedback.scss');
+
 export interface InputFeedbackProps extends Omit<InputProps, 'isInvalid'> {
 	error?: string;
 }
