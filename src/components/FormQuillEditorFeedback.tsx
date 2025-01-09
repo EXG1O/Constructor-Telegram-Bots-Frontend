@@ -12,7 +12,7 @@ function FormQuillEditorFeedback({
 	...props
 }: FormQuillEditorFeedbackProps): ReactElement<FormQuillEditorFeedbackProps> {
 	const { setFieldValue } = useFormikContext();
-	const [{ value, onBlur }, meta] = useField({ name });
+	const [{ value }, meta] = useField({ name });
 
 	const handleChange = useCallback<NonNullable<QuillEditorFeedbackProps['onChange']>>(
 		(value) => setFieldValue(name, value),
@@ -24,7 +24,6 @@ function FormQuillEditorFeedback({
 			{...props}
 			value={value}
 			error={meta.error}
-			onBlur={onBlur}
 			onChange={handleChange}
 		/>
 	);
