@@ -4,9 +4,9 @@ import classNames from 'classnames';
 
 import Collapse from 'react-bootstrap/Collapse';
 import Input from 'react-bootstrap/FormControl';
-import InputGroup, { InputGroupProps } from 'react-bootstrap/InputGroup';
 
 import Button from 'components/Button';
+import InputGroup, { InputGroupProps } from 'components/InputGroup';
 
 import SearchIcon from 'assets/icons/search.svg';
 import XIcon from 'assets/icons/x.svg';
@@ -35,7 +35,6 @@ function Search({
 	const [isActive, setActive] = useState<boolean>(false);
 
 	const show: boolean = isActive || Boolean(value);
-	const roundedValue: number = size === 'sm' ? 1 : size === 'lg' ? 3 : 2;
 
 	function handleSearch(): void {
 		onSearch(value);
@@ -51,11 +50,9 @@ function Search({
 	return (
 		<div {...props} className={classNames('d-flex', className)}>
 			<InputGroup size={size}>
-				<div
-					className={`text-bg-light border rounded-start-${roundedValue} px-2`}
-				>
-					<SearchIcon width={14} height='100%' />
-				</div>
+				<InputGroup.Text>
+					<SearchIcon width={14} height='auto' />
+				</InputGroup.Text>
 				<Input
 					value={value}
 					placeholder={t('inputPlaceholder')}
@@ -67,8 +64,8 @@ function Search({
 						<XIcon
 							width={21}
 							height='100%'
-							className={`text-bg-light rounded-end-${roundedValue} border border-start-0`}
-							style={{ cursor: 'pointer' }}
+							cursor='pointer'
+							className={classNames('text-bg-light border border-start-0', { 'rounded-end-1': size === 'sm', 'rounded-end-2': size === undefined, 'rounded-end-3': size === 'lg' })}
 							onClick={handleClear}
 						/>
 					</div>
