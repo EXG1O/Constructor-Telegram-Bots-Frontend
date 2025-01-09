@@ -12,7 +12,11 @@ function ToastContainer(): ReactElement {
 	const toasts = useToastContainerStore((state) => state.toasts);
 
 	return (
-		<BaseToastContainer position='bottom-end' className='p-2'>
+		<BaseToastContainer
+			containerPosition='fixed'
+			position='bottom-end'
+			className='p-2'
+		>
 			{toasts}
 		</BaseToastContainer>
 	);
