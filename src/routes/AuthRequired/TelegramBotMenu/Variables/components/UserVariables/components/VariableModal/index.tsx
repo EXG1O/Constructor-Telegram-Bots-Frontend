@@ -1,4 +1,4 @@
-import React, { memo, ReactElement, useEffect, useMemo } from 'react';
+import React, { memo, ReactElement, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
 import { Stack } from 'react-bootstrap';
@@ -34,7 +34,7 @@ function InnerVariableModal(): ReactElement {
 	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
 	const variableID = useVariableModalStore((state) => state.variableID);
-	const type = useMemo(() => (variableID ? 'edit' : 'add'), [variableID]);
+	const type = useVariableModalStore((state) => state.type);
 	const show = useVariableModalStore((state) => state.show);
 	const loading = useVariableModalStore((state) => state.loading);
 	const hideModal = useVariableModalStore((state) => state.hideModal);
@@ -112,7 +112,7 @@ function VariableModal({
 	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
 	const variableID = useVariableModalStore((state) => state.variableID);
-	const type = useMemo(() => (variableID ? 'edit' : 'add'), [variableID]);
+	const type = useVariableModalStore((state) => state.type);
 	const hideModal = useVariableModalStore((state) => state.hideModal);
 	const setLoading = useVariableModalStore((state) => state.setLoading);
 
