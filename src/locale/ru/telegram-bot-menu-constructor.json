@@ -150,8 +150,43 @@
 		"button_add": "Добавить",
 		"button_edit": "Сохранить"
 	},
+	"conditionOffcanvas": {
+		"title_add": "Добавление условия",
+		"title_edit": "Редактирование условия",
+		"messages": {
+			"getCondition": {
+				"error": "Не удалось получить данные условия."
+			},
+			"createCondition": {
+				"success": "Вы успешно добавили условие.",
+				"error": "Не удалось добавить условие."
+			},
+			"updateCondition": {
+				"success": "Вы успешно сохранили условие.",
+				"error": "Не удалось сохранить условие."
+			}
+		},
+		"partsBlock": {
+			"title": "Части условия",
+			"operatorSelect": {
+				"==": "Равно",
+				"!=": "Не равно",
+				">": "Больше",
+				">=": "Больше или равно",
+				"<": "Меньше",
+				"<=": "Меньше или равно"
+			},
+			"nextPartOperatorSelect": {
+				"&&": "И",
+				"||": "Или"
+			}
+		},
+		"actionButton_add": "Добавить",
+		"actionButton_edit": "Сохранить"
+	},
 	"panel": {
-		"addCommandButton": "Добавить команду"
+		"addCommandButton": "Добавить команду",
+		"addConditionButton": "Добавить условие"
 	},
 	"nodes": {
 		"command": {

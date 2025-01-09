@@ -26,6 +26,7 @@ import { createMessageToast } from 'components/ToastContainer';
 import CommandNode from './components/CommandNode';
 import CommandOffcanvas from './components/CommandOffcanvas';
 import Panel from './components/Panel';
+import ConditionOffcanvasProvider from './providers/ConditionOffcanvasProvider';
 
 import useTelegramBotMenuConstructorRouteLoaderData from './hooks/useTelegramBotMenuConstructorRouteLoaderData';
 
@@ -267,37 +268,39 @@ function Constructor(): ReactElement {
 					)}
 				>
 					<CommandOffcanvas />
-					<ReactFlow
-						fitView
-						nodes={nodes}
-						edges={edges}
-						nodeTypes={nodeTypes}
-						defaultEdgeOptions={defaultEdgeOptions}
-						deleteKeyCode={null}
-						onNodesChange={onNodesChange}
-						onEdgesChange={onEdgesChange}
-						onNodeDragStop={handleNodeDragStop}
-						onEdgeUpdateStart={handleEdgeUpdateStart}
-						onEdgeUpdate={handleEdgeUpdate}
-						onEdgeUpdateEnd={handleEdgeUpdateEnd}
-						isValidConnection={handleCheckValidConnection}
-						onConnect={addEdge}
-					>
-						<Panel />
-						<Controls
-							showInteractive={false}
-							className='border rounded-1 overflow-hidden'
-						/>
-						<MiniMap
-							maskColor='rgba(var(--bs-light-rgb), var(--bs-bg-opacity))'
-							className='border rounded-1 overflow-hidden'
-						/>
-						<Background
-							variant={BackgroundVariant.Dots}
-							size={1}
-							gap={20}
-						/>
-					</ReactFlow>
+					<ConditionOffcanvasProvider setNodes={setNodes}>
+						<ReactFlow
+							fitView
+							nodes={nodes}
+							edges={edges}
+							nodeTypes={nodeTypes}
+							defaultEdgeOptions={defaultEdgeOptions}
+							deleteKeyCode={null}
+							onNodesChange={onNodesChange}
+							onEdgesChange={onEdgesChange}
+							onNodeDragStop={handleNodeDragStop}
+							onEdgeUpdateStart={handleEdgeUpdateStart}
+							onEdgeUpdate={handleEdgeUpdate}
+							onEdgeUpdateEnd={handleEdgeUpdateEnd}
+							isValidConnection={handleCheckValidConnection}
+							onConnect={addEdge}
+						>
+							<Panel />
+							<Controls
+								showInteractive={false}
+								className='border rounded-1 overflow-hidden'
+							/>
+							<MiniMap
+								maskColor='rgba(var(--bs-light-rgb), var(--bs-bg-opacity))'
+								className='border rounded-1 overflow-hidden'
+							/>
+							<Background
+								variant={BackgroundVariant.Dots}
+								size={1}
+								gap={20}
+							/>
+						</ReactFlow>
+					</ConditionOffcanvasProvider>
 				</CommandOffcanvas.StoreProvider>
 			</div>
 		</Page>
