@@ -74,20 +74,16 @@ function Constructor(): ReactElement {
 	const { diagramCommands, diagramConditions, diagramBackgroundTasks } =
 		useTelegramBotMenuConstructorRouteLoaderData();
 
-	const [nodes, setNodes, onNodesChange] = useNodesState(
-		Object.assign(
-			parseDiagramCommandNodes(diagramCommands),
-			parseDiagramConditionNodes(diagramConditions),
-			parseDiagramBackgroundTaskNodes(diagramBackgroundTasks),
-		),
-	);
-	const [edges, setEdges, onEdgesChange] = useEdgesState(
-		Object.assign(
-			parseDiagramCommandEdges(diagramCommands),
-			parseDiagramConditionEdges(diagramConditions),
-			parseDiagramBackgroundTaskEdges(diagramBackgroundTasks),
-		),
-	);
+	const [nodes, setNodes, onNodesChange] = useNodesState([
+		...parseDiagramCommandNodes(diagramCommands),
+		...parseDiagramConditionNodes(diagramConditions),
+		...parseDiagramBackgroundTaskNodes(diagramBackgroundTasks),
+	]);
+	const [edges, setEdges, onEdgesChange] = useEdgesState([
+		...parseDiagramCommandEdges(diagramCommands),
+		...parseDiagramConditionEdges(diagramConditions),
+		...parseDiagramBackgroundTaskEdges(diagramBackgroundTasks),
+	]);
 	const edgeUpdating = useRef<Edge | null>(null);
 
 	const handleNodeDragStop = useCallback(
