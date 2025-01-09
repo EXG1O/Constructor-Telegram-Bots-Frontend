@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import classNames from 'classnames';
 
 import Feedback from 'react-bootstrap/Feedback';
 
@@ -12,11 +13,15 @@ export interface QuillEditorFeedbackProps extends QuillEditorProps {
 
 function QuillEditorFeedback({
 	error,
+	className,
 	...props
 }: QuillEditorFeedbackProps): ReactElement<QuillEditorFeedbackProps> {
 	return (
 		<div>
-			<QuillEditor {...props} />
+			<QuillEditor
+				{...props}
+				className={classNames({ 'is-invalid': Boolean(error) }, className)}
+			/>
 			{error && <Feedback type='invalid'>{error}</Feedback>}
 		</div>
 	);
