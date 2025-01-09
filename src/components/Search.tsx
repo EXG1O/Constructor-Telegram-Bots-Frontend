@@ -65,7 +65,14 @@ function Search({
 							width={21}
 							height='100%'
 							cursor='pointer'
-							className={classNames('text-bg-light border border-start-0', { 'rounded-end-1': size === 'sm', 'rounded-end-2': size === undefined, 'rounded-end-3': size === 'lg' })}
+							className={classNames(
+								'text-bg-light border border-start-0',
+								{
+									'rounded-end-1': size === 'sm',
+									'rounded-end-2': size === undefined,
+									'rounded-end-3': size === 'lg',
+								},
+							)}
 							onClick={handleClear}
 						/>
 					</div>
