@@ -100,13 +100,13 @@ function Constructor(): ReactElement {
 
 				await (
 					type === 'command'
-						? DiagramCommandAPI.update
+						? DiagramCommandAPI
 						: type === 'condition'
-							? DiagramConditionAPI.update
+							? DiagramConditionAPI
 							: type === 'background_task'
-								? DiagramBackgroundTaskAPI.update
+								? DiagramBackgroundTaskAPI
 								: undefined
-				)?.(telegramBot.id, parseInt(id), node.position);
+				)?.update(telegramBot.id, parseInt(id), node.position);
 			});
 		},
 		[],
