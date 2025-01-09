@@ -73,6 +73,7 @@
 			outline: 0;
 
 			&.ql-blank::before {
+				cursor: text;
 				position: absolute;
 				color: $secondary;
 				content: attr(data-placeholder);
