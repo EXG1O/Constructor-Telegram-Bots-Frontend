@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { forwardRef, ReactNode } from 'react';
 
 import { BaseModalProps } from '@restart/ui/Modal';
 import BaseModal from 'react-bootstrap/Modal';
@@ -10,6 +10,8 @@ import Title from './components/Title';
 import ModalContext from './contexts/ModalContext';
 
 import Loading from '../Loading';
+
+import { FCA } from 'utils/helpers';
 
 import('./index.scss');
 
@@ -36,29 +38,26 @@ export interface ModalProps
 	children?: ReactNode;
 }
 
-function Modal({
-	loading = false,
-	backdrop,
-	keyboard,
-	children,
-	...props
-}: ModalProps): ReactElement<ModalProps> {
-	return (
-		<ModalContext.Provider value={{ loading }}>
-			<BaseModal
-				{...props}
-				backdrop={loading ? 'static' : backdrop}
-				keyboard={!loading && keyboard}
-			>
-				{children}
-				{loading && (
-					<BaseModal.Body className='d-flex justify-content-center'>
-						<Loading size='md' />
-					</BaseModal.Body>
-				)}
-			</BaseModal>
-		</ModalContext.Provider>
-	);
-}
+const Modal: FCA<'div', ModalProps> = forwardRef<HTMLElement, ModalProps>(
+	function Modal({ loading = false, backdrop, keyboard, children, ...props }, ref) {
+		return (
+			<ModalContext.Provider value={{ loading }}>
+				<BaseModal
+					ref={ref}
+					{...props}
+					backdrop={loading ? 'static' : backdrop}
+					keyboard={!loading && keyboard}
+				>
+					{children}
+					{loading && (
+						<BaseModal.Body className='d-flex justify-content-center'>
+							<Loading size='md' />
+						</BaseModal.Body>
+					)}
+				</BaseModal>
+			</ModalContext.Provider>
+		);
+	},
+);
 
 export default Object.assign(Modal, { Header, Title, Body, Footer });

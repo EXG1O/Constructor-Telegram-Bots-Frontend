@@ -1,17 +1,19 @@
-import React, { ReactElement, useContext } from 'react';
+import React, { forwardRef, useContext } from 'react';
 
 import BaseBody, { ModalBodyProps as BaseBodyProps } from 'react-bootstrap/ModalBody';
 
 import ModalContext from '../contexts/ModalContext';
 
-export interface BodyProps extends BaseBodyProps {
-	as?: any;
-}
+import { FCA } from 'utils/helpers';
 
-function Body(props: BodyProps): ReactElement<BodyProps> {
-	const context = useContext(ModalContext);
+export type BodyProps = BaseBodyProps;
 
-	return !context?.loading ? <BaseBody {...props} /> : <></>;
-}
+const Body: FCA<'div', BodyProps> = forwardRef<HTMLElement, BodyProps>(
+	function Body(props, ref) {
+		const context = useContext(ModalContext);
+
+		return !context?.loading && <BaseBody ref={ref} {...props} />;
+	},
+);
 
 export default Body;

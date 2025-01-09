@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext } from 'react';
+import React, { forwardRef, useContext } from 'react';
 
 import BaseHeader, {
 	ModalHeaderProps as BaseHeaderProps,
@@ -6,12 +6,22 @@ import BaseHeader, {
 
 import ModalContext from '../contexts/ModalContext';
 
+import { FCA } from 'utils/helpers';
+
 export type HeaderProps = BaseHeaderProps;
 
-function Header({ closeButton, ...props }: HeaderProps): ReactElement<HeaderProps> {
-	const context = useContext(ModalContext);
+const Header: FCA<'div', HeaderProps> = forwardRef<HTMLDivElement, HeaderProps>(
+	function Header({ closeButton, ...props }, ref) {
+		const context = useContext(ModalContext);
 
-	return <BaseHeader {...props} closeButton={!context?.loading && closeButton} />;
-}
+		return (
+			<BaseHeader
+				ref={ref}
+				{...props}
+				closeButton={!context?.loading && closeButton}
+			/>
+		);
+	},
+);
 
 export default Header;
