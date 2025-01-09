@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
 import classNames from 'classnames';
 
-import Feedback from 'react-bootstrap/Feedback';
-
+import Feedback from './Feedback';
 import QuillEditor, { QuillEditorProps } from './QuillEditor';
 
 import('./QuillEditorFeedback.scss');

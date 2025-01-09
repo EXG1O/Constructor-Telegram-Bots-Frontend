@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 
+import Feedback from './Feedback';
 import Input, { InputProps } from './Input';
 
 import { FCA } from 'utils/helpers';
@@ -17,7 +18,7 @@ const InputFeedback: FCA<'input', InputFeedbackProps> = forwardRef<
 	return (
 		<div>
 			<Input as={as} ref={ref} {...props} isInvalid={Boolean(error)} />
-			{error && <Input.Feedback type='invalid'>{error}</Input.Feedback>}
+			{error && <Feedback type='invalid'>{error}</Feedback>}
 		</div>
 	);
 });
