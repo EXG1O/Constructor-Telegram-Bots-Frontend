@@ -1,0 +1,17 @@
+@import 'styles/base';
+
+@each $state, $data in $form-validation-states {
+	$color: map-get($data, 'color');
+	$focus-box-shadow: map-get($data, 'focus-box-shadow');
+
+	.monaco-editor-wrapper {
+		@include form-validation-state-selector($state) {
+			border-color: $color !important;
+
+			&:focus-within {
+				border-color: $color !important;
+				box-shadow: $focus-box-shadow !important;
+			}
+		}
+	}
+}
