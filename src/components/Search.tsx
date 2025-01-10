@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import Collapse from 'react-bootstrap/Collapse';
-import Input from 'react-bootstrap/FormControl';
 
 import Button from 'components/Button';
 import InputGroup, { InputGroupProps } from 'components/InputGroup';
+
+import Input from './Input';
 
 import SearchIcon from 'assets/icons/search.svg';
 import XIcon from 'assets/icons/x.svg';
