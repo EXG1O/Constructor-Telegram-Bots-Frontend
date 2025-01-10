@@ -32,14 +32,14 @@ function InnerVariableModal(): ReactElement {
 
 	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
+	const { isSubmitting, setValues, setErrors } = useFormikContext<FormValues>();
+
 	const variableID = useVariableModalStore((state) => state.variableID);
 	const type = useVariableModalStore((state) => state.type);
 	const show = useVariableModalStore((state) => state.show);
 	const loading = useVariableModalStore((state) => state.loading);
 	const hideModal = useVariableModalStore((state) => state.hideModal);
 	const setLoading = useVariableModalStore((state) => state.setLoading);
-
-	const { setValues, setErrors } = useFormikContext<FormValues>();
 
 	useEffect(() => {
 		if (variableID) {
@@ -69,7 +69,12 @@ function InnerVariableModal(): ReactElement {
 	}
 
 	return (
-		<Modal show={show} loading={loading} onHide={hideModal} onExited={handleExited}>
+		<Modal
+			show={show}
+			loading={isSubmitting || loading}
+			onHide={hideModal}
+			onExited={handleExited}
+		>
 			<Form>
 				<Modal.Header closeButton>
 					<Modal.Title>{t('title', { context: type })}</Modal.Title>
@@ -117,14 +122,11 @@ function VariableModal({
 	const variableID = useVariableModalStore((state) => state.variableID);
 	const type = useVariableModalStore((state) => state.type);
 	const hideModal = useVariableModalStore((state) => state.hideModal);
-	const setLoading = useVariableModalStore((state) => state.setLoading);
 
 	async function handleSubmit(
 		values: FormValues,
 		actions: FormikHelpers<FormValues>,
 	): Promise<void> {
-		setLoading(true);
-
 		const response = await (variableID
 			? VariableAPI.update(telegramBot.id, variableID, values)
 			: VariablesAPI.create(telegramBot.id, values));
@@ -143,7 +145,6 @@ function VariableModal({
 				message: t(`messages.${type}Variable.error`),
 				level: 'error',
 			});
-			setLoading(false);
 			return;
 		}
 
