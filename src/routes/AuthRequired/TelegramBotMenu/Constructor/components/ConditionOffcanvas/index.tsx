@@ -5,6 +5,7 @@ import { RouteID } from 'routes';
 
 import Button from 'components/Button';
 import Offcanvas, { OffcanvasProps } from 'components/Offcanvas';
+import Stack from 'components/Stack';
 
 import PartsBlock from './components/PartsBlock';
 import StoreProvider from './providers/StoreProvider';
@@ -40,7 +41,7 @@ function ConditionOffcanvas(
 			<Offcanvas.Header closeButton>
 				<Offcanvas.Title>{t('title', { context: type })}</Offcanvas.Title>
 			</Offcanvas.Header>
-			<Offcanvas.Body className='vstack gap-3'>
+			<Offcanvas.Body as={Stack} gap={3}>
 				<NameBlock store={store} />
 				<PartsBlock />
 			</Offcanvas.Body>

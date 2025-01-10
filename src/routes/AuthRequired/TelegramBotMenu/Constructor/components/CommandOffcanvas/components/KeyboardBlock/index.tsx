@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
+import Stack from 'components/Stack';
+
 import AddKeyboardButtonButton from './components/AddKeyboardButtonButton';
 import AddKeyboardRowButton from './components/AddKeyboardRowButton';
 import BlockCollapse from './components/BlockCollapse';
@@ -34,7 +36,7 @@ function KeyboardBlock(props: KeyboardBlockProps): ReactElement<KeyboardBlockPro
 	return (
 		<BlockCollapse>
 			<Block {...props} title={t('title')}>
-				<Block.Body className='vstack gap-2'>
+				<Block.Body as={Stack} gap={2}>
 					<KeyboardTypeButtonGroup />
 					<KeyboardButtonBlock />
 					<Keyboard />

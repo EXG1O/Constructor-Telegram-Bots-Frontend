@@ -9,6 +9,7 @@ import Switch from 'react-bootstrap/Switch';
 
 import Button from 'components/Button';
 import Modal, { ModalProps } from 'components/Modal';
+import Stack from 'components/Stack';
 import { createMessageToast } from 'components/ToastContainer';
 
 import useTelegramBots from '../hooks/useTelegramBots';
@@ -85,7 +86,7 @@ function TelegramBotAdditionModal({
 			<Modal.Header closeButton>
 				<Modal.Title>{t('title')}</Modal.Title>
 			</Modal.Header>
-			<Modal.Body className='vstack gap-2'>
+			<Modal.Body as={Stack} gap={2}>
 				<div>
 					<Input
 						value={data.api_token}

@@ -3,6 +3,8 @@ import classNames from 'classnames';
 
 import { CollapseProps } from 'react-bootstrap/Collapse';
 
+import Stack from 'components/Stack';
+
 import AddHeaderButton from './components/AddHeaderButton';
 import BlockCollapse, { BlockCollapseProps } from './components/BlockCollapse';
 import HeaderInputGroup from './components/HeaderInputGroup';
@@ -31,10 +33,11 @@ function HeadersBlock({
 
 	return (
 		<BlockCollapse>
-			<div
+			<Stack
 				{...props}
+				gap={1}
 				className={classNames(
-					'vstack border border-top-0 rounded-1 rounded-top-0 gap-1 p-1',
+					'border border-top-0 rounded-1 rounded-top-0 p-1',
 					className,
 				)}
 			>
@@ -42,7 +45,7 @@ function HeadersBlock({
 					<HeaderInputGroup key={index} index={index} />
 				))}
 				<AddHeaderButton />
-			</div>
+			</Stack>
 		</BlockCollapse>
 	);
 }

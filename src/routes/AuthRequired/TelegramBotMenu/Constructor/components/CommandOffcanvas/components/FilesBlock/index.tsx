@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
+import Stack from 'components/Stack';
+
 import AddFilesButton from './components/AddFilesButton';
 import BlockCollapse from './components/BlockCollapse';
 import FileList from './components/FileList';
@@ -32,7 +34,7 @@ function FilesBlock(props: FilesBlockProps): ReactElement<FilesBlockProps> {
 	return (
 		<BlockCollapse>
 			<Block {...props} title={t('title')}>
-				<Block.Body className='vstack gap-2'>
+				<Block.Body as={Stack} gap={2}>
 					<FileList />
 					<AddFilesButton />
 				</Block.Body>

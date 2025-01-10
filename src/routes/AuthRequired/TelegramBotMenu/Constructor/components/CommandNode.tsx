@@ -6,9 +6,9 @@ import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import './CommandNode.scss';
-import Stack from 'react-bootstrap/Stack';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
+import Stack from 'components/Stack';
 import { createMessageToast } from 'components/ToastContainer';
 
 import NodeToolbar from './NodeToolbar';

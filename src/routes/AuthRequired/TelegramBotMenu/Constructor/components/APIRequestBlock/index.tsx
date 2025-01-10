@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
+import Stack from 'components/Stack';
+
 import BodyBlock, { Body, defaultBody } from './components/BodyBlock';
 import HeadersBlock, { defaultHeaders, Headers } from './components/HeadersBlock';
 import MethodButtonGroup, {
@@ -50,7 +52,7 @@ function APIRequestBlock({
 
 	return (
 		<Block {...props} title={t('title')}>
-			<Block.Body className='vstack gap-2'>
+			<Block.Body as={Stack} gap={2}>
 				<StoreContext.Provider value={store}>
 					<URLInput />
 					<MethodButtonGroup />

@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import Container, { ContainerProps } from './Container';
 import Title from './Title';
 
+import('./Stack.scss');
+
 export interface PageProps {
 	title: string;
 	align?: 'center';

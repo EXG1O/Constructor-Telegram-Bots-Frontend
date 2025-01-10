@@ -7,6 +7,7 @@ import { RouteID } from 'routes';
 import Collapse from 'react-bootstrap/Collapse';
 
 import Button, { ButtonProps } from 'components/Button';
+import Stack from 'components/Stack';
 
 import AddonButton, { AddonButtonProps } from './components/AddonButton';
 import StoreContext from './contexts/StoreContext';
@@ -56,13 +57,16 @@ function AddonButtonGroup({
 			/>
 			<Collapse in={show}>
 				<div>
-					<div className='vstack bg-light border border-top-0 rounded-1 rounded-top-0 p-1 gap-1'>
+					<Stack
+						gap={1}
+						className='bg-light border border-top-0 rounded-1 rounded-top-0 p-1'
+					>
 						<StoreContext.Provider value={store}>
 							{addonButtons.map((props, index) => (
 								<AddonButton key={index} {...props} />
 							))}
 						</StoreContext.Provider>
-					</div>
+					</Stack>
 				</div>
 			</Collapse>
 		</div>

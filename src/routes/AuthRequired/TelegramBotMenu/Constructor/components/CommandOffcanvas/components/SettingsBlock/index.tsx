@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
+import Stack from 'components/Stack';
+
 import SettingSwitch from './components/SettingSwitch';
 
 import Block, { BlockProps } from '../../../Block';
@@ -28,7 +30,7 @@ function SettingsBlock(props: SettingsBlockProps): ReactElement<SettingsBlockPro
 
 	return (
 		<Block {...props} title={t('title')}>
-			<Block.Body className='vstack gap-2'>
+			<Block.Body as={Stack} gap={2}>
 				<SettingSwitch
 					settingName='isReplyToUserMessage'
 					label={t('replyToUserMessageSwitch')}

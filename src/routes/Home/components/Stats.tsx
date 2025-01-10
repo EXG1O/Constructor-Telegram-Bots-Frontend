@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Stack from 'react-bootstrap/Stack';
-
 import Block, { BlockProps } from 'components/Block';
 import InfoArea from 'components/InfoArea';
+import Stack from 'components/Stack';
 
 import useHomeRouteLoaderData from '../hooks/useHomeRouteLoaderData';
 

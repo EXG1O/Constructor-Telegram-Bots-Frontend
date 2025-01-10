@@ -1,11 +1,11 @@
 import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Panel as BasePanel } from 'reactflow';
-import classNames from 'classnames';
 
 import { RouteID } from 'routes';
 
 import AddButton from 'components/AddButton';
+import Stack from 'components/Stack';
 
 import useCommandOffcanvasStore from './CommandOffcanvas/hooks/useCommandOffcanvasStore';
 import useConditionOffcanvasStore from './ConditionOffcanvas/hooks/useConditionOffcanvasStore';
@@ -24,14 +24,14 @@ function Panel({ className, ...props }: PanelProps): ReactElement<PanelProps> {
 
 	return (
 		<BasePanel position='top-right'>
-			<div {...props} className={classNames('vstack gap-1', className)}>
+			<Stack {...props} gap={1}>
 				<AddButton size='sm' variant='dark' onClick={showAddCommandOffcanvas}>
 					{t('addCommandButton')}
 				</AddButton>
 				<AddButton size='sm' variant='dark' onClick={showAddConditionOffcanvas}>
 					{t('addConditionButton')}
 				</AddButton>
-			</div>
+			</Stack>
 		</BasePanel>
 	);
 }

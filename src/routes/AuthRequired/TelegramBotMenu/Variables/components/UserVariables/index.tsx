@@ -3,9 +3,8 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Stack from 'react-bootstrap/Stack';
-
 import Block from 'components/Block';
+import Stack from 'components/Stack';
 
 import Toolbar from './components/Toolbar';
 import VariableModal from './components/VariableModal';
