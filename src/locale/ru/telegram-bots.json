@@ -9,7 +9,7 @@
 		"messages": {
 			"createTelegramBot": {
 				"success": "Вы успешно добавили Telegram бота.",
-				"error": "Произошла непредвиденная ошибка из-за чего не удалось добавить Telegram бота."
+				"error": "Не удалось добавить Telegram бота."
 			}
 		},
 		"apiTokenInputPlaceholder": "Введите API-токен",
