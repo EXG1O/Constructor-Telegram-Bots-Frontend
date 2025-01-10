@@ -15,9 +15,16 @@
 				"error_other": "Произошла непредвиденная ошибка."
 			}
 		},
-		"recordModal": {
-			"title_add": "Добавление записи",
-			"actionButton_add": "Добавить"
+		"recordAdditionModal": {
+			"title": "Добавление записи",
+			"messages": {
+				"addRecord": {
+					"success": "Вы успешно добавили запись.",
+					"error": "Не удалось добавить запись.",
+					"error_validJSON": "Введите данных записи в формате JSON."
+				}
+			},
+			"addButton": "Добавить"
 		},
 		"toolbar": {
 			"addRecordButton": "Добавить запись"

@@ -8,7 +8,6 @@ import Page from 'components/Page';
 import Stack from 'components/Stack';
 
 import RecordList from './components/RecordList';
-import RecordModal from './components/RecordModal';
 import Toolbar from './components/Toolbar';
 import StoreProvider from './providers/StoreProvider';
 
@@ -18,18 +17,15 @@ function Database(): ReactElement {
 	return (
 		<Page title={t('title')} grid>
 			<StoreProvider>
-				<RecordModal.StoreProvider>
-					<RecordModal />
-					<Block variant='light'>
-						<h3 className='fw-semibold text-center mb-3'>
-							{t('records.title')}
-						</h3>
-						<Stack gap={2}>
-							<Toolbar />
-							<RecordList />
-						</Stack>
-					</Block>
-				</RecordModal.StoreProvider>
+				<Block variant='light'>
+					<h3 className='fw-semibold text-center mb-3'>
+						{t('records.title')}
+					</h3>
+					<Stack gap={2}>
+						<Toolbar />
+						<RecordList />
+					</Stack>
+				</Block>
 			</StoreProvider>
 		</Page>
 	);
