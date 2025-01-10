@@ -1,17 +1,21 @@
-import React, { ReactElement } from 'react';
+import React, { forwardRef } from 'react';
 import classNames from 'classnames';
 
 import BaseCardFooter, {
 	CardFooterProps as BaseCardFooterProps,
 } from 'react-bootstrap/CardFooter';
 
+import { FCA } from 'utils/helpers';
+
 export type BlockFooterProps = BaseCardFooterProps;
 
-function BlockFooter({
-	className,
-	...props
-}: BlockFooterProps): ReactElement<BlockFooterProps> {
-	return <BaseCardFooter {...props} className={classNames(className, 'p-2')} />;
-}
+const BlockFooter: FCA<'div', BlockFooterProps> = forwardRef<
+	HTMLElement,
+	BlockFooterProps
+>(function BlockFooter({ className, ...props }, ref) {
+	return (
+		<BaseCardFooter ref={ref} {...props} className={classNames(className, 'p-2')} />
+	);
+});
 
 export default BlockFooter;
