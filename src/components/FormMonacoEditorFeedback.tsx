@@ -1,5 +1,5 @@
 import React, { ReactElement, useCallback } from 'react';
-import { useField, useFormikContext } from 'formik';
+import { useField } from 'formik';
 
 import MonacoEditorFeedback, {
 	MonacoEditorFeedbackProps,
@@ -9,16 +9,18 @@ export interface FormMonacoEditorFeedbackProps extends MonacoEditorFeedbackProps
 	name: string;
 }
 
+type ChangeHandler = NonNullable<MonacoEditorFeedbackProps['onChange']>;
+
 function FormMonacoEditorFeedback({
 	name,
 	...props
 }: FormMonacoEditorFeedbackProps): ReactElement<FormMonacoEditorFeedbackProps> {
-	const { setFieldValue } = useFormikContext();
-	const [{ value }, meta] = useField({ name });
+	const [{ value }, meta, { setValue }] = useField(name);
 
-	const handleChange = useCallback<
-		NonNullable<MonacoEditorFeedbackProps['onChange']>
-	>((_editor, value) => setFieldValue(name, value), [name]);
+	const handleChange = useCallback<ChangeHandler>(
+		(_editor, value) => setValue(value),
+		[name],
+	);
 
 	return (
 		<MonacoEditorFeedback

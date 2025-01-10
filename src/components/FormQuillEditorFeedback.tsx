@@ -1,5 +1,5 @@
 import React, { ReactElement, useCallback } from 'react';
-import { useField, useFormikContext } from 'formik';
+import { useField } from 'formik';
 
 import QuillEditorFeedback, { QuillEditorFeedbackProps } from './QuillEditorFeedback';
 
@@ -7,17 +7,15 @@ export interface FormQuillEditorFeedbackProps extends QuillEditorFeedbackProps {
 	name: string;
 }
 
+type ChangeHandler = NonNullable<QuillEditorFeedbackProps['onChange']>;
+
 function FormQuillEditorFeedback({
 	name,
 	...props
 }: FormQuillEditorFeedbackProps): ReactElement<FormQuillEditorFeedbackProps> {
-	const { setFieldValue } = useFormikContext();
-	const [{ value }, meta] = useField({ name });
+	const [{ value }, meta, { setValue }] = useField(name);
 
-	const handleChange = useCallback<NonNullable<QuillEditorFeedbackProps['onChange']>>(
-		(value) => setFieldValue(name, value),
-		[name],
-	);
+	const handleChange = useCallback<ChangeHandler>((value) => setValue(value), [name]);
 
 	return (
 		<QuillEditorFeedback
