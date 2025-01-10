@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext } from 'react';
+import React, { forwardRef, useContext } from 'react';
 
 import BaseBody, {
 	OffcanvasBodyProps as BaseBodyProps,
@@ -6,14 +6,16 @@ import BaseBody, {
 
 import OffcanvasContext from '../contexts/OffcanvasContext';
 
-export interface BodyProps extends BaseBodyProps {
-	as?: any;
-}
+import { FCA } from 'utils/helpers';
 
-function Body(props: BodyProps): ReactElement<BodyProps> {
-	const context = useContext(OffcanvasContext);
+export type BodyProps = BaseBodyProps;
 
-	return !context?.loading ? <BaseBody {...props} /> : <></>;
-}
+const Body: FCA<'div', BodyProps> = forwardRef<HTMLElement, BodyProps>(
+	function Body(props, ref) {
+		const context = useContext(OffcanvasContext);
+
+		return !context?.loading && <BaseBody ref={ref} {...props} />;
+	},
+);
 
 export default Body;

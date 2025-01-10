@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { forwardRef, ReactNode } from 'react';
 
 import { BaseModalProps } from '@restart/ui/Modal';
 import BaseOffcanvas from 'react-bootstrap/Offcanvas';
@@ -10,6 +10,8 @@ import Header from './components/Header';
 import OffcanvasContext from './contexts/OffcanvasContext';
 
 import Loading from '../Loading';
+
+import { FCA } from 'utils/helpers';
 
 import('./index.scss');
 
@@ -37,24 +39,22 @@ export interface OffcanvasProps
 
 /** The wrapper component adds support for the `loading` prop to the...
  *  Offcanvas component from `react-bootstrap`. */
-function Offcanvas({
-	loading = false,
-	children,
-	...props
-}: OffcanvasProps): ReactElement<OffcanvasProps> {
-	return (
-		<OffcanvasContext.Provider value={{ loading }}>
-			<BaseOffcanvas {...props}>
-				{children}
-				{loading && (
-					<BaseOffcanvas.Body className='d-flex justify-content-center'>
-						<Loading size='md' className='align-self-center' />
-					</BaseOffcanvas.Body>
-				)}
-			</BaseOffcanvas>
-		</OffcanvasContext.Provider>
-	);
-}
+const Offcanvas: FCA<'div', OffcanvasProps> = forwardRef<HTMLElement, OffcanvasProps>(
+	function Offcanvas({ loading = false, children, ...props }, ref) {
+		return (
+			<OffcanvasContext.Provider value={{ loading }}>
+				<BaseOffcanvas ref={ref} {...props}>
+					{children}
+					{loading && (
+						<BaseOffcanvas.Body className='d-flex justify-content-center'>
+							<Loading size='md' className='align-self-center' />
+						</BaseOffcanvas.Body>
+					)}
+				</BaseOffcanvas>
+			</OffcanvasContext.Provider>
+		);
+	},
+);
 
 Title.defaultProps = { as: 'h5' };
 
