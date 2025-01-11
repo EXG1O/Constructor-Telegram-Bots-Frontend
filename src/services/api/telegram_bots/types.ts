@@ -276,19 +276,11 @@ export namespace Data {
 	}
 
 	export namespace BackgroundTasksAPI {
-		interface CreateBackgroundTaskAPIRequest
-			extends Pick<BackgroundTaskAPIRequest, 'url' | 'method'> {
-			headers?: BackgroundTaskAPIRequest['headers'];
-			body?: BackgroundTaskAPIRequest['body'];
-		}
-
-		export interface Create extends Omit<BackgroundTask, 'id' | 'api_request'> {
-			api_request: CreateBackgroundTaskAPIRequest[];
-		}
+		export type Create = Omit<BackgroundTask, 'id'>;
 	}
 
 	export namespace BackgroundTaskAPI {
-		export type Update = Omit<BackgroundTask, 'id'>;
+		export type Update = BackgroundTasksAPI.Create;
 
 		export interface PartialUpdate
 			extends Omit<BackgroundTask, 'id' | 'api_request'> {
