@@ -4,12 +4,12 @@ import classNames from 'classnames';
 
 import { RouteID } from 'routes';
 
-import Input, { FormControlProps as InputProps } from 'react-bootstrap/FormControl';
+import InputFeedback, { InputFeedbackProps } from 'components/InputFeedback';
 
-import useCommandOffcanvasStore from '../../../../../hooks/useCommandOffcanvasStore';
+import { useCommandOffcanvasStore } from '../../../../../store';
 
 export type URLInputProps = Omit<
-	InputProps,
+	InputFeedbackProps,
 	'size' | 'value' | 'placeholder' | 'children' | 'onChange'
 >;
 
@@ -22,23 +22,23 @@ function URLInput({ className, ...props }: URLInputProps): ReactElement<URLInput
 		keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardButtonBlock.urlInput',
 	});
 
-	const url = useCommandOffcanvasStore((state) => state.keyboardButton.url);
-	const updateKeyboardButton = useCommandOffcanvasStore(
-		(state) => state.updateKeyboardButton,
+	const url = useCommandOffcanvasStore((state) => state.keyboardButtonBlock.url);
+	const setURL = useCommandOffcanvasStore(
+		(state) => state.keyboardButtonBlock.setURL,
+	);
+	const error = useCommandOffcanvasStore(
+		(state) => state.keyboardButtonBlock.errors.url,
 	);
 
 	return (
-		<Input
+		<InputFeedback
 			{...props}
 			size='sm'
 			value={url}
+			error={error}
 			className={classNames('border-top-0 rounded-top-0', className)}
 			placeholder={t('placeholder')}
-			onChange={(e) =>
-				updateKeyboardButton((keyboardButton) => {
-					keyboardButton.url = e.target.value;
-				})
-			}
+			onChange={(e) => setURL(e.target.value)}
 		/>
 	);
 }

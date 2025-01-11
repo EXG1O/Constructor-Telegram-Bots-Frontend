@@ -3,24 +3,23 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
+import FormCheckFeedback from 'components/FormCheckFeedback';
 import Stack from 'components/Stack';
 
-import SettingSwitch from './components/SettingSwitch';
-
-import Block, { BlockProps } from '../../../Block';
+import Block, { BlockProps } from '../../Block';
 
 export interface Settings {
-	isReplyToUserMessage: boolean;
-	isDeleteUserMessage: boolean;
-	isSendAsNewMessage: boolean;
+	is_reply_to_user_message: boolean;
+	is_delete_user_message: boolean;
+	is_send_as_new_message: boolean;
 }
 
-export type SettingsBlockProps = Omit<BlockProps, 'title' | 'children'>;
+export type SettingsBlockProps = Pick<BlockProps, 'className'>;
 
 export const defaultSettings: Settings = {
-	isReplyToUserMessage: false,
-	isDeleteUserMessage: false,
-	isSendAsNewMessage: false,
+	is_reply_to_user_message: false,
+	is_delete_user_message: false,
+	is_send_as_new_message: false,
 };
 
 function SettingsBlock(props: SettingsBlockProps): ReactElement<SettingsBlockProps> {
@@ -31,16 +30,19 @@ function SettingsBlock(props: SettingsBlockProps): ReactElement<SettingsBlockPro
 	return (
 		<Block {...props} title={t('title')}>
 			<Block.Body as={Stack} gap={2}>
-				<SettingSwitch
-					settingName='isReplyToUserMessage'
+				<FormCheckFeedback
+					type='switch'
+					name='settings.is_reply_to_user_message'
 					label={t('replyToUserMessageSwitch')}
 				/>
-				<SettingSwitch
-					settingName='isDeleteUserMessage'
+				<FormCheckFeedback
+					type='switch'
+					name='settings.is_delete_user_message'
 					label={t('deleteUserMessageSwitch')}
 				/>
-				<SettingSwitch
-					settingName='isSendAsNewMessage'
+				<FormCheckFeedback
+					type='switch'
+					name='settings.is_send_as_new_message'
 					label={t('sendAsNewMessageSwitch')}
 				/>
 			</Block.Body>

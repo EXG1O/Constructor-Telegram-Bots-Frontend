@@ -1,5 +1,6 @@
 import React, { memo, ReactElement, useId, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useField } from 'formik';
 
 import { RouteID } from 'routes';
 
@@ -8,17 +9,15 @@ import ToggleButtonGroup, {
 	ToggleButtonRadioProps,
 } from 'components/ToggleButtonGroup';
 
-import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
-
 export type Type = 'default' | 'inline' | 'payment';
 
-export type KeyboardTypeButtonGroupProps = Omit<
+export type KeyboardTypeButtonGroupProps = Pick<
 	ToggleButtonRadioProps<Type>,
-	'id' | 'type' | 'name' | 'value' | 'children' | 'onChange'
+	'className'
 >;
 
 interface TypeToggleButtonProps
-	extends Omit<ToggleButtonProps, 'key' | 'id' | 'size' | 'variant' | 'onChange'> {
+	extends Pick<ToggleButtonProps, 'className' | 'children'> {
 	value: Type;
 }
 
@@ -33,8 +32,7 @@ function KeyboardTypeButtonGroup(
 		keyPrefix: 'commandOffcanvas.keyboardBlock.typeButtonGroup',
 	});
 
-	const type = useCommandOffcanvasStore((state) => state.keyboard.type);
-	const updateKeyboard = useCommandOffcanvasStore((state) => state.updateKeyboard);
+	const [{ value }, _meta, { setValue }] = useField<Type>('keyboard.type');
 
 	const toggleButtons = useMemo<TypeToggleButtonProps[]>(
 		() => [
@@ -50,12 +48,8 @@ function KeyboardTypeButtonGroup(
 			{...props}
 			type='radio'
 			name={id}
-			value={type}
-			onChange={(value) =>
-				updateKeyboard((keyboard) => {
-					keyboard.type = value;
-				})
-			}
+			value={value}
+			onChange={(value) => setValue(value)}
 		>
 			{toggleButtons.map((props, index) => (
 				<ToggleButtonGroup.Button

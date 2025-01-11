@@ -1,10 +1,10 @@
 import React, { memo, ReactElement } from 'react';
 import { Draggable, DraggableProps } from 'react-beautiful-dnd';
+import { useField } from 'formik';
+import { produce } from 'immer';
 
 import { KeyboardButton } from './DraggableKeyboardButton';
 import DroppableKeyboardButtons from './DroppableKeyboardButtons';
-
-import useCommandOffcanvasStore from '../../../../../hooks/useCommandOffcanvasStore';
 
 import GripVerticalIcon from 'assets/icons/grip-vertical.svg';
 import TrashIcon from 'assets/icons/trash.svg';
@@ -23,8 +23,9 @@ function DraggableKeyboardRow({
 	rowIndex,
 	...props
 }: DraggableKeyboardRowProps): ReactElement<DraggableKeyboardRowProps> {
-	const row = useCommandOffcanvasStore((state) => state.keyboard.rows[rowIndex]);
-	const deleteRow = useCommandOffcanvasStore((state) => state.deleteKeyboardRow);
+	const [{ value: rows }, _meta, { setValue }] =
+		useField<KeyboardRow[]>('keyboard.rows');
+	const [{ value: row }] = useField<KeyboardRow>(`keyboard.rows[${rowIndex}]`);
 
 	return (
 		<Draggable {...props} draggableId={row.draggableId} index={rowIndex}>
@@ -45,7 +46,13 @@ function DraggableKeyboardRow({
 					<div
 						className='d-flex align-items-center bg-light text-danger border border-start-0 rounded-end-1 px-1'
 						style={{ cursor: 'pointer' }}
-						onClick={() => deleteRow(rowIndex)}
+						onClick={() =>
+							setValue(
+								produce(rows, (draft) => {
+									draft.splice(rowIndex, 1);
+								}),
+							)
+						}
 					>
 						<TrashIcon width={18} height={18} />
 					</div>

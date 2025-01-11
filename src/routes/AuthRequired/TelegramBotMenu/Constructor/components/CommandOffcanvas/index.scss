@@ -1,0 +1,5 @@
+@import 'styles/base';
+
+.command.offcanvas .offcanvas-body > * {
+	margin-bottom: map-get($spacers, 3);
+}

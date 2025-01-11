@@ -8,10 +8,7 @@ import BaseTelegramBotStorage, {
 
 import useTelegramBotStorage from '../hooks/useTelegramBotStorage';
 
-export type TelegramBotStorageProps = Omit<
-	BaseTelegramBotStorageProps,
-	'telegramBot' | 'usedStorageSize'
->;
+export type TelegramBotStorageProps = Pick<BaseTelegramBotStorageProps, 'className'>;
 
 function TelegramBotStorage(
 	props: TelegramBotStorageProps,
@@ -23,6 +20,7 @@ function TelegramBotStorage(
 	return (
 		<BaseTelegramBotStorage
 			{...props}
+			size='sm'
 			telegramBot={telegramBot}
 			usedStorageSize={usedStorageSize}
 		/>

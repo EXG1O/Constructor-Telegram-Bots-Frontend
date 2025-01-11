@@ -1,18 +1,8 @@
 {
 	"title": "Конструктор",
 	"messages": {
-		"getCommand": {
-			"error": "Не удалось получить данные команды."
-		},
-		"createCommand": {
-			"success": "Вы успешно добавили команду.",
-			"error": "Не удалось добавить команду.",
-			"error_getDiagramCommand": "Не удалось получить добавленную ранее команду."
-		},
-		"updateCommand": {
-			"success": "Вы успешно сохранили команду.",
-			"error": "Не удалось сохранить команду.",
-			"error_getDiagramCommand": "Не удалось получить сохранённую ранее команду."
+		"getDiagramCommand": {
+			"error": "Не удалось получить данные команды для диаграммы."
 		},
 		"createConnection": {
 			"error": "Не удалось подключить блок к другому блоку."
@@ -61,6 +51,22 @@
 	"commandOffcanvas": {
 		"title_add": "Добавление команды",
 		"title_edit": "Редактирование команды",
+		"messages": {
+			"validation": {
+				"invalidJSON": "Введите данные в формате JSON."
+			},
+			"getCommand": {
+				"error": "Не удалось получить данные команды."
+			},
+			"addCommand": {
+				"success": "Вы успешно добавили команду.",
+				"error": "Не удалось добавить команду."
+			},
+			"editCommand": {
+				"success": "Вы успешно сохранили команду.",
+				"error": "Не удалось сохранить команду."
+			}
+		},
 		"settingsBlock": {
 			"title": "Настройки",
 			"replyToUserMessageSwitch": "Ответить на сообщение пользователя",
@@ -69,16 +75,12 @@
 		},
 		"triggerBlock": {
 			"title": "Триггер",
-			"textInput": {
-				"placeholder": "Введите текст"
-			},
+			"textInputPlaceholder": "Введите текст",
 			"descriptionInputCollapse": {
 				"showButton": "Добавить в меню",
 				"hideButton": "Убрать из меню"
 			},
-			"descriptionInput": {
-				"placeholder": "Введите описание"
-			}
+			"descriptionInputPlaceholder": "Введите описание"
 		},
 		"imagesBlock": {
 			"title": "Изображения",
@@ -106,9 +108,7 @@
 		},
 		"messageBlock": {
 			"title": "Сообщение",
-			"messageEditor": {
-				"placeholder": "Введите текст"
-			}
+			"messageEditorPlaceholder": "Введите текст"
 		},
 		"keyboardBlock": {
 			"title": "Клавиатура",
@@ -120,6 +120,10 @@
 			"keyboardButtonBlock": {
 				"title_add": "Добавление кнопки",
 				"title_edit": "Редактирование кнопки",
+				"messages": {
+					"emptyTextError": "Это поле не может быть пустым.",
+					"invalidURLError": "Неверный URL-адрес."
+				},
 				"textInput": {
 					"placeholder": "Введите текст"
 				},
@@ -132,8 +136,7 @@
 				},
 				"actionButton_add": "Добавить",
 				"actionButton_edit": "Сохранить",
-				"deleteButton": "Удалить",
-				"cancelButton": "Отменить"
+				"deleteButton": "Удалить"
 			},
 			"addButtonButton": {
 				"text": "Добавить кнопку"
@@ -145,8 +148,8 @@
 		"databaseRecordBlock": {
 			"title": "Запись в базу данных"
 		},
-		"button_add": "Добавить",
-		"button_edit": "Сохранить"
+		"actionButton_add": "Добавить",
+		"actionButton_edit": "Сохранить"
 	},
 	"conditionOffcanvas": {
 		"title_add": "Добавление условия",

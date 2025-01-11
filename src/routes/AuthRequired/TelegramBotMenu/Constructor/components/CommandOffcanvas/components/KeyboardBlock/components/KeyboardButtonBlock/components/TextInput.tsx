@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Input, { FormControlProps as InputProps } from 'react-bootstrap/FormControl';
+import InputFeedback, { InputFeedbackProps } from 'components/InputFeedback';
 
-import useCommandOffcanvasStore from '../../../../../hooks/useCommandOffcanvasStore';
+import { useCommandOffcanvasStore } from '../../../../../store';
 
 export type TextInputProps = Omit<
-	InputProps,
+	InputFeedbackProps,
 	'size' | 'value' | 'placeholder' | 'children' | 'onChange'
 >;
 
@@ -21,22 +21,22 @@ function TextInput(props: TextInputProps): ReactElement<TextInputProps> {
 		keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardButtonBlock.textInput',
 	});
 
-	const text = useCommandOffcanvasStore((state) => state.keyboardButton.text);
-	const updateKeyboardButton = useCommandOffcanvasStore(
-		(state) => state.updateKeyboardButton,
+	const text = useCommandOffcanvasStore((state) => state.keyboardButtonBlock.text);
+	const setText = useCommandOffcanvasStore(
+		(state) => state.keyboardButtonBlock.setText,
+	);
+	const error = useCommandOffcanvasStore(
+		(state) => state.keyboardButtonBlock.errors.text,
 	);
 
 	return (
-		<Input
+		<InputFeedback
 			{...props}
 			size='sm'
 			value={text}
+			error={error}
 			placeholder={t('placeholder')}
-			onChange={(e) =>
-				updateKeyboardButton((keyboardButton) => {
-					keyboardButton.text = e.target.value;
-				})
-			}
+			onChange={(e) => setText(e.target.value)}
 		/>
 	);
 }

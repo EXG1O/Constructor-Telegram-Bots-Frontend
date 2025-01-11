@@ -2,7 +2,7 @@ import React, { CSSProperties, memo, ReactElement, ReactNode } from 'react';
 
 import Loading from 'components/Loading';
 
-import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
+import { useCommandOffcanvasStore } from '../../../store';
 
 export interface ImagesLoadingProps {
 	children: ReactNode;

@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
+import { useField } from 'formik';
 
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import useCommandOffcanvasStore from './useCommandOffcanvasStore';
+import { Files } from '../components/FilesBlock';
+import { Images } from '../components/ImagesBlock';
 
 export interface TelegramBotStorage {
 	storageSize: number;
@@ -13,8 +15,8 @@ export interface TelegramBotStorage {
 function useTelegramBotStorage(): TelegramBotStorage {
 	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-	const images = useCommandOffcanvasStore((state) => state.images);
-	const files = useCommandOffcanvasStore((state) => state.files);
+	const [{ value: images }] = useField<Images>({ name: 'images' });
+	const [{ value: files }] = useField<Files>({ name: 'files' });
 
 	const usedStorageSize = useMemo<number>(
 		() =>

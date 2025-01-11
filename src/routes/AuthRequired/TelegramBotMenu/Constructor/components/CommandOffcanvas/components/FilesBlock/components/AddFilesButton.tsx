@@ -1,20 +1,18 @@
 import React, { memo, ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useField } from 'formik';
+import { produce } from 'immer';
 
 import { RouteID } from 'routes';
 
-import { _File } from '..';
+import { CustomFile, Files } from '..';
 
 import Button, { ButtonProps } from 'components/Button';
 import { createMessageToast } from 'components/ToastContainer';
 
-import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
 import useTelegramBotStorage from '../../../hooks/useTelegramBotStorage';
 
-export type AddFilesButtonProps = Omit<
-	ButtonProps,
-	'as' | 'htmlFor' | 'size' | 'variant' | 'children'
->;
+export type AddFilesButtonProps = Pick<ButtonProps, 'className'>;
 
 function AddFilesButton(props: AddFilesButtonProps): ReactElement<AddFilesButtonProps> {
 	const id = useId();
@@ -23,7 +21,7 @@ function AddFilesButton(props: AddFilesButtonProps): ReactElement<AddFilesButton
 		keyPrefix: 'commandOffcanvas.filesBlock.addFilesButton',
 	});
 
-	const updateFiles = useCommandOffcanvasStore((state) => state.updateFiles);
+	const [{ value: files }, _meta, { setValue }] = useField<Files>('files');
 
 	const { remainingStorageSize } = useTelegramBotStorage();
 
@@ -36,45 +34,47 @@ function AddFilesButton(props: AddFilesButtonProps): ReactElement<AddFilesButton
 
 		let availableStorageSize = remainingStorageSize;
 
-		updateFiles((files) => {
-			files.push(
-				...newFiles
-					.filter((file) => {
-						if (file.size > 2621440) {
-							createMessageToast({
-								message: t('messages.addImages.error', {
-									context: 'tooLarge',
-									name: file.name,
-								}),
-								level: 'error',
-							});
-							return false;
-						}
+		setValue(
+			produce(files, (draft) => {
+				draft.push(
+					...newFiles
+						.filter((file) => {
+							if (file.size > 2621440) {
+								createMessageToast({
+									message: t('messages.addImages.error', {
+										context: 'tooLarge',
+										name: file.name,
+									}),
+									level: 'error',
+								});
+								return false;
+							}
 
-						if (availableStorageSize - file.size < 0) {
-							createMessageToast({
-								message: t('messages.addImages.error', {
-									context: 'notEnoughStorage',
-									name: file.name,
-								}),
-								level: 'error',
-							});
-							return false;
-						}
+							if (availableStorageSize - file.size < 0) {
+								createMessageToast({
+									message: t('messages.addImages.error', {
+										context: 'notEnoughStorage',
+										name: file.name,
+									}),
+									level: 'error',
+								});
+								return false;
+							}
 
-						availableStorageSize -= file.size;
+							availableStorageSize -= file.size;
 
-						return true;
-					})
-					.map<_File>((file) => ({
-						key: crypto.randomUUID(),
-						name: file.name,
-						size: file.size,
-						file,
-						fromURL: null,
-					})),
-			);
-		});
+							return true;
+						})
+						.map<CustomFile>((file) => ({
+							key: crypto.randomUUID(),
+							name: file.name,
+							size: file.size,
+							file,
+							from_url: null,
+						})),
+				);
+			}),
+		);
 	}
 
 	return (

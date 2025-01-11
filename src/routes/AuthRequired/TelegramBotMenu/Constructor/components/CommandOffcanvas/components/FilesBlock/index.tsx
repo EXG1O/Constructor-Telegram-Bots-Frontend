@@ -6,23 +6,22 @@ import { RouteID } from 'routes';
 import Stack from 'components/Stack';
 
 import AddFilesButton from './components/AddFilesButton';
-import BlockCollapse from './components/BlockCollapse';
 import FileList from './components/FileList';
 
 import Block, { BlockProps } from '../../../Block';
 
-export interface _File extends Pick<File, 'name' | 'size'> {
+export interface CustomFile extends Pick<File, 'name' | 'size'> {
 	id?: number;
 	key: string;
 	name: string;
 	size: number;
 	file: File | null;
-	fromURL: string | null;
+	from_url: string | null;
 }
 
-export type Files = _File[];
+export type Files = CustomFile[];
 
-export type FilesBlockProps = Omit<BlockProps, 'title' | 'children'>;
+export type FilesBlockProps = Pick<BlockProps, 'className'>;
 
 export const defaultFiles: Files = [];
 
@@ -32,14 +31,14 @@ function FilesBlock(props: FilesBlockProps): ReactElement<FilesBlockProps> {
 	});
 
 	return (
-		<BlockCollapse>
+		<Block.Collapse name='show_files_block'>
 			<Block {...props} title={t('title')}>
 				<Block.Body as={Stack} gap={2}>
 					<FileList />
 					<AddFilesButton />
 				</Block.Body>
 			</Block>
-		</BlockCollapse>
+		</Block.Collapse>
 	);
 }
 

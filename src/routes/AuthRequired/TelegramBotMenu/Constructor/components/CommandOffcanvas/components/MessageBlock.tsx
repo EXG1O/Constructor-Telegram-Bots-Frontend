@@ -3,15 +3,17 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import MessageEditor from './components/MessageEditor';
+import FormTelegramQuillEditorFeedback from 'components/FormTelegramQuillEditorFeedback';
 
-import Block, { BlockProps } from '../../../Block';
+import Block, { BlockProps } from '../../Block';
 
-export type Message = string;
+export interface Message {
+	text: string;
+}
 
-export type MessageBlockProps = Omit<BlockProps, 'title' | 'children'>;
+export type MessageBlockProps = Pick<BlockProps, 'className'>;
 
-export const defaultMessage: Message = '';
+export const defaultMessage: Message = { text: '' };
 
 function MessageBlock(props: MessageBlockProps): ReactElement<MessageBlockProps> {
 	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
@@ -20,7 +22,11 @@ function MessageBlock(props: MessageBlockProps): ReactElement<MessageBlockProps>
 
 	return (
 		<Block {...props} title={t('title')} body>
-			<MessageEditor />
+			<FormTelegramQuillEditorFeedback
+				height={220}
+				name='message.text'
+				placeholder={t('messageEditorPlaceholder')}
+			/>
 		</Block>
 	);
 }

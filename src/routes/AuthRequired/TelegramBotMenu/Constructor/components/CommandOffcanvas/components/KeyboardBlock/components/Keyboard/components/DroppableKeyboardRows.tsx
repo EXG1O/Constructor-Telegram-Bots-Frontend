@@ -1,10 +1,9 @@
 import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import { Droppable, DroppableProps } from 'react-beautiful-dnd';
 import classNames from 'classnames';
+import { useField } from 'formik';
 
-import DraggableKeyboardRow from './DraggableKeyboardRow';
-
-import useCommandOffcanvasStore from '../../../../../hooks/useCommandOffcanvasStore';
+import DraggableKeyboardRow, { KeyboardRow } from './DraggableKeyboardRow';
 
 export type DroppableKeyboardRowsProps = Pick<
 	DroppableProps,
@@ -25,7 +24,7 @@ function DroppableKeyboardRows({
 	className,
 	...props
 }: DroppableKeyboardRowsProps): ReactElement<DroppableKeyboardRowsProps> {
-	const rows = useCommandOffcanvasStore((state) => state.keyboard.rows);
+	const [{ value: rows }] = useField<KeyboardRow[]>('keyboard.rows');
 
 	return (
 		<Droppable

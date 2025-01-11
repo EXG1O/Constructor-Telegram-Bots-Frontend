@@ -1,24 +1,30 @@
 import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import classNames from 'classnames';
+import { useField } from 'formik';
+import { produce } from 'immer';
+
+import { Files } from '..';
 
 import FileDetail from './FileDetail';
 
-import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
+export type FileListProps = Pick<HTMLAttributes<HTMLDivElement>, 'className'>;
 
-export type FileListProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
-
-function FileList({ className, ...props }: FileListProps): ReactElement<FileListProps> {
-	const files = useCommandOffcanvasStore((state) => state.files);
-	const updateFiles = useCommandOffcanvasStore((state) => state.updateFiles);
+function FileList({
+	className,
+	...props
+}: FileListProps): ReactElement<FileListProps> | null {
+	const [{ value: files }, _meta, { setValue }] = useField<Files>('files');
 
 	function handleDragEnd(result: DropResult): void {
 		if (!result.destination) return;
 
-		updateFiles((files) => {
-			const [movedFile] = files.splice(result.source.index, 1);
-			files.splice(result.destination!.index, 0, movedFile);
-		});
+		setValue(
+			produce(files, (draft) => {
+				const [movedFile] = draft.splice(result.source.index, 1);
+				draft.splice(result.destination!.index, 0, movedFile);
+			}),
+		);
 	}
 
 	return files.length ? (
@@ -43,9 +49,7 @@ function FileList({ className, ...props }: FileListProps): ReactElement<FileList
 				</Droppable>
 			</DragDropContext>
 		</div>
-	) : (
-		<></>
-	);
+	) : null;
 }
 
 export default memo(FileList);

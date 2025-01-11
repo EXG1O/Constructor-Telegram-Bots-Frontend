@@ -1,34 +1,22 @@
-import React, {
-	CSSProperties,
-	HTMLAttributes,
-	memo,
-	ReactElement,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import React, { memo, ReactElement, useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
+import { useField } from 'formik';
 
-import Carousel from 'components/Carousel';
+import { Images } from '..';
 
-import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
+import Carousel, { CarouselProps } from 'components/Carousel';
 
-export type ImageCarouselProps = Omit<
-	HTMLAttributes<HTMLDivElement>,
-	'children' | 'onSelect'
->;
-
-const carouselItemStyle: CSSProperties = { height: '200px' };
+export type ImageCarouselProps = Pick<CarouselProps, 'className'>;
 
 function ImageCarousel({
 	className,
 	...props
-}: ImageCarouselProps): ReactElement<ImageCarouselProps> {
-	const images = useCommandOffcanvasStore((state) => state.images);
+}: ImageCarouselProps): ReactElement<ImageCarouselProps> | null {
+	const [{ value: images }] = useField<Images>('images');
 
 	const [rawActiveIndex, setActiveIndex] = useState<number>(0);
 	const activeIndex = useMemo<number>(
-		() => (images.length <= rawActiveIndex ? rawActiveIndex - 1 : rawActiveIndex),
+		() => (images.length < rawActiveIndex ? rawActiveIndex - 1 : rawActiveIndex),
 		[images, rawActiveIndex],
 	);
 
@@ -52,16 +40,14 @@ function ImageCarousel({
 			{images.map((image) => (
 				<Carousel.Item key={image.key}>
 					<img
+						height={200}
 						src={image.url}
 						className='w-100 object-fit-contain'
-						style={carouselItemStyle}
 					/>
 				</Carousel.Item>
 			))}
 		</Carousel>
-	) : (
-		<></>
-	);
+	) : null;
 }
 
 export default memo(ImageCarousel);

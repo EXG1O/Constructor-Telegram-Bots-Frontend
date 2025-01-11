@@ -1,8 +1,9 @@
 import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import classNames from 'classnames';
+import { useField } from 'formik';
 
-import useCommandOffcanvasStore from '../../../../../hooks/useCommandOffcanvasStore';
+import { useCommandOffcanvasStore } from '../../../../../store';
 
 export interface KeyboardButton {
 	id?: number;
@@ -23,15 +24,21 @@ function DraggableKeyboardButton({
 	className,
 	...props
 }: DraggableKeyboardButtonProps): ReactElement<DraggableKeyboardButtonProps> {
-	const button = useCommandOffcanvasStore(
-		(state) => state.keyboard.rows[rowIndex].buttons[buttonIndex],
+	const [{ value: button }] = useField<KeyboardButton>(
+		`keyboard.rows[${rowIndex}].buttons[${buttonIndex}]`,
 	);
-	const disabled = useCommandOffcanvasStore(
+
+	const select = useCommandOffcanvasStore(
 		(state) =>
-			state.keyboardRowIndex === rowIndex &&
-			state.keyboardButtonIndex === buttonIndex,
+			state.keyboardButtonBlock.rowIndex === rowIndex &&
+			state.keyboardButtonBlock.buttonIndex === buttonIndex,
 	);
-	const edit = useCommandOffcanvasStore((state) => state.showEditKeyboardButtonBlock);
+	const showEditButtonBlock = useCommandOffcanvasStore(
+		(state) => state.keyboardButtonBlock.showBlock,
+	);
+	const hideEditButtonBlock = useCommandOffcanvasStore(
+		(state) => state.keyboardButtonBlock.hideBlock,
+	);
 
 	return (
 		<Draggable index={buttonIndex} draggableId={button.draggableId}>
@@ -43,10 +50,18 @@ function DraggableKeyboardButton({
 					{...dragHandleProps}
 					className={classNames(
 						'rounded-1 text-center px-2 py-1',
-						{ 'text-bg-dark': !disabled, 'text-bg-secondary': disabled },
+						{ 'text-bg-dark': !select, 'text-bg-secondary': select },
 						className,
 					)}
-					onClick={!disabled ? () => edit(rowIndex, buttonIndex) : undefined}
+					onClick={() =>
+						select
+							? hideEditButtonBlock()
+							: showEditButtonBlock(
+									{ ...button, url: button.url ?? '' },
+									rowIndex,
+									buttonIndex,
+								)
+					}
 				>
 					{button.text}
 				</small>

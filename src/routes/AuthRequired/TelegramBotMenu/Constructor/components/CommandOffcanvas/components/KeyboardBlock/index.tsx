@@ -7,7 +7,6 @@ import Stack from 'components/Stack';
 
 import AddKeyboardButtonButton from './components/AddKeyboardButtonButton';
 import AddKeyboardRowButton from './components/AddKeyboardRowButton';
-import BlockCollapse from './components/BlockCollapse';
 import Keyboard, { KeyboardRow } from './components/Keyboard';
 import KeyboardButtonBlock from './components/KeyboardButtonBlock';
 import KeyboardTypeButtonGroup, {
@@ -22,11 +21,9 @@ export interface Keyboard {
 	rows: KeyboardRow[];
 }
 
-export type KeyboardBlockProps = Omit<BlockProps, 'title' | 'children'>;
+export type KeyboardBlockProps = Pick<BlockProps, 'className'>;
 
 export const defaultKeyboard: Keyboard = { type: defaultType, rows: [] };
-
-export { defaultType as defaultKeyboardType };
 
 function KeyboardBlock(props: KeyboardBlockProps): ReactElement<KeyboardBlockProps> {
 	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
@@ -34,7 +31,7 @@ function KeyboardBlock(props: KeyboardBlockProps): ReactElement<KeyboardBlockPro
 	});
 
 	return (
-		<BlockCollapse>
+		<Block.Collapse name='show_keyboard_block'>
 			<Block {...props} title={t('title')}>
 				<Block.Body as={Stack} gap={2}>
 					<KeyboardTypeButtonGroup />
@@ -46,7 +43,7 @@ function KeyboardBlock(props: KeyboardBlockProps): ReactElement<KeyboardBlockPro
 					<AddKeyboardRowButton className='w-50' />
 				</Block.Footer>
 			</Block>
-		</BlockCollapse>
+		</Block.Collapse>
 	);
 }
 

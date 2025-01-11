@@ -11,9 +11,8 @@ import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import Stack from 'components/Stack';
 import { createMessageToast } from 'components/ToastContainer';
 
+import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
 import NodeToolbar from './NodeToolbar';
-
-import useCommandOffcanvasStore from './CommandOffcanvas/hooks/useCommandOffcanvasStore';
 
 import { CommandAPI } from 'services/api/telegram_bots/main';
 import { DiagramBlock, DiagramCommand } from 'services/api/telegram_bots/types';
@@ -32,7 +31,7 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 	const onNodesChange = useStore((state) => state.onNodesChange);
 
 	const showEditCommandOffcanvas = useCommandOffcanvasStore(
-		(state) => state.showEdit,
+		(state) => state.showOffcanvas,
 	);
 
 	const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);

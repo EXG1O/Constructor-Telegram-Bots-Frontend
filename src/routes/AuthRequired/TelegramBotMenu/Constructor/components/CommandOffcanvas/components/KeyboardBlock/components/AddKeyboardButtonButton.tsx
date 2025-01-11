@@ -5,12 +5,9 @@ import { RouteID } from 'routes';
 
 import Button, { ButtonProps } from 'components/Button';
 
-import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
+import { useCommandOffcanvasStore } from '../../../store';
 
-export type AddKeyboardButtonButtonProps = Omit<
-	ButtonProps,
-	'size' | 'variant' | 'children' | 'onClick'
->;
+export type AddKeyboardButtonButtonProps = Pick<ButtonProps, 'className'>;
 
 function AddKeyboardButtonButton(
 	props: AddKeyboardButtonButtonProps,
@@ -20,11 +17,10 @@ function AddKeyboardButtonButton(
 	});
 
 	const disabled = useCommandOffcanvasStore(
-		(state) =>
-			state.showKeyboardButtonBlock && state.keyboardButtonBlockType === 'add',
+		({ keyboardButtonBlock: { show, type } }) => show && type === 'add',
 	);
 	const showAddKeyboardButtonBlock = useCommandOffcanvasStore(
-		(state) => state.showAddKeyboardButtonBlock,
+		(state) => state.keyboardButtonBlock.showBlock,
 	);
 
 	return (

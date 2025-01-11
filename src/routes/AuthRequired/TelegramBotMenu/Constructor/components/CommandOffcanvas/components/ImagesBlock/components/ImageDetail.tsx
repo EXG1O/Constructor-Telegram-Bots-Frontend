@@ -1,14 +1,23 @@
-import React, { CSSProperties, HTMLAttributes, memo, ReactElement } from 'react';
+import React, {
+	CSSProperties,
+	HTMLAttributes,
+	memo,
+	ReactElement,
+	useMemo,
+} from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import classNames from 'classnames';
+import { useField } from 'formik';
+import { produce } from 'immer';
+
+import { Image, Images } from '..';
 
 import Button from 'components/Button';
-
-import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
 
 import TrashIcon from 'assets/icons/trash.svg';
 
 export interface ImageDetailProps
-	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+	extends Pick<HTMLAttributes<HTMLDivElement>, 'className'> {
 	index: number;
 }
 
@@ -16,10 +25,20 @@ const imageNameStyle: CSSProperties = { cursor: 'pointer' };
 
 function ImageDetail({
 	index,
+	className,
 	...props
 }: ImageDetailProps): ReactElement<ImageDetailProps> {
-	const image = useCommandOffcanvasStore((state) => state.images[index]);
-	const updateImages = useCommandOffcanvasStore((state) => state.updateImages);
+	const [{ value: images }, _meta, { setValue }] = useField<Images>('images');
+
+	const image = useMemo<Image>(() => images[index], [index]);
+
+	function handleDeleteButtonClick(): void {
+		setValue(
+			produce(images, (draft) => {
+				draft.splice(index, 1);
+			}),
+		);
+	}
 
 	return (
 		<Draggable index={index} draggableId={`command-offcanvas-image-${image.key}`}>
@@ -29,7 +48,7 @@ function ImageDetail({
 					{...props}
 					{...draggableProps}
 					{...dragHandleProps}
-					className='d-flex'
+					className={classNames(className, 'd-flex')}
 				>
 					<small
 						className='flex-fill text-bg-dark rounded-start-1 text-break px-2 py-1'
@@ -41,11 +60,7 @@ function ImageDetail({
 						size='sm'
 						variant='danger'
 						className='d-flex border-start-0 rounded-start-0 p-1'
-						onClick={() =>
-							updateImages((images) => {
-								images.splice(index, 1);
-							})
-						}
+						onClick={handleDeleteButtonClick}
 					>
 						<TrashIcon width={18} height={18} />
 					</Button>

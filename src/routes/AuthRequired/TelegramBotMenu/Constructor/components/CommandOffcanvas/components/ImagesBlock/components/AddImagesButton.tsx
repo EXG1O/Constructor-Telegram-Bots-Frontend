@@ -1,20 +1,19 @@
 import React, { memo, ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useField } from 'formik';
 
 import { RouteID } from 'routes';
 
-import { Image } from '..';
+import { Image, Images } from '..';
 
 import Button, { ButtonProps } from 'components/Button';
 import { createMessageToast } from 'components/ToastContainer';
 
-import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
 import useTelegramBotStorage from '../../../hooks/useTelegramBotStorage';
 
-export type AddImagesButtonProps = Omit<
-	ButtonProps,
-	'as' | 'size' | 'variant' | 'htmlFor' | 'children'
->;
+import { useCommandOffcanvasStore } from '../../../store';
+
+export type AddImagesButtonProps = Pick<ButtonProps, 'className'>;
 
 interface ProcessedImage extends File {
 	url?: string;
@@ -29,7 +28,8 @@ function AddImagesButton(
 		keyPrefix: 'commandOffcanvas.imagesBlock.addImagesButton',
 	});
 
-	const updateImages = useCommandOffcanvasStore((state) => state.updateImages);
+	const [{ value: images }, _meta, { setValue }] = useField<Images>('images');
+
 	const setImagesLoading = useCommandOffcanvasStore(
 		(state) => state.setImagesLoading,
 	);
@@ -41,12 +41,12 @@ function AddImagesButton(
 
 		setImagesLoading(true);
 
-		const images: File[] = Object.values(event.target.files);
+		const newImages: File[] = Object.values(event.target.files);
 		let availableStorageSize: number = remainingStorageSize;
 
 		event.target.value = '';
 
-		const processedImages: ProcessedImage[] = images
+		const processedImages: ProcessedImage[] = newImages
 			.filter((image) => {
 				if (image.size > 2621440) {
 					createMessageToast({
@@ -95,19 +95,17 @@ function AddImagesButton(
 					return;
 				}
 			}
-
-			updateImages((images) => {
-				images.push(
-					...processedImages.map<Image>((file) => ({
-						key: crypto.randomUUID(),
-						image: file,
-						name: file.name,
-						size: file.size,
-						url: file.url!,
-						fromURL: null,
-					})),
-				);
-			});
+			setValue([
+				...images,
+				...processedImages.map<Image>((file) => ({
+					key: crypto.randomUUID(),
+					image: file,
+					name: file.name,
+					size: file.size,
+					url: file.url!,
+					from_url: null,
+				})),
+			]);
 
 			setImagesLoading(false);
 		};
@@ -125,7 +123,7 @@ function AddImagesButton(
 				hidden
 				onChange={handleChange}
 			/>
-			<Button {...props} as='label' size='sm' variant='dark' htmlFor={id}>
+			<Button {...props} as='label' htmlFor={id} size='sm' variant='dark'>
 				{t('text')}
 			</Button>
 		</>

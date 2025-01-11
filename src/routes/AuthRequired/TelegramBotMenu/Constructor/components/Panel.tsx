@@ -7,7 +7,8 @@ import { RouteID } from 'routes';
 import AddButton from 'components/AddButton';
 import Stack from 'components/Stack';
 
-import useCommandOffcanvasStore from './CommandOffcanvas/hooks/useCommandOffcanvasStore';
+import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
+
 import useConditionOffcanvasStore from './ConditionOffcanvas/hooks/useConditionOffcanvasStore';
 
 export type PanelProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
@@ -17,7 +18,9 @@ function Panel({ className, ...props }: PanelProps): ReactElement<PanelProps> {
 		keyPrefix: 'panel',
 	});
 
-	const showAddCommandOffcanvas = useCommandOffcanvasStore((state) => state.showAdd);
+	const showAddCommandOffcanvas = useCommandOffcanvasStore(
+		(state) => state.showOffcanvas,
+	);
 	const showAddConditionOffcanvas = useConditionOffcanvasStore(
 		(state) => state.showAdd,
 	);
@@ -25,7 +28,11 @@ function Panel({ className, ...props }: PanelProps): ReactElement<PanelProps> {
 	return (
 		<BasePanel position='top-right'>
 			<Stack {...props} gap={1}>
-				<AddButton size='sm' variant='dark' onClick={showAddCommandOffcanvas}>
+				<AddButton
+					size='sm'
+					variant='dark'
+					onClick={() => showAddCommandOffcanvas()}
+				>
 					{t('addCommandButton')}
 				</AddButton>
 				<AddButton size='sm' variant='dark' onClick={showAddConditionOffcanvas}>

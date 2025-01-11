@@ -1,39 +1,32 @@
-import React, {
-	CSSProperties,
-	HTMLAttributes,
-	memo,
-	ReactElement,
-	useMemo,
-} from 'react';
+import React, { CSSProperties, HTMLAttributes, memo, ReactElement } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import classNames from 'classnames';
+import { useField } from 'formik';
+import { produce } from 'immer';
+
+import { Images } from '..';
 
 import ImageDetail from './ImageDetail';
 
-import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
+export type ImageListProps = Pick<HTMLAttributes<HTMLDivElement>, 'className'>;
 
-export type ImageListProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+const blockStyle: CSSProperties = { maxHeight: 171 };
 
 function ImageList({
 	className,
-	style,
 	...props
-}: ImageListProps): ReactElement<ImageListProps> {
-	const images = useCommandOffcanvasStore((state) => state.images);
-	const updateImages = useCommandOffcanvasStore((state) => state.updateImages);
-
-	const blockStyle = useMemo<CSSProperties>(
-		() => ({ ...style, maxHeight: 171 }),
-		[style],
-	);
+}: ImageListProps): ReactElement<ImageListProps> | null {
+	const [{ value: images }, _meta, { setValue }] = useField<Images>('images');
 
 	function handleDragEnd(result: DropResult): void {
 		if (!result.destination) return;
 
-		updateImages((images) => {
-			const [movedImage] = images.splice(result.source.index, 1);
-			images.splice(result.destination!.index, 0, movedImage);
-		});
+		setValue(
+			produce(images, (draft) => {
+				const [movedImage] = draft.splice(result.source.index, 1);
+				draft.splice(result.destination!.index, 0, movedImage);
+			}),
+		);
 	}
 
 	return images.length ? (
@@ -62,9 +55,7 @@ function ImageList({
 				</Droppable>
 			</DragDropContext>
 		</div>
-	) : (
-		<></>
-	);
+	) : null;
 }
 
 export default memo(ImageList);

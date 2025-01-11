@@ -1,5 +1,6 @@
 import React, { memo, ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useField } from 'formik';
 
 import { RouteID } from 'routes';
 
@@ -7,9 +8,11 @@ import Collapse, { CollapseProps } from 'react-bootstrap/Collapse';
 
 import Button, { ButtonProps } from 'components/Button';
 
-import useCommandOffcanvasStore from '../../../../../hooks/useCommandOffcanvasStore';
+import { Type } from '../../KeyboardTypeButtonGroup';
 
-export type URLInputCollapseProps = Omit<CollapseProps, 'in'>;
+import { useCommandOffcanvasStore } from '../../../../../store';
+
+export type URLInputCollapseProps = Pick<CollapseProps, 'children'>;
 
 function URLInputCollapse({
 	children,
@@ -20,11 +23,13 @@ function URLInputCollapse({
 			'commandOffcanvas.keyboardBlock.keyboardButtonBlock.urlInputCollapse',
 	});
 
-	const keyboardType = useCommandOffcanvasStore((state) => state.keyboard.type);
+	const [{ value: type }] = useField<Type>(`keyboard.type`);
 
-	const show = useCommandOffcanvasStore((state) => state.showKeyboardButtonURLInput);
+	const show = useCommandOffcanvasStore(
+		(state) => state.keyboardButtonBlock.showURLInput,
+	);
 	const setShow = useCommandOffcanvasStore(
-		(state) => state.setShowKeyboardButtonURLInput,
+		(state) => state.keyboardButtonBlock.setShowURLInput,
 	);
 
 	const showButtonProps = useMemo<ButtonProps>(
@@ -46,7 +51,7 @@ function URLInputCollapse({
 
 	return (
 		<div>
-			<Collapse in={keyboardType !== 'default'}>
+			<Collapse in={type !== 'default'}>
 				<div>
 					<Button
 						size='sm'

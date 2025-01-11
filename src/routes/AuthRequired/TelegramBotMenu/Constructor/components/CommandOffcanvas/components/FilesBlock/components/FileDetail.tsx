@@ -1,14 +1,22 @@
-import React, { CSSProperties, HTMLAttributes, memo, ReactElement } from 'react';
+import React, {
+	CSSProperties,
+	HTMLAttributes,
+	memo,
+	ReactElement,
+	useMemo,
+} from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import { useField } from 'formik';
+import { produce } from 'immer';
+
+import { CustomFile, Files } from '..';
 
 import Button from 'components/Button';
-
-import useCommandOffcanvasStore from '../../../hooks/useCommandOffcanvasStore';
 
 import TrashIcon from 'assets/icons/trash.svg';
 
 export interface FileDetailProps
-	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+	extends Pick<HTMLAttributes<HTMLDivElement>, 'className'> {
 	index: number;
 }
 
@@ -18,8 +26,17 @@ function FileDetail({
 	index,
 	...props
 }: FileDetailProps): ReactElement<FileDetailProps> {
-	const file = useCommandOffcanvasStore((state) => state.files[index]);
-	const updateFiles = useCommandOffcanvasStore((state) => state.updateFiles);
+	const [{ value: files }, _meta, { setValue }] = useField<Files>({ name: 'files' });
+
+	const file = useMemo<CustomFile>(() => files[index], [index]);
+
+	function handleDeleteButtonClick(): void {
+		setValue(
+			produce(files, (draft) => {
+				draft.splice(index, 1);
+			}),
+		);
+	}
 
 	return (
 		<Draggable index={index} draggableId={`command-offcanvas-file-${file.key}`}>
@@ -40,12 +57,8 @@ function FileDetail({
 					<Button
 						size='sm'
 						variant='danger'
-						className='d-flex border-start-0 rounded-start-0 p-1'
-						onClick={() =>
-							updateFiles((files) => {
-								files.splice(index, 1);
-							})
-						}
+						className='border-start-0 rounded-start-0 p-1'
+						onClick={handleDeleteButtonClick}
 					>
 						<TrashIcon width={18} height={18} />
 					</Button>

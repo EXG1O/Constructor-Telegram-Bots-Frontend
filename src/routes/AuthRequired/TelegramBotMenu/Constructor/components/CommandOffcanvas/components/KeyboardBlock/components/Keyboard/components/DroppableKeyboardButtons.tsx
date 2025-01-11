@@ -1,12 +1,12 @@
-import React, { HTMLAttributes, memo, ReactElement } from 'react';
+import React, { CSSProperties, HTMLAttributes, memo, ReactElement } from 'react';
 import { Droppable, DroppableProps } from 'react-beautiful-dnd';
 import classNames from 'classnames';
+import { useField } from 'formik';
 
 import './DroppableKeyboardButtons.scss';
 
 import DraggableKeyboardButton from './DraggableKeyboardButton';
-
-import useCommandOffcanvasStore from '../../../../../hooks/useCommandOffcanvasStore';
+import { KeyboardRow } from './DraggableKeyboardRow';
 
 export interface DroppableKeyboardButtonsProps
 	extends Pick<
@@ -17,9 +17,11 @@ export interface DroppableKeyboardButtonsProps
 			| 'renderClone'
 			| 'getContainerForClone'
 		>,
-		Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+		Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'style'> {
 	rowIndex: number;
 }
+
+const blockStyle: CSSProperties = { minHeight: 41 };
 
 function DroppableKeyboardButtons({
 	rowIndex,
@@ -31,7 +33,7 @@ function DroppableKeyboardButtons({
 	className,
 	...props
 }: DroppableKeyboardButtonsProps): ReactElement<DroppableKeyboardButtonsProps> {
-	const row = useCommandOffcanvasStore((state) => state.keyboard.rows[rowIndex]);
+	const [{ value: row }] = useField<KeyboardRow>(`keyboard.rows[${rowIndex}]`);
 
 	return (
 		<Droppable
@@ -53,7 +55,7 @@ function DroppableKeyboardButtons({
 						'droppable-keyboard-buttons d-flex bg-light overflow-auto',
 						className,
 					)}
-					style={{ minHeight: 41 }}
+					style={blockStyle}
 				>
 					{row.buttons.map((button, index) => (
 						<DraggableKeyboardButton

@@ -3,32 +3,20 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import BlockCollapse from './components/BlockCollapse';
-import DescriptionInput, {
-	defaultDescription,
-	Description,
-} from './components/DescriptionInput';
+import FormInputFeedback from 'components/FormInputFeedback';
+
 import DescriptionInputCollapse from './components/DescriptionInputCollapse';
-import TextInput, { defaultText, Text } from './components/TextInput';
 
 import Block, { BlockProps } from '../../../Block';
 
 export interface Trigger {
-	text: Text;
-	description: Description;
+	text: string;
+	description: string;
 }
 
-export type TriggerBlockProps = Omit<BlockProps, 'title' | 'children'>;
+export type TriggerBlockProps = Pick<BlockProps, 'className'>;
 
-export const defaultTrigger: Trigger = {
-	text: defaultText,
-	description: defaultDescription,
-};
-
-export {
-	defaultDescription as defaultTriggerDescription,
-	defaultText as defaultTriggerText,
-};
+export const defaultTrigger: Trigger = { text: '', description: '' };
 
 function TriggerBlock(props: TriggerBlockProps): ReactElement<TriggerBlockProps> {
 	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
@@ -36,14 +24,21 @@ function TriggerBlock(props: TriggerBlockProps): ReactElement<TriggerBlockProps>
 	});
 
 	return (
-		<BlockCollapse>
+		<Block.Collapse name='show_trigger_block'>
 			<Block {...props} title={t('title')} body>
-				<TextInput className='mb-2' />
+				<FormInputFeedback
+					name='trigger.text'
+					placeholder={t('textInputPlaceholder')}
+				/>
 				<DescriptionInputCollapse>
-					<DescriptionInput />
+					<FormInputFeedback
+						name='trigger.description'
+						placeholder={t('descriptionInputPlaceholder')}
+						className='border-top-0 rounded-top-0'
+					/>
 				</DescriptionInputCollapse>
 			</Block>
-		</BlockCollapse>
+		</Block.Collapse>
 	);
 }
 

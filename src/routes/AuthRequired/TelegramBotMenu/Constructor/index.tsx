@@ -41,6 +41,7 @@ import {
 	DiagramCommandAPI,
 	DiagramConditionAPI,
 } from 'services/api/telegram_bots/main';
+import { Command, DiagramCommand } from 'services/api/telegram_bots/types';
 
 import {
 	parseDiagramBackgroundTaskEdges,
@@ -237,68 +238,89 @@ function Constructor(): ReactElement {
 		[],
 	);
 
+	async function getDiagramCommand(
+		commandID: Command['id'],
+	): Promise<DiagramCommand | null> {
+		const response = await DiagramCommandAPI.get(telegramBot.id, commandID);
+
+		if (!response.ok) {
+			createMessageToast({
+				message: t('messages.getDiagramCommand.error'),
+				level: 'error',
+			});
+		}
+
+		return response.ok ? response.json : null;
+	}
+
+	async function handleAddDiagramCommandToNode(command: Command): Promise<void> {
+		const diagramCommand: DiagramCommand | null = await getDiagramCommand(
+			command.id,
+		);
+		if (diagramCommand)
+			setNodes((prevNodes) => [
+				...prevNodes,
+				...parseDiagramCommandNodes([diagramCommand]),
+			]);
+	}
+
+	async function handleSaveDiagramCommandNode(command: Command): Promise<void> {
+		const diagramCommand: DiagramCommand | null = await getDiagramCommand(
+			command.id,
+		);
+		if (diagramCommand)
+			setNodes((prevNodes) =>
+				prevNodes.map((node) =>
+					node.id === `command:${command.id}`
+						? parseDiagramCommandNodes([diagramCommand])[0]
+						: node,
+				),
+			);
+	}
+
 	return (
 		<Page title={t('title')} grid>
+			<CommandOffcanvas
+				onAdd={handleAddDiagramCommandToNode}
+				onSave={handleSaveDiagramCommandNode}
+			/>
 			<div
 				className='bg-light rounded-4 overflow-hidden'
 				style={{ height: '100%', minHeight: '600px' }}
 			>
-				<CommandOffcanvas.StoreProvider
-					onAdd={useCallback(
-						(diagramCommand) =>
-							setNodes((prevNodes) => [
-								...prevNodes,
-								...parseDiagramCommandNodes([diagramCommand]),
-							]),
-						[],
-					)}
-					onSave={useCallback(
-						(commandID, diagramCommand) =>
-							setNodes((prevNodes) =>
-								prevNodes.map((node) =>
-									node.id === `command:${commandID}`
-										? parseDiagramCommandNodes([diagramCommand])[0]
-										: node,
-								),
-							),
-						[],
-					)}
-				>
-					<CommandOffcanvas />
-					<ConditionOffcanvasProvider setNodes={setNodes}>
-						<ReactFlow
-							fitView
-							nodes={nodes}
-							edges={edges}
-							nodeTypes={nodeTypes}
-							defaultEdgeOptions={defaultEdgeOptions}
-							deleteKeyCode={null}
-							onNodesChange={onNodesChange}
-							onEdgesChange={onEdgesChange}
-							onNodeDragStop={handleNodeDragStop}
-							onEdgeUpdateStart={handleEdgeUpdateStart}
-							onEdgeUpdate={handleEdgeUpdate}
-							onEdgeUpdateEnd={handleEdgeUpdateEnd}
-							isValidConnection={handleCheckValidConnection}
-							onConnect={addEdge}
-						>
-							<Panel />
-							<Controls
-								showInteractive={false}
-								className='border rounded-1 overflow-hidden'
-							/>
-							<MiniMap
-								maskColor='rgba(var(--bs-light-rgb), var(--bs-bg-opacity))'
-								className='border rounded-1 overflow-hidden'
-							/>
-							<Background
-								variant={BackgroundVariant.Dots}
-								size={1}
-								gap={20}
-							/>
-						</ReactFlow>
-					</ConditionOffcanvasProvider>
-				</CommandOffcanvas.StoreProvider>
+				<ConditionOffcanvasProvider setNodes={setNodes}>
+					<ReactFlow
+						fitView
+						nodes={nodes}
+						edges={edges}
+						nodeTypes={nodeTypes}
+						defaultEdgeOptions={defaultEdgeOptions}
+						deleteKeyCode={null}
+						onNodesChange={onNodesChange}
+						onEdgesChange={onEdgesChange}
+						onNodeDragStop={handleNodeDragStop}
+						onEdgeUpdateStart={handleEdgeUpdateStart}
+						onEdgeUpdate={handleEdgeUpdate}
+						onEdgeUpdateEnd={handleEdgeUpdateEnd}
+						isValidConnection={handleCheckValidConnection}
+						onConnect={addEdge}
+					>
+						<Panel />
+						<Controls
+							showInteractive={false}
+							className='border rounded-1 overflow-hidden'
+						/>
+						<MiniMap
+							maskColor='rgba(var(--bs-light-rgb), var(--bs-bg-opacity))'
+							className='border rounded-1 overflow-hidden'
+						/>
+						<Background
+							variant={BackgroundVariant.Dots}
+							size={1}
+							gap={20}
+						/>
+					</ReactFlow>
+				</ConditionOffcanvasProvider>
 			</div>
 		</Page>
 	);
