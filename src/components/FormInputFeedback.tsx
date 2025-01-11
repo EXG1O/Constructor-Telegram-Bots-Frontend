@@ -12,7 +12,7 @@ export interface FormInputFeedbackProps extends InputFeedbackProps {
 const FormInputFeedback: FCA<'input', FormInputFeedbackProps> = forwardRef<
 	HTMLElement,
 	FormInputFeedbackProps
->(function FormInputFeedback({ size, ...props }, ref) {
+>(function FormInputFeedback(props, ref) {
 	const [field, meta] = useField(props);
 
 	return <InputFeedback ref={ref} {...props} {...field} error={meta.error} />;
