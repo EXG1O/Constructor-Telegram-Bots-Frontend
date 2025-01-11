@@ -7,6 +7,7 @@ import Block from 'components/Block';
 import Page from 'components/Page';
 import Stack from 'components/Stack';
 
+import Footer from './components/Footer';
 import RecordList from './components/RecordList';
 import Toolbar from './components/Toolbar';
 import StoreProvider from './providers/StoreProvider';
@@ -24,6 +25,7 @@ function Database(): ReactElement {
 					<Stack gap={2}>
 						<Toolbar />
 						<RecordList />
+						<Footer />
 					</Stack>
 				</Block>
 			</StoreProvider>

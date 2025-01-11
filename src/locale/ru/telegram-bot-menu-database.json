@@ -47,5 +47,12 @@
 				}
 			}
 		}
+	},
+	"footer": {
+		"recordCount_one": "{{count}} запись",
+		"recordCount_two": "{{count}} записи",
+		"recordCount_few": "{{count}} записи",
+		"recordCount_many": "{{count}} записей",
+		"recordCount_other": "{{count}} записей"
 	}
 }
