@@ -26,8 +26,8 @@ import { createMessageToast } from 'components/ToastContainer';
 import CommandNode from './components/CommandNode';
 import CommandOffcanvas from './components/CommandOffcanvas';
 import ConditionNode from './components/ConditionNode';
+import ConditionOffcanvas from './components/ConditionOffcanvas';
 import Panel from './components/Panel';
-import ConditionOffcanvasProvider from './providers/ConditionOffcanvasProvider';
 
 import useTelegramBotMenuConstructorRouteLoaderData from './hooks/useTelegramBotMenuConstructorRouteLoaderData';
 
@@ -41,7 +41,12 @@ import {
 	DiagramCommandAPI,
 	DiagramConditionAPI,
 } from 'services/api/telegram_bots/main';
-import { Command, DiagramCommand } from 'services/api/telegram_bots/types';
+import {
+	Command,
+	Condition,
+	DiagramCommand,
+	DiagramCondition,
+} from 'services/api/telegram_bots/types';
 
 import {
 	parseDiagramBackgroundTaskEdges,
@@ -278,49 +283,89 @@ function Constructor(): ReactElement {
 			);
 	}
 
+	async function getDiagramCondition(
+		conditionID: Condition['id'],
+	): Promise<DiagramCondition | null> {
+		const response = await DiagramConditionAPI.get(telegramBot.id, conditionID);
+
+		if (!response.ok) {
+			createMessageToast({
+				message: t('messages.getDiagramCondition.error'),
+				level: 'error',
+			});
+		}
+
+		return response.ok ? response.json : null;
+	}
+
+	async function handleAddDiagramConditionToNode(
+		condition: Condition,
+	): Promise<void> {
+		const diagramCondition: DiagramCondition | null = await getDiagramCondition(
+			condition.id,
+		);
+		if (diagramCondition)
+			setNodes((prevNodes) => [
+				...prevNodes,
+				...parseDiagramConditionNodes([diagramCondition]),
+			]);
+	}
+
+	async function handleSaveDiagramConditionNode(condition: Condition): Promise<void> {
+		const diagramCondition: DiagramCondition | null = await getDiagramCondition(
+			condition.id,
+		);
+		if (diagramCondition)
+			setNodes((prevNodes) =>
+				prevNodes.map((node) =>
+					node.id === `condition:${condition.id}`
+						? parseDiagramConditionNodes([diagramCondition])[0]
+						: node,
+				),
+			);
+	}
+
 	return (
 		<Page title={t('title')} grid>
 			<CommandOffcanvas
 				onAdd={handleAddDiagramCommandToNode}
 				onSave={handleSaveDiagramCommandNode}
 			/>
+			<ConditionOffcanvas
+				onAdd={handleAddDiagramConditionToNode}
+				onSave={handleSaveDiagramConditionNode}
+			/>
 			<div
 				className='bg-light rounded-4 overflow-hidden'
 				style={{ height: '100%', minHeight: '600px' }}
 			>
-				<ConditionOffcanvasProvider setNodes={setNodes}>
-					<ReactFlow
-						fitView
-						nodes={nodes}
-						edges={edges}
-						nodeTypes={nodeTypes}
-						defaultEdgeOptions={defaultEdgeOptions}
-						deleteKeyCode={null}
-						onNodesChange={onNodesChange}
-						onEdgesChange={onEdgesChange}
-						onNodeDragStop={handleNodeDragStop}
-						onEdgeUpdateStart={handleEdgeUpdateStart}
-						onEdgeUpdate={handleEdgeUpdate}
-						onEdgeUpdateEnd={handleEdgeUpdateEnd}
-						isValidConnection={handleCheckValidConnection}
-						onConnect={addEdge}
-					>
-						<Panel />
-						<Controls
-							showInteractive={false}
-							className='border rounded-1 overflow-hidden'
-						/>
-						<MiniMap
-							maskColor='rgba(var(--bs-light-rgb), var(--bs-bg-opacity))'
-							className='border rounded-1 overflow-hidden'
-						/>
-						<Background
-							variant={BackgroundVariant.Dots}
-							size={1}
-							gap={20}
-						/>
-					</ReactFlow>
-				</ConditionOffcanvasProvider>
+				<ReactFlow
+					fitView
+					nodes={nodes}
+					edges={edges}
+					nodeTypes={nodeTypes}
+					defaultEdgeOptions={defaultEdgeOptions}
+					deleteKeyCode={null}
+					onNodesChange={onNodesChange}
+					onEdgesChange={onEdgesChange}
+					onNodeDragStop={handleNodeDragStop}
+					onEdgeUpdateStart={handleEdgeUpdateStart}
+					onEdgeUpdate={handleEdgeUpdate}
+					onEdgeUpdateEnd={handleEdgeUpdateEnd}
+					isValidConnection={handleCheckValidConnection}
+					onConnect={addEdge}
+				>
+					<Panel />
+					<Controls
+						showInteractive={false}
+						className='border rounded-1 overflow-hidden'
+					/>
+					<MiniMap
+						maskColor='rgba(var(--bs-light-rgb), var(--bs-bg-opacity))'
+						className='border rounded-1 overflow-hidden'
+					/>
+					<Background variant={BackgroundVariant.Dots} size={1} gap={20} />
+				</ReactFlow>
 			</div>
 		</Page>
 	);

@@ -8,8 +8,7 @@ import AddButton from 'components/AddButton';
 import Stack from 'components/Stack';
 
 import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
-
-import useConditionOffcanvasStore from './ConditionOffcanvas/hooks/useConditionOffcanvasStore';
+import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
 
 export type PanelProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
@@ -22,7 +21,7 @@ function Panel({ className, ...props }: PanelProps): ReactElement<PanelProps> {
 		(state) => state.showOffcanvas,
 	);
 	const showAddConditionOffcanvas = useConditionOffcanvasStore(
-		(state) => state.showAdd,
+		(state) => state.showOffcanvas,
 	);
 
 	return (
@@ -35,7 +34,11 @@ function Panel({ className, ...props }: PanelProps): ReactElement<PanelProps> {
 				>
 					{t('addCommandButton')}
 				</AddButton>
-				<AddButton size='sm' variant='dark' onClick={showAddConditionOffcanvas}>
+				<AddButton
+					size='sm'
+					variant='dark'
+					onClick={() => showAddConditionOffcanvas()}
+				>
 					{t('addConditionButton')}
 				</AddButton>
 			</Stack>

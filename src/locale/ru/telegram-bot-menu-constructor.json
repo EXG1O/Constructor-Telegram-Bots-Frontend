@@ -4,6 +4,9 @@
 		"getDiagramCommand": {
 			"error": "Не удалось получить данные команды для диаграммы."
 		},
+		"getDiagramCondition": {
+			"error": "Не удалось получить данные условия для диаграммы."
+		},
 		"createConnection": {
 			"error": "Не удалось подключить блок к другому блоку."
 		},
@@ -158,11 +161,11 @@
 			"getCondition": {
 				"error": "Не удалось получить данные условия."
 			},
-			"createCondition": {
+			"addCondition": {
 				"success": "Вы успешно добавили условие.",
 				"error": "Не удалось добавить условие."
 			},
-			"updateCondition": {
+			"editCondition": {
 				"success": "Вы успешно сохранили условие.",
 				"error": "Не удалось сохранить условие."
 			}

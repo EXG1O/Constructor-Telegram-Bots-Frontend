@@ -1,52 +1,107 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useId } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
 
 import { RouteID } from 'routes';
+import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import Button from 'components/Button';
 import Offcanvas, { OffcanvasProps } from 'components/Offcanvas';
 import Stack from 'components/Stack';
+import { createMessageToast } from 'components/ToastContainer';
 
-import PartsBlock from './components/PartsBlock';
-import StoreProvider from './providers/StoreProvider';
+import PartsBlock, { defaultParts, Parts } from './components/PartsBlock';
 
-import NameBlock from '../NameBlock';
+import NameBlock, { defaultName, Name } from '../NameBlock';
 
-import useConditionOffcanvasStore from './hooks/useConditionOffcanvasStore';
+import { ConditionAPI, ConditionsAPI } from 'services/api/telegram_bots/main';
+import { Condition, Data } from 'services/api/telegram_bots/types';
 
-export type ConditionFormOffcanvasProps = Omit<
-	OffcanvasProps,
-	'show' | 'children' | 'onHide'
->;
+import { useConditionOffcanvasStore } from './store';
 
-function ConditionOffcanvas(
-	props: ConditionFormOffcanvasProps,
-): ReactElement<ConditionFormOffcanvasProps> {
+export interface FormValues {
+	name: Name;
+	parts: Parts;
+}
+
+type InnerConditionFormOffcanvasProps = Pick<OffcanvasProps, 'className'>;
+
+export const defaultFormValues: FormValues = {
+	name: defaultName,
+	parts: defaultParts,
+};
+
+function InnerConditionOffcanvas(
+	props: InnerConditionFormOffcanvasProps,
+): ReactElement<InnerConditionFormOffcanvasProps> {
 	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'conditionOffcanvas',
 	});
 
-	const store = useConditionOffcanvasStore();
+	const formID = useId();
 
+	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+
+	const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
+
+	const conditionID = useConditionOffcanvasStore((state) => state.conditionID);
 	const type = useConditionOffcanvasStore((state) => state.type);
 	const show = useConditionOffcanvasStore((state) => state.show);
 	const loading = useConditionOffcanvasStore((state) => state.loading);
+	const hideOffcanvas = useConditionOffcanvasStore((state) => state.hideOffcanvas);
+	const setLoading = useConditionOffcanvasStore((state) => state.setLoading);
 
-	const add = useConditionOffcanvasStore((state) => state.add);
-	const save = useConditionOffcanvasStore((state) => state.save);
-	const hide = useConditionOffcanvasStore((state) => state.hide);
+	useEffect(() => {
+		if (conditionID) {
+			(async () => {
+				const response = await ConditionAPI.get(telegramBot.id, conditionID);
+
+				if (!response.ok) {
+					hideOffcanvas();
+					createMessageToast({
+						message: t('messages.getCondition.error'),
+						level: 'error',
+					});
+					return;
+				}
+
+				const { id, parts, ...condition } = response.json;
+
+				setValues({
+					...condition,
+					parts: parts.map(({ next_part_operator, ...part }) => ({
+						...part,
+						next_part_operator: next_part_operator ?? 'null',
+					})),
+				});
+				setLoading(false);
+			})();
+		}
+	}, [conditionID]);
+
+	function handleExited(): void {
+		resetForm();
+	}
 
 	return (
-		<Offcanvas {...props} show={show} loading={loading} onHide={hide}>
+		<Offcanvas
+			{...props}
+			show={show}
+			loading={isSubmitting || loading}
+			onHide={hideOffcanvas}
+			onExited={handleExited}
+		>
 			<Offcanvas.Header closeButton>
 				<Offcanvas.Title>{t('title', { context: type })}</Offcanvas.Title>
 			</Offcanvas.Header>
-			<Offcanvas.Body as={Stack} gap={3}>
-				<NameBlock store={store} />
-				<PartsBlock />
+			<Offcanvas.Body as={Form} id={formID}>
+				<Stack gap={3}>
+					<NameBlock />
+					<PartsBlock />
+				</Stack>
 			</Offcanvas.Body>
 			<Offcanvas.Footer className='gap-2'>
-				<Button variant='success' onClick={type === 'add' ? add : save}>
+				<Button type='submit' form={formID} variant='success'>
 					{t('actionButton', { context: type })}
 				</Button>
 			</Offcanvas.Footer>
@@ -54,4 +109,73 @@ function ConditionOffcanvas(
 	);
 }
 
-export default Object.assign(ConditionOffcanvas, { StoreProvider });
+export interface ConditionFormOffcanvasProps extends InnerConditionFormOffcanvasProps {
+	onAdd?: (condition: Condition) => void;
+	onSave?: (condition: Condition) => void;
+}
+
+function ConditionOffcanvas({
+	onAdd,
+	onSave,
+	...props
+}: ConditionFormOffcanvasProps): ReactElement<ConditionFormOffcanvasProps> {
+	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+		keyPrefix: 'conditionOffcanvas',
+	});
+
+	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+
+	const conditionID = useConditionOffcanvasStore((state) => state.conditionID);
+	const type = useConditionOffcanvasStore((state) => state.type);
+	const hideOffcanvas = useConditionOffcanvasStore((state) => state.hideOffcanvas);
+
+	async function handleSubmit(
+		{ parts, ...values }: FormValues,
+		{ setFieldError }: FormikHelpers<FormValues>,
+	): Promise<void> {
+		const data: Data.ConditionsAPI.Create | Data.ConditionAPI.Update = {
+			...values,
+			parts: parts.map(({ next_part_operator, ...part }) => ({
+				...part,
+				next_part_operator:
+					next_part_operator !== 'null' ? next_part_operator : null,
+			})),
+		};
+
+		const response = await (conditionID
+			? ConditionAPI.update(telegramBot.id, conditionID, data)
+			: ConditionsAPI.create(telegramBot.id, data));
+
+		if (!response.ok) {
+			for (const error of response.json.errors) {
+				if (!error.attr) continue;
+				setFieldError(error.attr, error.detail);
+			}
+			createMessageToast({
+				message: t(`messages.${type}Condition.error`),
+				level: 'error',
+			});
+			return;
+		}
+
+		(conditionID ? onSave : onAdd)?.(response.json);
+		hideOffcanvas();
+		createMessageToast({
+			message: t(`messages.${type}Condition.success`),
+			level: 'success',
+		});
+	}
+
+	return (
+		<Formik
+			initialValues={defaultFormValues}
+			validateOnBlur={false}
+			validateOnChange={false}
+			onSubmit={handleSubmit}
+		>
+			<InnerConditionOffcanvas {...props} />
+		</Formik>
+	);
+}
+
+export default ConditionOffcanvas;

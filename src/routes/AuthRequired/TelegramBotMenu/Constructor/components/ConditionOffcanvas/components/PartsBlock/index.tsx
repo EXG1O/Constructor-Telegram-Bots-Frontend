@@ -1,15 +1,13 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useField } from 'formik';
 import { Stack } from 'react-bootstrap';
-import { useShallow } from 'zustand/react/shallow';
 
 import { RouteID } from 'routes';
 
 import PartItem, { defaultPart, Part } from './components/PartItem';
 
 import Block from '../../../Block';
-
-import useConditionOffcanvasStore from '../../hooks/useConditionOffcanvasStore';
 
 export type Parts = Part[];
 
@@ -20,14 +18,12 @@ function PartsBlock(): ReactElement {
 		keyPrefix: 'conditionOffcanvas.partsBlock',
 	});
 
-	const partCount = useConditionOffcanvasStore(
-		useShallow((store) => store.parts.length),
-	);
+	const [{ value: parts }] = useField<Parts>('parts');
 
 	return (
 		<Block title={t('title')} body>
 			<Stack gap={1}>
-				{Array.from({ length: partCount }).map((_, index) => (
+				{parts.map((_, index) => (
 					<PartItem key={index} index={index} />
 				))}
 			</Stack>

@@ -1,19 +1,20 @@
 import React, { ChangeEvent, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useShallow } from 'zustand/react/shallow';
+import { useField } from 'formik';
+import { produce } from 'immer';
 
 import { RouteID } from 'routes';
+
+import { Parts } from '..';
 
 import Select, { SelectProps } from 'components/Select';
 
 import { defaultPart, Part } from './PartItem';
 
-import useConditionOffcanvasStore from '../../../hooks/useConditionOffcanvasStore';
-
 export type NextPartOperator = '&&' | '||' | 'null';
 
 export interface NextPartOperatorSelectProps
-	extends Omit<SelectProps, 'defaultValue' | 'value' | 'onChange'> {
+	extends Pick<SelectProps, 'size' | 'className'> {
 	index: number;
 }
 
@@ -29,28 +30,31 @@ function NextPartOperatorSelect({
 		keyPrefix: 'conditionOffcanvas.partsBlock.nextPartOperatorSelect',
 	});
 
-	const nextPartOperator = useConditionOffcanvasStore(
-		useShallow((store) => store.parts[index].nextPartOperator),
-	);
-	const updateParts = useConditionOffcanvasStore((store) => store.updateParts);
+	const [{ value: parts }, _meta, { setValue }] = useField<Parts>('parts');
 
 	function handleChange(event: ChangeEvent<HTMLSelectElement>) {
-		updateParts((parts) => {
-			const part: Part = parts[index];
-			const operator = event.target.value as NextPartOperator;
+		setValue(
+			produce(parts, (draft) => {
+				const part: Part = draft[index];
+				const operator = event.target.value as NextPartOperator;
 
-			if (operator === 'null') {
-				parts.splice(parts.length - 1, 1);
-			} else if (part.nextPartOperator === 'null') {
-				parts.push(defaultPart);
-			}
+				if (operator === 'null') {
+					draft.splice(draft.length - 1, 1);
+				} else if (part.next_part_operator === 'null') {
+					draft.push(defaultPart);
+				}
 
-			part.nextPartOperator = operator;
-		});
+				part.next_part_operator = operator;
+			}),
+		);
 	}
 
 	return (
-		<Select {...props} value={nextPartOperator} onChange={handleChange}>
+		<Select
+			{...props}
+			value={parts[index].next_part_operator}
+			onChange={handleChange}
+		>
 			<option value='null'>-</option>
 			{nextPartOperators.map((nextPartOperator, index) => (
 				<option key={index} value={nextPartOperator}>

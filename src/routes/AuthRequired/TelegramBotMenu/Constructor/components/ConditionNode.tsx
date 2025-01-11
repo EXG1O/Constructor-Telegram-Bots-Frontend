@@ -9,9 +9,8 @@ import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import Stack from 'components/Stack';
 import { createMessageToast } from 'components/ToastContainer';
 
+import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
 import NodeToolbar from './NodeToolbar';
-
-import useConditionOffcanvasStore from './ConditionOffcanvas/hooks/useConditionOffcanvasStore';
 
 import { ConditionAPI } from 'services/api/telegram_bots/main';
 import { DiagramBlock, DiagramCommand } from 'services/api/telegram_bots/types';
@@ -33,7 +32,7 @@ function ConditionNode({
 	const onNodesChange = useStore((state) => state.onNodesChange);
 
 	const showEditConditionOffcanvas = useConditionOffcanvasStore(
-		(state) => state.showEdit,
+		(state) => state.showOffcanvas,
 	);
 
 	const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);

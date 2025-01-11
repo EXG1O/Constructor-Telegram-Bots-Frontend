@@ -1,17 +1,14 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useShallow } from 'zustand/react/shallow';
+import { useField } from 'formik';
 
 import { RouteID } from 'routes';
 
 import Select, { SelectProps } from 'components/Select';
 
-import useConditionOffcanvasStore from '../../../hooks/useConditionOffcanvasStore';
-
 export type Operator = '==' | '!=' | '>' | '>=' | '<' | '<=';
 
-export interface OperatorSelectProps
-	extends Omit<SelectProps, 'defaultValue' | 'value' | 'onChange'> {
+export interface OperatorSelectProps extends Pick<SelectProps, 'size' | 'className'> {
 	index: number;
 }
 
@@ -27,21 +24,16 @@ function OperatorSelect({
 		keyPrefix: 'conditionOffcanvas.partsBlock.operatorSelect',
 	});
 
-	const operator = useConditionOffcanvasStore(
-		useShallow((store) => store.parts[index].operator),
+	const [{ value }, _meta, { setValue }] = useField<Operator>(
+		`parts[${index}].operation`,
 	);
-	const updateParts = useConditionOffcanvasStore((store) => store.updateParts);
 
 	return (
 		<Select
 			{...props}
-			value={operator}
+			value={value}
 			className='text-truncate'
-			onChange={(e) =>
-				updateParts((parts) => {
-					parts[index].operator = e.target.value as Operator;
-				})
-			}
+			onChange={(e) => setValue(e.target.value as Operator)}
 		>
 			{operators.map((operator, index) => (
 				<option key={index} value={operator}>
