@@ -23,6 +23,7 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 import Page from 'components/Page';
 import { createMessageToast } from 'components/ToastContainer';
 
+import BackgroundTaskNode from './components/BackgroundTaskNode';
 import BackgroundTaskOffcanvas from './components/BackgroundTaskOffcanvas';
 import CommandNode from './components/CommandNode';
 import CommandOffcanvas from './components/CommandOffcanvas';
@@ -68,7 +69,11 @@ type SourceHandle = [
 ];
 type TargetHandle = ['command' | 'condition', string, 'left' | 'right', string];
 
-const nodeTypes: NodeTypes = { command: CommandNode, condition: ConditionNode };
+const nodeTypes: NodeTypes = {
+	command: CommandNode,
+	condition: ConditionNode,
+	background_task: BackgroundTaskNode,
+};
 const defaultEdgeOptions: DefaultEdgeOptions = {
 	markerEnd: {
 		type: MarkerType.Arrow,
