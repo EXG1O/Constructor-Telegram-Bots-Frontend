@@ -10,12 +10,12 @@ import Button, { ButtonProps } from 'components/Button';
 import Loading from './Loading';
 import { createMessageToast } from './ToastContainer';
 
+import settings from 'settings';
+
 import TelegramIcon from 'assets/icons/telegram.svg';
 
-import { UsersAPI } from 'services/api/users/main';
-import { Data } from 'services/api/users/types';
-
-import settings from 'settings';
+import { UsersAPI } from 'api/users/main';
+import { Data } from 'api/users/types';
 
 type AuthData = Data.UsersAPI.Login;
 

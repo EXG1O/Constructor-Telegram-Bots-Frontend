@@ -13,8 +13,8 @@ import { createMessageToast } from 'components/ToastContainer';
 
 import useTelegramBots from '../hooks/useTelegramBots';
 
-import { TelegramBotsAPI } from 'services/api/telegram_bots/main';
-import { Data } from 'services/api/telegram_bots/types';
+import { TelegramBotsAPI } from 'api/telegram_bots/main';
+import { Data } from 'api/telegram_bots/types';
 
 type FormValues = Data.TelegramBotsAPI.Create;
 

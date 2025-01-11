@@ -14,7 +14,7 @@ import Loading from 'components/Loading';
 import useTelegramBot from 'components/TelegramBotBlock/hooks/useTelegramBot';
 import { createMessageToast } from 'components/ToastContainer';
 
-import { TelegramBotAPI } from 'services/api/telegram_bots/main';
+import { TelegramBotAPI } from 'api/telegram_bots/main';
 
 export type TelegramBotBlockFooterProps = Omit<CardFooterProps, 'as' | 'children'>;
 

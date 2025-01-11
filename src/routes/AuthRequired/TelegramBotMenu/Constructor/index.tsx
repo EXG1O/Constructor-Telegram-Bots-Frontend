@@ -42,7 +42,7 @@ import {
 	DiagramBackgroundTaskAPI,
 	DiagramCommandAPI,
 	DiagramConditionAPI,
-} from 'services/api/telegram_bots/main';
+} from 'api/telegram_bots/main';
 import {
 	BackgroundTask,
 	Command,
@@ -50,7 +50,7 @@ import {
 	DiagramBackgroundTask,
 	DiagramCommand,
 	DiagramCondition,
-} from 'services/api/telegram_bots/types';
+} from 'api/telegram_bots/types';
 
 import {
 	parseDiagramBackgroundTaskEdges,

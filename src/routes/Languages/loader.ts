@@ -1,5 +1,5 @@
-import { LanguagesAPI } from 'services/api/languages/main';
-import { APIResponse } from 'services/api/languages/types';
+import { LanguagesAPI } from 'api/languages/main';
+import { APIResponse } from 'api/languages/types';
 
 export interface LoaderData {
 	languages: APIResponse.LanguagesAPI.Get;

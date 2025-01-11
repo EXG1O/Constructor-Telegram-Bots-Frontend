@@ -12,7 +12,7 @@ import UpdateDisplay from './components/UpdateDisplay';
 
 import useUpdatesRouteLoaderData from './hooks/useUpdatesRouteLoaderData';
 
-import { UpdatesAPI } from 'services/api/updates/main';
+import { UpdatesAPI } from 'api/updates/main';
 
 import { PaginationData } from './loader';
 

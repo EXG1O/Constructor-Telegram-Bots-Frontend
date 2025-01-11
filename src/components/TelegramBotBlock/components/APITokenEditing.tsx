@@ -19,7 +19,7 @@ import useTelegramBot from '../hooks/useTelegramBot';
 import CheckIcon from 'assets/icons/check.svg';
 import XIcon from 'assets/icons/x.svg';
 
-import { TelegramBotAPI } from 'services/api/telegram_bots/main';
+import { TelegramBotAPI } from 'api/telegram_bots/main';
 
 const inputStyle: CSSProperties = { fontSize: '16px' };
 const iconProps: SVGProps<SVGSVGElement> = { width: 28, height: 28, cursor: 'pointer' };

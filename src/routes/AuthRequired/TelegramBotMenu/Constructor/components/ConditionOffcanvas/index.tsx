@@ -14,8 +14,8 @@ import PartsBlock, { defaultParts, Parts } from './components/PartsBlock';
 
 import NameBlock, { defaultName, Name } from '../NameBlock';
 
-import { ConditionAPI, ConditionsAPI } from 'services/api/telegram_bots/main';
-import { Condition, Data } from 'services/api/telegram_bots/types';
+import { ConditionAPI, ConditionsAPI } from 'api/telegram_bots/main';
+import { Condition, Data } from 'api/telegram_bots/types';
 
 import { useConditionOffcanvasStore } from './store';
 

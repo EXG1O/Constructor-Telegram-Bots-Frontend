@@ -10,7 +10,7 @@ import LanguagesDropdown from './LanguagesDropdown';
 import TelegramBotMenuDropdown from './TelegramBotMenuDropdown';
 import UserMenuDropdown from './UserMenuDropdown';
 
-import { TelegramBot } from 'services/api/telegram_bots/types';
+import { TelegramBot } from 'api/telegram_bots/types';
 
 export type ButtonsProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 

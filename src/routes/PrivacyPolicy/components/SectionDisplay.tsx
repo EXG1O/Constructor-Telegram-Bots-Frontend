@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
 import classNames from 'classnames';
 
-import { Section } from 'services/api/privacy_policy/types';
+import { Section } from 'api/privacy_policy/types';
 
 import('styles/dynamic-content.scss');
 

@@ -1,4 +1,4 @@
-import { makeRequest } from 'services/api/core';
+import { makeRequest } from 'api/core';
 
 import { APIResponse } from './types';
 

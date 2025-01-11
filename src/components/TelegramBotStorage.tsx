@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import ProgressBar from './ProgressBar';
 
-import { TelegramBot } from 'services/api/telegram_bots/types';
+import { TelegramBot } from 'api/telegram_bots/types';
 
 type Size = 'sm' | 'lg';
 

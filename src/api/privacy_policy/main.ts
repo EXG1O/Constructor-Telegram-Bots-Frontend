@@ -1,8 +1,8 @@
-import { makeRequest } from 'services/api/core';
+import { makeRequest } from 'api/core';
 
 import { APIResponse } from './types';
 
-const rootUrl: string = '/api/instruction/';
+const rootUrl: string = '/api/privacy-policy/';
 
 export class SectionsAPI {
 	static url: string = rootUrl + 'sections/';

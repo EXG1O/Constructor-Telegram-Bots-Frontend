@@ -12,8 +12,8 @@ import { createMessageToast } from 'components/ToastContainer';
 import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
 import NodeToolbar from './NodeToolbar';
 
-import { ConditionAPI } from 'services/api/telegram_bots/main';
-import { DiagramBlock, DiagramCommand } from 'services/api/telegram_bots/types';
+import { ConditionAPI } from 'api/telegram_bots/main';
+import { DiagramBlock, DiagramCommand } from 'api/telegram_bots/types';
 
 type Data = Omit<DiagramCommand, keyof DiagramBlock>;
 

@@ -29,8 +29,8 @@ import useDatabaseRecordsStore from '../../../../hooks/useDatabaseRecordsStore';
 
 import TrashIcon from 'assets/icons/trash.svg';
 
-import { DatabaseRecordAPI } from 'services/api/telegram_bots/main';
-import { DatabaseRecord } from 'services/api/telegram_bots/types';
+import { DatabaseRecordAPI } from 'api/telegram_bots/main';
+import { DatabaseRecord } from 'api/telegram_bots/types';
 
 export interface RecordDisplayProps extends Omit<ListGroupItemProps, 'children'> {
 	record: DatabaseRecord;

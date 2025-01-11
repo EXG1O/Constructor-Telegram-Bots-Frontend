@@ -7,7 +7,7 @@ import useLanguagesRouteLoaderData from 'routes/Languages/hooks/useLanguagesRout
 import Dropdown, { DropdownProps } from 'components/Dropdown';
 import { createMessageToast } from 'components/ToastContainer';
 
-import { LanguagesAPI } from 'services/api/languages/main';
+import { LanguagesAPI } from 'api/languages/main';
 
 export type LanguagesDropdownProps = Omit<DropdownProps, 'children'>;
 

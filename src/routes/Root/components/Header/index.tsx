@@ -12,7 +12,7 @@ import Container from 'components/Container';
 import Buttons from './components/Buttons';
 import Links from './components/Links';
 
-import useWindowSize from 'services/hooks/useWindowSize';
+import useWindowSize from 'hooks/useWindowSize';
 
 import Logo from 'assets/logo.svg';
 

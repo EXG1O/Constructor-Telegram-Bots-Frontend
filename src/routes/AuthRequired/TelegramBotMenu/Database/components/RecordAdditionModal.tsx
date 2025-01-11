@@ -13,7 +13,7 @@ import { createMessageToast } from 'components/ToastContainer';
 
 import useDatabaseRecordsStore from '../hooks/useDatabaseRecordsStore';
 
-import { DatabaseRecordsAPI } from 'services/api/telegram_bots/main';
+import { DatabaseRecordsAPI } from 'api/telegram_bots/main';
 
 interface FormValues {
 	data: string;

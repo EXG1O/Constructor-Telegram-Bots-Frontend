@@ -14,7 +14,7 @@ import { createMessageToast } from 'components/ToastContainer';
 
 import useTelegramBot from '../hooks/useTelegramBot';
 
-import { TelegramBotAPI } from 'services/api/telegram_bots/main';
+import { TelegramBotAPI } from 'api/telegram_bots/main';
 
 export type PrivateSwitchProps = Pick<HTMLAttributes<HTMLElement>, 'className'>;
 

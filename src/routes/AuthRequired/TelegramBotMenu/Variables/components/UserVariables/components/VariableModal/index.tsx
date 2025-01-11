@@ -12,8 +12,8 @@ import FormTelegramQuillEditorFeedback from 'components/FormTelegramQuillEditorF
 import Modal from 'components/Modal';
 import { createMessageToast } from 'components/ToastContainer';
 
-import { VariableAPI, VariablesAPI } from 'services/api/telegram_bots/main';
-import { Variable } from 'services/api/telegram_bots/types';
+import { VariableAPI, VariablesAPI } from 'api/telegram_bots/main';
+import { Variable } from 'api/telegram_bots/types';
 
 import { useVariableModalStore } from './store';
 

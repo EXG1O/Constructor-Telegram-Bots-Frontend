@@ -15,8 +15,8 @@ import ClipboardIcon from 'assets/icons/clipboard.svg';
 import PencilSquareIcon from 'assets/icons/pencil-square.svg';
 import TrashIcon from 'assets/icons/trash.svg';
 
-import { VariableAPI } from 'services/api/telegram_bots/main';
-import { Variable } from 'services/api/telegram_bots/types';
+import { VariableAPI } from 'api/telegram_bots/main';
+import { Variable } from 'api/telegram_bots/types';
 
 export interface TableRowProps {
 	variable: Variable;

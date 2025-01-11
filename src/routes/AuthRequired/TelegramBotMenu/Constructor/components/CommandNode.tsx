@@ -14,8 +14,8 @@ import { createMessageToast } from 'components/ToastContainer';
 import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
 import NodeToolbar from './NodeToolbar';
 
-import { CommandAPI } from 'services/api/telegram_bots/main';
-import { DiagramBlock, DiagramCommand } from 'services/api/telegram_bots/types';
+import { CommandAPI } from 'api/telegram_bots/main';
+import { DiagramBlock, DiagramCommand } from 'api/telegram_bots/types';
 
 type Data = Omit<DiagramCommand, keyof DiagramBlock>;
 

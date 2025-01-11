@@ -30,8 +30,8 @@ import NameBlock, { defaultName, Name } from '../NameBlock';
 
 import './index.scss';
 
-import { CommandAPI, CommandsAPI } from 'services/api/telegram_bots/main';
-import { Command, Data } from 'services/api/telegram_bots/types';
+import { CommandAPI, CommandsAPI } from 'api/telegram_bots/main';
+import { Command, Data } from 'api/telegram_bots/types';
 
 import { useCommandOffcanvasStore } from './store';
 

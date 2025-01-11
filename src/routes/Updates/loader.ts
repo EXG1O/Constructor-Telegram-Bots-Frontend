@@ -1,5 +1,5 @@
-import { UpdatesAPI } from 'services/api/updates/main';
-import { APIResponse } from 'services/api/updates/types';
+import { UpdatesAPI } from 'api/updates/main';
+import { APIResponse } from 'api/updates/types';
 
 export interface PaginationData extends APIResponse.UpdatesAPI.Get.Pagination {
 	limit: number;

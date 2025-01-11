@@ -22,8 +22,8 @@ import APITokenEditing from './components/APITokenEditing';
 import PrivateSwitch from './components/PrivateSwitch';
 import TelegramBotContext from './contexts/TelegramBotContext';
 
-import { TelegramBotAPI } from 'services/api/telegram_bots/main';
-import { TelegramBot } from 'services/api/telegram_bots/types';
+import { TelegramBotAPI } from 'api/telegram_bots/main';
+import { TelegramBot } from 'api/telegram_bots/types';
 
 export interface TelegramBotBlockProps
 	extends Omit<BlockProps, 'variant' | 'gradient'> {

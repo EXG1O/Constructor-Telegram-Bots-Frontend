@@ -6,8 +6,8 @@ import { RouteID } from 'routes';
 
 import { createMessageToast } from 'components/ToastContainer';
 
-import { DatabaseRecordsAPI } from 'services/api/telegram_bots/main';
-import { DatabaseRecord, TelegramBot } from 'services/api/telegram_bots/types';
+import { DatabaseRecordsAPI } from 'api/telegram_bots/main';
+import { DatabaseRecord, TelegramBot } from 'api/telegram_bots/types';
 
 export interface StateParams {
 	telegramBot: TelegramBot;

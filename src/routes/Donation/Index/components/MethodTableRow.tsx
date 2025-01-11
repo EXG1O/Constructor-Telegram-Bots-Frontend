@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import { Method } from 'services/api/donations/types';
+import { Method } from 'api/donations/types';
 
 export interface MethodTableRowProps {
 	method: Method;

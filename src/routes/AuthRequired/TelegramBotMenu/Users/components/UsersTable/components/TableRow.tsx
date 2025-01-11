@@ -24,9 +24,9 @@ import KeyIcon from 'assets/icons/key.svg';
 import KeyFillIcon from 'assets/icons/key-fill.svg';
 import TrashIcon from 'assets/icons/trash.svg';
 
-import { makeRequest } from 'services/api/core';
-import { UserAPI } from 'services/api/telegram_bots/main';
-import { User } from 'services/api/telegram_bots/types';
+import { makeRequest } from 'api/core';
+import { UserAPI } from 'api/telegram_bots/main';
+import { User } from 'api/telegram_bots/types';
 
 export interface TableRowProps
 	extends Omit<HTMLAttributes<HTMLTableRowElement>, 'children'> {

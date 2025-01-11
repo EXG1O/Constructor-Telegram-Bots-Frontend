@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
 import classNames from 'classnames';
 
-import { Update } from 'services/api/updates/types';
+import { Update } from 'api/updates/types';
 
 import('styles/dynamic-content.scss');
 

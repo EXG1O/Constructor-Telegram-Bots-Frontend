@@ -1,9 +1,9 @@
-import { DonationsAPI } from 'services/api/donations/main';
-import { APIResponse as DonationsAPIResponse } from 'services/api/donations/types';
-import { StatsAPI as TelegramBotsStatsAPI } from 'services/api/telegram_bots/main';
-import { APIResponse as TelegramBotsAPIResponse } from 'services/api/telegram_bots/types';
-import { StatsAPI as UsersStatsAPI } from 'services/api/users/main';
-import { APIResponse as UsersAPIResponse } from 'services/api/users/types';
+import { DonationsAPI } from 'api/donations/main';
+import { APIResponse as DonationsAPIResponse } from 'api/donations/types';
+import { StatsAPI as TelegramBotsStatsAPI } from 'api/telegram_bots/main';
+import { APIResponse as TelegramBotsAPIResponse } from 'api/telegram_bots/types';
+import { StatsAPI as UsersStatsAPI } from 'api/users/main';
+import { APIResponse as UsersAPIResponse } from 'api/users/types';
 
 interface Stats {
 	users: UsersAPIResponse.StatsAPI.Get;

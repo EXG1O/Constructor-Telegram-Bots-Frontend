@@ -1,5 +1,5 @@
-import { UserAPI } from 'services/api/users/main';
-import { User } from 'services/api/users/types';
+import { UserAPI } from 'api/users/main';
+import { User } from 'api/users/types';
 
 export interface LoaderData {
 	user: User | null;

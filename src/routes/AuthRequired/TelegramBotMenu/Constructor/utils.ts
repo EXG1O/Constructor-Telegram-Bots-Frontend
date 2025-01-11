@@ -4,7 +4,7 @@ import {
 	DiagramBackgroundTask,
 	DiagramCommand,
 	DiagramCondition,
-} from 'services/api/telegram_bots/types';
+} from 'api/telegram_bots/types';
 
 export function parseDiagramCommandNodes(diagramCommands: DiagramCommand[]): Node[] {
 	return diagramCommands.map(

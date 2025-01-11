@@ -4,8 +4,8 @@ import {
 	DiagramBackgroundTasksAPI,
 	DiagramCommandsAPI,
 	DiagramConditionsAPI,
-} from 'services/api/telegram_bots/main';
-import { APIResponse } from 'services/api/telegram_bots/types';
+} from 'api/telegram_bots/main';
+import { APIResponse } from 'api/telegram_bots/types';
 
 export interface LoaderData {
 	diagramCommands: APIResponse.DiagramCommandsAPI.Get;

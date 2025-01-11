@@ -18,8 +18,8 @@ import IntervalBlock, { defaultInterval, Interval } from './components/IntervalB
 import AddonButtonGroup from '../AddonButtonGroup';
 import NameBlock, { defaultName, Name } from '../NameBlock';
 
-import { BackgroundTaskAPI, BackgroundTasksAPI } from 'services/api/telegram_bots/main';
-import { BackgroundTask, Data } from 'services/api/telegram_bots/types';
+import { BackgroundTaskAPI, BackgroundTasksAPI } from 'api/telegram_bots/main';
+import { BackgroundTask, Data } from 'api/telegram_bots/types';
 
 import { useBackgroundTaskOffcanvasStore } from './store';
 

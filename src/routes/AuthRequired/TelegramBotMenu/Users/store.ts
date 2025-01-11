@@ -6,8 +6,8 @@ import { RouteID } from 'routes';
 
 import { createMessageToast } from 'components/ToastContainer';
 
-import { UsersAPI } from 'services/api/telegram_bots/main';
-import { TelegramBot, User } from 'services/api/telegram_bots/types';
+import { UsersAPI } from 'api/telegram_bots/main';
+import { TelegramBot, User } from 'api/telegram_bots/types';
 
 import { Type } from './loader';
 

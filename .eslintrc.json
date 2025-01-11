@@ -46,13 +46,14 @@
 					["^components/(.*/)*[A-Z]([a-z]+[A-Z]?)*"],
 					["^\\./(.*/)*[A-Z]([a-z]+[A-Z]?)*"],
 					["^\\.\\./(.*/)*[A-Z]([a-z]+[A-Z]?)*"],
-					["/hooks/.+"],
+					["^settings$"],
+					["^hooks/.+"],
 					["/contexts/.+"],
+					["/hooks/.+"],
 					["\\.s?css$"],
 					["^assets/.+"],
-					["^utils/.+"],
-					["^services/api/.+"],
-					["^settings$"]
+					["^api/.+"],
+					["^utils/.+"]
 				]
 			}
 		]

@@ -1,5 +1,5 @@
-import { MethodsAPI, SectionsAPI } from 'services/api/donations/main';
-import { APIResponse } from 'services/api/donations/types';
+import { MethodsAPI, SectionsAPI } from 'api/donations/main';
+import { APIResponse } from 'api/donations/types';
 
 export interface LoaderData {
 	sections: APIResponse.SectionsAPI.Get;

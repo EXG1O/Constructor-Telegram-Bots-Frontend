@@ -105,13 +105,14 @@ const config = (env: any, argv: any): Configuration => {
 			extensions: ['.js', '.jsx', '.ts', '.tsx', '.css'],
 			alias: {
 				assets: `${__dirname}/src/assets/`,
-				styles: `${__dirname}/src/styles/`,
+				settings: `${__dirname}/src/settings`,
+				i18n: `${__dirname}/src/i18n/`,
 				components: `${__dirname}/src/components/`,
 				routes: `${__dirname}/src/routes/`,
-				services: `${__dirname}/src/services/`,
-				settings: `${__dirname}/src/settings`,
+				api: `${__dirname}/src/api/`,
+				hooks: `${__dirname}/src/hooks/`,
 				utils: `${__dirname}/src/utils/`,
-				i18n: `${__dirname}/src/i18n/`,
+				styles: `${__dirname}/src/styles/`,
 			},
 		},
 		optimization: {

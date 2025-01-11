@@ -12,8 +12,8 @@ import { createMessageToast } from 'components/ToastContainer';
 import { useBackgroundTaskOffcanvasStore } from './BackgroundTaskOffcanvas/store';
 import NodeToolbar from './NodeToolbar';
 
-import { BackgroundTaskAPI } from 'services/api/telegram_bots/main';
-import { DiagramBackgroundTask, DiagramBlock } from 'services/api/telegram_bots/types';
+import { BackgroundTaskAPI } from 'api/telegram_bots/main';
+import { DiagramBackgroundTask, DiagramBlock } from 'api/telegram_bots/types';
 
 type Data = Omit<DiagramBackgroundTask, keyof DiagramBlock>;
 

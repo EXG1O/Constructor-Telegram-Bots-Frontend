@@ -1,7 +1,7 @@
 import { Params } from 'react-router-dom';
 
-import { VariablesAPI } from 'services/api/telegram_bots/main';
-import { APIResponse } from 'services/api/telegram_bots/types';
+import { VariablesAPI } from 'api/telegram_bots/main';
+import { APIResponse } from 'api/telegram_bots/types';
 
 export interface PaginationData extends APIResponse.VariablesAPI.Get.Pagination {
 	limit: number;

@@ -12,15 +12,16 @@
 		"noFallthroughCasesInSwitch": false,
 		"paths": {
 			"assets/*": ["./src/assets/*"],
-			"styles/*": ["./src/styles/*"],
+			"settings": ["./src/settings"],
+			"i18n": ["./src/i18n"],
+			"i18n/*": ["./src/i18n/*"],
 			"components/*": ["./src/components/*"],
 			"routes": ["./src/routes"],
 			"routes/*": ["./src/routes/*"],
-			"services/*": ["./src/services/*"],
-			"settings": ["./src/settings"],
+			"api/*": ["./src/api/*"],
+			"hooks/*": ["./src/hooks/*"],
 			"utils/*": ["./src/utils/*"],
-			"i18n": ["./src/i18n"],
-			"i18n/*": ["./src/i18n/*"]
+			"styles/*": ["./src/styles/*"]
 		}
 	},
 	"include": ["./**/*.ts", "./**/*.tsx"],
