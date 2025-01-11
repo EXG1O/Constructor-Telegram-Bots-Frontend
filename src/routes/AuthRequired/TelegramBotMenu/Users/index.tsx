@@ -7,6 +7,7 @@ import { RouteID } from 'routes';
 import Block from 'components/Block';
 import Page from 'components/Page';
 
+import Footer from './components/Footer';
 import Toolbar from './components/Toolbar';
 import UsersTable from './components/UsersTable';
 import StoreProvider from './providers/StoreProvider';
@@ -24,6 +25,7 @@ function Users(): ReactElement {
 					<Stack gap={2}>
 						<Toolbar />
 						<UsersTable />
+						<Footer />
 					</Stack>
 				</Block>
 			</StoreProvider>
