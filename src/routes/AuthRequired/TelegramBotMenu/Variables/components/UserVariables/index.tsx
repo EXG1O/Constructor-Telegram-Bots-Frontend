@@ -6,6 +6,7 @@ import { RouteID } from 'routes';
 import Block from 'components/Block';
 import Stack from 'components/Stack';
 
+import Footer from './components/Footer';
 import Toolbar from './components/Toolbar';
 import VariableModal from './components/VariableModal';
 import VariablesTable from './components/VariablesTable';
@@ -32,6 +33,7 @@ function UserVariables(): ReactElement {
 				<Stack gap={2}>
 					<Toolbar />
 					<VariablesTable />
+					<Footer />
 				</Stack>
 			</Block>
 		</>
