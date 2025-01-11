@@ -3,6 +3,7 @@ import React, { forwardRef } from 'react';
 import Card, { CardProps } from 'components/Card';
 
 import BlockBody from './components/BlockBody';
+import BlockCollapse from './components/BlockCollapse';
 import BlockFooter from './components/BlockFooter';
 
 import { FCA } from 'utils/helpers';
@@ -24,4 +25,8 @@ const Block: FCA<'div', BlockProps> = forwardRef<HTMLElement, BlockProps>(
 	},
 );
 
-export default Object.assign(Block, { Body: BlockBody, Footer: BlockFooter });
+export default Object.assign(Block, {
+	Collapse: BlockCollapse,
+	Body: BlockBody,
+	Footer: BlockFooter,
+});
