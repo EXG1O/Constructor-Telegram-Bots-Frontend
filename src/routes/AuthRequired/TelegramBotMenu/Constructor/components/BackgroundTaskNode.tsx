@@ -19,13 +19,14 @@ type Data = Omit<DiagramBackgroundTask, keyof DiagramBlock>;
 
 export type BackgroundTaskNodeProps = NodeProps<Data>;
 
+const nodePrefix: string = 'nodes.backgroundTask';
+const offcanvasPrefix: string = 'backgroundTaskOffcanvas';
+
 function BackgroundTaskNode({
 	id,
 	data: task,
 }: BackgroundTaskNodeProps): ReactElement<BackgroundTaskNodeProps> {
-	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-		keyPrefix: 'nodes.backgroundTask',
-	});
+	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor);
 
 	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
@@ -44,8 +45,8 @@ function BackgroundTaskNode({
 	const showDeleteModal = useCallback(
 		() =>
 			setShowAskConfirmModal({
-				title: t('deleteModal.title'),
-				text: t('deleteModal.text'),
+				title: t(`${nodePrefix}.deleteModal.title`),
+				text: t(`${nodePrefix}.deleteModal.text`),
 				onConfirm: async () => {
 					setLoadingAskConfirmModal(true);
 
@@ -58,12 +59,16 @@ function BackgroundTaskNode({
 						onNodesChange?.([{ id, type: 'remove' }]);
 						hideAskConfirmModal();
 						createMessageToast({
-							message: t('messages.deleteBackgroundTask.success'),
+							message: t(
+								`${nodePrefix}.messages.deleteBackgroundTask.success`,
+							),
 							level: 'success',
 						});
 					} else {
 						createMessageToast({
-							message: t('messages.deleteBackgroundTask.error'),
+							message: t(
+								`${nodePrefix}.messages.deleteBackgroundTask.error`,
+							),
 							level: 'error',
 						});
 					}
@@ -83,7 +88,7 @@ function BackgroundTaskNode({
 	return (
 		<>
 			<NodeToolbar
-				title={t('title')}
+				title={t(`${nodePrefix}.title`)}
 				onEdit={handleEdit}
 				onDelete={showDeleteModal}
 			/>
@@ -105,8 +110,8 @@ function BackgroundTaskNode({
 					/>
 				</div>
 				<div className='bg-white border rounded px-3 py-2'>
-					<strong>{`${t('intervalText')}:`}</strong>{' '}
-					{t(`intervals.${task.interval}`)}
+					<strong>{`${t(`${nodePrefix}.interval`)}:`}</strong>{' '}
+					{t(`${offcanvasPrefix}.intervalBlock.select.${task.interval}`)}
 				</div>
 			</Stack>
 		</>
