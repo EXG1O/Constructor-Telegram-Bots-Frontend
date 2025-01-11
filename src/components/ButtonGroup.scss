@@ -42,6 +42,24 @@
 	}
 }
 
+.btn-group-sm > .btn {
+	@include button-size(
+		$btn-padding-y-sm,
+		$btn-padding-x-sm,
+		$btn-font-size-sm,
+		$btn-border-radius-sm
+	);
+}
+
+.btn-group-lg > .btn {
+	@include button-size(
+		$btn-padding-y-lg,
+		$btn-padding-x-lg,
+		$btn-font-size-lg,
+		$btn-border-radius-lg
+	);
+}
+
 .btn-group-vertical {
 	flex-direction: column;
 	align-items: flex-start;
