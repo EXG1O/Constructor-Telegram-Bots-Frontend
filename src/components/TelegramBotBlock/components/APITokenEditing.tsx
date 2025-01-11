@@ -9,10 +9,8 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { AnimatePresence, AnimationProps, motion } from 'framer-motion';
 
-import Input from 'react-bootstrap/FormControl';
-
+import InputFeedback, { InputFeedbackProps } from 'components/InputFeedback';
 import Loading from 'components/Loading';
 import { createMessageToast } from 'components/ToastContainer';
 
@@ -24,14 +22,9 @@ import XIcon from 'assets/icons/x.svg';
 import { TelegramBotAPI } from 'services/api/telegram_bots/main';
 
 const inputStyle: CSSProperties = { fontSize: '16px' };
-const iconStyle: CSSProperties = { cursor: 'pointer' };
-const iconProps: SVGProps<SVGSVGElement> = { width: 28, height: 28, style: iconStyle };
-
-const animationProps: AnimationProps = {
-	variants: { show: { opacity: 1 }, hide: { opacity: 0 } },
-	initial: 'hide',
-	animate: 'show',
-	exit: 'hide',
+const iconProps: SVGProps<SVGSVGElement> = { width: 28, height: 28, cursor: 'pointer' };
+const inputContainerProps: InputFeedbackProps['containerProps'] = {
+	className: 'flex-fill',
 };
 
 export interface APITokenEditingProps
@@ -52,16 +45,17 @@ function APITokenEditing({
 
 	const [telegramBot, setTelegramBot] = useTelegramBot();
 
+	const [value, setValue] = useState<string>(telegramBot.api_token);
 	const [loading, setLoading] = useState<boolean>(false);
-	const [inputValue, setInputValue] = useState<string>(telegramBot.api_token);
+	const [error, setError] = useState<string | null>(null);
 
-	useEffect(() => setInputValue(telegramBot.api_token), [telegramBot.api_token]);
+	useEffect(() => setValue(telegramBot.api_token), [telegramBot.api_token]);
 
 	async function handleSave(): Promise<void> {
 		setLoading(true);
 
 		const response = await TelegramBotAPI.partialUpdate(telegramBot.id, {
-			api_token: inputValue,
+			api_token: value,
 		});
 
 		if (response.ok) {
@@ -72,6 +66,10 @@ function APITokenEditing({
 				level: 'success',
 			});
 		} else {
+			setError(
+				response.json.errors.find((error) => error.attr === 'api_token')
+					?.detail ?? null,
+			);
 			createMessageToast({
 				message: t('messages.updateTelegramBotAPIToken.error'),
 				level: 'error',
@@ -86,31 +84,26 @@ function APITokenEditing({
 			{...props}
 			className={classNames('d-flex align-items-center gap-2', className)}
 		>
-			<Input
+			<InputFeedback
 				autoFocus
 				size='sm'
-				value={inputValue}
+				value={value}
+				error={error ?? undefined}
+				containerProps={inputContainerProps}
 				placeholder={t('inputPlaceholder')}
 				style={inputStyle}
-				onChange={(event) => setInputValue(event.target.value)}
+				onChange={(event) => setValue(event.target.value)}
 			/>
 			<div className='d-flex'>
-				<AnimatePresence>
-					{!loading ? (
-						<CheckIcon
-							{...iconProps}
-							className='text-success'
-							onClick={handleSave}
-						/>
-					) : (
-						<motion.div
-							{...animationProps}
-							className='d-flex align-self-center'
-						>
-							<Loading size='xxs' />
-						</motion.div>
-					)}
-				</AnimatePresence>
+				{!loading ? (
+					<CheckIcon
+						{...iconProps}
+						className='text-success'
+						onClick={handleSave}
+					/>
+				) : (
+					<Loading size='xxs' />
+				)}
 				<XIcon {...iconProps} className='text-danger' onClick={onCancel} />
 			</div>
 		</div>

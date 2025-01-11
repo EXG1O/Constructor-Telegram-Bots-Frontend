@@ -1,5 +1,5 @@
 import React, {
-	CSSProperties,
+	FC,
 	HTMLAttributes,
 	memo,
 	ReactElement,
@@ -20,8 +20,7 @@ export interface APITokenDisplayProps
 	onEdit: () => void;
 }
 
-const iconStyle: CSSProperties = { cursor: 'pointer' };
-const iconProps: SVGProps<SVGSVGElement> = { width: 18, height: 18, style: iconStyle };
+const iconProps: SVGProps<SVGSVGElement> = { width: 18, height: 18, cursor: 'pointer' };
 
 function APITokenDisplay({
 	className,
@@ -32,7 +31,10 @@ function APITokenDisplay({
 
 	const [show, setShow] = useState<boolean>(false);
 
-	const ShowIcon = useMemo(() => (show ? EyeSlashIcon : EyeIcon), [show]);
+	const ShowIcon = useMemo<FC<SVGProps<SVGSVGElement>>>(
+		() => (show ? EyeSlashIcon : EyeIcon),
+		[show],
+	);
 	const hiddenAPIToken = useMemo<string>(() => {
 		const [id, token] = telegramBot.api_token.split(':');
 		return id + ':' + '*'.repeat(token.length);
