@@ -179,52 +179,36 @@ export namespace Data {
 	}
 
 	export namespace CommandsAPI {
-		export interface CreateCommandTrigger
-			extends Omit<CommandTrigger, 'description'> {
-			description?: CommandTrigger['description'];
-		}
-
-		export interface CreateCommandMedia extends Pick<CommandMedia, 'position'> {
-			from_url?: CommandMedia['from_url'] | null;
-		}
+		export type CreateCommandMedia = Omit<
+			CommandMedia,
+			'id' | 'name' | 'size' | 'url'
+		>;
 
 		export interface CreateCommandImage extends CreateCommandMedia {
-			image?: File | null;
+			image: File | null;
 		}
 
 		export interface CreateCommandFile extends CreateCommandMedia {
-			file?: File | null;
+			file: File | null;
 		}
 
-		export interface CreateCommandKeyboardButton
-			extends Omit<CommandKeyboardButton, 'id' | 'url'> {
-			url?: CommandKeyboardButton['url'];
-		}
+		export type CreateCommandKeyboardButton = Omit<CommandKeyboardButton, 'id'>;
 
 		export interface CreateCommandKeyboard
 			extends Omit<CommandKeyboard, 'buttons'> {
 			buttons: CreateCommandKeyboardButton[];
 		}
 
-		export interface CreateCommandAPIRequest
-			extends Pick<CommandAPIRequest, 'url' | 'method'> {
-			headers?: CommandAPIRequest['headers'];
-			body?: CommandAPIRequest['body'];
-		}
-
-		export interface Create extends Pick<Command, 'name' | 'settings' | 'message'> {
-			trigger?: CreateCommandTrigger | null;
-			images?: CreateCommandImage[] | null;
-			files?: CreateCommandFile[] | null;
-			keyboard?: CreateCommandKeyboard | null;
-			api_request?: CreateCommandAPIRequest | null;
-			database_record?: Command['database_record'];
+		export interface Create
+			extends Omit<Command, 'id' | 'images' | 'files' | 'keyboard'> {
+			images: CreateCommandImage[] | null;
+			files: CreateCommandFile[] | null;
+			keyboard: CreateCommandKeyboard | null;
 		}
 	}
 
 	export namespace CommandAPI {
-		export interface UpdateCommandMedia
-			extends Pick<CommandMedia, 'position' | 'from_url'> {
+		export interface UpdateCommandMedia extends CommandsAPI.CreateCommandMedia {
 			id?: CommandMedia['id'];
 		}
 
@@ -237,7 +221,7 @@ export namespace Data {
 		}
 
 		export interface UpdateCommandKeyboardButton
-			extends Omit<CommandKeyboardButton, 'id'> {
+			extends CommandsAPI.CreateCommandKeyboardButton {
 			id?: CommandKeyboardButton['id'];
 		}
 
@@ -252,21 +236,21 @@ export namespace Data {
 			files: UpdateCommandFile[] | null;
 			keyboard: UpdateCommandKeyboard | null;
 		}
+
 		export interface PartialUpdateCommandKeyboard
-			extends Partial<Omit<CommandKeyboard, 'buttons'>> {
-			buttons?: Partial<CommandKeyboard['buttons']>;
+			extends Partial<Omit<UpdateCommandKeyboard, 'buttons'>> {
+			buttons?: Partial<UpdateCommandKeyboard['buttons']>;
 		}
 
-		export interface PartialUpdate {
-			name?: Command['name'];
-			settings?: Partial<Command['settings']>;
-			trigger?: Partial<Command['trigger']>;
+		export interface PartialUpdate extends Partial<Pick<Update, 'name'>> {
+			settings?: Partial<Update['settings']>;
+			trigger?: Partial<Update['trigger']>;
 			images?: Partial<UpdateCommandImage>[] | null;
 			files?: Partial<UpdateCommandFile>[] | null;
-			message?: Partial<Command['message']>;
+			message?: Partial<Update['message']>;
 			keyboard?: PartialUpdateCommandKeyboard;
-			api_request?: Partial<Command['api_request']>;
-			database_record?: Partial<Command['database_record']>;
+			api_request?: Partial<Update['api_request']>;
+			database_record?: Partial<Update['database_record']>;
 		}
 	}
 
