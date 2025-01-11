@@ -27,9 +27,7 @@
 	},
 	"apiRequestBlock": {
 		"title": "API-запрос",
-		"urlInput": {
-			"placeholder": "Введите URL-адрес"
-		},
+		"urlInputPlaceholder": "Введите URL-адрес",
 		"headersBlock": {
 			"showButton": "Добавить заголовки",
 			"hideButton": "Убрать заголовки",

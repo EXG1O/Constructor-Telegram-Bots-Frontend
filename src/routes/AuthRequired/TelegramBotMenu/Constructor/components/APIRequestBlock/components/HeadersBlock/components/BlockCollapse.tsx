@@ -1,24 +1,19 @@
 import React, { HTMLAttributes, memo, ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useField } from 'formik';
 
 import { RouteID } from 'routes';
 
-import Collapse, { CollapseProps } from 'react-bootstrap/Collapse';
+import Collapse from 'react-bootstrap/Collapse';
 
 import Button, { ButtonProps } from 'components/Button';
 
-import useAPIRequestBlockStore from '../../../hooks/useAPIRequestBlockStore';
-
-export type BlockCollapseProps = Omit<CollapseProps, 'in'> &
-	Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+export type BlockCollapseProps = Pick<
+	HTMLAttributes<HTMLDivElement>,
+	'className' | 'children'
+>;
 
 function BlockCollapse({
-	mountOnEnter,
-	unmountOnExit,
-	appear,
-	timeout,
-	dimension,
-	getDimensionValue,
 	children,
 	...props
 }: BlockCollapseProps): ReactElement<BlockCollapseProps> {
@@ -26,9 +21,8 @@ function BlockCollapse({
 		keyPrefix: 'apiRequestBlock.headersBlock',
 	});
 
-	const show = useAPIRequestBlockStore((state) => state.showAPIRequestHeadersBlock);
-	const setShow = useAPIRequestBlockStore(
-		(state) => state.setShowAPIRequestHeadersBlock,
+	const [{ value: show }, _meta, { setValue }] = useField(
+		'show_api_request_headers_block',
 	);
 
 	const showButtonProps = useMemo<ButtonProps>(
@@ -48,22 +42,18 @@ function BlockCollapse({
 		[i18n.language],
 	);
 
+	function handleClick() {
+		setValue(!show);
+	}
+
 	return (
 		<div {...props}>
 			<Button
 				size='sm'
 				{...(show ? hideButtonProps : showButtonProps)}
-				onClick={() => setShow(!show)}
+				onClick={handleClick}
 			/>
-			<Collapse
-				in={show}
-				mountOnEnter={mountOnEnter}
-				unmountOnExit={unmountOnExit}
-				appear={appear}
-				timeout={timeout}
-				dimension={dimension}
-				getDimensionValue={getDimensionValue}
-			>
+			<Collapse in={show}>
 				<div>{children}</div>
 			</Collapse>
 		</div>

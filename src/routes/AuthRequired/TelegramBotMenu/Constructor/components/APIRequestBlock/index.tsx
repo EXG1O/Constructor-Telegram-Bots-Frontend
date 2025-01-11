@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
+import FormInputFeedback from 'components/FormInputFeedback';
 import Stack from 'components/Stack';
 
 import BodyBlock, { Body, defaultBody } from './components/BodyBlock';
@@ -12,24 +13,20 @@ import MethodButtonGroup, {
 	Method,
 } from './components/MethodButtonGroup';
 import TestBlock from './components/TestBlock';
-import URLInput, { defaultURL, URL } from './components/URLInput';
-import StoreContext, { StoreContextType } from './contexts/StoreContext';
 
 import Block, { BlockProps } from '../Block';
 
 export interface APIRequest {
-	url: URL;
+	url: string;
 	method: Method;
 	headers: Headers;
 	body: Body;
 }
 
-export interface APIRequestBlockProps extends Omit<BlockProps, 'title' | 'children'> {
-	store: StoreContextType;
-}
+export type APIRequestBlockProps = Omit<BlockProps, 'title' | 'children'>;
 
 export const defaultAPIRequest: APIRequest = {
-	url: defaultURL,
+	url: '',
 	method: defaultMethod,
 	headers: defaultHeaders,
 	body: defaultBody,
@@ -39,13 +36,11 @@ export {
 	defaultBody as defaultAPIRequestBody,
 	defaultHeaders as defaultAPIRequestHeaders,
 	defaultMethod as defaultAPIRequestMethod,
-	defaultURL as defaultAPIRequestURL,
 };
 
-function APIRequestBlock({
-	store,
-	...props
-}: APIRequestBlockProps): ReactElement<APIRequestBlockProps> {
+function APIRequestBlock(
+	props: APIRequestBlockProps,
+): ReactElement<APIRequestBlockProps> {
 	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'apiRequestBlock',
 	});
@@ -53,13 +48,14 @@ function APIRequestBlock({
 	return (
 		<Block {...props} title={t('title')}>
 			<Block.Body as={Stack} gap={2}>
-				<StoreContext.Provider value={store}>
-					<URLInput />
-					<MethodButtonGroup />
-					<HeadersBlock />
-					<BodyBlock />
-					<TestBlock />
-				</StoreContext.Provider>
+				<FormInputFeedback
+					name='api_request.url'
+					placeholder={t('urlInputPlaceholder')}
+				/>
+				<MethodButtonGroup />
+				<HeadersBlock />
+				<BodyBlock />
+				<TestBlock />
 			</Block.Body>
 		</Block>
 	);

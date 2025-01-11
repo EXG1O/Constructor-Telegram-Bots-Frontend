@@ -1,24 +1,11 @@
-import React, { memo, ReactElement, useId } from 'react';
+import React, { memo, useId } from 'react';
+import { useField } from 'formik';
 
-import ToggleButtonGroup, {
-	ToggleButtonProps,
-	ToggleButtonRadioProps,
-} from 'components/ToggleButtonGroup';
-
-import useAPIRequestBlockStore from '../hooks/useAPIRequestBlockStore';
+import ToggleButtonGroup from 'components/ToggleButtonGroup';
 
 export type Method = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
-export type MethodButtonGroupProps = Omit<
-	ToggleButtonRadioProps<Method>,
-	'size' | 'type' | 'name' | 'value' | 'children' | 'onChange'
->;
-
-interface MethodToggleButtonProps
-	extends Omit<
-		ToggleButtonProps,
-		'key' | 'id' | 'value' | 'size' | 'variant' | 'children' | 'onChange'
-	> {
+interface MethodToggleButtonProps {
 	value: Method;
 }
 
@@ -32,35 +19,27 @@ const methodToggleButtons: MethodToggleButtonProps[] = [
 	{ value: 'delete' },
 ];
 
-function MethodButtonGroup(
-	props: MethodButtonGroupProps,
-): ReactElement<MethodButtonGroupProps> {
+function MethodButtonGroup() {
 	const id = useId();
 
-	const method = useAPIRequestBlockStore((state) => state.apiRequest.method);
-	const updateAPIRequest = useAPIRequestBlockStore((state) => state.updateAPIRequest);
+	const [{ value }, _meta, { setValue }] = useField<Method>('api_request.method');
 
 	return (
 		<ToggleButtonGroup
-			{...props}
 			size='sm'
 			type='radio'
 			name={id}
-			value={method}
-			onChange={(method) =>
-				updateAPIRequest((apiRequest) => {
-					apiRequest.method = method;
-				})
-			}
+			value={value}
+			onChange={setValue}
 		>
-			{methodToggleButtons.map((props, index) => (
+			{methodToggleButtons.map(({ value }, index) => (
 				<ToggleButtonGroup.Button
-					{...props}
 					key={index}
-					id={id + props.value}
+					id={id + value}
+					value={value}
 					variant='outline-dark'
 				>
-					{props.value.toUpperCase()}
+					{value.toUpperCase()}
 				</ToggleButtonGroup.Button>
 			))}
 		</ToggleButtonGroup>

@@ -1,16 +1,19 @@
 import React, { CSSProperties, memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useField } from 'formik';
+import { produce } from 'immer';
 
 import { RouteID } from 'routes';
 
-import Input from 'react-bootstrap/FormControl';
-import InputGroup, { InputGroupProps } from 'react-bootstrap/InputGroup';
+import { Header } from '..';
 
 import Button from 'components/Button';
+import FormInputFeedback from 'components/FormInputFeedback';
+import InputGroup, { InputGroupProps } from 'components/InputGroup';
 
-import useAPIRequestBlockStore from '../../../hooks/useAPIRequestBlockStore';
+import TrashIcon from 'assets/icons/trash.svg';
 
-export interface HeaderDetailProps extends Omit<InputGroupProps, 'children'> {
+export interface HeaderDetailProps extends Pick<InputGroupProps, 'className'> {
 	index: number;
 }
 
@@ -28,43 +31,35 @@ function HeaderDetail({
 		keyPrefix: 'apiRequestBlock.headersBlock.headerInputGroup',
 	});
 
-	const header = useAPIRequestBlockStore((state) => state.apiRequest.headers[index]);
-	const updateAPIRequest = useAPIRequestBlockStore((state) => state.updateAPIRequest);
+	const [{ value: headers }, _meta, { setValue }] =
+		useField<Header[]>('api_request.headers');
+
+	function handleClick() {
+		setValue(
+			produce(headers, (draft) => {
+				draft.splice(index, 1);
+			}),
+		);
+	}
 
 	return (
-		<InputGroup {...props}>
-			<Input
-				size='sm'
-				value={header.key}
+		<InputGroup {...props} size='sm'>
+			<FormInputFeedback
+				name={`api_request.headers[${index}].key`}
 				placeholder={t('keyInputPlaceholder')}
-				onChange={(e) =>
-					updateAPIRequest((apiRequest) => {
-						apiRequest.headers[index].key = e.target.value;
-					})
-				}
 			/>
-			<Input
-				size='sm'
-				value={header.value}
+			<FormInputFeedback
+				name={`api_request.headers[${index}].value`}
 				placeholder={t('valueInputPlaceholder')}
-				onChange={(e) =>
-					updateAPIRequest((apiRequest) => {
-						apiRequest.headers[index].value = e.target.value;
-					})
-				}
 			/>
 			<Button
-				as='i'
-				size='sm'
 				variant='danger'
-				className='d-flex justify-content-center align-items-center bi bi-trash p-0'
+				className='d-flex justify-content-center align-items-center p-0'
 				style={deleteButtonStyle}
-				onClick={() =>
-					updateAPIRequest((apiRequest) => {
-						apiRequest.headers.splice(index, 1);
-					})
-				}
-			/>
+				onClick={handleClick}
+			>
+				<TrashIcon width={18} height={18} />
+			</Button>
 		</InputGroup>
 	);
 }

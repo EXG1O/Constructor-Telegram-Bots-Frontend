@@ -1,16 +1,14 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useField } from 'formik';
 
 import { RouteID } from 'routes';
 
+import { Header } from '..';
+
 import Button, { ButtonProps } from 'components/Button';
 
-import useAPIRequestBlockStore from '../../../hooks/useAPIRequestBlockStore';
-
-export type AddHeaderButtonProps = Omit<
-	ButtonProps,
-	'size' | 'variant' | 'children' | 'onClick'
->;
+export type AddHeaderButtonProps = Pick<ButtonProps, 'className'>;
 
 function AddHeaderButton(
 	props: AddHeaderButtonProps,
@@ -19,19 +17,15 @@ function AddHeaderButton(
 		keyPrefix: 'apiRequestBlock.headersBlock.addHeaderButton',
 	});
 
-	const updateAPIRequest = useAPIRequestBlockStore((state) => state.updateAPIRequest);
+	const [{ value: headers }, _meta, { setValue }] =
+		useField<Header[]>('api_request.headers');
+
+	function handleClick() {
+		setValue([...headers, { key: '', value: '' }]);
+	}
 
 	return (
-		<Button
-			{...props}
-			size='sm'
-			variant='dark'
-			onClick={() =>
-				updateAPIRequest((apiRequest) => {
-					apiRequest.headers.push({ key: '', value: '' });
-				})
-			}
-		>
+		<Button {...props} size='sm' variant='dark' onClick={handleClick}>
 			{t('text')}
 		</Button>
 	);
