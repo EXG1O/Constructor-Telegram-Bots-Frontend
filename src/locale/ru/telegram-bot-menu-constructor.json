@@ -7,6 +7,9 @@
 		"getDiagramCondition": {
 			"error": "Не удалось получить данные условия для диаграммы."
 		},
+		"getDiagramBackgroundTask": {
+			"error": "Не удалось получить данные фоновой задачи для диаграммы."
+		},
 		"createConnection": {
 			"error": "Не удалось подключить блок к другому блоку."
 		},
@@ -188,9 +191,42 @@
 		"actionButton_add": "Добавить",
 		"actionButton_edit": "Сохранить"
 	},
+	"backgroundTaskOffcanvas": {
+		"title_add": "Добавление фоновой задачи",
+		"title_edit": "Редактирование фоновой задачи",
+		"messages": {
+			"validation": {
+				"invalidJSON": "Введите данные в формате JSON."
+			},
+			"getBackgroundTask": {
+				"error": "Не удалось получить данные фоновой задачи."
+			},
+			"addBackgroundTask": {
+				"success": "Вы успешно добавили фоновую задачу.",
+				"error": "Не удалось добавить фоновую задачу."
+			},
+			"editBackgroundTask": {
+				"success": "Вы успешно сохранили фоновую задачу.",
+				"error": "Не удалось сохранить фоновую задачу."
+			}
+		},
+		"intervalBlock": {
+			"title": "Интервал",
+			"select": {
+				"1": "1 день",
+				"3": "3 дня",
+				"7": "7 дней",
+				"14": "14 дней",
+				"28": "28 дней"
+			}
+		},
+		"actionButton_add": "Добавить",
+		"actionButton_edit": "Сохранить"
+	},
 	"panel": {
 		"addCommandButton": "Добавить команду",
-		"addConditionButton": "Добавить условие"
+		"addConditionButton": "Добавить условие",
+		"addBackgroundTaskButton": "Добавить фоновую задачу"
 	},
 	"nodes": {
 		"command": {

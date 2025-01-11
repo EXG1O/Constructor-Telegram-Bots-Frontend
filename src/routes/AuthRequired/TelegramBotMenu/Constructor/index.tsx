@@ -23,6 +23,7 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 import Page from 'components/Page';
 import { createMessageToast } from 'components/ToastContainer';
 
+import BackgroundTaskOffcanvas from './components/BackgroundTaskOffcanvas';
 import CommandNode from './components/CommandNode';
 import CommandOffcanvas from './components/CommandOffcanvas';
 import ConditionNode from './components/ConditionNode';
@@ -42,8 +43,10 @@ import {
 	DiagramConditionAPI,
 } from 'services/api/telegram_bots/main';
 import {
+	BackgroundTask,
 	Command,
 	Condition,
+	DiagramBackgroundTask,
 	DiagramCommand,
 	DiagramCondition,
 } from 'services/api/telegram_bots/types';
@@ -325,6 +328,51 @@ function Constructor(): ReactElement {
 			);
 	}
 
+	async function getDiagramBackgroundTask(
+		conditionID: BackgroundTask['id'],
+	): Promise<DiagramBackgroundTask | null> {
+		const response = await DiagramBackgroundTaskAPI.get(
+			telegramBot.id,
+			conditionID,
+		);
+
+		if (!response.ok) {
+			createMessageToast({
+				message: t('messages.getDiagramBackgroundTask.error'),
+				level: 'error',
+			});
+		}
+
+		return response.ok ? response.json : null;
+	}
+
+	async function handleAddDiagramBackgroundTaskToNode(
+		condition: BackgroundTask,
+	): Promise<void> {
+		const diagramBackgroundTask: DiagramBackgroundTask | null =
+			await getDiagramBackgroundTask(condition.id);
+		if (diagramBackgroundTask)
+			setNodes((prevNodes) => [
+				...prevNodes,
+				...parseDiagramBackgroundTaskNodes([diagramBackgroundTask]),
+			]);
+	}
+
+	async function handleSaveDiagramBackgroundTaskNode(
+		condition: BackgroundTask,
+	): Promise<void> {
+		const diagramBackgroundTask: DiagramBackgroundTask | null =
+			await getDiagramBackgroundTask(condition.id);
+		if (diagramBackgroundTask)
+			setNodes((prevNodes) =>
+				prevNodes.map((node) =>
+					node.id === `background_task:${condition.id}`
+						? parseDiagramBackgroundTaskNodes([diagramBackgroundTask])[0]
+						: node,
+				),
+			);
+	}
+
 	return (
 		<Page title={t('title')} grid>
 			<CommandOffcanvas
@@ -334,6 +382,10 @@ function Constructor(): ReactElement {
 			<ConditionOffcanvas
 				onAdd={handleAddDiagramConditionToNode}
 				onSave={handleSaveDiagramConditionNode}
+			/>
+			<BackgroundTaskOffcanvas
+				onAdd={handleAddDiagramBackgroundTaskToNode}
+				onSave={handleSaveDiagramBackgroundTaskNode}
 			/>
 			<div
 				className='bg-light rounded-4 overflow-hidden'

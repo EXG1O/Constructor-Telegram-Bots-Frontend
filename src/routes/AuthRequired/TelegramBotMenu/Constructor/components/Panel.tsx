@@ -7,6 +7,7 @@ import { RouteID } from 'routes';
 import AddButton from 'components/AddButton';
 import Stack from 'components/Stack';
 
+import { useBackgroundTaskOffcanvasStore } from './BackgroundTaskOffcanvas/store';
 import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
 import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
 
@@ -21,6 +22,9 @@ function Panel({ className, ...props }: PanelProps): ReactElement<PanelProps> {
 		(state) => state.showOffcanvas,
 	);
 	const showAddConditionOffcanvas = useConditionOffcanvasStore(
+		(state) => state.showOffcanvas,
+	);
+	const showAddBackgroundTaskOffcanvas = useBackgroundTaskOffcanvasStore(
 		(state) => state.showOffcanvas,
 	);
 
@@ -40,6 +44,13 @@ function Panel({ className, ...props }: PanelProps): ReactElement<PanelProps> {
 					onClick={() => showAddConditionOffcanvas()}
 				>
 					{t('addConditionButton')}
+				</AddButton>
+				<AddButton
+					size='sm'
+					variant='dark'
+					onClick={() => showAddBackgroundTaskOffcanvas()}
+				>
+					{t('addBackgroundTaskButton')}
 				</AddButton>
 			</Stack>
 		</BasePanel>
