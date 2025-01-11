@@ -1,33 +1,25 @@
 import React, { memo, ReactElement } from 'react';
+import { useField } from 'formik';
 
 import Button, { ButtonProps } from 'components/Button';
 
-import useAddonButtonGroupStore from '../hooks/useAddonButtonGroupStore';
-
-export interface AddonButtonProps<State = any>
-	extends Omit<ButtonProps, 'key' | 'size' | 'variant' | 'onClick'> {
-	stateName: keyof State;
-	actionName: keyof State;
+export interface AddonButtonProps extends Pick<ButtonProps, 'className'> {
+	name: string;
 	children: string;
 }
 
-type Show = boolean;
-type SetShow = (show: boolean) => void;
-
 function AddonButton({
-	stateName,
-	actionName,
+	name,
 	...props
 }: AddonButtonProps): ReactElement<AddonButtonProps> {
-	const show = useAddonButtonGroupStore<Show>((state) => state[stateName]);
-	const setShow = useAddonButtonGroupStore<SetShow>((state) => state[actionName]);
+	const [{ value: show }, _meta, { setValue }] = useField<boolean>(name);
 
 	return (
 		<Button
 			{...props}
 			size='sm'
 			variant={show ? 'secondary' : 'dark'}
-			onClick={() => setShow(!show)}
+			onClick={() => setValue(!show)}
 		/>
 	);
 }

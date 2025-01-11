@@ -1,6 +1,5 @@
-import React, { HTMLAttributes, memo, ReactElement, useMemo, useState } from 'react';
+import React, { HTMLAttributes, ReactElement, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StoreApi, UseBoundStore } from 'zustand';
 
 import { RouteID } from 'routes';
 
@@ -9,20 +8,12 @@ import Collapse from 'react-bootstrap/Collapse';
 import Button, { ButtonProps } from 'components/Button';
 import Stack from 'components/Stack';
 
-import AddonButton, { AddonButtonProps } from './components/AddonButton';
-import StoreContext from './contexts/StoreContext';
+import AddonButton from './components/AddonButton';
 
-export interface AddonButtonGroupProps
-	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
-	store: UseBoundStore<StoreApi<any>>;
-	addonButtons: AddonButtonProps[];
-}
-
-export type { AddonButtonProps };
+export type AddonButtonGroupProps = HTMLAttributes<HTMLDivElement>;
 
 function AddonButtonGroup({
-	store,
-	addonButtons,
+	children,
 	...props
 }: AddonButtonGroupProps): ReactElement<AddonButtonGroupProps> {
 	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
@@ -61,11 +52,7 @@ function AddonButtonGroup({
 						gap={1}
 						className='bg-light border border-top-0 rounded-1 rounded-top-0 p-1'
 					>
-						<StoreContext.Provider value={store}>
-							{addonButtons.map((props, index) => (
-								<AddonButton key={index} {...props} />
-							))}
-						</StoreContext.Provider>
+						{children}
 					</Stack>
 				</div>
 			</Collapse>
@@ -73,4 +60,4 @@ function AddonButtonGroup({
 	);
 }
 
-export default memo(AddonButtonGroup);
+export default Object.assign(AddonButtonGroup, { Button: AddonButton });
