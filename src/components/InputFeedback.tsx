@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, HTMLAttributes } from 'react';
 
 import Feedback from './Feedback';
 import Input, { InputProps } from './Input';
@@ -9,14 +9,15 @@ import('./InputFeedback.scss');
 
 export interface InputFeedbackProps extends Omit<InputProps, 'isInvalid'> {
 	error?: string;
+	containerProps?: HTMLAttributes<HTMLDivElement>;
 }
 
 const InputFeedback: FCA<'input', InputFeedbackProps> = forwardRef<
 	HTMLElement,
 	InputFeedbackProps
->(function InputFeedback({ as, error, ...props }, ref) {
+>(function InputFeedback({ as, error, containerProps, ...props }, ref) {
 	return (
-		<div>
+		<div {...containerProps}>
 			<Input as={as} ref={ref} {...props} isInvalid={Boolean(error)} />
 			{error && <Feedback type='invalid'>{error}</Feedback>}
 		</div>
