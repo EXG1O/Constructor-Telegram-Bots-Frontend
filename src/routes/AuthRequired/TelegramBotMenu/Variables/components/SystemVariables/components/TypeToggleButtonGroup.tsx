@@ -7,7 +7,6 @@ import { RouteID } from 'routes';
 import { Type } from '..';
 
 import ToggleButtonGroup, {
-	ToggleButtonProps,
 	ToggleButtonRadioProps,
 } from 'components/ToggleButtonGroup';
 
@@ -16,11 +15,7 @@ export type TypeToggleButtonGroupProps = Omit<
 	'type' | 'name' | 'children'
 >;
 
-interface TypeToggleButtonProps
-	extends Omit<
-		ToggleButtonProps,
-		'key' | 'id' | 'value' | 'size' | 'variant' | 'onChange'
-	> {
+interface TypeToggleButtonProps {
 	value: Type;
 }
 

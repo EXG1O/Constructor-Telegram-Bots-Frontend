@@ -1,4 +1,4 @@
-import React, { memo, ReactElement, useCallback } from 'react';
+import React, { memo, MouseEventHandler, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
@@ -6,12 +6,17 @@ import { RouteID } from 'routes';
 import Row from 'react-bootstrap/Row';
 
 import AddButton from 'components/AddButton';
-import Pagination from 'components/Pagination';
-import Search from 'components/Search';
+import Pagination, { PaginationProps } from 'components/Pagination';
+import Search, { SearchProps } from 'components/Search';
 
 import { useVariableModalStore } from './VariableModal/store';
 
 import useUserVariablesStore from '../hooks/useUserVariablesStore';
+
+type AddButtonClickHandler = MouseEventHandler<HTMLButtonElement>;
+type SearchHandler = SearchProps['onSearch'];
+type ClearHandler = SearchProps['onClear'];
+type PageChangeHandler = PaginationProps['onPageChange'];
 
 function Toolbar(): ReactElement {
 	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
@@ -25,7 +30,22 @@ function Toolbar(): ReactElement {
 	const itemOffset = useUserVariablesStore((state) => state.offset);
 	const updateVariables = useUserVariablesStore((state) => state.updateVariables);
 
-	const handleAddButtonClick = useCallback(() => showVariableModal(), []);
+	const handleAddButtonClick = useCallback<AddButtonClickHandler>(
+		() => showVariableModal(),
+		[],
+	);
+	const handleSearch = useCallback<SearchHandler>(
+		(value) => updateVariables(undefined, undefined, value),
+		[],
+	);
+	const handleClear = useCallback<ClearHandler>(
+		() => updateVariables(undefined, undefined, null),
+		[],
+	);
+	const handlePageChange = useCallback<PageChangeHandler>(
+		(newOffset) => updateVariables(undefined, newOffset),
+		[],
+	);
 
 	return (
 		<Row md='auto' className='g-2'>
@@ -37,14 +57,8 @@ function Toolbar(): ReactElement {
 			<Search
 				size='sm'
 				className='flex-fill'
-				onSearch={useCallback(
-					(value) => updateVariables(undefined, undefined, value),
-					[],
-				)}
-				onClear={useCallback(
-					() => updateVariables(undefined, undefined, null),
-					[],
-				)}
+				onSearch={handleSearch}
+				onClear={handleClear}
 			/>
 			<Pagination
 				size='sm'
@@ -52,10 +66,7 @@ function Toolbar(): ReactElement {
 				itemLimit={itemLimit}
 				itemOffset={itemOffset}
 				className='justify-content-center ps-1'
-				onPageChange={useCallback(
-					(newOffset) => updateVariables(undefined, newOffset),
-					[],
-				)}
+				onPageChange={handlePageChange}
 			/>
 		</Row>
 	);

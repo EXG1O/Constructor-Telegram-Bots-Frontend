@@ -1,4 +1,4 @@
-import React, { CSSProperties, HTMLAttributes, ReactElement } from 'react';
+import React, { HTMLAttributes, ReactElement } from 'react';
 
 import { Variable } from '..';
 
@@ -9,17 +9,15 @@ export interface TableRowProps
 	variable: Variable;
 }
 
-const iconStyle: CSSProperties = { cursor: 'pointer' };
-
 function TableRow({ variable, ...props }: TableRowProps): ReactElement<TableRowProps> {
 	return (
 		<tr {...props}>
 			<td className='w-50'>
 				<div className='d-flex align-items-center gap-2'>
 					<ClipboardIcon
+						cursor='pointer'
 						className='btn-clipboard'
 						data-clipboard-text={`{{ ${variable.name} }}`}
-						style={iconStyle}
 					/>
 					<span className='flex-fill text-info-emphasis'>
 						{variable.name}

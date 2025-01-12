@@ -11,6 +11,8 @@ import TableWrapper from './components/TableWrapper';
 
 import useUserVariablesStore from '../../hooks/useUserVariablesStore';
 
+const tablePlaceholderClassName: string = 'text-center px-3 py-2';
+
 function VariablesTable(): ReactElement {
 	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
 		keyPrefix: 'user.table',
@@ -32,11 +34,11 @@ function VariablesTable(): ReactElement {
 				</Table>
 			</TableWrapper>
 		) : search ? (
-			<TableWrapper className='text-center px-3 py-2'>
+			<TableWrapper className={tablePlaceholderClassName}>
 				{t('placeholders.notFound')}
 			</TableWrapper>
 		) : (
-			<TableWrapper className='text-center px-3 py-2'>
+			<TableWrapper className={tablePlaceholderClassName}>
 				{t('placeholders.notAdded')}
 			</TableWrapper>
 		)

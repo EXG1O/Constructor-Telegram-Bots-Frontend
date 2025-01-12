@@ -1,7 +1,6 @@
 import React, { memo, ReactElement, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
-import { Stack } from 'react-bootstrap';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
@@ -10,6 +9,7 @@ import Button from 'components/Button';
 import FormInputFeedback from 'components/FormInputFeedback';
 import FormTelegramQuillEditorFeedback from 'components/FormTelegramQuillEditorFeedback';
 import Modal from 'components/Modal';
+import Stack from 'components/Stack';
 import { createMessageToast } from 'components/ToastContainer';
 
 import { VariableAPI, VariablesAPI } from 'api/telegram_bots/main';
@@ -32,7 +32,7 @@ function InnerVariableModal(): ReactElement {
 
 	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-	const { isSubmitting, setValues, setErrors } = useFormikContext<FormValues>();
+	const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
 
 	const variableID = useVariableModalStore((state) => state.variableID);
 	const type = useVariableModalStore((state) => state.type);
@@ -64,8 +64,7 @@ function InnerVariableModal(): ReactElement {
 	}, [variableID]);
 
 	function handleExited(): void {
-		setValues(defaultFormValues);
-		setErrors({});
+		resetForm();
 	}
 
 	return (
@@ -125,22 +124,17 @@ function VariableModal({
 
 	async function handleSubmit(
 		values: FormValues,
-		actions: FormikHelpers<FormValues>,
+		{ setFieldError }: FormikHelpers<FormValues>,
 	): Promise<void> {
 		const response = await (variableID
 			? VariableAPI.update(telegramBot.id, variableID, values)
 			: VariablesAPI.create(telegramBot.id, values));
 
 		if (!response.ok) {
-			actions.setErrors(
-				response.json.errors.reduce<Record<string, string>>(
-					(errors, { attr, detail }) => {
-						if (attr) errors[attr] = detail;
-						return errors;
-					},
-					{},
-				),
-			);
+			for (const error of response.json.errors) {
+				if (!error.attr) continue;
+				setFieldError(error.attr, error.detail);
+			}
 			createMessageToast({
 				message: t(`messages.${type}Variable.error`),
 				level: 'error',

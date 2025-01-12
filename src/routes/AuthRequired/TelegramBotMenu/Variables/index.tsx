@@ -28,6 +28,8 @@ function Variables(): ReactElement {
 				level: 'error',
 			}),
 		);
+
+		return clipboard.destroy;
 	}, []);
 
 	return (

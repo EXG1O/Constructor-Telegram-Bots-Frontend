@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { memo, ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
@@ -33,4 +33,4 @@ function SystemVariables(): ReactElement {
 	);
 }
 
-export default SystemVariables;
+export default memo(SystemVariables);

@@ -10,7 +10,8 @@ import TableRow from './components/TableRow';
 
 import { Type } from '../..';
 
-export interface VariablesTableProps extends HTMLAttributes<HTMLDivElement> {
+export interface VariablesTableProps
+	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
 	type: Type;
 }
 
