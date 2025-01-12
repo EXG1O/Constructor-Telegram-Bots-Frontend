@@ -134,7 +134,7 @@ export interface DiagramCommandKeyboard extends Omit<CommandKeyboard, 'buttons'>
 
 export interface DiagramCommand
 	extends Pick<Command, 'id' | 'name' | 'images' | 'files' | 'message'>,
-		DiagramBlock {
+		Omit<DiagramBlock, 'source_connections'> {
 	keyboard: DiagramCommandKeyboard | null;
 }
 
