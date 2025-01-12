@@ -1,4 +1,4 @@
-import React, { memo, ReactElement, useCallback } from 'react';
+import React, { CSSProperties, memo, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -14,6 +14,8 @@ import { User } from 'api/users/types';
 export interface UserMenuDropdownProps extends Omit<DropdownProps, 'children'> {
 	user: User;
 }
+
+const toggleButtonStyle: CSSProperties = { maxWidth: '150px' };
 
 function UserMenuDropdown({
 	user,
@@ -65,7 +67,7 @@ function UserMenuDropdown({
 			<Dropdown.Toggle
 				variant='dark'
 				className='text-truncate'
-				style={{ maxWidth: '150px' }}
+				style={toggleButtonStyle}
 			>
 				{user.first_name}
 			</Dropdown.Toggle>

@@ -1,4 +1,4 @@
-import React, { CSSProperties, memo, ReactElement, useMemo } from 'react';
+import React, { memo, ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -19,22 +19,7 @@ import Logo from 'assets/logo.svg';
 function Header(): ReactElement {
 	const windowSize = useWindowSize();
 
-	const isLargeWindowSize = useMemo<boolean>(
-		() => windowSize.width < 992,
-		[windowSize.width],
-	);
-
-	const linksColStyle = useMemo<CSSProperties>(
-		() => ({ width: isLargeWindowSize ? 'calc(100% - 46px)' : undefined }),
-		[isLargeWindowSize],
-	);
-	const linksClassName = useMemo<string>(
-		() =>
-			classNames('flex-nowrap justify-content-xl-center', {
-				'overflow-x-auto': isLargeWindowSize,
-			}),
-		[isLargeWindowSize],
-	);
+	const isLargeWindowSize = windowSize.width < 992;
 
 	return (
 		<nav className='py-2'>
@@ -45,8 +30,19 @@ function Header(): ReactElement {
 							<Logo width={38} height={38} />
 						</Link>
 					</Col>
-					<Col xs='auto' xl='6' style={linksColStyle}>
-						<Links className={linksClassName} />
+					<Col
+						xs='auto'
+						xl='6'
+						style={{
+							width: isLargeWindowSize ? 'calc(100% - 46px)' : undefined,
+						}}
+					>
+						<Links
+							className={classNames(
+								'flex-nowrap justify-content-xl-center',
+								{ 'overflow-x-auto': isLargeWindowSize },
+							)}
+						/>
 					</Col>
 					<Col xs='auto' xl='3' className='flex-fill'>
 						<Buttons />

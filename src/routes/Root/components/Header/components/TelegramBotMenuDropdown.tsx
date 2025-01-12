@@ -1,4 +1,4 @@
-import React, { memo, ReactElement, useMemo } from 'react';
+import React, { CSSProperties, memo, ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -11,6 +11,8 @@ import { TelegramBot } from 'api/telegram_bots/types';
 export interface TelegramBotMenuDropdownProps extends Omit<DropdownProps, 'children'> {
 	telegramBot: TelegramBot;
 }
+
+const toggleButtonStyle: CSSProperties = { maxWidth: '150px' };
 
 function TelegramBotMenuDropdown({
 	telegramBot,
@@ -37,7 +39,7 @@ function TelegramBotMenuDropdown({
 			<Dropdown.Toggle
 				variant='dark'
 				className='text-truncate'
-				style={{ maxWidth: '150px' }}
+				style={toggleButtonStyle}
 			>
 				{telegramBot.username}
 			</Dropdown.Toggle>
