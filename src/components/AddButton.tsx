@@ -1,4 +1,4 @@
-import React, { memo, ReactElement, useMemo } from 'react';
+import React, { memo, ReactElement } from 'react';
 import classNames from 'classnames';
 
 import Button, { ButtonProps } from 'components/Button';
@@ -18,8 +18,8 @@ function AddButton({
 	children,
 	...props
 }: AddButtonProps): ReactElement<AddButtonProps> {
-	const paddingStart = useMemo<number>(() => (size === 'sm' ? 1 : 2), [size]);
-	const iconSize = useMemo<number>(() => (size ? iconSizes[size] : 23), [size]);
+	const paddingStart: number = size === 'sm' ? 1 : 2;
+	const iconSize: number = size ? iconSizes[size] : 23;
 
 	return (
 		<Button
