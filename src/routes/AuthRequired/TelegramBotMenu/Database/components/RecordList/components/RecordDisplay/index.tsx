@@ -44,17 +44,18 @@ const options: NonNullable<MonacoEditorProps['options']> = {
 	lineNumbersMinChars: 0,
 };
 
-const deleteButtonStyle: CSSProperties = {
-	width: '25px',
-	height: '25px',
-};
+const deleteButtonStyle: CSSProperties = { width: '25px', height: '25px' };
+
+type ChangeHandler = NonNullable<MonacoEditorProps['onChange']>;
+type ConfirmHandler = NonNullable<ConfirmButtonGroupProps['onConfirm']>;
+type CancelHandler = NonNullable<ConfirmButtonGroupProps['onCancel']>;
 
 function RecordDisplay({
 	record,
 	className,
 	...props
 }: RecordDisplayProps): ReactElement<RecordDisplayProps> {
-	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuDatabase, {
+	const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
 		keyPrefix: 'records',
 	});
 
@@ -76,41 +77,39 @@ function RecordDisplay({
 		(state) => state.setLoading,
 	);
 
-	const showDeleteModal = useCallback(
-		() =>
-			setShowAskConfirmModal({
-				title: t('list.display.deleteModal.title'),
-				text: t('list.display.deleteModal.text'),
-				onConfirm: async () => {
-					setLoadingAskConfirmModal(true);
+	function showDeleteModal(): void {
+		setShowAskConfirmModal({
+			title: t('list.display.deleteModal.title'),
+			text: t('list.display.deleteModal.text'),
+			onConfirm: async () => {
+				setLoadingAskConfirmModal(true);
 
-					const response = await DatabaseRecordAPI.delete(
-						telegramBot.id,
-						record.id,
-					);
+				const response = await DatabaseRecordAPI.delete(
+					telegramBot.id,
+					record.id,
+				);
 
-					if (response.ok) {
-						updateRecords();
-						hideAskConfirmModal();
-						createMessageToast({
-							message: t('list.display.messages.deleteRecord.success'),
-							level: 'success',
-						});
-					} else {
-						createMessageToast({
-							message: t('list.display.messages.deleteRecord.error'),
-							level: 'error',
-						});
-					}
+				if (response.ok) {
+					updateRecords();
+					hideAskConfirmModal();
+					createMessageToast({
+						message: t('list.display.messages.deleteRecord.success'),
+						level: 'success',
+					});
+				} else {
+					createMessageToast({
+						message: t('list.display.messages.deleteRecord.error'),
+						level: 'error',
+					});
+				}
 
-					setLoadingAskConfirmModal(false);
-				},
-				onCancel: null,
-			}),
-		[telegramBot.id, i18n.language],
-	);
+				setLoadingAskConfirmModal(false);
+			},
+			onCancel: null,
+		});
+	}
 
-	const handleChange = useCallback<NonNullable<MonacoEditorProps['onChange']>>(
+	const handleChange = useCallback<ChangeHandler>(
 		(editor, newValue) => {
 			if (initialValue === value && value !== newValue) {
 				editor.updateLayout(true);
@@ -121,9 +120,7 @@ function RecordDisplay({
 		[value],
 	);
 
-	const handleConfirm = useCallback<
-		NonNullable<ConfirmButtonGroupProps['onConfirm']>
-	>(async () => {
+	const handleConfirm = useCallback<ConfirmHandler>(async () => {
 		setLoading(true);
 
 		try {
@@ -168,7 +165,7 @@ function RecordDisplay({
 		setLoading(false);
 	}, [telegramBot.id, record.id, value]);
 
-	const handleCancel = useCallback<NonNullable<ConfirmButtonGroupProps['onCancel']>>(
+	const handleCancel = useCallback<CancelHandler>(
 		() => setValue(initialValue),
 		[initialValue],
 	);

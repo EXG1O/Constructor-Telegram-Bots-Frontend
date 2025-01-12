@@ -1,6 +1,7 @@
 import React, {
 	HTMLAttributes,
 	memo,
+	MouseEventHandler,
 	ReactElement,
 	useCallback,
 	useState,
@@ -12,15 +13,21 @@ import { Row } from 'react-bootstrap';
 import { RouteID } from 'routes';
 
 import AddButton from 'components/AddButton';
-import Pagination from 'components/Pagination';
-import Search, { defaultValue as searchDefaultValue } from 'components/Search';
+import Pagination, { PaginationProps } from 'components/Pagination';
+import Search, { SearchProps } from 'components/Search';
 
-import RecordAdditionModal from './RecordAdditionModal';
+import RecordAdditionModal, { RecordAdditionModalProps } from './RecordAdditionModal';
 
 import useDatabaseRecordsStore from '../hooks/useDatabaseRecordsStore';
 
 export interface ToolbarProps
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+
+type HideHandler = RecordAdditionModalProps['onHide'];
+type AddButtonClickHandler = MouseEventHandler<HTMLButtonElement>;
+type SearchHandler = SearchProps['onSearch'];
+type ClearHandler = SearchProps['onClear'];
+type PageChangeHandler = PaginationProps['onPageChange'];
 
 function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarProps> {
 	const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
@@ -34,19 +41,34 @@ function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarPro
 
 	const [showModal, setShowModal] = useState<boolean>(false);
 
+	const handleHide = useCallback<HideHandler>(() => setShowModal(false), []);
+	const handleAddButtonClick = useCallback<AddButtonClickHandler>(
+		() => setShowModal(true),
+		[],
+	);
+	const handleSearch = useCallback<SearchHandler>(
+		(value) => updateRecords(undefined, undefined, value),
+		[],
+	);
+	const handleClear = useCallback<ClearHandler>(
+		() => updateRecords(undefined, undefined, null),
+		[],
+	);
+	const handlePageChange = useCallback<PageChangeHandler>(
+		(newOffset) => updateRecords(undefined, newOffset),
+		[],
+	);
+
 	return (
 		<>
-			<RecordAdditionModal
-				show={showModal}
-				onHide={useCallback(() => setShowModal(false), [])}
-			/>
+			<RecordAdditionModal show={showModal} onHide={handleHide} />
 			<Row {...props} lg='auto' className={classNames('g-2', className)}>
 				<div>
 					<AddButton
 						size='sm'
 						variant='dark'
 						className='w-100'
-						onClick={useCallback(() => setShowModal(true), [])}
+						onClick={handleAddButtonClick}
 					>
 						{t('addRecordButton')}
 					</AddButton>
@@ -54,14 +76,8 @@ function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarPro
 				<Search
 					size='sm'
 					className='flex-fill'
-					onSearch={useCallback(
-						(search) => updateRecords(undefined, undefined, search),
-						[],
-					)}
-					onClear={useCallback(
-						() => updateRecords(undefined, undefined, searchDefaultValue),
-						[],
-					)}
+					onSearch={handleSearch}
+					onClear={handleClear}
 				/>
 				<Pagination
 					size='sm'
@@ -69,10 +85,7 @@ function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarPro
 					itemLimit={itemLimit}
 					itemOffset={itemOffset}
 					className='justify-content-center ps-1'
-					onPageChange={useCallback(
-						(newOffset) => updateRecords(undefined, newOffset),
-						[],
-					)}
+					onPageChange={handlePageChange}
 				/>
 			</Row>
 		</>

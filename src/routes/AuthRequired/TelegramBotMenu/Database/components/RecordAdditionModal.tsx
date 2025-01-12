@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers } from 'formik';
 import monaco from 'monaco-editor';
@@ -19,7 +19,7 @@ interface FormValues {
 	data: string;
 }
 
-export interface TelegramBotAdditionModalProps
+export interface RecordAdditionModalProps
 	extends Omit<ModalProps, 'loading' | 'children' | 'onExited'> {
 	show: NonNullable<ModalProps['show']>;
 	onHide: NonNullable<ModalProps['onHide']>;
@@ -40,7 +40,7 @@ const monacoOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
 function RecordAdditionModal({
 	onHide,
 	...props
-}: TelegramBotAdditionModalProps): ReactElement<TelegramBotAdditionModalProps> {
+}: RecordAdditionModalProps): ReactElement<RecordAdditionModalProps> {
 	const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
 		keyPrefix: 'records.recordAdditionModal',
 	});
@@ -51,7 +51,7 @@ function RecordAdditionModal({
 
 	async function handleSubmit(
 		values: FormValues,
-		{ setErrors, setFieldError }: FormikHelpers<FormValues>,
+		{ setFieldError }: FormikHelpers<FormValues>,
 	): Promise<void> {
 		let data: Record<string, any>;
 
@@ -75,15 +75,10 @@ function RecordAdditionModal({
 		const response = await DatabaseRecordsAPI.create(telegramBot.id, { data });
 
 		if (!response.ok) {
-			setErrors(
-				response.json.errors.reduce<Record<string, string>>(
-					(errors, { attr, detail }) => {
-						if (attr) errors[attr] = detail;
-						return errors;
-					},
-					{},
-				),
-			);
+			for (const error of response.json.errors) {
+				if (!error.attr) continue;
+				setFieldError(error.attr, error.detail);
+			}
 			createMessageToast({
 				message: t('messages.addRecord.error'),
 				level: 'error',
@@ -111,7 +106,7 @@ function RecordAdditionModal({
 					{...props}
 					loading={isSubmitting}
 					onHide={onHide}
-					onExited={useCallback(() => resetForm(), [])}
+					onExited={() => resetForm()}
 				>
 					<Form>
 						<Modal.Header closeButton>

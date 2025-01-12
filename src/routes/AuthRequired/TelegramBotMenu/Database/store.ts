@@ -61,7 +61,7 @@ export function createStore(initialProps: InitialProps) {
 
 			const limit = newLimit ?? currentLimit;
 			const offset = newOffset ?? currentOffset;
-			const search = newSearch ?? currentSearch;
+			const search = newSearch === undefined ? currentSearch : null;
 
 			const response = await DatabaseRecordsAPI.get(
 				telegramBot.id,

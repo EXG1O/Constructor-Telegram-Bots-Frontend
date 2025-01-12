@@ -12,7 +12,9 @@ import Wrapper from './components/Wrapper';
 
 import useDatabaseRecordsStore from '../../hooks/useDatabaseRecordsStore';
 
-export interface RecordListProps extends Omit<ListGroupProps, 'children'> {}
+export type RecordListProps = Omit<ListGroupProps, 'children'>;
+
+const tablePlaceholderClassName: string = 'text-center px-3 py-2';
 
 function RecordList({
 	className,
@@ -34,11 +36,11 @@ function RecordList({
 				))}
 			</ListGroup>
 		) : search ? (
-			<Wrapper className='text-center px-3 py-2'>
+			<Wrapper className={tablePlaceholderClassName}>
 				{t('placeholders.notFound')}
 			</Wrapper>
 		) : (
-			<Wrapper className='text-center px-3 py-2'>
+			<Wrapper className={tablePlaceholderClassName}>
 				{t('placeholders.notAdded')}
 			</Wrapper>
 		)

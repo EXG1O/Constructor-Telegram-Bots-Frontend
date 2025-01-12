@@ -11,6 +11,8 @@ export interface ConfirmButtonGroupProps extends Omit<ButtonGroupProps, 'childre
 	onCancel?: () => void;
 }
 
+const buttonClassName: string = 'd-flex p-0';
+
 function ConfirmButtonGroup({
 	onConfirm,
 	onCancel,
@@ -18,10 +20,10 @@ function ConfirmButtonGroup({
 }: ConfirmButtonGroupProps): ReactElement<ConfirmButtonGroupProps> {
 	return (
 		<ButtonGroup size='sm' {...props}>
-			<Button variant='success' className='d-flex p-0' onClick={onConfirm}>
+			<Button variant='success' className={buttonClassName} onClick={onConfirm}>
 				<CheckIcon width={25} height={25} />
 			</Button>
-			<Button variant='danger' className='d-flex p-0' onClick={onCancel}>
+			<Button variant='danger' className={buttonClassName} onClick={onCancel}>
 				<XIcon width={25} height={25} />
 			</Button>
 		</ButtonGroup>
