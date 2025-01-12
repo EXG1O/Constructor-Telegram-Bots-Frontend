@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import Feedback from './Feedback';
 import Select, { SelectProps } from './Select';
@@ -21,4 +21,4 @@ function SelectFeedback({
 	);
 }
 
-export default SelectFeedback;
+export default memo(SelectFeedback);
