@@ -1,4 +1,4 @@
-import React, { ReactElement, useMemo } from 'react';
+import React, { memo, ReactElement, useMemo } from 'react';
 import classNames from 'classnames';
 
 import Feedback from './Feedback';
@@ -12,7 +12,7 @@ export interface MonacoEditorFeedbackProps extends MonacoEditorProps {
 
 function MonacoEditorFeedback({
 	error,
-	wrapperProps,
+	wrapperProps: wrapperExtraProps,
 	className,
 	...props
 }: MonacoEditorFeedbackProps): ReactElement<MonacoEditorFeedbackProps> {
@@ -20,22 +20,23 @@ function MonacoEditorFeedback({
 		() => classNames({ 'is-invalid': Boolean(error) }),
 		[error],
 	);
-	const customWrapperProps = useMemo<MonacoEditorProps['wrapperProps']>(
+	const wrapperProps = useMemo<MonacoEditorProps['wrapperProps']>(
 		() =>
-			Object.assign(wrapperProps || {}, {
+			Object.assign(wrapperExtraProps || {}, {
 				className: classNames(
-					(wrapperProps as Record<string, string> | undefined)?.className,
+					(wrapperExtraProps as Record<string, string> | undefined)
+						?.className,
 					extraClassName,
 				),
 			}),
-		[wrapperProps],
+		[wrapperExtraProps],
 	);
 
 	return (
 		<div>
 			<MonacoEditor
 				{...props}
-				wrapperProps={customWrapperProps}
+				wrapperProps={wrapperProps}
 				className={classNames(className, extraClassName)}
 			/>
 			{error && <Feedback type='invalid'>{error}</Feedback>}
@@ -43,4 +44,4 @@ function MonacoEditorFeedback({
 	);
 }
 
-export default MonacoEditorFeedback;
+export default memo(MonacoEditorFeedback);
