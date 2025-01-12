@@ -21,9 +21,7 @@ function ImageCarousel({
 	);
 
 	useEffect(() => {
-		if (activeIndex !== rawActiveIndex) {
-			setActiveIndex(activeIndex);
-		}
+		if (activeIndex !== rawActiveIndex) setActiveIndex(activeIndex);
 	}, [activeIndex]);
 
 	return images.length ? (
@@ -35,7 +33,7 @@ function ImageCarousel({
 			indicators={images.length > 1}
 			activeIndex={activeIndex}
 			className={classNames('bg-light overflow-hidden border rounded', className)}
-			onSelect={(index) => setActiveIndex(index)}
+			onSelect={setActiveIndex}
 		>
 			{images.map((image) => (
 				<Carousel.Item key={image.key}>

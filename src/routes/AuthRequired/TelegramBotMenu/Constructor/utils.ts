@@ -1,20 +1,19 @@
 import { Edge, Node } from 'reactflow';
 
 import {
+	Connection,
 	DiagramBackgroundTask,
 	DiagramCommand,
 	DiagramCondition,
 } from 'api/telegram_bots/types';
 
 export function parseDiagramCommandNodes(diagramCommands: DiagramCommand[]): Node[] {
-	return diagramCommands.map(
-		({ x, y, source_connections, target_connections, ...diagramCommand }) => ({
-			id: `command:${diagramCommand.id}`,
-			type: 'command',
-			position: { x, y },
-			data: diagramCommand,
-		}),
-	);
+	return diagramCommands.map(({ x, y, target_connections, ...diagramCommand }) => ({
+		id: `command:${diagramCommand.id}`,
+		type: 'command',
+		position: { x, y },
+		data: diagramCommand,
+	}));
 }
 
 export function parseDiagramConditionNodes(
@@ -43,68 +42,61 @@ export function parseDiagramBackgroundTaskNodes(
 	);
 }
 
-export function parseDiagramCommandEdges(diagramCommands: DiagramCommand[]): Edge[] {
-	return diagramCommands.reduce<Edge[]>((edges, diagramCommand) => {
-		diagramCommand.keyboard?.buttons.forEach((button) => {
-			button.source_connections.forEach((connection) => {
-				const source: string = `command:${diagramCommand.id}`;
-				const target: string = `${connection.target_object_type}:${connection.target_object_id}`;
-
-				edges.push({
-					id: `reactflow__edge-${connection.id}`,
-					source,
-					sourceHandle: `${source}:${connection.source_handle_position}:${connection.source_object_id}`,
-					target,
-					targetHandle: `${target}:${connection.target_handle_position}:0`,
-				});
-			});
-		});
-
-		return edges;
-	}, []);
-}
-
-export function parseDiagramConditionEdges(
+export function parseEdges(
+	diagramCommands: DiagramCommand[],
 	diagramConditions: DiagramCondition[],
-): Edge[] {
-	return diagramConditions.reduce<Edge[]>((edges, diagramCondition) => {
-		Object.assign(
-			diagramCondition.source_connections,
-			diagramCondition.target_connections,
-		).forEach((connection) => {
-			const source: string = `${connection.source_object_type}:${connection.source_object_id}`;
-			const target: string = `${connection.target_object_type}:${connection.target_object_id}`;
-
-			edges.push({
-				id: `reactflow__edge-${connection.id}`,
-				source,
-				sourceHandle: `${source}:${connection.source_handle_position}:0`,
-				target,
-				targetHandle: `${target}:${connection.target_handle_position}:0`,
-			});
-		});
-
-		return edges;
-	}, []);
-}
-
-export function parseDiagramBackgroundTaskEdges(
 	diagramBackgroundTasks: DiagramBackgroundTask[],
 ): Edge[] {
-	return diagramBackgroundTasks.reduce<Edge[]>((edges, diagramBackgroundTask) => {
-		diagramBackgroundTask.target_connections.forEach((connection) => {
-			const source: string = `${connection.source_object_type}:${connection.source_object_id}`;
-			const target: string = `${connection.target_object_type}:${connection.target_object_id}`;
+	const connections: Connection[] = [
+		...diagramCommands.flatMap((command) => [
+			...command.target_connections,
+			...(command.keyboard?.buttons.flatMap(
+				(button) => button.source_connections,
+			) ?? []),
+		]),
+		...diagramConditions.flatMap((condition) => [
+			...condition.source_connections,
+			...condition.target_connections,
+		]),
+		...diagramBackgroundTasks.flatMap((task) => task.target_connections),
+	];
 
-			edges.push({
-				id: `reactflow__edge-${connection.id}`,
-				source,
-				sourceHandle: `${source}:${connection.source_handle_position}:0`,
-				target,
-				targetHandle: `${target}:${connection.target_handle_position}:0`,
-			});
-		});
+	const seen = new Set<string>();
+	const uniqueConnections: Connection[] = connections.filter((connection) => {
+		const key = connection.id.toString();
 
-		return edges;
-	}, []);
+		if (seen.has(key)) return false;
+
+		seen.add(key);
+		return true;
+	});
+
+	return uniqueConnections.map((connection) => {
+		const isKeyboardButtonConnection: boolean =
+			connection.source_object_type === 'command_keyboard_button';
+
+		const source: string = isKeyboardButtonConnection
+			? `command:${
+					diagramCommands.find((command) =>
+						command.keyboard?.buttons.some(
+							(button) => button.id === connection.source_object_id,
+						),
+					)?.id
+				}`
+			: `${connection.source_object_type}:${connection.source_object_id}`;
+		const target: string = `${connection.target_object_type}:${connection.target_object_id}`;
+
+		return {
+			id: `reactflow__edge-${connection.id}`,
+			source,
+			sourceHandle:
+				`${source}:${connection.source_handle_position}:` +
+				(isKeyboardButtonConnection
+					? connection.source_object_id
+					: 0
+				).toString(),
+			target,
+			targetHandle: `${target}:${connection.target_handle_position}:0`,
+		};
+	});
 }

@@ -52,13 +52,17 @@ function BodyBlock(props: BodyBlockProps): ReactElement<BodyBlockProps> {
 		[i18n.language],
 	);
 
+	function handleClick(): void {
+		setValue(!show);
+	}
+
 	return (
 		<BlockCollapse>
 			<div {...props}>
 				<Button
 					size='sm'
 					{...(show ? hideButtonProps : showButtonProps)}
-					onClick={() => setValue(!show)}
+					onClick={handleClick}
 				/>
 				<Collapse in={show}>
 					<div>

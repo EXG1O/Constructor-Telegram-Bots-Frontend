@@ -32,12 +32,6 @@ export const defaultAPIRequest: APIRequest = {
 	body: defaultBody,
 };
 
-export {
-	defaultBody as defaultAPIRequestBody,
-	defaultHeaders as defaultAPIRequestHeaders,
-	defaultMethod as defaultAPIRequestMethod,
-};
-
 function APIRequestBlock(
 	props: APIRequestBlockProps,
 ): ReactElement<APIRequestBlockProps> {

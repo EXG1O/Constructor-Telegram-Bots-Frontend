@@ -40,6 +40,16 @@ function DraggableKeyboardButton({
 		(state) => state.keyboardButtonBlock.hideBlock,
 	);
 
+	function handleClick(): void {
+		select
+			? hideEditButtonBlock()
+			: showEditButtonBlock(
+					{ ...button, url: button.url ?? '' },
+					rowIndex,
+					buttonIndex,
+				);
+	}
+
 	return (
 		<Draggable index={buttonIndex} draggableId={button.draggableId}>
 			{({ innerRef, draggableProps, dragHandleProps }) => (
@@ -53,15 +63,7 @@ function DraggableKeyboardButton({
 						{ 'text-bg-dark': !select, 'text-bg-secondary': select },
 						className,
 					)}
-					onClick={() =>
-						select
-							? hideEditButtonBlock()
-							: showEditButtonBlock(
-									{ ...button, url: button.url ?? '' },
-									rowIndex,
-									buttonIndex,
-								)
-					}
+					onClick={handleClick}
 				>
 					{button.text}
 				</small>

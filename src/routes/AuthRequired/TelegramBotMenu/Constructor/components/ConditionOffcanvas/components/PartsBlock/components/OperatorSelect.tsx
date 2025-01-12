@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ChangeEvent, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useField } from 'formik';
 
@@ -28,12 +28,16 @@ function OperatorSelect({
 		`parts[${index}].operation`,
 	);
 
+	function handleChange(event: ChangeEvent<HTMLSelectElement>): void {
+		setValue(event.target.value as Operator);
+	}
+
 	return (
 		<Select
 			{...props}
 			value={value}
 			className='text-truncate'
-			onChange={(e) => setValue(e.target.value as Operator)}
+			onChange={handleChange}
 		>
 			{operators.map((operator, index) => (
 				<option key={index} value={operator}>

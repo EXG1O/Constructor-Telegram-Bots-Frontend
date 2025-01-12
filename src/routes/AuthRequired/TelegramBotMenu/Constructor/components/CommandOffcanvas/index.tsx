@@ -25,7 +25,6 @@ import TelegramBotStorage from './components/TelegramBotStorage';
 import TriggerBlock, { defaultTrigger, Trigger } from './components/TriggerBlock';
 
 import AddonButtonGroup from '../AddonButtonGroup';
-import { defaultAPIRequestBody, defaultAPIRequestHeaders } from '../APIRequestBlock';
 import NameBlock, { defaultName, Name } from '../NameBlock';
 
 import './index.scss';
@@ -207,10 +206,10 @@ function InnerCommandOffcanvas(): ReactElement {
 												Object.entries(header);
 											return { key, value };
 										})
-									: defaultAPIRequestHeaders,
+									: defaultAPIRequest.headers,
 								body: api_request.body
 									? JSON.stringify(api_request.body, undefined, 4)
-									: defaultAPIRequestBody,
+									: defaultAPIRequest.body,
 							}
 						: defaultAPIRequest,
 					database_record: database_record

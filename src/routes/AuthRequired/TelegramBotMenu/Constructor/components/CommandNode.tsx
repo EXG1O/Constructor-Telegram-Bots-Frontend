@@ -1,6 +1,6 @@
 import React, { memo, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Handle, NodeProps, Position, useStore } from 'reactflow';
+import { Handle, NodeProps as RFNodeProps, Position, useStore } from 'reactflow';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
@@ -12,16 +12,21 @@ import Stack from 'components/Stack';
 import { createMessageToast } from 'components/ToastContainer';
 
 import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
-import NodeToolbar from './NodeToolbar';
+import Node, { NodeProps } from './Node';
 
 import { CommandAPI } from 'api/telegram_bots/main';
 import { DiagramBlock, DiagramCommand } from 'api/telegram_bots/types';
 
 type Data = Omit<DiagramCommand, keyof DiagramBlock>;
 
-export type CommandNodeProps = NodeProps<Data>;
+export type CommandNodeProps = RFNodeProps<Data>;
 
-function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodeProps> {
+type EditHandler = NodeProps['onEdit'];
+
+function CommandNode({
+	id,
+	data: command,
+}: CommandNodeProps): ReactElement<CommandNodeProps> {
 	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'nodes.command',
 	});
@@ -48,7 +53,10 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 				onConfirm: async () => {
 					setLoadingAskConfirmModal(true);
 
-					const response = await CommandAPI.delete(telegramBot.id, data.id);
+					const response = await CommandAPI.delete(
+						telegramBot.id,
+						command.id,
+					);
 
 					if (response.ok) {
 						onNodesChange?.([{ id, type: 'remove' }]);
@@ -71,59 +79,46 @@ function CommandNode({ id, data }: CommandNodeProps): ReactElement<CommandNodePr
 		[i18n.language],
 	);
 
+	const handleEdit = useCallback<EditHandler>(
+		() => showEditCommandOffcanvas(command.id),
+		[command.id],
+	);
+
 	return (
-		<>
-			<NodeToolbar
-				title={t('title')}
-				onEdit={useCallback(() => showEditCommandOffcanvas(data.id), [data.id])}
-				onDelete={showDeleteModal}
+		<Node title={t('title')} onEdit={handleEdit} onDelete={showDeleteModal}>
+			<Node.Block className='position-relative text-center text-break'>
+				<Handle id={`${id}:left:0`} type='target' position={Position.Left} />
+				{command.name}
+				<Handle id={`${id}:right:0`} type='target' position={Position.Right} />
+			</Node.Block>
+			<Node.Block
+				className='message-text-block'
+				dangerouslySetInnerHTML={{ __html: command.message.text }}
 			/>
-			<Stack gap={2} style={{ width: '300px' }}>
-				<div
-					className='bg-white border rounded text-center text-break px-3 py-2'
-					style={{ position: 'relative' }}
-				>
-					<Handle
-						id={`${id}:left:0`}
-						type='target'
-						position={Position.Left}
-					/>
-					{data.name}
-					<Handle
-						id={`${id}:right:0`}
-						type='target'
-						position={Position.Right}
-					/>
-				</div>
-				<div
-					className='message-text-block bg-white border rounded px-3 py-2'
-					dangerouslySetInnerHTML={{ __html: data.message.text }}
-				/>
-				{data.keyboard?.buttons && (
-					<Stack gap={1}>
-						{data.keyboard.buttons.map((button) => (
-							<div
-								key={button.id}
-								className='text-bg-dark rounded text-center text-break px-3 py-2'
-								style={{ position: 'relative' }}
-							>
-								<Handle
-									id={`${id}:left:${button.id}`}
-									type='source'
-									position={Position.Left}
-								/>
-								{button.text}
-								<Handle
-									id={`${id}:right:${button.id}`}
-									type='source'
-									position={Position.Right}
-								/>
-							</div>
-						))}
-					</Stack>
-				)}
-			</Stack>
-		</>
+			{command.keyboard?.buttons && (
+				<Stack gap={1}>
+					{command.keyboard.buttons.map((button) => (
+						<Node.Block
+							key={button.id}
+							variant='dark'
+							className='position-relative text-center text-break'
+						>
+							<Handle
+								id={`${id}:left:${button.id}`}
+								type='source'
+								position={Position.Left}
+							/>
+							{button.text}
+							<Handle
+								id={`${id}:right:${button.id}`}
+								type='source'
+								position={Position.Right}
+							/>
+						</Node.Block>
+					))}
+				</Stack>
+			)}
+		</Node>
 	);
 }
 

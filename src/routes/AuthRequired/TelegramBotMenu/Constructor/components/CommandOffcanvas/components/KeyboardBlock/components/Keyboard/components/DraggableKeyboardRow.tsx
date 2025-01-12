@@ -27,6 +27,14 @@ function DraggableKeyboardRow({
 		useField<KeyboardRow[]>('keyboard.rows');
 	const [{ value: row }] = useField<KeyboardRow>(`keyboard.rows[${rowIndex}]`);
 
+	function handleClick(): void {
+		setValue(
+			produce(rows, (draft) => {
+				draft.splice(rowIndex, 1);
+			}),
+		);
+	}
+
 	return (
 		<Draggable {...props} draggableId={row.draggableId} index={rowIndex}>
 			{({ innerRef, draggableProps, dragHandleProps }) => (
@@ -46,13 +54,7 @@ function DraggableKeyboardRow({
 					<div
 						className='d-flex align-items-center bg-light text-danger border border-start-0 rounded-end-1 px-1'
 						style={{ cursor: 'pointer' }}
-						onClick={() =>
-							setValue(
-								produce(rows, (draft) => {
-									draft.splice(rowIndex, 1);
-								}),
-							)
-						}
+						onClick={handleClick}
 					>
 						<TrashIcon width={18} height={18} />
 					</div>

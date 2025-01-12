@@ -32,7 +32,7 @@ function KeyboardTypeButtonGroup(
 		keyPrefix: 'commandOffcanvas.keyboardBlock.typeButtonGroup',
 	});
 
-	const [{ value }, _meta, { setValue }] = useField<Type>('keyboard.type');
+	const [field, _meta] = useField<Type>('keyboard.type');
 
 	const toggleButtons = useMemo<TypeToggleButtonProps[]>(
 		() => [
@@ -44,18 +44,12 @@ function KeyboardTypeButtonGroup(
 	);
 
 	return (
-		<ToggleButtonGroup
-			{...props}
-			type='radio'
-			name={id}
-			value={value}
-			onChange={(value) => setValue(value)}
-		>
+		<ToggleButtonGroup {...props} {...field} type='radio' name={id}>
 			{toggleButtons.map((props, index) => (
 				<ToggleButtonGroup.Button
 					{...props}
 					key={index}
-					id={id + props.value}
+					id={id + index}
 					size='sm'
 					variant='outline-dark'
 				/>

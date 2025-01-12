@@ -6,11 +6,10 @@ import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
-import Stack from 'components/Stack';
 import { createMessageToast } from 'components/ToastContainer';
 
 import { useBackgroundTaskOffcanvasStore } from './BackgroundTaskOffcanvas/store';
-import NodeToolbar from './NodeToolbar';
+import Node from './Node';
 
 import { BackgroundTaskAPI } from 'api/telegram_bots/main';
 import { DiagramBackgroundTask, DiagramBlock } from 'api/telegram_bots/types';
@@ -86,35 +85,21 @@ function BackgroundTaskNode({
 	);
 
 	return (
-		<>
-			<NodeToolbar
-				title={t(`${nodePrefix}.title`)}
-				onEdit={handleEdit}
-				onDelete={showDeleteModal}
-			/>
-			<Stack gap={2} style={{ width: '300px' }}>
-				<div
-					className='bg-white border rounded text-center text-break px-3 py-2'
-					style={{ position: 'relative' }}
-				>
-					<Handle
-						id={`${id}:left:0`}
-						type='source'
-						position={Position.Left}
-					/>
-					{task.name}
-					<Handle
-						id={`${id}:right:0`}
-						type='source'
-						position={Position.Right}
-					/>
-				</div>
-				<div className='bg-white border rounded px-3 py-2'>
-					<strong>{`${t(`${nodePrefix}.interval`)}:`}</strong>{' '}
-					{t(`${offcanvasPrefix}.intervalBlock.select.${task.interval}`)}
-				</div>
-			</Stack>
-		</>
+		<Node
+			title={t(`${nodePrefix}.title`)}
+			onEdit={handleEdit}
+			onDelete={showDeleteModal}
+		>
+			<Node.Block className='position-relative text-center text-break'>
+				<Handle id={`${id}:left:0`} type='source' position={Position.Left} />
+				{task.name}
+				<Handle id={`${id}:right:0`} type='source' position={Position.Right} />
+			</Node.Block>
+			<Node.Block>
+				<strong>{`${t(`${nodePrefix}.interval`)}:`}</strong>{' '}
+				{t(`${offcanvasPrefix}.intervalBlock.select.${task.interval}`)}
+			</Node.Block>
+		</Node>
 	);
 }
 

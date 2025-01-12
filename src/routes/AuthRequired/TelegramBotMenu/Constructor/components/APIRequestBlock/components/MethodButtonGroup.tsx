@@ -22,20 +22,14 @@ const methodToggleButtons: MethodToggleButtonProps[] = [
 function MethodButtonGroup() {
 	const id = useId();
 
-	const [{ value }, _meta, { setValue }] = useField<Method>('api_request.method');
+	const [field, _meta] = useField<Method>('api_request.method');
 
 	return (
-		<ToggleButtonGroup
-			size='sm'
-			type='radio'
-			name={id}
-			value={value}
-			onChange={setValue}
-		>
+		<ToggleButtonGroup {...field} size='sm' type='radio' name={id}>
 			{methodToggleButtons.map(({ value }, index) => (
 				<ToggleButtonGroup.Button
 					key={index}
-					id={id + value}
+					id={id + index}
 					value={value}
 					variant='outline-dark'
 				>

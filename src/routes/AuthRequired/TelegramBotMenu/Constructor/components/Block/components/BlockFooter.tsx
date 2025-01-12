@@ -1,20 +1,20 @@
 import React, { forwardRef } from 'react';
 import classNames from 'classnames';
 
-import BaseCardFooter, {
-	CardFooterProps as BaseCardFooterProps,
-} from 'react-bootstrap/CardFooter';
+import { CardFooterProps } from 'react-bootstrap/CardFooter';
+
+import Card from 'components/Card';
 
 import { FCA } from 'utils/helpers';
 
-export type BlockFooterProps = BaseCardFooterProps;
+export type BlockFooterProps = CardFooterProps;
 
 const BlockFooter: FCA<'div', BlockFooterProps> = forwardRef<
 	HTMLElement,
 	BlockFooterProps
 >(function BlockFooter({ className, ...props }, ref) {
 	return (
-		<BaseCardFooter ref={ref} {...props} className={classNames(className, 'p-2')} />
+		<Card.Footer ref={ref} {...props} className={classNames(className, 'p-2')} />
 	);
 });
 

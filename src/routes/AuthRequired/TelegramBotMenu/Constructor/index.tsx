@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useRef } from 'react';
+import React, { CSSProperties, ReactElement, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactFlow, {
 	addEdge as baseAddEdge,
@@ -53,12 +53,10 @@ import {
 } from 'api/telegram_bots/types';
 
 import {
-	parseDiagramBackgroundTaskEdges,
 	parseDiagramBackgroundTaskNodes,
-	parseDiagramCommandEdges,
 	parseDiagramCommandNodes,
-	parseDiagramConditionEdges,
 	parseDiagramConditionNodes,
+	parseEdges,
 } from './utils';
 
 type SourceHandle = [
@@ -68,6 +66,8 @@ type SourceHandle = [
 	string,
 ];
 type TargetHandle = ['command' | 'condition', string, 'left' | 'right', string];
+
+const containerStyle: CSSProperties = { height: '100%', minHeight: '600px' };
 
 const nodeTypes: NodeTypes = {
 	command: CommandNode,
@@ -93,11 +93,9 @@ function Constructor(): ReactElement {
 		...parseDiagramConditionNodes(diagramConditions),
 		...parseDiagramBackgroundTaskNodes(diagramBackgroundTasks),
 	]);
-	const [edges, setEdges, onEdgesChange] = useEdgesState([
-		...parseDiagramCommandEdges(diagramCommands),
-		...parseDiagramConditionEdges(diagramConditions),
-		...parseDiagramBackgroundTaskEdges(diagramBackgroundTasks),
-	]);
+	const [edges, setEdges, onEdgesChange] = useEdgesState(
+		parseEdges(diagramCommands, diagramConditions, diagramBackgroundTasks),
+	);
 	const edgeUpdating = useRef<Edge | null>(null);
 
 	const handleNodeDragStop = useCallback(
@@ -392,10 +390,7 @@ function Constructor(): ReactElement {
 				onAdd={handleAddDiagramBackgroundTaskToNode}
 				onSave={handleSaveDiagramBackgroundTaskNode}
 			/>
-			<div
-				className='bg-light rounded-4 overflow-hidden'
-				style={{ height: '100%', minHeight: '600px' }}
-			>
+			<div className='bg-light rounded-4 overflow-hidden' style={containerStyle}>
 				<ReactFlow
 					fitView
 					nodes={nodes}

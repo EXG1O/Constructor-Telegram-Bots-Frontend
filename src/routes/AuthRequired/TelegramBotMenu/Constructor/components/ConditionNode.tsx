@@ -1,27 +1,28 @@
 import React, { memo, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Handle, NodeProps, Position, useStore } from 'reactflow';
+import { Handle, NodeProps as RFNodeProps, Position, useStore } from 'reactflow';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
-import Stack from 'components/Stack';
 import { createMessageToast } from 'components/ToastContainer';
 
 import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
-import NodeToolbar from './NodeToolbar';
+import Node, { NodeProps } from './Node';
 
 import { ConditionAPI } from 'api/telegram_bots/main';
-import { DiagramBlock, DiagramCommand } from 'api/telegram_bots/types';
+import { DiagramBlock, DiagramCondition } from 'api/telegram_bots/types';
 
-type Data = Omit<DiagramCommand, keyof DiagramBlock>;
+type Data = Omit<DiagramCondition, keyof DiagramBlock>;
 
-export type ConditionNodeProps = NodeProps<Data>;
+export type ConditionNodeProps = RFNodeProps<Data>;
+
+type EditHandler = NodeProps['onEdit'];
 
 function ConditionNode({
 	id,
-	data,
+	data: condition,
 }: ConditionNodeProps): ReactElement<ConditionNodeProps> {
 	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'nodes.condition',
@@ -49,7 +50,10 @@ function ConditionNode({
 				onConfirm: async () => {
 					setLoadingAskConfirmModal(true);
 
-					const response = await ConditionAPI.delete(telegramBot.id, data.id);
+					const response = await ConditionAPI.delete(
+						telegramBot.id,
+						condition.id,
+					);
 
 					if (response.ok) {
 						onNodesChange?.([{ id, type: 'remove' }]);
@@ -72,35 +76,19 @@ function ConditionNode({
 		[i18n.language],
 	);
 
+	const handleEdit = useCallback<EditHandler>(
+		() => showEditConditionOffcanvas(condition.id),
+		[condition.id],
+	);
+
 	return (
-		<>
-			<NodeToolbar
-				title={t('title')}
-				onEdit={useCallback(
-					() => showEditConditionOffcanvas(data.id),
-					[data.id],
-				)}
-				onDelete={showDeleteModal}
-			/>
-			<Stack gap={2} style={{ width: '300px' }}>
-				<div
-					className='bg-white border rounded text-center text-break px-3 py-2'
-					style={{ position: 'relative' }}
-				>
-					<Handle
-						id={`${id}:left:0`}
-						type='target'
-						position={Position.Left}
-					/>
-					{data.name}
-					<Handle
-						id={`${id}:right:0`}
-						type='target'
-						position={Position.Right}
-					/>
-				</div>
-			</Stack>
-		</>
+		<Node title={t('title')} onEdit={handleEdit} onDelete={showDeleteModal}>
+			<Node.Block className='position-relative text-center text-break'>
+				<Handle id={`${id}:left:0`} type='target' position={Position.Left} />
+				{condition.name}
+				<Handle id={`${id}:right:0`} type='source' position={Position.Right} />
+			</Node.Block>
+		</Node>
 	);
 }
 
