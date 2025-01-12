@@ -70,7 +70,7 @@ function MessageToast({
 	);
 }
 
-export function createMessageToast(props: MessageToastProps) {
+export function createMessageToast(props: MessageToastProps): void {
 	const id: string = crypto.randomUUID();
 
 	useToastContainerStore.setState((state) => {
