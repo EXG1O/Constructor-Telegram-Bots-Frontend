@@ -21,12 +21,12 @@ function Header({ className, ...props }: HeaderProps): ReactElement<HeaderProps>
 
 	const [showModal, setShowModal] = useState<boolean>(false);
 
+	const handleHideModal = useCallback(() => setShowModal(false), []);
+	const handleAddButtonClick = useCallback(() => setShowModal(true), []);
+
 	return (
 		<>
-			<TelegramBotAdditionModal
-				show={showModal}
-				onHide={useCallback(() => setShowModal(false), [])}
-			/>
+			<TelegramBotAdditionModal show={showModal} onHide={handleHideModal} />
 			<div
 				{...props}
 				className={classNames(
@@ -40,7 +40,7 @@ function Header({ className, ...props }: HeaderProps): ReactElement<HeaderProps>
 				<AddButton
 					variant='dark'
 					className='flex-grow-1 flex-lg-grow-0 align-self-center'
-					onClick={useCallback(() => setShowModal(true), [])}
+					onClick={handleAddButtonClick}
 				>
 					{t('addTelegramBotButton')}
 				</AddButton>

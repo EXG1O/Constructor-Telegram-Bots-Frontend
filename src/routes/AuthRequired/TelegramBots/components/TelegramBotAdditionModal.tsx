@@ -1,4 +1,4 @@
-import React, { memo, ReactElement, useCallback } from 'react';
+import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers } from 'formik';
 
@@ -38,20 +38,15 @@ function TelegramBotAdditionModal({
 
 	async function handleSubmit(
 		values: FormValues,
-		{ setErrors }: FormikHelpers<FormValues>,
+		{ setFieldError }: FormikHelpers<FormValues>,
 	): Promise<void> {
 		const response = await TelegramBotsAPI.create(values);
 
 		if (!response.ok) {
-			setErrors(
-				response.json.errors.reduce<Record<string, string>>(
-					(errors, { attr, detail }) => {
-						if (attr) errors[attr] = detail;
-						return errors;
-					},
-					{},
-				),
-			);
+			for (const error of response.json.errors) {
+				if (!error.attr) continue;
+				setFieldError(error.attr, error.detail);
+			}
 			createMessageToast({
 				message: t('messages.createTelegramBot.error'),
 				level: 'error',
@@ -79,7 +74,7 @@ function TelegramBotAdditionModal({
 					{...props}
 					loading={isSubmitting}
 					onHide={onHide}
-					onExited={useCallback(() => resetForm(), [])}
+					onExited={() => resetForm()}
 				>
 					<Form>
 						<Modal.Header closeButton>
