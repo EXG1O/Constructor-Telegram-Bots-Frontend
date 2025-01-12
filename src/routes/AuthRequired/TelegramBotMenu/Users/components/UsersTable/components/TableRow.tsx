@@ -1,11 +1,10 @@
 import React, {
 	CSSProperties,
+	FC,
 	HTMLAttributes,
 	memo,
 	ReactElement,
 	SVGProps,
-	useCallback,
-	useMemo,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import formatDate from 'i18n/formatDate';
@@ -33,17 +32,15 @@ export interface TableRowProps
 	user: User;
 }
 
-const iconStyle: CSSProperties = { cursor: 'pointer' };
-const trashIconStyle: CSSProperties = { ...iconStyle, marginLeft: '5.5px' };
-
 const iconProps: SVGProps<SVGSVGElement> = {
 	width: 18,
 	height: '100%',
-	style: iconStyle,
+	cursor: 'pointer',
 };
+const trashIconStyle: CSSProperties = { marginLeft: '5.5px' };
 
 function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps> {
-	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuUsers, {
+	const { t } = useTranslation(RouteID.TelegramBotMenuUsers, {
 		keyPrefix: 'table.row',
 	});
 
@@ -57,120 +54,109 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
 		(state) => state.setLoading,
 	);
 
-	const showAskConfirmModal = useCallback(
-		(
-			title: string,
-			text: string,
-			apiCall: () => ReturnType<typeof makeRequest>,
-			successMessage: string,
-			errorMessage: string,
-		) =>
-			setShowAskConfirmModal({
-				title,
-				text,
-				onConfirm: async () => {
-					setLoadingAskConfirmModal(true);
+	function showAskConfirmModal(
+		title: string,
+		text: string,
+		apiCall: () => ReturnType<typeof makeRequest>,
+		successMessage: string,
+		errorMessage: string,
+	): void {
+		setShowAskConfirmModal({
+			title,
+			text,
+			onConfirm: async () => {
+				setLoadingAskConfirmModal(true);
 
-					const response = await apiCall();
+				const response = await apiCall();
 
-					if (response.ok) {
-						updateUsers();
-						hideAskConfirmModal();
-						createMessageToast({
-							message: successMessage,
-							level: 'success',
-						});
-					} else {
-						createMessageToast({
-							message: errorMessage,
-							level: 'error',
-						});
-					}
+				if (response.ok) {
+					updateUsers();
+					hideAskConfirmModal();
+					createMessageToast({
+						message: successMessage,
+						level: 'success',
+					});
+				} else {
+					createMessageToast({
+						message: errorMessage,
+						level: 'error',
+					});
+				}
 
-					setLoadingAskConfirmModal(false);
-				},
-				onCancel: null,
-			}),
-		[],
-	);
+				setLoadingAskConfirmModal(false);
+			},
+			onCancel: null,
+		});
+	}
 
-	const showAllowModal = useCallback(
-		() =>
-			showAskConfirmModal(
-				t('allowModal.title'),
-				t('allowModal.text'),
-				() =>
-					UserAPI.partialUpdate(telegramBot.id, user.id, {
-						is_allowed: true,
-					}),
-				t('messages.allowUser.success'),
-				t('messages.allowUser.error'),
-			),
-		[i18n.language, telegramBot.id],
-	);
+	function showAllowModal(): void {
+		showAskConfirmModal(
+			t('allowModal.title'),
+			t('allowModal.text'),
+			() =>
+				UserAPI.partialUpdate(telegramBot.id, user.id, {
+					is_allowed: true,
+				}),
+			t('messages.allowUser.success'),
+			t('messages.allowUser.error'),
+		);
+	}
 
-	const showDisallowModal = useCallback(
-		() =>
-			showAskConfirmModal(
-				t('disallowModal.title'),
-				t('disallowModal.text'),
-				() =>
-					UserAPI.partialUpdate(telegramBot.id, user.id, {
-						is_allowed: false,
-					}),
-				t('messages.disallowUser.success'),
-				t('messages.disallowUser.error'),
-			),
-		[i18n.language, telegramBot.id],
-	);
+	function showDisallowModal(): void {
+		showAskConfirmModal(
+			t('disallowModal.title'),
+			t('disallowModal.text'),
+			() =>
+				UserAPI.partialUpdate(telegramBot.id, user.id, {
+					is_allowed: false,
+				}),
+			t('messages.disallowUser.success'),
+			t('messages.disallowUser.error'),
+		);
+	}
 
-	const showBlockModal = useCallback(
-		() =>
-			showAskConfirmModal(
-				t('blockModal.title'),
-				t('blockModal.text'),
-				() =>
-					UserAPI.partialUpdate(telegramBot.id, user.id, {
-						is_blocked: true,
-					}),
-				t('messages.blockUser.success'),
-				t('messages.blockUser.error'),
-			),
-		[i18n.language, telegramBot.id],
-	);
+	function showBlockModal(): void {
+		showAskConfirmModal(
+			t('blockModal.title'),
+			t('blockModal.text'),
+			() =>
+				UserAPI.partialUpdate(telegramBot.id, user.id, {
+					is_blocked: true,
+				}),
+			t('messages.blockUser.success'),
+			t('messages.blockUser.error'),
+		);
+	}
 
-	const showUnblockModal = useCallback(
-		() =>
-			showAskConfirmModal(
-				t('unblockModal.title'),
-				t('unblockModal.text'),
-				() =>
-					UserAPI.partialUpdate(telegramBot.id, user.id, {
-						is_blocked: false,
-					}),
-				t('messages.unblockUser.success'),
-				t('messages.unblockUser.error'),
-			),
-		[i18n.language, telegramBot.id],
-	);
+	function showUnblockModal(): void {
+		showAskConfirmModal(
+			t('unblockModal.title'),
+			t('unblockModal.text'),
+			() =>
+				UserAPI.partialUpdate(telegramBot.id, user.id, {
+					is_blocked: false,
+				}),
+			t('messages.unblockUser.success'),
+			t('messages.unblockUser.error'),
+		);
+	}
 
-	const showDeleteModal = useCallback(
-		() =>
-			showAskConfirmModal(
-				t('deleteModal.title'),
-				t('deleteModal.text'),
-				() => UserAPI.delete(telegramBot.id, user.id),
-				t('messages.deleteUser.success'),
-				t('messages.deleteUser.error'),
-			),
-		[i18n.language, telegramBot.id],
-	);
+	function showDeleteModal(): void {
+		showAskConfirmModal(
+			t('deleteModal.title'),
+			t('deleteModal.text'),
+			() => UserAPI.delete(telegramBot.id, user.id),
+			t('messages.deleteUser.success'),
+			t('messages.deleteUser.error'),
+		);
+	}
 
-	const AllowedIcon = useMemo(
-		() => (user.is_allowed ? KeyFillIcon : KeyIcon),
-		[user],
-	);
-	const BlockIcon = useMemo(() => (user.is_blocked ? BanFillIcon : BanIcon), [user]);
+	const AllowedIcon: FC<SVGProps<SVGSVGElement>> = user.is_allowed
+		? KeyFillIcon
+		: KeyIcon;
+	const BlockIcon: FC<SVGProps<SVGSVGElement>> = user.is_blocked
+		? BanFillIcon
+		: BanIcon;
 
 	return (
 		<tr {...props}>

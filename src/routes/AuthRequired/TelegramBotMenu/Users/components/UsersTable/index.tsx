@@ -14,6 +14,8 @@ import useUsersStore from '../../hooks/useUsersStore';
 
 export interface UsersTableProps extends Omit<BlockProps, 'children'> {}
 
+const tablePlaceholderClassName: string = 'text-center px-3 py-2';
+
 function UsersTable({
 	className,
 	...props
@@ -45,19 +47,19 @@ function UsersTable({
 				</Table>
 			</TableWrapper>
 		) : search ? (
-			<TableWrapper className='text-center px-3 py-2'>
+			<TableWrapper className={tablePlaceholderClassName}>
 				{t('placeholders.notFound')}
 			</TableWrapper>
 		) : type === 'allowed' ? (
-			<TableWrapper className='text-center px-3 py-2'>
+			<TableWrapper className={tablePlaceholderClassName}>
 				{t('placeholders.notAllowed')}
 			</TableWrapper>
 		) : type === 'blocked' ? (
-			<TableWrapper className='text-center px-3 py-2'>
+			<TableWrapper className={tablePlaceholderClassName}>
 				{t('placeholders.notBlocked')}
 			</TableWrapper>
 		) : (
-			<TableWrapper className='text-center px-3 py-2'>
+			<TableWrapper className={tablePlaceholderClassName}>
 				{t('placeholders.notActivated')}
 			</TableWrapper>
 		)
