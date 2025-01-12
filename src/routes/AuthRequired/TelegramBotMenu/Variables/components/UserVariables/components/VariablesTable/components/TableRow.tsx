@@ -1,4 +1,4 @@
-import React, { CSSProperties, memo, ReactElement, useCallback } from 'react';
+import React, { memo, ReactElement, SVGProps } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
@@ -22,7 +22,11 @@ export interface TableRowProps {
 	variable: Variable;
 }
 
-const iconStyle: CSSProperties = { cursor: 'pointer' };
+const iconProps: SVGProps<SVGSVGElement> = {
+	height: '100%',
+	width: 18,
+	cursor: 'pointer',
+};
 
 function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
 	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
@@ -39,50 +43,45 @@ function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
 		(state) => state.setLoading,
 	);
 
-	const showDeleteModal = useCallback(
-		() =>
-			showAskConfirmModal({
-				title: t('deleteModal.title'),
-				text: t('deleteModal.text'),
-				onConfirm: async () => {
-					setLoadingAskConfirmModal(true);
-
-					const response = await VariableAPI.delete(
-						telegramBot.id,
-						variable.id,
-					);
-
-					if (response.ok) {
-						updateVariables();
-						hideAskConfirmModal();
-						createMessageToast({
-							message: t('messages.deleteVariable.success'),
-							level: 'success',
-						});
-					} else {
-						createMessageToast({
-							message: t('messages.deleteVariable.error'),
-							level: 'error',
-						});
-					}
-
-					setLoadingAskConfirmModal(false);
-				},
-				onCancel: null,
-			}),
-		[],
-	);
-
 	const showVariableModal = useVariableModalStore((state) => state.showModal);
+
+	function showDeleteModal(): void {
+		showAskConfirmModal({
+			title: t('deleteModal.title'),
+			text: t('deleteModal.text'),
+			onConfirm: async () => {
+				setLoadingAskConfirmModal(true);
+
+				const response = await VariableAPI.delete(telegramBot.id, variable.id);
+
+				if (response.ok) {
+					updateVariables();
+					hideAskConfirmModal();
+					createMessageToast({
+						message: t('messages.deleteVariable.success'),
+						level: 'success',
+					});
+				} else {
+					createMessageToast({
+						message: t('messages.deleteVariable.error'),
+						level: 'error',
+					});
+				}
+
+				setLoadingAskConfirmModal(false);
+			},
+			onCancel: null,
+		});
+	}
 
 	return (
 		<tr>
 			<td className='w-50'>
 				<div className='d-flex align-items-center gap-2'>
 					<ClipboardIcon
+						cursor='pointer'
 						className='btn-clipboard'
 						data-clipboard-text={`{{ ${variable.name} }}`}
-						style={iconStyle}
 					/>
 					<span className='flex-fill text-info-emphasis'>
 						{variable.name}
@@ -96,17 +95,13 @@ function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
 					</span>
 					<div className='d-flex align-content-center gap-1'>
 						<PencilSquareIcon
-							width={18}
-							height='100%'
+							{...iconProps}
 							className='text-secondary'
-							style={iconStyle}
 							onClick={() => showVariableModal(variable.id)}
 						/>
 						<TrashIcon
-							width={18}
-							height='100%'
+							{...iconProps}
 							className='text-danger'
-							style={iconStyle}
 							onClick={showDeleteModal}
 						/>
 					</div>
