@@ -1,4 +1,4 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
+import React, { forwardRef, HTMLAttributes, memo } from 'react';
 
 import Feedback from './Feedback';
 import Input, { InputProps } from './Input';
@@ -24,4 +24,4 @@ const InputFeedback: FCA<'input', InputFeedbackProps> = forwardRef<
 	);
 });
 
-export default InputFeedback;
+export default memo(InputFeedback);
