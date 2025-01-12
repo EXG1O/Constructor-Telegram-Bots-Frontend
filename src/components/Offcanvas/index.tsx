@@ -2,11 +2,11 @@ import React, { forwardRef, ReactNode } from 'react';
 
 import { BaseModalProps } from '@restart/ui/Modal';
 import BaseOffcanvas from 'react-bootstrap/Offcanvas';
-import Title from 'react-bootstrap/OffcanvasTitle';
 
-import Body from './components/Body';
-import Footer from './components/Footer';
-import Header from './components/Header';
+import OffcanvasBody from './components/OffcanvasBody';
+import OffcanvasFooter from './components/OffcanvasFooter';
+import OffcanvasHeader from './components/OffcanvasHeader';
+import OffcanvasTitle from './components/OffcanvasTitle';
 import OffcanvasContext from './contexts/OffcanvasContext';
 
 import Loading from '../Loading';
@@ -35,8 +35,8 @@ export interface OffcanvasProps
 	children?: ReactNode;
 }
 
-/** The wrapper component adds support for the `loading` prop to the...
- *  Offcanvas component from `react-bootstrap`. */
+BaseOffcanvas.displayName = 'BaseOffcanvas';
+
 const Offcanvas = forwardRef<HTMLElement, OffcanvasProps>(function Offcanvas(
 	{ loading = false, children, ...props },
 	ref,
@@ -55,6 +55,9 @@ const Offcanvas = forwardRef<HTMLElement, OffcanvasProps>(function Offcanvas(
 	);
 });
 
-Title.defaultProps = { as: 'h5' };
-
-export default Object.assign(Offcanvas, { Header, Title, Body, Footer });
+export default Object.assign(Offcanvas, {
+	Header: OffcanvasHeader,
+	Title: OffcanvasTitle,
+	Body: OffcanvasBody,
+	Footer: OffcanvasFooter,
+});
