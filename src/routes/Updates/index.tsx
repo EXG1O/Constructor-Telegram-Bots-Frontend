@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useMemo, useState } from 'react';
+import React, { ReactElement, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
@@ -47,6 +47,10 @@ function Updates(): ReactElement {
 		setLoading(false);
 	}
 
+	function handlePageChange(newItemOffset: number): void {
+		updateUpdates(undefined, newItemOffset);
+	}
+
 	return (
 		<Page title={title} grid>
 			<h1 className='fw-semibold text-center'>{title}</h1>
@@ -62,10 +66,7 @@ function Updates(): ReactElement {
 				itemLimit={paginationData.limit}
 				itemOffset={paginationData.offset}
 				className='align-self-center'
-				onPageChange={useCallback(
-					(newItemOffset) => updateUpdates(undefined, newItemOffset),
-					[],
-				)}
+				onPageChange={handlePageChange}
 			/>
 		</Page>
 	);
