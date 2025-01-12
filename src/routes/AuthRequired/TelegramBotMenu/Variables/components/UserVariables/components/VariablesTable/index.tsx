@@ -41,8 +41,8 @@ function VariablesTable(): ReactElement {
 			</TableWrapper>
 		)
 	) : (
-		<TableWrapper className='d-flex justify-content-center p-3'>
-			<Loading size='md' />
+		<TableWrapper className='d-flex justify-content-center p-2'>
+			<Loading size='sm' />
 		</TableWrapper>
 	);
 }

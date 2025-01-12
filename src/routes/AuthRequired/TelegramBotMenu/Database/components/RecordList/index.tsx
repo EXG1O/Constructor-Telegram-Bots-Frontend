@@ -43,8 +43,8 @@ function RecordList({
 			</Wrapper>
 		)
 	) : (
-		<Wrapper className='d-flex justify-content-center p-3'>
-			<Loading size='md' />
+		<Wrapper className='d-flex justify-content-center p-2'>
+			<Loading size='sm' />
 		</Wrapper>
 	);
 }
