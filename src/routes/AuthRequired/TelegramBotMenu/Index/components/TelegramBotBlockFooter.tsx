@@ -1,15 +1,16 @@
-import React, { memo, ReactElement, useCallback } from 'react';
+import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { reverse, RouteID } from 'routes';
 
-import CardFooter, { CardFooterProps } from 'react-bootstrap/CardFooter';
+import { CardFooterProps } from 'react-bootstrap/CardFooter';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import Button from 'components/Button';
+import Card from 'components/Card';
 import Loading from 'components/Loading';
 import useTelegramBot from 'components/TelegramBotBlock/hooks/useTelegramBot';
 import { createMessageToast } from 'components/ToastContainer';
@@ -21,7 +22,7 @@ export type TelegramBotBlockFooterProps = Omit<CardFooterProps, 'as' | 'children
 function TelegramBotBlockFooter(
 	props: TelegramBotBlockFooterProps,
 ): ReactElement<TelegramBotBlockFooterProps> {
-	const { t, i18n } = useTranslation(RouteID.TelegramBotMenu, {
+	const { t } = useTranslation(RouteID.TelegramBotMenu, {
 		keyPrefix: 'telegramBotBlockFooter',
 	});
 
@@ -35,56 +36,54 @@ function TelegramBotBlockFooter(
 		(state) => state.setLoading,
 	);
 
-	const showDeleteModal = useCallback(
-		() =>
-			setShowAskConfirmModal({
-				title: t('deleteModal.title'),
-				text: t('deleteModal.text'),
-				onConfirm: async () => {
-					setLoadingAskConfirmModal(true);
+	function showDeleteModal(): void {
+		setShowAskConfirmModal({
+			title: t('deleteModal.title'),
+			text: t('deleteModal.text'),
+			onConfirm: async () => {
+				setLoadingAskConfirmModal(true);
 
-					const response = await TelegramBotAPI.delete(telegramBot.id);
+				const response = await TelegramBotAPI.delete(telegramBot.id);
 
-					if (response.ok) {
-						hideAskConfirmModal();
-						navigate(reverse(RouteID.TelegramBots));
-						createMessageToast({
-							message: t('messages.deleteTelegramBot.success'),
-							level: 'success',
-						});
-					} else {
-						createMessageToast({
-							message: t('messages.deleteTelegramBot.error'),
-							level: 'error',
-						});
-					}
+				if (response.ok) {
+					hideAskConfirmModal();
+					navigate(reverse(RouteID.TelegramBots));
+					createMessageToast({
+						message: t('messages.deleteTelegramBot.success'),
+						level: 'success',
+					});
+				} else {
+					createMessageToast({
+						message: t('messages.deleteTelegramBot.error'),
+						level: 'error',
+					});
+				}
 
-					setLoadingAskConfirmModal(false);
-				},
-				onCancel: null,
-			}),
-		[i18n.language],
-	);
+				setLoadingAskConfirmModal(false);
+			},
+			onCancel: null,
+		});
+	}
 
 	async function handleAction(action: 'start' | 'restart' | 'stop'): Promise<void> {
 		const response = await TelegramBotAPI[action](telegramBot.id);
 
-		if (response.ok) {
-			setTelegramBot({ ...telegramBot, is_loading: true });
-			createMessageToast({
-				message: t(`messages.${action}TelegramBot.success`),
-				level: 'info',
-			});
-		} else {
+		if (!response.ok) {
 			createMessageToast({
 				message: t(`messages.${action}TelegramBot.error`),
 				level: 'error',
 			});
 		}
+
+		setTelegramBot({ ...telegramBot, is_loading: true });
+		createMessageToast({
+			message: t(`messages.${action}TelegramBot.success`),
+			level: 'info',
+		});
 	}
 
 	return (
-		<CardFooter {...props} as={Row} className='g-3'>
+		<Card.Footer {...props} as={Row} className='g-3'>
 			{telegramBot.is_loading ? (
 				<Col>
 					<Button
@@ -132,7 +131,7 @@ function TelegramBotBlockFooter(
 					{t('deleteButton')}
 				</Button>
 			</Col>
-		</CardFooter>
+		</Card.Footer>
 	);
 }
 
