@@ -50,24 +50,33 @@ const baseOptions: monacoCore.editor.IStandaloneEditorConstructionOptions = {
 function MonacoEditor({
 	size,
 	isChild,
-	options,
-	className,
+	options: extraOptions,
+	className: extraClassName,
 	onChange,
 	onMount,
 	...props
 }: MonacoEditorProps): ReactElement<MonacoEditorProps> {
 	const editor = useRef<Editor | undefined>(undefined);
 
-	const lineHeight = useMemo<number>(() => (size ? lineHeights[size] : 22), [size]);
-	const fontSize = useMemo<number>(() => (size ? fontSizes[size] : 16), [size]);
-	const roundedValue = useMemo<number>(
-		() => (size ? roundedValues[size] : 2),
-		[size],
-	);
+	const lineHeight: number = size ? lineHeights[size] : 22;
+	const fontSize: number = size ? fontSizes[size] : 16;
+	const roundedValue: number = size ? roundedValues[size] : 2;
 
-	const baseClassName = useMemo<string>(
-		() => `border rounded-${roundedValue}`,
-		[roundedValue],
+	const baseClassName: string = `border rounded-${roundedValue}`;
+	const className = useMemo<string | undefined>(
+		() =>
+			isChild
+				? extraClassName
+				: classNames(
+						baseClassName,
+						'monaco-editor-wrapper overflow-hidden',
+						extraClassName,
+					),
+		[baseClassName, extraClassName],
+	);
+	const options = useMemo<monacoCore.editor.IStandaloneEditorConstructionOptions>(
+		() => ({ ...baseOptions, fontSize, ...extraOptions }),
+		[extraOptions],
 	);
 
 	const updateLayout = useCallback((resetWidth?: boolean) => {
@@ -111,19 +120,8 @@ function MonacoEditor({
 		<Editor
 			{...props}
 			loading={<EditorLoading className={baseClassName} />}
-			options={useMemo(
-				() => ({ ...baseOptions, fontSize, ...options }),
-				[options],
-			)}
-			className={
-				isChild
-					? className
-					: classNames(
-							baseClassName,
-							'monaco-editor-wrapper overflow-hidden',
-							className,
-						)
-			}
+			options={options}
+			className={className}
 			onChange={handleChange}
 			onMount={handleMount}
 		/>
