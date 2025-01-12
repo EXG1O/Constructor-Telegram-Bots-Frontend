@@ -11,7 +11,7 @@ function Root(): ReactElement {
 	const { user } = useRootRouteLoaderData();
 
 	useEffect(() => {
-		if (user) navigate(reverse(RouteID.Home));
+		if (!user) navigate(reverse(RouteID.Home));
 	}, [user]);
 
 	return user ? <Outlet /> : <Loading size='xl' className='m-auto' />;
