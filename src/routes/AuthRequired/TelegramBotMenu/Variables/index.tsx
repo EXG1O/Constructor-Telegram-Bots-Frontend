@@ -29,7 +29,7 @@ function Variables(): ReactElement {
 			}),
 		);
 
-		return clipboard.destroy;
+		return () => clipboard.destroy();
 	}, []);
 
 	return (
