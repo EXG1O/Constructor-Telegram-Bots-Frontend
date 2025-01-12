@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, memo } from 'react';
 
 import Check, { CheckProps } from './Check';
 
@@ -27,4 +27,4 @@ const CheckFeedback: FCA<'input', CheckFeedbackProps> = forwardRef<
 	);
 });
 
-export default CheckFeedback;
+export default memo(CheckFeedback);
