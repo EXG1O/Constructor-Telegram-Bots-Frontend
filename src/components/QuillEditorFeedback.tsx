@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 import classNames from 'classnames';
 
 import Feedback from './Feedback';
@@ -26,4 +26,4 @@ function QuillEditorFeedback({
 	);
 }
 
-export default QuillEditorFeedback;
+export default memo(QuillEditorFeedback);
