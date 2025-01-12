@@ -31,14 +31,16 @@ function APITokenDisplay({
 
 	const [show, setShow] = useState<boolean>(false);
 
-	const ShowIcon = useMemo<FC<SVGProps<SVGSVGElement>>>(
-		() => (show ? EyeSlashIcon : EyeIcon),
-		[show],
-	);
 	const hiddenAPIToken = useMemo<string>(() => {
 		const [id, token] = telegramBot.api_token.split(':');
 		return id + ':' + '*'.repeat(token.length);
 	}, [telegramBot.api_token]);
+
+	const ShowIcon: FC<SVGProps<SVGSVGElement>> = show ? EyeSlashIcon : EyeIcon;
+
+	function handleShowIconClick(): void {
+		setShow(!show);
+	}
 
 	return (
 		<div
@@ -49,7 +51,7 @@ function APITokenDisplay({
 				{show ? telegramBot.api_token : hiddenAPIToken}
 			</span>
 			<div className='d-flex gap-2'>
-				<ShowIcon {...iconProps} onClick={() => setShow(!show)} />
+				<ShowIcon {...iconProps} onClick={handleShowIconClick} />
 				<PencilSquareIcon
 					{...iconProps}
 					className='text-secondary'

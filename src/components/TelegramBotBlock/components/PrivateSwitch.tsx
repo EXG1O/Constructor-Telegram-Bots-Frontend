@@ -1,9 +1,8 @@
 import React, {
-	ChangeEventHandler,
+	ChangeEvent,
 	HTMLAttributes,
 	memo,
 	ReactElement,
-	useCallback,
 	useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,35 +26,32 @@ function PrivateSwitch(props: PrivateSwitchProps): ReactElement<PrivateSwitchPro
 
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
-		async (event) => {
-			setLoading(true);
+	async function handleChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
+		setLoading(true);
 
-			const response = await TelegramBotAPI.partialUpdate(telegramBot.id, {
-				is_private: event.target.checked,
+		const response = await TelegramBotAPI.partialUpdate(telegramBot.id, {
+			is_private: event.target.checked,
+		});
+
+		if (response.ok) {
+			setTelegramBot(response.json);
+			createMessageToast({
+				message: t('messages.updateTelegramBotPrivate.success', {
+					context: String(response.json.is_private),
+				}),
+				level: 'success',
 			});
+		} else {
+			createMessageToast({
+				message: t('messages.updateTelegramBotPrivate.error', {
+					context: String(event.target.checked),
+				}),
+				level: 'error',
+			});
+		}
 
-			if (response.ok) {
-				setTelegramBot(response.json);
-				createMessageToast({
-					message: t('messages.updateTelegramBotPrivate.success', {
-						context: String(response.json.is_private),
-					}),
-					level: 'success',
-				});
-			} else {
-				createMessageToast({
-					message: t('messages.updateTelegramBotPrivate.error', {
-						context: String(event.target.checked),
-					}),
-					level: 'error',
-				});
-			}
-
-			setLoading(false);
-		},
-		[telegramBot.id],
-	);
+		setLoading(false);
+	}
 
 	return !loading ? (
 		<Check

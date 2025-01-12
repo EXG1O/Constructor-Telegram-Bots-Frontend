@@ -1,4 +1,5 @@
 import React, {
+	ChangeEvent,
 	CSSProperties,
 	HTMLAttributes,
 	memo,
@@ -79,6 +80,10 @@ function APITokenEditing({
 		setLoading(false);
 	}
 
+	function handleChange(event: ChangeEvent<HTMLInputElement>): void {
+		setValue(event.target.value);
+	}
+
 	return (
 		<div
 			{...props}
@@ -92,7 +97,7 @@ function APITokenEditing({
 				containerProps={inputContainerProps}
 				placeholder={t('inputPlaceholder')}
 				style={inputStyle}
-				onChange={(event) => setValue(event.target.value)}
+				onChange={handleChange}
 			/>
 			<div className='d-flex'>
 				{!loading ? (
