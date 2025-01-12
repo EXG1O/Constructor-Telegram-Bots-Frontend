@@ -3,10 +3,10 @@ import React, { forwardRef, ReactNode } from 'react';
 import { BaseModalProps } from '@restart/ui/Modal';
 import BaseModal from 'react-bootstrap/Modal';
 
-import Body from './components/Body';
-import Footer from './components/Footer';
-import Header from './components/Header';
-import Title from './components/Title';
+import ModalBody from './components/ModalBody';
+import ModalFooter from './components/ModalFooter';
+import ModalHeader from './components/ModalHeader';
+import ModalTitle from './components/ModalTitle';
 import ModalContext from './contexts/ModalContext';
 
 import Loading from '../Loading';
@@ -38,6 +38,8 @@ export interface ModalProps
 	children?: ReactNode;
 }
 
+BaseModal.displayName = 'BaseModal';
+
 const Modal: FCA<'div', ModalProps> = forwardRef<HTMLElement, ModalProps>(
 	function Modal({ loading = false, backdrop, keyboard, children, ...props }, ref) {
 		return (
@@ -60,4 +62,9 @@ const Modal: FCA<'div', ModalProps> = forwardRef<HTMLElement, ModalProps>(
 	},
 );
 
-export default Object.assign(Modal, { Header, Title, Body, Footer });
+export default Object.assign(Modal, {
+	Header: ModalHeader,
+	Title: ModalTitle,
+	Body: ModalBody,
+	Footer: ModalFooter,
+});
