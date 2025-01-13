@@ -104,7 +104,7 @@
 			"title": "Файлы",
 			"addFilesButton": {
 				"messages": {
-					"addImages": {
+					"addFiles": {
 						"error_tooLarge": "Файл {{name}} весит больше 2.5MB.",
 						"error_notEnoughStorage": "Невозможно добавить файл {{name}}, потому-что не хватает места в хранилище."
 					}

@@ -41,7 +41,7 @@ function AddFilesButton(props: AddFilesButtonProps): ReactElement<AddFilesButton
 						.filter((file) => {
 							if (file.size > 2621440) {
 								createMessageToast({
-									message: t('messages.addImages.error', {
+									message: t('messages.addFiles.error', {
 										context: 'tooLarge',
 										name: file.name,
 									}),
@@ -52,7 +52,7 @@ function AddFilesButton(props: AddFilesButtonProps): ReactElement<AddFilesButton
 
 							if (availableStorageSize - file.size < 0) {
 								createMessageToast({
-									message: t('messages.addImages.error', {
+									message: t('messages.addFiles.error', {
 										context: 'notEnoughStorage',
 										name: file.name,
 									}),
