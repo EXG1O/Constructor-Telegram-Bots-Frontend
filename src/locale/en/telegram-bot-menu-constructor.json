@@ -1,24 +1,20 @@
 {
 	"title": "Constructor",
 	"messages": {
-		"getCommand": {
-			"error": "Failed to retrieve command data."
+		"getDiagramCommand": {
+			"error": "Failed to get command data for the diagram."
 		},
-		"createCommand": {
-			"success": "You have successfully added the command.",
-			"error": "Failed to add the command.",
-			"error_getDiagramCommand": "Failed to retrieve the previously added command."
+		"getDiagramCondition": {
+			"error": "Failed to get condition data for the diagram."
 		},
-		"updateCommand": {
-			"success": "You have successfully saved the command.",
-			"error": "Failed to save the command.",
-			"error_getDiagramCommand": "Failed to retrieve the previously saved command."
+		"getDiagramBackgroundTask": {
+			"error": "Failed to get background task data for the diagram."
 		},
 		"createConnection": {
-			"error": "Failed to connect the block to another block."
+			"error": "Failed to connect one block to another."
 		},
 		"deleteConnection": {
-			"error": "Failed to disconnect the block from another block."
+			"error": "Failed to disconnect one block from another."
 		}
 	},
 	"nameBlock": {
@@ -27,30 +23,28 @@
 	},
 	"apiRequestBlock": {
 		"title": "API-request",
-		"urlInput": {
-			"placeholder": "Enter a URL-address"
-		},
+		"urlInputPlaceholder": "Enter URL",
 		"headersBlock": {
-			"showButton": "Add a headers",
-			"hideButton": "Remove the headers",
+			"showButton": "Add headers",
+			"hideButton": "Remove headers",
 			"headerInputGroup": {
 				"keyInputPlaceholder": "Key",
 				"valueInputPlaceholder": "Value"
 			},
 			"addHeaderButton": {
-				"text": "Add a header"
+				"text": "Add header"
 			}
 		},
 		"bodyBlock": {
-			"showButton": "Add a data",
-			"hideButton": "Remove the data"
+			"showButton": "Add data",
+			"hideButton": "Remove data"
 		},
 		"testBlock": {
 			"messages": {
 				"makeTest": {
-					"error": "An error occurred while sending the API-request.",
-					"error_emptyURL": "Enter URL-address.",
-					"error_validURL": "Enter a valid URL-address."
+					"error": "An error occurred while sending the API request.",
+					"error_emptyURL": "Enter URL.",
+					"error_validURL": "Enter a valid URL."
 				}
 			},
 			"testButton": "Test"
@@ -63,6 +57,22 @@
 	"commandOffcanvas": {
 		"title_add": "Adding a command",
 		"title_edit": "Editing the command",
+		"messages": {
+			"validation": {
+				"invalidJSON": "Please enter the data in JSON format."
+			},
+			"getCommand": {
+				"error": "Failed to get command data."
+			},
+			"addCommand": {
+				"success": "You have successfully added the command.",
+				"error": "Failed to add the command."
+			},
+			"editCommand": {
+				"success": "You have successfully saved the command.",
+				"error": "Failed to save the command."
+			}
+		},
 		"settingsBlock": {
 			"title": "Settings",
 			"replyToUserMessageSwitch": "Reply to user message",
@@ -71,16 +81,12 @@
 		},
 		"triggerBlock": {
 			"title": "Trigger",
-			"textInput": {
-				"placeholder": "Enter a text"
-			},
+			"textInputPlaceholder": "Enter text",
 			"descriptionInputCollapse": {
 				"showButton": "Add to menu",
 				"hideButton": "Remove from menu"
 			},
-			"descriptionInput": {
-				"placeholder": "Enter a description"
-			}
+			"descriptionInputPlaceholder": "Enter description"
 		},
 		"imagesBlock": {
 			"title": "Images",
@@ -91,7 +97,7 @@
 						"error_notEnoughStorage": "Unable to add image {{name}}, not enough storage space."
 					}
 				},
-				"text": "Add a images"
+				"text": "Add images"
 			}
 		},
 		"filesBlock": {
@@ -103,14 +109,12 @@
 						"error_notEnoughStorage": "Unable to add file {{name}}, not enough storage space."
 					}
 				},
-				"text": "Add a files"
+				"text": "Add files"
 			}
 		},
 		"messageBlock": {
 			"title": "Message",
-			"messageEditor": {
-				"placeholder": "Enter a text"
-			}
+			"messageEditorPlaceholder": "Enter text"
 		},
 		"keyboardBlock": {
 			"title": "Keyboard",
@@ -122,36 +126,107 @@
 			"keyboardButtonBlock": {
 				"title_add": "Adding a button",
 				"title_edit": "Editing the button",
+				"messages": {
+					"emptyTextError": "This field cannot be empty.",
+					"invalidURLError": "Invalid URL."
+				},
 				"textInput": {
-					"placeholder": "Enter a text"
+					"placeholder": "Enter text"
 				},
 				"urlInputCollapse": {
-					"showButton": "Add a URL-address",
-					"hideButton": "Remove the URL-address"
+					"showButton": "Add URL",
+					"hideButton": "Remove URL"
 				},
 				"urlInput": {
-					"placeholder": "Enter a URL-address"
+					"placeholder": "Enter URL"
 				},
 				"actionButton_add": "Add",
 				"actionButton_edit": "Save",
-				"deleteButton": "Delete",
-				"cancelButton": "Cancel"
+				"deleteButton": "Delete"
 			},
 			"addButtonButton": {
-				"text": "Add a button"
+				"text": "Add button"
 			},
 			"addRowButton": {
-				"text": "Add a row"
+				"text": "Add row"
 			}
 		},
 		"databaseRecordBlock": {
 			"title": "Record to database"
 		},
-		"button_add": "Add",
-		"button_edit": "Save"
+		"actionButton_add": "Add",
+		"actionButton_edit": "Save"
+	},
+	"conditionOffcanvas": {
+		"title_add": "Adding a condition",
+		"title_edit": "Editing the condition",
+		"messages": {
+			"getCondition": {
+				"error": "Failed to get condition data."
+			},
+			"addCondition": {
+				"success": "You have successfully added a condition.",
+				"error": "Failed to add the condition."
+			},
+			"editCondition": {
+				"success": "You have successfully saved the condition.",
+				"error": "Failed to save the condition."
+			}
+		},
+		"partsBlock": {
+			"title": "Condition parts",
+			"operatorSelect": {
+				"==": "Equal",
+				"!=": "Not equal",
+				">": "Greater than",
+				">=": "Greater than or equal",
+				"<": "Less than",
+				"<=": "Less than or equal"
+			},
+			"nextPartOperatorSelect": {
+				"&&": "And",
+				"||": "Or"
+			}
+		},
+		"actionButton_add": "Add",
+		"actionButton_edit": "Save"
+	},
+	"backgroundTaskOffcanvas": {
+		"title_add": "Adding a background task",
+		"title_edit": "Editing the background task",
+		"messages": {
+			"validation": {
+				"invalidJSON": "Please enter the data in JSON format."
+			},
+			"getBackgroundTask": {
+				"error": "Failed to get background task data."
+			},
+			"addBackgroundTask": {
+				"success": "You have successfully added a background task.",
+				"error": "Failed to add background task."
+			},
+			"editBackgroundTask": {
+				"success": "You have successfully saved the background task.",
+				"error": "Failed to save the background task."
+			}
+		},
+		"intervalBlock": {
+			"title": "Interval",
+			"select": {
+				"1": "1 day",
+				"3": "3 days",
+				"7": "7 days",
+				"14": "14 days",
+				"28": "28 days"
+			}
+		},
+		"actionButton_add": "Add",
+		"actionButton_edit": "Save"
 	},
 	"panel": {
-		"addCommandButton": "Add a command"
+		"addCommandButton": "Add command",
+		"addConditionButton": "Add condition",
+		"addBackgroundTaskButton": "Add background task"
 	},
 	"nodes": {
 		"command": {
@@ -166,6 +241,33 @@
 				"title": "Deleting the command",
 				"text": "Are you sure you want to delete the command?"
 			}
+		},
+		"condition": {
+			"title": "Condition",
+			"messages": {
+				"deleteCondition": {
+					"success": "You have successfully deleted the condition.",
+					"error": "Failed to delete the condition."
+				}
+			},
+			"deleteModal": {
+				"title": "Deleting the condition",
+				"text": "Are you sure you want to delete the condition?"
+			}
+		},
+		"backgroundTask": {
+			"title": "Background Task",
+			"messages": {
+				"deleteCondition": {
+					"success": "You have successfully deleted the background task.",
+					"error": "Failed to delete the background task."
+				}
+			},
+			"deleteModal": {
+				"title": "Deleting the condition",
+				"text": "Are you sure you want to delete the background task?"
+			},
+			"interval": "Interval"
 		}
 	}
 }

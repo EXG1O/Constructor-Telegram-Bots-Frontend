@@ -2,8 +2,8 @@
 	"title": "Variables",
 	"messages": {
 		"copy": {
-			"success": "You have successfully copied the variable to the clipboard.",
-			"error": "An error occurred while trying to copy the variable to the clipboard."
+			"success": "The variable has been successfully copied to the clipboard.",
+			"error": "An error occurred while copying the variable to the clipboard."
 		}
 	},
 	"system": {
@@ -15,7 +15,7 @@
 		"variables": {
 			"personal": {
 				"userID": "User ID",
-				"userUsername": "@username",
+				"userUsername": "User @username",
 				"userFirstName": "User first name",
 				"userLastName": "User last name",
 				"userFullName": "User full name",
@@ -37,39 +37,41 @@
 				"error": "Failed to retrieve the list of variables."
 			},
 			"getVariable": {
-				"error": "Failed to retrieve variable data."
-			},
-			"createVariable": {
-				"success": "You have successfully added the variable.",
-				"error": "Failed to add the variable."
-			},
-			"updateVariable": {
-				"success": "You have successfully saved the variable.",
-				"error": "Failed to save the variable."
+				"error": "Failed to retrieve the variable data."
 			}
 		},
 		"variableModal": {
 			"title_add": "Adding a variable",
 			"title_edit": "Editing the variable",
+			"messages": {
+				"addVariable": {
+					"success": "You have successfully added the variable.",
+					"error": "Failed to add the variable."
+				},
+				"editVariable": {
+					"success": "You have successfully saved the variable.",
+					"error": "Failed to save the variable."
+				}
+			},
 			"nameInput": {
 				"placeholder": "Come up with a name"
 			},
 			"valueInput": {
-				"placeholder": "Enter a value"
+				"placeholder": "Enter value"
 			},
 			"descriptionInput": {
-				"placeholder": "Enter a description"
+				"placeholder": "Enter description"
 			},
 			"actionButton_add": "Add",
 			"actionButton_edit": "Save"
 		},
 		"toolbar": {
-			"addVariableButton": "Add a variable"
+			"addVariableButton": "Add variable"
 		},
 		"table": {
 			"placeholders": {
-				"notFound": "No results found for the variable search",
-				"notAdded": "You haven't added any variables yet"
+				"notFound": "No variables found",
+				"notAdded": "No variables have been added yet"
 			},
 			"row": {
 				"messages": {
@@ -83,6 +85,10 @@
 					"text": "Are you sure you want to delete the variable?"
 				}
 			}
+		},
+		"footer": {
+			"variableCount_one": "{{count}} variable",
+			"variableCount_other": "{{count}} variables"
 		}
 	}
 }

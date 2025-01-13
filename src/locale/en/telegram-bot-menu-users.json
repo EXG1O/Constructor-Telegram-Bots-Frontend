@@ -14,10 +14,10 @@
 	},
 	"table": {
 		"placeholders": {
-			"notFound": "No results found for the user search",
+			"notFound": "No users found",
 			"notAllowed": "You have no allowed users",
 			"notBlocked": "You have no blocked users",
-			"notActivated": "Your Telegram bot has not been activated by anyone yet"
+			"notActivated": "No one has activated your Telegram bot yet"
 		},
 		"row": {
 			"messages": {
@@ -63,5 +63,9 @@
 				"text": "Are you sure you want to delete the user?"
 			}
 		}
+	},
+	"footer": {
+		"userCount_one": "{{count}} user",
+		"userCount_other": "{{count}} users"
 	}
 }

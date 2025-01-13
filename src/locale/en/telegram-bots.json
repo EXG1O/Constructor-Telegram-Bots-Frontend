@@ -2,7 +2,7 @@
 	"title": "Telegram bots",
 	"header": {
 		"title": "Added Telegram bots",
-		"addTelegramBotButton": "Add a Telegram bot"
+		"addTelegramBotButton": "Add Telegram bot"
 	},
 	"telegramBotAdditionModal": {
 		"title": "Adding a Telegram bot",
@@ -12,7 +12,7 @@
 				"error": "An unexpected error occurred, and the Telegram bot could not be added."
 			}
 		},
-		"apiTokenInputPlaceholder": "Enter a API-token",
+		"apiTokenInputPlaceholder": "Enter API-token",
 		"privateSwitchLabel": "Make private",
 		"addButton": "Add"
 	},

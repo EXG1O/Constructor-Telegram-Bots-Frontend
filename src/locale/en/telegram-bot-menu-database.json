@@ -15,16 +15,23 @@
 				"error_other": "An unexpected error occurred."
 			}
 		},
-		"recordModal": {
+		"recordAdditionModal": {
 			"title_add": "Adding a record",
-			"actionButton_add": "Add"
+			"messages": {
+				"addRecord": {
+					"success": "You have successfully added a record.",
+					"error": "Failed to add the record.",
+					"error_validJSON": "Please enter the record data in JSON format."
+				}
+			},
+			"addButton": "Add"
 		},
 		"toolbar": {
-			"addRecordButton": "Add a record"
+			"addRecordButton": "Add record"
 		},
 		"list": {
 			"placeholders": {
-				"notFound": "No results found for the search",
+				"notFound": "No results found",
 				"notAdded": "You haven't added any records yet"
 			},
 			"display": {
@@ -40,5 +47,9 @@
 				}
 			}
 		}
+	},
+	"footer": {
+		"recordCount_one": "{{count}} record",
+		"recordCount_other": "{{count}} records"
 	}
 }
