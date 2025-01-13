@@ -16,20 +16,28 @@ function AddKeyboardButtonButton(
 		keyPrefix: 'commandOffcanvas.keyboardBlock.addButtonButton',
 	});
 
-	const disabled = useCommandOffcanvasStore(
+	const addKeyboardButtonBlockVisible = useCommandOffcanvasStore(
 		({ keyboardButtonBlock: { show, type } }) => show && type === 'add',
 	);
 	const showAddKeyboardButtonBlock = useCommandOffcanvasStore(
 		(state) => state.keyboardButtonBlock.showBlock,
 	);
+	const hideAddKeyboardButtonBlock = useCommandOffcanvasStore(
+		(state) => state.keyboardButtonBlock.hideBlock,
+	);
+
+	function handleClick(): void {
+		addKeyboardButtonBlockVisible
+			? hideAddKeyboardButtonBlock()
+			: showAddKeyboardButtonBlock();
+	}
 
 	return (
 		<Button
 			{...props}
 			size='sm'
-			variant='dark'
-			disabled={disabled}
-			onClick={() => showAddKeyboardButtonBlock()}
+			variant={addKeyboardButtonBlockVisible ? 'secondary' : 'dark'}
+			onClick={handleClick}
 		>
 			{t('text')}
 		</Button>
