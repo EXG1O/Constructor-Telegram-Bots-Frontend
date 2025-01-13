@@ -50,7 +50,12 @@ function Toolbar(): ReactElement {
 	return (
 		<Row md='auto' className='g-2'>
 			<div>
-				<AddButton size='sm' variant='dark' onClick={handleAddButtonClick}>
+				<AddButton
+					size='sm'
+					variant='dark'
+					className='w-100'
+					onClick={handleAddButtonClick}
+				>
 					{t('addVariableButton')}
 				</AddButton>
 			</div>
