@@ -77,7 +77,7 @@ function LoginButton({
 					script.onload = () => {
 						window.Telegram.Login.init(
 							{
-								bot_id: process.env.TELEGRAM_BOT_ID,
+								bot_id: settings.TELEGRAM_BOT_ID,
 								request_access: 'write',
 							},
 							login,
