@@ -5,12 +5,10 @@ export interface LoaderData {
 	telegramBots: APIResponse.TelegramBotsAPI.Get;
 }
 
-async function loader(): Promise<LoaderData> {
+async function loader(): Promise<LoaderData | null> {
 	const response = await TelegramBotsAPI.get();
 
-	if (!response.ok) {
-		throw Error('Failed to fetch data.');
-	}
+	if (!response.ok) return null;
 
 	return { telegramBots: response.json };
 }

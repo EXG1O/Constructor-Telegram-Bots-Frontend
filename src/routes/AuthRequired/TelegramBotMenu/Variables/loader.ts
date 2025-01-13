@@ -16,15 +16,13 @@ async function loader({
 	params,
 }: {
 	params: Params<'telegramBotID'>;
-}): Promise<LoaderData | Response> {
+}): Promise<LoaderData | null> {
 	const telegramBotID: number = parseInt(params.telegramBotID!);
 	const [limit, offset] = [10, 0];
 
 	const response = await VariablesAPI.get(telegramBotID, limit, offset);
 
-	if (!response.ok) {
-		throw Error('Failed to fetch data.');
-	}
+	if (!response.ok) return null;
 
 	return { paginationData: { ...response.json, limit, offset } };
 }

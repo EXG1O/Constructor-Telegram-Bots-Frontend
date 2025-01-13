@@ -13,7 +13,7 @@ async function loader({
 	params,
 }: {
 	params: Params<'telegramBotID'>;
-}): Promise<Response | LoaderData> {
+}): Promise<Response | LoaderData | null> {
 	const { telegramBotID } = params;
 
 	if (telegramBotID === undefined) {
@@ -22,9 +22,7 @@ async function loader({
 
 	const response = await TelegramBotAPI.get(parseInt(telegramBotID));
 
-	if (!response.ok) {
-		throw Error('Failed to fetch data.');
-	}
+	if (!response.ok) return null;
 
 	return { telegramBot: response.json };
 }

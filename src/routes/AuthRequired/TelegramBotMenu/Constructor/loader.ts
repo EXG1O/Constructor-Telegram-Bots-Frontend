@@ -17,7 +17,7 @@ async function loader({
 	params,
 }: {
 	params: Params<'telegramBotID'>;
-}): Promise<LoaderData | Response> {
+}): Promise<LoaderData | null> {
 	const telegramBotID: number = parseInt(params.telegramBotID!);
 
 	const [
@@ -35,7 +35,7 @@ async function loader({
 		!diagramConditionsResponse.ok ||
 		!diagramBackgroundTasksResponse.ok
 	) {
-		throw Error('Failed to fetch data.');
+		return null;
 	}
 
 	return {
