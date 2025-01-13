@@ -49,8 +49,10 @@ function TelegramBotBlock({
 	);
 
 	useEffect(() => {
+		let isCheckActive: boolean = true;
+
 		const checkStatus = async () => {
-			if (!telegramBot.is_loading) return;
+			if (!isCheckActive || !telegramBot.is_loading) return;
 
 			const response = await TelegramBotAPI.get(telegramBot.id);
 
@@ -70,6 +72,10 @@ function TelegramBotBlock({
 		};
 
 		checkStatus();
+
+		return () => {
+			isCheckActive = false;
+		};
 	}, [telegramBot.is_loading]);
 
 	const loadingStatusProps = useMemo<TdHTMLAttributes<HTMLTableCellElement>>(
