@@ -11,7 +11,7 @@ function MethodTableRow({
 }: MethodTableRowProps): ReactElement<MethodTableRowProps> {
 	return (
 		<tr>
-			<th>{method.text}</th>
+			<th className='text-nowrap'>{method.text}</th>
 			<td>
 				{method.link ? (
 					<a
