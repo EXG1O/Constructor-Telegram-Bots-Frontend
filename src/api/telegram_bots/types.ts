@@ -141,7 +141,7 @@ export interface DiagramCommand
 export type DiagramCondition = Pick<Condition, 'id' | 'name'> & DiagramBlock;
 
 export type DiagramBackgroundTask = Pick<BackgroundTask, 'id' | 'name' | 'interval'> &
-	Omit<DiagramBlock, 'source_connections'>;
+	Omit<DiagramBlock, 'target_connections'>;
 
 export interface Variable {
 	id: number;

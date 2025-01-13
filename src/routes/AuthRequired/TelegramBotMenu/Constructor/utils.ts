@@ -33,7 +33,7 @@ export function parseDiagramBackgroundTaskNodes(
 	diagramBackgroundTasks: DiagramBackgroundTask[],
 ): Node[] {
 	return diagramBackgroundTasks.map(
-		({ x, y, target_connections, ...diagramBackgroundTask }) => ({
+		({ x, y, source_connections, ...diagramBackgroundTask }) => ({
 			id: `background_task:${diagramBackgroundTask.id}`,
 			type: 'background_task',
 			position: { x, y },
@@ -58,7 +58,7 @@ export function parseEdges(
 			...condition.source_connections,
 			...condition.target_connections,
 		]),
-		...diagramBackgroundTasks.flatMap((task) => task.target_connections),
+		...diagramBackgroundTasks.flatMap((task) => task.source_connections),
 	];
 
 	const seen = new Set<string>();
