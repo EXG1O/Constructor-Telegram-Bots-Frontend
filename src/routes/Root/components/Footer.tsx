@@ -12,7 +12,7 @@ function Footer(): ReactElement {
 		<footer className='py-2'>
 			<Container>
 				<div className='d-flex justify-content-between'>
-					<span>&copy; 2024 exg1o</span>
+					<span>&copy; 2025 exg1o</span>
 					<div className='d-flex gap-1'>
 						<a
 							href='https://t.me/exg1o_channel'
