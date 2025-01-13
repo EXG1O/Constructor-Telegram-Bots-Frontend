@@ -12,16 +12,12 @@ import Input from './Input';
 import SearchIcon from 'assets/icons/search.svg';
 import XIcon from 'assets/icons/x.svg';
 
-export type Value = string;
-
 export interface SearchProps
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>,
 		Pick<InputGroupProps, 'size'> {
-	onSearch: (value: Value) => void;
+	onSearch: (value: string | null) => void;
 	onClear: () => void;
 }
-
-export const defaultValue: Value = '';
 
 function Search({
 	size,
@@ -32,7 +28,7 @@ function Search({
 }: SearchProps): ReactElement<SearchProps> {
 	const { t } = useTranslation('components', { keyPrefix: 'search' });
 
-	const [value, setValue] = useState<Value>(defaultValue);
+	const [value, setValue] = useState<string | null>(null);
 	const [isActive, setActive] = useState<boolean>(false);
 
 	const show: boolean = isActive || Boolean(value);
@@ -45,7 +41,7 @@ function Search({
 	function handleClear(): void {
 		onClear();
 		setActive(false);
-		setValue(defaultValue);
+		setValue(null);
 	}
 
 	return (
@@ -55,7 +51,7 @@ function Search({
 					<SearchIcon width={14} height='auto' />
 				</InputGroup.Text>
 				<Input
-					value={value}
+					value={value ?? ''}
 					placeholder={t('inputPlaceholder')}
 					onChange={(e) => setValue(e.target.value)}
 					onKeyUp={(e) => e.key === 'Enter' && handleSearch()}
