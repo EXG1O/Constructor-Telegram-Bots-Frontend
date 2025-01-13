@@ -57,7 +57,7 @@ function Links({ className, ...props }: LinksProps): ReactElement<LinksProps> {
 						<Link
 							{...props}
 							className={classNames(
-								'd-block text-reset text-decoration-none p-2 pb-1',
+								'd-block text-reset text-decoration-none text-nowrap p-2 pb-1',
 								className,
 							)}
 						/>
