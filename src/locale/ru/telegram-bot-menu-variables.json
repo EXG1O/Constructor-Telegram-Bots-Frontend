@@ -88,6 +88,9 @@
 		},
 		"footer": {
 			"variableCount_one": "{{count}} переменная",
+			"variableCount_two": "{{count}} переменных",
+			"variableCount_few": "{{count}} переменных",
+			"variableCount_many": "{{count}} переменных",
 			"variableCount_other": "{{count}} переменных"
 		}
 	}
