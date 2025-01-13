@@ -63,5 +63,12 @@
 				"text": "Ви точно хочете видалити користувача?"
 			}
 		}
+	},
+	"footer": {
+		"userCount_one": "{{count}} користувач",
+		"userCount_two": "{{count}} користувача",
+		"userCount_few": "{{count}} користувача",
+		"userCount_many": "{{count}} користувачів",
+		"userCount_other": "{{count}} користувачів"
 	}
 }

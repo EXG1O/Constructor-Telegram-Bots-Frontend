@@ -3,7 +3,7 @@
 	"messages": {
 		"copy": {
 			"success": "Ви успішно скопіювали змінну в буфер обміну.",
-			"error": "При спробі скопіювати змінну в буфер обміну сталася помилка."
+			"error": "Під час спроби скопіювати змінну в буфер обміну сталася помилка."
 		}
 	},
 	"system": {
@@ -22,7 +22,7 @@
 				"userLanguageCode": "Мовний тег користувача",
 				"userMessageID": "ID повідомлення користувача",
 				"userMessageText": "Текст повідомлення користувача",
-				"userMessageDate": "Дата надсилання повідомлення користувача"
+				"userMessageDate": "Дата відправки повідомлення користувача"
 			},
 			"global": {
 				"botName": "Назва бота",
@@ -38,19 +38,21 @@
 			},
 			"getVariable": {
 				"error": "Не вдалося отримати дані змінної."
-			},
-			"createVariable": {
-				"success": "Ви успішно додали змінну.",
-				"error": "Не вдалося додати змінну."
-			},
-			"updateVariable": {
-				"success": "Ви успішно зберегли змінну.",
-				"error": "Не вдалося зберегти змінну."
 			}
 		},
 		"variableModal": {
 			"title_add": "Додавання змінної",
 			"title_edit": "Редагування змінної",
+			"messages": {
+				"addVariable": {
+					"success": "Ви успішно додали змінну.",
+					"error": "Не вдалося додати змінну."
+				},
+				"editVariable": {
+					"success": "Ви успішно зберегли змінну.",
+					"error": "Не вдалося зберегти змінну."
+				}
+			},
 			"nameInput": {
 				"placeholder": "Придумайте назву"
 			},
@@ -83,6 +85,13 @@
 					"text": "Ви точно хочете видалити змінну?"
 				}
 			}
+		},
+		"footer": {
+			"variableCount_one": "{{count}} змінна",
+			"variableCount_two": "{{count}} змінних",
+			"variableCount_few": "{{count}} змінних",
+			"variableCount_many": "{{count}} змінних",
+			"variableCount_other": "{{count}} змінних"
 		}
 	}
 }

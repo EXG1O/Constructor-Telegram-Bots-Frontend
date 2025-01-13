@@ -15,9 +15,16 @@
 				"error_other": "Сталася непередбачена помилка."
 			}
 		},
-		"recordModal": {
-			"title_add": "Додавання запису",
-			"actionButton_add": "Додати"
+		"recordAdditionModal": {
+			"title": "Додавання запису",
+			"messages": {
+				"addRecord": {
+					"success": "Ви успішно додали запис.",
+					"error": "Не вдалося додати запис.",
+					"error_validJSON": "Введіть дані запису у форматі JSON."
+				}
+			},
+			"addButton": "Додати"
 		},
 		"toolbar": {
 			"addRecordButton": "Додати запис"
@@ -40,5 +47,12 @@
 				}
 			}
 		}
+	},
+	"footer": {
+		"recordCount_one": "{{count}} запис",
+		"recordCount_two": "{{count}} записи",
+		"recordCount_few": "{{count}} записи",
+		"recordCount_many": "{{count}} записів",
+		"recordCount_other": "{{count}} записів"
 	}
 }
