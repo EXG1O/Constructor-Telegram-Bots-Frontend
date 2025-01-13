@@ -130,7 +130,9 @@ function TelegramBotBlock({
 							/>
 						</tr>
 						<tr>
-							<th scope='row' className='text-nowrap'>{t('table.apiToken.header')}:</th>
+							<th scope='row' className='text-nowrap'>
+								{t('table.apiToken.header')}:
+							</th>
 							<td className='w-100'>
 								{apiTokenEditing ? (
 									<APITokenEditing
