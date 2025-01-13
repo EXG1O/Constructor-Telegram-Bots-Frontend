@@ -128,19 +128,19 @@ export interface DiagramCommandKeyboardButton extends CommandKeyboardButton {
 	source_connections: Connection[];
 }
 
-export interface DiagramCommandKeyboard extends Omit<CommandKeyboard, 'buttons'> {
+export interface DiagramCommandKeyboard extends Pick<CommandKeyboard, 'type'> {
 	buttons: DiagramCommandKeyboardButton[];
 }
 
 export interface DiagramCommand
-	extends Pick<Command, 'id' | 'name' | 'images' | 'files' | 'message'>,
+	extends Pick<Command, 'id' | 'name' | 'message'>,
 		Omit<DiagramBlock, 'source_connections'> {
 	keyboard: DiagramCommandKeyboard | null;
 }
 
-export type DiagramCondition = Omit<Condition, 'parts'> & DiagramBlock;
+export type DiagramCondition = Pick<Condition, 'id' | 'name'> & DiagramBlock;
 
-export type DiagramBackgroundTask = Omit<BackgroundTask, 'api_request'> &
+export type DiagramBackgroundTask = Pick<BackgroundTask, 'id' | 'name' | 'interval'> &
 	Omit<DiagramBlock, 'source_connections'>;
 
 export interface Variable {
