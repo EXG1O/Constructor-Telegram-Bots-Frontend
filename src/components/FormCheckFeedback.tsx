@@ -12,10 +12,22 @@ export interface FormCheckFeedbackProps extends CheckFeedbackProps {
 const FormCheckFeedback: FCA<'input', FormCheckFeedbackProps> = forwardRef<
 	HTMLElement,
 	FormCheckFeedbackProps
->(function FormCheckFeedback({ size, ...props }, ref) {
-	const [field, meta] = useField(props);
+>(function FormCheckFeedback({ size, type, ...props }, ref) {
+	const [field, meta] = useField({
+		type: type && type !== 'switch' ? type : 'checkbox',
+		...props,
+	});
 
-	return <CheckFeedback ref={ref} {...props} {...field} error={meta.error} />;
+	return (
+		<CheckFeedback
+			ref={ref}
+			{...props}
+			{...field}
+			size={size}
+			type={type}
+			error={meta.error}
+		/>
+	);
 });
 
 export default FormCheckFeedback;
