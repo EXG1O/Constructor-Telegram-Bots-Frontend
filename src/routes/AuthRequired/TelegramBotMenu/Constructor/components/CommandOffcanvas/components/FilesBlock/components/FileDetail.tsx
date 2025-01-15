@@ -57,7 +57,7 @@ function FileDetail({
 					<Button
 						size='sm'
 						variant='danger'
-						className='border-start-0 rounded-start-0 p-1'
+						className='d-flex border-start-0 rounded-start-0 p-1'
 						onClick={handleDeleteButtonClick}
 					>
 						<TrashIcon width={18} height={18} />

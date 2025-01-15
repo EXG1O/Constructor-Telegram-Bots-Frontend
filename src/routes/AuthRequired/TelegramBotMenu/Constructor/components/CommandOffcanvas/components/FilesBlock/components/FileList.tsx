@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, memo, ReactElement } from 'react';
+import React, { CSSProperties, HTMLAttributes, memo, ReactElement } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 import { useField } from 'formik';
@@ -9,6 +9,8 @@ import { Files } from '..';
 import FileDetail from './FileDetail';
 
 export type FileListProps = Pick<HTMLAttributes<HTMLDivElement>, 'className'>;
+
+const blockStyle: CSSProperties = { maxHeight: 171 };
 
 function FileList({
 	className,
@@ -30,7 +32,11 @@ function FileList({
 	return files.length ? (
 		<div
 			{...props}
-			className={classNames('bg-light border rounded-1 gap-1 p-1', className)}
+			className={classNames(
+				'bg-light overflow-auto border rounded-1 gap-1 p-1',
+				className,
+			)}
+			style={blockStyle}
 		>
 			<DragDropContext onDragEnd={handleDragEnd}>
 				<Droppable droppableId='command-offcanvas-files'>
