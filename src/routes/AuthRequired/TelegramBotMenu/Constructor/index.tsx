@@ -36,6 +36,7 @@ import useTelegramBotMenuConstructorRouteLoaderData from './hooks/useTelegramBot
 import 'reactflow/dist/base.css';
 import './index.scss';
 
+import { APIResponse } from 'api/core';
 import {
 	ConnectionAPI,
 	ConnectionsAPI,
@@ -158,23 +159,28 @@ function Constructor(): ReactElement {
 					target_handle_position,
 				});
 
-				if (response.ok) {
-					if (shouldUpdateEdges) {
-						setEdges((prevEdges) =>
-							baseAddEdge(
-								{
-									...connection,
-									id: `reactflow__edge-${response.json.id}`,
-								},
-								prevEdges,
-							),
-						);
-					}
-				} else {
+				if (!response.ok) {
+					const errors: APIResponse.ErrorDetail[] = response.json.errors;
+
 					createMessageToast({
-						message: t('messages.createConnection.error'),
+						message: errors.length
+							? errors[0].detail
+							: t('messages.createConnection.error'),
 						level: 'error',
 					});
+					return;
+				}
+
+				if (shouldUpdateEdges) {
+					setEdges((prevEdges) =>
+						baseAddEdge(
+							{
+								...connection,
+								id: `reactflow__edge-${response.json.id}`,
+							},
+							prevEdges,
+						),
+					);
 				}
 			}
 		},
