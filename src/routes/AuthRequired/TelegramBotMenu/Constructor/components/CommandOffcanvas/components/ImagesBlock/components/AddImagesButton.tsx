@@ -47,30 +47,40 @@ function AddImagesButton(
 		event.target.value = '';
 
 		const processedImages: ProcessedImage[] = newImages
-			.filter((image) => {
-				if (image.size > 2621440) {
+			.filter((newImage) => {
+				if (
+					images.some(
+						(image) =>
+							newImage.name === image.name &&
+							newImage.size === image.size,
+					)
+				) {
+					return false;
+				}
+
+				if (newImage.size > 2621440) {
 					createMessageToast({
 						message: t('messages.addImages.error', {
 							context: 'tooLarge',
-							name: image.name,
+							name: newImage.name,
 						}),
 						level: 'error',
 					});
 					return false;
 				}
 
-				if (availableStorageSize - image.size < 0) {
+				if (availableStorageSize - newImage.size < 0) {
 					createMessageToast({
 						message: t('messages.addImages.error', {
 							context: 'notEnoughStorage',
-							name: image.name,
+							name: newImage.name,
 						}),
 						level: 'error',
 					});
 					return false;
 				}
 
-				availableStorageSize -= image.size;
+				availableStorageSize -= newImage.size;
 
 				return true;
 			})
