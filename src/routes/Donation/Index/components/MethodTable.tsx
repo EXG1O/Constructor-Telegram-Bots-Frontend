@@ -6,10 +6,10 @@ import MethodTableRow from './MethodTableRow';
 
 import useDonationRouteLoaderData from '../hooks/useDonationRouteLoaderData';
 
-function MethodTable(): ReactElement {
+function MethodTable(): ReactElement | null {
 	const { methods } = useDonationRouteLoaderData();
 
-	return (
+	return methods.length ? (
 		<div className='text-bg-white border rounded-1'>
 			<Table
 				responsive
@@ -24,7 +24,7 @@ function MethodTable(): ReactElement {
 				</tbody>
 			</Table>
 		</div>
-	);
+	) : null;
 }
 
 export default memo(MethodTable);
