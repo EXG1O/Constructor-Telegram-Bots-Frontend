@@ -1,4 +1,11 @@
-import React, { HTMLAttributes, memo, ReactElement, useMemo } from 'react';
+import React, {
+	HTMLAttributes,
+	memo,
+	ReactElement,
+	useCallback,
+	useMemo,
+	useRef,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { useField } from 'formik';
 import monaco from 'monaco-editor';
@@ -8,13 +15,18 @@ import { RouteID } from 'routes';
 import Collapse from 'react-bootstrap/Collapse';
 
 import Button, { ButtonProps } from 'components/Button';
-import FormMonacoEditorFeedback from 'components/FormMonacoEditorFeedback';
+import FormMonacoEditorFeedback, {
+	FormMonacoEditorFeedbackProps,
+} from 'components/FormMonacoEditorFeedback';
+import { Editor } from 'components/MonacoEditor';
 
 import BlockCollapse from './components/BlockCollapse';
 
 export type Body = string;
 
 export type BodyBlockProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+
+type EditorMountHandler = NonNullable<FormMonacoEditorFeedbackProps['onMount']>;
 
 export const defaultBody: Body = JSON.stringify({ key: 'value' }, undefined, 4);
 
@@ -30,6 +42,8 @@ function BodyBlock(props: BodyBlockProps): ReactElement<BodyBlockProps> {
 	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
 		keyPrefix: 'apiRequestBlock.bodyBlock',
 	});
+
+	const editorRef = useRef<Editor | undefined>(undefined);
 
 	const [{ value: show }, _meta, { setValue }] = useField<boolean>(
 		'show_api_request_body_block',
@@ -52,9 +66,20 @@ function BodyBlock(props: BodyBlockProps): ReactElement<BodyBlockProps> {
 		[i18n.language],
 	);
 
-	function handleClick(): void {
+	function handleButtonClick(): void {
 		setValue(!show);
 	}
+
+	function handleCollapseEnter(): void {
+		editorRef.current?.updateLayout();
+	}
+
+	const handleEditorMount = useCallback<EditorMountHandler>(
+		(editor) => {
+			editorRef.current = editor;
+		},
+		[editorRef],
+	);
 
 	return (
 		<BlockCollapse>
@@ -62,9 +87,9 @@ function BodyBlock(props: BodyBlockProps): ReactElement<BodyBlockProps> {
 				<Button
 					size='sm'
 					{...(show ? hideButtonProps : showButtonProps)}
-					onClick={handleClick}
+					onClick={handleButtonClick}
 				/>
-				<Collapse in={show}>
+				<Collapse in={show} onEnter={handleCollapseEnter}>
 					<div>
 						<FormMonacoEditorFeedback
 							size='sm'
@@ -72,6 +97,7 @@ function BodyBlock(props: BodyBlockProps): ReactElement<BodyBlockProps> {
 							name='api_request.body'
 							options={monacoOptions}
 							className='border-top-0 rounded-top-0'
+							onMount={handleEditorMount}
 						/>
 					</div>
 				</Collapse>
