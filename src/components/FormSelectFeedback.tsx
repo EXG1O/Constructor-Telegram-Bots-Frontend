@@ -13,7 +13,7 @@ function FormSelectFeedback({
 }: FormSelectFeedbackProps): ReactElement<FormSelectFeedbackProps> {
 	const [field, meta] = useField(props);
 
-	return <SelectFeedback {...props} {...field} error={meta.error} />;
+	return <SelectFeedback {...props} {...field} size={size} error={meta.error} />;
 }
 
 export default FormSelectFeedback;
