@@ -38,30 +38,40 @@ function AddFilesButton(props: AddFilesButtonProps): ReactElement<AddFilesButton
 			produce(files, (draft) => {
 				draft.push(
 					...newFiles
-						.filter((file) => {
-							if (file.size > 2621440) {
+						.filter((newFile) => {
+							if (
+								files.some(
+									(file) =>
+										newFile.name === file.name &&
+										newFile.size === file.size,
+								)
+							) {
+								return false;
+							}
+
+							if (newFile.size > 2621440) {
 								createMessageToast({
 									message: t('messages.addFiles.error', {
 										context: 'tooLarge',
-										name: file.name,
+										name: newFile.name,
 									}),
 									level: 'error',
 								});
 								return false;
 							}
 
-							if (availableStorageSize - file.size < 0) {
+							if (availableStorageSize - newFile.size < 0) {
 								createMessageToast({
 									message: t('messages.addFiles.error', {
 										context: 'notEnoughStorage',
-										name: file.name,
+										name: newFile.name,
 									}),
 									level: 'error',
 								});
 								return false;
 							}
 
-							availableStorageSize -= file.size;
+							availableStorageSize -= newFile.size;
 
 							return true;
 						})
