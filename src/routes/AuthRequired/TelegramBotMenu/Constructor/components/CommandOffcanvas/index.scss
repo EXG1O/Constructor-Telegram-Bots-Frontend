@@ -1,5 +1,8 @@
 @import 'styles/base';
 
-.command.offcanvas .offcanvas-body > * {
-	margin-bottom: map-get($spacers, 3);
+.command.offcanvas .offcanvas-body {
+	> .card,
+	> .collapse > .card {
+		margin-bottom: map-get($spacers, 3);
+	}
 }
