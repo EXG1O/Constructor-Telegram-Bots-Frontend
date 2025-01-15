@@ -258,7 +258,7 @@
 		"backgroundTask": {
 			"title": "Фонова задача",
 			"messages": {
-				"deleteCondition": {
+				"deleteBackgroundTask": {
 					"success": "Ви успішно видалили фонову задачу.",
 					"error": "Не вдалося видалити фонову задачу."
 				}

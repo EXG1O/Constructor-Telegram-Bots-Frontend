@@ -258,7 +258,7 @@
 		"backgroundTask": {
 			"title": "Background Task",
 			"messages": {
-				"deleteCondition": {
+				"deleteBackgroundTask": {
 					"success": "You have successfully deleted the background task.",
 					"error": "Failed to delete the background task."
 				}
