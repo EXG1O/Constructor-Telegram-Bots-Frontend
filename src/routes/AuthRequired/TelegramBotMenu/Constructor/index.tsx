@@ -60,13 +60,11 @@ import {
 	parseEdges,
 } from './utils';
 
-type SourceHandle = [
-	'command' | 'condition' | 'background_task',
-	string,
-	'left' | 'right',
-	string,
-];
-type TargetHandle = ['command' | 'condition', string, 'left' | 'right', string];
+type Source = ['command' | 'condition' | 'background_task', string];
+type Target = ['command' | 'condition', string];
+type Handle = ['left' | 'right', string];
+type SourceHandle = [...Source, ...Handle];
+type TargetHandle = [...Target, ...Handle];
 
 const containerStyle: CSSProperties = { height: '100%', minHeight: '600px' };
 
@@ -246,13 +244,29 @@ function Constructor(): ReactElement {
 	);
 
 	const handleCheckValidConnection = useCallback(
-		(connection: Connection): boolean =>
-			Boolean(connection.source) &&
-			Boolean(connection.sourceHandle) &&
-			Boolean(connection.target) &&
-			Boolean(connection.targetHandle) &&
-			connection.source !== connection.target,
-		[],
+		(connection: Connection): boolean => {
+			if (
+				!connection.source ||
+				!connection.sourceHandle ||
+				!connection.target ||
+				!connection.targetHandle ||
+				connection.source === connection.target
+			) {
+				return false;
+			}
+
+			switch ((connection.source.split(':') as Source)[0]) {
+				case 'command':
+					return !edges.some(
+						(edge) => edge.sourceHandle === connection.sourceHandle,
+					);
+				case 'background_task':
+					return !edges.some((edge) => edge.source === connection.source);
+				default:
+					return true;
+			}
+		},
+		[edges],
 	);
 
 	async function getDiagramCommand(
