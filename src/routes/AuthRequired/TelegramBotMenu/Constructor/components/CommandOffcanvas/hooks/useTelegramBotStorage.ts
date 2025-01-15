@@ -15,16 +15,25 @@ export interface TelegramBotStorage {
 function useTelegramBotStorage(): TelegramBotStorage {
 	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-	const [{ value: images }] = useField<Images>({ name: 'images' });
-	const [{ value: files }] = useField<Files>({ name: 'files' });
+	const [{ value: showImages }] = useField<boolean>('show_images_block');
+	const [{ value: showFiles }] = useField<boolean>('show_files_block');
+	const [{ value: images }] = useField<Images>('images');
+	const [{ value: files }] = useField<Files>('files');
 
-	const usedStorageSize = useMemo<number>(
-		() =>
-			telegramBot.used_storage_size +
-			images.reduce((totalSize, image) => totalSize + image.size, 0) +
-			files.reduce((totalSize, file) => totalSize + file.size, 0),
-		[images, files],
-	);
+	const usedStorageSize = useMemo<number>(() => {
+		const calcMediaSize = (media: Images | Files): number =>
+			media.reduce((totalSize, file) => totalSize + file.size, 0);
+
+		const imagesSize: number = showImages
+			? calcMediaSize(images.filter((image) => image.image))
+			: 0;
+		const filesSize: number = showFiles
+			? calcMediaSize(files.filter((file) => file.file))
+			: 0;
+
+		return telegramBot.used_storage_size + imagesSize + filesSize;
+	}, [showImages, showFiles, images, files]);
+
 	const remainingStorageSize = useMemo<number>(
 		() => telegramBot.storage_size - usedStorageSize,
 		[usedStorageSize],
