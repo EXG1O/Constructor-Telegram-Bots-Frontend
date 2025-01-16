@@ -46,7 +46,11 @@ export const useCommandOffcanvasStore = create<State>((set, get, api) => ({
 			show: true,
 			loading: Boolean(commandID),
 		}),
-	hideOffcanvas: () => set({ commandID: null, show: false }),
+	hideOffcanvas: () => {
+		const { keyboardButtonBlock } = get();
+		keyboardButtonBlock.hideBlock();
+		set({ commandID: null, show: false });
+	},
 
 	setLoading: (loading) => set({ loading }),
 }));
