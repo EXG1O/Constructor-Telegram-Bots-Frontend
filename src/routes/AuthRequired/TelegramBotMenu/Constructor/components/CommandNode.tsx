@@ -14,6 +14,8 @@ import { createMessageToast } from 'components/ToastContainer';
 import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
 import Node, { NodeProps } from './Node';
 
+import Link45DegIcon from 'assets/icons/link-45deg.svg';
+
 import { CommandAPI } from 'api/telegram_bots/main';
 import { DiagramBlock, DiagramCommand } from 'api/telegram_bots/types';
 
@@ -107,17 +109,26 @@ function CommandNode({
 							variant='dark'
 							className='position-relative text-center text-break'
 						>
-							<Handle
-								id={`${id}:left:${button.id}`}
-								type='source'
-								position={Position.Left}
-							/>
-							{button.text}
-							<Handle
-								id={`${id}:right:${button.id}`}
-								type='source'
-								position={Position.Right}
-							/>
+							{button.url ? (
+								<>
+									{button.text}
+									<Link45DegIcon width={16} height={16} />
+								</>
+							) : (
+								<>
+									<Handle
+										id={`${id}:left:${button.id}`}
+										type='source'
+										position={Position.Left}
+									/>
+									{button.text}
+									<Handle
+										id={`${id}:right:${button.id}`}
+										type='source'
+										position={Position.Right}
+									/>
+								</>
+							)}
 						</Node.Block>
 					))}
 				</Stack>
