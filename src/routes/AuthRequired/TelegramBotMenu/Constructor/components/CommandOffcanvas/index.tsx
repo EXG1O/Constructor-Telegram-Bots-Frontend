@@ -400,12 +400,15 @@ function CommandOffcanvas({
 							Data.CommandsAPI.CreateCommandKeyboardButton[]
 						>((buttons, row, rowIndex) => {
 							buttons.push(
-								...row.buttons.map(({ text, url }, buttonIndex) => ({
-									row: rowIndex,
-									position: buttonIndex,
-									text,
-									url,
-								})),
+								...row.buttons.map(
+									({ id, text, url }, buttonIndex) => ({
+										id,
+										row: rowIndex,
+										position: buttonIndex,
+										text,
+										url,
+									}),
+								),
 							);
 
 							return buttons;
