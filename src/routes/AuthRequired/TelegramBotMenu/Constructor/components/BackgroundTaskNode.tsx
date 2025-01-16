@@ -23,13 +23,15 @@ const offcanvasPrefix: string = 'backgroundTaskOffcanvas';
 
 function BackgroundTaskNode({
 	id,
+	xPos,
+	yPos,
 	data: task,
 }: BackgroundTaskNodeProps): ReactElement<BackgroundTaskNodeProps> {
 	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor);
 
 	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-	const onNodesChange = useStore((state) => state.onNodesChange);
+	const onNodesDelete = useStore((state) => state.onNodesDelete);
 
 	const showEditBackgroundTaskOffcanvas = useBackgroundTaskOffcanvasStore(
 		(state) => state.showOffcanvas,
@@ -55,7 +57,9 @@ function BackgroundTaskNode({
 					);
 
 					if (response.ok) {
-						onNodesChange?.([{ id, type: 'remove' }]);
+						onNodesDelete?.([
+							{ id, position: { x: xPos, y: yPos }, data: task },
+						]);
 						hideAskConfirmModal();
 						createMessageToast({
 							message: t(

@@ -25,6 +25,8 @@ type EditHandler = NodeProps['onEdit'];
 
 function CommandNode({
 	id,
+	xPos,
+	yPos,
 	data: command,
 }: CommandNodeProps): ReactElement<CommandNodeProps> {
 	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
@@ -33,7 +35,7 @@ function CommandNode({
 
 	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-	const onNodesChange = useStore((state) => state.onNodesChange);
+	const onNodesDelete = useStore((state) => state.onNodesDelete);
 
 	const showEditCommandOffcanvas = useCommandOffcanvasStore(
 		(state) => state.showOffcanvas,
@@ -59,7 +61,9 @@ function CommandNode({
 					);
 
 					if (response.ok) {
-						onNodesChange?.([{ id, type: 'remove' }]);
+						onNodesDelete?.([
+							{ id, position: { x: xPos, y: yPos }, data: command },
+						]);
 						hideAskConfirmModal();
 						createMessageToast({
 							message: t('messages.deleteCommand.success'),

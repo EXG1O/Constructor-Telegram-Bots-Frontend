@@ -22,6 +22,8 @@ type EditHandler = NodeProps['onEdit'];
 
 function ConditionNode({
 	id,
+	xPos,
+	yPos,
 	data: condition,
 }: ConditionNodeProps): ReactElement<ConditionNodeProps> {
 	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
@@ -30,7 +32,7 @@ function ConditionNode({
 
 	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-	const onNodesChange = useStore((state) => state.onNodesChange);
+	const onNodesDelete = useStore((state) => state.onNodesDelete);
 
 	const showEditConditionOffcanvas = useConditionOffcanvasStore(
 		(state) => state.showOffcanvas,
@@ -56,7 +58,9 @@ function ConditionNode({
 					);
 
 					if (response.ok) {
-						onNodesChange?.([{ id, type: 'remove' }]);
+						onNodesDelete?.([
+							{ id, position: { x: xPos, y: yPos }, data: condition },
+						]);
 						hideAskConfirmModal();
 						createMessageToast({
 							message: t('messages.deleteCondition.success'),

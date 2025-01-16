@@ -12,6 +12,7 @@ import ReactFlow, {
 	MiniMap,
 	Node,
 	NodeTypes,
+	OnNodesDelete,
 	updateEdge,
 	useEdgesState,
 	useNodesState,
@@ -118,6 +119,21 @@ function Constructor(): ReactElement {
 		},
 		[],
 	);
+
+	const handleNodesDelete = useCallback<OnNodesDelete>((deletedNodes) => {
+		const deletedNodeIds = new Set<string>(deletedNodes.map((node) => node.id));
+
+		setEdges((prevEdges) =>
+			prevEdges.filter(
+				(edge) =>
+					!deletedNodeIds.has(edge.source) &&
+					!deletedNodeIds.has(edge.target),
+			),
+		);
+		setNodes((prevNodes) =>
+			prevNodes.filter((node) => !deletedNodeIds.has(node.id)),
+		);
+	}, []);
 
 	const addEdge = useCallback(
 		async (connection: Connection, shouldUpdateEdges: boolean = true) => {
@@ -421,6 +437,7 @@ function Constructor(): ReactElement {
 					onNodesChange={onNodesChange}
 					onEdgesChange={onEdgesChange}
 					onNodeDragStop={handleNodeDragStop}
+					onNodesDelete={handleNodesDelete}
 					onEdgeUpdateStart={handleEdgeUpdateStart}
 					onEdgeUpdate={handleEdgeUpdate}
 					onEdgeUpdateEnd={handleEdgeUpdateEnd}
