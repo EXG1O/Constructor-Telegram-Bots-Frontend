@@ -64,10 +64,13 @@
 	}
 
 	.ql-container {
+		white-space: pre-line;
 		position: relative;
 
 		.ql-editor {
-			overflow: auto;
+			overflow-y: auto;
+			white-space: pre-wrap;
+			word-wrap: break-word;
 			scrollbar-width: thin;
 			padding: $input-padding-y $input-padding-x;
 			outline: 0;
@@ -114,8 +117,8 @@
 
 				&::before {
 					content: '';
-					display: inline-block;
-					mask: url('assets/icons/pencil-square.svg') no-repeat center;
+					mask: url('assets/icons/pencil-square.svg') center / 17px 17px
+						no-repeat;
 					background-color: currentColor;
 					width: 16px;
 					height: 16px;
@@ -153,9 +156,7 @@
 					color: $success;
 
 					&::before {
-						mask: url('assets/icons/check.svg') no-repeat center;
-						width: 30px;
-						height: 30px;
+						mask: url('assets/icons/check.svg') center / 26px 26px no-repeat;
 					}
 				}
 			}
