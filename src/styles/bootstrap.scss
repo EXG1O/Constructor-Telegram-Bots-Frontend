@@ -1,0 +1,27 @@
+@import 'base';
+@import 'root';
+@import '~bootstrap/scss/reboot';
+@import '~bootstrap/scss/type';
+@import '~bootstrap/scss/grid';
+@import '~bootstrap/scss/transitions';
+@import '~bootstrap/scss/helpers/color-bg';
+@import '~bootstrap/scss/helpers/ratio';
+@import '~bootstrap/scss/helpers/position';
+@import '~bootstrap/scss/helpers/visually-hidden';
+@import '~bootstrap/scss/helpers/text-truncation';
+@import '~bootstrap/scss/utilities/api';
+
+// If you need the styles of the components below, then add lazy loading...
+// support for this component first.
+
+// @import '~bootstrap/scss/images';
+// @import '~bootstrap/scss/nav';
+// @import '~bootstrap/scss/navbar';
+// @import '~bootstrap/scss/accordion';
+// @import '~bootstrap/scss/breadcrumb';
+// @import '~bootstrap/scss/badge';
+// @import '~bootstrap/scss/alert';
+// @import '~bootstrap/scss/tooltip';
+// @import '~bootstrap/scss/popover';
+// @import '~bootstrap/scss/spinners';
+// @import '~bootstrap/scss/placeholders';

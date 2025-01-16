@@ -1,0 +1,61 @@
+{
+	"askConfirmModal": {
+		"yesButton": "Да",
+		"noButton": "Нет"
+	},
+	"search": {
+		"inputPlaceholder": "Поиск",
+		"button": "Найти"
+	},
+	"loginButton": {
+		"messages": {
+			"userLogin": {
+				"success": "Успешная авторизация.",
+				"error": "Не удалось пройти авторизацию по неизвестным причинам."
+			}
+		},
+		"text": "Войти через Telegram"
+	},
+	"telegramBotBlock": {
+		"messages": {
+			"getTelegramBot": {
+				"error": "Не удалось получить данные о Telegram боте."
+			}
+		},
+		"table": {
+			"status": {
+				"header": "Статус",
+				"loading": "Загрузка",
+				"enabled": "Включен",
+				"disabled": "Выключен"
+			},
+			"apiToken": {
+				"header": "API-токен",
+				"messages": {
+					"updateTelegramBotAPIToken": {
+						"success": "Вы успешно обновили API-токен Telegram бота.",
+						"error": "Не удалось обновить API-токен Telegram бота."
+					}
+				},
+				"inputPlaceholder": "Введите API-токен"
+			},
+			"private": {
+				"header": "Приватный",
+				"messages": {
+					"updateTelegramBotPrivate": {
+						"success_true": "Вы успешно сделали Telegram бота приватным.",
+						"success_false": "Вы успешно сделали Telegram бота не приватным.",
+						"error_true": "Не удалось сделать Telegram бота приватным.",
+						"error_false": "Не удалось сделать Telegram бота не приватным."
+					}
+				}
+			},
+			"storage": {
+				"header": "Хранилище"
+			},
+			"addedDate": {
+				"header": "Добавлен"
+			}
+		}
+	}
+}

@@ -1,0 +1,276 @@
+{
+	"title": "Конструктор",
+	"messages": {
+		"getDiagramCommand": {
+			"error": "Не удалось получить данные команды для диаграммы."
+		},
+		"getDiagramCondition": {
+			"error": "Не удалось получить данные условия для диаграммы."
+		},
+		"getDiagramBackgroundTask": {
+			"error": "Не удалось получить данные фоновой задачи для диаграммы."
+		},
+		"createConnection": {
+			"error": "Не удалось подключить блок к другому блоку."
+		},
+		"deleteConnection": {
+			"error": "Не удалось отключить блок от другого блока."
+		}
+	},
+	"nameBlock": {
+		"title": "Название",
+		"inputPlaceholder": "Придумайте название"
+	},
+	"variablesInfoText": {
+		"text": "Вы можете использовать переменные."
+	},
+	"apiRequestBlock": {
+		"title": "API-запрос",
+		"urlInputPlaceholder": "Введите URL-адрес",
+		"headersBlock": {
+			"showButton": "Добавить заголовки",
+			"hideButton": "Убрать заголовки",
+			"headerInputGroup": {
+				"keyInputPlaceholder": "Ключ",
+				"valueInputPlaceholder": "Значение"
+			},
+			"addHeaderButton": {
+				"text": "Добавить заголовок"
+			}
+		},
+		"bodyBlock": {
+			"showButton": "Добавить данные",
+			"hideButton": "Убрать данные"
+		},
+		"testBlock": {
+			"messages": {
+				"makeTest": {
+					"error": "Произошла ошибка во время отправки API-запроса.",
+					"error_emptyURL": "Введите URL-адрес.",
+					"error_validURL": "Введите правильный URL-адрес."
+				}
+			},
+			"testButton": "Протестировать"
+		}
+	},
+	"addonButtonGroup": {
+		"showButton": "Показать дополнения",
+		"hideButton": "Скрыть дополнения"
+	},
+	"commandOffcanvas": {
+		"title_add": "Добавление команды",
+		"title_edit": "Редактирование команды",
+		"messages": {
+			"validation": {
+				"invalidJSON": "Введите данные в формате JSON."
+			},
+			"getCommand": {
+				"error": "Не удалось получить данные команды."
+			},
+			"addCommand": {
+				"success": "Вы успешно добавили команду.",
+				"error": "Не удалось добавить команду."
+			},
+			"editCommand": {
+				"success": "Вы успешно сохранили команду.",
+				"error": "Не удалось сохранить команду."
+			}
+		},
+		"settingsBlock": {
+			"title": "Настройки",
+			"replyToUserMessageSwitch": "Ответить на сообщение пользователя",
+			"deleteUserMessageSwitch": "Удалить сообщение пользователя",
+			"sendAsNewMessageSwitch": "Отправить сообщение как новое"
+		},
+		"triggerBlock": {
+			"title": "Триггер",
+			"textInputPlaceholder": "Введите текст",
+			"descriptionInputCollapse": {
+				"showButton": "Добавить в меню",
+				"hideButton": "Убрать из меню"
+			},
+			"descriptionInputPlaceholder": "Введите описание"
+		},
+		"imagesBlock": {
+			"title": "Изображения",
+			"addImagesButton": {
+				"messages": {
+					"addImages": {
+						"error_tooLarge": "Изображение {{name}} весит больше 2.5МБ.",
+						"error_notEnoughStorage": "Невозможно добавить изображение {{name}}, потому-что не хватает места в хранилище."
+					}
+				},
+				"text": "Добавить изображения"
+			}
+		},
+		"filesBlock": {
+			"title": "Файлы",
+			"addFilesButton": {
+				"messages": {
+					"addFiles": {
+						"error_tooLarge": "Файл {{name}} весит больше 2.5MB.",
+						"error_notEnoughStorage": "Невозможно добавить файл {{name}}, потому-что не хватает места в хранилище."
+					}
+				},
+				"text": "Добавить файлы"
+			}
+		},
+		"messageBlock": {
+			"title": "Сообщение",
+			"messageEditorPlaceholder": "Введите текст"
+		},
+		"keyboardBlock": {
+			"title": "Клавиатура",
+			"typeButtonGroup": {
+				"default": "Обычный",
+				"inline": "Встроенный",
+				"payment": "Платёжный"
+			},
+			"keyboardButtonBlock": {
+				"title_add": "Добавление кнопки",
+				"title_edit": "Редактирование кнопки",
+				"messages": {
+					"emptyTextError": "Это поле не может быть пустым.",
+					"invalidURLError": "Неверный URL-адрес."
+				},
+				"textInput": {
+					"placeholder": "Введите текст"
+				},
+				"urlInputCollapse": {
+					"showButton": "Добавить URL-адрес",
+					"hideButton": "Удалить URL-адрес"
+				},
+				"urlInput": {
+					"placeholder": "Введите URL-адрес"
+				},
+				"actionButton_add": "Добавить",
+				"actionButton_edit": "Сохранить",
+				"deleteButton": "Удалить"
+			},
+			"addButtonButton": {
+				"text": "Добавить кнопку"
+			},
+			"addRowButton": {
+				"text": "Добавить ряд"
+			}
+		},
+		"databaseRecordBlock": {
+			"title": "Запись в базу данных"
+		},
+		"actionButton_add": "Добавить",
+		"actionButton_edit": "Сохранить"
+	},
+	"conditionOffcanvas": {
+		"title_add": "Добавление условия",
+		"title_edit": "Редактирование условия",
+		"messages": {
+			"getCondition": {
+				"error": "Не удалось получить данные условия."
+			},
+			"addCondition": {
+				"success": "Вы успешно добавили условие.",
+				"error": "Не удалось добавить условие."
+			},
+			"editCondition": {
+				"success": "Вы успешно сохранили условие.",
+				"error": "Не удалось сохранить условие."
+			}
+		},
+		"partsBlock": {
+			"title": "Части условия",
+			"operatorSelect": {
+				"==": "Равно",
+				"!=": "Не равно",
+				">": "Больше",
+				">=": "Больше или равно",
+				"<": "Меньше",
+				"<=": "Меньше или равно"
+			},
+			"nextPartOperatorSelect": {
+				"&&": "И",
+				"||": "Или"
+			}
+		},
+		"actionButton_add": "Добавить",
+		"actionButton_edit": "Сохранить"
+	},
+	"backgroundTaskOffcanvas": {
+		"title_add": "Добавление фоновой задачи",
+		"title_edit": "Редактирование фоновой задачи",
+		"messages": {
+			"validation": {
+				"invalidJSON": "Введите данные в формате JSON."
+			},
+			"getBackgroundTask": {
+				"error": "Не удалось получить данные фоновой задачи."
+			},
+			"addBackgroundTask": {
+				"success": "Вы успешно добавили фоновую задачу.",
+				"error": "Не удалось добавить фоновую задачу."
+			},
+			"editBackgroundTask": {
+				"success": "Вы успешно сохранили фоновую задачу.",
+				"error": "Не удалось сохранить фоновую задачу."
+			}
+		},
+		"intervalBlock": {
+			"title": "Интервал",
+			"select": {
+				"1": "1 день",
+				"3": "3 дня",
+				"7": "7 дней",
+				"14": "14 дней",
+				"28": "28 дней"
+			}
+		},
+		"actionButton_add": "Добавить",
+		"actionButton_edit": "Сохранить"
+	},
+	"panel": {
+		"addCommandButton": "Добавить команду",
+		"addConditionButton": "Добавить условие",
+		"addBackgroundTaskButton": "Добавить фоновую задачу"
+	},
+	"nodes": {
+		"command": {
+			"title": "Команда",
+			"messages": {
+				"deleteCommand": {
+					"success": "Вы успешно удалили команду.",
+					"error": "Не удалось удалить команду."
+				}
+			},
+			"deleteModal": {
+				"title": "Удаление команды",
+				"text": "Вы точно хотите удалить команду?"
+			}
+		},
+		"condition": {
+			"title": "Условие",
+			"messages": {
+				"deleteCondition": {
+					"success": "Вы успешно удалили условие.",
+					"error": "Не удалось удалить условие."
+				}
+			},
+			"deleteModal": {
+				"title": "Удаление условия",
+				"text": "Вы точно хотите удалить условие?"
+			}
+		},
+		"backgroundTask": {
+			"title": "Фоновая задача",
+			"messages": {
+				"deleteBackgroundTask": {
+					"success": "Вы успешно удалили фоновую задачу.",
+					"error": "Не удалось удалить фоновую задачу."
+				}
+			},
+			"deleteModal": {
+				"title": "Удаление условия",
+				"text": "Вы точно хотите удалить фоновую задачу?"
+			},
+			"interval": "Интервал"
+		}
+	}
+}

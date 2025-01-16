@@ -1,0 +1,66 @@
+{
+	"env": {
+		"browser": true,
+		"node": true,
+		"es6": true
+	},
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": 2021,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
+	"plugins": ["react", "react-hooks", "@typescript-eslint", "simple-import-sort"],
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:react/recommended"
+	],
+	"rules": {
+		"no-inner-declarations": "off",
+		"@typescript-eslint/no-namespace": "off",
+		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/no-unused-vars": [
+			"error",
+			{
+				"args": "all",
+				"argsIgnorePattern": "^_",
+				"caughtErrors": "all",
+				"caughtErrorsIgnorePattern": "^_",
+				"destructuredArrayIgnorePattern": "^_",
+				"varsIgnorePattern": "^_",
+				"ignoreRestSiblings": true
+			}
+		],
+		"simple-import-sort/exports": "error",
+		"simple-import-sort/imports": [
+			"error",
+			{
+				"groups": [
+					["^react(?!-bootstrap)", "^@?\\w"],
+					["^routes(/.+)*"],
+					["^\\.\\./?$", "^\\./?$"],
+					["/[A-Z]([a-z]+[A-Z]?)*"],
+					["^components/(.*/)*[A-Z]([a-z]+[A-Z]?)*"],
+					["^\\./(.*/)*[A-Z]([a-z]+[A-Z]?)*"],
+					["^\\.\\./(.*/)*[A-Z]([a-z]+[A-Z]?)*"],
+					["^settings$"],
+					["^hooks/.+"],
+					["/contexts/.+"],
+					["/hooks/.+"],
+					["\\.s?css$"],
+					["^assets/.+"],
+					["^api/.+"],
+					["^utils/.+"]
+				]
+			}
+		]
+	},
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	}
+}

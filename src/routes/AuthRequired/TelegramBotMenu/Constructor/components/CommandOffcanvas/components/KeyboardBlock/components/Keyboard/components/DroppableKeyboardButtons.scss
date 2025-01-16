@@ -1,0 +1,7 @@
+.droppable-keyboard-buttons > * {
+	width: 100%;
+
+	&:not(:first-child) {
+		margin-left: 4px;
+	}
+}

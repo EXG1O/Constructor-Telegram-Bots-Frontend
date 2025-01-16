@@ -1,0 +1,55 @@
+{
+	"title": "Database",
+	"messages": {
+		"getRecords": {
+			"error": "Failed to retrieve database records."
+		}
+	},
+	"records": {
+		"title": "Database records",
+		"messages": {
+			"partialUpdateRecord": {
+				"success": "You have successfully updated the record.",
+				"error": "Failed to update the record.",
+				"error_validJSON": "Enter valid JSON data.",
+				"error_other": "An unexpected error occurred."
+			}
+		},
+		"recordAdditionModal": {
+			"title_add": "Adding a record",
+			"messages": {
+				"addRecord": {
+					"success": "You have successfully added a record.",
+					"error": "Failed to add the record.",
+					"error_validJSON": "Please enter the record data in JSON format."
+				}
+			},
+			"addButton": "Add"
+		},
+		"toolbar": {
+			"addRecordButton": "Add record"
+		},
+		"list": {
+			"placeholders": {
+				"notFound": "No results found",
+				"notAdded": "You haven't added any records yet"
+			},
+			"display": {
+				"messages": {
+					"deleteRecord": {
+						"success": "You have successfully deleted the record.",
+						"error": "Failed to delete the record."
+					}
+				},
+				"deleteModal": {
+					"title": "Deleting the record",
+					"text": "Are you sure you want to delete the record?"
+				}
+			}
+		}
+	},
+	"footer": {
+		"recordCount_one": "{{count}} record",
+		"recordCount_other": "{{count}} records"
+	}
+}

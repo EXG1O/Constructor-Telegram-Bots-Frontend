@@ -1,0 +1,276 @@
+{
+	"title": "Конструктор",
+	"messages": {
+		"getDiagramCommand": {
+			"error": "Не вдалося отримати дані команди для діаграми."
+		},
+		"getDiagramCondition": {
+			"error": "Не вдалося отримати дані умови для діаграми."
+		},
+		"getDiagramBackgroundTask": {
+			"error": "Не вдалося отримати дані фонової задачі для діаграми."
+		},
+		"createConnection": {
+			"error": "Не вдалося підключити блок до іншого блоку."
+		},
+		"deleteConnection": {
+			"error": "Не вдалося відключити блок від іншого блоку."
+		}
+	},
+	"nameBlock": {
+		"title": "Назва",
+		"inputPlaceholder": "Придумайте назву"
+	},
+	"variablesInfoText": {
+		"text": "Ви можете використовувати змінні."
+	},
+	"apiRequestBlock": {
+		"title": "API-запит",
+		"urlInputPlaceholder": "Введіть URL-адресу",
+		"headersBlock": {
+			"showButton": "Додати заголовки",
+			"hideButton": "Прибрати заголовки",
+			"headerInputGroup": {
+				"keyInputPlaceholder": "Ключ",
+				"valueInputPlaceholder": "Значення"
+			},
+			"addHeaderButton": {
+				"text": "Додати заголовок"
+			}
+		},
+		"bodyBlock": {
+			"showButton": "Додати дані",
+			"hideButton": "Прибрати дані"
+		},
+		"testBlock": {
+			"messages": {
+				"makeTest": {
+					"error": "Сталася помилка під час відправки API-запиту.",
+					"error_emptyURL": "Введіть URL-адресу.",
+					"error_validURL": "Введіть правильну URL-адресу."
+				}
+			},
+			"testButton": "Протестувати"
+		}
+	},
+	"addonButtonGroup": {
+		"showButton": "Показати доповнення",
+		"hideButton": "Приховати доповнення"
+	},
+	"commandOffcanvas": {
+		"title_add": "Додавання команди",
+		"title_edit": "Редагування команди",
+		"messages": {
+			"validation": {
+				"invalidJSON": "Введіть дані у форматі JSON."
+			},
+			"getCommand": {
+				"error": "Не вдалося отримати дані команди."
+			},
+			"addCommand": {
+				"success": "Ви успішно додали команду.",
+				"error": "Не вдалося додати команду."
+			},
+			"editCommand": {
+				"success": "Ви успішно зберегли команду.",
+				"error": "Не вдалося зберегти команду."
+			}
+		},
+		"settingsBlock": {
+			"title": "Налаштування",
+			"replyToUserMessageSwitch": "Відповісти на повідомлення користувача",
+			"deleteUserMessageSwitch": "Видалити повідомлення користувача",
+			"sendAsNewMessageSwitch": "Відправити повідомлення як нове"
+		},
+		"triggerBlock": {
+			"title": "Тригер",
+			"textInputPlaceholder": "Введіть текст",
+			"descriptionInputCollapse": {
+				"showButton": "Додати до меню",
+				"hideButton": "Прибрати з меню"
+			},
+			"descriptionInputPlaceholder": "Введіть опис"
+		},
+		"imagesBlock": {
+			"title": "Зображення",
+			"addImagesButton": {
+				"messages": {
+					"addImages": {
+						"error_tooLarge": "Зображення {{name}} важить більше 2.5МБ.",
+						"error_notEnoughStorage": "Неможливо додати зображення {{name}}, тому що не вистачає місця в сховищі."
+					}
+				},
+				"text": "Додати зображення"
+			}
+		},
+		"filesBlock": {
+			"title": "Файли",
+			"addFilesButton": {
+				"messages": {
+					"addFiles": {
+						"error_tooLarge": "Файл {{name}} важить більше 2.5МБ.",
+						"error_notEnoughStorage": "Неможливо додати файл {{name}}, тому що не вистачає місця в сховищі."
+					}
+				},
+				"text": "Додати файли"
+			}
+		},
+		"messageBlock": {
+			"title": "Повідомлення",
+			"messageEditorPlaceholder": "Введіть текст"
+		},
+		"keyboardBlock": {
+			"title": "Клавіатура",
+			"typeButtonGroup": {
+				"default": "Звичайна",
+				"inline": "Вбудована",
+				"payment": "Платіжна"
+			},
+			"keyboardButtonBlock": {
+				"title_add": "Додавання кнопки",
+				"title_edit": "Редагування кнопки",
+				"messages": {
+					"emptyTextError": "Це поле не може бути порожнім.",
+					"invalidURLError": "Неправильна URL-адреса."
+				},
+				"textInput": {
+					"placeholder": "Введіть текст"
+				},
+				"urlInputCollapse": {
+					"showButton": "Додати URL-адресу",
+					"hideButton": "Видалити URL-адресу"
+				},
+				"urlInput": {
+					"placeholder": "Введіть URL-адресу"
+				},
+				"actionButton_add": "Додати",
+				"actionButton_edit": "Зберегти",
+				"deleteButton": "Видалити"
+			},
+			"addButtonButton": {
+				"text": "Додати кнопку"
+			},
+			"addRowButton": {
+				"text": "Додати ряд"
+			}
+		},
+		"databaseRecordBlock": {
+			"title": "Запис у базу даних"
+		},
+		"actionButton_add": "Додати",
+		"actionButton_edit": "Зберегти"
+	},
+	"conditionOffcanvas": {
+		"title_add": "Додавання умови",
+		"title_edit": "Редагування умови",
+		"messages": {
+			"getCondition": {
+				"error": "Не вдалося отримати дані умови."
+			},
+			"addCondition": {
+				"success": "Ви успішно додали умову.",
+				"error": "Не вдалося додати умову."
+			},
+			"editCondition": {
+				"success": "Ви успішно зберегли умову.",
+				"error": "Не вдалося зберегти умову."
+			}
+		},
+		"partsBlock": {
+			"title": "Частини умови",
+			"operatorSelect": {
+				"==": "Дорівнює",
+				"!=": "Не дорівнює",
+				">": "Більше",
+				">=": "Більше або дорівнює",
+				"<": "Менше",
+				"<=": "Менше або дорівнює"
+			},
+			"nextPartOperatorSelect": {
+				"&&": "І",
+				"||": "Або"
+			}
+		},
+		"actionButton_add": "Додати",
+		"actionButton_edit": "Зберегти"
+	},
+	"backgroundTaskOffcanvas": {
+		"title_add": "Додавання фонової задачі",
+		"title_edit": "Редагування фонової задачі",
+		"messages": {
+			"validation": {
+				"invalidJSON": "Введіть дані у форматі JSON."
+			},
+			"getBackgroundTask": {
+				"error": "Не вдалося отримати дані фонової задачі."
+			},
+			"addBackgroundTask": {
+				"success": "Ви успішно додали фонову задачу.",
+				"error": "Не вдалося додати фонову задачу."
+			},
+			"editBackgroundTask": {
+				"success": "Ви успішно зберегли фонову задачу.",
+				"error": "Не вдалося зберегти фонову задачу."
+			}
+		},
+		"intervalBlock": {
+			"title": "Інтервал",
+			"select": {
+				"1": "1 день",
+				"3": "3 дні",
+				"7": "7 днів",
+				"14": "14 днів",
+				"28": "28 днів"
+			}
+		},
+		"actionButton_add": "Додати",
+		"actionButton_edit": "Зберегти"
+	},
+	"panel": {
+		"addCommandButton": "Додати команду",
+		"addConditionButton": "Додати умову",
+		"addBackgroundTaskButton": "Додати фонову задачу"
+	},
+	"nodes": {
+		"command": {
+			"title": "Команда",
+			"messages": {
+				"deleteCommand": {
+					"success": "Ви успішно видалили команду.",
+					"error": "Не вдалося видалити команду."
+				}
+			},
+			"deleteModal": {
+				"title": "Видалення команди",
+				"text": "Ви точно хочете видалити команду?"
+			}
+		},
+		"condition": {
+			"title": "Умова",
+			"messages": {
+				"deleteCondition": {
+					"success": "Ви успішно видалили умову.",
+					"error": "Не вдалося видалити умову."
+				}
+			},
+			"deleteModal": {
+				"title": "Видалення умови",
+				"text": "Ви точно хочете видалити умову?"
+			}
+		},
+		"backgroundTask": {
+			"title": "Фонова задача",
+			"messages": {
+				"deleteBackgroundTask": {
+					"success": "Ви успішно видалили фонову задачу.",
+					"error": "Не вдалося видалити фонову задачу."
+				}
+			},
+			"deleteModal": {
+				"title": "Видалення умови",
+				"text": "Ви точно хочете видалити фонову задачу?"
+			},
+			"interval": "Інтервал"
+		}
+	}
+}

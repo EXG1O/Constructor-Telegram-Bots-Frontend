@@ -1,0 +1,29 @@
+{
+	"compilerOptions": {
+		"module": "CommonJS",
+		"target": "ES2015",
+		"lib": ["ES2021"],
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"jsx": "react",
+		"strict": true,
+		"noEmit": true,
+		"allowUnreachableCode": false,
+		"noFallthroughCasesInSwitch": false,
+		"paths": {
+			"assets/*": ["./src/assets/*"],
+			"settings": ["./src/settings"],
+			"i18n": ["./src/i18n"],
+			"i18n/*": ["./src/i18n/*"],
+			"components/*": ["./src/components/*"],
+			"routes": ["./src/routes"],
+			"routes/*": ["./src/routes/*"],
+			"api/*": ["./src/api/*"],
+			"hooks/*": ["./src/hooks/*"],
+			"utils/*": ["./src/utils/*"],
+			"styles/*": ["./src/styles/*"]
+		}
+	},
+	"include": ["./**/*.ts", "./**/*.tsx"],
+	"exclude": ["./node_modules"]
+}
