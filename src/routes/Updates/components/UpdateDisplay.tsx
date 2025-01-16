@@ -1,12 +1,14 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import classNames from 'classnames';
+
+import Block, { BlockProps } from 'components/Block';
 
 import { Update } from 'api/updates/types';
 
 import('styles/dynamic-content.scss');
 
 export interface UpdateDisplayProps
-	extends Omit<HTMLAttributes<HTMLDivElement>, 'dangerouslySetInnerHTML'> {
+	extends Omit<BlockProps, 'dangerouslySetInnerHTML' | 'children'> {
 	update: Update;
 }
 
@@ -16,9 +18,9 @@ function UpdateDisplay({
 	...props
 }: UpdateDisplayProps): ReactElement<UpdateDisplayProps> {
 	return (
-		<div
+		<Block
 			{...props}
-			className={classNames('dynamic-content border rounded p-3', className)}
+			className={classNames('dynamic-content', className)}
 			dangerouslySetInnerHTML={{ __html: update.description }}
 		/>
 	);
