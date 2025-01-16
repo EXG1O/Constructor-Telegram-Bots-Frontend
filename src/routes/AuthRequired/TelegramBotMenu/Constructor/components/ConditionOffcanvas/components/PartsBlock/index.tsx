@@ -8,6 +8,7 @@ import { RouteID } from 'routes';
 import PartItem, { defaultPart, Part } from './components/PartItem';
 
 import Block from '../../../Block';
+import VariablesInfoText from '../../../VariablesInfoText';
 
 export type Parts = Part[];
 
@@ -26,6 +27,7 @@ function PartsBlock(): ReactElement {
 				{parts.map((_, index) => (
 					<PartItem key={index} index={index} />
 				))}
+				<VariablesInfoText />
 			</Stack>
 		</Block>
 	);

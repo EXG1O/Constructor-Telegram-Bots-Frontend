@@ -21,6 +21,9 @@
 		"title": "Name",
 		"inputPlaceholder": "Come up with a name"
 	},
+	"variablesInfoText": {
+		"text": "You can use variables."
+	},
 	"apiRequestBlock": {
 		"title": "API-request",
 		"urlInputPlaceholder": "Enter URL",

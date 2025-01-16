@@ -21,6 +21,9 @@
 		"title": "Название",
 		"inputPlaceholder": "Придумайте название"
 	},
+	"variablesInfoText": {
+		"text": "Вы можете использовать переменные."
+	},
 	"apiRequestBlock": {
 		"title": "API-запрос",
 		"urlInputPlaceholder": "Введите URL-адрес",

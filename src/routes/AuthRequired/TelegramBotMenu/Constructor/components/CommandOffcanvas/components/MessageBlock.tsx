@@ -6,6 +6,7 @@ import { RouteID } from 'routes';
 import FormTelegramQuillEditorFeedback from 'components/FormTelegramQuillEditorFeedback';
 
 import Block, { BlockProps } from '../../Block';
+import VariablesInfoText from '../../VariablesInfoText';
 
 export interface Message {
 	text: string;
@@ -27,6 +28,7 @@ function MessageBlock(props: MessageBlockProps): ReactElement<MessageBlockProps>
 				name='message.text'
 				placeholder={t('messageEditorPlaceholder')}
 			/>
+			<VariablesInfoText />
 		</Block>
 	);
 }

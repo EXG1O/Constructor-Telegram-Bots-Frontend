@@ -7,6 +7,7 @@ import { RouteID } from 'routes';
 import FormMonacoEditorFeedback from 'components/FormMonacoEditorFeedback';
 
 import Block, { BlockProps } from '../../Block';
+import VariablesInfoText from '../../VariablesInfoText';
 
 export interface DatabaseRecord {
 	data: string;
@@ -41,6 +42,7 @@ function DatabaseRecordBlock(
 					name='database_record.data'
 					options={monacoOptions}
 				/>
+				<VariablesInfoText />
 			</Block>
 		</Block.Collapse>
 	);

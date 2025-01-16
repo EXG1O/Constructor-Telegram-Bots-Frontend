@@ -22,6 +22,8 @@ import { Editor } from 'components/MonacoEditor';
 
 import BlockCollapse from './components/BlockCollapse';
 
+import VariablesInfoText from '../../../VariablesInfoText';
+
 export type Body = string;
 
 export type BodyBlockProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
@@ -99,6 +101,7 @@ function BodyBlock(props: BodyBlockProps): ReactElement<BodyBlockProps> {
 							className='border-top-0 rounded-top-0'
 							onMount={handleEditorMount}
 						/>
+						<VariablesInfoText />
 					</div>
 				</Collapse>
 			</div>
