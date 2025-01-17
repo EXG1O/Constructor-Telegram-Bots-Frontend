@@ -25,7 +25,7 @@ declare global {
 			Login: {
 				init: (
 					options?: Record<string, any>,
-					callback?: (authData: AuthData) => void,
+					callback?: (authData: AuthData | false) => void,
 				) => void;
 				open: () => void;
 			};
@@ -47,7 +47,9 @@ function LoginButton({
 
 	const buttonRef = useRef<HTMLButtonElement | null>(null);
 
-	async function login(authData: AuthData): Promise<void> {
+	async function login(authData: AuthData | false): Promise<void> {
+		if (!authData) return;
+
 		setLoading(true);
 
 		const response = await UsersAPI.login(authData);
