@@ -376,7 +376,8 @@ function CommandOffcanvas({
 			images:
 				show_images_block && images.length
 					? images.map<Data.CommandsAPI.CreateCommandImage>(
-							({ image, from_url }, index) => ({
+							({ id, image, from_url }, index) => ({
+								id,
 								position: index,
 								image,
 								from_url,
@@ -386,7 +387,8 @@ function CommandOffcanvas({
 			files:
 				show_files_block && files.length
 					? files.map<Data.CommandsAPI.CreateCommandFile>(
-							({ file, from_url }, index) => ({
+							({ id, file, from_url }, index) => ({
+								id,
 								position: index,
 								file,
 								from_url,
