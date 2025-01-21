@@ -11,17 +11,13 @@ BaseToastContainer.displayName = 'BaseToastContainer';
 export { createMessageToast } from './components/MessageToast';
 
 function ToastContainer(): ReactElement {
-	const toasts = useToastContainerStore((state) => state.toasts);
+  const toasts = useToastContainerStore((state) => state.toasts);
 
-	return (
-		<BaseToastContainer
-			containerPosition='fixed'
-			position='bottom-end'
-			className='p-2'
-		>
-			{toasts}
-		</BaseToastContainer>
-	);
+  return (
+    <BaseToastContainer containerPosition='fixed' position='bottom-end' className='p-2'>
+      {toasts}
+    </BaseToastContainer>
+  );
 }
 
 export default memo(ToastContainer);

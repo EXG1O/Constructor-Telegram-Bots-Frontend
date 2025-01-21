@@ -2,12 +2,12 @@
 @import '~bootstrap/scss/forms/input-group';
 
 @each $state, $data in $form-validation-states {
-	.input-group {
-		> .form-control:not(:focus),
-		> .form-select:not(:focus) {
-			@include form-validation-state-selector($state) {
-				z-index: 4;
-			}
-		}
-	}
+  .input-group {
+    > .form-control:not(:focus),
+    > .form-select:not(:focus) {
+      @include form-validation-state-selector($state) {
+        z-index: 4;
+      }
+    }
+  }
 }

@@ -9,7 +9,7 @@ import Block, { BlockProps } from '../../Block';
 import VariablesInfoText from '../../VariablesInfoText';
 
 export interface Message {
-	text: string;
+  text: string;
 }
 
 export type MessageBlockProps = Pick<BlockProps, 'className'>;
@@ -17,20 +17,20 @@ export type MessageBlockProps = Pick<BlockProps, 'className'>;
 export const defaultMessage: Message = { text: '' };
 
 function MessageBlock(props: MessageBlockProps): ReactElement<MessageBlockProps> {
-	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-		keyPrefix: 'commandOffcanvas.messageBlock',
-	});
+  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+    keyPrefix: 'commandOffcanvas.messageBlock',
+  });
 
-	return (
-		<Block {...props} title={t('title')} body>
-			<FormTelegramQuillEditorFeedback
-				height={220}
-				name='message.text'
-				placeholder={t('messageEditorPlaceholder')}
-			/>
-			<VariablesInfoText />
-		</Block>
-	);
+  return (
+    <Block {...props} title={t('title')} body>
+      <FormTelegramQuillEditorFeedback
+        height={220}
+        name='message.text'
+        placeholder={t('messageEditorPlaceholder')}
+      />
+      <VariablesInfoText />
+    </Block>
+  );
 }
 
 export default memo(MessageBlock);

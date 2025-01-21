@@ -6,25 +6,25 @@ import { TelegramBotAPI } from 'api/telegram_bots/main';
 import { APIResponse } from 'api/telegram_bots/types';
 
 export interface LoaderData {
-	telegramBot: APIResponse.TelegramBotAPI.Get;
+  telegramBot: APIResponse.TelegramBotAPI.Get;
 }
 
 async function loader({
-	params,
+  params,
 }: {
-	params: Params<'telegramBotID'>;
+  params: Params<'telegramBotID'>;
 }): Promise<Response | LoaderData | null> {
-	const { telegramBotID } = params;
+  const { telegramBotID } = params;
 
-	if (telegramBotID === undefined) {
-		return redirect(reverse(RouteID.TelegramBots));
-	}
+  if (telegramBotID === undefined) {
+    return redirect(reverse(RouteID.TelegramBots));
+  }
 
-	const response = await TelegramBotAPI.get(parseInt(telegramBotID));
+  const response = await TelegramBotAPI.get(parseInt(telegramBotID));
 
-	if (!response.ok) return null;
+  if (!response.ok) return null;
 
-	return { telegramBot: response.json };
+  return { telegramBot: response.json };
 }
 
 export default loader;

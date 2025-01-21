@@ -21,79 +21,74 @@ export type ConditionNodeProps = RFNodeProps<Data>;
 type EditHandler = NodeProps['onEdit'];
 
 function ConditionNode({
-	id,
-	xPos,
-	yPos,
-	data: condition,
+  id,
+  xPos,
+  yPos,
+  data: condition,
 }: ConditionNodeProps): ReactElement<ConditionNodeProps> {
-	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-		keyPrefix: 'nodes.condition',
-	});
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+    keyPrefix: 'nodes.condition',
+  });
 
-	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-	const onNodesDelete = useStore((state) => state.onNodesDelete);
+  const onNodesDelete = useStore((state) => state.onNodesDelete);
 
-	const showEditConditionOffcanvas = useConditionOffcanvasStore(
-		(state) => state.showOffcanvas,
-	);
+  const showEditConditionOffcanvas = useConditionOffcanvasStore(
+    (state) => state.showOffcanvas,
+  );
 
-	const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
-	const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
-	const setLoadingAskConfirmModal = useAskConfirmModalStore(
-		(state) => state.setLoading,
-	);
+  const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
+  const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
+  const setLoadingAskConfirmModal = useAskConfirmModalStore(
+    (state) => state.setLoading,
+  );
 
-	const showDeleteModal = useCallback(
-		() =>
-			setShowAskConfirmModal({
-				title: t('deleteModal.title'),
-				text: t('deleteModal.text'),
-				onConfirm: async () => {
-					setLoadingAskConfirmModal(true);
+  const showDeleteModal = useCallback(
+    () =>
+      setShowAskConfirmModal({
+        title: t('deleteModal.title'),
+        text: t('deleteModal.text'),
+        onConfirm: async () => {
+          setLoadingAskConfirmModal(true);
 
-					const response = await ConditionAPI.delete(
-						telegramBot.id,
-						condition.id,
-					);
+          const response = await ConditionAPI.delete(telegramBot.id, condition.id);
 
-					if (response.ok) {
-						onNodesDelete?.([
-							{ id, position: { x: xPos, y: yPos }, data: condition },
-						]);
-						hideAskConfirmModal();
-						createMessageToast({
-							message: t('messages.deleteCondition.success'),
-							level: 'success',
-						});
-					} else {
-						createMessageToast({
-							message: t('messages.deleteCondition.error'),
-							level: 'error',
-						});
-					}
+          if (response.ok) {
+            onNodesDelete?.([{ id, position: { x: xPos, y: yPos }, data: condition }]);
+            hideAskConfirmModal();
+            createMessageToast({
+              message: t('messages.deleteCondition.success'),
+              level: 'success',
+            });
+          } else {
+            createMessageToast({
+              message: t('messages.deleteCondition.error'),
+              level: 'error',
+            });
+          }
 
-					setLoadingAskConfirmModal(false);
-				},
-				onCancel: null,
-			}),
-		[i18n.language],
-	);
+          setLoadingAskConfirmModal(false);
+        },
+        onCancel: null,
+      }),
+    [i18n.language],
+  );
 
-	const handleEdit = useCallback<EditHandler>(
-		() => showEditConditionOffcanvas(condition.id),
-		[condition.id],
-	);
+  const handleEdit = useCallback<EditHandler>(
+    () => showEditConditionOffcanvas(condition.id),
+    [condition.id],
+  );
 
-	return (
-		<Node title={t('title')} onEdit={handleEdit} onDelete={showDeleteModal}>
-			<Node.Block className='position-relative text-center text-break'>
-				<Handle id={`${id}:left:0`} type='target' position={Position.Left} />
-				{condition.name}
-				<Handle id={`${id}:right:0`} type='source' position={Position.Right} />
-			</Node.Block>
-		</Node>
-	);
+  return (
+    <Node title={t('title')} onEdit={handleEdit} onDelete={showDeleteModal}>
+      <Node.Block className='position-relative text-center text-break'>
+        <Handle id={`${id}:left:0`} type='target' position={Position.Left} />
+        {condition.name}
+        <Handle id={`${id}:right:0`} type='source' position={Position.Right} />
+      </Node.Block>
+    </Node>
+  );
 }
 
 export default memo(ConditionNode);

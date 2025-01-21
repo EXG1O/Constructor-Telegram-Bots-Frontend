@@ -15,22 +15,22 @@ export type Parts = Part[];
 export const defaultParts: Parts = [defaultPart];
 
 function PartsBlock(): ReactElement {
-	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-		keyPrefix: 'conditionOffcanvas.partsBlock',
-	});
+  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+    keyPrefix: 'conditionOffcanvas.partsBlock',
+  });
 
-	const [{ value: parts }] = useField<Parts>('parts');
+  const [{ value: parts }] = useField<Parts>('parts');
 
-	return (
-		<Block title={t('title')} body>
-			<Stack gap={1}>
-				{parts.map((_, index) => (
-					<PartItem key={index} index={index} />
-				))}
-				<VariablesInfoText />
-			</Stack>
-		</Block>
-	);
+  return (
+    <Block title={t('title')} body>
+      <Stack gap={1}>
+        {parts.map((_, index) => (
+          <PartItem key={index} index={index} />
+        ))}
+        <VariablesInfoText />
+      </Stack>
+    </Block>
+  );
 }
 
 export default memo(PartsBlock);

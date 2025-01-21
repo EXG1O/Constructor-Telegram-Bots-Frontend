@@ -17,38 +17,38 @@ export type RecordListProps = Omit<ListGroupProps, 'children'>;
 const tablePlaceholderClassName: string = 'text-center px-3 py-2';
 
 function RecordList({
-	className,
-	...props
+  className,
+  ...props
 }: RecordListProps): ReactElement<RecordListProps> {
-	const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
-		keyPrefix: 'records.list',
-	});
+  const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
+    keyPrefix: 'records.list',
+  });
 
-	const loading = useDatabaseRecordsStore((state) => state.loading);
-	const search = useDatabaseRecordsStore((state) => state.search);
-	const records = useDatabaseRecordsStore((state) => state.records);
+  const loading = useDatabaseRecordsStore((state) => state.loading);
+  const search = useDatabaseRecordsStore((state) => state.search);
+  const records = useDatabaseRecordsStore((state) => state.records);
 
-	return !loading ? (
-		records.length ? (
-			<ListGroup {...props} className={classNames(className, 'rounded-1')}>
-				{records.map((record) => (
-					<RecordDisplay key={record.id} record={record} />
-				))}
-			</ListGroup>
-		) : search ? (
-			<Wrapper className={tablePlaceholderClassName}>
-				{t('placeholders.notFound')}
-			</Wrapper>
-		) : (
-			<Wrapper className={tablePlaceholderClassName}>
-				{t('placeholders.notAdded')}
-			</Wrapper>
-		)
-	) : (
-		<Wrapper className='d-flex justify-content-center p-2'>
-			<Loading size='sm' />
-		</Wrapper>
-	);
+  return !loading ? (
+    records.length ? (
+      <ListGroup {...props} className={classNames(className, 'rounded-1')}>
+        {records.map((record) => (
+          <RecordDisplay key={record.id} record={record} />
+        ))}
+      </ListGroup>
+    ) : search ? (
+      <Wrapper className={tablePlaceholderClassName}>
+        {t('placeholders.notFound')}
+      </Wrapper>
+    ) : (
+      <Wrapper className={tablePlaceholderClassName}>
+        {t('placeholders.notAdded')}
+      </Wrapper>
+    )
+  ) : (
+    <Wrapper className='d-flex justify-content-center p-2'>
+      <Loading size='sm' />
+    </Wrapper>
+  );
 }
 
 export default memo(RecordList);

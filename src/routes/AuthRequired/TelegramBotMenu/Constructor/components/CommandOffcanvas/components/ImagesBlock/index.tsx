@@ -13,13 +13,13 @@ import ImagesLoading from './components/ImagesLoading';
 import Block, { BlockProps } from '../../../Block';
 
 export interface Image {
-	id?: number;
-	key: string;
-	image: File | null;
-	name: string;
-	size: number;
-	url: string;
-	from_url: string | null;
+  id?: number;
+  key: string;
+  image: File | null;
+  name: string;
+  size: number;
+  url: string;
+  from_url: string | null;
 }
 
 export type Images = Image[];
@@ -29,23 +29,23 @@ export type ImagesBlockProps = Pick<BlockProps, 'className'>;
 export const defaultImages: Images = [];
 
 function ImagesBlock(props: ImagesBlockProps): ReactElement<ImagesBlockProps> {
-	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-		keyPrefix: 'commandOffcanvas.imagesBlock',
-	});
+  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+    keyPrefix: 'commandOffcanvas.imagesBlock',
+  });
 
-	return (
-		<Block.Collapse name='show_images_block'>
-			<Block {...props} title={t('title')}>
-				<Block.Body as={Stack} gap={2}>
-					<ImagesLoading>
-						<ImageCarousel />
-						<ImageList />
-					</ImagesLoading>
-					<AddImagesButton />
-				</Block.Body>
-			</Block>
-		</Block.Collapse>
-	);
+  return (
+    <Block.Collapse name='show_images_block'>
+      <Block {...props} title={t('title')}>
+        <Block.Body as={Stack} gap={2}>
+          <ImagesLoading>
+            <ImageCarousel />
+            <ImageList />
+          </ImagesLoading>
+          <AddImagesButton />
+        </Block.Body>
+      </Block>
+    </Block.Collapse>
+  );
 }
 
 export default memo(ImagesBlock);

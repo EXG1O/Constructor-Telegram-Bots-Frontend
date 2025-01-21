@@ -1,7 +1,7 @@
 import React, { forwardRef, useContext } from 'react';
 
 import BaseModalFooter, {
-	ModalFooterProps as BaseModalFooterProps,
+  ModalFooterProps as BaseModalFooterProps,
 } from 'react-bootstrap/ModalFooter';
 
 import ModalContext from '../contexts/ModalContext';
@@ -9,18 +9,18 @@ import ModalContext from '../contexts/ModalContext';
 import { FCA } from 'utils/helpers';
 
 export interface ModalFooterProps extends BaseModalFooterProps {
-	as?: any;
+  as?: any;
 }
 
 BaseModalFooter.displayName = 'BaseModalFooter';
 
 const ModalFooter: FCA<'div', ModalFooterProps> = forwardRef<
-	HTMLElement,
-	ModalFooterProps
+  HTMLElement,
+  ModalFooterProps
 >(function ModalFooter(props, ref) {
-	const context = useContext(ModalContext);
+  const context = useContext(ModalContext);
 
-	return !context?.loading && <BaseModalFooter ref={ref} {...props} />;
+  return !context?.loading && <BaseModalFooter ref={ref} {...props} />;
 });
 
 export default ModalFooter;

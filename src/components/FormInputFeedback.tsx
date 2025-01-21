@@ -6,16 +6,16 @@ import InputFeedback, { InputFeedbackProps } from './InputFeedback';
 import { FCA } from 'utils/helpers';
 
 export interface FormInputFeedbackProps extends InputFeedbackProps {
-	name: string;
+  name: string;
 }
 
 const FormInputFeedback: FCA<'input', FormInputFeedbackProps> = forwardRef<
-	HTMLElement,
-	FormInputFeedbackProps
+  HTMLElement,
+  FormInputFeedbackProps
 >(function FormInputFeedback(props, ref) {
-	const [field, meta] = useField(props);
+  const [field, meta] = useField(props);
 
-	return <InputFeedback ref={ref} {...props} {...field} error={meta.error} />;
+  return <InputFeedback ref={ref} {...props} {...field} error={meta.error} />;
 });
 
 export default FormInputFeedback;

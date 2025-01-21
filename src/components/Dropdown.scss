@@ -2,13 +2,13 @@
 @import '~bootstrap/scss/dropdown';
 
 .dropdown {
-	&-menu {
-		margin-top: 3px;
-		text-align: center;
-		box-shadow: var(--#{$prefix}dropdown-box-shadow);
-	}
+  &-menu {
+    margin-top: 3px;
+    text-align: center;
+    box-shadow: var(--#{$prefix}dropdown-box-shadow);
+  }
 
-	&-item {
-		transition: $btn-transition;
-	}
+  &-item {
+    transition: $btn-transition;
+  }
 }

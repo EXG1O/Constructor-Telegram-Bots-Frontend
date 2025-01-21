@@ -6,70 +6,70 @@ import { useField } from 'formik';
 import { useCommandOffcanvasStore } from '../../../../../store';
 
 export interface KeyboardButton {
-	id?: number;
-	draggableId: string;
-	text: string;
-	url: string | null;
+  id?: number;
+  draggableId: string;
+  text: string;
+  url: string | null;
 }
 
 export interface DraggableKeyboardButtonProps
-	extends Omit<HTMLAttributes<HTMLElement>, 'children'> {
-	rowIndex: number;
-	buttonIndex: number;
+  extends Omit<HTMLAttributes<HTMLElement>, 'children'> {
+  rowIndex: number;
+  buttonIndex: number;
 }
 
 function DraggableKeyboardButton({
-	rowIndex,
-	buttonIndex,
-	className,
-	...props
+  rowIndex,
+  buttonIndex,
+  className,
+  ...props
 }: DraggableKeyboardButtonProps): ReactElement<DraggableKeyboardButtonProps> {
-	const [{ value: button }] = useField<KeyboardButton>(
-		`keyboard.rows[${rowIndex}].buttons[${buttonIndex}]`,
-	);
+  const [{ value: button }] = useField<KeyboardButton>(
+    `keyboard.rows[${rowIndex}].buttons[${buttonIndex}]`,
+  );
 
-	const select = useCommandOffcanvasStore(
-		(state) =>
-			state.keyboardButtonBlock.rowIndex === rowIndex &&
-			state.keyboardButtonBlock.buttonIndex === buttonIndex,
-	);
-	const showEditButtonBlock = useCommandOffcanvasStore(
-		(state) => state.keyboardButtonBlock.showBlock,
-	);
-	const hideEditButtonBlock = useCommandOffcanvasStore(
-		(state) => state.keyboardButtonBlock.hideBlock,
-	);
+  const select = useCommandOffcanvasStore(
+    (state) =>
+      state.keyboardButtonBlock.rowIndex === rowIndex &&
+      state.keyboardButtonBlock.buttonIndex === buttonIndex,
+  );
+  const showEditButtonBlock = useCommandOffcanvasStore(
+    (state) => state.keyboardButtonBlock.showBlock,
+  );
+  const hideEditButtonBlock = useCommandOffcanvasStore(
+    (state) => state.keyboardButtonBlock.hideBlock,
+  );
 
-	function handleClick(): void {
-		select
-			? hideEditButtonBlock()
-			: showEditButtonBlock(
-					{ ...button, url: button.url ?? '' },
-					rowIndex,
-					buttonIndex,
-				);
-	}
+  function handleClick(): void {
+    select
+      ? hideEditButtonBlock()
+      : showEditButtonBlock(
+          { ...button, url: button.url ?? '' },
+          rowIndex,
+          buttonIndex,
+        );
+  }
 
-	return (
-		<Draggable index={buttonIndex} draggableId={button.draggableId}>
-			{({ innerRef, draggableProps, dragHandleProps }) => (
-				<small
-					ref={innerRef}
-					{...props}
-					{...draggableProps}
-					{...dragHandleProps}
-					className={classNames(
-						'rounded-1 text-center px-2 py-1',
-						{ 'text-bg-dark': !select, 'text-bg-secondary': select },
-						className,
-					)}
-					onClick={handleClick}
-				>
-					{button.text}
-				</small>
-			)}
-		</Draggable>
-	);
+  return (
+    <Draggable index={buttonIndex} draggableId={button.draggableId}>
+      {({ innerRef, draggableProps, dragHandleProps }) => (
+        <small
+          ref={innerRef}
+          {...props}
+          {...draggableProps}
+          {...dragHandleProps}
+          className={classNames(
+            'rounded-1 text-center px-2 py-1',
+            { 'text-bg-dark': !select, 'text-bg-secondary': select },
+            className,
+          )}
+          onClick={handleClick}
+        >
+          {button.text}
+        </small>
+      )}
+    </Draggable>
+  );
 }
 
 export default memo(DraggableKeyboardButton);

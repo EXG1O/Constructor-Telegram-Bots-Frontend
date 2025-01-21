@@ -1,17 +1,17 @@
 {
-	"title": "Free constructor Telegram bots",
-	"header": {
-		"text": "A website with which you can easily, free and without any programming knowledge, create your own multifunctional Telegram bot."
-	},
-	"stats": {
-		"title": "Statistics",
-		"usersTotal": "Users",
-		"telegramBotsTotal": "Added Telegram bots",
-		"telegramBotsEnabled": "Enabled Telegram bots",
-		"telegramBotsUsers": "Telegram bots users"
-	},
-	"donations": {
-		"title": "Donations",
-		"noDonations": "No donations have been made yet"
-	}
+  "title": "Free constructor Telegram bots",
+  "header": {
+    "text": "A website with which you can easily, free and without any programming knowledge, create your own multifunctional Telegram bot."
+  },
+  "stats": {
+    "title": "Statistics",
+    "usersTotal": "Users",
+    "telegramBotsTotal": "Added Telegram bots",
+    "telegramBotsEnabled": "Enabled Telegram bots",
+    "telegramBotsUsers": "Telegram bots users"
+  },
+  "donations": {
+    "title": "Donations",
+    "noDonations": "No donations have been made yet"
+  }
 }

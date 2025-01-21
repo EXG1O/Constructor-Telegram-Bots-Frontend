@@ -4,27 +4,27 @@ import { VariablesAPI } from 'api/telegram_bots/main';
 import { APIResponse } from 'api/telegram_bots/types';
 
 export interface PaginationData extends APIResponse.VariablesAPI.Get.Pagination {
-	limit: number;
-	offset: number;
+  limit: number;
+  offset: number;
 }
 
 export interface LoaderData {
-	paginationData: PaginationData;
+  paginationData: PaginationData;
 }
 
 async function loader({
-	params,
+  params,
 }: {
-	params: Params<'telegramBotID'>;
+  params: Params<'telegramBotID'>;
 }): Promise<LoaderData | null> {
-	const telegramBotID: number = parseInt(params.telegramBotID!);
-	const [limit, offset] = [10, 0];
+  const telegramBotID: number = parseInt(params.telegramBotID!);
+  const [limit, offset] = [10, 0];
 
-	const response = await VariablesAPI.get(telegramBotID, limit, offset);
+  const response = await VariablesAPI.get(telegramBotID, limit, offset);
 
-	if (!response.ok) return null;
+  if (!response.ok) return null;
 
-	return { paginationData: { ...response.json, limit, offset } };
+  return { paginationData: { ...response.json, limit, offset } };
 }
 
 export default loader;

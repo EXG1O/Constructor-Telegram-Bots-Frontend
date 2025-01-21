@@ -17,57 +17,49 @@ export interface UsersTableProps extends Omit<BlockProps, 'children'> {}
 const tablePlaceholderClassName: string = 'text-center px-3 py-2';
 
 function UsersTable({
-	className,
-	...props
+  className,
+  ...props
 }: UsersTableProps): ReactElement<UsersTableProps> {
-	const { t } = useTranslation(RouteID.TelegramBotMenuUsers, { keyPrefix: 'table' });
+  const { t } = useTranslation(RouteID.TelegramBotMenuUsers, { keyPrefix: 'table' });
 
-	const loading = useUsersStore((state) => state.loading);
-	const search = useUsersStore((state) => state.search);
-	const type = useUsersStore((state) => state.type);
-	const users = useUsersStore((state) => state.users);
+  const loading = useUsersStore((state) => state.loading);
+  const search = useUsersStore((state) => state.search);
+  const type = useUsersStore((state) => state.type);
+  const users = useUsersStore((state) => state.users);
 
-	return !loading ? (
-		users.length ? (
-			<TableWrapper
-				{...props}
-				className={classNames('overflow-hidden', className)}
-			>
-				<Table
-					responsive
-					striped
-					borderless
-					className='align-middle text-nowrap mb-0'
-				>
-					<tbody>
-						{users.map((user) => (
-							<TableRow key={user.id} user={user} />
-						))}
-					</tbody>
-				</Table>
-			</TableWrapper>
-		) : search ? (
-			<TableWrapper className={tablePlaceholderClassName}>
-				{t('placeholders.notFound')}
-			</TableWrapper>
-		) : type === 'allowed' ? (
-			<TableWrapper className={tablePlaceholderClassName}>
-				{t('placeholders.notAllowed')}
-			</TableWrapper>
-		) : type === 'blocked' ? (
-			<TableWrapper className={tablePlaceholderClassName}>
-				{t('placeholders.notBlocked')}
-			</TableWrapper>
-		) : (
-			<TableWrapper className={tablePlaceholderClassName}>
-				{t('placeholders.notActivated')}
-			</TableWrapper>
-		)
-	) : (
-		<TableWrapper className='d-flex justify-content-center p-2'>
-			<Loading size='sm' />
-		</TableWrapper>
-	);
+  return !loading ? (
+    users.length ? (
+      <TableWrapper {...props} className={classNames('overflow-hidden', className)}>
+        <Table responsive striped borderless className='align-middle text-nowrap mb-0'>
+          <tbody>
+            {users.map((user) => (
+              <TableRow key={user.id} user={user} />
+            ))}
+          </tbody>
+        </Table>
+      </TableWrapper>
+    ) : search ? (
+      <TableWrapper className={tablePlaceholderClassName}>
+        {t('placeholders.notFound')}
+      </TableWrapper>
+    ) : type === 'allowed' ? (
+      <TableWrapper className={tablePlaceholderClassName}>
+        {t('placeholders.notAllowed')}
+      </TableWrapper>
+    ) : type === 'blocked' ? (
+      <TableWrapper className={tablePlaceholderClassName}>
+        {t('placeholders.notBlocked')}
+      </TableWrapper>
+    ) : (
+      <TableWrapper className={tablePlaceholderClassName}>
+        {t('placeholders.notActivated')}
+      </TableWrapper>
+    )
+  ) : (
+    <TableWrapper className='d-flex justify-content-center p-2'>
+      <Loading size='sm' />
+    </TableWrapper>
+  );
 }
 
 export default UsersTable;

@@ -1,21 +1,21 @@
 {
-	"title": "Telegram bots",
-	"header": {
-		"title": "Added Telegram bots",
-		"addTelegramBotButton": "Add Telegram bot"
-	},
-	"telegramBotAdditionModal": {
-		"title": "Adding a Telegram bot",
-		"messages": {
-			"createTelegramBot": {
-				"success": "You have successfully added the Telegram bot.",
-				"error": "An unexpected error occurred, and the Telegram bot could not be added."
-			}
-		},
-		"apiTokenInputPlaceholder": "Enter API-token",
-		"privateSwitchLabel": "Make private",
-		"addButton": "Add"
-	},
-	"notTelegramBots": "You haven't added any Telegram bots yet",
-	"telegramBotMenuLink": "Telegram bot menu"
+  "title": "Telegram bots",
+  "header": {
+    "title": "Added Telegram bots",
+    "addTelegramBotButton": "Add Telegram bot"
+  },
+  "telegramBotAdditionModal": {
+    "title": "Adding a Telegram bot",
+    "messages": {
+      "createTelegramBot": {
+        "success": "You have successfully added the Telegram bot.",
+        "error": "An unexpected error occurred, and the Telegram bot could not be added."
+      }
+    },
+    "apiTokenInputPlaceholder": "Enter API-token",
+    "privateSwitchLabel": "Make private",
+    "addButton": "Add"
+  },
+  "notTelegramBots": "You haven't added any Telegram bots yet",
+  "telegramBotMenuLink": "Telegram bot menu"
 }

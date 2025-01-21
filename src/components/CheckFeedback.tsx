@@ -8,23 +8,23 @@ import('./CheckFeedback.scss');
 import('./Feedback.scss');
 
 export interface CheckFeedbackProps extends Omit<CheckProps, 'isInvalid'> {
-	error?: string;
+  error?: string;
 }
 
 const CheckFeedback: FCA<'input', CheckFeedbackProps> = forwardRef<
-	HTMLElement,
-	CheckFeedbackProps
+  HTMLElement,
+  CheckFeedbackProps
 >(function CheckFeedback({ as, error, ...props }, ref) {
-	return (
-		<Check
-			as={as}
-			ref={ref}
-			{...props}
-			isInvalid={Boolean(error)}
-			feedbackType='invalid'
-			feedback={error}
-		/>
-	);
+  return (
+    <Check
+      as={as}
+      ref={ref}
+      {...props}
+      isInvalid={Boolean(error)}
+      feedbackType='invalid'
+      feedback={error}
+    />
+  );
 });
 
 export default memo(CheckFeedback);

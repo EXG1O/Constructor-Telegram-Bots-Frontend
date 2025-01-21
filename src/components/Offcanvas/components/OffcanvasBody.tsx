@@ -1,7 +1,7 @@
 import React, { forwardRef, useContext } from 'react';
 
 import BaseOffcanvasBody, {
-	OffcanvasBodyProps as BaseOffcanvasBodyProps,
+  OffcanvasBodyProps as BaseOffcanvasBodyProps,
 } from 'react-bootstrap/OffcanvasBody';
 
 import OffcanvasContext from '../contexts/OffcanvasContext';
@@ -13,12 +13,12 @@ export type BodyOffcanvasProps = BaseOffcanvasBodyProps;
 BaseOffcanvasBody.displayName = 'BaseOffcanvasBody';
 
 const OffcanvasBody: FCA<'div', BodyOffcanvasProps> = forwardRef<
-	HTMLElement,
-	BodyOffcanvasProps
+  HTMLElement,
+  BodyOffcanvasProps
 >(function OffcanvasBody(props, ref) {
-	const context = useContext(OffcanvasContext);
+  const context = useContext(OffcanvasContext);
 
-	return !context?.loading && <BaseOffcanvasBody ref={ref} {...props} />;
+  return !context?.loading && <BaseOffcanvasBody ref={ref} {...props} />;
 });
 
 export default OffcanvasBody;

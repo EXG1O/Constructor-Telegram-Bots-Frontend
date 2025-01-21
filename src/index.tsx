@@ -10,5 +10,5 @@ import { routes } from './routes';
 const router = createBrowserRouter(routes);
 
 createRoot(document.querySelector<HTMLDivElement>('#root')!).render(
-	<RouterProvider router={router} />,
+  <RouterProvider router={router} />,
 );

@@ -14,50 +14,50 @@ import Loading from '../Loading';
 import('./index.scss');
 
 export interface OffcanvasProps
-	extends Omit<
-		BaseModalProps,
-		| 'role'
-		| 'renderBackdrop'
-		| 'renderDialog'
-		| 'transition'
-		| 'backdrop'
-		| 'backdropTransition'
-		| 'keyboard'
-		| 'children'
-	> {
-	loading?: boolean;
-	bsPrefix?: string;
-	backdropClassName?: string;
-	scroll?: boolean;
-	placement?: 'start' | 'end' | 'top' | 'bottom';
-	responsive?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
-	renderStaticNode?: boolean;
-	children?: ReactNode;
+  extends Omit<
+    BaseModalProps,
+    | 'role'
+    | 'renderBackdrop'
+    | 'renderDialog'
+    | 'transition'
+    | 'backdrop'
+    | 'backdropTransition'
+    | 'keyboard'
+    | 'children'
+  > {
+  loading?: boolean;
+  bsPrefix?: string;
+  backdropClassName?: string;
+  scroll?: boolean;
+  placement?: 'start' | 'end' | 'top' | 'bottom';
+  responsive?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+  renderStaticNode?: boolean;
+  children?: ReactNode;
 }
 
 BaseOffcanvas.displayName = 'BaseOffcanvas';
 
 const Offcanvas = forwardRef<HTMLElement, OffcanvasProps>(function Offcanvas(
-	{ loading = false, children, ...props },
-	ref,
+  { loading = false, children, ...props },
+  ref,
 ) {
-	return (
-		<OffcanvasContext.Provider value={{ loading }}>
-			<BaseOffcanvas ref={ref} {...props}>
-				{children}
-				{loading && (
-					<BaseOffcanvas.Body className='d-flex justify-content-center'>
-						<Loading size='md' className='align-self-center' />
-					</BaseOffcanvas.Body>
-				)}
-			</BaseOffcanvas>
-		</OffcanvasContext.Provider>
-	);
+  return (
+    <OffcanvasContext.Provider value={{ loading }}>
+      <BaseOffcanvas ref={ref} {...props}>
+        {children}
+        {loading && (
+          <BaseOffcanvas.Body className='d-flex justify-content-center'>
+            <Loading size='md' className='align-self-center' />
+          </BaseOffcanvas.Body>
+        )}
+      </BaseOffcanvas>
+    </OffcanvasContext.Provider>
+  );
 });
 
 export default Object.assign(Offcanvas, {
-	Header: OffcanvasHeader,
-	Title: OffcanvasTitle,
-	Body: OffcanvasBody,
-	Footer: OffcanvasFooter,
+  Header: OffcanvasHeader,
+  Title: OffcanvasTitle,
+  Body: OffcanvasBody,
+  Footer: OffcanvasFooter,
 });

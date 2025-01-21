@@ -13,24 +13,24 @@ import UsersTable from './components/UsersTable';
 import StoreProvider from './providers/StoreProvider';
 
 function Users(): ReactElement {
-	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuUsers);
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuUsers);
 
-	const title = useMemo<string>(() => t('title'), [i18n.language]);
+  const title = useMemo<string>(() => t('title'), [i18n.language]);
 
-	return (
-		<Page title={title} grid>
-			<StoreProvider>
-				<Block variant='light'>
-					<h3 className='fw-semibold text-center mb-3'>{title}</h3>
-					<Stack gap={2}>
-						<Toolbar />
-						<UsersTable />
-						<Footer />
-					</Stack>
-				</Block>
-			</StoreProvider>
-		</Page>
-	);
+  return (
+    <Page title={title} grid>
+      <StoreProvider>
+        <Block variant='light'>
+          <h3 className='fw-semibold text-center mb-3'>{title}</h3>
+          <Stack gap={2}>
+            <Toolbar />
+            <UsersTable />
+            <Footer />
+          </Stack>
+        </Block>
+      </StoreProvider>
+    </Page>
+  );
 }
 
 export default Users;

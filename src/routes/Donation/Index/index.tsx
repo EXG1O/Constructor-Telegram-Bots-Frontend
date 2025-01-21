@@ -11,21 +11,21 @@ import SectionDisplay from './components/SectionDisplay';
 import useDonationRouteLoaderData from './hooks/useDonationRouteLoaderData';
 
 function Index(): ReactElement {
-	const { t, i18n } = useTranslation(RouteID.Donation);
+  const { t, i18n } = useTranslation(RouteID.Donation);
 
-	const { sections } = useDonationRouteLoaderData();
+  const { sections } = useDonationRouteLoaderData();
 
-	const title = useMemo<string>(() => t('title'), [i18n.language]);
+  const title = useMemo<string>(() => t('title'), [i18n.language]);
 
-	return (
-		<Page title={title} grid>
-			<h1 className='fw-semibold text-center'>{title}</h1>
-			{sections.map((section) => (
-				<SectionDisplay key={section.id} section={section} />
-			))}
-			<MethodTable />
-		</Page>
-	);
+  return (
+    <Page title={title} grid>
+      <h1 className='fw-semibold text-center'>{title}</h1>
+      {sections.map((section) => (
+        <SectionDisplay key={section.id} section={section} />
+      ))}
+      <MethodTable />
+    </Page>
+  );
 }
 
 export default Index;

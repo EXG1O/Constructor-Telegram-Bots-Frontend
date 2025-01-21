@@ -7,14 +7,14 @@ import useRootRouteLoaderData from 'routes/Root/hooks/useRootRouteLoaderData';
 import Loading from 'components/Loading';
 
 function Root(): ReactElement {
-	const navigate = useNavigate();
-	const { user } = useRootRouteLoaderData();
+  const navigate = useNavigate();
+  const { user } = useRootRouteLoaderData();
 
-	useEffect(() => {
-		if (!user) navigate(reverse(RouteID.Home));
-	}, [user]);
+  useEffect(() => {
+    if (!user) navigate(reverse(RouteID.Home));
+  }, [user]);
 
-	return user ? <Outlet /> : <Loading size='xl' className='m-auto' />;
+  return user ? <Outlet /> : <Loading size='xl' className='m-auto' />;
 }
 
 export default Root;

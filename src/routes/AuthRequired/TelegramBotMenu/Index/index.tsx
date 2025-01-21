@@ -13,21 +13,21 @@ import TelegramBotBlock from 'components/TelegramBotBlock';
 import TelegramBotBlockFooter from './components/TelegramBotBlockFooter';
 
 function Index(): ReactElement {
-	const { t } = useTranslation(RouteID.TelegramBotMenu);
+  const { t } = useTranslation(RouteID.TelegramBotMenu);
 
-	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-	return (
-		<Page title={t('title')} grid>
-			<Row className='g-3 g-lg-4'>
-				<Col xs={12} lg={6}>
-					<TelegramBotBlock telegramBot={telegramBot}>
-						<TelegramBotBlockFooter />
-					</TelegramBotBlock>
-				</Col>
-			</Row>
-		</Page>
-	);
+  return (
+    <Page title={t('title')} grid>
+      <Row className='g-3 g-lg-4'>
+        <Col xs={12} lg={6}>
+          <TelegramBotBlock telegramBot={telegramBot}>
+            <TelegramBotBlockFooter />
+          </TelegramBotBlock>
+        </Col>
+      </Row>
+    </Page>
+  );
 }
 
 export default Index;

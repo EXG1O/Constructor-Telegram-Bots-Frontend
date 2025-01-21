@@ -15,29 +15,26 @@ import StoreProvider from './providers/StoreProvider';
 import useUserVariablesStore from './hooks/useUserVariablesStore';
 
 function UserVariables(): ReactElement {
-	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
-		keyPrefix: 'user',
-	});
+  const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
+    keyPrefix: 'user',
+  });
 
-	const updateVariables = useUserVariablesStore((state) => state.updateVariables);
-	const handleAddOrSaveVariable = useCallback(() => updateVariables(), []);
+  const updateVariables = useUserVariablesStore((state) => state.updateVariables);
+  const handleAddOrSaveVariable = useCallback(() => updateVariables(), []);
 
-	return (
-		<>
-			<VariableModal
-				onAdd={handleAddOrSaveVariable}
-				onSave={handleAddOrSaveVariable}
-			/>
-			<Block variant='light'>
-				<h3 className='fw-semibold text-center mb-3'>{t('title')}</h3>
-				<Stack gap={2}>
-					<Toolbar />
-					<VariablesTable />
-					<Footer />
-				</Stack>
-			</Block>
-		</>
-	);
+  return (
+    <>
+      <VariableModal onAdd={handleAddOrSaveVariable} onSave={handleAddOrSaveVariable} />
+      <Block variant='light'>
+        <h3 className='fw-semibold text-center mb-3'>{t('title')}</h3>
+        <Stack gap={2}>
+          <Toolbar />
+          <VariablesTable />
+          <Footer />
+        </Stack>
+      </Block>
+    </>
+  );
 }
 
 export default Object.assign(memo(UserVariables), { StoreProvider });

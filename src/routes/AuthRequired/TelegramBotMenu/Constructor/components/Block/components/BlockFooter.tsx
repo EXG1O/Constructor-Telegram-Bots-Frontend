@@ -10,12 +10,10 @@ import { FCA } from 'utils/helpers';
 export type BlockFooterProps = CardFooterProps;
 
 const BlockFooter: FCA<'div', BlockFooterProps> = forwardRef<
-	HTMLElement,
-	BlockFooterProps
+  HTMLElement,
+  BlockFooterProps
 >(function BlockFooter({ className, ...props }, ref) {
-	return (
-		<Card.Footer ref={ref} {...props} className={classNames(className, 'p-2')} />
-	);
+  return <Card.Footer ref={ref} {...props} className={classNames(className, 'p-2')} />;
 });
 
 export default BlockFooter;
