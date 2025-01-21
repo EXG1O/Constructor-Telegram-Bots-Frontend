@@ -1,31 +1,31 @@
 {
-	"title": "Telegram бот",
-	"telegramBotBlockFooter": {
-		"messages": {
-			"startTelegramBot": {
-				"success": "Выполняется включение Telegram бота.",
-				"error": "Не удалось включить Telegram бота."
-			},
-			"restartTelegramBot": {
-				"success": "Выполняется перезагрузка Telegram бота.",
-				"error": "Не удалось перезагрузить Telegram бота."
-			},
-			"stopTelegramBot": {
-				"success": "Выполняется выключение Telegram бота.",
-				"error": "Не удалось выключить Telegram бота."
-			},
-			"deleteTelegramBot": {
-				"success": "Вы успешно удалили Telegram бота.",
-				"error": "Не удалось удалить Telegram бота."
-			}
-		},
-		"deleteModal": {
-			"title": "Удаление Telegram бота",
-			"text": "Вы точно хотите удалить Telegram бота?"
-		},
-		"startButton": "Включить",
-		"restartButton": "Перезагрузить",
-		"stopButton": "Выключить",
-		"deleteButton": "Удалить"
-	}
+  "title": "Telegram бот",
+  "telegramBotBlockFooter": {
+    "messages": {
+      "startTelegramBot": {
+        "success": "Выполняется включение Telegram бота.",
+        "error": "Не удалось включить Telegram бота."
+      },
+      "restartTelegramBot": {
+        "success": "Выполняется перезагрузка Telegram бота.",
+        "error": "Не удалось перезагрузить Telegram бота."
+      },
+      "stopTelegramBot": {
+        "success": "Выполняется выключение Telegram бота.",
+        "error": "Не удалось выключить Telegram бота."
+      },
+      "deleteTelegramBot": {
+        "success": "Вы успешно удалили Telegram бота.",
+        "error": "Не удалось удалить Telegram бота."
+      }
+    },
+    "deleteModal": {
+      "title": "Удаление Telegram бота",
+      "text": "Вы точно хотите удалить Telegram бота?"
+    },
+    "startButton": "Включить",
+    "restartButton": "Перезагрузить",
+    "stopButton": "Выключить",
+    "deleteButton": "Удалить"
+  }
 }

@@ -17,40 +17,39 @@ import useWindowSize from 'hooks/useWindowSize';
 import Logo from 'assets/logo.svg';
 
 function Header(): ReactElement {
-	const windowSize = useWindowSize();
+  const windowSize = useWindowSize();
 
-	const isLargeWindowSize = windowSize.width < 992;
+  const isLargeWindowSize = windowSize.width < 992;
 
-	return (
-		<nav className='py-2'>
-			<Container>
-				<Row className='g-2'>
-					<Col xs='auto' xl='3'>
-						<Link to={reverse(RouteID.Home)}>
-							<Logo width={38} height={38} />
-						</Link>
-					</Col>
-					<Col
-						xs='auto'
-						xl='6'
-						style={{
-							width: isLargeWindowSize ? 'calc(100% - 46px)' : undefined,
-						}}
-					>
-						<Links
-							className={classNames(
-								'flex-nowrap justify-content-xl-center',
-								{ 'overflow-x-auto': isLargeWindowSize },
-							)}
-						/>
-					</Col>
-					<Col xs='auto' xl='3' className='flex-fill'>
-						<Buttons />
-					</Col>
-				</Row>
-			</Container>
-		</nav>
-	);
+  return (
+    <nav className='py-2'>
+      <Container>
+        <Row className='g-2'>
+          <Col xs='auto' xl='3'>
+            <Link to={reverse(RouteID.Home)}>
+              <Logo width={38} height={38} />
+            </Link>
+          </Col>
+          <Col
+            xs='auto'
+            xl='6'
+            style={{
+              width: isLargeWindowSize ? 'calc(100% - 46px)' : undefined,
+            }}
+          >
+            <Links
+              className={classNames('flex-nowrap justify-content-xl-center', {
+                'overflow-x-auto': isLargeWindowSize,
+              })}
+            />
+          </Col>
+          <Col xs='auto' xl='3' className='flex-fill'>
+            <Buttons />
+          </Col>
+        </Row>
+      </Container>
+    </nav>
+  );
 }
 
 export default memo(Header);

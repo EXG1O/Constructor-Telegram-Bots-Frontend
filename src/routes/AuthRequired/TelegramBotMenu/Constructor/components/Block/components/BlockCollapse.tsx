@@ -4,21 +4,21 @@ import { useField } from 'formik';
 import Collapse, { CollapseProps } from 'react-bootstrap/Collapse';
 
 export interface BlockCollapseProps extends Omit<CollapseProps, 'in'> {
-	name: string;
+  name: string;
 }
 
 function BlockCollapse({
-	name,
-	children,
-	...props
+  name,
+  children,
+  ...props
 }: BlockCollapseProps): ReactElement<BlockCollapseProps> {
-	const [{ value: show }] = useField<boolean>(name);
+  const [{ value: show }] = useField<boolean>(name);
 
-	return (
-		<Collapse {...props} in={show}>
-			<div>{children}</div>
-		</Collapse>
-	);
+  return (
+    <Collapse {...props} in={show}>
+      <div>{children}</div>
+    </Collapse>
+  );
 }
 
 export default BlockCollapse;

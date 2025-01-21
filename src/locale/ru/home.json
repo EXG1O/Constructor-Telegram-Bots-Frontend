@@ -1,17 +1,17 @@
 {
-	"title": "Бесплатный конструктор Telegram ботов",
-	"header": {
-		"text": "Сайт, с помощью которого вы можете легко, бесплатно и без каких-либо знаний в программировании, создать своего многофункционального Telegram бота."
-	},
-	"stats": {
-		"title": "Статистика",
-		"usersTotal": "Пользователей",
-		"telegramBotsTotal": "Добавленных Telegram ботов",
-		"telegramBotsEnabled": "Включенных Telegram ботов",
-		"telegramBotsUsers": "Пользователей Telegram ботов"
-	},
-	"donations": {
-		"title": "Пожертвования",
-		"noDonations": "Ещё не было сделано пожертвований"
-	}
+  "title": "Бесплатный конструктор Telegram ботов",
+  "header": {
+    "text": "Сайт, с помощью которого вы можете легко, бесплатно и без каких-либо знаний в программировании, создать своего многофункционального Telegram бота."
+  },
+  "stats": {
+    "title": "Статистика",
+    "usersTotal": "Пользователей",
+    "telegramBotsTotal": "Добавленных Telegram ботов",
+    "telegramBotsEnabled": "Включенных Telegram ботов",
+    "telegramBotsUsers": "Пользователей Telegram ботов"
+  },
+  "donations": {
+    "title": "Пожертвования",
+    "noDonations": "Ещё не было сделано пожертвований"
+  }
 }

@@ -1,58 +1,58 @@
 {
-	"title": "База данных",
-	"messages": {
-		"getRecords": {
-			"error": "Не удалось получить записи базы данных."
-		}
-	},
-	"records": {
-		"title": "Записи базы данных",
-		"messages": {
-			"partialUpdateRecord": {
-				"success": "Вы успешно обновили запись.",
-				"error": "Не удалось обновить запись.",
-				"error_validJSON": "Введите правильно данные в формате JSON.",
-				"error_other": "Произошла непредвиденная ошибка."
-			}
-		},
-		"recordAdditionModal": {
-			"title": "Добавление записи",
-			"messages": {
-				"addRecord": {
-					"success": "Вы успешно добавили запись.",
-					"error": "Не удалось добавить запись.",
-					"error_validJSON": "Введите данных записи в формате JSON."
-				}
-			},
-			"addButton": "Добавить"
-		},
-		"toolbar": {
-			"addRecordButton": "Добавить запись"
-		},
-		"list": {
-			"placeholders": {
-				"notFound": "Поиск по записям не дал результатов",
-				"notAdded": "Вы ещё не добавили записи"
-			},
-			"display": {
-				"messages": {
-					"deleteRecord": {
-						"success": "Вы успешно удалили запись.",
-						"error": "Не удалось удалить запись."
-					}
-				},
-				"deleteModal": {
-					"title": "Удаление записи",
-					"text": "Вы точно хотите удалить запись?"
-				}
-			}
-		}
-	},
-	"footer": {
-		"recordCount_one": "{{count}} запись",
-		"recordCount_two": "{{count}} записи",
-		"recordCount_few": "{{count}} записи",
-		"recordCount_many": "{{count}} записей",
-		"recordCount_other": "{{count}} записей"
-	}
+  "title": "База данных",
+  "messages": {
+    "getRecords": {
+      "error": "Не удалось получить записи базы данных."
+    }
+  },
+  "records": {
+    "title": "Записи базы данных",
+    "messages": {
+      "partialUpdateRecord": {
+        "success": "Вы успешно обновили запись.",
+        "error": "Не удалось обновить запись.",
+        "error_validJSON": "Введите правильно данные в формате JSON.",
+        "error_other": "Произошла непредвиденная ошибка."
+      }
+    },
+    "recordAdditionModal": {
+      "title": "Добавление записи",
+      "messages": {
+        "addRecord": {
+          "success": "Вы успешно добавили запись.",
+          "error": "Не удалось добавить запись.",
+          "error_validJSON": "Введите данных записи в формате JSON."
+        }
+      },
+      "addButton": "Добавить"
+    },
+    "toolbar": {
+      "addRecordButton": "Добавить запись"
+    },
+    "list": {
+      "placeholders": {
+        "notFound": "Поиск по записям не дал результатов",
+        "notAdded": "Вы ещё не добавили записи"
+      },
+      "display": {
+        "messages": {
+          "deleteRecord": {
+            "success": "Вы успешно удалили запись.",
+            "error": "Не удалось удалить запись."
+          }
+        },
+        "deleteModal": {
+          "title": "Удаление записи",
+          "text": "Вы точно хотите удалить запись?"
+        }
+      }
+    }
+  },
+  "footer": {
+    "recordCount_one": "{{count}} запись",
+    "recordCount_two": "{{count}} записи",
+    "recordCount_few": "{{count}} записи",
+    "recordCount_many": "{{count}} записей",
+    "recordCount_other": "{{count}} записей"
+  }
 }

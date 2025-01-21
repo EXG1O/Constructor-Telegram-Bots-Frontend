@@ -6,34 +6,34 @@ import { StatsAPI as UsersStatsAPI } from 'api/users/main';
 import { APIResponse as UsersAPIResponse } from 'api/users/types';
 
 interface Stats {
-	users: UsersAPIResponse.StatsAPI.Get;
-	telegramBots: TelegramBotsAPIResponse.StatsAPI.Get;
+  users: UsersAPIResponse.StatsAPI.Get;
+  telegramBots: TelegramBotsAPIResponse.StatsAPI.Get;
 }
 
 export interface LoaderData {
-	stats: Stats;
-	donations: DonationsAPIResponse.DonationsAPI.Get.Pagination;
+  stats: Stats;
+  donations: DonationsAPIResponse.DonationsAPI.Get.Pagination;
 }
 
 async function loader(): Promise<LoaderData> {
-	const [usersStatsResponse, telegramBotsResponse, donationsResponse] =
-		await Promise.all([
-			UsersStatsAPI.get(),
-			TelegramBotsStatsAPI.get(),
-			DonationsAPI.get(20),
-		]);
+  const [usersStatsResponse, telegramBotsResponse, donationsResponse] =
+    await Promise.all([
+      UsersStatsAPI.get(),
+      TelegramBotsStatsAPI.get(),
+      DonationsAPI.get(20),
+    ]);
 
-	if (!usersStatsResponse.ok || !telegramBotsResponse.ok || !donationsResponse.ok) {
-		throw Error('Failed to fetch data.');
-	}
+  if (!usersStatsResponse.ok || !telegramBotsResponse.ok || !donationsResponse.ok) {
+    throw Error('Failed to fetch data.');
+  }
 
-	return {
-		stats: {
-			users: usersStatsResponse.json,
-			telegramBots: telegramBotsResponse.json,
-		},
-		donations: donationsResponse.json,
-	};
+  return {
+    stats: {
+      users: usersStatsResponse.json,
+      telegramBots: telegramBotsResponse.json,
+    },
+    donations: donationsResponse.json,
+  };
 }
 
 export default loader;

@@ -1,16 +1,16 @@
 @import 'styles/base';
 
 .btn-check {
-	position: absolute;
-	clip: rect(0, 0, 0, 0);
-	pointer-events: none;
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  pointer-events: none;
 
-	&[disabled],
-	&:disabled {
-		+ .btn {
-			pointer-events: none;
-			filter: none;
-			opacity: $form-check-btn-check-disabled-opacity;
-		}
-	}
+  &[disabled],
+  &:disabled {
+    + .btn {
+      pointer-events: none;
+      filter: none;
+      opacity: $form-check-btn-check-disabled-opacity;
+    }
+  }
 }

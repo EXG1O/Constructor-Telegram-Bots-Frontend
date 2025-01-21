@@ -1,61 +1,61 @@
 {
-	"askConfirmModal": {
-		"yesButton": "Yes",
-		"noButton": "No"
-	},
-	"search": {
-		"inputPlaceholder": "Search",
-		"button": "Find"
-	},
-	"loginButton": {
-		"messages": {
-			"userLogin": {
-				"success": "Successful authorization.",
-				"error": "Authorization failed for unknown reasons."
-			}
-		},
-		"text": "Login via Telegram"
-	},
-	"telegramBotBlock": {
-		"messages": {
-			"getTelegramBot": {
-				"error": "Failed to retrieve Telegram bot data."
-			}
-		},
-		"table": {
-			"status": {
-				"header": "Status",
-				"loading": "Loading",
-				"enabled": "Enabled",
-				"disabled": "Disabled"
-			},
-			"apiToken": {
-				"header": "API-token",
-				"messages": {
-					"updateTelegramBotAPIToken": {
-						"success": "You have successfully updated the Telegram bot API-token.",
-						"error": "Failed to update the Telegram bot API-token."
-					}
-				},
-				"inputPlaceholder": "Enter a API-token"
-			},
-			"private": {
-				"header": "Private",
-				"messages": {
-					"updateTelegramBotPrivate": {
-						"success_true": "You have successfully made the Telegram bot private.",
-						"success_false": "You have successfully made the Telegram bot public.",
-						"error_true": "Failed to make the Telegram bot private.",
-						"error_false": "Failed to make the Telegram bot public."
-					}
-				}
-			},
-			"storage": {
-				"header": "Storage"
-			},
-			"addedDate": {
-				"header": "Added"
-			}
-		}
-	}
+  "askConfirmModal": {
+    "yesButton": "Yes",
+    "noButton": "No"
+  },
+  "search": {
+    "inputPlaceholder": "Search",
+    "button": "Find"
+  },
+  "loginButton": {
+    "messages": {
+      "userLogin": {
+        "success": "Successful authorization.",
+        "error": "Authorization failed for unknown reasons."
+      }
+    },
+    "text": "Login via Telegram"
+  },
+  "telegramBotBlock": {
+    "messages": {
+      "getTelegramBot": {
+        "error": "Failed to retrieve Telegram bot data."
+      }
+    },
+    "table": {
+      "status": {
+        "header": "Status",
+        "loading": "Loading",
+        "enabled": "Enabled",
+        "disabled": "Disabled"
+      },
+      "apiToken": {
+        "header": "API-token",
+        "messages": {
+          "updateTelegramBotAPIToken": {
+            "success": "You have successfully updated the Telegram bot API-token.",
+            "error": "Failed to update the Telegram bot API-token."
+          }
+        },
+        "inputPlaceholder": "Enter a API-token"
+      },
+      "private": {
+        "header": "Private",
+        "messages": {
+          "updateTelegramBotPrivate": {
+            "success_true": "You have successfully made the Telegram bot private.",
+            "success_false": "You have successfully made the Telegram bot public.",
+            "error_true": "Failed to make the Telegram bot private.",
+            "error_false": "Failed to make the Telegram bot public."
+          }
+        }
+      },
+      "storage": {
+        "header": "Storage"
+      },
+      "addedDate": {
+        "header": "Added"
+      }
+    }
+  }
 }

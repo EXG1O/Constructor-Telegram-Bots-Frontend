@@ -11,35 +11,35 @@ import SystemVariables from './components/SystemVariables';
 import UserVariables from './components/UserVariables';
 
 function Variables(): ReactElement {
-	const { t } = useTranslation(RouteID.TelegramBotMenuVariables);
+  const { t } = useTranslation(RouteID.TelegramBotMenuVariables);
 
-	useEffect(() => {
-		const clipboard = new ClipboardJS('.btn-clipboard');
+  useEffect(() => {
+    const clipboard = new ClipboardJS('.btn-clipboard');
 
-		clipboard.on('success', () =>
-			createMessageToast({
-				message: t('messages.copy.success'),
-				level: 'success',
-			}),
-		);
-		clipboard.on('error', () =>
-			createMessageToast({
-				message: t('messages.copy.error'),
-				level: 'error',
-			}),
-		);
+    clipboard.on('success', () =>
+      createMessageToast({
+        message: t('messages.copy.success'),
+        level: 'success',
+      }),
+    );
+    clipboard.on('error', () =>
+      createMessageToast({
+        message: t('messages.copy.error'),
+        level: 'error',
+      }),
+    );
 
-		return () => clipboard.destroy();
-	}, []);
+    return () => clipboard.destroy();
+  }, []);
 
-	return (
-		<Page title={t('title')} grid>
-			<SystemVariables />
-			<UserVariables.StoreProvider>
-				<UserVariables />
-			</UserVariables.StoreProvider>
-		</Page>
-	);
+  return (
+    <Page title={t('title')} grid>
+      <SystemVariables />
+      <UserVariables.StoreProvider>
+        <UserVariables />
+      </UserVariables.StoreProvider>
+    </Page>
+  );
 }
 
 export default Variables;

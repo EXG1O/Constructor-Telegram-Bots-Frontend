@@ -12,41 +12,39 @@ import { LanguagesAPI } from 'api/languages/main';
 export type LanguagesDropdownProps = Omit<DropdownProps, 'children'>;
 
 function LanguagesDropdown(
-	props: LanguagesDropdownProps,
+  props: LanguagesDropdownProps,
 ): ReactElement<LanguagesDropdownProps> {
-	const { t, i18n } = useTranslation(RouteID.Root, {
-		keyPrefix: 'languagesDropdown',
-	});
+  const { t, i18n } = useTranslation(RouteID.Root, {
+    keyPrefix: 'languagesDropdown',
+  });
 
-	const { languages } = useLanguagesRouteLoaderData();
+  const { languages } = useLanguagesRouteLoaderData();
 
-	async function setLanguage(langCode: string): Promise<void> {
-		const response = await LanguagesAPI.set({ lang_code: langCode });
+  async function setLanguage(langCode: string): Promise<void> {
+    const response = await LanguagesAPI.set({ lang_code: langCode });
 
-		if (response.ok) {
-			await i18n.changeLanguage(langCode);
-		} else {
-			createMessageToast({
-				message: t('messages.changeLanguage.error'),
-				level: 'error',
-			});
-		}
-	}
+    if (response.ok) {
+      await i18n.changeLanguage(langCode);
+    } else {
+      createMessageToast({
+        message: t('messages.changeLanguage.error'),
+        level: 'error',
+      });
+    }
+  }
 
-	return (
-		<Dropdown {...props}>
-			<Dropdown.Toggle variant='primary'>
-				{i18n.language.toUpperCase()}
-			</Dropdown.Toggle>
-			<Dropdown.Menu>
-				{Object.entries(languages).map((language, index) => (
-					<Dropdown.Item key={index} onClick={() => setLanguage(language[0])}>
-						{language[1]}
-					</Dropdown.Item>
-				))}
-			</Dropdown.Menu>
-		</Dropdown>
-	);
+  return (
+    <Dropdown {...props}>
+      <Dropdown.Toggle variant='primary'>{i18n.language.toUpperCase()}</Dropdown.Toggle>
+      <Dropdown.Menu>
+        {Object.entries(languages).map((language, index) => (
+          <Dropdown.Item key={index} onClick={() => setLanguage(language[0])}>
+            {language[1]}
+          </Dropdown.Item>
+        ))}
+      </Dropdown.Menu>
+    </Dropdown>
+  );
 }
 
 export default memo(LanguagesDropdown);

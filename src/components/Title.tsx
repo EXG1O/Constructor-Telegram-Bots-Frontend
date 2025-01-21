@@ -1,16 +1,16 @@
 import { ReactNode, useEffect } from 'react';
 
 export interface TitleProps {
-	title: string;
-	children: ReactNode;
+  title: string;
+  children: ReactNode;
 }
 
 function Title({ title, children }: TitleProps): ReactNode {
-	useEffect(() => {
-		document.title = `${title} - Constructor Telegram Bots`;
-	}, [title]);
+  useEffect(() => {
+    document.title = `${title} - Constructor Telegram Bots`;
+  }, [title]);
 
-	return children;
+  return children;
 }
 
 export default Title;

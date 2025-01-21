@@ -1,8 +1,8 @@
 {
-	"title": "Updates",
-	"messages": {
-		"getUpdates": {
-			"error": "Failed to retrieve the list of updates."
-		}
-	}
+  "title": "Updates",
+  "messages": {
+    "getUpdates": {
+      "error": "Failed to retrieve the list of updates."
+    }
+  }
 }

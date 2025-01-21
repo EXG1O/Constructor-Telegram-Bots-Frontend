@@ -10,11 +10,9 @@ import { FCA } from 'utils/helpers';
 export type BlockBodyProps = CardBodyProps;
 
 const BlockBody: FCA<'div', BlockBodyProps> = forwardRef<HTMLElement, BlockBodyProps>(
-	function BlockBody({ className, ...props }, ref) {
-		return (
-			<Card.Body ref={ref} {...props} className={classNames(className, 'p-2')} />
-		);
-	},
+  function BlockBody({ className, ...props }, ref) {
+    return <Card.Body ref={ref} {...props} className={classNames(className, 'p-2')} />;
+  },
 );
 
 export default BlockBody;

@@ -12,14 +12,14 @@ const langNamespace: string = 'not-found';
 const langOptions: TOptions = { ns: langNamespace };
 
 async function loader(): Promise<LoaderData> {
-	await i18n.loadNamespaces(langNamespace);
+  await i18n.loadNamespaces(langNamespace);
 
-	createMessageToast({
-		message: i18n.t('text', langOptions),
-		level: 'error',
-	});
+  createMessageToast({
+    message: i18n.t('text', langOptions),
+    level: 'error',
+  });
 
-	return redirect(reverse(RouteID.Home));
+  return redirect(reverse(RouteID.Home));
 }
 
 export default loader;

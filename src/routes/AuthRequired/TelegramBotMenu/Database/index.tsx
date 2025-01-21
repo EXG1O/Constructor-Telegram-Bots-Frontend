@@ -13,24 +13,22 @@ import Toolbar from './components/Toolbar';
 import StoreProvider from './providers/StoreProvider';
 
 function Database(): ReactElement {
-	const { t } = useTranslation(RouteID.TelegramBotMenuDatabase);
+  const { t } = useTranslation(RouteID.TelegramBotMenuDatabase);
 
-	return (
-		<Page title={t('title')} grid>
-			<StoreProvider>
-				<Block variant='light'>
-					<h3 className='fw-semibold text-center mb-3'>
-						{t('records.title')}
-					</h3>
-					<Stack gap={2}>
-						<Toolbar />
-						<RecordList />
-						<Footer />
-					</Stack>
-				</Block>
-			</StoreProvider>
-		</Page>
-	);
+  return (
+    <Page title={t('title')} grid>
+      <StoreProvider>
+        <Block variant='light'>
+          <h3 className='fw-semibold text-center mb-3'>{t('records.title')}</h3>
+          <Stack gap={2}>
+            <Toolbar />
+            <RecordList />
+            <Footer />
+          </Stack>
+        </Block>
+      </StoreProvider>
+    </Page>
+  );
 }
 
 export default Database;

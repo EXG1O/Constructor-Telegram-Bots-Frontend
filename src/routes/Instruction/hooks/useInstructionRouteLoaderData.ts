@@ -5,7 +5,7 @@ import { RouteID } from 'routes';
 import { LoaderData } from '../loader';
 
 function useInstructionRouteLoaderData() {
-	return useRouteLoaderData(RouteID.Instruction) as LoaderData;
+  return useRouteLoaderData(RouteID.Instruction) as LoaderData;
 }
 
 export default useInstructionRouteLoaderData;

@@ -2,6 +2,6 @@
 @use 'components/FormTelegramQuillEditorFeedback.content' as TelegramQuillEditorContent;
 
 .message-text-block {
-	@include QuillEditorContent.styles;
-	@include TelegramQuillEditorContent.styles;
+  @include QuillEditorContent.styles;
+  @include TelegramQuillEditorContent.styles;
 }

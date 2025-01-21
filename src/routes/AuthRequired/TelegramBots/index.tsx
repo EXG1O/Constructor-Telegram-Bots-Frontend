@@ -14,20 +14,20 @@ import useTelegramBotsRouteLoaderData from './hooks/useTelegramBotsRouteLoaderDa
 import { TelegramBot } from 'api/telegram_bots/types';
 
 function TelegramBots(): ReactElement {
-	const { t } = useTranslation(RouteID.TelegramBots);
+  const { t } = useTranslation(RouteID.TelegramBots);
 
-	const { telegramBots: initialTelegramBots } = useTelegramBotsRouteLoaderData();
+  const { telegramBots: initialTelegramBots } = useTelegramBotsRouteLoaderData();
 
-	const telegramBotsState = useState<TelegramBot[]>(initialTelegramBots);
+  const telegramBotsState = useState<TelegramBot[]>(initialTelegramBots);
 
-	return (
-		<Page title={t('title')} grid>
-			<TelegramBotsContext.Provider value={telegramBotsState}>
-				<Header />
-				<TelegramBotList />
-			</TelegramBotsContext.Provider>
-		</Page>
-	);
+  return (
+    <Page title={t('title')} grid>
+      <TelegramBotsContext.Provider value={telegramBotsState}>
+        <Header />
+        <TelegramBotList />
+      </TelegramBotsContext.Provider>
+    </Page>
+  );
 }
 
 export default TelegramBots;

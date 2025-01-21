@@ -11,24 +11,24 @@ import Button, { ButtonProps } from 'components/Button';
 export type AddHeaderButtonProps = Pick<ButtonProps, 'className'>;
 
 function AddHeaderButton(
-	props: AddHeaderButtonProps,
+  props: AddHeaderButtonProps,
 ): ReactElement<AddHeaderButtonProps> {
-	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-		keyPrefix: 'apiRequestBlock.headersBlock.addHeaderButton',
-	});
+  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+    keyPrefix: 'apiRequestBlock.headersBlock.addHeaderButton',
+  });
 
-	const [{ value: headers }, _meta, { setValue }] =
-		useField<Header[]>('api_request.headers');
+  const [{ value: headers }, _meta, { setValue }] =
+    useField<Header[]>('api_request.headers');
 
-	function handleClick() {
-		setValue([...headers, { key: '', value: '' }]);
-	}
+  function handleClick() {
+    setValue([...headers, { key: '', value: '' }]);
+  }
 
-	return (
-		<Button {...props} size='sm' variant='dark' onClick={handleClick}>
-			{t('text')}
-		</Button>
-	);
+  return (
+    <Button {...props} size='sm' variant='dark' onClick={handleClick}>
+      {t('text')}
+    </Button>
+  );
 }
 
 export default memo(AddHeaderButton);

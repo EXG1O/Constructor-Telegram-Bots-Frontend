@@ -6,17 +6,17 @@ import { RouteID } from 'routes';
 import useDatabaseRecordsStore from '../hooks/useDatabaseRecordsStore';
 
 function Footer(): ReactElement | null {
-	const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
-		keyPrefix: 'footer',
-	});
+  const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
+    keyPrefix: 'footer',
+  });
 
-	const recordCount = useDatabaseRecordsStore((state) => state.count);
+  const recordCount = useDatabaseRecordsStore((state) => state.count);
 
-	return recordCount ? (
-		<small className='text-body-secondary text-end'>
-			{t('recordCount', { count: recordCount })}
-		</small>
-	) : null;
+  return recordCount ? (
+    <small className='text-body-secondary text-end'>
+      {t('recordCount', { count: recordCount })}
+    </small>
+  ) : null;
 }
 
 export default Footer;

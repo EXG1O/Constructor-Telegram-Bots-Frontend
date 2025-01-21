@@ -24,12 +24,12 @@ $enable-validation-icons: false;
 $enable-dark-mode: false;
 
 $new-theme-colors: (
-	'white': $white,
+  'white': $white,
 );
 $theme-colors: map-merge($theme-colors, $new-theme-colors);
 
 $table-variants: (
-	'white': $white,
+  'white': $white,
 );
 
 $gradient: linear-gradient(90deg, rgba($white, 0), rgba($white, 0.25) 125%);
@@ -41,12 +41,12 @@ $paragraph-margin-bottom: unset;
 $form-check-margin-bottom: unset;
 
 $loading-sizes: (
-	xxs: 0.5,
-	xs: 1,
-	sm: 2,
-	md: 3,
-	lg: 4,
-	xl: 5,
+  xxs: 0.5,
+  xs: 1,
+  sm: 2,
+  md: 3,
+  lg: 4,
+  xl: 5,
 );
 
 $card-border-color: $border-color;

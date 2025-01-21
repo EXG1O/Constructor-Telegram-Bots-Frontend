@@ -1,11 +1,11 @@
 export interface Section {
-	id: number;
-	title: string;
-	text: string;
+  id: number;
+  title: string;
+  text: string;
 }
 
 export namespace APIResponse {
-	export namespace SectionsAPI {
-		export type Get = Section[];
-	}
+  export namespace SectionsAPI {
+    export type Get = Section[];
+  }
 }

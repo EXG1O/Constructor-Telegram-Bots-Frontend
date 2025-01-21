@@ -2,13 +2,13 @@ import { UserAPI } from 'api/users/main';
 import { User } from 'api/users/types';
 
 export interface LoaderData {
-	user: User | null;
+  user: User | null;
 }
 
 async function loader(): Promise<LoaderData> {
-	const response = await UserAPI.get();
+  const response = await UserAPI.get();
 
-	return { user: response.ok ? response.json : null };
+  return { user: response.ok ? response.json : null };
 }
 
 export default loader;

@@ -1,37 +1,37 @@
 {
-	"links": {
-		"instruction": "Инструкция",
-		"updates": "Обновления",
-		"privacyPolicy": "Конфиденциальность",
-		"donation": "Пожертвование"
-	},
-	"languagesDropdown": {
-		"messages": {
-			"changeLanguage": {
-				"error": "Не удалось изменить язык."
-			}
-		}
-	},
-	"userMenuDropdown": {
-		"messages": {
-			"logout": {
-				"success": "Вы успешно вышли из аккаунта.",
-				"error": "Не удалось выйти из аккаунта."
-			}
-		},
-		"logoutModal": {
-			"title": "Выход из аккаунта",
-			"text": "Вы точно хотите выйти из аккаунта?"
-		},
-		"adminPanel": "Админ панель",
-		"telegramBots": "Telegram боты",
-		"exit": "Выйти"
-	},
-	"telegramBotMenuDropdown": {
-		"telegramBot": "Telegram бот",
-		"variables": "Переменные",
-		"users": "Пользователи",
-		"database": "База данных",
-		"constructor": "Конструктор"
-	}
+  "links": {
+    "instruction": "Инструкция",
+    "updates": "Обновления",
+    "privacyPolicy": "Конфиденциальность",
+    "donation": "Пожертвование"
+  },
+  "languagesDropdown": {
+    "messages": {
+      "changeLanguage": {
+        "error": "Не удалось изменить язык."
+      }
+    }
+  },
+  "userMenuDropdown": {
+    "messages": {
+      "logout": {
+        "success": "Вы успешно вышли из аккаунта.",
+        "error": "Не удалось выйти из аккаунта."
+      }
+    },
+    "logoutModal": {
+      "title": "Выход из аккаунта",
+      "text": "Вы точно хотите выйти из аккаунта?"
+    },
+    "adminPanel": "Админ панель",
+    "telegramBots": "Telegram боты",
+    "exit": "Выйти"
+  },
+  "telegramBotMenuDropdown": {
+    "telegramBot": "Telegram бот",
+    "variables": "Переменные",
+    "users": "Пользователи",
+    "database": "База данных",
+    "constructor": "Конструктор"
+  }
 }

@@ -16,55 +16,55 @@ import { FCA } from 'utils/helpers';
 import('./index.scss');
 
 export interface ModalProps
-	extends Omit<
-		BaseModalProps,
-		| 'role'
-		| 'transition'
-		| 'backdropTransition'
-		| 'renderBackdrop'
-		| 'renderDialog'
-		| 'children'
-	> {
-	loading?: boolean;
-	size?: 'sm' | 'lg' | 'xl';
-	fullscreen?: 'sm-down' | 'md-down' | 'lg-down' | 'xl-down' | 'xxl-down';
-	animation?: boolean;
-	centered?: boolean;
-	backdropClassName?: string;
-	dialogClassName?: string;
-	contentClassName?: string;
-	dialogAs?: React.ElementType;
-	scrollable?: boolean;
-	children?: ReactNode;
+  extends Omit<
+    BaseModalProps,
+    | 'role'
+    | 'transition'
+    | 'backdropTransition'
+    | 'renderBackdrop'
+    | 'renderDialog'
+    | 'children'
+  > {
+  loading?: boolean;
+  size?: 'sm' | 'lg' | 'xl';
+  fullscreen?: 'sm-down' | 'md-down' | 'lg-down' | 'xl-down' | 'xxl-down';
+  animation?: boolean;
+  centered?: boolean;
+  backdropClassName?: string;
+  dialogClassName?: string;
+  contentClassName?: string;
+  dialogAs?: React.ElementType;
+  scrollable?: boolean;
+  children?: ReactNode;
 }
 
 BaseModal.displayName = 'BaseModal';
 
 const Modal: FCA<'div', ModalProps> = forwardRef<HTMLElement, ModalProps>(
-	function Modal({ loading = false, backdrop, keyboard, children, ...props }, ref) {
-		return (
-			<ModalContext.Provider value={{ loading }}>
-				<BaseModal
-					ref={ref}
-					{...props}
-					backdrop={loading ? 'static' : backdrop}
-					keyboard={!loading && keyboard}
-				>
-					{children}
-					{loading && (
-						<BaseModal.Body className='d-flex justify-content-center'>
-							<Loading size='md' />
-						</BaseModal.Body>
-					)}
-				</BaseModal>
-			</ModalContext.Provider>
-		);
-	},
+  function Modal({ loading = false, backdrop, keyboard, children, ...props }, ref) {
+    return (
+      <ModalContext.Provider value={{ loading }}>
+        <BaseModal
+          ref={ref}
+          {...props}
+          backdrop={loading ? 'static' : backdrop}
+          keyboard={!loading && keyboard}
+        >
+          {children}
+          {loading && (
+            <BaseModal.Body className='d-flex justify-content-center'>
+              <Loading size='md' />
+            </BaseModal.Body>
+          )}
+        </BaseModal>
+      </ModalContext.Provider>
+    );
+  },
 );
 
 export default Object.assign(Modal, {
-	Header: ModalHeader,
-	Title: ModalTitle,
-	Body: ModalBody,
-	Footer: ModalFooter,
+  Header: ModalHeader,
+  Title: ModalTitle,
+  Body: ModalBody,
+  Footer: ModalFooter,
 });

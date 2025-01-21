@@ -17,59 +17,59 @@ import { UpdatesAPI } from 'api/updates/main';
 import { PaginationData } from './loader';
 
 function Updates(): ReactElement {
-	const { t, i18n } = useTranslation(RouteID.Updates);
+  const { t, i18n } = useTranslation(RouteID.Updates);
 
-	const { paginationData: initialPaginationData } = useUpdatesRouteLoaderData();
+  const { paginationData: initialPaginationData } = useUpdatesRouteLoaderData();
 
-	const [paginationData, setPaginationData] =
-		useState<PaginationData>(initialPaginationData);
-	const [loading, setLoading] = useState<boolean>(false);
+  const [paginationData, setPaginationData] =
+    useState<PaginationData>(initialPaginationData);
+  const [loading, setLoading] = useState<boolean>(false);
 
-	const title = useMemo<string>(() => t('title'), [i18n.language]);
+  const title = useMemo<string>(() => t('title'), [i18n.language]);
 
-	async function updateUpdates(
-		limit: number = paginationData.limit,
-		offset: number = paginationData.offset,
-	): Promise<void> {
-		setLoading(true);
+  async function updateUpdates(
+    limit: number = paginationData.limit,
+    offset: number = paginationData.offset,
+  ): Promise<void> {
+    setLoading(true);
 
-		const response = await UpdatesAPI.get(limit, offset);
+    const response = await UpdatesAPI.get(limit, offset);
 
-		if (response.ok) {
-			setPaginationData({ ...response.json, limit, offset });
-		} else {
-			createMessageToast({
-				message: t('messages.getUpdates.error'),
-				level: 'error',
-			});
-		}
+    if (response.ok) {
+      setPaginationData({ ...response.json, limit, offset });
+    } else {
+      createMessageToast({
+        message: t('messages.getUpdates.error'),
+        level: 'error',
+      });
+    }
 
-		setLoading(false);
-	}
+    setLoading(false);
+  }
 
-	function handlePageChange(newItemOffset: number): void {
-		updateUpdates(undefined, newItemOffset);
-	}
+  function handlePageChange(newItemOffset: number): void {
+    updateUpdates(undefined, newItemOffset);
+  }
 
-	return (
-		<Page title={title} grid>
-			<h1 className='fw-semibold text-center'>{title}</h1>
-			{!loading ? (
-				paginationData.results.map((update) => (
-					<UpdateDisplay key={update.id} update={update} />
-				))
-			) : (
-				<Loading size='lg' className='m-auto' />
-			)}
-			<Pagination
-				itemCount={paginationData.count}
-				itemLimit={paginationData.limit}
-				itemOffset={paginationData.offset}
-				className='align-self-center'
-				onPageChange={handlePageChange}
-			/>
-		</Page>
-	);
+  return (
+    <Page title={title} grid>
+      <h1 className='fw-semibold text-center'>{title}</h1>
+      {!loading ? (
+        paginationData.results.map((update) => (
+          <UpdateDisplay key={update.id} update={update} />
+        ))
+      ) : (
+        <Loading size='lg' className='m-auto' />
+      )}
+      <Pagination
+        itemCount={paginationData.count}
+        itemLimit={paginationData.limit}
+        itemOffset={paginationData.offset}
+        className='align-self-center'
+        onPageChange={handlePageChange}
+      />
+    </Page>
+  );
 }
 
 export default Updates;

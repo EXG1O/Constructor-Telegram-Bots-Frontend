@@ -9,18 +9,18 @@ type Store = StoreContextValue;
 
 function useDatabaseRecordsStore(): Store;
 function useDatabaseRecordsStore<Selector>(
-	selector: (state: State) => Selector,
+  selector: (state: State) => Selector,
 ): Selector;
 function useDatabaseRecordsStore<Selector>(
-	selector?: (state: State) => Selector,
+  selector?: (state: State) => Selector,
 ): Selector | Store {
-	const store = useContext(StoreContext);
+  const store = useContext(StoreContext);
 
-	if (store === undefined) {
-		throw new Error('useDatabaseRecordsStore must be used with a StoreProvider.');
-	}
+  if (store === undefined) {
+    throw new Error('useDatabaseRecordsStore must be used with a StoreProvider.');
+  }
 
-	return selector ? useStore(store, selector) : store;
+  return selector ? useStore(store, selector) : store;
 }
 
 export default useDatabaseRecordsStore;

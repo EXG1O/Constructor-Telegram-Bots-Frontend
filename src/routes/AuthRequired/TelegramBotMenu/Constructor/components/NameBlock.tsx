@@ -14,15 +14,15 @@ export type NameBlockProps = Pick<BlockProps, 'className'>;
 export const defaultName: Name = '';
 
 function NameBlock(props: NameBlockProps): ReactElement<NameBlockProps> {
-	const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-		keyPrefix: 'nameBlock',
-	});
+  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+    keyPrefix: 'nameBlock',
+  });
 
-	return (
-		<Block {...props} title={t('title')} body>
-			<FormInputFeedback name='name' placeholder={t('inputPlaceholder')} />
-		</Block>
-	);
+  return (
+    <Block {...props} title={t('title')} body>
+      <FormInputFeedback name='name' placeholder={t('inputPlaceholder')} />
+    </Block>
+  );
 }
 
 export default NameBlock;

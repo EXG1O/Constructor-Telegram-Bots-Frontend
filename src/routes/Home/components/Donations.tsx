@@ -17,38 +17,38 @@ const baseStyle: CSSProperties = { height: '324px' };
 const wrapperStyle: CSSProperties = { ...baseStyle, scrollbarWidth: 'thin' };
 
 function Donations({
-	className,
-	...props
+  className,
+  ...props
 }: DonationsProps): ReactElement<DonationsProps> {
-	const { t } = useTranslation(RouteID.Home, { keyPrefix: 'donations' });
+  const { t } = useTranslation(RouteID.Home, { keyPrefix: 'donations' });
 
-	const { donations } = useHomeRouteLoaderData();
+  const { donations } = useHomeRouteLoaderData();
 
-	return (
-		<Block
-			{...props}
-			variant='dark'
-			gradient
-			className={classNames(className, 'text-center')}
-		>
-			<h3 className='fw-semibold mb-3'>{t('title')}</h3>
-			{donations.count ? (
-				<div className='overflow-auto' style={wrapperStyle}>
-					<Row xs={3} className='mx-0'>
-						{donations.results.map((donation) => (
-							<React.Fragment key={donation.id}>
-								<span>{`${donation.sum}€`}</span>
-								<span>{donation.sender}</span>
-								<span>{formatDate(donation.date)}</span>
-							</React.Fragment>
-						))}
-					</Row>
-				</div>
-			) : (
-				<div style={baseStyle}>{t('noDonations')}</div>
-			)}
-		</Block>
-	);
+  return (
+    <Block
+      {...props}
+      variant='dark'
+      gradient
+      className={classNames(className, 'text-center')}
+    >
+      <h3 className='fw-semibold mb-3'>{t('title')}</h3>
+      {donations.count ? (
+        <div className='overflow-auto' style={wrapperStyle}>
+          <Row xs={3} className='mx-0'>
+            {donations.results.map((donation) => (
+              <React.Fragment key={donation.id}>
+                <span>{`${donation.sum}€`}</span>
+                <span>{donation.sender}</span>
+                <span>{formatDate(donation.date)}</span>
+              </React.Fragment>
+            ))}
+          </Row>
+        </div>
+      ) : (
+        <div style={baseStyle}>{t('noDonations')}</div>
+      )}
+    </Block>
+  );
 }
 
 export default memo(Donations);

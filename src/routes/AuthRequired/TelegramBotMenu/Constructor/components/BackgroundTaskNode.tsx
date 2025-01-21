@@ -22,89 +22,80 @@ const nodePrefix: string = 'nodes.backgroundTask';
 const offcanvasPrefix: string = 'backgroundTaskOffcanvas';
 
 function BackgroundTaskNode({
-	id,
-	xPos,
-	yPos,
-	data: task,
+  id,
+  xPos,
+  yPos,
+  data: task,
 }: BackgroundTaskNodeProps): ReactElement<BackgroundTaskNodeProps> {
-	const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor);
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor);
 
-	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-	const onNodesDelete = useStore((state) => state.onNodesDelete);
+  const onNodesDelete = useStore((state) => state.onNodesDelete);
 
-	const showEditBackgroundTaskOffcanvas = useBackgroundTaskOffcanvasStore(
-		(state) => state.showOffcanvas,
-	);
+  const showEditBackgroundTaskOffcanvas = useBackgroundTaskOffcanvasStore(
+    (state) => state.showOffcanvas,
+  );
 
-	const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
-	const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
-	const setLoadingAskConfirmModal = useAskConfirmModalStore(
-		(state) => state.setLoading,
-	);
+  const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
+  const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
+  const setLoadingAskConfirmModal = useAskConfirmModalStore(
+    (state) => state.setLoading,
+  );
 
-	const showDeleteModal = useCallback(
-		() =>
-			setShowAskConfirmModal({
-				title: t(`${nodePrefix}.deleteModal.title`),
-				text: t(`${nodePrefix}.deleteModal.text`),
-				onConfirm: async () => {
-					setLoadingAskConfirmModal(true);
+  const showDeleteModal = useCallback(
+    () =>
+      setShowAskConfirmModal({
+        title: t(`${nodePrefix}.deleteModal.title`),
+        text: t(`${nodePrefix}.deleteModal.text`),
+        onConfirm: async () => {
+          setLoadingAskConfirmModal(true);
 
-					const response = await BackgroundTaskAPI.delete(
-						telegramBot.id,
-						task.id,
-					);
+          const response = await BackgroundTaskAPI.delete(telegramBot.id, task.id);
 
-					if (response.ok) {
-						onNodesDelete?.([
-							{ id, position: { x: xPos, y: yPos }, data: task },
-						]);
-						hideAskConfirmModal();
-						createMessageToast({
-							message: t(
-								`${nodePrefix}.messages.deleteBackgroundTask.success`,
-							),
-							level: 'success',
-						});
-					} else {
-						createMessageToast({
-							message: t(
-								`${nodePrefix}.messages.deleteBackgroundTask.error`,
-							),
-							level: 'error',
-						});
-					}
+          if (response.ok) {
+            onNodesDelete?.([{ id, position: { x: xPos, y: yPos }, data: task }]);
+            hideAskConfirmModal();
+            createMessageToast({
+              message: t(`${nodePrefix}.messages.deleteBackgroundTask.success`),
+              level: 'success',
+            });
+          } else {
+            createMessageToast({
+              message: t(`${nodePrefix}.messages.deleteBackgroundTask.error`),
+              level: 'error',
+            });
+          }
 
-					setLoadingAskConfirmModal(false);
-				},
-				onCancel: null,
-			}),
-		[i18n.language],
-	);
+          setLoadingAskConfirmModal(false);
+        },
+        onCancel: null,
+      }),
+    [i18n.language],
+  );
 
-	const handleEdit = useCallback(
-		() => showEditBackgroundTaskOffcanvas(task.id),
-		[task.id],
-	);
+  const handleEdit = useCallback(
+    () => showEditBackgroundTaskOffcanvas(task.id),
+    [task.id],
+  );
 
-	return (
-		<Node
-			title={t(`${nodePrefix}.title`)}
-			onEdit={handleEdit}
-			onDelete={showDeleteModal}
-		>
-			<Node.Block className='position-relative text-center text-break'>
-				<Handle id={`${id}:left:0`} type='source' position={Position.Left} />
-				{task.name}
-				<Handle id={`${id}:right:0`} type='source' position={Position.Right} />
-			</Node.Block>
-			<Node.Block>
-				<strong>{`${t(`${nodePrefix}.interval`)}:`}</strong>{' '}
-				{t(`${offcanvasPrefix}.intervalBlock.select.${task.interval}`)}
-			</Node.Block>
-		</Node>
-	);
+  return (
+    <Node
+      title={t(`${nodePrefix}.title`)}
+      onEdit={handleEdit}
+      onDelete={showDeleteModal}
+    >
+      <Node.Block className='position-relative text-center text-break'>
+        <Handle id={`${id}:left:0`} type='source' position={Position.Left} />
+        {task.name}
+        <Handle id={`${id}:right:0`} type='source' position={Position.Right} />
+      </Node.Block>
+      <Node.Block>
+        <strong>{`${t(`${nodePrefix}.interval`)}:`}</strong>{' '}
+        {t(`${offcanvasPrefix}.intervalBlock.select.${task.interval}`)}
+      </Node.Block>
+    </Node>
+  );
 }
 
 export default memo(BackgroundTaskNode);

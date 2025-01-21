@@ -3,7 +3,7 @@ import React, { memo, ReactElement } from 'react';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import BaseTelegramBotStorage, {
-	TelegramBotStorageProps as BaseTelegramBotStorageProps,
+  TelegramBotStorageProps as BaseTelegramBotStorageProps,
 } from 'components/TelegramBotStorage';
 
 import useTelegramBotStorage from '../hooks/useTelegramBotStorage';
@@ -11,20 +11,20 @@ import useTelegramBotStorage from '../hooks/useTelegramBotStorage';
 export type TelegramBotStorageProps = Pick<BaseTelegramBotStorageProps, 'className'>;
 
 function TelegramBotStorage(
-	props: TelegramBotStorageProps,
+  props: TelegramBotStorageProps,
 ): ReactElement<TelegramBotStorageProps> {
-	const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-	const { usedStorageSize } = useTelegramBotStorage();
+  const { usedStorageSize } = useTelegramBotStorage();
 
-	return (
-		<BaseTelegramBotStorage
-			{...props}
-			size='sm'
-			telegramBot={telegramBot}
-			usedStorageSize={usedStorageSize}
-		/>
-	);
+  return (
+    <BaseTelegramBotStorage
+      {...props}
+      size='sm'
+      telegramBot={telegramBot}
+      usedStorageSize={usedStorageSize}
+    />
+  );
 }
 
 export default memo(TelegramBotStorage);

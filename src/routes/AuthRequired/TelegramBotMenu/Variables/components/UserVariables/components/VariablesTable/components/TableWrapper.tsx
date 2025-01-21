@@ -4,15 +4,15 @@ import classNames from 'classnames';
 export type TableWrapperProps = HTMLAttributes<HTMLDivElement>;
 
 function TableWrapper({
-	className,
-	...props
+  className,
+  ...props
 }: TableWrapperProps): ReactElement<TableWrapperProps> {
-	return (
-		<div
-			{...props}
-			className={classNames('text-bg-white border rounded-1', className)}
-		/>
-	);
+  return (
+    <div
+      {...props}
+      className={classNames('text-bg-white border rounded-1', className)}
+    />
+  );
 }
 
 export default memo(TableWrapper);

@@ -7,52 +7,52 @@ import { RouteID } from 'routes';
 import { Type } from '..';
 
 import ToggleButtonGroup, {
-	ToggleButtonRadioProps,
+  ToggleButtonRadioProps,
 } from 'components/ToggleButtonGroup';
 
 export type TypeToggleButtonGroupProps = Omit<
-	ToggleButtonRadioProps<Type>,
-	'type' | 'name' | 'children'
+  ToggleButtonRadioProps<Type>,
+  'type' | 'name' | 'children'
 >;
 
 interface TypeToggleButtonProps {
-	value: Type;
+  value: Type;
 }
 
 const typeToggleButtons: TypeToggleButtonProps[] = [
-	{ value: 'personal' },
-	{ value: 'global' },
+  { value: 'personal' },
+  { value: 'global' },
 ];
 
 function TypeToggleButtonGroup({
-	className,
-	...props
+  className,
+  ...props
 }: TypeToggleButtonGroupProps): ReactElement<TypeToggleButtonGroupProps> {
-	const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
-		keyPrefix: 'system.typeButtonGroup',
-	});
+  const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
+    keyPrefix: 'system.typeButtonGroup',
+  });
 
-	return (
-		<ToggleButtonGroup
-			{...props}
-			type='radio'
-			name='system-variables-types'
-			className={classNames('bg-white', className)}
-		>
-			{typeToggleButtons.map(({ value, ...props }, index) => (
-				<ToggleButtonGroup.Button
-					{...props}
-					key={index}
-					id={`system-variables-${value}`}
-					value={value}
-					size='sm'
-					variant='outline-dark'
-				>
-					{t(value)}
-				</ToggleButtonGroup.Button>
-			))}
-		</ToggleButtonGroup>
-	);
+  return (
+    <ToggleButtonGroup
+      {...props}
+      type='radio'
+      name='system-variables-types'
+      className={classNames('bg-white', className)}
+    >
+      {typeToggleButtons.map(({ value, ...props }, index) => (
+        <ToggleButtonGroup.Button
+          {...props}
+          key={index}
+          id={`system-variables-${value}`}
+          value={value}
+          size='sm'
+          variant='outline-dark'
+        >
+          {t(value)}
+        </ToggleButtonGroup.Button>
+      ))}
+    </ToggleButtonGroup>
+  );
 }
 
 export default TypeToggleButtonGroup;

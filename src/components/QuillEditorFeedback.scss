@@ -1,16 +1,16 @@
 @import 'styles/base';
 
 .quill {
-	@each $state, $data in $form-validation-states {
-		$color: map-get($data, 'color');
+  @each $state, $data in $form-validation-states {
+    $color: map-get($data, 'color');
 
-		@include form-validation-state-selector($state) {
-			border-color: $color !important;
+    @include form-validation-state-selector($state) {
+      border-color: $color !important;
 
-			&:focus-within {
-				border-color: $color !important;
-				box-shadow: map-get($data, 'focus-box-shadow') !important;
-			}
-		}
-	}
+      &:focus-within {
+        border-color: $color !important;
+        box-shadow: map-get($data, 'focus-box-shadow') !important;
+      }
+    }
+  }
 }

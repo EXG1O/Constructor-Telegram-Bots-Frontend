@@ -4,16 +4,16 @@ import { useField } from 'formik';
 import SelectFeedback, { SelectFeedbackProps } from './SelectFeedback';
 
 export interface FormSelectFeedbackProps extends SelectFeedbackProps {
-	name: string;
+  name: string;
 }
 
 function FormSelectFeedback({
-	size,
-	...props
+  size,
+  ...props
 }: FormSelectFeedbackProps): ReactElement<FormSelectFeedbackProps> {
-	const [field, meta] = useField(props);
+  const [field, meta] = useField(props);
 
-	return <SelectFeedback {...props} {...field} size={size} error={meta.error} />;
+  return <SelectFeedback {...props} {...field} size={size} error={meta.error} />;
 }
 
 export default FormSelectFeedback;
