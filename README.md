@@ -9,3 +9,6 @@ cd Constructor-Telegram-Bots-Frontend
 npm ci
 npm run build
 ```
+
+## Contributing
+Read [CONTRIBUTING.md](CONTRIBUTING.md) for more information on this.
