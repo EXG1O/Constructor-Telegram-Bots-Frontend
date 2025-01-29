@@ -16,7 +16,7 @@
       }
     },
     "recordAdditionModal": {
-      "title_add": "Adding a record",
+      "title": "Adding a record",
       "messages": {
         "addRecord": {
           "success": "You have successfully added a record.",
