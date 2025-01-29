@@ -6,6 +6,6 @@ To install, execute the following commands:
 ```bash
 git clone https://github.com/EXG1O/Constructor-Telegram-Bots-Frontend.git
 cd Constructor-Telegram-Bots-Frontend
-npm i
+npm ci
 npm run build
 ```
