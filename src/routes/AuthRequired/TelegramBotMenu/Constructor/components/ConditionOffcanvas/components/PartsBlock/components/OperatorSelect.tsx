@@ -25,7 +25,7 @@ function OperatorSelect({
   });
 
   const [{ value }, _meta, { setValue }] = useField<Operator>(
-    `parts[${index}].operation`,
+    `parts[${index}].operator`,
   );
 
   function handleChange(event: ChangeEvent<HTMLSelectElement>): void {
