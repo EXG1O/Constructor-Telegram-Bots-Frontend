@@ -7,6 +7,7 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import dotenv from 'dotenv';
+import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
 
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
@@ -15,14 +16,11 @@ interface Configuration extends WebpackConfiguration {
 const config = (env: any, argv: any): Configuration => {
   const isProduction: boolean = argv.mode === 'production';
   const publicPath: string = isProduction ? '/static/frontend/' : '/';
-  const envVars: Record<string, string> = Object.assign(
-    dotenv.config().parsed || {},
-    {
-      DEBUG: (!isProduction).toString(),
-      WEBPACK_SERVE: Boolean(env.WEBPACK_SERVE).toString(),
-      PUBLIC_PATH: publicPath,
-    },
-  );
+  const envVars: Record<string, string> = Object.assign(dotenv.config().parsed || {}, {
+    DEBUG: (!isProduction).toString(),
+    WEBPACK_SERVE: Boolean(env.WEBPACK_SERVE).toString(),
+    PUBLIC_PATH: publicPath,
+  });
 
   return {
     entry: './src/index.tsx',
@@ -32,6 +30,7 @@ const config = (env: any, argv: any): Configuration => {
       filename: '[name].[contenthash].bundle.js',
       chunkFilename: '[name].[contenthash].chunk.js',
     },
+    devtool: isProduction ? 'source-map' : 'eval-source-map',
     devServer: env.WEBPACK_SERVE
       ? {
           hot: true,
@@ -132,6 +131,69 @@ const config = (env: any, argv: any): Configuration => {
       }),
       new MiniCssExtractPlugin({
         filename: '[name].[contenthash].css',
+      }),
+      new MonacoWebpackPlugin({
+        filename: 'monaco_[name].[contenthash].worker.js',
+        publicPath,
+        languages: ['json'],
+        features: [
+          '!anchorSelect',
+          '!bracketMatching',
+          '!browser',
+          '!caretOperations',
+          '!clipboard',
+          '!codeAction',
+          '!codelens',
+          '!colorPicker',
+          '!comment',
+          '!contextmenu',
+          '!cursorUndo',
+          '!diffEditor',
+          '!dnd',
+          '!documentSymbols',
+          '!dropOrPasteInto',
+          '!find',
+          '!folding',
+          '!fontZoom',
+          '!format',
+          '!gotoError',
+          '!gotoLine',
+          '!gotoSymbol',
+          '!hover',
+          '!iPadShowKeyboard',
+          '!inPlaceReplace',
+          '!indentation',
+          '!inlayHints',
+          '!inlineCompletions',
+          '!inlineProgress',
+          '!inspectTokens',
+          '!lineSelection',
+          '!linesOperations',
+          '!linkedEditing',
+          '!links',
+          '!longLinesHelper',
+          '!multicursor',
+          '!parameterHints',
+          '!quickCommand',
+          '!quickHelp',
+          '!quickOutline',
+          '!readOnlyMessage',
+          '!referenceSearch',
+          '!rename',
+          '!semanticTokens',
+          '!smartSelect',
+          '!snippet',
+          '!stickyScroll',
+          '!suggest',
+          '!toggleHighContrast',
+          '!toggleTabFocusMode',
+          '!tokenization',
+          '!unicodeHighlighter',
+          '!unusualLineTerminators',
+          '!wordHighlighter',
+          '!wordOperations',
+          '!wordPartOperations',
+        ],
       }),
     ],
   };
