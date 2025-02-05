@@ -48,7 +48,7 @@ function Search({
     <div {...props} className={classNames('d-flex', className)}>
       <InputGroup size={size}>
         <InputGroup.Text>
-          <SearchIcon width={14} height='auto' />
+          <SearchIcon width={14} height={14} />
         </InputGroup.Text>
         <Input
           value={value ?? ''}
