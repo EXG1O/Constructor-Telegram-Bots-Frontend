@@ -1,4 +1,4 @@
-import React, { ReactElement, useMemo, useState } from 'react';
+import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
@@ -21,11 +21,12 @@ function Updates(): ReactElement {
 
   const { paginationData: initialPaginationData } = useUpdatesRouteLoaderData();
 
+  const title = useMemo<string>(() => t('title'), [i18n.language]);
+  const isInitialRender = useRef<boolean>(true);
+
   const [paginationData, setPaginationData] =
     useState<PaginationData>(initialPaginationData);
   const [loading, setLoading] = useState<boolean>(false);
-
-  const title = useMemo<string>(() => t('title'), [i18n.language]);
 
   async function updateUpdates(
     limit: number = paginationData.limit,
@@ -46,6 +47,15 @@ function Updates(): ReactElement {
 
     setLoading(false);
   }
+
+  useEffect(() => {
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
+    }
+
+    updateUpdates();
+  }, [i18n.language]);
 
   function handlePageChange(newItemOffset: number): void {
     updateUpdates(undefined, newItemOffset);

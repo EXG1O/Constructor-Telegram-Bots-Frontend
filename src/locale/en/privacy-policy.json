@@ -1,3 +1,8 @@
 {
-  "title": "Privacy policy"
+  "title": "Privacy policy",
+  "messages": {
+    "getSections": {
+      "error": "Failed to retrieve the list of privacy policy sections."
+    }
+  }
 }
