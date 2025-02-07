@@ -2,28 +2,48 @@ name: Main CI
 
 on:
   push:
+    branches:
+      - master
   pull_request:
+    branches:
+      - master
 
 jobs:
-  build:
+  code-quality:
+    name: Code Quality Checks
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - name: Install system dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y npm
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.5.x
 
-      - name: Install npm dependencies
-        run: npm i
+      - name: Install dependencies
+        run: npm ci
 
       - name: Run ESLint
         run: npx eslint ./src
 
-      - name: Run Prettier check
+      - name: Run Prettier
         run: npx prettier ./src --check
+  build:
+    name: Build
+    needs: code-quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.5.x
+
+      - name: Install dependencies
+        run: npm ci --omit=dev
 
       - name: Run build
         run: npm run build
