@@ -1,0 +1,14 @@
+.donations-container {
+  height: 324px;
+
+  td {
+    &.sum,
+    &.date {
+      width: 28%;
+    }
+
+    &.sender {
+      width: 44%;
+    }
+  }
+}

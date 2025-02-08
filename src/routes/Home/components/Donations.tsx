@@ -1,20 +1,18 @@
-import React, { CSSProperties, memo, ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import formatDate from 'i18n/formatDate';
 
 import { RouteID } from 'routes';
 
-import Row from 'react-bootstrap/Row';
+import './Donations.scss';
 
 import Block, { BlockProps } from 'components/Block';
+import Table from 'components/Table';
 
 import useHomeRouteLoaderData from '../hooks/useHomeRouteLoaderData';
 
 export type DonationsProps = Omit<BlockProps, 'variant' | 'gradient' | 'children'>;
-
-const baseStyle: CSSProperties = { height: '324px' };
-const wrapperStyle: CSSProperties = { ...baseStyle, scrollbarWidth: 'thin' };
 
 function Donations({
   className,
@@ -32,21 +30,23 @@ function Donations({
       className={classNames(className, 'text-center')}
     >
       <h3 className='fw-semibold mb-3'>{t('title')}</h3>
-      {donations.count ? (
-        <div className='overflow-auto' style={wrapperStyle}>
-          <Row xs={3} className='mx-0'>
-            {donations.results.map((donation) => (
-              <React.Fragment key={donation.id}>
-                <span>{`${donation.sum}€`}</span>
-                <span>{donation.sender}</span>
-                <span>{formatDate(donation.date)}</span>
-              </React.Fragment>
-            ))}
-          </Row>
-        </div>
-      ) : (
-        <div style={baseStyle}>{t('noDonations')}</div>
-      )}
+      <div className='donations-container'>
+        {donations.count ? (
+          <Table borderless className='align-middle mb-0'>
+            <tbody>
+              {donations.results.map((donation) => (
+                <tr key={donation.id}>
+                  <td className='sum'>{`${donation.sum}€`}</td>
+                  <td className='sender text-break'>{donation.sender}</td>
+                  <td className='date'>{formatDate(donation.date)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        ) : (
+          t('noDonations')
+        )}
+      </div>
     </Block>
   );
 }
