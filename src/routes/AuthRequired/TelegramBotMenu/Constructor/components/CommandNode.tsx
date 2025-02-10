@@ -106,8 +106,7 @@ function CommandNode({
             >
               {button.url ? (
                 <>
-                  {button.text}
-                  <Link45DegIcon width={16} height={16} />
+                  <Link45DegIcon width={16} height={16} /> {button.text}
                 </>
               ) : (
                 <>
