@@ -1,10 +1,10 @@
 import { StateCreator } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-import { KeyboardButton } from '.';
-
 import { Text } from './components/TextInput';
-import { URL } from './components/URLInput';
+import { defaultURL, URL } from './components/URLInput';
+
+import { KeyboardButton } from '../Keyboard/components/DraggableKeyboardButton';
 
 export interface KeyboardButtonBlockSliceState {
   keyboardButtonBlock: {
@@ -77,7 +77,7 @@ export const createKeyboardButtonBlockSlice: StateCreator<
           keyboardButtonBlock.buttonIndex = buttonIndex;
           keyboardButtonBlock.type = 'edit';
           keyboardButtonBlock.text = button.text;
-          keyboardButtonBlock.url = button.url;
+          keyboardButtonBlock.url = button.url ?? defaultURL;
         } else {
           keyboardButtonBlock.rowIndex = null;
           keyboardButtonBlock.buttonIndex = null;
@@ -87,6 +87,7 @@ export const createKeyboardButtonBlockSlice: StateCreator<
         }
 
         keyboardButtonBlock.show = true;
+        keyboardButtonBlock.showURLInput = Boolean(keyboardButtonBlock.url);
         keyboardButtonBlock.errors = {};
       }),
     hideBlock: () =>
