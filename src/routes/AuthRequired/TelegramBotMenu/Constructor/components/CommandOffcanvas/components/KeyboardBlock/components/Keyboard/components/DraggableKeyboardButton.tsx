@@ -41,13 +41,7 @@ function DraggableKeyboardButton({
   );
 
   function handleClick(): void {
-    select
-      ? hideEditButtonBlock()
-      : showEditButtonBlock(
-          { ...button, url: button.url ?? '' },
-          rowIndex,
-          buttonIndex,
-        );
+    select ? hideEditButtonBlock() : showEditButtonBlock(button, rowIndex, buttonIndex);
   }
 
   return (
