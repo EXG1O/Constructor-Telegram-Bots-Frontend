@@ -17,6 +17,7 @@ import URLInputCollapse from './components/URLInputCollapse';
 
 import Block, { BlockProps } from '../../../../../Block';
 import { KeyboardRow } from '../Keyboard/components/DraggableKeyboardRow';
+import { Type } from '../KeyboardTypeButtonGroup';
 
 import { useCommandOffcanvasStore } from '../../../../store';
 
@@ -34,18 +35,24 @@ function KeyboardButtonBlock(
     keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardButtonBlock',
   });
 
-  const type = useCommandOffcanvasStore((state) => state.keyboardButtonBlock.type);
+  const blockType = useCommandOffcanvasStore((state) => state.keyboardButtonBlock.type);
+  const shouldShowURLInput = useCommandOffcanvasStore(
+    (state) => state.keyboardButtonBlock.showURLInput,
+  );
   const hideBlock = useCommandOffcanvasStore(
     (state) => state.keyboardButtonBlock.hideBlock,
   );
 
+  const [{ value: keyboardType }] = useField<Type>('keyboard.type');
   const [{ value: rows }, _meta, { setValue }] =
     useField<KeyboardRow[]>(`keyboard.rows`);
+
+  const showURLInput: boolean = shouldShowURLInput && keyboardType !== 'default';
 
   function validateButton(): boolean {
     const errors: Record<string, string> = {};
     const {
-      keyboardButtonBlock: { showURLInput, text, url, setErrors },
+      keyboardButtonBlock: { text, url, setErrors },
     } = useCommandOffcanvasStore.getState();
 
     if (!text) {
@@ -73,7 +80,7 @@ function KeyboardButtonBlock(
     if (!validateButton()) return;
 
     const {
-      keyboardButtonBlock: { showURLInput, text, url },
+      keyboardButtonBlock: { text, url },
     } = useCommandOffcanvasStore.getState();
 
     setValue(
@@ -97,7 +104,7 @@ function KeyboardButtonBlock(
     if (!validateButton()) return;
 
     const {
-      keyboardButtonBlock: { rowIndex, buttonIndex, showURLInput, text, url },
+      keyboardButtonBlock: { rowIndex, buttonIndex, text, url },
     } = useCommandOffcanvasStore.getState();
 
     if (rowIndex === null) {
@@ -133,7 +140,7 @@ function KeyboardButtonBlock(
 
   return (
     <BlockCollapse>
-      <Block {...props} title={t('title', { context: type })}>
+      <Block {...props} title={t('title', { context: blockType })}>
         <Block.Body>
           <TextInput />
           <URLInputCollapse>
@@ -142,17 +149,17 @@ function KeyboardButtonBlock(
         </Block.Body>
         <Block.Footer>
           <Row className='g-2'>
-            <Col xs={type === 'add' ? 12 : 6}>
+            <Col xs={blockType === 'add' ? 12 : 6}>
               <Button
                 size='sm'
                 variant='success'
                 className='w-100'
-                onClick={type === 'add' ? handleAddButton : handleSaveButton}
+                onClick={blockType === 'add' ? handleAddButton : handleSaveButton}
               >
-                {t('actionButton', { context: type })}
+                {t('actionButton', { context: blockType })}
               </Button>
             </Col>
-            {type === 'edit' && (
+            {blockType === 'edit' && (
               <Col xs={6}>
                 <Button
                   size='sm'
