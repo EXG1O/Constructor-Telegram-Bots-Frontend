@@ -30,7 +30,7 @@ function Donations({
       className={classNames(className, 'text-center')}
     >
       <h3 className='fw-semibold mb-3'>{t('title')}</h3>
-      <div className='donations-container'>
+      <div className='donations-container overflow-y-auto'>
         {donations.count ? (
           <Table borderless className='align-middle mb-0'>
             <tbody>
