@@ -15,3 +15,6 @@ npm run build
 
 ## Contributing
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for more information on this.
+
+## License
+This repository is licensed under the [AGPL-3.0 License](LICENSE).
