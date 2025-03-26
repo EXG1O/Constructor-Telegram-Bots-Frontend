@@ -38,7 +38,7 @@ function Donations({
                 <tr key={donation.id}>
                   <td className='sum'>{`${donation.sum}€`}</td>
                   <td className='sender text-break'>{donation.sender}</td>
-                  <td className='date'>{formatDate(donation.date)}</td>
+                  <td className='date'>{formatDate(donation.date, 'd MMM yyyy')}</td>
                 </tr>
               ))}
             </tbody>
