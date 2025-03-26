@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import classNames from 'classnames';
 
 import Block, { BlockProps } from 'components/Block';
+import Markdown from 'components/Markdown';
 
 import { Update } from 'api/updates/types';
 
@@ -18,11 +19,9 @@ function UpdateDisplay({
   ...props
 }: UpdateDisplayProps): ReactElement<UpdateDisplayProps> {
   return (
-    <Block
-      {...props}
-      className={classNames('dynamic-content', className)}
-      dangerouslySetInnerHTML={{ __html: update.description }}
-    />
+    <Block {...props} className={classNames('dynamic-content', className)}>
+      <Markdown>{update.description}</Markdown>
+    </Block>
   );
 }
 

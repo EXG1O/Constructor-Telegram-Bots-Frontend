@@ -1,6 +1,8 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
 import classNames from 'classnames';
 
+import Markdown from 'components/Markdown';
+
 import { Section } from 'api/privacy_policy/types';
 
 import('styles/dynamic-content.scss');
@@ -18,7 +20,7 @@ function SectionDisplay({
   return (
     <div {...props} className={classNames('dynamic-content', className)}>
       <h3 className='mb-1'>{section.title}</h3>
-      <div dangerouslySetInnerHTML={{ __html: section.text }} />
+      <Markdown>{section.text}</Markdown>
     </div>
   );
 }
