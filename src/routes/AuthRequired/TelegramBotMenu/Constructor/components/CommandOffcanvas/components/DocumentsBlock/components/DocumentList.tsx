@@ -4,32 +4,33 @@ import classNames from 'classnames';
 import { useField } from 'formik';
 import { produce } from 'immer';
 
-import { Files } from '..';
+import { Documents } from '..';
 
-import FileDetail from './FileDetail';
+import DocumentDetail from './DocumentDetail';
 
-export type FileListProps = Pick<HTMLAttributes<HTMLDivElement>, 'className'>;
+export type DocumentsListProps = Pick<HTMLAttributes<HTMLDivElement>, 'className'>;
 
 const blockStyle: CSSProperties = { maxHeight: 171 };
 
-function FileList({
+function DocumentsList({
   className,
   ...props
-}: FileListProps): ReactElement<FileListProps> | null {
-  const [{ value: files }, _meta, { setValue }] = useField<Files>('files');
+}: DocumentsListProps): ReactElement<DocumentsListProps> | null {
+  const [{ value: documents }, _meta, { setValue: setDocuments }] =
+    useField<Documents>('documents');
 
   function handleDragEnd(result: DropResult): void {
     if (!result.destination) return;
 
-    setValue(
-      produce(files, (draft) => {
-        const [movedFile] = draft.splice(result.source.index, 1);
-        draft.splice(result.destination!.index, 0, movedFile);
+    setDocuments(
+      produce(documents, (draft) => {
+        const [movedDocument] = draft.splice(result.source.index, 1);
+        draft.splice(result.destination!.index, 0, movedDocument);
       }),
     );
   }
 
-  return files.length ? (
+  return documents.length ? (
     <div
       {...props}
       className={classNames(
@@ -39,15 +40,15 @@ function FileList({
       style={blockStyle}
     >
       <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId='command-offcanvas-files'>
+        <Droppable droppableId='command-offcanvas-documents'>
           {(provided) => (
             <div
               ref={provided.innerRef}
               {...provided.droppableProps}
               className='row g-1'
             >
-              {files.map((file, index) => (
-                <FileDetail key={file.key} index={index} />
+              {documents.map((document, index) => (
+                <DocumentDetail key={document.key} index={index} />
               ))}
               {provided.placeholder}
             </div>
@@ -58,4 +59,4 @@ function FileList({
   ) : null;
 }
 
-export default memo(FileList);
+export default memo(DocumentsList);

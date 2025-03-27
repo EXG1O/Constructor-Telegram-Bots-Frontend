@@ -103,16 +103,16 @@
         "text": "Додати зображення"
       }
     },
-    "filesBlock": {
-      "title": "Файли",
-      "addFilesButton": {
+    "documentsBlock": {
+      "title": "Документи",
+      "addDocumentsButton": {
         "messages": {
-          "addFiles": {
+          "addDocuments": {
             "error_tooLarge": "Файл {{name}} важить більше 2.5МБ.",
-            "error_notEnoughStorage": "Неможливо додати файл {{name}}, тому що не вистачає місця в сховищі."
+            "error_notEnoughStorage": "Неможливо додати документ {{name}}, тому що не вистачає місця в сховищі."
           }
         },
-        "text": "Додати файли"
+        "text": "Додати документи"
       }
     },
     "messageBlock": {

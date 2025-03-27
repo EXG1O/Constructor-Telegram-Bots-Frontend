@@ -55,7 +55,7 @@ export interface CommandMedia {
 }
 
 export type CommandImage = CommandMedia;
-export type CommandFile = CommandMedia;
+export type CommandDocument = CommandMedia;
 
 export interface CommandMessage {
   text: string;
@@ -86,7 +86,7 @@ export interface Command {
   settings: CommandSettings;
   trigger: CommandTrigger | null;
   images: CommandImage[];
-  files: CommandFile[];
+  documents: CommandDocument[];
   message: CommandMessage;
   keyboard: CommandKeyboard | null;
   api_request: CommandAPIRequest | null;
@@ -179,13 +179,8 @@ export namespace Data {
   }
 
   export namespace CommandsAPI {
-    export type CreateCommandMedia = Omit<CommandMedia, 'id' | 'name' | 'size' | 'url'>;
-
-    export interface CreateCommandImage extends CreateCommandMedia {
-      image: File | null;
-    }
-
-    export interface CreateCommandFile extends CreateCommandMedia {
+    export interface CreateCommandMedia
+      extends Omit<CommandMedia, 'id' | 'name' | 'size' | 'url'> {
       file: File | null;
     }
 
@@ -196,9 +191,9 @@ export namespace Data {
     }
 
     export interface Create
-      extends Omit<Command, 'id' | 'images' | 'files' | 'keyboard'> {
-      images: CreateCommandImage[] | null;
-      files: CreateCommandFile[] | null;
+      extends Omit<Command, 'id' | 'images' | 'documents' | 'keyboard'> {
+      images: CreateCommandMedia[] | null;
+      documents: CreateCommandMedia[] | null;
       keyboard: CreateCommandKeyboard | null;
     }
   }
@@ -206,14 +201,6 @@ export namespace Data {
   export namespace CommandAPI {
     export interface UpdateCommandMedia extends CommandsAPI.CreateCommandMedia {
       id?: CommandMedia['id'];
-    }
-
-    export interface UpdateCommandImage extends UpdateCommandMedia {
-      image: File | null;
-    }
-
-    export interface UpdateCommandFile extends UpdateCommandMedia {
-      file: File | null;
     }
 
     export interface UpdateCommandKeyboardButton
@@ -226,9 +213,9 @@ export namespace Data {
     }
 
     export interface Update
-      extends Omit<Command, 'id' | 'images' | 'files' | 'keyboard'> {
-      images: UpdateCommandImage[] | null;
-      files: UpdateCommandFile[] | null;
+      extends Omit<Command, 'id' | 'images' | 'documents' | 'keyboard'> {
+      images: UpdateCommandMedia[] | null;
+      documents: UpdateCommandMedia[] | null;
       keyboard: UpdateCommandKeyboard | null;
     }
 
@@ -240,8 +227,8 @@ export namespace Data {
     export interface PartialUpdate extends Partial<Pick<Update, 'name'>> {
       settings?: Partial<Update['settings']>;
       trigger?: Partial<Update['trigger']>;
-      images?: Partial<UpdateCommandImage>[] | null;
-      files?: Partial<UpdateCommandFile>[] | null;
+      images?: Partial<UpdateCommandMedia>[] | null;
+      documents?: Partial<UpdateCommandMedia>[] | null;
       message?: Partial<Update['message']>;
       keyboard?: PartialUpdateCommandKeyboard;
       api_request?: Partial<Update['api_request']>;
