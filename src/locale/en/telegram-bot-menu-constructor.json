@@ -103,16 +103,16 @@
         "text": "Add images"
       }
     },
-    "filesBlock": {
-      "title": "Files",
-      "addFilesButton": {
+    "documentsBlock": {
+      "title": "Documents",
+      "addDocumentsButton": {
         "messages": {
-          "addFiles": {
+          "addDocuments": {
             "error_tooLarge": "File {{name}} is larger than 2.5MB.",
-            "error_notEnoughStorage": "Unable to add file {{name}}, not enough storage space."
+            "error_notEnoughStorage": "Unable to add document {{name}}, not enough storage space."
           }
         },
-        "text": "Add files"
+        "text": "Add documents"
       }
     },
     "messageBlock": {

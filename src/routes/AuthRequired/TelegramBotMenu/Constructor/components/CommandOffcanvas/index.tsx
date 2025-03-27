@@ -15,7 +15,11 @@ import DatabaseRecordBlock, {
   DatabaseRecord,
   defaultDatabaseRecord,
 } from './components/DatabaseRecordBlock';
-import FilesCard, { CustomFile, defaultFiles, Files } from './components/FilesBlock';
+import DocumentsBlock, {
+  defaultDocuments,
+  Document,
+  Documents,
+} from './components/DocumentsBlock';
 import ImagesBlock, { defaultImages, Image, Images } from './components/ImagesBlock';
 import KeyboardBlock, { defaultKeyboard, Keyboard } from './components/KeyboardBlock';
 import { KeyboardRow } from './components/KeyboardBlock/components/Keyboard';
@@ -39,7 +43,7 @@ export interface FormValues {
   settings: Settings;
   trigger: Trigger;
   images: Images;
-  files: Files;
+  documents: Documents;
   message: Message;
   keyboard: Keyboard;
   api_request: APIRequest;
@@ -49,7 +53,7 @@ export interface FormValues {
   show_trigger_description_input: boolean;
 
   show_images_block: boolean;
-  show_files_block: boolean;
+  show_documents_block: boolean;
   show_keyboard_block: boolean;
 
   show_api_request_block: boolean;
@@ -64,7 +68,7 @@ export const defaultFormValues: FormValues = {
   settings: defaultSettings,
   trigger: defaultTrigger,
   images: defaultImages,
-  files: defaultFiles,
+  documents: defaultDocuments,
   message: defaultMessage,
   keyboard: defaultKeyboard,
   api_request: defaultAPIRequest,
@@ -74,7 +78,7 @@ export const defaultFormValues: FormValues = {
   show_trigger_description_input: false,
 
   show_images_block: false,
-  show_files_block: false,
+  show_documents_block: false,
   show_keyboard_block: false,
 
   show_api_request_block: false,
@@ -118,7 +122,7 @@ function InnerCommandOffcanvas(): ReactElement {
           id,
           trigger,
           images,
-          files,
+          documents,
           keyboard,
           api_request,
           database_record,
@@ -140,17 +144,17 @@ function InnerCommandOffcanvas(): ReactElement {
                 .map<Image>(({ id, name, size, url, from_url }) => ({
                   id,
                   key: crypto.randomUUID(),
-                  image: null,
+                  file: null,
                   name: name ?? from_url!,
                   size: size ?? 0,
                   url: url ?? from_url!,
                   from_url,
                 }))
             : defaultImages,
-          files: files.length
-            ? files
+          documents: documents.length
+            ? documents
                 .sort((a, b) => a.position - b.position)
-                .map<CustomFile>(({ id, name, size, url, from_url }) => ({
+                .map<Document>(({ id, name, size, url, from_url }) => ({
                   id,
                   key: crypto.randomUUID(),
                   file: null,
@@ -159,7 +163,7 @@ function InnerCommandOffcanvas(): ReactElement {
                   url: url ?? from_url!,
                   from_url,
                 }))
-            : defaultFiles,
+            : defaultDocuments,
           keyboard: keyboard
             ? {
                 type: keyboard.type,
@@ -210,7 +214,7 @@ function InnerCommandOffcanvas(): ReactElement {
           show_trigger_description_input: Boolean(trigger?.description),
 
           show_images_block: Boolean(images.length),
-          show_files_block: Boolean(files.length),
+          show_documents_block: Boolean(documents.length),
           show_keyboard_block: Boolean(keyboard),
 
           show_api_request_block: Boolean(api_request),
@@ -246,7 +250,7 @@ function InnerCommandOffcanvas(): ReactElement {
         <SettingsBlock />
         <TriggerBlock />
         <ImagesBlock />
-        <FilesCard />
+        <DocumentsBlock />
         <MessageBlock />
         <KeyboardBlock />
         <APIRequestBlock />
@@ -261,8 +265,8 @@ function InnerCommandOffcanvas(): ReactElement {
           <AddonButtonGroup.Button name='show_images_block'>
             {t('commandOffcanvas.imagesBlock.title')}
           </AddonButtonGroup.Button>
-          <AddonButtonGroup.Button name='show_files_block'>
-            {t('commandOffcanvas.filesBlock.title')}
+          <AddonButtonGroup.Button name='show_documents_block'>
+            {t('commandOffcanvas.documentsBlock.title')}
           </AddonButtonGroup.Button>
           <AddonButtonGroup.Button name='show_keyboard_block'>
             {t('commandOffcanvas.keyboardBlock.title')}
@@ -305,14 +309,14 @@ function CommandOffcanvas({
     {
       trigger,
       images,
-      files,
+      documents,
       keyboard,
       api_request,
       database_record,
       show_trigger_block,
       show_trigger_description_input,
       show_images_block,
-      show_files_block,
+      show_documents_block,
       show_keyboard_block,
       show_api_request_block,
       show_api_request_headers_block,
@@ -352,18 +356,18 @@ function CommandOffcanvas({
       trigger: show_trigger_block ? trigger : null,
       images:
         show_images_block && images.length
-          ? images.map<Data.CommandsAPI.CreateCommandImage>(
-              ({ id, image, from_url }, index) => ({
+          ? images.map<Data.CommandsAPI.CreateCommandMedia>(
+              ({ id, file, from_url }, index) => ({
                 id,
                 position: index,
-                image,
+                file,
                 from_url,
               }),
             )
           : null,
-      files:
-        show_files_block && files.length
-          ? files.map<Data.CommandsAPI.CreateCommandFile>(
+      documents:
+        show_documents_block && documents.length
+          ? documents.map<Data.CommandsAPI.CreateCommandMedia>(
               ({ id, file, from_url }, index) => ({
                 id,
                 position: index,

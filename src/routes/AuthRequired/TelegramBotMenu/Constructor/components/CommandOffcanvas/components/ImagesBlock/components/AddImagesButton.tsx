@@ -105,7 +105,7 @@ function AddImagesButton(
         ...images,
         ...processedImages.map<Image>((file) => ({
           key: crypto.randomUUID(),
-          image: file,
+          file: file,
           name: file.name,
           size: file.size,
           url: file.url!,

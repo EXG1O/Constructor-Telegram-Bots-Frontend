@@ -4,74 +4,79 @@ import { useField } from 'formik';
 
 import { RouteID } from 'routes';
 
-import { CustomFile, Files } from '..';
+import { Document, Documents } from '..';
 
 import Button, { ButtonProps } from 'components/Button';
 import { createMessageToast } from 'components/ToastContainer';
 
 import useTelegramBotStorage from '../../../hooks/useTelegramBotStorage';
 
-export type AddFilesButtonProps = Pick<ButtonProps, 'className'>;
+export type AddDocumentsButtonProps = Pick<ButtonProps, 'className'>;
 
-function AddFilesButton(props: AddFilesButtonProps): ReactElement<AddFilesButtonProps> {
+function AddDocumentsButton(
+  props: AddDocumentsButtonProps,
+): ReactElement<AddDocumentsButtonProps> {
   const id = useId();
 
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'commandOffcanvas.filesBlock.addFilesButton',
+    keyPrefix: 'commandOffcanvas.documentsBlock.addDocumentsButton',
   });
 
-  const [{ value: files }, _meta, { setValue }] = useField<Files>('files');
+  const [{ value: documents }, _meta, { setValue: setDocuments }] =
+    useField<Documents>('documents');
 
   const { remainingStorageSize } = useTelegramBotStorage();
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
     if (!event.target.files) return;
 
-    const newFiles: File[] = Object.values(event.target.files);
+    const newDocuments: File[] = Object.values(event.target.files);
 
     event.target.value = '';
 
     let availableStorageSize = remainingStorageSize;
 
-    setValue([
-      ...files,
-      ...newFiles
-        .filter((newFile) => {
+    setDocuments([
+      ...documents,
+      ...newDocuments
+        .filter((newDocument) => {
           if (
-            files.some(
-              (file) => newFile.name === file.name && newFile.size === file.size,
+            documents.some(
+              (document) =>
+                newDocument.name === document.name &&
+                newDocument.size === document.size,
             )
           ) {
             return false;
           }
 
-          if (newFile.size > 2621440) {
+          if (newDocument.size > 2621440) {
             createMessageToast({
-              message: t('messages.addFiles.error', {
+              message: t('messages.addDocuments.error', {
                 context: 'tooLarge',
-                name: newFile.name,
+                name: newDocument.name,
               }),
               level: 'error',
             });
             return false;
           }
 
-          if (availableStorageSize - newFile.size < 0) {
+          if (availableStorageSize - newDocument.size < 0) {
             createMessageToast({
-              message: t('messages.addFiles.error', {
+              message: t('messages.addDocuments.error', {
                 context: 'notEnoughStorage',
-                name: newFile.name,
+                name: newDocument.name,
               }),
               level: 'error',
             });
             return false;
           }
 
-          availableStorageSize -= newFile.size;
+          availableStorageSize -= newDocument.size;
 
           return true;
         })
-        .map<CustomFile>((file) => ({
+        .map<Document>((file) => ({
           key: crypto.randomUUID(),
           name: file.name,
           size: file.size,
@@ -91,4 +96,4 @@ function AddFilesButton(props: AddFilesButtonProps): ReactElement<AddFilesButton
   );
 }
 
-export default memo(AddFilesButton);
+export default memo(AddDocumentsButton);

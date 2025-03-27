@@ -15,10 +15,10 @@ import Block, { BlockProps } from '../../../Block';
 export interface Image {
   id?: number;
   key: string;
-  image: File | null;
   name: string;
   size: number;
   url: string;
+  file: File | null;
   from_url: string | null;
 }
 

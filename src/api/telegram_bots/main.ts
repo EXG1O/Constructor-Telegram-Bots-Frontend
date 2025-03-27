@@ -138,9 +138,8 @@ export class CommandsAPI {
   static parseMedia(
     index: number,
     formData: FormData,
-    mediaType: 'image' | 'file',
-    file: File | null | undefined,
-    { from_url, ...extraData }: Data.CommandsAPI.CreateCommandMedia,
+    mediaType: 'image' | 'document',
+    { file, from_url, ...extraData }: Data.CommandsAPI.CreateCommandMedia,
   ): void {
     const name: string = `${mediaType}:${index}`;
 
@@ -163,14 +162,14 @@ export class CommandsAPI {
   }
   static async create(
     telegramBotID: TelegramBot['id'],
-    { images, files, ...data }: Data.CommandsAPI.Create,
+    { images, documents, ...data }: Data.CommandsAPI.Create,
   ) {
     const formData = new FormData();
-    images?.forEach(({ image, ...media }, index) =>
-      CommandsAPI.parseMedia(index, formData, 'image', image, media),
+    images?.forEach((media, index) =>
+      CommandsAPI.parseMedia(index, formData, 'image', media),
     );
-    files?.forEach(({ file, ...media }, index) =>
-      CommandsAPI.parseMedia(index, formData, 'file', file, media),
+    documents?.forEach((media, index) =>
+      CommandsAPI.parseMedia(index, formData, 'document', media),
     );
     formData.append('data', JSON.stringify(data));
 
@@ -191,9 +190,8 @@ export class CommandAPI {
   static parseMedia(
     index: number,
     formData: FormData,
-    mediaType: 'image' | 'file',
-    file: File | null | undefined,
-    { id, from_url, ...extraData }: Partial<Data.CommandAPI.UpdateCommandMedia>,
+    mediaType: 'image' | 'document',
+    { id, file, from_url, ...extraData }: Partial<Data.CommandAPI.UpdateCommandMedia>,
   ): void {
     const name: string = `${mediaType}:${index}`;
 
@@ -219,14 +217,14 @@ export class CommandAPI {
   static async update(
     telegramBotID: TelegramBot['id'],
     commandID: Command['id'],
-    { images, files, ...data }: Data.CommandAPI.Update,
+    { images, documents, ...data }: Data.CommandAPI.Update,
   ) {
     const formData = new FormData();
-    images?.forEach(({ image, ...media }, index) =>
-      CommandAPI.parseMedia(index, formData, 'image', image, media),
+    images?.forEach((media, index) =>
+      CommandAPI.parseMedia(index, formData, 'image', media),
     );
-    files?.forEach(({ file, ...media }, index) =>
-      CommandAPI.parseMedia(index, formData, 'file', file, media),
+    documents?.forEach((media, index) =>
+      CommandAPI.parseMedia(index, formData, 'document', media),
     );
     formData.append('data', JSON.stringify(data));
 
@@ -240,14 +238,14 @@ export class CommandAPI {
   static async partialUpdate(
     telegramBotID: TelegramBot['id'],
     commandID: Command['id'],
-    { images, files, ...data }: Data.CommandAPI.PartialUpdate,
+    { images, documents, ...data }: Data.CommandAPI.PartialUpdate,
   ) {
     const formData = new FormData();
-    images?.forEach(({ image, ...media }, index) =>
-      CommandAPI.parseMedia(index, formData, 'image', image, media),
+    images?.forEach((media, index) =>
+      CommandAPI.parseMedia(index, formData, 'image', media),
     );
-    files?.forEach(({ file, ...media }, index) =>
-      CommandAPI.parseMedia(index, formData, 'file', file, media),
+    documents?.forEach((media, index) =>
+      CommandAPI.parseMedia(index, formData, 'document', media),
     );
     formData.append('data', JSON.stringify(data));
 

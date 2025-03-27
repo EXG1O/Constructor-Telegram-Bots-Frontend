@@ -9,37 +9,39 @@ import { Draggable } from 'react-beautiful-dnd';
 import { useField } from 'formik';
 import { produce } from 'immer';
 
-import { CustomFile, Files } from '..';
+import { Document, Documents } from '..';
 
 import Button from 'components/Button';
 
 import TrashIcon from 'assets/icons/trash.svg';
 
-export interface FileDetailProps
+export interface DocumentDetailProps
   extends Pick<HTMLAttributes<HTMLDivElement>, 'className'> {
   index: number;
 }
 
 const fileNameStyle: CSSProperties = { cursor: 'pointer' };
 
-function FileDetail({
+function DocumentDetail({
   index,
   ...props
-}: FileDetailProps): ReactElement<FileDetailProps> {
-  const [{ value: files }, _meta, { setValue }] = useField<Files>({ name: 'files' });
+}: DocumentDetailProps): ReactElement<DocumentDetailProps> {
+  const [{ value: documents }, _meta, { setValue: setDocuments }] = useField<Documents>(
+    { name: 'documents' },
+  );
 
-  const file = useMemo<CustomFile>(() => files[index], [index]);
+  const file = useMemo<Document>(() => documents[index], [index]);
 
   function handleDeleteButtonClick(): void {
-    setValue(
-      produce(files, (draft) => {
+    setDocuments(
+      produce(documents, (draft) => {
         draft.splice(index, 1);
       }),
     );
   }
 
   return (
-    <Draggable index={index} draggableId={`command-offcanvas-file-${file.key}`}>
+    <Draggable index={index} draggableId={`command-offcanvas-document-${file.key}`}>
       {({ innerRef, draggableProps, dragHandleProps }) => (
         <div
           ref={innerRef}
@@ -68,4 +70,4 @@ function FileDetail({
   );
 }
 
-export default memo(FileDetail);
+export default memo(DocumentDetail);

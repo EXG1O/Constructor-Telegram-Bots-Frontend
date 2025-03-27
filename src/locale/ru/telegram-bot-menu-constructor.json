@@ -103,16 +103,16 @@
         "text": "Добавить изображения"
       }
     },
-    "filesBlock": {
-      "title": "Файлы",
-      "addFilesButton": {
+    "documentsBlock": {
+      "title": "Документы",
+      "addDocumentsButton": {
         "messages": {
-          "addFiles": {
+          "addDocuments": {
             "error_tooLarge": "Файл {{name}} весит больше 2.5MB.",
-            "error_notEnoughStorage": "Невозможно добавить файл {{name}}, потому-что не хватает места в хранилище."
+            "error_notEnoughStorage": "Невозможно добавить документ {{name}}, потому-что не хватает места в хранилище."
           }
         },
-        "text": "Добавить файлы"
+        "text": "Добавить документы"
       }
     },
     "messageBlock": {
