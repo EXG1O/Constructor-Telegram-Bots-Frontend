@@ -16,7 +16,7 @@ type HandlePositions = 'left' | 'right';
 export interface Connection {
   id: number;
   source_object_type:
-    | 'command'
+    | 'trigger'
     | 'command_keyboard_button'
     | 'condition'
     | 'background_task';
@@ -34,15 +34,27 @@ export interface APIRequest {
   body: Record<string, any> | null;
 }
 
+export interface TriggerCommand {
+  command: string;
+  payload: string | null;
+  description: string | null;
+}
+
+export interface TriggerMessage {
+  text: string;
+}
+
+export interface Trigger {
+  id: number;
+  name: string;
+  command: TriggerCommand | null;
+  message: TriggerMessage | null;
+}
+
 export interface CommandSettings {
   is_reply_to_user_message: boolean;
   is_delete_user_message: boolean;
   is_send_as_new_message: boolean;
-}
-
-export interface CommandTrigger {
-  text: string;
-  description: string | null;
 }
 
 export interface CommandMedia {
@@ -84,7 +96,6 @@ export interface Command {
   id: number;
   name: string;
   settings: CommandSettings;
-  trigger: CommandTrigger | null;
   images: CommandImage[];
   documents: CommandDocument[];
   message: CommandMessage;
@@ -123,6 +134,9 @@ export interface DiagramBlock {
   source_connections: Connection[];
   target_connections: Connection[];
 }
+
+export type DiagramTrigger = Pick<Trigger, 'id' | 'name'> &
+  Omit<DiagramBlock, 'target_connections'>;
 
 export interface DiagramCommandKeyboardButton extends CommandKeyboardButton {
   source_connections: Connection[];
@@ -178,6 +192,25 @@ export namespace Data {
     export type Create = Omit<Connection, 'id'>;
   }
 
+  export namespace TriggersAPI {
+    export type Create = Omit<Trigger, 'id'>;
+  }
+
+  export namespace TriggerAPI {
+    export type Update = TriggersAPI.Create;
+
+    export interface PartialUpdateTriggerCommand
+      extends Pick<TriggerCommand, 'command'> {
+      payload?: string | null;
+      description?: string | null;
+    }
+
+    export interface PartialUpdate extends Partial<Pick<Trigger, 'name'>> {
+      command?: PartialUpdateTriggerCommand | null;
+      message?: Partial<Update['message']>;
+    }
+  }
+
   export namespace CommandsAPI {
     export interface CreateCommandMedia
       extends Omit<CommandMedia, 'id' | 'name' | 'size' | 'url'> {
@@ -226,7 +259,6 @@ export namespace Data {
 
     export interface PartialUpdate extends Partial<Pick<Update, 'name'>> {
       settings?: Partial<Update['settings']>;
-      trigger?: Partial<Update['trigger']>;
       images?: Partial<UpdateCommandMedia>[] | null;
       documents?: Partial<UpdateCommandMedia>[] | null;
       message?: Partial<Update['message']>;
@@ -266,6 +298,11 @@ export namespace Data {
     export interface PartialUpdate extends Omit<BackgroundTask, 'id' | 'api_request'> {
       api_request?: Partial<BackgroundTaskAPIRequest>;
     }
+  }
+
+  export namespace DiagramTriggerAPI {
+    export type Update = Pick<DiagramTrigger, 'x' | 'y'>;
+    export type PartialUpdate = Partial<Update>;
   }
 
   export namespace DiagramCommandAPI {
@@ -339,6 +376,17 @@ export namespace APIResponse {
     export type Create = Connection;
   }
 
+  export namespace TriggersAPI {
+    export type Get = Trigger[];
+    export type Create = TriggerAPI.Get;
+  }
+
+  export namespace TriggerAPI {
+    export type Get = Trigger;
+    export type Update = Get;
+    export type PartialUpdate = Get;
+  }
+
   export namespace CommandsAPI {
     export type Get = Command[];
     export type Create = CommandAPI.Get;
@@ -368,6 +416,16 @@ export namespace APIResponse {
 
   export namespace BackgroundTaskAPI {
     export type Get = BackgroundTask;
+    export type Update = Get;
+    export type PartialUpdate = Get;
+  }
+
+  export namespace DiagramTriggersAPI {
+    export type Get = DiagramTrigger[];
+  }
+
+  export namespace DiagramTriggerAPI {
+    export type Get = DiagramTrigger;
     export type Update = Get;
     export type PartialUpdate = Get;
   }
