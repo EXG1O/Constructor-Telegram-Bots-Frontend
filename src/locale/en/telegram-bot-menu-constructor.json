@@ -82,15 +82,6 @@
       "deleteUserMessageSwitch": "Delete user message",
       "sendAsNewMessageSwitch": "Send message as new"
     },
-    "triggerBlock": {
-      "title": "Trigger",
-      "textInputPlaceholder": "Enter text",
-      "descriptionInputCollapse": {
-        "showButton": "Add to menu",
-        "hideButton": "Remove from menu"
-      },
-      "descriptionInputPlaceholder": "Enter description"
-    },
     "imagesBlock": {
       "title": "Images",
       "addImagesButton": {

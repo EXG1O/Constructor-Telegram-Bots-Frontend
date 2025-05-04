@@ -61,7 +61,7 @@ import {
   parseEdges,
 } from './utils';
 
-type Source = ['command' | 'condition' | 'background_task', string];
+type Source = ['trigger' | 'command' | 'condition' | 'background_task', string];
 type Target = ['command' | 'condition', string];
 type Handle = ['left' | 'right', string];
 type SourceHandle = [...Source, ...Handle];
@@ -140,32 +140,32 @@ function Constructor(): ReactElement {
         connection.targetHandle
       ) {
         const [
-          source_object_type,
-          source_object_id,
-          source_handle_position,
-          source_nested_object_id,
+          sourceObjectType,
+          sourceObjectId,
+          sourceHandlePosition,
+          sourceNestedObjectId,
         ] = connection.sourceHandle.split(':') as SourceHandle;
         const [
-          target_object_type,
-          target_object_id,
-          target_handle_position,
-          _target_nested_object_id,
+          targetObjectType,
+          targetObjectId,
+          targetHandlePosition,
+          _targetNestedObjectId,
         ] = connection.targetHandle.split(':') as TargetHandle;
 
         const response = await ConnectionsAPI.create(telegramBot.id, {
-          ...(source_object_type === 'command' && parseInt(source_nested_object_id) > 0
+          ...(sourceObjectType !== 'command'
             ? {
-                source_object_type: 'command_keyboard_button',
-                source_object_id: parseInt(source_nested_object_id),
+                source_object_type: sourceObjectType,
+                source_object_id: parseInt(sourceObjectId),
               }
             : {
-                source_object_type,
-                source_object_id: parseInt(source_object_id),
+                source_object_type: 'command_keyboard_button',
+                source_object_id: parseInt(sourceNestedObjectId),
               }),
-          source_handle_position,
-          target_object_type,
-          target_object_id: parseInt(target_object_id),
-          target_handle_position,
+          source_handle_position: sourceHandlePosition,
+          target_object_type: targetObjectType,
+          target_object_id: parseInt(targetObjectId),
+          target_handle_position: targetHandlePosition,
         });
 
         if (!response.ok) {

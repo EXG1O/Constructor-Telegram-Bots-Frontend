@@ -82,15 +82,6 @@
       "deleteUserMessageSwitch": "Видалити повідомлення користувача",
       "sendAsNewMessageSwitch": "Відправити повідомлення як нове"
     },
-    "triggerBlock": {
-      "title": "Тригер",
-      "textInputPlaceholder": "Введіть текст",
-      "descriptionInputCollapse": {
-        "showButton": "Додати до меню",
-        "hideButton": "Прибрати з меню"
-      },
-      "descriptionInputPlaceholder": "Введіть опис"
-    },
     "imagesBlock": {
       "title": "Зображення",
       "addImagesButton": {

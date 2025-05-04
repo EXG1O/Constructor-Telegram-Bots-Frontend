@@ -26,7 +26,6 @@ import { KeyboardRow } from './components/KeyboardBlock/components/Keyboard';
 import MessageBlock, { defaultMessage, Message } from './components/MessageBlock';
 import SettingsBlock, { defaultSettings, Settings } from './components/SettingsBlock';
 import TelegramBotStorage from './components/TelegramBotStorage';
-import TriggerBlock, { defaultTrigger, Trigger } from './components/TriggerBlock';
 
 import AddonButtonGroup from '../AddonButtonGroup';
 import NameBlock, { defaultName, Name } from '../NameBlock';
@@ -41,16 +40,12 @@ import { useCommandOffcanvasStore } from './store';
 export interface FormValues {
   name: Name;
   settings: Settings;
-  trigger: Trigger;
   images: Images;
   documents: Documents;
   message: Message;
   keyboard: Keyboard;
   api_request: APIRequest;
   database_record: DatabaseRecord;
-
-  show_trigger_block: boolean;
-  show_trigger_description_input: boolean;
 
   show_images_block: boolean;
   show_documents_block: boolean;
@@ -66,16 +61,12 @@ export interface FormValues {
 export const defaultFormValues: FormValues = {
   name: defaultName,
   settings: defaultSettings,
-  trigger: defaultTrigger,
   images: defaultImages,
   documents: defaultDocuments,
   message: defaultMessage,
   keyboard: defaultKeyboard,
   api_request: defaultAPIRequest,
   database_record: defaultDatabaseRecord,
-
-  show_trigger_block: false,
-  show_trigger_description_input: false,
 
   show_images_block: false,
   show_documents_block: false,
@@ -120,7 +111,6 @@ function InnerCommandOffcanvas(): ReactElement {
 
         const {
           id,
-          trigger,
           images,
           documents,
           keyboard,
@@ -132,12 +122,6 @@ function InnerCommandOffcanvas(): ReactElement {
         setValues({
           ...command,
 
-          trigger: trigger
-            ? {
-                ...trigger,
-                description: trigger.description ?? defaultTrigger.description,
-              }
-            : defaultTrigger,
           images: images.length
             ? images
                 .sort((a, b) => a.position - b.position)
@@ -210,9 +194,6 @@ function InnerCommandOffcanvas(): ReactElement {
               }
             : defaultDatabaseRecord,
 
-          show_trigger_block: Boolean(trigger),
-          show_trigger_description_input: Boolean(trigger?.description),
-
           show_images_block: Boolean(images.length),
           show_documents_block: Boolean(documents.length),
           show_keyboard_block: Boolean(keyboard),
@@ -248,7 +229,6 @@ function InnerCommandOffcanvas(): ReactElement {
       <Offcanvas.Body as={Form} id={formID}>
         <NameBlock />
         <SettingsBlock />
-        <TriggerBlock />
         <ImagesBlock />
         <DocumentsBlock />
         <MessageBlock />
@@ -259,9 +239,6 @@ function InnerCommandOffcanvas(): ReactElement {
       <Offcanvas.Footer className='gap-2'>
         <TelegramBotStorage />
         <AddonButtonGroup>
-          <AddonButtonGroup.Button name='show_trigger_block'>
-            {t('commandOffcanvas.triggerBlock.title')}
-          </AddonButtonGroup.Button>
           <AddonButtonGroup.Button name='show_images_block'>
             {t('commandOffcanvas.imagesBlock.title')}
           </AddonButtonGroup.Button>
@@ -307,14 +284,11 @@ function CommandOffcanvas({
 
   async function handleSubmit(
     {
-      trigger,
       images,
       documents,
       keyboard,
       api_request,
       database_record,
-      show_trigger_block,
-      show_trigger_description_input,
       show_images_block,
       show_documents_block,
       show_keyboard_block,
@@ -353,7 +327,6 @@ function CommandOffcanvas({
 
     const data: Data.CommandsAPI.Create | Data.CommandAPI.Update = {
       ...values,
-      trigger: show_trigger_block ? trigger : null,
       images:
         show_images_block && images.length
           ? images.map<Data.CommandsAPI.CreateCommandMedia>(
