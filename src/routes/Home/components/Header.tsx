@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { RouteID } from 'routes';
 
-import Block, { BlockProps } from 'components/Block';
+import Block, { BlockProps } from 'components/ui/Block';
 
 export type HeaderProps = Omit<BlockProps, 'variant' | 'gradient' | 'children'>;
 

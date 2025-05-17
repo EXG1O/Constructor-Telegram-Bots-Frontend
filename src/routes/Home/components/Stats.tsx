@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Block, { BlockProps } from 'components/Block';
+import Block, { BlockProps } from 'components/ui/Block';
 import InfoArea from 'components/InfoArea';
 import Stack from 'components/Stack';
 

@@ -12,7 +12,7 @@ import classNames from 'classnames';
 import i18n from 'i18n';
 import formatDate from 'i18n/formatDate';
 
-import Block, { BlockProps } from 'components/Block';
+import Block, { BlockProps } from 'components/ui/Block';
 import Table from 'components/Table';
 import TelegramBotStorage from 'components/TelegramBotStorage';
 import { createMessageToast } from 'components/ToastContainer';

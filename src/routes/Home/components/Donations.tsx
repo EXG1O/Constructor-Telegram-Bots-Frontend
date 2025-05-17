@@ -7,7 +7,7 @@ import { RouteID } from 'routes';
 
 import './Donations.scss';
 
-import Block, { BlockProps } from 'components/Block';
+import Block, { BlockProps } from 'components/ui/Block';
 import Table from 'components/Table';
 
 import useHomeRouteLoaderData from '../hooks/useHomeRouteLoaderData';
