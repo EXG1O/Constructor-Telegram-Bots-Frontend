@@ -1,1 +1,117 @@
 @import 'tailwindcss';
+
+@font-face {
+  font-family: InterVariable;
+  src:
+    url(assets/InterVariable.woff2) format('woff2 supports variations'),
+    url(assets/InterVariable.woff2) format('woff2-variations');
+  font-weight: 100 1000;
+}
+
+@theme {
+  --font-sans: InterVariable, sans-serif;
+
+  --color-*: initial;
+  --color-black: #000;
+  --color-white: #fff;
+
+  --color-background: var(--color-white);
+  --color-foreground: #191f2f;
+
+  --color-light: #f7f9fb;
+  --color-light-foreground: var(--color-foreground);
+  --color-dark: #1e2337;
+  --color-dark-foreground: var(--color-white);
+  --color-primary: #0098ea;
+  --color-primary-foreground: var(--color-white);
+  --color-info: #0dcaf0;
+  --color-info-foreground: var(--color-foreground);
+  --color-warning: #ffc107;
+  --color-warning-foreground: var(--color-foreground);
+  --color-danger: #e34b3b;
+  --color-danger-foreground: var(--color-white);
+  --color-success: #00a84e;
+  --color-success-foreground: var(--color-white);
+
+  --breakpoint-*: initial;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1400px;
+
+  --container-*: initial;
+  --container-sm: 720px;
+  --container-md: 720px;
+  --container-lg: 960px;
+  --container-xl: 1140px;
+  --container-2xl: 1320px;
+
+  --text-*: initial;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: calc(1 / 0.75);
+  --text-sm: 0.875rem;
+  --text-sm--line-height: calc(1.25 / 0.875);
+  --text-base: 1rem;
+  --text-base--line-height: calc(1.5 / 1);
+  --text-lg: 1.125rem;
+  --text-lg--line-height: calc(1.75 / 1.125);
+  --text-xl: 1.25rem;
+  --text-xl--line-height: calc(1.75 / 1.25);
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: calc(2 / 1.5);
+  --text-3xl: 1.75rem;
+  --text-3xl--line-height: calc(2 / 1.75);
+  --text-4xl: 2rem;
+  --text-4xl--line-height: calc(2.25 / 2);
+  --text-5xl: 2.5rem;
+  --text-5xl--line-height: 1;
+  --text-6xl: 3rem;
+  --text-6xl--line-height: 1;
+  --text-7xl: 4rem;
+  --text-7xl--line-height: 1;
+  --text-8xl: 5rem;
+  --text-8xl--line-height: 1;
+  --text-9xl: 6rem;
+  --text-9xl--line-height: 1;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-medium;
+    line-height: 1.2;
+  }
+
+  h1 {
+    font-size: var(--text-5xl);
+  }
+
+  h2 {
+    font-size: var(--text-4xl);
+  }
+
+  h3 {
+    font-size: var(--text-3xl);
+  }
+
+  h4 {
+    font-size: var(--text-2xl);
+  }
+
+  h5 {
+    font-size: var(--text-xl);
+  }
+
+  h6 {
+    font-size: var(--text-base);
+  }
+
+  [role='button'] {
+    @apply cursor-pointer;
+  }
+}
