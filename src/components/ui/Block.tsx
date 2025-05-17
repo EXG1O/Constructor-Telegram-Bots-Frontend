@@ -1,10 +1,10 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
+import { Slot } from '@radix-ui/react-slot';
 import { cva, VariantProps } from 'class-variance-authority';
 
 import cn from 'utils/cn';
-import { AsProp, FCA } from 'utils/helpers';
 
-export const blockVariants = cva(['rounded-2xl p-3'], {
+export const blockVariants = cva(['rounded-2xl', 'p-3'], {
   variants: {
     variant: {
       light: ['bg-light', 'text-light-foreground'],
@@ -12,20 +12,20 @@ export const blockVariants = cva(['rounded-2xl p-3'], {
       primary: ['bg-primary', 'text-primary-foreground'],
     },
     gradient: {
-      false: null,
       true: 'bg-gradient-to-r',
+      false: null,
     },
   },
   compoundVariants: [
     {
       variant: 'dark',
       gradient: true,
-      className: 'from-dark to-dark/80',
+      className: ['from-dark', 'to-dark/80'],
     },
     {
       variant: 'primary',
       gradient: true,
-      className: 'from-primary to-primary/80',
+      className: ['from-primary', 'to-primary/80'],
     },
   ],
   defaultVariants: {
@@ -33,15 +33,16 @@ export const blockVariants = cva(['rounded-2xl p-3'], {
   },
 });
 
-export type BlockProps = AsProp &
-  HTMLAttributes<HTMLDivElement> &
-  VariantProps<typeof blockVariants>;
+export interface BlockProps
+  extends HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof blockVariants> {
+  asChild?: boolean;
+}
 
-const Block: FCA<'div', BlockProps> = forwardRef<HTMLElement, BlockProps>(
-  function Block(
-    { as: Component = 'div', variant, gradient, className, ...props },
-    ref,
-  ) {
+const Block = forwardRef<HTMLDivElement, BlockProps>(
+  ({ asChild, variant, gradient, className, ...props }, ref) => {
+    const Component = asChild ? Slot : 'div';
+
     return (
       <Component
         {...props}
@@ -51,5 +52,6 @@ const Block: FCA<'div', BlockProps> = forwardRef<HTMLElement, BlockProps>(
     );
   },
 );
+Block.displayName = 'Block';
 
 export default Block;
