@@ -5,7 +5,7 @@ import { RouteID } from 'routes';
 
 import Row from 'react-bootstrap/Row';
 
-import PlusButton from 'components/ui/PlusButton';
+import PlusButton from 'components/shared/PlusButton';
 import Pagination, { PaginationProps } from 'components/Pagination';
 import Search, { SearchProps } from 'components/Search';
 

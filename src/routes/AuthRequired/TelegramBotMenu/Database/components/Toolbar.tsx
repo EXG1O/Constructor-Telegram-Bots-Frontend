@@ -12,7 +12,7 @@ import { Row } from 'react-bootstrap';
 
 import { RouteID } from 'routes';
 
-import PlusButton from 'components/ui/PlusButton';
+import PlusButton from 'components/shared/PlusButton';
 import Pagination, { PaginationProps } from 'components/Pagination';
 import Search, { SearchProps } from 'components/Search';
 
