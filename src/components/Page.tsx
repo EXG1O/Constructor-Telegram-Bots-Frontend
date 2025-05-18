@@ -1,7 +1,7 @@
 import React, { memo, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 
-import Container, { ContainerProps } from './Container';
+import Container from 'components/ui/Container';
 import Title from './Title';
 
 import('./Stack.scss');
@@ -21,19 +21,22 @@ function Page({
   className,
   children,
 }: PageProps): ReactElement<PageProps> {
-  const containerProps: Omit<ContainerProps, 'as'> = {
-    className: classNames('my-2 my-lg-3', { 'vstack gap-3 gap-lg-4': grid }, className),
-    children,
-  };
+  const containerClassName: string = classNames('my-2 my-lg-3', { 'vstack gap-3 gap-lg-4': grid }, className)
 
   return (
     <Title title={title}>
       {align === 'center' ? (
         <main className='my-auto'>
-          <Container {...containerProps} />
+          <Container className={containerClassName}>
+            {children}
+          </Container>
         </main>
       ) : (
-        <Container as='main' {...containerProps} />
+        <Container asChild className={containerClassName}>
+          <main>
+            {children}
+          </main>
+        </Container>
       )}
     </Title>
   );

@@ -1,6 +1,6 @@
 import React, { memo, ReactElement } from 'react';
 
-import Container from 'components/Container';
+import Container from 'components/ui/Container';
 
 import GithubIcon from 'assets/icons/github.svg';
 import TelegramIcon from 'assets/icons/telegram.svg';
