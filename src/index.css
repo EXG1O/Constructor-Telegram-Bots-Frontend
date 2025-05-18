@@ -22,6 +22,8 @@
   --color-light-foreground: var(--color-foreground);
   --color-dark: #1e2337;
   --color-dark-foreground: var(--color-white);
+  --color-secondary: #6c757d;
+  --color-secondary-foreground: var(--color-white);
   --color-primary: #0098ea;
   --color-primary-foreground: var(--color-white);
   --color-info: #0dcaf0;
