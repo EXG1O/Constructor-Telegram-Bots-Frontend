@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Loading from 'components/Loading';
+import Spinner from 'components/ui/Spinner';
 import Page from 'components/Page';
 import { createMessageToast } from 'components/ToastContainer';
 
@@ -57,7 +57,7 @@ function Instruction(): ReactElement {
       {!loading ? (
         sections.map((section) => <SectionDisplay key={section.id} section={section} />)
       ) : (
-        <Loading size='lg' className='m-auto' />
+        <Spinner size='lg' className='m-auto' />
       )}
     </Page>
   );

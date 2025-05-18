@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import InputFeedback, { InputFeedbackProps } from 'components/InputFeedback';
-import Loading from 'components/Loading';
+import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ToastContainer';
 
 import useTelegramBot from '../hooks/useTelegramBot';
@@ -103,7 +103,7 @@ function APITokenEditing({
         {!loading ? (
           <CheckIcon {...iconProps} className='text-success' onClick={handleSave} />
         ) : (
-          <Loading size='xxs' />
+          <Spinner size='xxs' />
         )}
         <XIcon {...iconProps} className='text-danger' onClick={onCancel} />
       </div>

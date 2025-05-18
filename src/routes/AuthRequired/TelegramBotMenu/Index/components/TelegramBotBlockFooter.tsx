@@ -11,7 +11,7 @@ import Row from 'react-bootstrap/Row';
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import Button from 'components/ui/Button';
 import Card from 'components/Card';
-import Loading from 'components/Loading';
+import Spinner from 'components/ui/Spinner';
 import useTelegramBot from 'components/TelegramBotBlock/hooks/useTelegramBot';
 import { createMessageToast } from 'components/ToastContainer';
 
@@ -91,7 +91,7 @@ function TelegramBotBlockFooter(
             variant='secondary'
             className='w-100 d-flex justify-content-center'
           >
-            <Loading size='xs' />
+            <Spinner size='xs' />
           </Button>
         </Col>
       ) : telegramBot.is_enabled ? (

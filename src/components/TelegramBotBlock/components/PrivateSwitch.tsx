@@ -8,7 +8,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 
 import Check from 'components/Check';
-import Loading from 'components/Loading';
+import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ToastContainer';
 
 import useTelegramBot from '../hooks/useTelegramBot';
@@ -61,7 +61,7 @@ function PrivateSwitch(props: PrivateSwitchProps): ReactElement<PrivateSwitchPro
       onChange={handleChange}
     />
   ) : (
-    <Loading size='xxs' />
+    <Spinner size='xxs' />
   );
 }
 

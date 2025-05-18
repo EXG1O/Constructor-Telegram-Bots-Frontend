@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Loading from 'components/Loading';
+import Spinner from 'components/ui/Spinner';
 import Page from 'components/Page';
 import Pagination from 'components/Pagination';
 import { createMessageToast } from 'components/ToastContainer';
@@ -69,7 +69,7 @@ function Updates(): ReactElement {
           <UpdateDisplay key={update.id} update={update} />
         ))
       ) : (
-        <Loading size='lg' className='m-auto' />
+        <Spinner size='lg' className='m-auto' />
       )}
       <Pagination
         itemCount={paginationData.count}

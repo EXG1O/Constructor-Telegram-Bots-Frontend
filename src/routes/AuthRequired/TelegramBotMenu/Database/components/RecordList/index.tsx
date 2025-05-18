@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { RouteID } from 'routes';
 
 import ListGroup, { ListGroupProps } from 'components/ListGroup';
-import Loading from 'components/Loading';
+import Spinner from 'components/ui/Spinner';
 
 import RecordDisplay from './components/RecordDisplay';
 import Wrapper from './components/Wrapper';
@@ -46,7 +46,7 @@ function RecordList({
     )
   ) : (
     <Wrapper className='d-flex justify-content-center p-2'>
-      <Loading size='sm' />
+      <Spinner size='sm' />
     </Wrapper>
   );
 }

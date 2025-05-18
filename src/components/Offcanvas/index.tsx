@@ -9,7 +9,7 @@ import OffcanvasHeader from './components/OffcanvasHeader';
 import OffcanvasTitle from './components/OffcanvasTitle';
 import OffcanvasContext from './contexts/OffcanvasContext';
 
-import Loading from '../Loading';
+import Spinner from 'components/ui/Spinner';
 
 import('./index.scss');
 
@@ -47,7 +47,7 @@ const Offcanvas = forwardRef<HTMLElement, OffcanvasProps>(function Offcanvas(
         {children}
         {loading && (
           <BaseOffcanvas.Body className='d-flex justify-content-center'>
-            <Loading size='md' className='align-self-center' />
+            <Spinner size='md' className='align-self-center' />
           </BaseOffcanvas.Body>
         )}
       </BaseOffcanvas>

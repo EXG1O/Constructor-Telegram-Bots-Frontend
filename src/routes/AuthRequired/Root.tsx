@@ -4,7 +4,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { reverse, RouteID } from 'routes';
 import useRootRouteLoaderData from 'routes/Root/hooks/useRootRouteLoaderData';
 
-import Loading from 'components/Loading';
+import Spinner from 'components/ui/Spinner';
 
 function Root(): ReactElement {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ function Root(): ReactElement {
     if (!user) navigate(reverse(RouteID.Home));
   }, [user]);
 
-  return user ? <Outlet /> : <Loading size='xl' className='m-auto' />;
+  return user ? <Outlet /> : <Spinner size='xl' className='m-auto' />;
 }
 
 export default Root;

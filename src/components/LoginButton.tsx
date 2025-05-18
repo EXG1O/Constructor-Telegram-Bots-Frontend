@@ -7,7 +7,6 @@ import { reverse, RouteID } from 'routes';
 
 import Button, { ButtonProps } from 'components/ui/Button';
 
-import Loading from './Loading';
 import { createMessageToast } from './ToastContainer';
 
 import settings from 'settings';
@@ -16,6 +15,7 @@ import TelegramIcon from 'assets/icons/telegram.svg';
 
 import { UsersAPI } from 'api/users/main';
 import { Data } from 'api/users/types';
+import Spinner from 'components/ui/Spinner';
 
 type AuthData = Data.UsersAPI.Login;
 
@@ -121,7 +121,7 @@ function LoginButton({
           {t('text')}
         </>
       ) : (
-        <Loading size='xxs' />
+        <Spinner size='xxs' />
       )}
     </Button>
   );

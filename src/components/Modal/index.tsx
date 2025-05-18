@@ -9,7 +9,7 @@ import ModalHeader from './components/ModalHeader';
 import ModalTitle from './components/ModalTitle';
 import ModalContext from './contexts/ModalContext';
 
-import Loading from '../Loading';
+import Spinner from 'components/ui/Spinner';
 
 import { FCA } from 'utils/helpers';
 
@@ -53,7 +53,7 @@ const Modal: FCA<'div', ModalProps> = forwardRef<HTMLElement, ModalProps>(
           {children}
           {loading && (
             <BaseModal.Body className='d-flex justify-content-center'>
-              <Loading size='md' />
+              <Spinner size='md' />
             </BaseModal.Body>
           )}
         </BaseModal>

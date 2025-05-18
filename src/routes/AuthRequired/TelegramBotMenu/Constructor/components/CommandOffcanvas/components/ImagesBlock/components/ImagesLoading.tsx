@@ -1,6 +1,6 @@
 import React, { CSSProperties, memo, ReactElement, ReactNode } from 'react';
 
-import Loading from 'components/Loading';
+import Spinner from 'components/ui/Spinner';
 
 import { useCommandOffcanvasStore } from '../../../store';
 
@@ -20,7 +20,7 @@ function ImagesLoading({
       className='d-flex justify-content-center bg-light border rounded'
       style={blockStyle}
     >
-      <Loading size='md' className='align-self-center' />
+      <Spinner size='md' className='align-self-center' />
     </div>
   ) : (
     children

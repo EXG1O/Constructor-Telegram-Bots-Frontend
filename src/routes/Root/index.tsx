@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Outlet, useNavigation } from 'react-router-dom';
 
 import AskConfirmModal from 'components/AskConfirmModal';
-import Loading from 'components/Loading';
+import Spinner from 'components/ui/Spinner';
 import ToastContainer from 'components/ToastContainer';
 
 import Footer from './components/Footer';
@@ -19,7 +19,7 @@ function Root(): ReactElement {
       {navigation.state === 'idle' ? (
         <Outlet />
       ) : (
-        <Loading size='lg' className='m-auto' />
+        <Spinner size='lg' className='m-auto' />
       )}
       <Footer />
     </>

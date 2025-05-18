@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import classNames from 'classnames';
 
-import Loading from '../../Loading';
+import Spinner from 'components/ui/Spinner';
 
 export type EditorLoadingProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
@@ -14,7 +14,7 @@ function EditorLoading({
       {...props}
       className={classNames('d-flex justify-content-center w-100 p-2', className)}
     >
-      <Loading size='sm' />
+      <Spinner size='sm' />
     </div>
   );
 }

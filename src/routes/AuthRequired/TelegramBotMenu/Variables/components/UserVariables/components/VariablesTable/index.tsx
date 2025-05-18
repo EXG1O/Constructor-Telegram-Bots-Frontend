@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Loading from 'components/Loading';
+import Spinner from 'components/ui/Spinner';
 import Table from 'components/Table';
 
 import TableRow from './components/TableRow';
@@ -44,7 +44,7 @@ function VariablesTable(): ReactElement {
     )
   ) : (
     <TableWrapper className='d-flex justify-content-center p-2'>
-      <Loading size='sm' />
+      <Spinner size='sm' />
     </TableWrapper>
   );
 }

@@ -15,7 +15,7 @@ import ListGroupItem, { ListGroupItemProps } from 'react-bootstrap/ListGroupItem
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import Button from 'components/ui/Button';
-import Loading from 'components/Loading';
+import Spinner from 'components/ui/Spinner';
 import MonacoEditor, { MonacoEditorProps } from 'components/MonacoEditor';
 import { createMessageToast } from 'components/ToastContainer';
 
@@ -193,7 +193,7 @@ function RecordDisplay({
     </ListGroupItem>
   ) : (
     <Wrapper className='d-flex justify-content-center p-3'>
-      <Loading size='sm' />
+      <Spinner size='sm' />
     </Wrapper>
   );
 }
