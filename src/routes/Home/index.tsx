@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import Page from 'components/Page';
+import Page from 'components/shared/Page';
 
 import Donations from './components/Donations';
 import Header from './components/Header';

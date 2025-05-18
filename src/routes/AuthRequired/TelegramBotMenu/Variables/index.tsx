@@ -4,7 +4,7 @@ import ClipboardJS from 'clipboard';
 
 import { RouteID } from 'routes';
 
-import Page from 'components/Page';
+import Page from 'components/shared/Page';
 import { createMessageToast } from 'components/ToastContainer';
 
 import SystemVariables from './components/SystemVariables';

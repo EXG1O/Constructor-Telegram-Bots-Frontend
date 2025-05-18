@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { RouteID } from 'routes';
 
 import Spinner from 'components/ui/Spinner';
-import Page from 'components/Page';
+import Page from 'components/shared/Page';
 import { createMessageToast } from 'components/ToastContainer';
 
 import MethodTable from './components/MethodTable';

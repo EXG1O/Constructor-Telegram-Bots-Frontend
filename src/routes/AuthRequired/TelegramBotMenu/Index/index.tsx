@@ -7,7 +7,7 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import Page from 'components/Page';
+import Page from 'components/shared/Page';
 import TelegramBotBlock from 'components/TelegramBotBlock';
 
 import TelegramBotBlockFooter from './components/TelegramBotBlockFooter';

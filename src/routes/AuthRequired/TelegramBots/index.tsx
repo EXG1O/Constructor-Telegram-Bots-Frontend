@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Page from 'components/Page';
+import Page from 'components/shared/Page';
 
 import Header from './components/Header';
 import TelegramBotList from './components/TelegramBotList';

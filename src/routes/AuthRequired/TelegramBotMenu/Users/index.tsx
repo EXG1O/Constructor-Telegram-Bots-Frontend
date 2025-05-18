@@ -5,7 +5,7 @@ import { Stack } from 'react-bootstrap';
 import { RouteID } from 'routes';
 
 import Block from 'components/ui/Block';
-import Page from 'components/Page';
+import Page from 'components/shared/Page';
 
 import Footer from './components/Footer';
 import Toolbar from './components/Toolbar';

@@ -1,7 +1,7 @@
 import React, { ReactElement, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
-import Page from 'components/Page';
+import Page from 'components/shared/Page';
 
 function ErrorBoundary(): ReactElement {
   const { t, i18n } = useTranslation('error-boundary');

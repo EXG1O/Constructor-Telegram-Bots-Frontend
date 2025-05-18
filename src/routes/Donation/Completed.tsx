@@ -3,7 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Page from 'components/Page';
+import Page from 'components/shared/Page';
 
 function Completed(): ReactElement {
   const { t, i18n } = useTranslation(RouteID.DonationCompleted);

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { RouteID } from 'routes';
 
 import Block from 'components/ui/Block';
-import Page from 'components/Page';
+import Page from 'components/shared/Page';
 import Stack from 'components/ui/Stack';
 
 import Footer from './components/Footer';
