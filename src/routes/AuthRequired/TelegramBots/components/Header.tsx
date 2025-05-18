@@ -10,7 +10,7 @@ import classNames from 'classnames';
 
 import { RouteID } from 'routes';
 
-import AddButton from 'components/ui/AddButton';
+import PlusButton from 'components/ui/PlusButton';
 
 import TelegramBotAdditionModal from './TelegramBotAdditionModal';
 
@@ -37,13 +37,13 @@ function Header({ className, ...props }: HeaderProps): ReactElement<HeaderProps>
         <h1 className='flex-grow-1 flex-lg-grow-0 fw-semibold text-center mb-0'>
           {t('title')}
         </h1>
-        <AddButton
+        <PlusButton
           variant='dark'
           className='flex-grow-1 flex-lg-grow-0 align-self-center'
           onClick={handleAddButtonClick}
         >
           {t('addTelegramBotButton')}
-        </AddButton>
+        </PlusButton>
       </div>
     </>
   );

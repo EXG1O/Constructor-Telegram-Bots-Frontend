@@ -5,7 +5,7 @@ import { RouteID } from 'routes';
 
 import Row from 'react-bootstrap/Row';
 
-import AddButton from 'components/ui/AddButton';
+import PlusButton from 'components/ui/PlusButton';
 import Pagination, { PaginationProps } from 'components/Pagination';
 import Search, { SearchProps } from 'components/Search';
 
@@ -50,14 +50,14 @@ function Toolbar(): ReactElement {
   return (
     <Row md='auto' className='g-2'>
       <div>
-        <AddButton
+        <PlusButton
           size='sm'
           variant='dark'
           className='w-100'
           onClick={handleAddButtonClick}
         >
           {t('addVariableButton')}
-        </AddButton>
+        </PlusButton>
       </div>
       <Search
         size='sm'

@@ -12,7 +12,7 @@ import { Row } from 'react-bootstrap';
 
 import { RouteID } from 'routes';
 
-import AddButton from 'components/ui/AddButton';
+import PlusButton from 'components/ui/PlusButton';
 import Pagination, { PaginationProps } from 'components/Pagination';
 import Search, { SearchProps } from 'components/Search';
 
@@ -64,14 +64,14 @@ function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarPro
       <RecordAdditionModal show={showModal} onHide={handleHide} />
       <Row {...props} lg='auto' className={classNames('g-2', className)}>
         <div>
-          <AddButton
+          <PlusButton
             size='sm'
             variant='dark'
             className='w-100'
             onClick={handleAddButtonClick}
           >
             {t('addRecordButton')}
-          </AddButton>
+          </PlusButton>
         </div>
         <Search
           size='sm'

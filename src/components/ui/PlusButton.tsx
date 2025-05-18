@@ -3,9 +3,9 @@ import { Plus } from 'lucide-react';
 
 import Button, { ButtonProps } from 'components/ui/Button';
 
-export type AddButtonProps = ButtonProps;
+export type PlusButtonProps = ButtonProps;
 
-const AddButton = forwardRef<HTMLButtonElement, ButtonProps>(
+const PlusButton = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ children, ...props }, ref) => {
     return (
       <Button {...props} ref={ref}>
@@ -15,6 +15,6 @@ const AddButton = forwardRef<HTMLButtonElement, ButtonProps>(
     );
   },
 );
-AddButton.displayName = 'AddButton';
+PlusButton.displayName = 'PlusButton';
 
-export default AddButton;
+export default PlusButton;
