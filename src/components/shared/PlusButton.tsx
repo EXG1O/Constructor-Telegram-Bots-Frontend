@@ -1,7 +1,9 @@
 import React, { forwardRef } from 'react';
 import { Plus } from 'lucide-react';
 
-import Button, { ButtonProps } from 'components/ui/Button';
+import Button, { ButtonProps, buttonVariants } from 'components/ui/Button';
+
+export { buttonVariants as plusButtonVariants };
 
 export type PlusButtonProps = ButtonProps;
 
