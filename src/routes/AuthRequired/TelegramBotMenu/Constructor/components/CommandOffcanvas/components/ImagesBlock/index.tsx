@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Stack from 'components/Stack';
+import Stack from 'components/ui/Stack';
 
 import AddImagesButton from './components/AddImagesButton';
 import ImageCarousel from './components/ImageCarousel';
@@ -36,13 +36,15 @@ function ImagesBlock(props: ImagesBlockProps): ReactElement<ImagesBlockProps> {
   return (
     <Block.Collapse name='show_images_block'>
       <Block {...props} title={t('title')}>
-        <Block.Body as={Stack} gap={2}>
-          <ImagesLoading>
-            <ImageCarousel />
-            <ImageList />
-          </ImagesLoading>
-          <AddImagesButton />
-        </Block.Body>
+        <Stack asChild className='gap-2'>
+          <Block.Body>
+            <ImagesLoading>
+              <ImageCarousel />
+              <ImageList />
+            </ImagesLoading>
+            <AddImagesButton />
+          </Block.Body>
+        </Stack>
       </Block>
     </Block.Collapse>
   );

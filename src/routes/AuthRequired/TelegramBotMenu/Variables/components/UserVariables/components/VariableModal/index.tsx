@@ -9,7 +9,7 @@ import Button from 'components/ui/Button';
 import FormInputFeedback from 'components/FormInputFeedback';
 import FormTelegramQuillEditorFeedback from 'components/FormTelegramQuillEditorFeedback';
 import Modal from 'components/Modal';
-import Stack from 'components/Stack';
+import Stack from 'components/ui/Stack';
 import { createMessageToast } from 'components/ToastContainer';
 
 import { VariableAPI, VariablesAPI } from 'api/telegram_bots/main';
@@ -78,18 +78,20 @@ function InnerVariableModal(): ReactElement {
         <Modal.Header closeButton>
           <Modal.Title>{t('title', { context: type })}</Modal.Title>
         </Modal.Header>
-        <Modal.Body as={Stack} gap={2}>
-          <FormInputFeedback name='name' placeholder={t('nameInput.placeholder')} />
-          <FormTelegramQuillEditorFeedback
-            height={220}
-            name='value'
-            placeholder={t('valueInput.placeholder')}
-          />
-          <FormInputFeedback
-            name='description'
-            placeholder={t('descriptionInput.placeholder')}
-          />
-        </Modal.Body>
+        <Stack asChild className='gap-2'>
+          <Modal.Body>
+            <FormInputFeedback name='name' placeholder={t('nameInput.placeholder')} />
+            <FormTelegramQuillEditorFeedback
+              height={220}
+              name='value'
+              placeholder={t('valueInput.placeholder')}
+            />
+            <FormInputFeedback
+              name='description'
+              placeholder={t('descriptionInput.placeholder')}
+            />
+          </Modal.Body>
+        </Stack>
         <Modal.Footer>
           <Button variant='success' type='submit'>
             {t('actionButton', { context: type })}

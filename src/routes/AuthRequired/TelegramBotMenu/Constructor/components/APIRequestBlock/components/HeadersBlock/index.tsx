@@ -2,7 +2,7 @@ import React, { memo, ReactElement } from 'react';
 import classNames from 'classnames';
 import { useField } from 'formik';
 
-import Stack, { StackProps } from 'components/Stack';
+import Stack, { StackProps } from 'components/ui/Stack';
 
 import AddHeaderButton from './components/AddHeaderButton';
 import BlockCollapse from './components/BlockCollapse';
@@ -27,9 +27,8 @@ function HeadersBlock({
   return (
     <BlockCollapse>
       <Stack
-        gap={1}
         className={classNames(
-          'border border-top-0 rounded-1 rounded-top-0 p-1',
+          'gap-1 border border-top-0 rounded-1 rounded-top-0 p-1',
           className,
         )}
       >

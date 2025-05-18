@@ -5,7 +5,7 @@ import { RouteID } from 'routes';
 
 import Block from 'components/ui/Block';
 import Page from 'components/Page';
-import Stack from 'components/Stack';
+import Stack from 'components/ui/Stack';
 
 import Footer from './components/Footer';
 import RecordList from './components/RecordList';
@@ -20,7 +20,7 @@ function Database(): ReactElement {
       <StoreProvider>
         <Block variant='light'>
           <h3 className='fw-semibold text-center mb-3'>{t('records.title')}</h3>
-          <Stack gap={2}>
+          <Stack className='gap-2'>
             <Toolbar />
             <RecordList />
             <Footer />

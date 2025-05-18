@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { RouteID } from 'routes';
 
 import FormCheckFeedback from 'components/FormCheckFeedback';
-import Stack from 'components/Stack';
+import Stack from 'components/ui/Stack';
 
 import Block, { BlockProps } from '../../Block';
 
@@ -29,23 +29,25 @@ function SettingsBlock(props: SettingsBlockProps): ReactElement<SettingsBlockPro
 
   return (
     <Block {...props} title={t('title')}>
-      <Block.Body as={Stack} gap={2}>
-        <FormCheckFeedback
-          type='switch'
-          name='settings.is_reply_to_user_message'
-          label={t('replyToUserMessageSwitch')}
-        />
-        <FormCheckFeedback
-          type='switch'
-          name='settings.is_delete_user_message'
-          label={t('deleteUserMessageSwitch')}
-        />
-        <FormCheckFeedback
-          type='switch'
-          name='settings.is_send_as_new_message'
-          label={t('sendAsNewMessageSwitch')}
-        />
-      </Block.Body>
+      <Stack asChild className='gap-2'>
+        <Block.Body>
+          <FormCheckFeedback
+            type='switch'
+            name='settings.is_reply_to_user_message'
+            label={t('replyToUserMessageSwitch')}
+          />
+          <FormCheckFeedback
+            type='switch'
+            name='settings.is_delete_user_message'
+            label={t('deleteUserMessageSwitch')}
+          />
+          <FormCheckFeedback
+            type='switch'
+            name='settings.is_send_as_new_message'
+            label={t('sendAsNewMessageSwitch')}
+          />
+        </Block.Body>
+      </Stack>
     </Block>
   );
 }

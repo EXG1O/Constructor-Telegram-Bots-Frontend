@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { RouteID } from 'routes';
 
 import Block from 'components/ui/Block';
-import Stack from 'components/Stack';
+import Stack from 'components/ui/Stack';
 
 import Footer from './components/Footer';
 import Toolbar from './components/Toolbar';
@@ -27,7 +27,7 @@ function UserVariables(): ReactElement {
       <VariableModal onAdd={handleAddOrSaveVariable} onSave={handleAddOrSaveVariable} />
       <Block variant='light'>
         <h3 className='fw-semibold text-center mb-3'>{t('title')}</h3>
-        <Stack gap={2}>
+        <Stack className='gap-2'>
           <Toolbar />
           <VariablesTable />
           <Footer />

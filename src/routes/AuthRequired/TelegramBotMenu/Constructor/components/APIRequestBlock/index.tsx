@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { RouteID } from 'routes';
 
 import FormInputFeedback from 'components/FormInputFeedback';
-import Stack from 'components/Stack';
+import Stack from 'components/ui/Stack';
 
 import BodyBlock, { Body, defaultBody } from './components/BodyBlock';
 import HeadersBlock, { defaultHeaders, Headers } from './components/HeadersBlock';
@@ -41,16 +41,18 @@ function APIRequestBlock(
 
   return (
     <Block {...props} title={t('title')}>
-      <Block.Body as={Stack} gap={2}>
-        <FormInputFeedback
-          name='api_request.url'
-          placeholder={t('urlInputPlaceholder')}
-        />
-        <MethodButtonGroup />
-        <HeadersBlock />
-        <BodyBlock />
-        <TestBlock />
-      </Block.Body>
+      <Stack asChild className='gap-2'>
+        <Block.Body>
+          <FormInputFeedback
+            name='api_request.url'
+            placeholder={t('urlInputPlaceholder')}
+          />
+          <MethodButtonGroup />
+          <HeadersBlock />
+          <BodyBlock />
+          <TestBlock />
+        </Block.Body>
+      </Stack>
     </Block>
   );
 }

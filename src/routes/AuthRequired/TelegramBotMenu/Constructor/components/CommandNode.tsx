@@ -8,7 +8,7 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 import './CommandNode.scss';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
-import Stack from 'components/Stack';
+import Stack from 'components/ui/Stack';
 import { createMessageToast } from 'components/ToastContainer';
 
 import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
@@ -97,7 +97,7 @@ function CommandNode({
         dangerouslySetInnerHTML={{ __html: command.message.text }}
       />
       {command.keyboard?.buttons && (
-        <Stack gap={1}>
+        <Stack className='gap-1'>
           {command.keyboard.buttons.map((button) => (
             <Node.Block
               key={button.id}

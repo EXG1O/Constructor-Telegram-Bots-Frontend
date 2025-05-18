@@ -8,7 +8,7 @@ import Button from 'components/ui/Button';
 import FormCheckFeedback from 'components/FormCheckFeedback';
 import FormInputFeedback from 'components/FormInputFeedback';
 import Modal, { ModalProps } from 'components/Modal';
-import Stack from 'components/Stack';
+import Stack from 'components/ui/Stack';
 import { createMessageToast } from 'components/ToastContainer';
 
 import useTelegramBots from '../hooks/useTelegramBots';
@@ -80,17 +80,19 @@ function TelegramBotAdditionModal({
             <Modal.Header closeButton>
               <Modal.Title>{t('title')}</Modal.Title>
             </Modal.Header>
-            <Modal.Body as={Stack} gap={2}>
-              <FormInputFeedback
-                name='api_token'
-                placeholder={t('apiTokenInputPlaceholder')}
-              />
-              <FormCheckFeedback
-                type='switch'
-                name='is_private'
-                label={t('privateSwitchLabel')}
-              />
-            </Modal.Body>
+            <Stack asChild className='gap-2'>
+              <Modal.Body>
+                <FormInputFeedback
+                  name='api_token'
+                  placeholder={t('apiTokenInputPlaceholder')}
+                />
+                <FormCheckFeedback
+                  type='switch'
+                  name='is_private'
+                  label={t('privateSwitchLabel')}
+                />
+              </Modal.Body>
+            </Stack>
             <Modal.Footer>
               <Button variant='success' type='submit'>
                 {t('addButton')}
