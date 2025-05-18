@@ -5,7 +5,7 @@ import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import Button from 'components/Button';
+import Button from 'components/ui/Button';
 import Offcanvas, { OffcanvasProps } from 'components/Offcanvas';
 import Stack from 'components/Stack';
 import { createMessageToast } from 'components/ToastContainer';

@@ -4,7 +4,7 @@ import { Form, Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 
-import Button from 'components/Button';
+import Button from 'components/ui/Button';
 import FormCheckFeedback from 'components/FormCheckFeedback';
 import FormInputFeedback from 'components/FormInputFeedback';
 import Modal, { ModalProps } from 'components/Modal';

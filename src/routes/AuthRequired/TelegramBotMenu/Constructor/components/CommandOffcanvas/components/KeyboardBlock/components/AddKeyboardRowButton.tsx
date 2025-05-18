@@ -5,7 +5,7 @@ import { produce } from 'immer';
 
 import { RouteID } from 'routes';
 
-import Button, { ButtonProps } from 'components/Button';
+import Button, { ButtonProps } from 'components/ui/Button';
 
 import { KeyboardRow } from './Keyboard';
 

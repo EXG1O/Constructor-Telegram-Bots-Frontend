@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 
 import { Header } from '..';
 
-import Button, { ButtonProps } from 'components/Button';
+import Button, { ButtonProps } from 'components/ui/Button';
 
 export type AddHeaderButtonProps = Pick<ButtonProps, 'className'>;
 

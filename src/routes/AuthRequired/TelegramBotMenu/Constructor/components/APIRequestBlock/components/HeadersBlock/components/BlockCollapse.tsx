@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 
 import Collapse from 'react-bootstrap/Collapse';
 
-import Button, { ButtonProps } from 'components/Button';
+import Button, { ButtonProps } from 'components/ui/Button';
 
 export type BlockCollapseProps = Pick<
   HTMLAttributes<HTMLDivElement>,

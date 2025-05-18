@@ -8,7 +8,7 @@ import { RouteID } from 'routes';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import Button from 'components/Button';
+import Button from 'components/ui/Button';
 
 import BlockCollapse from './components/BlockCollapse';
 import TextInput, { Text } from './components/TextInput';

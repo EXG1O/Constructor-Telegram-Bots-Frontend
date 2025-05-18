@@ -1,7 +1,7 @@
 import React, { memo, ReactElement } from 'react';
 import { useField } from 'formik';
 
-import Button, { ButtonProps } from 'components/Button';
+import Button, { ButtonProps } from 'components/ui/Button';
 
 export interface AddonButtonProps extends Pick<ButtonProps, 'className'> {
   name: string;

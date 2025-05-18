@@ -14,7 +14,7 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 import ListGroupItem, { ListGroupItemProps } from 'react-bootstrap/ListGroupItem';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
-import Button from 'components/Button';
+import Button from 'components/ui/Button';
 import Loading from 'components/Loading';
 import MonacoEditor, { MonacoEditorProps } from 'components/MonacoEditor';
 import { createMessageToast } from 'components/ToastContainer';

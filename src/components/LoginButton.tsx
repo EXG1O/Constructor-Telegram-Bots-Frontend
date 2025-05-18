@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import { reverse, RouteID } from 'routes';
 
-import Button, { ButtonProps } from 'components/Button';
+import Button, { ButtonProps } from 'components/ui/Button';
 
 import Loading from './Loading';
 import { createMessageToast } from './ToastContainer';

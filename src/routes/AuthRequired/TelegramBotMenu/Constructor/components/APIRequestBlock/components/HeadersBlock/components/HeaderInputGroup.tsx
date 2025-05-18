@@ -7,7 +7,7 @@ import { RouteID } from 'routes';
 
 import { Header } from '..';
 
-import Button from 'components/Button';
+import Button from 'components/ui/Button';
 import FormInputFeedback from 'components/FormInputFeedback';
 import InputGroup, { InputGroupProps } from 'components/InputGroup';
 

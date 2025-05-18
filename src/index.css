@@ -112,8 +112,4 @@
   h6 {
     font-size: var(--text-base);
   }
-
-  button {
-    @apply cursor-pointer;
-  }
 }

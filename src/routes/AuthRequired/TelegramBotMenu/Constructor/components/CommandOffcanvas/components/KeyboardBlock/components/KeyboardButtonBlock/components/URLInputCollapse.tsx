@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 
 import Collapse, { CollapseProps } from 'react-bootstrap/Collapse';
 
-import Button, { ButtonProps } from 'components/Button';
+import Button, { ButtonProps } from 'components/ui/Button';
 
 import { Type } from '../../KeyboardTypeButtonGroup';
 

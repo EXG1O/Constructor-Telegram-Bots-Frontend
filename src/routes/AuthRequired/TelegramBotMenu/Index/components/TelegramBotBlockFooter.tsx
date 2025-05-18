@@ -9,7 +9,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
-import Button from 'components/Button';
+import Button from 'components/ui/Button';
 import Card from 'components/Card';
 import Loading from 'components/Loading';
 import useTelegramBot from 'components/TelegramBotBlock/hooks/useTelegramBot';

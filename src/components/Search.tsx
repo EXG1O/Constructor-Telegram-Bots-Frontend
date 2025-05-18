@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import Collapse from 'react-bootstrap/Collapse';
 
-import Button from 'components/Button';
+import Button from 'components/ui/Button';
 import InputGroup, { InputGroupProps } from 'components/InputGroup';
 
 import Input from './Input';

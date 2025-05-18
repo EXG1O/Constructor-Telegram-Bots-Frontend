@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 
 import { Document, Documents } from '..';
 
-import Button, { ButtonProps } from 'components/Button';
+import Button, { ButtonProps } from 'components/ui/Button';
 import { createMessageToast } from 'components/ToastContainer';
 
 import useTelegramBotStorage from '../../../hooks/useTelegramBotStorage';
@@ -89,8 +89,10 @@ function AddDocumentsButton(
   return (
     <>
       <input id={id} type='file' multiple hidden onChange={handleChange} />
-      <Button {...props} as='label' htmlFor={id} size='sm' variant='dark'>
-        {t('text')}
+      <Button {...props} asChild size='sm' variant='dark'>
+        <label htmlFor={id}>
+          {t('text')}
+        </label>
       </Button>
     </>
   );

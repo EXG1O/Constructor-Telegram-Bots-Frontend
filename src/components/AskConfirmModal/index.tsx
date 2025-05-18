@@ -1,7 +1,7 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Button from 'components/Button';
+import Button from 'components/ui/Button';
 
 import Modal from '../Modal';
 

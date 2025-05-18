@@ -12,7 +12,7 @@ import { produce } from 'immer';
 
 import { Image, Images } from '..';
 
-import Button from 'components/Button';
+import Button from 'components/ui/Button';
 
 import TrashIcon from 'assets/icons/trash.svg';
 

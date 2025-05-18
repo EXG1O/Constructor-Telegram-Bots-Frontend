@@ -2,7 +2,7 @@ import React, { CSSProperties, HTMLAttributes, memo, ReactElement } from 'react'
 import { NodeToolbar as BaseNodeToolbar } from 'reactflow';
 import classNames from 'classnames';
 
-import Button from 'components/Button';
+import Button from 'components/ui/Button';
 
 import PencilSquareIcon from 'assets/icons/pencil-square.svg';
 import TrashIcon from 'assets/icons/trash.svg';

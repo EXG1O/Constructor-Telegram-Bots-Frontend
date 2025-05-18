@@ -6,7 +6,7 @@ import monaco from 'monaco-editor';
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import Button from 'components/Button';
+import Button from 'components/ui/Button';
 import FormMonacoEditorFeedback from 'components/FormMonacoEditorFeedback';
 import Modal, { ModalProps } from 'components/Modal';
 import { createMessageToast } from 'components/ToastContainer';

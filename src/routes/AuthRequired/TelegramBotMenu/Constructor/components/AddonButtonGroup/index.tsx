@@ -5,7 +5,7 @@ import { RouteID } from 'routes';
 
 import Collapse from 'react-bootstrap/Collapse';
 
-import Button, { ButtonProps } from 'components/Button';
+import Button, { ButtonProps } from 'components/ui/Button';
 import Stack from 'components/Stack';
 
 import AddonButton from './components/AddonButton';

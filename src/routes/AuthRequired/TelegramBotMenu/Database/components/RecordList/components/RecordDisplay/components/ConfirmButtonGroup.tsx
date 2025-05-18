@@ -1,6 +1,6 @@
 import React, { memo, ReactElement } from 'react';
 
-import Button from 'components/Button';
+import Button from 'components/ui/Button';
 import ButtonGroup, { ButtonGroupProps } from 'components/ButtonGroup';
 
 import CheckIcon from 'assets/icons/check.svg';
