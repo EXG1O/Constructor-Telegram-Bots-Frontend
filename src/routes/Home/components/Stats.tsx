@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { RouteID } from 'routes';
 
 import Block, { BlockProps } from 'components/ui/Block';
-import InfoArea from 'components/InfoArea';
+import PrettyNumber from 'components/ui/PrettyNumber';
 import Stack from 'components/Stack';
 
 import useHomeRouteLoaderData from '../hooks/useHomeRouteLoaderData';
@@ -20,19 +20,18 @@ function Stats({ className, ...props }: StatsProps): ReactElement<StatsProps> {
     <Block {...props} variant='primary' gradient>
       <h3 className='fw-semibold text-center mb-3'>{t('title')}</h3>
       <Stack gap={2}>
-        <InfoArea number={stats.users.total} description={t('usersTotal')} />
-        <InfoArea
-          number={stats.telegramBots.telegram_bots.total}
-          description={t('telegramBotsTotal')}
-        />
-        <InfoArea
-          number={stats.telegramBots.telegram_bots.enabled}
-          description={t('telegramBotsEnabled')}
-        />
-        <InfoArea
-          number={stats.telegramBots.users.total}
-          description={t('telegramBotsUsers')}
-        />
+        <PrettyNumber description={t('usersTotal')}>
+          {stats.users.total}
+        </PrettyNumber>
+        <PrettyNumber description={t('telegramBotsTotal')}>
+          {stats.telegramBots.telegram_bots.total}
+        </PrettyNumber>
+        <PrettyNumber description={t('telegramBotsEnabled')}>
+          {stats.telegramBots.telegram_bots.enabled}
+        </PrettyNumber>
+        <PrettyNumber description={t('telegramBotsUsers')}>
+          {stats.telegramBots.users.total}
+        </PrettyNumber>
       </Stack>
     </Block>
   );
