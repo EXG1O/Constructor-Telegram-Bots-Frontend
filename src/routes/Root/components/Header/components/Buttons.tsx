@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 import useRootRouteLoaderData from 'routes/Root/hooks/useRootRouteLoaderData';
 
-import LoginButton from 'components/LoginButton';
+import LoginButton from 'components/shared/LoginButton';
 
 import LanguagesDropdown from './LanguagesDropdown';
 import TelegramBotMenuDropdown from './TelegramBotMenuDropdown';
