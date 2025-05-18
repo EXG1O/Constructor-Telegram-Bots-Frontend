@@ -10,7 +10,7 @@ import classNames from 'classnames';
 
 import { RouteID } from 'routes';
 
-import AddButton from 'components/AddButton';
+import AddButton from 'components/ui/AddButton';
 
 import TelegramBotAdditionModal from './TelegramBotAdditionModal';
 

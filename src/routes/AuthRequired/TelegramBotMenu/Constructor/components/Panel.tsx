@@ -4,7 +4,7 @@ import { Panel as BasePanel } from 'reactflow';
 
 import { RouteID } from 'routes';
 
-import AddButton from 'components/AddButton';
+import AddButton from 'components/ui/AddButton';
 import Stack from 'components/Stack';
 
 import { useBackgroundTaskOffcanvasStore } from './BackgroundTaskOffcanvas/store';
