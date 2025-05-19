@@ -15,7 +15,7 @@ export const inputVariants = cva(
     'appearance-none',
     'bg-clip-padding',
     'transition-colors',
-    'placeholder:text-foreground/75',
+    'placeholder:text-muted',
     'focus:outline-none',
     'focus:ring-4',
     'disabled:bg-gray-200',

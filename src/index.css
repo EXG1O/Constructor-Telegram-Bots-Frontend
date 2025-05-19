@@ -44,6 +44,7 @@
   --color-success: #00a84e;
   --color-success-foreground: var(--color-white);
 
+  --color-muted: color-mix(in oklab, var(--color-foreground) 75%, transparent);
   --color-outline: var(--color-gray-300);
   --color-focus: color-mix(in oklab, var(--color-primary) 25%, transparent);
   --color-outline-focus: #80ccf5;
