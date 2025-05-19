@@ -1,7 +1,7 @@
 import React, { memo, ReactElement } from 'react';
 import classNames from 'classnames';
 
-import Feedback from './Feedback';
+import Feedback from 'components/ui/Feedback';
 import QuillEditor, { QuillEditorProps } from './QuillEditor';
 
 import('./QuillEditorFeedback.scss');

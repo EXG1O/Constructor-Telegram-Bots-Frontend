@@ -5,7 +5,6 @@ import Check, { CheckProps } from './Check';
 import { FCA } from 'utils/helpers';
 
 import('./CheckFeedback.scss');
-import('./Feedback.scss');
 
 export interface CheckFeedbackProps extends Omit<CheckProps, 'isInvalid'> {
   error?: string;

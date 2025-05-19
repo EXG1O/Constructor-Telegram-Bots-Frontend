@@ -1,6 +1,6 @@
 import React, { memo, ReactElement } from 'react';
 
-import Feedback from './Feedback';
+import Feedback from 'components/ui/Feedback';
 import Select, { SelectProps } from './Select';
 
 import('./SelectFeedback.scss');

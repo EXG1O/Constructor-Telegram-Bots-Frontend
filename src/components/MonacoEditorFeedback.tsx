@@ -1,7 +1,7 @@
 import React, { memo, ReactElement, useMemo } from 'react';
 import classNames from 'classnames';
 
-import Feedback from './Feedback';
+import Feedback from 'components/ui/Feedback';
 import MonacoEditor, { MonacoEditorProps } from './MonacoEditor';
 
 import('./MonacoEditorFeedback.scss');
