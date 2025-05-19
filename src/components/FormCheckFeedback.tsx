@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useField } from 'formik';
 
-import CheckFeedback, { CheckFeedbackProps } from './CheckFeedback';
+import CheckFeedback, { CheckFeedbackProps } from 'components/shared/CheckFeedback';
 
 import { FCA } from 'utils/helpers';
 
