@@ -1,6 +1,6 @@
 import React, { forwardRef, memo } from 'react';
 
-import Check, { CheckProps } from './Check';
+import Check, { CheckProps } from 'components/ui/Check';
 
 import { FCA } from 'utils/helpers';
 

@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Check from 'components/Check';
+import Check from 'components/ui/Check';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ToastContainer';
 
