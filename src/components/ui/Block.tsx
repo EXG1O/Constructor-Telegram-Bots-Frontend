@@ -13,7 +13,6 @@ export const blockVariants = cva(['rounded-2xl', 'p-3'], {
     },
     gradient: {
       true: 'bg-gradient-to-r',
-      false: null,
     },
   },
   compoundVariants: [
