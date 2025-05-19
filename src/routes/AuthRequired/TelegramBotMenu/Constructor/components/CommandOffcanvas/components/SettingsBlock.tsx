@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import FormCheckFeedback from 'components/FormCheckFeedback';
+import FormCheckFeedback from 'components/shared/FormCheckFeedback';
 import Stack from 'components/ui/Stack';
 
 import Block, { BlockProps } from '../../Block';
