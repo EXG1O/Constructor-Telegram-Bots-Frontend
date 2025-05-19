@@ -45,6 +45,8 @@
   --color-success-foreground: var(--color-white);
 
   --color-outline: var(--color-gray-300);
+  --color-focus: color-mix(in oklab, var(--color-primary) 25%, transparent);
+  --color-outline-focus: #80ccf5;
 
   --breakpoint-*: initial;
   --breakpoint-sm: 576px;

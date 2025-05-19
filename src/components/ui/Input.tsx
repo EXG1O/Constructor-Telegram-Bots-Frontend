@@ -28,7 +28,7 @@ export const inputVariants = cva(
         lg: ['text-lg', 'rounded-lg', 'px-4', 'py-2'],
       },
       invalid: {
-        false: ['border-outline', 'focus:border-[#80ccf5]', 'focus:ring-primary/25'],
+        false: ['border-outline', 'focus:border-outline-focus', 'focus:ring-focus'],
         true: ['border-danger', 'focus:ring-danger/25'],
       },
     },
