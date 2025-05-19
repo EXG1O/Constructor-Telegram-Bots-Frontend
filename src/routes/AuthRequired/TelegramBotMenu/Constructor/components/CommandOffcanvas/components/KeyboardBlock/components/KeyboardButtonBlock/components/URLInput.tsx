@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { RouteID } from 'routes';
 
-import InputFeedback, { InputFeedbackProps } from 'components/InputFeedback';
+import InputFeedback, { InputFeedbackProps } from 'components/shared/InputFeedback';
 
 import { useCommandOffcanvasStore } from '../../../../../store';
 

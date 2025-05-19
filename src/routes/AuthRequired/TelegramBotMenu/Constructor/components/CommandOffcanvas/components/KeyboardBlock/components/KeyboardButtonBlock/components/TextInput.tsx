@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import InputFeedback, { InputFeedbackProps } from 'components/InputFeedback';
+import InputFeedback, { InputFeedbackProps } from 'components/shared/InputFeedback';
 
 import { useCommandOffcanvasStore } from '../../../../../store';
 

@@ -11,7 +11,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import InputFeedback, { InputFeedbackProps } from 'components/InputFeedback';
+import InputFeedback, { InputFeedbackProps } from 'components/shared/InputFeedback';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ToastContainer';
 
@@ -24,7 +24,7 @@ import { TelegramBotAPI } from 'api/telegram_bots/main';
 
 const inputStyle: CSSProperties = { fontSize: '16px' };
 const iconProps: SVGProps<SVGSVGElement> = { width: 28, height: 28, cursor: 'pointer' };
-const inputContainerProps: InputFeedbackProps['containerProps'] = {
+const inputWrapperProps: InputFeedbackProps['wrapperProps'] = {
   className: 'flex-fill',
 };
 
@@ -94,7 +94,7 @@ function APITokenEditing({
         size='sm'
         value={value}
         error={error ?? undefined}
-        containerProps={inputContainerProps}
+        wrapperProps={inputWrapperProps}
         placeholder={t('inputPlaceholder')}
         style={inputStyle}
         onChange={handleChange}

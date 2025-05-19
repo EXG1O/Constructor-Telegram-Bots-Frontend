@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useField } from 'formik';
 
-import InputFeedback, { InputFeedbackProps } from './InputFeedback';
+import InputFeedback, { InputFeedbackProps } from './shared/InputFeedback';
 
 import { FCA } from 'utils/helpers';
 
