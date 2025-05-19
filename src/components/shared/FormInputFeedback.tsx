@@ -16,7 +16,9 @@ const FormInputFeedback = forwardRef<HTMLInputElement, FormInputFeedbackProps>(
   ({ size, ...props }, ref) => {
     const [field, meta] = useField<(typeof props)['value']>(props);
 
-    return <InputFeedback ref={ref} {...props} {...field} error={meta.error} />;
+    return (
+      <InputFeedback ref={ref} {...props} {...field} size={size} error={meta.error} />
+    );
   },
 );
 FormInputFeedback.displayName = 'FormInputFeedback';
