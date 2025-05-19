@@ -66,7 +66,7 @@ export const buttonVariants = cva(
       },
       size: {
         sm: ['gap-1.5', 'text-sm', 'rounded-sm', 'px-2', 'py-1', '[&_svg]:size-3.5'],
-        md: ['gap-2', 'rounded-md', 'px-3', 'py-1.5', '[&_svg]:size-4'],
+        md: ['gap-2', 'text-base', 'rounded-md', 'px-3', 'py-1.5', '[&_svg]:size-4'],
         lg: ['gap-2.5', 'text-xl', 'rounded-lg', 'px-4', 'py-2', '[&_svg]:size-5'],
       },
     },
