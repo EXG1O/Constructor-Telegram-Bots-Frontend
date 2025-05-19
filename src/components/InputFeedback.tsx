@@ -18,7 +18,7 @@ const InputFeedback: FCA<'input', InputFeedbackProps> = forwardRef<
 >(function InputFeedback({ as, error, containerProps, ...props }, ref) {
   return (
     <div {...containerProps}>
-      <Input as={as} ref={ref} {...props} isInvalid={Boolean(error)} />
+      <Input as={as} ref={ref} {...props} invalid={Boolean(error)} />
       {error && <Feedback type='invalid'>{error}</Feedback>}
     </div>
   );
