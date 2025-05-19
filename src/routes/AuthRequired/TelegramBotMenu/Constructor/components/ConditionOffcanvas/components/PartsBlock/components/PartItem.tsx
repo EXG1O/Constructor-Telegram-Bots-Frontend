@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Stack } from 'react-bootstrap';
 
-import FormInputFeedback from 'components/FormInputFeedback';
+import FormInputFeedback from 'components/shared/FormInputFeedback';
 
 import NextPartOperatorSelect, {
   defaultNextPartOperator,

@@ -8,7 +8,7 @@ import { RouteID } from 'routes';
 import { Header } from '..';
 
 import Button from 'components/ui/Button';
-import FormInputFeedback from 'components/FormInputFeedback';
+import FormInputFeedback from 'components/shared/FormInputFeedback';
 import InputGroup, { InputGroupProps } from 'components/InputGroup';
 
 import TrashIcon from 'assets/icons/trash.svg';

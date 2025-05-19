@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 
 import Button from 'components/ui/Button';
 import FormCheckFeedback from 'components/FormCheckFeedback';
-import FormInputFeedback from 'components/FormInputFeedback';
+import FormInputFeedback from 'components/shared/FormInputFeedback';
 import Modal, { ModalProps } from 'components/Modal';
 import Stack from 'components/ui/Stack';
 import { createMessageToast } from 'components/ToastContainer';

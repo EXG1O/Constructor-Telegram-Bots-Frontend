@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import Button from 'components/ui/Button';
-import FormInputFeedback from 'components/FormInputFeedback';
+import FormInputFeedback from 'components/shared/FormInputFeedback';
 import FormTelegramQuillEditorFeedback from 'components/FormTelegramQuillEditorFeedback';
 import Modal from 'components/Modal';
 import Stack from 'components/ui/Stack';
