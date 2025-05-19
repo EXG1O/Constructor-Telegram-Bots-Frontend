@@ -1,7 +1,7 @@
 import React, { forwardRef, HTMLAttributes, memo } from 'react';
 
 import Feedback from './Feedback';
-import Input, { InputProps } from './Input';
+import Input, { InputProps } from 'components/ui/Input';
 
 import { FCA } from 'utils/helpers';
 

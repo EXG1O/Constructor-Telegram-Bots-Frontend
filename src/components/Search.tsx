@@ -7,7 +7,7 @@ import Collapse from 'react-bootstrap/Collapse';
 import Button from 'components/ui/Button';
 import InputGroup, { InputGroupProps } from 'components/InputGroup';
 
-import Input from './Input';
+import Input from 'components/ui/Input';
 
 import SearchIcon from 'assets/icons/search.svg';
 import XIcon from 'assets/icons/x.svg';
