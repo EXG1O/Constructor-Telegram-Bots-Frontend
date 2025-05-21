@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import Card, { CardProps } from 'components/Card';
+import Card, { CardProps } from 'components/ui/Card';
 
 import BlockBody from './components/BlockBody';
 import BlockCollapse from './components/BlockCollapse';
@@ -10,13 +10,14 @@ import { FCA } from 'utils/helpers';
 
 export interface BlockProps extends CardProps {
   title: string;
+  body?: boolean;
 }
 
-const Block: FCA<'div', BlockProps> = forwardRef<HTMLElement, BlockProps>(
+const Block: FCA<'div', BlockProps> = forwardRef<HTMLDivElement, BlockProps>(
   function Block({ title, body, children, ...props }, ref) {
     return (
       <Card ref={ref} {...props}>
-        <Card.Header as='h6' className='text-center'>
+        <Card.Header>
           {title}
         </Card.Header>
         {body ? <BlockBody>{children}</BlockBody> : children}

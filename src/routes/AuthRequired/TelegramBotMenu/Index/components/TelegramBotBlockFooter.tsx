@@ -10,7 +10,7 @@ import Row from 'react-bootstrap/Row';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import Button from 'components/ui/Button';
-import Card from 'components/Card';
+import Card from 'components/ui/Card';
 import Spinner from 'components/ui/Spinner';
 import useTelegramBot from 'components/TelegramBotBlock/hooks/useTelegramBot';
 import { createMessageToast } from 'components/ToastContainer';
@@ -83,55 +83,57 @@ function TelegramBotBlockFooter(
   }
 
   return (
-    <Card.Footer {...props} as={Row} className='g-3'>
-      {telegramBot.is_loading ? (
-        <Col>
-          <Button
-            disabled
-            variant='secondary'
-            className='w-100 d-flex justify-content-center'
-          >
-            <Spinner size='xs' />
-          </Button>
-        </Col>
-      ) : telegramBot.is_enabled ? (
-        <>
+    <Row className='g-3'>
+      <Card.Footer {...props} asChild>
+        {telegramBot.is_loading ? (
           <Col>
             <Button
-              variant='danger'
-              className='w-100'
-              onClick={() => handleAction('stop')}
+              disabled
+              variant='secondary'
+              className='w-100 d-flex justify-content-center'
             >
-              {t('stopButton')}
+              <Spinner size='xs' />
             </Button>
           </Col>
+        ) : telegramBot.is_enabled ? (
+          <>
+            <Col>
+              <Button
+                variant='danger'
+                className='w-100'
+                onClick={() => handleAction('stop')}
+              >
+                {t('stopButton')}
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                variant='success'
+                className='w-100'
+                onClick={() => handleAction('restart')}
+              >
+                {t('restartButton')}
+              </Button>
+            </Col>
+          </>
+        ) : (
           <Col>
             <Button
               variant='success'
               className='w-100'
-              onClick={() => handleAction('restart')}
+              onClick={() => handleAction('start')}
             >
-              {t('restartButton')}
+              {t('startButton')}
             </Button>
           </Col>
-        </>
-      ) : (
-        <Col>
-          <Button
-            variant='success'
-            className='w-100'
-            onClick={() => handleAction('start')}
-          >
-            {t('startButton')}
+        )}
+        <Col {...(telegramBot.is_enabled ? { xs: '12', sm: true } : {})}>
+          <Button variant='danger' className='w-100' onClick={showDeleteModal}>
+            {t('deleteButton')}
           </Button>
         </Col>
-      )}
-      <Col {...(telegramBot.is_enabled ? { xs: '12', sm: true } : {})}>
-        <Button variant='danger' className='w-100' onClick={showDeleteModal}>
-          {t('deleteButton')}
-        </Button>
-      </Col>
-    </Card.Footer>
+      </Card.Footer>
+    </Row>
   );
 }
 
