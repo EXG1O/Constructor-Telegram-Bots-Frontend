@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, memo, ReactElement, useCallback } from 'react';
 import classNames from 'classnames';
 
-import Pagination, { PaginationProps } from 'components/Pagination';
+import Pagination, { PaginationProps } from 'components/ui/Pagination';
 import Search, { SearchProps } from 'components/Search';
 
 import TypeToggleButtonGroup from './components/TypeToggleButtonGroup';

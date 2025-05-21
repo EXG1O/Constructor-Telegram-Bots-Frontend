@@ -13,7 +13,7 @@ import { Row } from 'react-bootstrap';
 import { RouteID } from 'routes';
 
 import PlusButton from 'components/shared/PlusButton';
-import Pagination, { PaginationProps } from 'components/Pagination';
+import Pagination, { PaginationProps } from 'components/ui/Pagination';
 import Search, { SearchProps } from 'components/Search';
 
 import RecordAdditionModal, { RecordAdditionModalProps } from './RecordAdditionModal';

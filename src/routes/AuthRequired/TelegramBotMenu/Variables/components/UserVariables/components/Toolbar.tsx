@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 import Row from 'react-bootstrap/Row';
 
 import PlusButton from 'components/shared/PlusButton';
-import Pagination, { PaginationProps } from 'components/Pagination';
+import Pagination, { PaginationProps } from 'components/ui/Pagination';
 import Search, { SearchProps } from 'components/Search';
 
 import { useVariableModalStore } from './VariableModal/store';
