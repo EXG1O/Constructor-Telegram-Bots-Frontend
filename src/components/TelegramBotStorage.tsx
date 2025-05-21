@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import classNames from 'classnames';
 
-import ProgressBar from './ProgressBar';
+import ProgressBar from 'components/ui/ProgressBar';
 
 import { TelegramBot } from 'api/telegram_bots/types';
 
@@ -31,7 +31,6 @@ function TelegramBotStorage({
     >
       <span>{`${(usedStorageSize / 1024 ** 2).toFixed(2)} MB`}</span>
       <ProgressBar
-        variant='dark'
         now={usedStorageSize}
         max={telegramBot.storage_size}
         className='flex-fill align-self-center'
