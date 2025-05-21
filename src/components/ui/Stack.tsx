@@ -7,7 +7,7 @@ import cn from 'utils/cn';
 export const stackVariants = cva(['flex', 'self-stretch'], {
   variants: {
     direction: {
-      horizontal: ['flex-row', 'items-center'],
+      horizontal: ['flex-row'],
       vertical: ['flex-auto', 'flex-col'],
     },
   },
