@@ -13,6 +13,7 @@ export const selectVariants = cva(
     'border',
     'border-outline',
     'rounded-md',
+    'text-foreground',
     'cursor-pointer',
     'appearance-none',
     'transition-colors',
