@@ -14,7 +14,7 @@ import formatDate from 'i18n/formatDate';
 
 import Block, { BlockProps } from 'components/ui/Block';
 import Table from 'components/Table';
-import TelegramBotStorage from 'components/TelegramBotStorage';
+import TelegramBotStorage from 'components/shared/TelegramBotStorage';
 import { createMessageToast } from 'components/ToastContainer';
 
 import APITokenDisplay from './components/APITokenDisplay';

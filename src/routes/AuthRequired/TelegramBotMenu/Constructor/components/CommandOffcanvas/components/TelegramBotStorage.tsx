@@ -4,7 +4,7 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 
 import BaseTelegramBotStorage, {
   TelegramBotStorageProps as BaseTelegramBotStorageProps,
-} from 'components/TelegramBotStorage';
+} from 'components/shared/TelegramBotStorage';
 
 import useTelegramBotStorage from '../hooks/useTelegramBotStorage';
 
