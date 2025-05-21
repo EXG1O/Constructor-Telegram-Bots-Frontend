@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useField } from 'formik';
 
-import SelectFeedback, { SelectFeedbackProps } from './SelectFeedback';
+import SelectFeedback, { SelectFeedbackProps } from 'components/shared/SelectFeedback';
 
 export interface FormSelectFeedbackProps extends SelectFeedbackProps {
   name: string;
