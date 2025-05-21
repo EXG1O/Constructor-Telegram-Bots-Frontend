@@ -4,7 +4,7 @@ import { useField } from 'formik';
 
 import { RouteID } from 'routes';
 
-import Select, { SelectProps } from 'components/Select';
+import Select, { SelectProps } from 'components/ui/Select';
 
 export type Operator = '==' | '!=' | '>' | '>=' | '<' | '<=';
 

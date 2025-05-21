@@ -1,7 +1,7 @@
 import React, { memo, ReactElement } from 'react';
 
 import Feedback from 'components/ui/Feedback';
-import Select, { SelectProps } from './Select';
+import Select, { SelectProps } from 'components/ui/Select';
 
 import('./SelectFeedback.scss');
 
@@ -15,7 +15,7 @@ function SelectFeedback({
 }: SelectFeedbackProps): ReactElement<SelectFeedbackProps> {
   return (
     <div>
-      <Select {...props} isInvalid={Boolean(error)} />
+      <Select {...props} invalid={Boolean(error)} />
       {error && <Feedback type='invalid'>{error}</Feedback>}
     </div>
   );

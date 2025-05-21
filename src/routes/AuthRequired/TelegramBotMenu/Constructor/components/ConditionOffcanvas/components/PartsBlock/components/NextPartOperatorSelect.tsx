@@ -7,7 +7,7 @@ import { RouteID } from 'routes';
 
 import { Parts } from '..';
 
-import Select, { SelectProps } from 'components/Select';
+import Select, { SelectProps } from 'components/ui/Select';
 
 import { defaultPart, Part } from './PartItem';
 
