@@ -13,7 +13,7 @@ import i18n from 'i18n';
 import formatDate from 'i18n/formatDate';
 
 import Block, { BlockProps } from 'components/ui/Block';
-import Table from 'components/Table';
+import Table from 'components/ui/Table';
 import TelegramBotStorage from 'components/shared/TelegramBotStorage';
 import { createMessageToast } from 'components/ToastContainer';
 
@@ -117,23 +117,23 @@ function TelegramBotBlock({
             {telegramBot.username}
           </a>
         </h4>
-        <Table size='sm' borderless className='align-middle mb-0'>
-          <tbody>
-            <tr>
-              <th scope='row'>{t('table.status.header')}:</th>
-              <td
+        <Table size='sm' className='align-middle'>
+          <Table.Body>
+            <Table.Row>
+              <Table.Head scope='row'>{t('table.status.header')}:</Table.Head>
+              <Table.Cell
                 {...(telegramBot.is_loading
                   ? loadingStatusProps
                   : telegramBot.is_enabled
                     ? enabledStatusProps
                     : disabledStatusProps)}
               />
-            </tr>
-            <tr>
-              <th scope='row' className='text-nowrap'>
+            </Table.Row>
+            <Table.Row>
+              <Table.Head scope='row' className='text-nowrap'>
                 {t('table.apiToken.header')}:
-              </th>
-              <td className='w-100'>
+              </Table.Head>
+              <Table.Cell className='w-100'>
                 {apiTokenEditing ? (
                   <APITokenEditing
                     onSaved={toggleAPITokenState}
@@ -142,25 +142,25 @@ function TelegramBotBlock({
                 ) : (
                   <APITokenDisplay onEdit={toggleAPITokenState} />
                 )}
-              </td>
-            </tr>
-            <tr>
-              <th scope='row'>{t('table.private.header')}:</th>
-              <td>
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Head scope='row'>{t('table.private.header')}:</Table.Head>
+              <Table.Cell>
                 <PrivateSwitch />
-              </td>
-            </tr>
-            <tr>
-              <th scope='row'>{t('table.storage.header')}:</th>
-              <td>
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Head scope='row'>{t('table.storage.header')}:</Table.Head>
+              <Table.Cell>
                 <TelegramBotStorage telegramBot={telegramBot} />
-              </td>
-            </tr>
-            <tr>
-              <th scope='row'>{t('table.addedDate.header')}:</th>
-              <td>{formatDate(telegramBot.added_date)}</td>
-            </tr>
-          </tbody>
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Head scope='row'>{t('table.addedDate.header')}:</Table.Head>
+              <Table.Cell>{formatDate(telegramBot.added_date)}</Table.Cell>
+            </Table.Row>
+          </Table.Body>
         </Table>
         {children}
       </Block>

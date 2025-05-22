@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { RouteID } from 'routes';
 
 import Spinner from 'components/ui/Spinner';
-import Table from 'components/Table';
+import Table from 'components/ui/Table';
 
 import TableRow from './components/TableRow';
 import TableWrapper, { BlockProps } from './components/TableWrapper';
@@ -30,12 +30,12 @@ function UsersTable({
   return !loading ? (
     users.length ? (
       <TableWrapper {...props} className={classNames('overflow-hidden', className)}>
-        <Table responsive striped borderless className='align-middle text-nowrap mb-0'>
-          <tbody>
+        <Table striped className='align-middle text-nowrap'>
+          <Table.Body>
             {users.map((user) => (
               <TableRow key={user.id} user={user} />
             ))}
-          </tbody>
+          </Table.Body>
         </Table>
       </TableWrapper>
     ) : search ? (

@@ -3,6 +3,7 @@ import React, { HTMLAttributes, ReactElement } from 'react';
 import { Variable } from '..';
 
 import ClipboardIcon from 'assets/icons/clipboard.svg';
+import Table from 'components/ui/Table';
 
 export interface TableRowProps
   extends Omit<HTMLAttributes<HTMLTableRowElement>, 'children'> {
@@ -11,8 +12,8 @@ export interface TableRowProps
 
 function TableRow({ variable, ...props }: TableRowProps): ReactElement<TableRowProps> {
   return (
-    <tr {...props}>
-      <td className='w-50'>
+    <Table.Row {...props}>
+      <Table.Cell className='w-50'>
         <div className='d-flex align-items-center gap-2'>
           <ClipboardIcon
             cursor='pointer'
@@ -21,9 +22,9 @@ function TableRow({ variable, ...props }: TableRowProps): ReactElement<TableRowP
           />
           <span className='flex-fill text-info-emphasis'>{variable.name}</span>
         </div>
-      </td>
-      <td className='text-nowrap'>{variable.description}</td>
-    </tr>
+      </Table.Cell>
+      <Table.Cell className='text-nowrap'>{variable.description}</Table.Cell>
+    </Table.Row>
   );
 }
 

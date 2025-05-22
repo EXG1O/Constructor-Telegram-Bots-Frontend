@@ -26,6 +26,7 @@ import TrashIcon from 'assets/icons/trash.svg';
 import { makeRequest } from 'api/core';
 import { UserAPI } from 'api/telegram_bots/main';
 import { User } from 'api/telegram_bots/types';
+import Table from 'components/ui/Table';
 
 export interface TableRowProps
   extends Omit<HTMLAttributes<HTMLTableRowElement>, 'children'> {
@@ -159,11 +160,11 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
     : BanIcon;
 
   return (
-    <tr {...props}>
-      <td className='text-success-emphasis'>{`[${formatDate(user.activated_date)}]`}</td>
-      <td className='text-primary-emphasis'>{user.telegram_id}</td>
-      <td className='w-100'>{user.full_name}</td>
-      <td>
+    <Table.Row {...props}>
+      <Table.Cell className='text-success-emphasis'>{`[${formatDate(user.activated_date)}]`}</Table.Cell>
+      <Table.Cell className='text-primary-emphasis'>{user.telegram_id}</Table.Cell>
+      <Table.Cell className='w-100'>{user.full_name}</Table.Cell>
+      <Table.Cell>
         <div className='d-flex'>
           <div className='d-flex gap-2'>
             {telegramBot.is_private && (
@@ -186,8 +187,8 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
             onClick={showDeleteModal}
           />
         </div>
-      </td>
-    </tr>
+      </Table.Cell>
+    </Table.Row>
   );
 }
 

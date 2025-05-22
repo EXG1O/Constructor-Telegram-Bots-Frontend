@@ -1,6 +1,6 @@
 import React, { memo, ReactElement } from 'react';
 
-import Table from 'components/Table';
+import Table from 'components/ui/Table';
 
 import MethodTableRow from './MethodTableRow';
 
@@ -11,12 +11,12 @@ function MethodTable(): ReactElement | null {
 
   return methods.length ? (
     <div className='text-bg-white border rounded-1'>
-      <Table responsive striped borderless className='align-middle text-nowrap mb-0'>
-        <tbody>
+      <Table striped className='align-middle text-nowrap'>
+        <Table.Body>
           {methods.map((method, index) => (
             <MethodTableRow key={index} method={method} />
           ))}
-        </tbody>
+        </Table.Body>
       </Table>
     </div>
   ) : null;

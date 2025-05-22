@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { RouteID } from 'routes';
 
-import Table from 'components/Table';
+import Table from 'components/ui/Table';
 
 import TableRow from './components/TableRow';
 
@@ -64,12 +64,12 @@ function VariablesTable({
       {...props}
       className={classNames('overflow-hidden border rounded-1', className)}
     >
-      <Table responsive borderless striped variant='white' className='mb-0'>
-        <tbody>
+      <Table striped>
+        <Table.Body>
           {variables[type].map((variable, index) => (
             <TableRow key={index} variable={variable} />
           ))}
-        </tbody>
+        </Table.Body>
       </Table>
     </div>
   );

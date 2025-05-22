@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { RouteID } from 'routes';
 
 import Spinner from 'components/ui/Spinner';
-import Table from 'components/Table';
+import Table from 'components/ui/Table';
 
 import TableRow from './components/TableRow';
 import TableWrapper from './components/TableWrapper';
@@ -25,7 +25,7 @@ function VariablesTable(): ReactElement {
   return !loading ? (
     variables.length ? (
       <TableWrapper className='overflow-hidden'>
-        <Table responsive striped borderless className='align-middle mb-0'>
+        <Table striped className='align-middle'>
           <tbody>
             {variables.map((variable) => (
               <TableRow key={variable.id} variable={variable} />

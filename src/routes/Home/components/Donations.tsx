@@ -8,7 +8,7 @@ import { RouteID } from 'routes';
 import './Donations.scss';
 
 import Block, { BlockProps } from 'components/ui/Block';
-import Table from 'components/Table';
+import Table from 'components/ui/Table';
 
 import useHomeRouteLoaderData from '../hooks/useHomeRouteLoaderData';
 
@@ -30,18 +30,18 @@ function Donations({
       className={classNames(className, 'text-center')}
     >
       <h3 className='fw-semibold mb-3'>{t('title')}</h3>
-      <div className='donations-container overflow-y-auto'>
+      <div className='donations-container'>
         {donations.count ? (
-          <Table borderless className='align-middle mb-0'>
-            <tbody>
+          <Table className='align-middle'>
+            <Table.Body>
               {donations.results.map((donation) => (
-                <tr key={donation.id}>
-                  <td className='sum'>{`${donation.sum}€`}</td>
-                  <td className='sender text-break'>{donation.sender}</td>
-                  <td className='date'>{formatDate(donation.date, 'd MMM yyyy')}</td>
-                </tr>
+                <Table.Row key={donation.id}>
+                  <Table.Cell className='sum'>{`${donation.sum}€`}</Table.Cell>
+                  <Table.Cell className='sender text-break'>{donation.sender}</Table.Cell>
+                  <Table.Cell className='date'>{formatDate(donation.date, 'd MMM yyyy')}</Table.Cell>
+                </Table.Row>
               ))}
-            </tbody>
+            </Table.Body>
           </Table>
         ) : (
           t('noDonations')

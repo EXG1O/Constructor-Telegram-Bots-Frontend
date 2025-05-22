@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import { Method } from 'api/donations/types';
+import Table from 'components/ui/Table';
 
 export interface MethodTableRowProps {
   method: Method;
@@ -10,9 +11,9 @@ function MethodTableRow({
   method,
 }: MethodTableRowProps): ReactElement<MethodTableRowProps> {
   return (
-    <tr>
-      <th className='text-nowrap'>{method.text}</th>
-      <td>
+    <Table.Row>
+      <Table.Head scope='row' className='text-nowrap'>{method.text}</Table.Head>
+      <Table.Cell>
         {method.link ? (
           <a
             href={method.link}
@@ -25,8 +26,8 @@ function MethodTableRow({
         ) : (
           method.value
         )}
-      </td>
-    </tr>
+      </Table.Cell>
+    </Table.Row>
   );
 }
 
