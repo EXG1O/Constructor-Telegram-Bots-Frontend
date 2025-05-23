@@ -9,7 +9,7 @@ import { TelegramBot } from 'api/telegram_bots/types';
 import cn from 'utils/cn';
 
 export const telegramBotStorageVariants = cva(
-  ['flex', 'items-center', 'gap-2', 'text-nowrap'],
+  ['flex', 'w-full', 'items-center', 'gap-2', 'text-nowrap'],
   {
     variants: {
       size: {
