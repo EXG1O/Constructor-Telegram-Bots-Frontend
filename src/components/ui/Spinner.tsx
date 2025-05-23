@@ -14,12 +14,12 @@ export const spinnerVariants = cva(
   {
     variants: {
       size: {
-        xxs: ['w-5', 'h-5', 'border-2'],
-        xs: ['w-7', 'h-7', 'border-[2.4px]'],
-        sm: ['w-10', 'h-10', 'border-[3.2px]'],
-        md: ['w-15', 'h-15', 'border-4'],
-        lg: ['w-20', 'h-20', 'border-[4.8px]'],
-        xl: ['w-25', 'h-25', 'border-[5.6px]'],
+        xxs: ['size-5', 'border-2'],
+        xs: ['size-6', 'border-[2.4px]'],
+        sm: ['size-8', 'border-[3.2px]'],
+        md: ['size-10', 'border-4'],
+        lg: ['size-12', 'border-[4.8px]'],
+        xl: ['size-14', 'border-[5.6px]'],
       },
     },
     defaultVariants: {
