@@ -8,13 +8,12 @@ import React, {
   useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 import i18n from 'i18n';
 import formatDate from 'i18n/formatDate';
 
+import TelegramBotStorage from 'components/shared/TelegramBotStorage';
 import Block, { BlockProps } from 'components/ui/Block';
 import Table from 'components/ui/Table';
-import TelegramBotStorage from 'components/shared/TelegramBotStorage';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import APITokenDisplay from './components/APITokenDisplay';
@@ -25,8 +24,9 @@ import TelegramBotContext from './contexts/TelegramBotContext';
 import { TelegramBotAPI } from 'api/telegram_bots/main';
 import { TelegramBot } from 'api/telegram_bots/types';
 
-export interface TelegramBotBlockProps
-  extends Omit<BlockProps, 'variant' | 'gradient'> {
+import cn from 'utils/cn';
+
+export interface TelegramBotBlockProps extends BlockProps {
   telegramBot: TelegramBot;
 }
 
@@ -70,7 +70,6 @@ function TelegramBotBlock({
 
       setTelegramBot(response.json);
     };
-
     checkStatus();
 
     return () => {
@@ -102,14 +101,9 @@ function TelegramBotBlock({
 
   return (
     <TelegramBotContext.Provider value={[telegramBot, setTelegramBot]}>
-      <Block
-        {...props}
-        variant='light'
-        className={classNames(className, 'd-flex flex-column gap-2')}
-      >
-        <h4 className='fw-semibold text-center'>
+      <Block {...props} className={cn('flex', 'flex-col', 'gap-2', className)}>
+        <h4 className='text-center font-semibold'>
           <a
-            className='text-reset text-decoration-none'
             href={`https://t.me/${telegramBot.username}`}
             rel='noreferrer'
             target='_blank'
@@ -133,7 +127,7 @@ function TelegramBotBlock({
               <Table.Head scope='row' className='text-nowrap'>
                 {t('table.apiToken.header')}:
               </Table.Head>
-              <Table.Cell className='w-100'>
+              <Table.Cell className='w-full'>
                 {apiTokenEditing ? (
                   <APITokenEditing
                     onSaved={toggleAPITokenState}
@@ -168,4 +162,4 @@ function TelegramBotBlock({
   );
 }
 
-export default memo(TelegramBotBlock);
+export default TelegramBotBlock;

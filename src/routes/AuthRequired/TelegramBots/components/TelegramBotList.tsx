@@ -7,7 +7,7 @@ import { reverse, RouteID } from 'routes';
 
 import Row, { RowProps } from 'react-bootstrap/Row';
 
-import TelegramBotBlock from 'components/TelegramBotBlock';
+import TelegramBotBlock from 'components/shared/TelegramBotBlock';
 
 import useTelegramBots from '../hooks/useTelegramBots';
 

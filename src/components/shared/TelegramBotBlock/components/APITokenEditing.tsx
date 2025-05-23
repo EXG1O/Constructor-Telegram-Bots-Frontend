@@ -1,15 +1,12 @@
 import React, {
   ChangeEvent,
-  CSSProperties,
   HTMLAttributes,
-  memo,
   ReactElement,
-  SVGProps,
   useEffect,
   useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import { Check, X } from 'lucide-react';
 
 import InputFeedback, { InputFeedbackProps } from 'components/shared/InputFeedback';
 import Spinner from 'components/ui/Spinner';
@@ -17,19 +14,16 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useTelegramBot from '../hooks/useTelegramBot';
 
-import CheckIcon from 'assets/icons/check.svg';
-import XIcon from 'assets/icons/x.svg';
-
 import { TelegramBotAPI } from 'api/telegram_bots/main';
 
-const inputStyle: CSSProperties = { fontSize: '16px' };
-const iconProps: SVGProps<SVGSVGElement> = { width: 28, height: 28, cursor: 'pointer' };
+import cn from 'utils/cn';
+
 const inputWrapperProps: InputFeedbackProps['wrapperProps'] = {
-  className: 'flex-fill',
+  className: 'flex-auto',
 };
 
 export interface APITokenEditingProps
-  extends Pick<HTMLAttributes<HTMLElement>, 'className'> {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   onSaved: () => void;
   onCancel: () => void;
 }
@@ -52,7 +46,11 @@ function APITokenEditing({
 
   useEffect(() => setValue(telegramBot.api_token), [telegramBot.api_token]);
 
-  async function handleSave(): Promise<void> {
+  function handleInputChange(event: ChangeEvent<HTMLInputElement>): void {
+    setValue(event.target.value);
+  }
+
+  async function handleSaveClick(): Promise<void> {
     setLoading(true);
 
     const response = await TelegramBotAPI.partialUpdate(telegramBot.id, {
@@ -80,35 +78,35 @@ function APITokenEditing({
     setLoading(false);
   }
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>): void {
-    setValue(event.target.value);
-  }
-
   return (
-    <div
-      {...props}
-      className={classNames('d-flex align-items-center gap-2', className)}
-    >
-      <InputFeedback
-        autoFocus
-        size='sm'
-        value={value}
-        error={error ?? undefined}
-        wrapperProps={inputWrapperProps}
-        placeholder={t('inputPlaceholder')}
-        style={inputStyle}
-        onChange={handleChange}
-      />
-      <div className='d-flex'>
-        {!loading ? (
-          <CheckIcon {...iconProps} className='text-success' onClick={handleSave} />
-        ) : (
-          <Spinner size='xxs' />
-        )}
-        <XIcon {...iconProps} className='text-danger' onClick={onCancel} />
-      </div>
+    <div {...props} className={cn('flex', 'items-center', 'gap-2', className)}>
+      {!loading ? (
+        <>
+          <InputFeedback
+            autoFocus
+            size='sm'
+            value={value}
+            error={error ?? undefined}
+            wrapperProps={inputWrapperProps}
+            placeholder={t('inputPlaceholder')}
+            onChange={handleInputChange}
+          />
+          <div className='flex gap-0.5'>
+            <Check
+              className='size-5 cursor-pointer text-success'
+              onClick={handleSaveClick}
+            />
+            <X
+              className='size-5 cursor-pointer text-danger'
+              onClick={() => onCancel()}
+            />
+          </div>
+        </>
+      ) : (
+        <Spinner size='xxs' />
+      )}
     </div>
   );
 }
 
-export default memo(APITokenEditing);
+export default APITokenEditing;

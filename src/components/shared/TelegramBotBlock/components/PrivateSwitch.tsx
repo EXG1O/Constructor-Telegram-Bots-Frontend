@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  HTMLAttributes,
-  memo,
-  ReactElement,
-  useState,
-} from 'react';
+import React, { ChangeEvent, HTMLAttributes, ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Check from 'components/ui/Check';
@@ -15,7 +9,7 @@ import useTelegramBot from '../hooks/useTelegramBot';
 
 import { TelegramBotAPI } from 'api/telegram_bots/main';
 
-export type PrivateSwitchProps = Pick<HTMLAttributes<HTMLElement>, 'className'>;
+export type PrivateSwitchProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
 function PrivateSwitch(props: PrivateSwitchProps): ReactElement<PrivateSwitchProps> {
   const { t } = useTranslation('components', {
@@ -65,4 +59,4 @@ function PrivateSwitch(props: PrivateSwitchProps): ReactElement<PrivateSwitchPro
   );
 }
 
-export default memo(PrivateSwitch);
+export default PrivateSwitch;
