@@ -28,8 +28,8 @@ const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>(
         aria-valuemax={max}
         className={cn(
           'block',
+          'w-full',
           'h-3',
-          'w-100',
           'overflow-hidden',
           'rounded-sm',
           'bg-gray-200',
