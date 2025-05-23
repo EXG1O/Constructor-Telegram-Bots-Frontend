@@ -9,7 +9,7 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 import Button from 'components/ui/Button';
 import FormMonacoEditorFeedback from 'components/FormMonacoEditorFeedback';
 import Modal, { ModalProps } from 'components/Modal';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useDatabaseRecordsStore from '../hooks/useDatabaseRecordsStore';
 

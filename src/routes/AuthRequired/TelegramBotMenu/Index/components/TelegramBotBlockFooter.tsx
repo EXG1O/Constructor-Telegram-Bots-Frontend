@@ -13,7 +13,7 @@ import Button from 'components/ui/Button';
 import Card from 'components/ui/Card';
 import Spinner from 'components/ui/Spinner';
 import useTelegramBot from 'components/TelegramBotBlock/hooks/useTelegramBot';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { TelegramBotAPI } from 'api/telegram_bots/main';
 

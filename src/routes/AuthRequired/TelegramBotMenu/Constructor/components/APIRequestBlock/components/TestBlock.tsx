@@ -16,7 +16,7 @@ import { APIRequest } from '..';
 import Collapse from 'react-bootstrap/Collapse';
 
 import Button from 'components/ui/Button';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 export type TestBlockProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 

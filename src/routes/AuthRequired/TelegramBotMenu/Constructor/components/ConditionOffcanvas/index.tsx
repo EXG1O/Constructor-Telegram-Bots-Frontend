@@ -8,7 +8,7 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 import Button from 'components/ui/Button';
 import Offcanvas, { OffcanvasProps } from 'components/Offcanvas';
 import Stack from 'components/ui/Stack';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import PartsBlock, { defaultParts, Parts } from './components/PartsBlock';
 

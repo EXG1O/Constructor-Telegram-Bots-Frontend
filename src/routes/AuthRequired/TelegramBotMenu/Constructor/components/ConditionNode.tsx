@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
 import Node, { NodeProps } from './Node';

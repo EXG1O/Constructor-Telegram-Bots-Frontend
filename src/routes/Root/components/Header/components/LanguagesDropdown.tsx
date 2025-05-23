@@ -5,7 +5,7 @@ import { RouteID } from 'routes';
 import useLanguagesRouteLoaderData from 'routes/Languages/hooks/useLanguagesRouteLoaderData';
 
 import Dropdown, { DropdownProps } from 'components/Dropdown';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { LanguagesAPI } from 'api/languages/main';
 

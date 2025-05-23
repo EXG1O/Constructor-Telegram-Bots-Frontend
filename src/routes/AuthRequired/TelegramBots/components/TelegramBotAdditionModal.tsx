@@ -9,7 +9,7 @@ import FormCheckFeedback from 'components/shared/FormCheckFeedback';
 import FormInputFeedback from 'components/shared/FormInputFeedback';
 import Modal, { ModalProps } from 'components/Modal';
 import Stack from 'components/ui/Stack';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useTelegramBots from '../hooks/useTelegramBots';
 

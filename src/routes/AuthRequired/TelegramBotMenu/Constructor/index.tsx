@@ -22,7 +22,7 @@ import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import Page from 'components/shared/Page';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import BackgroundTaskNode from './components/BackgroundTaskNode';
 import BackgroundTaskOffcanvas from './components/BackgroundTaskOffcanvas';

@@ -10,7 +10,7 @@ import FormInputFeedback from 'components/shared/FormInputFeedback';
 import FormTelegramQuillEditorFeedback from 'components/FormTelegramQuillEditorFeedback';
 import Modal from 'components/Modal';
 import Stack from 'components/ui/Stack';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { VariableAPI, VariablesAPI } from 'api/telegram_bots/main';
 import { Variable } from 'api/telegram_bots/types';

@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 import Check from 'components/ui/Check';
 import Spinner from 'components/ui/Spinner';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useTelegramBot from '../hooks/useTelegramBot';
 

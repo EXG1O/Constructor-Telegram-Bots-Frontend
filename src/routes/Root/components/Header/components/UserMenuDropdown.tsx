@@ -6,7 +6,7 @@ import { reverse, RouteID } from 'routes';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import Dropdown, { DropdownProps } from 'components/Dropdown';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { UserAPI } from 'api/users/main';
 import { User } from 'api/users/types';

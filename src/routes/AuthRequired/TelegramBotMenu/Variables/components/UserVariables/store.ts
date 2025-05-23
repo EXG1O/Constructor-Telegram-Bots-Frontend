@@ -4,7 +4,7 @@ import { create } from 'zustand';
 
 import { RouteID } from 'routes';
 
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { VariablesAPI } from 'api/telegram_bots/main';
 import { TelegramBot, Variable } from 'api/telegram_bots/types';

@@ -7,7 +7,7 @@ import { RouteID } from 'routes';
 import { Document, Documents } from '..';
 
 import Button, { ButtonProps } from 'components/ui/Button';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useTelegramBotStorage from '../../../hooks/useTelegramBotStorage';
 

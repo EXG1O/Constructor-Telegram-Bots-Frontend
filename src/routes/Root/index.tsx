@@ -3,7 +3,7 @@ import { Outlet, useNavigation } from 'react-router-dom';
 
 import AskConfirmModal from 'components/AskConfirmModal';
 import Spinner from 'components/ui/Spinner';
-import ToastContainer from 'components/ToastContainer';
+import ToastContainer from 'components/ui/ToastContainer';
 
 import Footer from './components/Footer';
 import Header from './components/Header';

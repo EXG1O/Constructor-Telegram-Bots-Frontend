@@ -17,7 +17,7 @@ import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import Button from 'components/ui/Button';
 import Spinner from 'components/ui/Spinner';
 import MonacoEditor, { MonacoEditorProps } from 'components/MonacoEditor';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import ConfirmButtonGroup, {
   ConfirmButtonGroupProps,

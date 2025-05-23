@@ -4,7 +4,7 @@ import { TOptions } from 'i18next';
 
 import { reverse, RouteID } from 'routes';
 
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 export type LoaderData = Response;
 

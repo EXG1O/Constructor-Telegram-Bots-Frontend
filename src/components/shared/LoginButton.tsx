@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { reverse, RouteID } from 'routes';
 
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 import Button, { ButtonProps, buttonVariants } from 'components/ui/Button';
 import Spinner from 'components/ui/Spinner';
 

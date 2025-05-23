@@ -13,7 +13,7 @@ import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useUsersStore from '../../../hooks/useUsersStore';
 

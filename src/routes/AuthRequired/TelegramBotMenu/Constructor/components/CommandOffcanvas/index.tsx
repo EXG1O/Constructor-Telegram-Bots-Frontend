@@ -7,7 +7,7 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 
 import Button from 'components/ui/Button';
 import Offcanvas from 'components/Offcanvas';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import APIRequestBlock, { defaultAPIRequest } from './components/APIRequestBlock';
 import { APIRequest } from './components/APIRequestBlock';

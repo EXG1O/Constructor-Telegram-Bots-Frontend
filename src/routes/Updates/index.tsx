@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 import Spinner from 'components/ui/Spinner';
 import Page from 'components/shared/Page';
 import Pagination from 'components/ui/Pagination';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import UpdateDisplay from './components/UpdateDisplay';
 

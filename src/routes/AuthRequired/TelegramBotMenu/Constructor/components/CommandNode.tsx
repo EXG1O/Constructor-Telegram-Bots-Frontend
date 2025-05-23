@@ -9,7 +9,7 @@ import './CommandNode.scss';
 
 import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
 import Stack from 'components/ui/Stack';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
 import Node, { NodeProps } from './Node';

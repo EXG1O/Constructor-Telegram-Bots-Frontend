@@ -13,7 +13,7 @@ import classNames from 'classnames';
 
 import InputFeedback, { InputFeedbackProps } from 'components/shared/InputFeedback';
 import Spinner from 'components/ui/Spinner';
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useTelegramBot from '../hooks/useTelegramBot';
 
