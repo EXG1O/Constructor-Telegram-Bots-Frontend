@@ -3,6 +3,8 @@ import React, { forwardRef, HTMLAttributes } from 'react';
 import Check, { CheckProps, checkVariants } from 'components/ui/Check';
 import Feedback from 'components/ui/Feedback';
 
+import cn from 'utils/cn';
+
 export { checkVariants as checkFeedbackVariants };
 
 export interface CheckFeedbackProps extends Omit<CheckProps, 'invalid'> {
@@ -13,7 +15,7 @@ export interface CheckFeedbackProps extends Omit<CheckProps, 'invalid'> {
 const CheckFeedback = forwardRef<HTMLInputElement, CheckFeedbackProps>(
   ({ error, wrapperProps, ...props }, ref) => {
     return (
-      <div {...wrapperProps}>
+      <div {...wrapperProps} className={cn('w-full', wrapperProps?.className)}>
         <Check {...props} ref={ref} invalid={Boolean(error)} />
         {error && <Feedback type='invalid'>{error}</Feedback>}
       </div>

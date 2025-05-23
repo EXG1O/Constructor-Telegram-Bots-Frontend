@@ -3,6 +3,8 @@ import React, { forwardRef, HTMLAttributes } from 'react';
 import Feedback from 'components/ui/Feedback';
 import Select, { SelectProps, selectVariants } from 'components/ui/Select';
 
+import cn from 'utils/cn';
+
 export { selectVariants as selectFeedbackVariants };
 
 export interface SelectFeedbackProps extends Omit<SelectProps, 'invalid'> {
@@ -13,7 +15,7 @@ export interface SelectFeedbackProps extends Omit<SelectProps, 'invalid'> {
 const SelectFeedback = forwardRef<HTMLSelectElement, SelectFeedbackProps>(
   ({ error, wrapperProps, ...props }, ref) => {
     return (
-      <div {...wrapperProps}>
+      <div {...wrapperProps} className={cn('w-full', wrapperProps?.className)}>
         <Select {...props} ref={ref} invalid={Boolean(error)} />
         {error && <Feedback type='invalid'>{error}</Feedback>}
       </div>
