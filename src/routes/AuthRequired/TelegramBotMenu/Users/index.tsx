@@ -1,6 +1,5 @@
 import React, { ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Stack } from 'react-bootstrap';
 
 import { RouteID } from 'routes';
 
@@ -22,11 +21,11 @@ function Users(): ReactElement {
       <StoreProvider>
         <Block variant='light'>
           <h3 className='fw-semibold text-center mb-3'>{title}</h3>
-          <Stack gap={2}>
+          <div className='flex flex-col gap-2'>
             <Toolbar />
             <UsersTable />
             <Footer />
-          </Stack>
+          </div>
         </Block>
       </StoreProvider>
     </Page>

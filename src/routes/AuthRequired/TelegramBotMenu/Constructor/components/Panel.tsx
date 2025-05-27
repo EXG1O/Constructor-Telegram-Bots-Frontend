@@ -5,7 +5,6 @@ import { Panel as BasePanel } from 'reactflow';
 import { RouteID } from 'routes';
 
 import PlusButton from 'components/shared/PlusButton';
-import Stack from 'components/ui/Stack';
 
 import { useBackgroundTaskOffcanvasStore } from './BackgroundTaskOffcanvas/store';
 import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
@@ -30,7 +29,7 @@ function Panel({ className, ...props }: PanelProps): ReactElement<PanelProps> {
 
   return (
     <BasePanel position='top-right'>
-      <Stack {...props} className='gap-1'>
+      <div {...props} className='flex flex-col gap-1'>
         <PlusButton size='sm' variant='dark' onClick={() => showAddCommandOffcanvas()}>
           {t('addCommandButton')}
         </PlusButton>
@@ -44,7 +43,7 @@ function Panel({ className, ...props }: PanelProps): ReactElement<PanelProps> {
         >
           {t('addBackgroundTaskButton')}
         </PlusButton>
-      </Stack>
+      </div>
     </BasePanel>
   );
 }

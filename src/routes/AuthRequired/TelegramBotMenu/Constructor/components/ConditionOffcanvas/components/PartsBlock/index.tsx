@@ -1,7 +1,6 @@
 import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useField } from 'formik';
-import { Stack } from 'react-bootstrap';
 
 import { RouteID } from 'routes';
 
@@ -23,12 +22,12 @@ function PartsBlock(): ReactElement {
 
   return (
     <Block title={t('title')} body>
-      <Stack gap={1}>
+      <div className='flex flex-col gap-1'>
         {parts.map((_, index) => (
           <PartItem key={index} index={index} />
         ))}
         <VariablesInfoText />
-      </Stack>
+      </div>
     </Block>
   );
 }

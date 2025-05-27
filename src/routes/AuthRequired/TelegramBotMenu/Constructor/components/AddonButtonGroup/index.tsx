@@ -6,7 +6,6 @@ import { RouteID } from 'routes';
 import Collapse from 'react-bootstrap/Collapse';
 
 import Button, { ButtonProps } from 'components/ui/Button';
-import Stack from 'components/ui/Stack';
 
 import AddonButton from './components/AddonButton';
 
@@ -48,11 +47,11 @@ function AddonButtonGroup({
       />
       <Collapse in={show}>
         <div>
-          <Stack
-            className='bg-light gap-1 border border-top-0 rounded-1 rounded-top-0 p-1'
+          <div
+            className='flex flex-col bg-light gap-1 border border-top-0 rounded-1 rounded-top-0 p-1'
           >
             {children}
-          </Stack>
+          </div>
         </div>
       </Collapse>
     </div>

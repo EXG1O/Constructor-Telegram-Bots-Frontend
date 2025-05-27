@@ -5,7 +5,6 @@ import { RouteID } from 'routes';
 
 import Block, { BlockProps } from 'components/ui/Block';
 import PrettyNumber from 'components/ui/PrettyNumber';
-import Stack from 'components/ui/Stack';
 
 import useHomeRouteLoaderData from '../hooks/useHomeRouteLoaderData';
 
@@ -19,7 +18,7 @@ function Stats({ className, ...props }: StatsProps): ReactElement<StatsProps> {
   return (
     <Block {...props} variant='primary' gradient>
       <h3 className='fw-semibold text-center mb-3'>{t('title')}</h3>
-      <Stack className='gap-2'>
+      <div className='flex flex-col gap-2'>
         <PrettyNumber description={t('usersTotal')}>
           {stats.users.total}
         </PrettyNumber>
@@ -32,7 +31,7 @@ function Stats({ className, ...props }: StatsProps): ReactElement<StatsProps> {
         <PrettyNumber description={t('telegramBotsUsers')}>
           {stats.telegramBots.users.total}
         </PrettyNumber>
-      </Stack>
+      </div>
     </Block>
   );
 }

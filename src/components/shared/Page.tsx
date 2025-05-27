@@ -1,9 +1,9 @@
-import React, { Fragment, ReactElement, ReactNode, useEffect } from 'react';
+import React, { ReactElement, ReactNode, useEffect } from 'react';
 
 import Container from 'components/ui/Container';
-import Stack from 'components/ui/Stack';
 
 import cn from 'utils/cn';
+import { Slot } from '@radix-ui/react-slot';
 
 export interface PageProps {
   title: string;
@@ -20,7 +20,6 @@ function Page({
   className,
   children,
 }: PageProps): ReactElement<PageProps> {
-  const Wrapper = grid ? Stack : Fragment;
   const containerClassName: string = cn('my-2', 'lg:my-3', className);
 
   useEffect(() => {
@@ -28,7 +27,7 @@ function Page({
   }, [title]);
 
   return (
-    <Wrapper asChild className='gap-3 lg:gap-4'>
+    <Slot className={grid ? 'flex flex-auto flex-col gap-3 lg:gap-4' : undefined}>
       {align === 'center' ? (
         <main className='my-auto'>
           <Container className={containerClassName}>{children}</Container>
@@ -38,7 +37,7 @@ function Page({
           <main>{children}</main>
         </Container>
       )}
-    </Wrapper>
+    </Slot>
   );
 }
 

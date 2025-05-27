@@ -8,7 +8,6 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 import './CommandNode.scss';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
-import Stack from 'components/ui/Stack';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
@@ -97,7 +96,7 @@ function CommandNode({
         dangerouslySetInnerHTML={{ __html: command.message.text }}
       />
       {command.keyboard?.buttons && (
-        <Stack className='gap-1'>
+        <div className='flex flex-col gap-1'>
           {command.keyboard.buttons.map((button) => (
             <Node.Block
               key={button.id}
@@ -125,7 +124,7 @@ function CommandNode({
               )}
             </Node.Block>
           ))}
-        </Stack>
+        </div>
       )}
     </Node>
   );

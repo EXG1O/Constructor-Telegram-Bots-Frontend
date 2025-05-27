@@ -7,7 +7,6 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 
 import Button from 'components/ui/Button';
 import Offcanvas, { OffcanvasProps } from 'components/Offcanvas';
-import Stack from 'components/ui/Stack';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import PartsBlock, { defaultParts, Parts } from './components/PartsBlock';
@@ -94,11 +93,9 @@ function InnerConditionOffcanvas(
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>{t('title', { context: type })}</Offcanvas.Title>
       </Offcanvas.Header>
-      <Offcanvas.Body as={Form} id={formID}>
-        <Stack className='gap-3'>
-          <NameBlock />
-          <PartsBlock />
-        </Stack>
+      <Offcanvas.Body as={Form} id={formID} className='flex flex-col gap-3'>
+        <NameBlock />
+        <PartsBlock />
       </Offcanvas.Body>
       <Offcanvas.Footer className='gap-2'>
         <Button type='submit' form={formID} variant='success'>

@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Stack from 'components/ui/Stack';
-
 import AddDocumentsButton from './components/AddDocumentsButton';
 import DocumentList from './components/DocumentList';
 
@@ -33,12 +31,10 @@ function DocumentsBlock(props: DocumentsBlockProps): ReactElement<DocumentsBlock
   return (
     <Block.Collapse name='show_documents_block'>
       <Block {...props} title={t('title')}>
-        <Stack asChild className='gap-2'>
-          <Block.Body>
-            <DocumentList />
-            <AddDocumentsButton />
-          </Block.Body>
-        </Stack>
+        <Block.Body className='flex flex-col gap-2'>
+          <DocumentList />
+          <AddDocumentsButton />
+        </Block.Body>
       </Block>
     </Block.Collapse>
   );

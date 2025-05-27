@@ -1,8 +1,6 @@
-import React, { memo, ReactElement } from 'react';
+import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import classNames from 'classnames';
 import { useField } from 'formik';
-
-import Stack, { StackProps } from 'components/ui/Stack';
 
 import AddHeaderButton from './components/AddHeaderButton';
 import BlockCollapse from './components/BlockCollapse';
@@ -15,7 +13,7 @@ export interface Header {
 
 export type Headers = Header[];
 
-export type HeadersBlockProps = Pick<StackProps, 'className'>;
+export type HeadersBlockProps = Pick<HTMLAttributes<HTMLDivElement>, 'className'>;
 
 export const defaultHeaders: Headers = [];
 
@@ -26,9 +24,9 @@ function HeadersBlock({
 
   return (
     <BlockCollapse>
-      <Stack
+      <div
         className={classNames(
-          'gap-1 border border-top-0 rounded-1 rounded-top-0 p-1',
+          'flex flex-col gap-1 border border-top-0 rounded-1 rounded-top-0 p-1',
           className,
         )}
       >
@@ -36,7 +34,7 @@ function HeadersBlock({
           <HeaderInputGroup key={index} index={index} />
         ))}
         <AddHeaderButton />
-      </Stack>
+      </div>
     </BlockCollapse>
   );
 }

@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { Stack } from 'react-bootstrap';
 
 import FormInputFeedback from 'components/shared/FormInputFeedback';
 
@@ -32,12 +31,12 @@ export const defaultPart: Part = {
 
 function PartItem({ index }: PartItemProps): ReactElement<PartItemProps> {
   return (
-    <Stack direction='horizontal' gap={1}>
+    <div className='flex gap-1'>
       <FormInputFeedback size='sm' name={`parts[${index}].first_value`} />
       <OperatorSelect size='sm' index={index} />
       <FormInputFeedback size='sm' name={`parts[${index}].second_value`} />
       <NextPartOperatorSelect size='sm' index={index} />
-    </Stack>
+    </div>
   );
 }
 
