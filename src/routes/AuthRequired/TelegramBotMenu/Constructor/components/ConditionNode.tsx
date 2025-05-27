@@ -5,7 +5,7 @@ import { Handle, NodeProps as RFNodeProps, Position, useStore } from 'reactflow'
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
+import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
@@ -38,25 +38,25 @@ function ConditionNode({
     (state) => state.showOffcanvas,
   );
 
-  const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
-  const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
-  const setLoadingAskConfirmModal = useAskConfirmModalStore(
+  const setShowConfirmModal = useConfirmModalStore((state) => state.setShow);
+  const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
+  const setLoadingConfirmModal = useConfirmModalStore(
     (state) => state.setLoading,
   );
 
   const showDeleteModal = useCallback(
     () =>
-      setShowAskConfirmModal({
+      setShowConfirmModal({
         title: t('deleteModal.title'),
         text: t('deleteModal.text'),
         onConfirm: async () => {
-          setLoadingAskConfirmModal(true);
+          setLoadingConfirmModal(true);
 
           const response = await ConditionAPI.delete(telegramBot.id, condition.id);
 
           if (response.ok) {
             onNodesDelete?.([{ id, position: { x: xPos, y: yPos }, data: condition }]);
-            hideAskConfirmModal();
+            hideConfirmModal();
             createMessageToast({
               message: t('messages.deleteCondition.success'),
               level: 'success',
@@ -68,7 +68,7 @@ function ConditionNode({
             });
           }
 
-          setLoadingAskConfirmModal(false);
+          setLoadingConfirmModal(false);
         },
         onCancel: null,
       }),

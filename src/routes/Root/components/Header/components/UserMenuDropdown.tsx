@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { reverse, RouteID } from 'routes';
 
-import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
+import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import Dropdown, { DropdownProps } from 'components/Dropdown';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -25,24 +25,24 @@ function UserMenuDropdown({
 
   const navigate = useNavigate();
 
-  const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
-  const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
-  const setLoadingAskConfirmModal = useAskConfirmModalStore(
+  const setShowConfirmModal = useConfirmModalStore((state) => state.setShow);
+  const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
+  const setLoadingConfirmModal = useConfirmModalStore(
     (state) => state.setLoading,
   );
 
   const showLogoutModal = useCallback(
     () =>
-      setShowAskConfirmModal({
+      setShowConfirmModal({
         title: t('logoutModal.title'),
         text: t('logoutModal.text'),
         onConfirm: async () => {
-          setLoadingAskConfirmModal(true);
+          setLoadingConfirmModal(true);
 
           const response = await UserAPI.logout();
 
           if (response.ok) {
-            hideAskConfirmModal();
+            hideConfirmModal();
             navigate(reverse(RouteID.Home));
             createMessageToast({
               message: t('messages.logout.success'),
@@ -55,7 +55,7 @@ function UserMenuDropdown({
             });
           }
 
-          setLoadingAskConfirmModal(false);
+          setLoadingConfirmModal(false);
         },
         onCancel: null,
       }),

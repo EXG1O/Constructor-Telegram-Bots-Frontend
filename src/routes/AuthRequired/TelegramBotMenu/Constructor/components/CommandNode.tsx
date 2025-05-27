@@ -7,7 +7,7 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 
 import './CommandNode.scss';
 
-import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
+import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import Stack from 'components/ui/Stack';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -43,25 +43,25 @@ function CommandNode({
     (state) => state.showOffcanvas,
   );
 
-  const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
-  const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
-  const setLoadingAskConfirmModal = useAskConfirmModalStore(
+  const setShowConfirmModal = useConfirmModalStore((state) => state.setShow);
+  const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
+  const setLoadingConfirmModal = useConfirmModalStore(
     (state) => state.setLoading,
   );
 
   const showDeleteModal = useCallback(
     () =>
-      setShowAskConfirmModal({
+      setShowConfirmModal({
         title: t('deleteModal.title'),
         text: t('deleteModal.text'),
         onConfirm: async () => {
-          setLoadingAskConfirmModal(true);
+          setLoadingConfirmModal(true);
 
           const response = await CommandAPI.delete(telegramBot.id, command.id);
 
           if (response.ok) {
             onNodesDelete?.([{ id, position: { x: xPos, y: yPos }, data: command }]);
-            hideAskConfirmModal();
+            hideConfirmModal();
             createMessageToast({
               message: t('messages.deleteCommand.success'),
               level: 'success',
@@ -73,7 +73,7 @@ function CommandNode({
             });
           }
 
-          setLoadingAskConfirmModal(false);
+          setLoadingConfirmModal(false);
         },
         onCancel: null,
       }),

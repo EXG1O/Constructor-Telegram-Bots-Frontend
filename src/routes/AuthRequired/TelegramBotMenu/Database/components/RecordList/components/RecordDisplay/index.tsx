@@ -13,7 +13,7 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 
 import ListGroupItem, { ListGroupItemProps } from 'react-bootstrap/ListGroupItem';
 
-import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
+import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import Button from 'components/ui/Button';
 import Spinner from 'components/ui/Spinner';
 import MonacoEditor, { MonacoEditorProps } from 'components/MonacoEditor';
@@ -71,24 +71,24 @@ function RecordDisplay({
   const [value, setValue] = useState<string>(initialValue);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
-  const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
-  const setLoadingAskConfirmModal = useAskConfirmModalStore(
+  const setShowConfirmModal = useConfirmModalStore((state) => state.setShow);
+  const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
+  const setLoadingConfirmModal = useConfirmModalStore(
     (state) => state.setLoading,
   );
 
   function showDeleteModal(): void {
-    setShowAskConfirmModal({
+    setShowConfirmModal({
       title: t('list.display.deleteModal.title'),
       text: t('list.display.deleteModal.text'),
       onConfirm: async () => {
-        setLoadingAskConfirmModal(true);
+        setLoadingConfirmModal(true);
 
         const response = await DatabaseRecordAPI.delete(telegramBot.id, record.id);
 
         if (response.ok) {
           updateRecords();
-          hideAskConfirmModal();
+          hideConfirmModal();
           createMessageToast({
             message: t('list.display.messages.deleteRecord.success'),
             level: 'success',
@@ -100,7 +100,7 @@ function RecordDisplay({
           });
         }
 
-        setLoadingAskConfirmModal(false);
+        setLoadingConfirmModal(false);
       },
       onCancel: null,
     });

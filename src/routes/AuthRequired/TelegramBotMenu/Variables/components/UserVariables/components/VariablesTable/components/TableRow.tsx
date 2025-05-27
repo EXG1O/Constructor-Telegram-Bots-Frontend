@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
+import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useVariableModalStore } from '../../VariableModal/store';
@@ -37,26 +37,26 @@ function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
 
   const updateVariables = useUserVariablesStore((state) => state.updateVariables);
 
-  const showAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
-  const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
-  const setLoadingAskConfirmModal = useAskConfirmModalStore(
+  const showConfirmModal = useConfirmModalStore((state) => state.setShow);
+  const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
+  const setLoadingConfirmModal = useConfirmModalStore(
     (state) => state.setLoading,
   );
 
   const showVariableModal = useVariableModalStore((state) => state.showModal);
 
   function showDeleteModal(): void {
-    showAskConfirmModal({
+    showConfirmModal({
       title: t('deleteModal.title'),
       text: t('deleteModal.text'),
       onConfirm: async () => {
-        setLoadingAskConfirmModal(true);
+        setLoadingConfirmModal(true);
 
         const response = await VariableAPI.delete(telegramBot.id, variable.id);
 
         if (response.ok) {
           updateVariables();
-          hideAskConfirmModal();
+          hideConfirmModal();
           createMessageToast({
             message: t('messages.deleteVariable.success'),
             level: 'success',
@@ -68,7 +68,7 @@ function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
           });
         }
 
-        setLoadingAskConfirmModal(false);
+        setLoadingConfirmModal(false);
       },
       onCancel: null,
     });

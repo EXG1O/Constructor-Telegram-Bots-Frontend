@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Outlet, useNavigation } from 'react-router-dom';
 
-import AskConfirmModal from 'components/AskConfirmModal';
+import ConfirmModal from 'components/shared/ConfirmModal';
 import Spinner from 'components/ui/Spinner';
 import ToastContainer from 'components/ui/ToastContainer';
 
@@ -14,7 +14,7 @@ function Root(): ReactElement {
   return (
     <>
       <ToastContainer />
-      <AskConfirmModal />
+      <ConfirmModal />
       <Header />
       {navigation.state === 'idle' ? (
         <Outlet />

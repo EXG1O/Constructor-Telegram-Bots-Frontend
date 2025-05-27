@@ -1,17 +1,17 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Button from 'components/ui/Button';
 
 import Modal from 'components/ui/Modal';
 
-import { useAskConfirmModalStore } from './store';
+import { useConfirmModalStore } from './store';
 
-function AskConfirmModal(): ReactElement {
-  const { t } = useTranslation('components', { keyPrefix: 'askConfirmModal' });
+function ConfirmModal(): ReactElement {
+  const { t } = useTranslation('components', { keyPrefix: 'confirmModal' });
 
   const { show, loading, title, text, onConfirm, onCancel, setHide } =
-    useAskConfirmModalStore();
+    useConfirmModalStore();
 
   const handleConfirm = onConfirm ?? setHide;
   const handleCancel = onCancel ?? setHide;
@@ -22,11 +22,11 @@ function AskConfirmModal(): ReactElement {
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>{text}</Modal.Body>
-      <Modal.Footer>
-        <Button variant='success' className='flex-fill' onClick={handleConfirm}>
+      <Modal.Footer className='flex flex-nowrap gap-4'>
+        <Button variant='success' className='w-full' onClick={handleConfirm}>
           {t('yesButton')}
         </Button>
-        <Button variant='danger' className='flex-fill' onClick={handleCancel}>
+        <Button variant='danger' className='w-full' onClick={handleCancel}>
           {t('noButton')}
         </Button>
       </Modal.Footer>
@@ -34,4 +34,4 @@ function AskConfirmModal(): ReactElement {
   );
 }
 
-export default memo(AskConfirmModal);
+export default ConfirmModal;

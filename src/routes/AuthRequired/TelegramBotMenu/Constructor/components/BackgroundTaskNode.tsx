@@ -5,7 +5,7 @@ import { Handle, NodeProps, Position, useStore } from 'reactflow';
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
+import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useBackgroundTaskOffcanvasStore } from './BackgroundTaskOffcanvas/store';
@@ -37,25 +37,25 @@ function BackgroundTaskNode({
     (state) => state.showOffcanvas,
   );
 
-  const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
-  const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
-  const setLoadingAskConfirmModal = useAskConfirmModalStore(
+  const setShowConfirmModal = useConfirmModalStore((state) => state.setShow);
+  const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
+  const setLoadingConfirmModal = useConfirmModalStore(
     (state) => state.setLoading,
   );
 
   const showDeleteModal = useCallback(
     () =>
-      setShowAskConfirmModal({
+      setShowConfirmModal({
         title: t(`${nodePrefix}.deleteModal.title`),
         text: t(`${nodePrefix}.deleteModal.text`),
         onConfirm: async () => {
-          setLoadingAskConfirmModal(true);
+          setLoadingConfirmModal(true);
 
           const response = await BackgroundTaskAPI.delete(telegramBot.id, task.id);
 
           if (response.ok) {
             onNodesDelete?.([{ id, position: { x: xPos, y: yPos }, data: task }]);
-            hideAskConfirmModal();
+            hideConfirmModal();
             createMessageToast({
               message: t(`${nodePrefix}.messages.deleteBackgroundTask.success`),
               level: 'success',
@@ -67,7 +67,7 @@ function BackgroundTaskNode({
             });
           }
 
-          setLoadingAskConfirmModal(false);
+          setLoadingConfirmModal(false);
         },
         onCancel: null,
       }),

@@ -8,7 +8,7 @@ import { CardFooterProps } from 'react-bootstrap/CardFooter';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
+import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import Button from 'components/ui/Button';
 import Card from 'components/ui/Card';
 import Spinner from 'components/ui/Spinner';
@@ -30,23 +30,23 @@ function TelegramBotBlockFooter(
 
   const [telegramBot, setTelegramBot] = useTelegramBot();
 
-  const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
-  const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
-  const setLoadingAskConfirmModal = useAskConfirmModalStore(
+  const setShowConfirmModal = useConfirmModalStore((state) => state.setShow);
+  const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
+  const setLoadingConfirmModal = useConfirmModalStore(
     (state) => state.setLoading,
   );
 
   function showDeleteModal(): void {
-    setShowAskConfirmModal({
+    setShowConfirmModal({
       title: t('deleteModal.title'),
       text: t('deleteModal.text'),
       onConfirm: async () => {
-        setLoadingAskConfirmModal(true);
+        setLoadingConfirmModal(true);
 
         const response = await TelegramBotAPI.delete(telegramBot.id);
 
         if (response.ok) {
-          hideAskConfirmModal();
+          hideConfirmModal();
           navigate(reverse(RouteID.TelegramBots));
           createMessageToast({
             message: t('messages.deleteTelegramBot.success'),
@@ -59,7 +59,7 @@ function TelegramBotBlockFooter(
           });
         }
 
-        setLoadingAskConfirmModal(false);
+        setLoadingConfirmModal(false);
       },
       onCancel: null,
     });

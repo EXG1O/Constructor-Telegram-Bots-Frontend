@@ -12,7 +12,7 @@ import formatDate from 'i18n/formatDate';
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
+import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useUsersStore from '../../../hooks/useUsersStore';
@@ -49,30 +49,30 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
 
   const updateUsers = useUsersStore((state) => state.updateUsers);
 
-  const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
-  const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
-  const setLoadingAskConfirmModal = useAskConfirmModalStore(
+  const setShowConfirmModal = useConfirmModalStore((state) => state.setShow);
+  const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
+  const setLoadingConfirmModal = useConfirmModalStore(
     (state) => state.setLoading,
   );
 
-  function showAskConfirmModal(
+  function showConfirmModal(
     title: string,
     text: string,
     apiCall: () => ReturnType<typeof makeRequest>,
     successMessage: string,
     errorMessage: string,
   ): void {
-    setShowAskConfirmModal({
+    setShowConfirmModal({
       title,
       text,
       onConfirm: async () => {
-        setLoadingAskConfirmModal(true);
+        setLoadingConfirmModal(true);
 
         const response = await apiCall();
 
         if (response.ok) {
           updateUsers();
-          hideAskConfirmModal();
+          hideConfirmModal();
           createMessageToast({
             message: successMessage,
             level: 'success',
@@ -84,14 +84,14 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
           });
         }
 
-        setLoadingAskConfirmModal(false);
+        setLoadingConfirmModal(false);
       },
       onCancel: null,
     });
   }
 
   function showAllowModal(): void {
-    showAskConfirmModal(
+    showConfirmModal(
       t('allowModal.title'),
       t('allowModal.text'),
       () =>
@@ -104,7 +104,7 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
   }
 
   function showDisallowModal(): void {
-    showAskConfirmModal(
+    showConfirmModal(
       t('disallowModal.title'),
       t('disallowModal.text'),
       () =>
@@ -117,7 +117,7 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
   }
 
   function showBlockModal(): void {
-    showAskConfirmModal(
+    showConfirmModal(
       t('blockModal.title'),
       t('blockModal.text'),
       () =>
@@ -130,7 +130,7 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
   }
 
   function showUnblockModal(): void {
-    showAskConfirmModal(
+    showConfirmModal(
       t('unblockModal.title'),
       t('unblockModal.text'),
       () =>
@@ -143,7 +143,7 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
   }
 
   function showDeleteModal(): void {
-    showAskConfirmModal(
+    showConfirmModal(
       t('deleteModal.title'),
       t('deleteModal.text'),
       () => UserAPI.delete(telegramBot.id, user.id),

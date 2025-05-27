@@ -18,13 +18,13 @@ interface Actions {
 const initialState: State = {
   show: false,
   loading: false,
-  title: 'Undefined',
-  text: 'Undefined',
+  title: 'Unknown',
+  text: 'Unknown',
   onConfirm: null,
   onCancel: null,
 };
 
-export const useAskConfirmModalStore = create<State & Actions>((set) => ({
+export const useConfirmModalStore = create<State & Actions>((set) => ({
   ...initialState,
 
   setShow: (props) => set({ ...initialState, ...props, show: true }),
