@@ -10,7 +10,7 @@ export const buttonVariants = cva(
     'items-center',
     'justify-center',
     'whitespace-nowrap',
-    'transition-colors',
+    'transition',
     'cursor-pointer',
     'focus-visible:outline-none',
     'focus-visible:ring-4',
@@ -84,13 +84,14 @@ export interface ButtonProps
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ asChild, variant, size, className, ...props }, ref) => {
+  ({ asChild, type = 'button', variant, size, className, ...props }, ref) => {
     const Component = asChild ? Slot : 'button';
 
     return (
       <Component
         {...props}
         ref={ref}
+        type={type}
         className={cn(buttonVariants({ variant, size, className }))}
       />
     );
