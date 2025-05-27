@@ -1,0 +1,21 @@
+import React from 'react';
+import { forwardRef } from 'react';
+import { DialogTitle, DialogTitleProps } from '@radix-ui/react-dialog';
+import { Slot } from '@radix-ui/react-slot';
+
+export type ModelTitleProps = DialogTitleProps;
+
+const ModelTitle = forwardRef<HTMLHeadingElement, ModelTitleProps>(
+  ({ asChild, ...props }, ref) => {
+    const Component = asChild ? Slot : 'h5';
+
+    return (
+      <DialogTitle asChild>
+        <Component {...props} ref={ref} />
+      </DialogTitle>
+    );
+  },
+);
+ModelTitle.displayName = 'ModelTitle';
+
+export default ModelTitle;

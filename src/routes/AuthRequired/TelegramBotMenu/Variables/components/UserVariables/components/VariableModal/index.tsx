@@ -1,4 +1,4 @@
-import React, { memo, ReactElement, useEffect } from 'react';
+import React, { memo, ReactElement, useEffect, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
 
@@ -8,8 +8,7 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 import Button from 'components/ui/Button';
 import FormInputFeedback from 'components/shared/FormInputFeedback';
 import FormTelegramQuillEditorFeedback from 'components/FormTelegramQuillEditorFeedback';
-import Modal from 'components/Modal';
-import Stack from 'components/ui/Stack';
+import Modal from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { VariableAPI, VariablesAPI } from 'api/telegram_bots/main';
@@ -29,6 +28,8 @@ function InnerVariableModal(): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
     keyPrefix: 'user.variableModal',
   });
+
+  const formId = useId();
 
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
@@ -63,7 +64,7 @@ function InnerVariableModal(): ReactElement {
     }
   }, [variableID]);
 
-  function handleExited(): void {
+  function handleHidden(): void {
     resetForm();
   }
 
@@ -72,32 +73,30 @@ function InnerVariableModal(): ReactElement {
       show={show}
       loading={isSubmitting || loading}
       onHide={hideModal}
-      onExited={handleExited}
+      onHidden={handleHidden}
     >
-      <Form>
-        <Modal.Header closeButton>
-          <Modal.Title>{t('title', { context: type })}</Modal.Title>
-        </Modal.Header>
-        <Stack asChild className='gap-2'>
-          <Modal.Body>
-            <FormInputFeedback name='name' placeholder={t('nameInput.placeholder')} />
-            <FormTelegramQuillEditorFeedback
-              height={220}
-              name='value'
-              placeholder={t('valueInput.placeholder')}
-            />
-            <FormInputFeedback
-              name='description'
-              placeholder={t('descriptionInput.placeholder')}
-            />
-          </Modal.Body>
-        </Stack>
-        <Modal.Footer>
-          <Button variant='success' type='submit'>
-            {t('actionButton', { context: type })}
-          </Button>
-        </Modal.Footer>
-      </Form>
+      <Modal.Header closeButton>
+        <Modal.Title>{t('title', { context: type })}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body asChild>
+        <Form id={formId} className='flex flex-col gap-2'>
+          <FormInputFeedback name='name' placeholder={t('nameInput.placeholder')} />
+          <FormTelegramQuillEditorFeedback
+            height={220}
+            name='value'
+            placeholder={t('valueInput.placeholder')}
+          />
+          <FormInputFeedback
+            name='description'
+            placeholder={t('descriptionInput.placeholder')}
+          />
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button type='submit' form={formId} variant='success' className='w-full'>
+          {t('actionButton', { context: type })}
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 }

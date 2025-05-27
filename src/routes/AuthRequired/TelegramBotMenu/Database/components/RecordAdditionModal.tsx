@@ -8,7 +8,7 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 
 import Button from 'components/ui/Button';
 import FormMonacoEditorFeedback from 'components/FormMonacoEditorFeedback';
-import Modal, { ModalProps } from 'components/Modal';
+import Modal, { ModalProps } from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useDatabaseRecordsStore from '../hooks/useDatabaseRecordsStore';
@@ -20,7 +20,7 @@ interface FormValues {
 }
 
 export interface RecordAdditionModalProps
-  extends Omit<ModalProps, 'loading' | 'children' | 'onExited'> {
+  extends Omit<ModalProps, 'loading' | 'children' | 'onHidden'> {
   show: NonNullable<ModalProps['show']>;
   onHide: NonNullable<ModalProps['onHide']>;
 }
@@ -103,7 +103,7 @@ function RecordAdditionModal({
           {...props}
           loading={isSubmitting}
           onHide={onHide}
-          onExited={() => resetForm()}
+          onHidden={() => resetForm()}
         >
           <Form>
             <Modal.Header closeButton>
