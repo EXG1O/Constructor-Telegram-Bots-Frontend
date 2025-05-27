@@ -21,7 +21,6 @@ export const checkVariants = cva(
     'select-none',
     'cursor-pointer',
     'appearance-none',
-    'transition-shadow',
     'focus:outline-none',
     'focus:ring-4',
     'checked:bg-primary',
@@ -32,14 +31,14 @@ export const checkVariants = cva(
   {
     variants: {
       type: {
-        checkbox: ['checkbox', 'w-4', 'rounded-sm', '-ml-6'],
+        checkbox: ['checkbox', 'w-4', 'rounded-sm', '-ml-6', 'transition'],
         switch: [
           'switch',
           'w-8',
           'bg-left',
           'rounded-4xl',
           '-ml-10',
-          'transition-[background-position]',
+          'transition-[background-position,box-shadow]',
           'checked:bg-right',
         ],
       },
