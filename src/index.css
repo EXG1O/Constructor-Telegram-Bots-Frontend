@@ -29,20 +29,35 @@
   --color-foreground: #191f2f;
 
   --color-light: #f7f9fb;
+  --color-light-accent: #e9ebed;
   --color-light-foreground: var(--color-foreground);
+
   --color-dark: #1e2337;
+  --color-dark-accent: #404455;
   --color-dark-foreground: var(--color-white);
+
   --color-secondary: var(--color-gray-600);
+  --color-secondary-accent: #5c636a;
   --color-secondary-foreground: var(--color-white);
+
   --color-primary: #0098ea;
+  --color-primary-accent: #0081c7;
   --color-primary-foreground: var(--color-white);
+
   --color-info: #0dcaf0;
+  --color-info-accent: #31d2f2;
   --color-info-foreground: var(--color-foreground);
+
   --color-warning: #ffc107;
+  --color-warning-accent: #ffca2c;
   --color-warning-foreground: var(--color-foreground);
+
   --color-danger: #e34b3b;
+  --color-danger-accent: #c14032;
   --color-danger-foreground: var(--color-white);
+
   --color-success: #00a84e;
+  --color-success-accent: #008f42;
   --color-success-foreground: var(--color-white);
 
   --color-muted: color-mix(in oklab, var(--color-foreground) 75%, transparent);
