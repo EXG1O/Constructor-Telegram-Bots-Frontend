@@ -2,6 +2,8 @@ import React, { FC, ReactElement, SVGProps, useEffect, useRef } from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
 import { AnimationLifecycles, HTMLMotionProps, motion, Variants } from 'framer-motion';
 
+import CloseButton from 'components/shared/CloseButton';
+
 import SuccessIcon from 'assets/icons/check-circle-fill.svg';
 import ErrorIcon from 'assets/icons/exclamation-triangle-fill.svg';
 import InfoIcon from 'assets/icons/info-circle-fill.svg';
@@ -108,7 +110,7 @@ function MessageToast({
       <strong className='flex-auto wrap-break-word [word-break:break-word]'>
         {message}
       </strong>
-      {/* FIXME: Need to add a close button. */}
+      <CloseButton />
     </motion.div>
   );
 }

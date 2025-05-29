@@ -2,6 +2,8 @@ import React, { forwardRef, HTMLAttributes } from 'react';
 import { Close } from '@radix-ui/react-dialog';
 import { Slot } from '@radix-ui/react-slot';
 
+import CloseButton from 'components/shared/CloseButton';
+
 import cn from 'utils/cn';
 
 export interface ModalHeaderProps extends HTMLAttributes<HTMLDivElement> {
@@ -20,7 +22,11 @@ const ModalHeader = forwardRef<HTMLDivElement, ModalHeaderProps>(
         className={cn('flex', 'justify-between', className)}
       >
         {children}
-        {closeButton && <Close>{/* FIXME: Need to add a close button. */}</Close>}
+        {closeButton && (
+          <Close asChild>
+            <CloseButton />
+          </Close>
+        )}
       </Component>
     );
   },
