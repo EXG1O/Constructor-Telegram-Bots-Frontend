@@ -79,7 +79,7 @@ export const buttonVariants = cva(
 
 export interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
-    Omit<VariantProps<typeof buttonVariants>, 'disabled'> {
+    VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
