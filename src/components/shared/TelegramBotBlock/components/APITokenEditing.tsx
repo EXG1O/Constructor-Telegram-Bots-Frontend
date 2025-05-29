@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { Check, X } from 'lucide-react';
 
 import InputFeedback, { InputFeedbackProps } from 'components/shared/InputFeedback';
+import IconButton from 'components/ui/IconButton';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -78,6 +79,10 @@ function APITokenEditing({
     setLoading(false);
   }
 
+  function handleCancelClick(): void {
+    onCancel();
+  }
+
   return (
     <div {...props} className={cn('flex', 'items-center', 'gap-2', className)}>
       {!loading ? (
@@ -92,14 +97,12 @@ function APITokenEditing({
             onChange={handleInputChange}
           />
           <div className='flex gap-0.5'>
-            <Check
-              className='size-5 cursor-pointer text-success'
-              onClick={handleSaveClick}
-            />
-            <X
-              className='size-5 cursor-pointer text-danger'
-              onClick={() => onCancel()}
-            />
+            <IconButton size='lg' className='text-success' onClick={handleSaveClick}>
+              <Check />
+            </IconButton>
+            <IconButton size='lg' className='text-danger' onClick={handleCancelClick}>
+              <X />
+            </IconButton>
           </div>
         </>
       ) : (

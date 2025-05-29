@@ -1,6 +1,8 @@
 import React, { HTMLAttributes, ReactElement, useMemo, useState } from 'react';
 import { Eye, EyeOff, SquarePen } from 'lucide-react';
 
+import IconButton from 'components/ui/IconButton';
+
 import useTelegramBot from '../hooks/useTelegramBot';
 
 import cn from 'utils/cn';
@@ -24,7 +26,11 @@ function APITokenDisplay({
     return id + ':' + '*'.repeat(token.length);
   }, [telegramBot.api_token]);
 
-  function handleShowIconClick(): void {
+  function handleEditClick(): void {
+    onEdit();
+  }
+
+  function handleShowClick(): void {
     setShow(!show);
   }
 
@@ -34,8 +40,12 @@ function APITokenDisplay({
     <div {...props} className={cn('flex', 'items-center', 'gap-2', className)}>
       <span className='flex-auto'>{show ? telegramBot.api_token : hiddenAPIToken}</span>
       <div className='flex gap-1'>
-        <SquarePen className='size-4.5 cursor-pointer' onClick={() => onEdit()} />
-        <ShowIcon className='size-4.5 cursor-pointer' onClick={handleShowIconClick} />
+        <IconButton onClick={handleEditClick}>
+          <SquarePen />
+        </IconButton>
+        <IconButton onClick={handleShowClick}>
+          <ShowIcon />
+        </IconButton>
       </div>
     </div>
   );

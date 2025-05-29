@@ -1,5 +1,4 @@
 import React, {
-  memo,
   ReactElement,
   TdHTMLAttributes,
   useCallback,
