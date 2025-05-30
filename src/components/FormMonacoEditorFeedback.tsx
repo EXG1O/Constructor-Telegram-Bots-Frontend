@@ -3,7 +3,7 @@ import { useField } from 'formik';
 
 import MonacoEditorFeedback, {
   MonacoEditorFeedbackProps,
-} from './MonacoEditorFeedback';
+} from 'components/shared/MonacoEditorFeedback';
 
 export interface FormMonacoEditorFeedbackProps extends MonacoEditorFeedbackProps {
   name: string;
