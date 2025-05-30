@@ -7,7 +7,7 @@ import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import Button from 'components/ui/Button';
-import FormMonacoEditorFeedback from 'components/FormMonacoEditorFeedback';
+import FormMonacoEditorFeedback from 'components/shared/FormMonacoEditorFeedback';
 import Modal, { ModalProps } from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
 

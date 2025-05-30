@@ -17,7 +17,7 @@ import Collapse from 'react-bootstrap/Collapse';
 import Button, { ButtonProps } from 'components/ui/Button';
 import FormMonacoEditorFeedback, {
   FormMonacoEditorFeedbackProps,
-} from 'components/FormMonacoEditorFeedback';
+} from 'components/shared/FormMonacoEditorFeedback';
 import { Editor } from 'components/ui/MonacoEditor';
 
 import BlockCollapse from './components/BlockCollapse';

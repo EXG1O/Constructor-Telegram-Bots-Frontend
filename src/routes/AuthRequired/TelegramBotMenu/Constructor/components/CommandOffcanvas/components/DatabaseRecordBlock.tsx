@@ -4,7 +4,7 @@ import monaco from 'monaco-editor';
 
 import { RouteID } from 'routes';
 
-import FormMonacoEditorFeedback from 'components/FormMonacoEditorFeedback';
+import FormMonacoEditorFeedback from 'components/shared/FormMonacoEditorFeedback';
 
 import Block, { BlockProps } from '../../Block';
 import VariablesInfoText from '../../VariablesInfoText';
