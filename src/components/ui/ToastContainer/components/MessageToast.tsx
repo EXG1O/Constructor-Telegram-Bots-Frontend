@@ -1,6 +1,6 @@
-import React, { FC, ReactElement, SVGProps, useEffect, useRef } from 'react';
+import React, { FC, LiHTMLAttributes, ReactElement, SVGProps, useState } from 'react';
+import { Toast, ToastClose, ToastDescription } from '@radix-ui/react-toast';
 import { cva, VariantProps } from 'class-variance-authority';
-import { AnimationLifecycles, HTMLMotionProps, motion, Variants } from 'framer-motion';
 
 import CloseButton from 'components/shared/CloseButton';
 
@@ -13,7 +13,26 @@ import cn from 'utils/cn';
 import { useToastContainerStore } from '../store';
 
 export const messageToastVariants = cva(
-  ['flex', 'w-90', 'items-center', 'text-sm', 'rounded-md', 'gap-3', 'p-3'],
+  [
+    'flex',
+    'w-auto',
+    'max-w-[360px]',
+    'items-center',
+    'rounded-md',
+    'gap-3',
+    'p-3',
+    'transition-transform',
+    'data-[state=open]:animate-in',
+    'data-[state=open]:slide-in-from-right',
+    'data-[state=closed]:animate-out',
+    'data-[state=closed]:fade-out-65',
+    'data-[state=closed]:slide-out-to-right',
+    'data-[swipe=end]:animate-out',
+    'data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)]',
+    'data-[swipe=move]:transition-none',
+    'data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)]',
+    'data-[swipe=cancel]:translate-x-0',
+  ],
   {
     variants: {
       level: {
@@ -29,23 +48,14 @@ export const messageToastVariants = cva(
 );
 
 export interface MessageToastProps
-  extends Omit<
-      HTMLMotionProps<'div'>,
-      'id' | 'initial' | 'animate' | 'exit' | 'children'
-    >,
-    AnimationLifecycles,
-    Omit<VariantProps<typeof messageToastVariants>, 'show'> {
+  extends Omit<LiHTMLAttributes<HTMLLIElement>, 'id' | 'children' | 'onPause'>,
+    VariantProps<typeof messageToastVariants> {
   id: string;
   timeout?: number;
   message: string;
   onShow?: () => void;
   onClose?: () => void;
 }
-
-const animationVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-};
 
 const iconMap: Record<
   NonNullable<MessageToastProps['level']>,
@@ -64,54 +74,51 @@ function MessageToast({
   className,
   onShow,
   onClose,
+  onAnimationEnd,
   ...props
 }: MessageToastProps): ReactElement {
   level ??= 'info';
 
-  const timeoutId = useRef<NodeJS.Timeout | null>(null);
+  const [show, setShow] = useState(true);
 
-  useEffect(() => {
-    handleShow();
-    return clearTimer;
-  }, []);
+  function handleOpenChange(open: boolean): void {
+    setShow(open);
+    (open ? onShow : onClose)?.();
+  }
 
-  function clearTimer(): void {
-    if (timeoutId.current) {
-      clearTimeout(timeoutId.current);
-      timeoutId.current = null;
+  function handleAnimationEnd(event: React.AnimationEvent<HTMLLIElement>): void {
+    onAnimationEnd?.(event);
+
+    const state = event.currentTarget.dataset.state as 'open' | 'closed' | undefined;
+
+    if (state === 'closed') {
+      useToastContainerStore.setState((state) => {
+        state.toasts = state.toasts.filter((toast) => toast.props.id !== id);
+      });
     }
-  }
-
-  function handleShow(): void {
-    onShow?.();
-    timeoutId.current = setTimeout(handleClose, timeout);
-  }
-
-  function handleClose(): void {
-    onClose?.();
-    clearTimer();
-    useToastContainerStore.setState((state) => {
-      state.toasts = state.toasts.filter((toast) => toast.props.id !== id);
-    });
   }
 
   const Icon: FC<SVGProps<SVGSVGElement>> = iconMap[level];
 
   return (
-    <motion.div
+    <Toast
       {...props}
-      variants={animationVariants}
-      initial='hidden'
-      animate='visible'
-      exit='hidden'
+      open={show}
+      duration={timeout}
       className={cn(messageToastVariants({ level, className }))}
+      onOpenChange={handleOpenChange}
+      onAnimationEnd={handleAnimationEnd}
     >
       <Icon className='size-4' />
-      <strong className='flex-auto wrap-break-word [word-break:break-word]'>
-        {message}
-      </strong>
-      <CloseButton onClick={handleClose} />
-    </motion.div>
+      <ToastDescription asChild>
+        <strong className='flex-auto text-sm wrap-break-word [word-break:break-word]'>
+          {message}
+        </strong>
+      </ToastDescription>
+      <ToastClose asChild>
+        <CloseButton />
+      </ToastClose>
+    </Toast>
   );
 }
 

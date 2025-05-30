@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { ToastProvider, ToastViewport } from '@radix-ui/react-toast';
 
 import { useToastContainerStore } from './store';
 
@@ -9,9 +9,15 @@ function ToastContainer(): ReactElement {
   const toasts = useToastContainerStore((state) => state.toasts);
 
   return (
-    <div className='fixed right-0 bottom-0 flex flex-col gap-2 p-2'>
-      <AnimatePresence>{toasts}</AnimatePresence>
-    </div>
+    <ToastProvider swipeDirection='right' swipeThreshold={75}>
+      <ToastViewport
+        hotkey={[]}
+        label='Notifications'
+        className='fixed right-0 bottom-0 z-1100 flex flex-col gap-2 p-2'
+      >
+        {toasts}
+      </ToastViewport>
+    </ToastProvider>
   );
 }
 
