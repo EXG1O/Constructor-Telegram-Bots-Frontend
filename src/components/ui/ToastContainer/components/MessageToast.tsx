@@ -110,7 +110,7 @@ function MessageToast({
       <strong className='flex-auto wrap-break-word [word-break:break-word]'>
         {message}
       </strong>
-      <CloseButton />
+      <CloseButton onClick={handleClose} />
     </motion.div>
   );
 }
