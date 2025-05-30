@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { HTMLAttributes } from 'react';
 import { forwardRef } from 'react';
 import {
   Dialog,
   DialogContent,
-  DialogContentProps,
   DialogOverlay,
   DialogPortal,
 } from '@radix-ui/react-dialog';
@@ -18,52 +17,48 @@ import ModalContext, { ModalContextProps } from './contexts/ModalContext';
 
 import cn from 'utils/cn';
 
-export interface ModalProps extends DialogContentProps, Partial<ModalContextProps> {
+export interface ModalProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'aria-describedby'>,
+    Partial<ModalContextProps> {
   show?: boolean;
   onShow?: () => void;
+  onShowed?: () => void;
   onHide?: () => void;
   onHidden?: () => void;
 }
 
 const Modal = forwardRef<HTMLDivElement, ModalProps>(
   (
-    { show = false, loading, className, children, onShow, onHide, onHidden, ...props },
+    {
+      show,
+      loading,
+      className,
+      children,
+      onShow,
+      onShowed,
+      onHide,
+      onHidden,
+      onAnimationEnd,
+      ...props
+    },
     ref,
   ) => {
-    const [open, setOpen] = useState<boolean>(show);
-    const [close, setClose] = useState<boolean>(!open);
-
-    const prevOpenStateRef = useRef<boolean>(!open);
-
-    useEffect(() => setOpen(show), [show]);
-    useEffect(() => {
-      prevOpenStateRef.current = !open;
-      const prevOpenState = prevOpenStateRef.current;
-
-      if (open && !prevOpenState) {
-        setClose(false);
-        onShow?.();
-      }
-
-      if (!open && prevOpenState) {
-        onHide?.();
-
-        const timeoutId: NodeJS.Timeout = setTimeout(handleHidden, 300);
-        return () => clearTimeout(timeoutId);
-      }
-    }, [open]);
-
-    function handleHidden(): void {
-      onHidden?.();
-      setClose(true);
+    function handleOpenChange(open: boolean): void {
+      (open ? onShow : onHide)?.();
     }
 
-    function handleOpenChange(newOpen: boolean): void {
-      setOpen(newOpen);
+    function handleAnimationEnd(event: React.AnimationEvent<HTMLDivElement>): void {
+      onAnimationEnd?.(event);
+
+      const state = event.currentTarget.dataset.state as 'open' | 'closed' | undefined;
+
+      if (state) {
+        (state === 'open' ? onShowed : onHidden)?.();
+      }
     }
 
     return (
-      <Dialog open={open && !close} onOpenChange={handleOpenChange}>
+      <Dialog open={show} onOpenChange={handleOpenChange}>
         <DialogPortal>
           <DialogOverlay
             className={cn(
@@ -72,6 +67,7 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(
               'bg-black/50',
               'overflow-x-hidden',
               'overflow-y-auto',
+              'duration-300',
               'data-[state=open]:animate-in',
               'data-[state=closed]:animate-out',
               'data-[state=open]:fade-in',
@@ -103,6 +99,7 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(
                 'data-[state=closed]:slide-out-to-top-5',
                 className,
               )}
+              onAnimationEnd={handleAnimationEnd}
             >
               <ModalContext.Provider value={{ loading: Boolean(loading) }}>
                 {children}
