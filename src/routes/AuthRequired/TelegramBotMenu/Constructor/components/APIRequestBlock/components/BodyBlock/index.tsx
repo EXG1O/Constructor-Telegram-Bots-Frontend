@@ -18,7 +18,7 @@ import Button, { ButtonProps } from 'components/ui/Button';
 import FormMonacoEditorFeedback, {
   FormMonacoEditorFeedbackProps,
 } from 'components/FormMonacoEditorFeedback';
-import { Editor } from 'components/MonacoEditor';
+import { Editor } from 'components/ui/MonacoEditor';
 
 import BlockCollapse from './components/BlockCollapse';
 

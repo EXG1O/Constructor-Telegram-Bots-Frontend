@@ -16,7 +16,7 @@ import ListGroupItem, { ListGroupItemProps } from 'react-bootstrap/ListGroupItem
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import Button from 'components/ui/Button';
 import Spinner from 'components/ui/Spinner';
-import MonacoEditor, { MonacoEditorProps } from 'components/MonacoEditor';
+import MonacoEditor, { MonacoEditorProps } from 'components/ui/MonacoEditor';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import ConfirmButtonGroup, {
