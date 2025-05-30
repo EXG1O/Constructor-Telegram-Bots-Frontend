@@ -11,7 +11,7 @@ export const inputVariants = cva(
     'w-full',
     'bg-background',
     'text-foreground',
-    'border-1',
+    'border',
     'appearance-none',
     'bg-clip-padding',
     'transition',
