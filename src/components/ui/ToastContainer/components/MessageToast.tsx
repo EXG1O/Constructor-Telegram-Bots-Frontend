@@ -21,6 +21,7 @@ export const messageToastVariants = cva(
     'rounded-md',
     'gap-3',
     'p-3',
+    'outline-none',
     'transition-transform',
     'data-[state=open]:animate-in',
     'data-[state=open]:slide-in-from-right',

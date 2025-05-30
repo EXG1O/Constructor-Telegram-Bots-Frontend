@@ -13,7 +13,7 @@ function ToastContainer(): ReactElement {
       <ToastViewport
         hotkey={[]}
         label='Notifications'
-        className='fixed right-0 bottom-0 z-1100 flex flex-col gap-2 p-2'
+        className='fixed right-0 bottom-0 z-1100 flex flex-col gap-2 p-2 outline-none'
       >
         {toasts}
       </ToastViewport>
