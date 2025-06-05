@@ -16,6 +16,7 @@ import ModalTitle from './components/ModalTitle';
 import ModalContext, { ModalContextProps } from './contexts/ModalContext';
 
 import cn from 'utils/cn';
+import Z_INDEX from 'tokens/z-index';
 
 export interface ModalProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'aria-describedby'>,
@@ -64,6 +65,7 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(
             className={cn(
               'fixed',
               'inset-0',
+              Z_INDEX.MODAL,
               'bg-black/50',
               'overflow-x-hidden',
               'overflow-y-auto',

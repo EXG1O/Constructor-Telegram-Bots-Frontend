@@ -6,12 +6,13 @@ import {
   PopoverPortal,
 } from '@radix-ui/react-popover';
 import { cva, VariantProps } from 'class-variance-authority';
+import Z_INDEX from 'tokens/z-index';
 
 import cn from 'utils/cn';
 
 export const popoverBodyVariants = cva(
   [
-    'z-1100',
+    Z_INDEX.POPOVER,
     'bg-background',
     'text-foreground',
     'border',
