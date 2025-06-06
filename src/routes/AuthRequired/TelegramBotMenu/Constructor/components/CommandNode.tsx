@@ -5,8 +5,6 @@ import { Handle, NodeProps as RFNodeProps, Position, useStore } from 'reactflow'
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import './CommandNode.scss';
-
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -17,6 +15,9 @@ import Link45DegIcon from 'assets/icons/link-45deg.svg';
 
 import { CommandAPI } from 'api/telegram_bots/main';
 import { DiagramBlock, DiagramCommand } from 'api/telegram_bots/types';
+import cn from 'utils/cn';
+import { richInputEditorInnerContentVariants } from 'components/ui/RichInput/components/RichInputEditor';
+import { telegramRichInputEditorInnerContentVariants } from 'components/shared/TelegramRichInputLayout';
 
 type Data = Omit<DiagramCommand, keyof DiagramBlock>;
 
@@ -92,7 +93,10 @@ function CommandNode({
         <Handle id={`${id}:right:0`} type='target' position={Position.Right} />
       </Node.Block>
       <Node.Block
-        className='message-text-block'
+        className={cn(
+          richInputEditorInnerContentVariants(),
+          telegramRichInputEditorInnerContentVariants(),
+        )}
         dangerouslySetInnerHTML={{ __html: command.message.text }}
       />
       {command.keyboard?.buttons && (

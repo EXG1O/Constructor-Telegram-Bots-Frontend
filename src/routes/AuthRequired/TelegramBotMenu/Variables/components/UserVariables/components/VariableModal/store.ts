@@ -21,6 +21,7 @@ export type InitialState = Omit<StateParams, 'onAdd' | 'onSave'>;
 
 const initialState: InitialState = {
   variableID: null,
+
   type: 'add',
   show: false,
   loading: false,

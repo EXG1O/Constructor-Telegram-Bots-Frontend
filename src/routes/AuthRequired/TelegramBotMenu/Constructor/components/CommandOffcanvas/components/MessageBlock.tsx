@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import FormTelegramQuillEditorFeedback from 'components/FormTelegramQuillEditorFeedback';
-
 import Block, { BlockProps } from '../../Block';
 import VariablesInfoText from '../../VariablesInfoText';
+import TelegramRichInputLayout, { FORMATS } from 'components/shared/TelegramRichInputLayout';
+import FormRichInputFeedback from 'components/shared/FormRichInputFeedback';
 
 export interface Message {
   text: string;
@@ -23,11 +23,14 @@ function MessageBlock(props: MessageBlockProps): ReactElement<MessageBlockProps>
 
   return (
     <Block {...props} title={t('title')} body>
-      <FormTelegramQuillEditorFeedback
-        height={220}
+      <FormRichInputFeedback
         name='message.text'
+        height='220px'
+        formats={FORMATS}
         placeholder={t('messageEditorPlaceholder')}
-      />
+      >
+        <TelegramRichInputLayout />
+      </FormRichInputFeedback>
       <VariablesInfoText />
     </Block>
   );
