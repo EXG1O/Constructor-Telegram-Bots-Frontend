@@ -6,6 +6,7 @@ export interface StateParams {
   toolbarElement: HTMLDivElement | null;
   editorElement: HTMLDivElement | null;
 
+  height?: string;
   size: 'sm' | 'md' | 'lg';
   invalid: boolean;
 
@@ -28,7 +29,10 @@ export interface StateActions {
 
 export type State = StateParams & StateActions;
 export type StateProps = Partial<Pick<StateParams, 'size' | 'invalid'>> &
-  Pick<StateParams, 'readOnly' | 'formats' | 'placeholder' | 'onMount' | 'onChange'>;
+  Pick<
+    StateParams,
+    'height' | 'readOnly' | 'formats' | 'placeholder' | 'onMount' | 'onChange'
+  >;
 export type DefaultState = Omit<StateParams, keyof StateProps>;
 
 export const defaultState: DefaultState = {

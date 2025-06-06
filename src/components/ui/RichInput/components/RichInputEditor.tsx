@@ -78,6 +78,8 @@ export const richInputEditorInnerContentVariants = cva(
 export const richInputEditorContentVariants = cva(
   [
     'outline-0',
+    'overflow-y-auto',
+    '[scrollbar-width:thin]',
     '[.ql-blank]:before:absolute',
     '[.ql-blank]:before:content-[attr(data-placeholder)]',
     '[.ql-blank]:before:text-muted',
@@ -108,18 +110,24 @@ const RichInputEditor = forwardRef<HTMLDivElement, RichInputEditorProps>(
 
     const setEditorElement = useRichInputStore((state) => state.setEditorElement);
 
+    const height = useRichInputStore((state) => state.height);
     const size = useRichInputStore((state) => state.size);
 
     const quill = useRichInputStore((state) => state.quill);
 
     useEffect(() => {
       if (!quill) return;
+
       quill.root.className = cn(
         quill.root.className,
         richInputEditorContentVariants({ size }),
         richInputEditorInnerContentVariants({ size }),
         contentClassName,
       );
+
+      if (height) {
+        quill.root.style.height = height;
+      }
     }, [quill, contentClassName]);
 
     function mergeRefs(element: HTMLDivElement | null): void {
