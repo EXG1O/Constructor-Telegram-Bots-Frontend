@@ -25,7 +25,7 @@ if (!settings.WEBPACK_SERVE) {
   loader.config({ monaco: monacoCore });
 }
 
-export const monacoEditorVariants = cva(
+export const codeInputVariants = cva(
   [
     'flex',
     'flex-col',
@@ -62,7 +62,7 @@ export interface Editor extends monacoCore.editor.IStandaloneCodeEditor {
   updateLayout: (shouldResetWidth?: boolean) => void;
 }
 
-export interface MonacoEditorProps
+export interface CodeInputProps
   extends Pick<
       EditorProps,
       | 'defaultValue'
@@ -77,12 +77,12 @@ export interface MonacoEditorProps
       | 'onValidate'
     >,
     Omit<HTMLAttributes<HTMLElement>, 'defaultValue' | 'width' | 'height' | 'onChange'>,
-    VariantProps<typeof monacoEditorVariants> {
+    VariantProps<typeof codeInputVariants> {
   onMount?: (editor: Editor, monaco: Monaco) => void;
   onChange?: (editor: Editor, value: string) => void;
 }
 
-type Size = NonNullable<MonacoEditorProps['size']>;
+type Size = NonNullable<CodeInputProps['size']>;
 
 const LINE_HEIGHT_MAP: Record<Size, number> = { sm: 19, md: 22, lg: 22 };
 const FONT_SIZE_MAP: Record<Size, number> = { sm: 14, md: 16, lg: 18 };
@@ -98,7 +98,7 @@ export const DEFAULT_OPTIONS: monacoCore.editor.IStandaloneEditorConstructionOpt
   contextmenu: false,
 };
 
-function MonacoEditor({
+function CodeInput({
   defaultValue,
   defaultLanguage,
   value,
@@ -115,7 +115,7 @@ function MonacoEditor({
   onChange,
   onValidate,
   ...props
-}: MonacoEditorProps): ReactElement {
+}: CodeInputProps): ReactElement {
   size ??= 'md';
 
   const editorRef = useRef<Editor | null>(null);
@@ -138,8 +138,7 @@ function MonacoEditor({
     editor.layout({
       width: resetWidth
         ? 0
-        : editor.getContainerDomNode().querySelector('.monaco-editor')!
-            .clientWidth,
+        : editor.getContainerDomNode().querySelector('.monaco-editor')!.clientWidth,
       height: editorModel.getLineCount() * lineHeight,
     });
   }, []);
@@ -178,7 +177,7 @@ function MonacoEditor({
       options={options}
       wrapperProps={{
         ...props,
-        className: cn(monacoEditorVariants({ size, invalid, className })),
+        className: cn(codeInputVariants({ size, invalid, className })),
       }}
       beforeMount={beforeMount}
       onChange={handleChange}
@@ -188,4 +187,4 @@ function MonacoEditor({
   );
 }
 
-export default MonacoEditor;
+export default CodeInput;

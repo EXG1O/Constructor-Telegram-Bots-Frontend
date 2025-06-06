@@ -15,10 +15,10 @@ import { RouteID } from 'routes';
 import Collapse from 'react-bootstrap/Collapse';
 
 import Button, { ButtonProps } from 'components/ui/Button';
-import FormMonacoEditorFeedback, {
-  FormMonacoEditorFeedbackProps,
-} from 'components/shared/FormMonacoEditorFeedback';
-import { Editor } from 'components/ui/MonacoEditor';
+import FormCodeInputFeedback, {
+  FormCodeInputFeedbackProps,
+} from 'components/shared/FormCodeInputFeedback';
+import { Editor } from 'components/ui/CodeInput';
 
 import BlockCollapse from './components/BlockCollapse';
 
@@ -28,7 +28,7 @@ export type Body = string;
 
 export type BodyBlockProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
 
-type EditorMountHandler = NonNullable<FormMonacoEditorFeedbackProps['onMount']>;
+type EditorMountHandler = NonNullable<FormCodeInputFeedbackProps['onMount']>;
 
 export const defaultBody: Body = JSON.stringify({ key: 'value' }, undefined, 4);
 
@@ -93,7 +93,7 @@ function BodyBlock(props: BodyBlockProps): ReactElement<BodyBlockProps> {
         />
         <Collapse in={show} onEnter={handleCollapseEnter}>
           <div>
-            <FormMonacoEditorFeedback
+            <FormCodeInputFeedback
               size='sm'
               language='json'
               name='api_request.body'

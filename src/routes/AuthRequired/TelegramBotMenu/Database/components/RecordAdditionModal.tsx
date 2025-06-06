@@ -7,7 +7,7 @@ import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import Button from 'components/ui/Button';
-import FormMonacoEditorFeedback from 'components/shared/FormMonacoEditorFeedback';
+import FormCodeInputFeedback from 'components/shared/FormCodeInputFeedback';
 import Modal, { ModalProps } from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -110,7 +110,7 @@ function RecordAdditionModal({
               <Modal.Title>{t('title')}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <FormMonacoEditorFeedback
+              <FormCodeInputFeedback
                 language='json'
                 name='data'
                 options={monacoOptions}

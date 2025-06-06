@@ -1,32 +1,29 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
 
+import CodeInput, { CodeInputProps, codeInputVariants } from 'components/ui/CodeInput';
 import Feedback from 'components/ui/Feedback';
-import MonacoEditor, {
-  MonacoEditorProps,
-  monacoEditorVariants,
-} from 'components/ui/MonacoEditor';
 
 import cn from 'utils/cn';
 
-export { monacoEditorVariants as monacoEditorFeedbackVariants };
+export { codeInputVariants as codeInputFeedbackVariants };
 
-export interface MonacoEditorFeedbackProps extends MonacoEditorProps {
+export interface CodeInputFeedbackProps extends CodeInputProps {
   error?: string;
   wrapperProps?: HTMLAttributes<HTMLDivElement>;
 }
 
-function MonacoEditorFeedback({
+function CodeInputFeedback({
   error,
   wrapperProps,
   className,
   ...props
-}: MonacoEditorFeedbackProps): ReactElement {
+}: CodeInputFeedbackProps): ReactElement {
   return (
     <div {...wrapperProps} className={cn('w-full', wrapperProps?.className)}>
-      <MonacoEditor {...props} invalid={Boolean(error)} />
+      <CodeInput {...props} invalid={Boolean(error)} />
       {error && <Feedback type='invalid'>{error}</Feedback>}
     </div>
   );
 }
 
-export default MonacoEditorFeedback;
+export default CodeInputFeedback;

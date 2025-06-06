@@ -16,7 +16,7 @@ import ListGroupItem, { ListGroupItemProps } from 'react-bootstrap/ListGroupItem
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import Button from 'components/ui/Button';
 import Spinner from 'components/ui/Spinner';
-import MonacoEditor, { MonacoEditorProps } from 'components/ui/MonacoEditor';
+import CodeInput, { CodeInputProps } from 'components/ui/CodeInput';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import ConfirmButtonGroup, {
@@ -36,7 +36,7 @@ export interface RecordDisplayProps extends Omit<ListGroupItemProps, 'children'>
   record: DatabaseRecord;
 }
 
-const options: NonNullable<MonacoEditorProps['options']> = {
+const options: NonNullable<CodeInputProps['options']> = {
   glyphMargin: false,
   folding: false,
   lineNumbers: 'off',
@@ -46,7 +46,7 @@ const options: NonNullable<MonacoEditorProps['options']> = {
 
 const deleteButtonStyle: CSSProperties = { width: '25px', height: '25px' };
 
-type ChangeHandler = NonNullable<MonacoEditorProps['onChange']>;
+type ChangeHandler = NonNullable<CodeInputProps['onChange']>;
 type ConfirmHandler = NonNullable<ConfirmButtonGroupProps['onConfirm']>;
 type CancelHandler = NonNullable<ConfirmButtonGroupProps['onCancel']>;
 
@@ -169,7 +169,7 @@ function RecordDisplay({
 
   return !loading ? (
     <ListGroupItem {...props} className={classNames(className, 'd-flex gap-3')}>
-      <MonacoEditor
+      <CodeInput
         size='sm'
         value={value}
         language='json'

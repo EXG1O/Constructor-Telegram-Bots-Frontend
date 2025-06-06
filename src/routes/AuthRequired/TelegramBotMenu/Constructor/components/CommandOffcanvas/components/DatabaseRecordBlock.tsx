@@ -4,7 +4,7 @@ import monaco from 'monaco-editor';
 
 import { RouteID } from 'routes';
 
-import FormMonacoEditorFeedback from 'components/shared/FormMonacoEditorFeedback';
+import FormCodeInputFeedback from 'components/shared/FormCodeInputFeedback';
 
 import Block, { BlockProps } from '../../Block';
 import VariablesInfoText from '../../VariablesInfoText';
@@ -37,7 +37,7 @@ function DatabaseRecordBlock(
   return (
     <Block.Collapse name='show_database_block'>
       <Block {...props} title={t('title')} body>
-        <FormMonacoEditorFeedback
+        <FormCodeInputFeedback
           language='json'
           name='database_record.data'
           options={monacoOptions}
