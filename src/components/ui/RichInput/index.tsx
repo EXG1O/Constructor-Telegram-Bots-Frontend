@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 
 import RichInputContainer from './components/RichInputContainer';
 import RichInputEditor from './components/RichInputEditor';
@@ -18,36 +18,40 @@ export const DEFAULT_FORMATS: string[] = [
   'blockquote',
 ];
 
-export interface RichInputProps extends Omit<RichInputStoreProviderProps, 'children'> {}
+export interface RichInputProps extends Omit<RichInputStoreProviderProps, 'children'> {
+  children?: ReactNode;
+}
 
 function RichInput({
   formats = DEFAULT_FORMATS,
+  children,
   ...props
 }: RichInputProps): ReactElement {
   return (
     <RichInputStoreProvider {...props} formats={formats}>
-      <RichInputContainer>
-        <RichInputToolbar>
-          <RichInputToolbar.Group>
-            <RichInputToolbar.Button format='bold' />
-            <RichInputToolbar.Button format='italic' />
-            <RichInputToolbar.Button format='underline' />
-            <RichInputToolbar.Button format='strike' />
-            <RichInputToolbar.LinkButton />
-            <RichInputToolbar.Button format='code' />
-            <RichInputToolbar.Button format='code-block' />
-            <RichInputToolbar.Button format='blockquote' />
-            <RichInputToolbar.Button format='clean' />
-          </RichInputToolbar.Group>
-        </RichInputToolbar>
-        <RichInputEditor />
-      </RichInputContainer>
+      {children || (
+        <RichInputContainer>
+          <RichInputToolbar>
+            <RichInputToolbar.Group>
+              <RichInputToolbar.Button format='bold' />
+              <RichInputToolbar.Button format='italic' />
+              <RichInputToolbar.Button format='underline' />
+              <RichInputToolbar.Button format='strike' />
+              <RichInputToolbar.LinkButton />
+              <RichInputToolbar.Button format='code' />
+              <RichInputToolbar.Button format='code-block' />
+              <RichInputToolbar.Button format='blockquote' />
+              <RichInputToolbar.Button format='clean' />
+            </RichInputToolbar.Group>
+          </RichInputToolbar>
+          <RichInputEditor />
+        </RichInputContainer>
+      )}
     </RichInputStoreProvider>
   );
 }
 
 export default Object.assign(RichInput, {
-  StoreProvider: RichInputStoreProvider,
   Container: RichInputContainer,
   Toolbar: RichInputToolbar,
   Editor: RichInputEditor,
