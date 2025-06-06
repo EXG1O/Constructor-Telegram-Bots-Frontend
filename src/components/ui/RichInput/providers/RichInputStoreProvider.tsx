@@ -1,6 +1,4 @@
 import React, { ReactElement, ReactNode, useEffect, useMemo, useRef } from 'react';
-import isEqual from 'lodash/isEqual';
-import { Delta } from 'quill';
 import { useStore } from 'zustand';
 
 import StoreContext from '../contexts/RichInputStoreContext';
@@ -8,7 +6,6 @@ import StoreContext from '../contexts/RichInputStoreContext';
 import { createStore, StateProps } from '../store';
 
 export interface RichInputStoreProviderProps extends StateProps {
-  value?: Delta;
   children: ReactNode;
 }
 
@@ -32,6 +29,7 @@ function RichInputStoreProvider({
   const quill = useStore(store, (state) => state.quill);
   const initQuill = useStore(store, (state) => state.initQuill);
   const setReadOnly = useStore(store, (state) => state.setReadOnly);
+  const setValue = useStore(store, (state) => state.setValue);
   const setPlaceholder = useStore(store, (state) => state.setPlaceholder);
 
   useEffect(() => {
@@ -51,8 +49,8 @@ function RichInputStoreProvider({
     setPlaceholder(placeholder ?? '');
   }, [placeholder]);
   useEffect(() => {
-    if (!value || !quill || isEqual(value.ops, quill.getContents().ops)) return;
-    quill.setContents(value);
+    if (!value || !quill || value === quill.getSemanticHTML()) return;
+    setValue(value);
   }, [quill, value]);
 
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;

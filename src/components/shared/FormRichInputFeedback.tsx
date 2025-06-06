@@ -18,7 +18,7 @@ function FormRichInputFeedback({
 }: FormRichInputFeedbackProps): ReactElement {
   const [field, meta, { setValue }] = useField<(typeof props)['value']>(name);
 
-  function handleChange(value: Delta): void {
+  function handleChange(value: string): void {
     setValue(value);
     onChange?.(value);
   }

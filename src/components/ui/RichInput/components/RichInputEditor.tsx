@@ -9,6 +9,7 @@ import cn from 'utils/cn';
 export const richInputEditorInnerContentVariants = cva(
   [
     'text-foreground',
+    'whitespace-pre-wrap',
     '*:first:mt-0',
     '*:last:mb-0',
     '[&_a]:text-primary',
@@ -114,6 +115,7 @@ const RichInputEditor = forwardRef<HTMLDivElement, RichInputEditorProps>(
     const size = useRichInputStore((state) => state.size);
 
     const quill = useRichInputStore((state) => state.quill);
+    const value = useRichInputStore((state) => state.value);
 
     useEffect(() => {
       if (!quill) return;
@@ -144,7 +146,9 @@ const RichInputEditor = forwardRef<HTMLDivElement, RichInputEditorProps>(
         {...props}
         ref={mergeRefs}
         className={cn('block', 'relative', 'w-full', className)}
-      />
+      >
+        {!quill && value}
+      </Component>
     );
   },
 );

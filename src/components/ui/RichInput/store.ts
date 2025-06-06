@@ -1,5 +1,4 @@
-import isEqual from 'lodash/isEqual';
-import Quill, { Delta } from 'quill';
+import Quill from 'quill';
 import { create } from 'zustand';
 
 export interface StateParams {
@@ -13,9 +12,10 @@ export interface StateParams {
   quill: Quill | null;
   readOnly?: boolean;
   formats?: string[] | null;
+  value?: string;
   placeholder?: string;
   onMount?: (quill: Quill) => void;
-  onChange?: (value: Delta) => void;
+  onChange?: (value: string) => void;
 }
 
 export interface StateActions {
@@ -24,6 +24,7 @@ export interface StateActions {
 
   initQuill: () => void;
   setReadOnly: (readOnly: boolean) => void;
+  setValue: (value: string) => void;
   setPlaceholder: (placeholder: string) => void;
 }
 
@@ -31,7 +32,7 @@ export type State = StateParams & StateActions;
 export type StateProps = Partial<Pick<StateParams, 'size' | 'invalid'>> &
   Pick<
     StateParams,
-    'height' | 'readOnly' | 'formats' | 'placeholder' | 'onMount' | 'onChange'
+    'height' | 'readOnly' | 'formats' | 'value' | 'placeholder' | 'onMount' | 'onChange'
   >;
 export type DefaultState = Omit<StateParams, keyof StateProps>;
 
@@ -74,18 +75,15 @@ export function createStore({
         formats,
         placeholder,
       });
-      quill.on(
-        Quill.events.TEXT_CHANGE,
-        (newContent: Delta, oldContent: Delta, _source: string) => {
-          if (!quill) return;
+      quill.on(Quill.events.TEXT_CHANGE, () => {
+        const { value, onChange } = get();
 
-          const { onChange } = get();
+        const nextValue: string = quill.getSemanticHTML();
+        if (nextValue === value) return;
 
-          if (!onChange || isEqual(newContent.ops, oldContent.ops)) return;
-
-          onChange(newContent);
-        },
-      );
+        set({ value: nextValue });
+        onChange?.(nextValue);
+      });
       set({ quill });
       onMount?.(quill);
     },
@@ -95,6 +93,17 @@ export function createStore({
       const { quill } = get();
 
       quill?.[readOnly ? 'disable' : 'enable']();
+    },
+    setValue: (value) => {
+      set({ value });
+
+      const { quill } = get();
+      if (!quill) return;
+
+      const selectionRange = quill.getSelection();
+
+      quill.setContents(quill.clipboard.convert({ html: value }));
+      quill.setSelection(selectionRange);
     },
     setPlaceholder: (placeholder) => {
       set({ placeholder });
