@@ -84,10 +84,10 @@ export interface MonacoEditorProps
 
 type Size = NonNullable<MonacoEditorProps['size']>;
 
-const lineHeightMap: Record<Size, number> = { sm: 19, md: 22, lg: 22 };
-const fontSizeMap: Record<Size, number> = { sm: 14, md: 16, lg: 18 };
+const LINE_HEIGHT_MAP: Record<Size, number> = { sm: 19, md: 22, lg: 22 };
+const FONT_SIZE_MAP: Record<Size, number> = { sm: 14, md: 16, lg: 18 };
 
-const baseOptions: monacoCore.editor.IStandaloneEditorConstructionOptions = {
+export const DEFAULT_OPTIONS: monacoCore.editor.IStandaloneEditorConstructionOptions = {
   minimap: { enabled: false },
   renderLineHighlight: 'none',
   lineNumbersMinChars: 3,
@@ -118,27 +118,27 @@ function MonacoEditor({
 }: MonacoEditorProps): ReactElement {
   size ??= 'md';
 
-  const editor = useRef<Editor | undefined>(undefined);
+  const editorRef = useRef<Editor | null>(null);
 
-  const lineHeight: number = lineHeightMap[size];
-  const fontSize: number = fontSizeMap[size];
+  const lineHeight: number = LINE_HEIGHT_MAP[size];
+  const fontSize: number = FONT_SIZE_MAP[size];
 
   const options = useMemo<monacoCore.editor.IStandaloneEditorConstructionOptions>(
-    () => ({ ...baseOptions, fontSize, ...extraOptions }),
-    [extraOptions],
+    () => ({ ...DEFAULT_OPTIONS, fontSize, ...extraOptions }),
+    [fontSize, extraOptions],
   );
 
   const updateLayout = useCallback((resetWidth?: boolean) => {
-    if (!editor.current) return;
+    const editor: Editor | null = editorRef.current;
+    if (!editor) return;
 
-    const editorModel: monacoCore.editor.ITextModel | null = editor.current.getModel();
-
+    const editorModel: monacoCore.editor.ITextModel | null = editor.getModel();
     if (editorModel === null) return;
 
-    editor.current.layout({
+    editor.layout({
       width: resetWidth
         ? 0
-        : editor.current.getContainerDomNode().querySelector('.monaco-editor')!
+        : editor.getContainerDomNode().querySelector('.monaco-editor')!
             .clientWidth,
       height: editorModel.getLineCount() * lineHeight,
     });
@@ -146,20 +146,21 @@ function MonacoEditor({
 
   const handleChange = useCallback<OnChange>(
     (value) => {
-      if (!editor.current || value === undefined) return;
+      const editor: Editor | null = editorRef.current;
+      if (!editor || value === undefined) return;
 
       updateLayout();
-      onChange?.(editor.current, value);
+      onChange?.(editor, value);
     },
     [onChange],
   );
 
   const handleMount = useCallback<OnMount>(
-    (baseEditor, monaco) => {
-      editor.current = Object.assign(baseEditor, { updateLayout });
+    (editor, monaco) => {
+      editorRef.current = Object.assign(editor, { updateLayout });
 
       updateLayout();
-      onMount?.(editor.current, monaco);
+      onMount?.(editorRef.current, monaco);
     },
     [onMount],
   );

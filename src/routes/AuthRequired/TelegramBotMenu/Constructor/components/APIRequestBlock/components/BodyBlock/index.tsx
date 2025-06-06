@@ -45,7 +45,7 @@ function BodyBlock(props: BodyBlockProps): ReactElement<BodyBlockProps> {
     keyPrefix: 'apiRequestBlock.bodyBlock',
   });
 
-  const editorRef = useRef<Editor | undefined>(undefined);
+  const editorRef = useRef<Editor | null>(null);
 
   const [{ value: show }, _meta, { setValue }] = useField<boolean>(
     'show_api_request_body_block',
