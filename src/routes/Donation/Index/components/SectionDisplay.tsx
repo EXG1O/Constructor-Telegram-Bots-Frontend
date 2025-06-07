@@ -1,11 +1,9 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
 import classNames from 'classnames';
 
-import Markdown from 'components/Markdown';
+import Markdown from 'components/ui/Markdown';
 
 import { Section } from 'api/donations/types';
-
-import('styles/dynamic-content.scss');
 
 export interface SectionDisplayProps extends HTMLAttributes<HTMLDivElement> {
   section: Section;

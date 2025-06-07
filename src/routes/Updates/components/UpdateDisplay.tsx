@@ -2,11 +2,9 @@ import React, { ReactElement } from 'react';
 import classNames from 'classnames';
 
 import Block, { BlockProps } from 'components/ui/Block';
-import Markdown from 'components/Markdown';
+import Markdown from 'components/ui/Markdown';
 
 import { Update } from 'api/updates/types';
-
-import('styles/dynamic-content.scss');
 
 export interface UpdateDisplayProps
   extends Omit<BlockProps, 'dangerouslySetInnerHTML' | 'children'> {
