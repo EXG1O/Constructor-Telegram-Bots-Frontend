@@ -1,18 +1,17 @@
-import React, { CSSProperties, memo, ReactElement, useMemo } from 'react';
+import React, { memo, ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { reverse, RouteID } from 'routes';
 
-import Dropdown, { DropdownProps } from 'components/Dropdown';
+import Dropdown, { DropdownProps } from 'components/ui/Dropdown';
 
 import { TelegramBot } from 'api/telegram_bots/types';
+import Button from 'components/ui/Button';
 
 export interface TelegramBotMenuDropdownProps extends Omit<DropdownProps, 'children'> {
   telegramBot: TelegramBot;
 }
-
-const toggleButtonStyle: CSSProperties = { maxWidth: '150px' };
 
 function TelegramBotMenuDropdown({
   telegramBot,
@@ -36,18 +35,16 @@ function TelegramBotMenuDropdown({
 
   return (
     <Dropdown {...props}>
-      <Dropdown.Toggle
-        variant='dark'
-        className='text-truncate'
-        style={toggleButtonStyle}
-      >
-        {telegramBot.username}
-      </Dropdown.Toggle>
+      <Dropdown.Trigger asChild>
+        <Button variant='dark' className='max-w-[150px]'>
+          <span className='truncate'>{telegramBot.username}</span>
+        </Button>
+      </Dropdown.Trigger>
       <Dropdown.Menu>
         {Object.entries(links).map(([routeID, text], index) => (
-          <Dropdown.Item key={index} as={Link} to={reverse(routeID, params)}>
-            {text}
-          </Dropdown.Item>
+          <Dropdown.Menu.Item key={index} asChild>
+            <Link to={reverse(routeID, params)}>{text}</Link>
+          </Dropdown.Menu.Item>
         ))}
       </Dropdown.Menu>
     </Dropdown>

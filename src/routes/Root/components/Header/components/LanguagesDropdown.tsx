@@ -4,10 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { RouteID } from 'routes';
 import useLanguagesRouteLoaderData from 'routes/Languages/hooks/useLanguagesRouteLoaderData';
 
-import Dropdown, { DropdownProps } from 'components/Dropdown';
+import Dropdown, { DropdownProps } from 'components/ui/Dropdown';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { LanguagesAPI } from 'api/languages/main';
+import Button from 'components/ui/Button';
 
 export type LanguagesDropdownProps = Omit<DropdownProps, 'children'>;
 
@@ -35,12 +36,16 @@ function LanguagesDropdown(
 
   return (
     <Dropdown {...props}>
-      <Dropdown.Toggle variant='primary'>{i18n.language.toUpperCase()}</Dropdown.Toggle>
+      <Dropdown.Trigger asChild>
+        <Button variant='primary'>
+          {i18n.language.toUpperCase()}
+        </Button>
+      </Dropdown.Trigger>
       <Dropdown.Menu>
         {Object.entries(languages).map((language, index) => (
-          <Dropdown.Item key={index} onClick={() => setLanguage(language[0])}>
+          <Dropdown.Menu.Item key={index} onSelect={() => setLanguage(language[0])}>
             {language[1]}
-          </Dropdown.Item>
+          </Dropdown.Menu.Item>
         ))}
       </Dropdown.Menu>
     </Dropdown>

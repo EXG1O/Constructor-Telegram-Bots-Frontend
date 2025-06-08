@@ -1,21 +1,20 @@
-import React, { CSSProperties, memo, ReactElement, useCallback } from 'react';
+import React, { memo, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { reverse, RouteID } from 'routes';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
-import Dropdown, { DropdownProps } from 'components/Dropdown';
+import Dropdown, { DropdownProps } from 'components/ui/Dropdown';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { UserAPI } from 'api/users/main';
 import { User } from 'api/users/types';
+import Button from 'components/ui/Button';
 
 export interface UserMenuDropdownProps extends Omit<DropdownProps, 'children'> {
   user: User;
 }
-
-const toggleButtonStyle: CSSProperties = { maxWidth: '150px' };
 
 function UserMenuDropdown({
   user,
@@ -64,24 +63,24 @@ function UserMenuDropdown({
 
   return (
     <Dropdown {...props}>
-      <Dropdown.Toggle
-        variant='dark'
-        className='text-truncate'
-        style={toggleButtonStyle}
-      >
-        {user.first_name}
-      </Dropdown.Toggle>
+      <Dropdown.Trigger asChild>
+        <Button variant='dark' className='max-w-[150px]'>
+          <span className='truncate'>{user.first_name}</span>
+        </Button>
+      </Dropdown.Trigger>
       <Dropdown.Menu>
         {user.is_staff && (
-          <Dropdown.Item href='/admin/'>{t('adminPanel')}</Dropdown.Item>
+          <Dropdown.Menu.Item asChild>
+            <a href='/admin/'>{t('adminPanel')}</a>
+          </Dropdown.Menu.Item>
         )}
-        <Dropdown.Item as={Link} to={reverse(RouteID.TelegramBots)}>
-          {t('telegramBots')}
-        </Dropdown.Item>
-        <Dropdown.Divider />
-        <Dropdown.Item as='button' onClick={showLogoutModal}>
+        <Dropdown.Menu.Item asChild>
+          <Link to={reverse(RouteID.TelegramBots)}>{t('telegramBots')}</Link>
+        </Dropdown.Menu.Item>
+        <Dropdown.Menu.Separator />
+        <Dropdown.Menu.Item onSelect={showLogoutModal}>
           {t('exit')}
-        </Dropdown.Item>
+        </Dropdown.Menu.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
