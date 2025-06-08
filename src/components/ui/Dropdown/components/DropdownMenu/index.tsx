@@ -5,6 +5,7 @@ import {
   DropdownMenuContentProps,
   DropdownMenuPortal,
 } from '@radix-ui/react-dropdown-menu';
+import Z_INDEX from 'tokens/z-index';
 
 import MenuItem from './components/MenuItem';
 import MenuSeparator from './components/MenuSeparator';
@@ -23,6 +24,7 @@ const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
           sideOffset={sideOffset}
           className={cn(
             'block',
+            Z_INDEX.DROPDOWN,
             'min-w-[120px]',
             'max-h-(--radix-dropdown-menu-content-available-height)',
             'bg-background',
