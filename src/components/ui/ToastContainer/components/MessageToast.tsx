@@ -29,9 +29,9 @@ export const messageToastVariants = cva(
     'data-[state=closed]:fade-out-65',
     'data-[state=closed]:slide-out-to-right',
     'data-[swipe=end]:animate-out',
-    'data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)]',
+    'data-[swipe=end]:translate-x-(--radix-toast-swipe-end-x)',
     'data-[swipe=move]:transition-none',
-    'data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)]',
+    'data-[swipe=move]:translate-x-(--radix-toast-swipe-move-x)',
     'data-[swipe=cancel]:translate-x-0',
   ],
   {
