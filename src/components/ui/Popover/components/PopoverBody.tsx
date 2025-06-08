@@ -29,7 +29,7 @@ export const popoverBodyVariants = cva(
     'data-[state=closed]:animate-out',
     'data-[state=closed]:fade-out-0',
     'data-[state=closed]:zoom-out-85',
-    'origin-[--radix-popover-content-transform-origin]',
+    'origin-(--radix-popover-content-transform-origin)',
   ],
   {
     variants: {
