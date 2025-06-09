@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import Button from 'components/ui/Button';
-import Offcanvas, { OffcanvasProps } from 'components/Offcanvas';
+import Offcanvas, { OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import APIRequestBlock, {
@@ -107,7 +107,7 @@ function InnerBackgroundTaskOffcanvas(
     }
   }, [taskID]);
 
-  function handleExited(): void {
+  function handleHidden(): void {
     resetForm();
   }
 
@@ -118,17 +118,19 @@ function InnerBackgroundTaskOffcanvas(
       loading={isSubmitting || loading}
       className='background-task'
       onHide={hideOffcanvas}
-      onExited={handleExited}
+      onHidden={handleHidden}
     >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
           {t('backgroundTaskOffcanvas.title', { context: type })}
         </Offcanvas.Title>
       </Offcanvas.Header>
-      <Offcanvas.Body as={Form} id={formID}>
-        <NameBlock />
-        <IntervalBlock />
-        <APIRequestBlock />
+      <Offcanvas.Body asChild>
+        <Form id={formID}>
+          <NameBlock />
+          <IntervalBlock />
+          <APIRequestBlock />
+        </Form>
       </Offcanvas.Body>
       <Offcanvas.Footer className='gap-2'>
         <AddonButtonGroup>

@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import Button from 'components/ui/Button';
-import Offcanvas from 'components/Offcanvas';
+import Offcanvas from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import APIRequestBlock, { defaultAPIRequest } from './components/APIRequestBlock';
@@ -209,7 +209,7 @@ function InnerCommandOffcanvas(): ReactElement {
     }
   }, [commandID]);
 
-  function handleExited(): void {
+  function handleHidden(): void {
     resetForm();
   }
 
@@ -219,22 +219,24 @@ function InnerCommandOffcanvas(): ReactElement {
       loading={isSubmitting || loading}
       className='command'
       onHide={hideOffcanvas}
-      onExited={handleExited}
+      onHidden={handleHidden}
     >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
           {t('commandOffcanvas.title', { context: type })}
         </Offcanvas.Title>
       </Offcanvas.Header>
-      <Offcanvas.Body as={Form} id={formID}>
-        <NameBlock />
-        <SettingsBlock />
-        <ImagesBlock />
-        <DocumentsBlock />
-        <MessageBlock />
-        <KeyboardBlock />
-        <APIRequestBlock />
-        <DatabaseRecordBlock />
+      <Offcanvas.Body asChild>
+        <Form id={formID}>
+          <NameBlock />
+          <SettingsBlock />
+          <ImagesBlock />
+          <DocumentsBlock />
+          <MessageBlock />
+          <KeyboardBlock />
+          <APIRequestBlock />
+          <DatabaseRecordBlock />
+        </Form>
       </Offcanvas.Body>
       <Offcanvas.Footer className='gap-2'>
         <TelegramBotStorage />

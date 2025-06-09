@@ -1,8 +1,9 @@
 const Z_INDEX = {
-  DROPDOWN: 'z-1100',
-  POPOVER: 'z-1090',
-  TOAST_CONTAINER: 'z-1080',
-  MODAL: 'z-1070',
+  OFFCANVAS: 'z-1000',
+  MODAL: 'z-1010',
+  DROPDOWN: 'z-1020',
+  POPOVER: 'z-1030',
+  TOAST_CONTAINER: 'z-1040',
 };
 
 export default Z_INDEX;

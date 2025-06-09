@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import Button from 'components/ui/Button';
-import Offcanvas, { OffcanvasProps } from 'components/Offcanvas';
+import Offcanvas, { OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import PartsBlock, { defaultParts, Parts } from './components/PartsBlock';
@@ -78,7 +78,7 @@ function InnerConditionOffcanvas(
     }
   }, [conditionID]);
 
-  function handleExited(): void {
+  function handleHidden(): void {
     resetForm();
   }
 
@@ -88,14 +88,16 @@ function InnerConditionOffcanvas(
       show={show}
       loading={isSubmitting || loading}
       onHide={hideOffcanvas}
-      onExited={handleExited}
+      onHidden={handleHidden}
     >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>{t('title', { context: type })}</Offcanvas.Title>
       </Offcanvas.Header>
-      <Offcanvas.Body as={Form} id={formID} className='flex flex-col gap-3'>
-        <NameBlock />
-        <PartsBlock />
+      <Offcanvas.Body asChild>
+        <Form id={formID} className='flex flex-col gap-3'>
+          <NameBlock />
+          <PartsBlock />
+        </Form>
       </Offcanvas.Body>
       <Offcanvas.Footer className='gap-2'>
         <Button type='submit' form={formID} variant='success'>
