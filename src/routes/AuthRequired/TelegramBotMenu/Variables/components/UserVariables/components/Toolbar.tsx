@@ -7,15 +7,15 @@ import Row from 'react-bootstrap/Row';
 
 import PlusButton from 'components/shared/PlusButton';
 import Pagination, { PaginationProps } from 'components/ui/Pagination';
-import Search, { SearchProps } from 'components/Search';
+import SearchInput, { SearchInputProps } from 'components/shared/SearchInput';
 
 import { useVariableModalStore } from './VariableModal/store';
 
 import useUserVariablesStore from '../hooks/useUserVariablesStore';
 
 type AddButtonClickHandler = MouseEventHandler<HTMLButtonElement>;
-type SearchHandler = SearchProps['onSearch'];
-type ClearHandler = SearchProps['onClear'];
+type SearchHandler = NonNullable<SearchInputProps['onSearch']>;
+type CancelHandler = NonNullable<SearchInputProps['onCancel']>;
 type PageChangeHandler = PaginationProps['onPageChange'];
 
 function Toolbar(): ReactElement {
@@ -38,7 +38,7 @@ function Toolbar(): ReactElement {
     (value) => updateVariables(undefined, undefined, value),
     [],
   );
-  const handleClear = useCallback<ClearHandler>(
+  const handleCancel = useCallback<CancelHandler>(
     () => updateVariables(undefined, undefined, null),
     [],
   );
@@ -59,11 +59,11 @@ function Toolbar(): ReactElement {
           {t('addVariableButton')}
         </PlusButton>
       </div>
-      <Search
+      <SearchInput
         size='sm'
         className='flex-fill'
         onSearch={handleSearch}
-        onClear={handleClear}
+        onCancel={handleCancel}
       />
       <Pagination
         size='sm'

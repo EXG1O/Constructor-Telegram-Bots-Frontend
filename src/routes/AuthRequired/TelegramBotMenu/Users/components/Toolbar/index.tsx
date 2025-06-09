@@ -2,7 +2,7 @@ import React, { HTMLAttributes, memo, ReactElement, useCallback } from 'react';
 import classNames from 'classnames';
 
 import Pagination, { PaginationProps } from 'components/ui/Pagination';
-import Search, { SearchProps } from 'components/Search';
+import SearchInput, { SearchInputProps} from 'components/shared/SearchInput';
 
 import TypeToggleButtonGroup from './components/TypeToggleButtonGroup';
 
@@ -11,8 +11,8 @@ import useUsersStore from '../../hooks/useUsersStore';
 export interface ToolbarProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
 
-type SearchHandler = SearchProps['onSearch'];
-type ClearHandler = SearchProps['onClear'];
+type SearchHandler = NonNullable<SearchInputProps['onSearch']>;
+type CancelHandler = NonNullable<SearchInputProps['onCancel']>;
 type PageChangeHandler = PaginationProps['onPageChange'];
 
 function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarProps> {
@@ -25,7 +25,7 @@ function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarPro
     (value) => updateUsers(undefined, undefined, value),
     [],
   );
-  const handleClear = useCallback<ClearHandler>(
+  const handleCancel = useCallback<CancelHandler>(
     () => updateUsers(undefined, undefined, null),
     [],
   );
@@ -36,11 +36,11 @@ function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarPro
   return (
     <div {...props} className={classNames('row row-cols-lg-auto g-2', className)}>
       <TypeToggleButtonGroup />
-      <Search
+      <SearchInput
         size='sm'
         className='flex-fill'
         onSearch={handleSearch}
-        onClear={handleClear}
+        onCancel={handleCancel}
       />
       <Pagination
         size='sm'

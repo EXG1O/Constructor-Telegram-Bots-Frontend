@@ -14,7 +14,7 @@ import { RouteID } from 'routes';
 
 import PlusButton from 'components/shared/PlusButton';
 import Pagination, { PaginationProps } from 'components/ui/Pagination';
-import Search, { SearchProps } from 'components/Search';
+import SearchInput, { SearchInputProps } from 'components/shared/SearchInput';
 
 import RecordAdditionModal, { RecordAdditionModalProps } from './RecordAdditionModal';
 
@@ -25,8 +25,8 @@ export interface ToolbarProps
 
 type HideHandler = RecordAdditionModalProps['onHide'];
 type AddButtonClickHandler = MouseEventHandler<HTMLButtonElement>;
-type SearchHandler = SearchProps['onSearch'];
-type ClearHandler = SearchProps['onClear'];
+type SearchHandler = NonNullable<SearchInputProps['onSearch']>;
+type CancelHandler = NonNullable<SearchInputProps['onCancel']>;
 type PageChangeHandler = PaginationProps['onPageChange'];
 
 function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarProps> {
@@ -50,7 +50,7 @@ function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarPro
     (value) => updateRecords(undefined, undefined, value),
     [],
   );
-  const handleClear = useCallback<ClearHandler>(
+  const handleCancel = useCallback<CancelHandler>(
     () => updateRecords(undefined, undefined, null),
     [],
   );
@@ -73,11 +73,11 @@ function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarPro
             {t('addRecordButton')}
           </PlusButton>
         </div>
-        <Search
+        <SearchInput
           size='sm'
           className='flex-fill'
           onSearch={handleSearch}
-          onClear={handleClear}
+          onCancel={handleCancel}
         />
         <Pagination
           size='sm'
