@@ -14,7 +14,7 @@ import Links from './components/Links';
 
 import useWindowSize from 'hooks/useWindowSize';
 
-import Logo from 'assets/logo.svg';
+import Logo from 'assets/logo/logo.svg';
 
 function Header(): ReactElement {
   const windowSize = useWindowSize();
