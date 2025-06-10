@@ -5,8 +5,6 @@ import formatDate from 'i18n/formatDate';
 
 import { RouteID } from 'routes';
 
-import './Donations.scss';
-
 import Block, { BlockProps } from 'components/ui/Block';
 import Table from 'components/ui/Table';
 
@@ -36,9 +34,9 @@ function Donations({
             <Table.Body>
               {donations.results.map((donation) => (
                 <Table.Row key={donation.id}>
-                  <Table.Cell className='sum'>{`${donation.sum}€`}</Table.Cell>
-                  <Table.Cell className='sender text-break'>{donation.sender}</Table.Cell>
-                  <Table.Cell className='date'>{formatDate(donation.date, 'd MMM yyyy')}</Table.Cell>
+                  <Table.Cell className='w-1/4'>{`${donation.sum}€`}</Table.Cell>
+                  <Table.Cell className='w-1/2 text-break'>{donation.sender}</Table.Cell>
+                  <Table.Cell className='w-1/2'>{formatDate(donation.date, 'd MMM yyyy')}</Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>

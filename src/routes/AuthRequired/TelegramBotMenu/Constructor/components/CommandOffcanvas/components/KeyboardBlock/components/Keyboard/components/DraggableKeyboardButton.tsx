@@ -53,7 +53,7 @@ function DraggableKeyboardButton({
           {...draggableProps}
           {...dragHandleProps}
           className={classNames(
-            'rounded-1 text-center px-2 py-1',
+            'w-full rounded-1 text-center px-2 py-1',
             { 'text-bg-dark': !select, 'text-bg-secondary': select },
             className,
           )}

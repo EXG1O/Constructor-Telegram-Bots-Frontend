@@ -3,8 +3,6 @@ import { Droppable, DroppableProps } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 import { useField } from 'formik';
 
-import './DroppableKeyboardButtons.scss';
-
 import DraggableKeyboardButton from './DraggableKeyboardButton';
 import { KeyboardRow } from './DraggableKeyboardRow';
 
@@ -52,7 +50,7 @@ function DroppableKeyboardButtons({
           {...props}
           {...droppableProps}
           className={classNames(
-            'droppable-keyboard-buttons d-flex bg-light overflow-auto',
+            'd-flex bg-light overflow-auto',
             className,
           )}
           style={blockStyle}

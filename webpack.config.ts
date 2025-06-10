@@ -22,11 +22,6 @@ const config = (env: any, argv: any): Configuration => {
     PUBLIC_PATH: publicPath,
   });
 
-  const styleLoaders: string[] = [
-    isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
-    'css-loader',
-  ];
-
   return {
     entry: './src/index.tsx',
     output: {
@@ -61,11 +56,11 @@ const config = (env: any, argv: any): Configuration => {
         },
         {
           test: /\.css$/,
-          use: [...styleLoaders, 'postcss-loader'],
-        },
-        {
-          test: /\.scss$/,
-          use: [...styleLoaders, 'sass-loader'],
+          use: [
+            isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+            'css-loader',
+            'postcss-loader',
+          ],
         },
         {
           test: /\.(png|jpg)$/,

@@ -22,10 +22,10 @@ function Home(): ReactElement {
           <Header />
         </Col>
         <Col xs={12} lg={6}>
-          <Stats />
+          <Stats className='h-[324px]' />
         </Col>
         <Col xs={12} lg={6}>
-          <Donations />
+          <Donations className='h-[324px]' />
         </Col>
       </Row>
     </Page>
