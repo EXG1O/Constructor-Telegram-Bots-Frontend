@@ -30,8 +30,6 @@ import TelegramBotStorage from './components/TelegramBotStorage';
 import AddonButtonGroup from '../AddonButtonGroup';
 import NameBlock, { defaultName, Name } from '../NameBlock';
 
-import './index.scss';
-
 import { CommandAPI, CommandsAPI } from 'api/telegram_bots/main';
 import { Command, Data } from 'api/telegram_bots/types';
 

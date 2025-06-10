@@ -35,7 +35,6 @@ import Panel from './components/Panel';
 import useTelegramBotMenuConstructorRouteLoaderData from './hooks/useTelegramBotMenuConstructorRouteLoaderData';
 
 import 'reactflow/dist/base.css';
-import './index.scss';
 
 import { APIResponse } from 'api/core';
 import {

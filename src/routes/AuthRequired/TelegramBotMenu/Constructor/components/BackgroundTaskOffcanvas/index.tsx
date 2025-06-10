@@ -23,8 +23,6 @@ import { BackgroundTask, Data } from 'api/telegram_bots/types';
 
 import { useBackgroundTaskOffcanvasStore } from './store';
 
-import('./index.scss');
-
 export interface FormValues {
   name: Name;
   interval: Interval;
