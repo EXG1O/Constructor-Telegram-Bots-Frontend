@@ -3,9 +3,9 @@ import { forwardRef, InputHTMLAttributes } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, VariantProps } from 'class-variance-authority';
 
-import './Check.css';
-
 import cn from 'utils/cn';
+
+import('./Check.css');
 
 export const checkVariants = cva(
   [
