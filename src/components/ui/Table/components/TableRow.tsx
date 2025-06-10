@@ -1,6 +1,6 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 
-export type TableRowProps = HTMLAttributes<HTMLTableRowElement>;
+export interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {}
 
 const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>((props, ref) => {
   return <tr {...props} ref={ref} />;

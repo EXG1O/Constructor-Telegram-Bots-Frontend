@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import { useField } from 'formik';
-import { Delta } from 'quill';
 
 import RichInputFeedback, {
   RichInputFeedbackProps,

@@ -80,7 +80,7 @@ export const richInputEditorContentVariants = cva(
   [
     'outline-0',
     'overflow-y-auto',
-    '[scrollbar-width:thin]',
+    'scrollbar-thin',
     '[.ql-blank]:before:absolute',
     '[.ql-blank]:before:content-[attr(data-placeholder)]',
     '[.ql-blank]:before:text-muted',

@@ -4,7 +4,7 @@ import TableCell from './TableCell';
 
 import cn from 'utils/cn';
 
-export type TableHeadProps = ThHTMLAttributes<HTMLTableCellElement>;
+export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {}
 
 const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
   ({ scope, className, ...props }, ref) => {

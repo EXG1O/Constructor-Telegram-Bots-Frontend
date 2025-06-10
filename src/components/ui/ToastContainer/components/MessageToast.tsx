@@ -16,7 +16,7 @@ export const messageToastVariants = cva(
   [
     'flex',
     'w-auto',
-    'max-w-[360px]',
+    'max-w-90',
     'items-center',
     'rounded-md',
     'gap-3',

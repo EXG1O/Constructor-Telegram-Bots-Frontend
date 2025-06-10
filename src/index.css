@@ -143,3 +143,7 @@
     font-size: var(--text-base);
   }
 }
+
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+}

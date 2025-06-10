@@ -12,7 +12,7 @@ export const selectVariants = cva(
     'w-full',
     'border',
     'border-outline',
-    'rounded-md',
+    'bg-background',
     'text-foreground',
     'cursor-pointer',
     'appearance-none',

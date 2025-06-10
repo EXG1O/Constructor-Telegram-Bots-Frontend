@@ -2,6 +2,8 @@ import React, { forwardRef, TdHTMLAttributes } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
 
+import { DEFAULT_SIZE } from '..';
+
 import useTable from '../hooks/useTable';
 
 import cn from 'utils/cn';
@@ -12,6 +14,9 @@ export const tableCellVariants = cva([], {
       sm: ['p-1'],
       md: ['p-2'],
     },
+  },
+  defaultVariants: {
+    size: DEFAULT_SIZE,
   },
 });
 

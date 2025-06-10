@@ -17,8 +17,8 @@ const Card = forwardRef<HTMLDivElement, CardProps>(({ className, ...props }, ref
       className={cn(
         'flex',
         'flex-col',
+        'w-full',
         'bg-background',
-        'text-foreground',
         'border',
         'border-outline',
         'rounded-md',

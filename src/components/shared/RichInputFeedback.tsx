@@ -16,7 +16,7 @@ function RichInputFeedback({
   ...props
 }: RichInputFeedbackProps): ReactElement {
   return (
-    <div {...wrapperProps} className={cn('w-full', wrapperProps?.className)}>
+    <div {...wrapperProps} className={cn('block', 'w-full', wrapperProps?.className)}>
       <RichInput {...props} invalid={Boolean(error)} />
       {error && <Feedback type='invalid'>{error}</Feedback>}
     </div>

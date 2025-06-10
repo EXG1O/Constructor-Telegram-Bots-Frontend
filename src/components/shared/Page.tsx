@@ -1,9 +1,9 @@
 import React, { ReactElement, ReactNode, useEffect } from 'react';
+import { Slot } from '@radix-ui/react-slot';
 
 import Container from 'components/ui/Container';
 
 import cn from 'utils/cn';
-import { Slot } from '@radix-ui/react-slot';
 
 export interface PageProps {
   title: string;

@@ -6,6 +6,7 @@ import {
   DialogOverlay,
   DialogPortal,
 } from '@radix-ui/react-dialog';
+import Z_INDEX from 'tokens/z-index';
 
 import Spinner from 'components/ui/Spinner';
 
@@ -16,7 +17,6 @@ import ModalTitle from './components/ModalTitle';
 import ModalContext, { ModalContextProps } from './contexts/ModalContext';
 
 import cn from 'utils/cn';
-import Z_INDEX from 'tokens/z-index';
 
 export interface ModalProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'aria-describedby'>,
@@ -64,8 +64,8 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(
           <DialogOverlay
             className={cn(
               'fixed',
-              'inset-0',
               Z_INDEX.MODAL,
+              'inset-0',
               'bg-black/50',
               'overflow-x-hidden',
               'overflow-y-auto',
@@ -86,7 +86,6 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(
                 'w-auto',
                 'sm:max-w-[500px]',
                 'bg-background',
-                'text-foreground',
                 'rounded-lg',
                 'gap-4',
                 'p-4',

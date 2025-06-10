@@ -1,6 +1,6 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
 
-export type TableHeaderProps = HTMLAttributes<HTMLTableSectionElement>;
+export interface TableHeaderProps extends HTMLAttributes<HTMLTableSectionElement> {}
 
 const TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(
   (props, ref) => {

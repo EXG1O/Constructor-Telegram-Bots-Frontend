@@ -19,7 +19,7 @@ function CodeInputFeedback({
   ...props
 }: CodeInputFeedbackProps): ReactElement {
   return (
-    <div {...wrapperProps} className={cn('w-full', wrapperProps?.className)}>
+    <div {...wrapperProps} className={cn('block', 'w-full', wrapperProps?.className)}>
       <CodeInput {...props} invalid={Boolean(error)} />
       {error && <Feedback type='invalid'>{error}</Feedback>}
     </div>

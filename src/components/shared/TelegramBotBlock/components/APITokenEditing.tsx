@@ -84,7 +84,10 @@ function APITokenEditing({
   }
 
   return (
-    <div {...props} className={cn('flex', 'items-center', 'gap-2', className)}>
+    <div
+      {...props}
+      className={cn('flex', 'items-center', 'w-full', 'gap-2', className)}
+    >
       {!loading ? (
         <>
           <InputFeedback

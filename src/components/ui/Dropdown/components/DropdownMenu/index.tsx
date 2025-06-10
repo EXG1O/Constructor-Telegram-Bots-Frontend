@@ -25,7 +25,7 @@ const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
           className={cn(
             'block',
             Z_INDEX.DROPDOWN,
-            'min-w-[120px]',
+            'min-w-30',
             'max-h-(--radix-dropdown-menu-content-available-height)',
             'bg-background',
             'border',

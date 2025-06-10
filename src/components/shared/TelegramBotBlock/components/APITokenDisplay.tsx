@@ -37,7 +37,10 @@ function APITokenDisplay({
   const ShowIcon = show ? EyeOff : Eye;
 
   return (
-    <div {...props} className={cn('flex', 'items-center', 'gap-2', className)}>
+    <div
+      {...props}
+      className={cn('flex', 'items-center', 'w-full', 'gap-2', className)}
+    >
       <span className='flex-auto'>{show ? telegramBot.api_token : hiddenAPIToken}</span>
       <div className='flex gap-1'>
         <IconButton onClick={handleEditClick}>

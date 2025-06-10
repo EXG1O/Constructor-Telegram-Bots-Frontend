@@ -54,7 +54,7 @@ export const checkVariants = cva(
   },
 );
 
-const wrapperVariants = cva(['block', 'min-h-4'], {
+const wrapperVariants = cva(['block', 'w-full', 'min-h-4'], {
   variants: {
     type: {
       checkbox: ['pl-6'],
@@ -73,14 +73,14 @@ export interface CheckProps
 
 const Check = forwardRef<HTMLInputElement, CheckProps>(
   ({ asChild, label, type, invalid, className, wrapperProps, ...props }, ref) => {
-    const Input = asChild ? Slot : 'input';
+    const Component = asChild ? Slot : 'input';
 
     return (
       <div
         {...wrapperProps}
         className={cn(wrapperVariants({ type, className: wrapperProps?.className }))}
       >
-        <Input
+        <Component
           {...props}
           ref={ref}
           type='checkbox'

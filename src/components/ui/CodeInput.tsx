@@ -25,6 +25,10 @@ if (!settings.WEBPACK_SERVE) {
   loader.config({ monaco: monacoCore });
 }
 
+export type Size = 'sm' | 'md' | 'lg';
+
+export const DEFAULT_SIZE: Size = 'md';
+
 export const codeInputVariants = cva(
   [
     'flex',
@@ -77,12 +81,11 @@ export interface CodeInputProps
       | 'onValidate'
     >,
     Omit<HTMLAttributes<HTMLElement>, 'defaultValue' | 'width' | 'height' | 'onChange'>,
-    VariantProps<typeof codeInputVariants> {
+    Omit<VariantProps<typeof codeInputVariants>, 'size'> {
+  size?: Size;
   onMount?: (editor: Editor, monaco: Monaco) => void;
   onChange?: (editor: Editor, value: string) => void;
 }
-
-type Size = NonNullable<CodeInputProps['size']>;
 
 const LINE_HEIGHT_MAP: Record<Size, number> = { sm: 19, md: 22, lg: 22 };
 const FONT_SIZE_MAP: Record<Size, number> = { sm: 14, md: 16, lg: 18 };
@@ -106,7 +109,7 @@ function CodeInput({
   line,
   saveViewState,
   keepCurrentModel,
-  size,
+  size = DEFAULT_SIZE,
   invalid,
   options: extraOptions,
   className,
@@ -116,8 +119,6 @@ function CodeInput({
   onValidate,
   ...props
 }: CodeInputProps): ReactElement {
-  size ??= 'md';
-
   const editorRef = useRef<Editor | null>(null);
 
   const lineHeight: number = LINE_HEIGHT_MAP[size];

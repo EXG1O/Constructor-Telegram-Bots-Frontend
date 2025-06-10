@@ -20,6 +20,7 @@ const CardHeader = forwardRef<HTMLHeadingElement, CardHeaderProps>(
           'bg-foreground/3',
           'border-b',
           'border-outline',
+          'text-foreground',
           'text-center',
           'px-4',
           'py-2',

@@ -11,9 +11,12 @@ export const tableBodyVariants = cva([], {
       true: ['[&_tr]:not-even:bg-foreground/5'],
     },
   },
+  defaultVariants: {
+    striped: false,
+  },
 });
 
-export type TableBodyProps = HTMLAttributes<HTMLTableSectionElement>;
+export interface TableBodyProps extends HTMLAttributes<HTMLTableSectionElement> {}
 
 const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
   ({ className, ...props }, ref) => {

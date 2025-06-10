@@ -64,8 +64,8 @@ const Offcanvas = forwardRef<HTMLDivElement, OffcanvasProps>(
           <DialogOverlay
             className={cn(
               'fixed',
-              'inset-0',
               Z_INDEX.OFFCANVAS,
+              'inset-0',
               'bg-black/50',
               'duration-300',
               'data-[state=open]:animate-in',
@@ -80,9 +80,9 @@ const Offcanvas = forwardRef<HTMLDivElement, OffcanvasProps>(
             aria-describedby={undefined}
             className={cn(
               'fixed',
+              Z_INDEX.OFFCANVAS,
               'inset-y-0',
               'left-0',
-              Z_INDEX.OFFCANVAS,
               'flex',
               'flex-col',
               'size-full',

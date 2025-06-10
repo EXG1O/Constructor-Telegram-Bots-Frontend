@@ -10,11 +10,16 @@ import TableContext, { TableContextProps } from './contexts/TableContext';
 
 import cn from 'utils/cn';
 
-export type TableProps = TableHTMLAttributes<HTMLTableElement> &
-  Partial<TableContextProps>;
+export type Size = 'sm' | 'md';
+
+export const DEFAULT_SIZE: Size = 'md';
+
+export interface TableProps
+  extends TableHTMLAttributes<HTMLTableElement>,
+    Partial<TableContextProps> {}
 
 const Table = forwardRef<HTMLTableElement, TableProps>(
-  ({ size = 'md', striped = false, className, children, ...props }, ref) => {
+  ({ size = DEFAULT_SIZE, striped = false, className, children, ...props }, ref) => {
     return (
       <div className='block w-full overflow-auto'>
         <table {...props} ref={ref} className={cn('w-full', className)}>

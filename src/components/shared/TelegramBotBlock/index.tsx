@@ -34,7 +34,7 @@ function TelegramBotBlock({
   className,
   children,
   ...props
-}: TelegramBotBlockProps): ReactElement<TelegramBotBlockProps> {
+}: TelegramBotBlockProps): ReactElement {
   const { t } = useTranslation('components', { keyPrefix: 'telegramBotBlock' });
 
   const [telegramBot, setTelegramBot] = useState<TelegramBot>(initialTelegramBot);

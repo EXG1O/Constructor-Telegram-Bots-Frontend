@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { reverse, RouteID } from 'routes';
 
-import { createMessageToast } from 'components/ui/ToastContainer';
 import Button, { ButtonProps, buttonVariants } from 'components/ui/Button';
 import Spinner from 'components/ui/Spinner';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import settings from 'settings';
 
@@ -33,10 +33,10 @@ declare global {
   }
 }
 
-export type LoginButtonProps = ButtonProps;
+export interface LoginButtonProps extends ButtonProps {}
 
 const LoginButton = forwardRef<HTMLButtonElement, LoginButtonProps>(
-  ({ children, ...props }, ref) => {
+  ({ disabled, children, ...props }, ref) => {
     const { t } = useTranslation('components', { keyPrefix: 'loginButton' });
 
     const navigate = useNavigate();
@@ -115,7 +115,7 @@ const LoginButton = forwardRef<HTMLButtonElement, LoginButtonProps>(
     }, []);
 
     return (
-      <Button {...props} ref={setRefs} disabled={loading}>
+      <Button {...props} ref={setRefs} disabled={loading || disabled}>
         {!loading ? (
           (children ?? (
             <>

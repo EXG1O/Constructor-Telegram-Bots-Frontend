@@ -54,7 +54,7 @@ const TelegramBotStorage = forwardRef<HTMLDivElement, TelegramBotStorageProps>(
         <ProgressBar
           now={usedStorageSize}
           max={telegramBot.storage_size}
-          className='flex-fill'
+          className='flex-auto'
         />
         <span>{`${(telegramBot.storage_size / 1024 ** 2).toFixed(2)} MB`}</span>
       </Component>

@@ -28,8 +28,9 @@ export const spinnerVariants = cva(
   },
 );
 
-export type SpinnerProps = HTMLAttributes<HTMLDivElement> &
-  VariantProps<typeof spinnerVariants>;
+export interface SpinnerProps
+  extends HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof spinnerVariants> {}
 
 const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
   ({ size, className, ...props }, ref) => {

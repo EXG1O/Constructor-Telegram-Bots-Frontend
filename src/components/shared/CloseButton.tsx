@@ -5,7 +5,7 @@ import IconButton, { IconButtonProps } from 'components/ui/IconButton';
 
 import cn from 'utils/cn';
 
-export type CloseButtonProps = IconButtonProps;
+export interface CloseButtonProps extends IconButtonProps {}
 
 const CloseButton = forwardRef<HTMLButtonElement, CloseButtonProps>(
   ({ size = 'lg', className, ...props }, ref) => {

@@ -1,7 +1,9 @@
 import { createContext } from 'react';
 
+import { Size } from '..';
+
 export interface TableContextProps {
-  size: 'sm' | 'md';
+  size: Size;
   striped: boolean;
 }
 

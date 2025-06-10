@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Button from 'components/ui/Button';
-
 import Modal from 'components/ui/Modal';
 
 import { useConfirmModalStore } from './store';
@@ -21,7 +20,7 @@ function ConfirmModal(): ReactElement {
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{text}</Modal.Body>
+      <Modal.Body className='text-foreground'>{text}</Modal.Body>
       <Modal.Footer className='flex flex-nowrap gap-4'>
         <Button variant='success' className='w-full' onClick={handleConfirm}>
           {t('yesButton')}

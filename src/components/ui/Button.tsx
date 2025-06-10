@@ -9,7 +9,6 @@ export const buttonVariants = cva(
     'inline-flex',
     'items-center',
     'justify-center',
-    'whitespace-nowrap',
     'transition',
     'cursor-pointer',
     'focus-visible:outline-none',

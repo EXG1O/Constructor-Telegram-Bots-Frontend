@@ -24,7 +24,7 @@ const ModalHeader = forwardRef<HTMLDivElement, ModalHeaderProps>(
         {children}
         {closeButton && (
           <Close asChild>
-            <CloseButton />
+            <CloseButton className='text-foreground' />
           </Close>
         )}
       </Component>

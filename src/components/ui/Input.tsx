@@ -13,7 +13,6 @@ export const inputVariants = cva(
     'text-foreground',
     'border',
     'appearance-none',
-    'bg-clip-padding',
     'transition',
     'placeholder:text-muted',
     'focus:outline-none',

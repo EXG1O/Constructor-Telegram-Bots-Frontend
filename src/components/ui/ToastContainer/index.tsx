@@ -1,8 +1,10 @@
 import React, { ReactElement } from 'react';
 import { ToastProvider, ToastViewport } from '@radix-ui/react-toast';
+import Z_INDEX from 'tokens/z-index';
+
+import cn from 'utils/cn';
 
 import { useToastContainerStore } from './store';
-import Z_INDEX from 'tokens/z-index';
 
 export { createMessageToast } from './components/MessageToast';
 
@@ -14,7 +16,17 @@ function ToastContainer(): ReactElement {
       <ToastViewport
         hotkey={[]}
         label='Notifications'
-        className={`fixed right-0 bottom-0 ${Z_INDEX.TOAST_CONTAINER} flex flex-col gap-2 p-2 outline-none`}
+        className={cn(
+          'fixed',
+          Z_INDEX.TOAST_CONTAINER,
+          'right-0',
+          'bottom-0',
+          'flex',
+          'flex-col',
+          'gap-2',
+          'p-2',
+          'outline-none',
+        )}
       >
         {toasts}
       </ToastViewport>

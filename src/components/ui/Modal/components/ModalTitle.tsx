@@ -3,15 +3,17 @@ import { forwardRef } from 'react';
 import { DialogTitle, DialogTitleProps } from '@radix-ui/react-dialog';
 import { Slot } from '@radix-ui/react-slot';
 
-export type ModelTitleProps = DialogTitleProps;
+import cn from 'utils/cn';
+
+export interface ModelTitleProps extends DialogTitleProps {}
 
 const ModelTitle = forwardRef<HTMLHeadingElement, ModelTitleProps>(
-  ({ asChild, ...props }, ref) => {
+  ({ asChild, className, ...props }, ref) => {
     const Component = asChild ? Slot : 'h5';
 
     return (
       <DialogTitle asChild>
-        <Component {...props} ref={ref} />
+        <Component {...props} ref={ref} className={cn('text-foreground', className)} />
       </DialogTitle>
     );
   },
