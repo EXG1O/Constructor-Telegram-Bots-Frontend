@@ -19,7 +19,7 @@ function HeaderTelegramBotDropdown({
   ...props
 }: HeaderTelegramBotDropdownProps): ReactElement {
   const { t } = useTranslation(RouteID.Root, {
-    keyPrefix: 'telegramBotDropdown',
+    keyPrefix: 'header.telegramBotDropdown',
   });
 
   return (

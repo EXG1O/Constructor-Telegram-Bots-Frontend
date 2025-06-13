@@ -14,7 +14,7 @@ export interface HeaderLanguagesDropdownProps extends Omit<DropdownProps, 'child
 
 function HeaderLanguagesDropdown(props: HeaderLanguagesDropdownProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.Root, {
-    keyPrefix: 'languagesDropdown',
+    keyPrefix: 'header.languagesDropdown',
   });
 
   const { languages } = useLanguagesRouteLoaderData();

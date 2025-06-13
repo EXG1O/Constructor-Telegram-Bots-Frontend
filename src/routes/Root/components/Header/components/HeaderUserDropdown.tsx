@@ -17,7 +17,7 @@ export interface HeaderUserDropdownProps extends Omit<DropdownProps, 'children'>
 }
 
 function HeaderUserDropdown({ user, ...props }: HeaderUserDropdownProps): ReactElement {
-  const { t } = useTranslation(RouteID.Root, { keyPrefix: 'userDropdown' });
+  const { t } = useTranslation(RouteID.Root, { keyPrefix: 'header.userDropdown' });
 
   const navigate = useNavigate();
 
