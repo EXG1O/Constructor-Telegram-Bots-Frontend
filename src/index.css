@@ -3,10 +3,9 @@
 
 @font-face {
   font-family: InterVariable;
-  src:
-    url(assets/fonts/InterVariable.woff2) format('woff2 supports variations'),
-    url(assets/fonts/InterVariable.woff2) format('woff2-variations');
-  font-weight: 100 1000;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('assets/fonts/InterVariable.woff2') format('woff2');
 }
 
 @theme {
@@ -93,9 +92,9 @@
   --text-2xl: 1.5rem;
   --text-2xl--line-height: calc(2 / 1.5);
   --text-3xl: 1.75rem;
-  --text-3xl--line-height: calc(2 / 1.75);
+  --text-3xl--line-height: calc(2.25 / 1.75);
   --text-4xl: 2rem;
-  --text-4xl--line-height: calc(2.25 / 2);
+  --text-4xl--line-height: calc(2.5 / 2);
   --text-5xl: 2.5rem;
   --text-5xl--line-height: 1;
   --text-6xl: 3rem;
@@ -106,42 +105,6 @@
   --text-8xl--line-height: 1;
   --text-9xl: 6rem;
   --text-9xl--line-height: 1;
-}
-
-@layer base {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-medium;
-    line-height: 1.2;
-  }
-
-  h1 {
-    font-size: var(--text-5xl);
-  }
-
-  h2 {
-    font-size: var(--text-4xl);
-  }
-
-  h3 {
-    font-size: var(--text-3xl);
-  }
-
-  h4 {
-    font-size: var(--text-2xl);
-  }
-
-  h5 {
-    font-size: var(--text-xl);
-  }
-
-  h6 {
-    font-size: var(--text-base);
-  }
 }
 
 @utility scrollbar-thin {

@@ -101,7 +101,7 @@ function TelegramBotBlock({
   return (
     <TelegramBotContext.Provider value={[telegramBot, setTelegramBot]}>
       <Block {...props} className={cn('flex', 'flex-col', 'gap-2', className)}>
-        <h4 className='text-center font-semibold'>
+        <h4 className='text-2xl font-semibold text-center'>
           <a
             href={`https://t.me/${telegramBot.username}`}
             rel='noreferrer'

@@ -35,6 +35,26 @@ function Markdown({
       {...props}
       allowedElements={allowedElements}
       components={{
+        h1: ({ node, className, ...props }) => {
+          return <h1 {...props} className={cn('text-5xl', 'font-medium', className)} />;
+        },
+        h2: ({ node, className, ...props }) => {
+          return <h2 {...props} className={cn('text-4xl', 'font-medium', className)} />;
+        },
+        h3: ({ node, className, ...props }) => {
+          return <h3 {...props} className={cn('text-3xl', 'font-medium', className)} />;
+        },
+        h4: ({ node, className, ...props }) => {
+          return <h4 {...props} className={cn('text-2xl', 'font-medium', className)} />;
+        },
+        h5: ({ node, className, ...props }) => {
+          return <h5 {...props} className={cn('text-xl', 'font-medium', className)} />;
+        },
+        h6: ({ node, className, ...props }) => {
+          return (
+            <h6 {...props} className={cn('text-base', 'font-medium', className)} />
+          );
+        },
         p: ({ node, className, ...props }) => {
           return <p {...props} className={cn('not-last:mb-2', className)} />;
         },
