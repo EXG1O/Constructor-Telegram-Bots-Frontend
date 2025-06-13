@@ -6,9 +6,9 @@ import cn from 'utils/cn';
 export const spinnerVariants = cva(
   [
     'inline-block',
-    'rounded-full',
-    'border-current',
+    'border-dark',
     'border-r-transparent',
+    'rounded-full',
     'animate-spin',
   ],
   {
