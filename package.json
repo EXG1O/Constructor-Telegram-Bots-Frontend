@@ -37,7 +37,6 @@
     "embla-carousel-react": "^8.6.0",
     "fork-ts-checker-webpack-plugin": "^9.0.2",
     "formik": "^2.4.6",
-    "framer-motion": "^11.2.10",
     "html-loader": "^5.1.0",
     "html-webpack-plugin": "^5.6.0",
     "i18next": "^23.14.0",
