@@ -6,7 +6,9 @@ import cn from 'utils/cn';
 
 export const iconButtonVariants = cva(
   [
-    'inline-block',
+    'inline-flex',
+    'justify-center',
+    'items-center',
     'transition',
     'cursor-pointer',
     'focus-visible:outline-none',
