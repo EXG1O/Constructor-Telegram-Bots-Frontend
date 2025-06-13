@@ -1,55 +1,82 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
 
 import { reverse, RouteID } from 'routes';
+import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-
+import LoginButton from 'components/shared/LoginButton';
 import Container from 'components/ui/Container';
+import IconButton from 'components/ui/IconButton';
 
-import Buttons from './components/Buttons';
-import Links from './components/Links';
+import HeaderLanguagesDropdown from './components/HeaderLanguagesDropdown';
+import HeaderLink from './components/HeaderLink';
+import HeaderTelegramBotDropdown from './components/HeaderTelegramBotDropdown';
+import HeaderUserDropdown from './components/HeaderUserDropdown';
 
-import useWindowSize from 'hooks/useWindowSize';
+import useRootRouteLoaderData from '../../hooks/useRootRouteLoaderData';
 
 import Logo from 'assets/logo/logo.svg';
 
-function Header(): ReactElement {
-  const windowSize = useWindowSize();
+import { TelegramBot } from 'api/telegram_bots/types';
 
-  const isLargeWindowSize = windowSize.width < 992;
+import cn from 'utils/cn';
+
+function Header(): ReactElement {
+  const { t } = useTranslation(RouteID.Root, { keyPrefix: 'header' });
+
+  const { user } = useRootRouteLoaderData();
+  const telegramBot: TelegramBot | undefined = (
+    useTelegramBotMenuRootRouteLoaderData() as
+      | ReturnType<typeof useTelegramBotMenuRootRouteLoaderData>
+      | undefined
+  )?.telegramBot;
 
   return (
-    <nav className='py-2'>
-      <Container>
-        <Row className='g-2'>
-          <Col xs='auto' xl='3'>
-            <Link to={reverse(RouteID.Home)}>
-              <Logo width={38} height={38} />
+    <Container asChild>
+      <nav className='flex flex-wrap gap-2 py-2 lg:flex-nowrap xl:grid xl:grid-cols-4'>
+        <div className='flex grow-0 items-center xl:col-span-1'>
+          <IconButton asChild size={null}>
+            <Link to={reverse(RouteID.Home)} className='rounded-full'>
+              <Logo className='size-9.5' />
             </Link>
-          </Col>
-          <Col
-            xs='auto'
-            xl='6'
-            style={{
-              width: isLargeWindowSize ? 'calc(100% - 46px)' : undefined,
-            }}
-          >
-            <Links
-              className={classNames('flex-nowrap justify-content-xl-center', {
-                'overflow-x-auto': isLargeWindowSize,
-              })}
-            />
-          </Col>
-          <Col xs='auto' xl='3' className='flex-fill'>
-            <Buttons />
-          </Col>
-        </Row>
-      </Container>
-    </nav>
+          </IconButton>
+        </div>
+        <div
+          className={cn(
+            'xl:col-span-2',
+            'flex',
+            'flex-nowrap',
+            'max-lg:w-[calc(100%-var(--spacing)*11.5)]',
+            'xl:justify-center',
+            'items-center',
+            'overflow-x-auto',
+            'scrollbar-thin',
+          )}
+        >
+          <HeaderLink to={reverse(RouteID.Instruction)}>
+            {t('links.instruction')}
+          </HeaderLink>
+          <HeaderLink to={reverse(RouteID.Updates)}>{t('links.updates')}</HeaderLink>
+          <HeaderLink to={reverse(RouteID.PrivacyPolicy)}>
+            {t('links.privacyPolicy')}
+          </HeaderLink>
+          <HeaderLink to={reverse(RouteID.Donation)}>{t('links.donation')}</HeaderLink>
+        </div>
+        <div className='flex flex-auto flex-nowrap items-center gap-2 lg:justify-end xl:col-span-1'>
+          <HeaderLanguagesDropdown />
+          {user ? (
+            <>
+              <HeaderUserDropdown user={user} />
+              {telegramBot && <HeaderTelegramBotDropdown telegramBot={telegramBot} />}
+            </>
+          ) : (
+            <LoginButton />
+          )}
+        </div>
+      </nav>
+    </Container>
   );
 }
 
-export default memo(Header);
+export default Header;

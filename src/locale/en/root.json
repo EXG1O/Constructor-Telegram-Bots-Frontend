@@ -1,37 +1,39 @@
 {
-  "links": {
-    "instruction": "Instruction",
-    "updates": "Updates",
-    "privacyPolicy": "Privacy policy",
-    "donation": "Donation"
-  },
-  "languagesDropdown": {
-    "messages": {
-      "changeLanguage": {
-        "error": "Failed to change language."
+  "header": {
+    "links": {
+      "instruction": "Instruction",
+      "updates": "Updates",
+      "privacyPolicy": "Privacy policy",
+      "donation": "Donation"
+    },
+    "languagesDropdown": {
+      "messages": {
+        "changeLanguage": {
+          "error": "Failed to change language."
+        }
       }
+    },
+    "userDropdown": {
+      "messages": {
+        "logout": {
+          "success": "You have successfully logout from account.",
+          "error": "Failed to logout from account."
+        }
+      },
+      "logoutConfirmModal": {
+        "title": "Logout",
+        "text": "Are you sure you want to logout from account?"
+      },
+      "adminPanel": "Admin panel",
+      "telegramBots": "Telegram bots",
+      "exit": "Exit"
+    },
+    "telegramBotDropdown": {
+      "telegramBot": "Telegram bot",
+      "variables": "Variables",
+      "users": "Users",
+      "database": "Database",
+      "constructor": "Constructor"
     }
-  },
-  "userMenuDropdown": {
-    "messages": {
-      "logout": {
-        "success": "You have successfully logout from account.",
-        "error": "Failed to logout from account."
-      }
-    },
-    "logoutModal": {
-      "title": "Logout",
-      "text": "Are you sure you want to logout from account?"
-    },
-    "adminPanel": "Admin panel",
-    "telegramBots": "Telegram bots",
-    "exit": "Exit"
-  },
-  "telegramBotMenuDropdown": {
-    "telegramBot": "Telegram bot",
-    "variables": "Variables",
-    "users": "Users",
-    "database": "Database",
-    "constructor": "Constructor"
   }
 }

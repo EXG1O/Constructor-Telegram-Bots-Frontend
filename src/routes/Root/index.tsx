@@ -13,13 +13,15 @@ function Root(): ReactElement {
 
   return (
     <>
-      <ToastContainer />
       <ConfirmModal />
+      <ToastContainer />
       <Header />
       {navigation.state === 'idle' ? (
         <Outlet />
       ) : (
-        <Spinner size='lg' className='m-auto' />
+        <main className='flex flex-auto items-center justify-center'>
+          <Spinner size='lg' />
+        </main>
       )}
       <Footer />
     </>

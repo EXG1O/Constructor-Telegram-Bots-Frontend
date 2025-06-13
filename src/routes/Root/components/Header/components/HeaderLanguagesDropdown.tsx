@@ -1,20 +1,18 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 import useLanguagesRouteLoaderData from 'routes/Languages/hooks/useLanguagesRouteLoaderData';
 
+import Button from 'components/ui/Button';
 import Dropdown, { DropdownProps } from 'components/ui/Dropdown';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { LanguagesAPI } from 'api/languages/main';
-import Button from 'components/ui/Button';
 
-export type LanguagesDropdownProps = Omit<DropdownProps, 'children'>;
+export interface HeaderLanguagesDropdownProps extends Omit<DropdownProps, 'children'> {}
 
-function LanguagesDropdown(
-  props: LanguagesDropdownProps,
-): ReactElement<LanguagesDropdownProps> {
+function HeaderLanguagesDropdown(props: HeaderLanguagesDropdownProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.Root, {
     keyPrefix: 'languagesDropdown',
   });
@@ -37,9 +35,7 @@ function LanguagesDropdown(
   return (
     <Dropdown {...props}>
       <Dropdown.Trigger asChild>
-        <Button variant='primary'>
-          {i18n.language.toUpperCase()}
-        </Button>
+        <Button variant='primary'>{i18n.language.toUpperCase()}</Button>
       </Dropdown.Trigger>
       <Dropdown.Menu>
         {Object.entries(languages).map((language, index) => (
@@ -52,4 +48,4 @@ function LanguagesDropdown(
   );
 }
 
-export default memo(LanguagesDropdown);
+export default HeaderLanguagesDropdown;

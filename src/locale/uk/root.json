@@ -1,37 +1,39 @@
 {
-  "links": {
-    "instruction": "Інструкція",
-    "updates": "Оновлення",
-    "privacyPolicy": "Конфіденційність",
-    "donation": "Пожертва"
-  },
-  "languagesDropdown": {
-    "messages": {
-      "changeLanguage": {
-        "error": "Не вдалося змінити мову."
+  "header": {
+    "links": {
+      "instruction": "Інструкція",
+      "updates": "Оновлення",
+      "privacyPolicy": "Конфіденційність",
+      "donation": "Пожертва"
+    },
+    "languagesDropdown": {
+      "messages": {
+        "changeLanguage": {
+          "error": "Не вдалося змінити мову."
+        }
       }
+    },
+    "userMenuDropdown": {
+      "messages": {
+        "logout": {
+          "success": "Ви успішно вийшли з облікового запису.",
+          "error": "Не вдалося вийти з облікового запису."
+        }
+      },
+      "logoutConfirmModal": {
+        "title": "Вихід з облікового запису",
+        "text": "Ви точно хочете вийти з облікового запису?"
+      },
+      "adminPanel": "Адмін панель",
+      "telegramBots": "Telegram боти",
+      "exit": "Вийти"
+    },
+    "telegramBotMenuDropdown": {
+      "telegramBot": "Telegram бот",
+      "variables": "Змінні",
+      "users": "Користувачі",
+      "database": "База даних",
+      "constructor": "Конструктор"
     }
-  },
-  "userMenuDropdown": {
-    "messages": {
-      "logout": {
-        "success": "Ви успішно вийшли з облікового запису.",
-        "error": "Не вдалося вийти з облікового запису."
-      }
-    },
-    "logoutModal": {
-      "title": "Вихід з облікового запису",
-      "text": "Ви точно хочете вийти з облікового запису?"
-    },
-    "adminPanel": "Адмін панель",
-    "telegramBots": "Telegram боти",
-    "exit": "Вийти"
-  },
-  "telegramBotMenuDropdown": {
-    "telegramBot": "Telegram бот",
-    "variables": "Змінні",
-    "users": "Користувачі",
-    "database": "База даних",
-    "constructor": "Конструктор"
   }
 }
