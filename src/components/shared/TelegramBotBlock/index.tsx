@@ -126,7 +126,7 @@ function TelegramBotBlock({
               <Table.Head scope='row' className='text-nowrap'>
                 {t('table.apiToken.header')}:
               </Table.Head>
-              <Table.Cell className='w-full'>
+              <Table.Cell>
                 {apiTokenEditing ? (
                   <APITokenEditing
                     onSaved={toggleAPITokenState}

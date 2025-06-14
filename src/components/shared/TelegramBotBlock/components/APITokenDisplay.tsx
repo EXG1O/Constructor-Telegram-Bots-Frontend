@@ -41,7 +41,9 @@ function APITokenDisplay({
       {...props}
       className={cn('flex', 'items-center', 'w-full', 'gap-2', className)}
     >
-      <span className='flex-auto'>{show ? telegramBot.api_token : hiddenAPIToken}</span>
+      <span className='flex-auto wrap-break-word break-word'>
+        {show ? telegramBot.api_token : hiddenAPIToken}
+      </span>
       <div className='flex gap-1'>
         <IconButton onClick={handleEditClick}>
           <SquarePen />
