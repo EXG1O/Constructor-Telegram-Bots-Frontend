@@ -59,7 +59,7 @@ function PrivacyPolicy(): ReactElement {
         sections.map((section) => <SectionItem key={section.id} section={section} />)
       ) : (
         <div className='flex flex-auto items-center justify-center'>
-          <Spinner size='md' />
+          <Spinner />
         </div>
       )}
     </Page>

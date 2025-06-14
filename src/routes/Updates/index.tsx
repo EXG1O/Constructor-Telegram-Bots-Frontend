@@ -1,14 +1,14 @@
-import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Spinner from 'components/ui/Spinner';
 import Page from 'components/shared/Page';
 import Pagination from 'components/ui/Pagination';
+import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import UpdateDisplay from './components/UpdateDisplay';
+import UpdateItem from './components/UpdateItem';
 
 import useUpdatesRouteLoaderData from './hooks/useUpdatesRouteLoaderData';
 
@@ -21,12 +21,13 @@ function Updates(): ReactElement {
 
   const { paginationData: initialPaginationData } = useUpdatesRouteLoaderData();
 
-  const title = useMemo<string>(() => t('title'), [i18n.language]);
-  const isInitialRender = useRef<boolean>(true);
+  const title: string = t('title');
 
   const [paginationData, setPaginationData] =
     useState<PaginationData>(initialPaginationData);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const isInitialRenderRef = useRef<boolean>(true);
 
   async function updateUpdates(
     limit: number = paginationData.limit,
@@ -49,8 +50,8 @@ function Updates(): ReactElement {
   }
 
   useEffect(() => {
-    if (isInitialRender.current) {
-      isInitialRender.current = false;
+    if (isInitialRenderRef.current) {
+      isInitialRenderRef.current = false;
       return;
     }
 
@@ -63,21 +64,24 @@ function Updates(): ReactElement {
 
   return (
     <Page title={title} grid>
-      <h1 className='fw-semibold text-center'>{title}</h1>
+      <h2 className='text-center text-4xl font-semibold text-foreground'>{title}</h2>
       {!loading ? (
         paginationData.results.map((update) => (
-          <UpdateDisplay key={update.id} update={update} />
+          <UpdateItem key={update.id} update={update} />
         ))
       ) : (
-        <Spinner size='lg' className='m-auto' />
+        <div className='flex flex-auto items-center justify-center'>
+          <Spinner />
+        </div>
       )}
-      <Pagination
-        itemCount={paginationData.count}
-        itemLimit={paginationData.limit}
-        itemOffset={paginationData.offset}
-        className='align-self-center'
-        onPageChange={handlePageChange}
-      />
+      <div className='flex w-full justify-center'>
+        <Pagination
+          itemCount={paginationData.count}
+          itemLimit={paginationData.limit}
+          itemOffset={paginationData.offset}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </Page>
   );
 }
