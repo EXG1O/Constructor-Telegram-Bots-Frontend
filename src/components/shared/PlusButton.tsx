@@ -5,7 +5,7 @@ import Button, { ButtonProps, buttonVariants } from 'components/ui/Button';
 
 export { buttonVariants as plusButtonVariants };
 
-export type PlusButtonProps = ButtonProps;
+export interface PlusButtonProps extends ButtonProps {}
 
 const PlusButton = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ children, ...props }, ref) => {
