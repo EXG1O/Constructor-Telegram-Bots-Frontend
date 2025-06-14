@@ -1,14 +1,14 @@
-import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Spinner from 'components/ui/Spinner';
 import Page from 'components/shared/Page';
+import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import MethodTable from './components/MethodTable';
-import SectionDisplay from './components/SectionDisplay';
+import SectionItem from './components/SectionItem';
 
 import useDonationRouteLoaderData from './hooks/useDonationRouteLoaderData';
 
@@ -20,11 +20,12 @@ function Index(): ReactElement {
 
   const { sections: initialSections } = useDonationRouteLoaderData();
 
-  const title = useMemo<string>(() => t('title'), [i18n.language]);
-  const isInitialRender = useRef<boolean>(true);
+  const title: string = t('title');
 
   const [sections, setSections] = useState<Section[]>(initialSections);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const isInitialRenderRef = useRef<boolean>(true);
 
   async function updateSections(): Promise<void> {
     setLoading(true);
@@ -44,8 +45,8 @@ function Index(): ReactElement {
   }
 
   useEffect(() => {
-    if (isInitialRender.current) {
-      isInitialRender.current = false;
+    if (isInitialRenderRef.current) {
+      isInitialRenderRef.current = false;
       return;
     }
 
@@ -54,11 +55,13 @@ function Index(): ReactElement {
 
   return (
     <Page title={title} grid>
-      <h1 className='fw-semibold text-center'>{title}</h1>
+      <h2 className='text-center text-4xl font-semibold text-foreground'>{title}</h2>
       {!loading ? (
-        sections.map((section) => <SectionDisplay key={section.id} section={section} />)
+        sections.map((section) => <SectionItem key={section.id} section={section} />)
       ) : (
-        <Spinner size='lg' className='m-auto' />
+        <div className='flex flex-auto items-center justify-center'>
+          <Spinner />
+        </div>
       )}
       <MethodTable />
     </Page>
