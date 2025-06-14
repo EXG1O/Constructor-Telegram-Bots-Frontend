@@ -23,7 +23,7 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
 
     return (
       pageCount > 1 && (
-        <ul {...props} ref={ref} className={cn('flex', className)}>
+        <ul {...props} ref={ref} className={cn('inline-flex', className)}>
           {Array.from({ length: pageCount }, (_, index) => {
             const page = index + 1;
 
