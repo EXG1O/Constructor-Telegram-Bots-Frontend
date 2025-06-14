@@ -110,3 +110,7 @@
 @utility scrollbar-thin {
   scrollbar-width: thin;
 }
+
+@utility break-word {
+  word-break: break-word;
+}
