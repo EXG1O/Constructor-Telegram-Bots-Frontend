@@ -70,7 +70,6 @@ export const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: 'dark',
       size: 'md',
     },
   },

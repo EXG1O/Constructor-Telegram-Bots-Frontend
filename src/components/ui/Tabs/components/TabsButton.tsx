@@ -38,7 +38,6 @@ const TabsButton = forwardRef<HTMLButtonElement, TabsButtonProps>(
       <Button
         {...props}
         ref={ref}
-        variant={null}
         size={size}
         className={tabsButtonVariants({ active: value == activeValue, className })}
         onClick={handleClick}
