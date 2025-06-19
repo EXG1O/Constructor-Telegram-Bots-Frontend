@@ -1,12 +1,12 @@
-import React, { memo, ReactElement, useId } from 'react';
+import React, { ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 
-import Button from 'components/ui/Button';
 import FormCheckFeedback from 'components/shared/FormCheckFeedback';
 import FormInputFeedback from 'components/shared/FormInputFeedback';
+import Button from 'components/ui/Button';
 import Modal, { ModalProps } from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -28,7 +28,7 @@ const defaultFormValues: FormValues = { api_token: '', is_private: false };
 function TelegramBotAdditionModal({
   onHide,
   ...props
-}: TelegramBotAdditionModalProps): ReactElement<TelegramBotAdditionModalProps> {
+}: TelegramBotAdditionModalProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBots, {
     keyPrefix: 'telegramBotAdditionModal',
   });
@@ -104,4 +104,4 @@ function TelegramBotAdditionModal({
   );
 }
 
-export default memo(TelegramBotAdditionModal);
+export default TelegramBotAdditionModal;

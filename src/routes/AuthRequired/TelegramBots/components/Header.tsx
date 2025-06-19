@@ -1,10 +1,4 @@
-import React, {
-  HTMLAttributes,
-  memo,
-  ReactElement,
-  useCallback,
-  useState,
-} from 'react';
+import React, { HTMLAttributes, ReactElement, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
@@ -14,9 +8,9 @@ import PlusButton from 'components/shared/PlusButton';
 
 import TelegramBotAdditionModal from './TelegramBotAdditionModal';
 
-export type HeaderProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+export interface HeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
 
-function Header({ className, ...props }: HeaderProps): ReactElement<HeaderProps> {
+function Header({ className, ...props }: HeaderProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBots, { keyPrefix: 'header' });
 
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -30,16 +24,16 @@ function Header({ className, ...props }: HeaderProps): ReactElement<HeaderProps>
       <div
         {...props}
         className={classNames(
-          'd-flex flex-wrap justify-content-between gap-2',
+          'flex flex-wrap items-center justify-between gap-1 lg:gap-2',
           className,
         )}
       >
-        <h1 className='flex-grow-1 flex-lg-grow-0 fw-semibold text-center mb-0'>
+        <h2 className='text-center text-4xl font-semibold max-lg:w-full'>
           {t('title')}
-        </h1>
+        </h2>
         <PlusButton
           variant='dark'
-          className='flex-grow-1 flex-lg-grow-0 align-self-center'
+          className='max-lg:w-full'
           onClick={handleAddButtonClick}
         >
           {t('addTelegramBotButton')}
@@ -49,4 +43,4 @@ function Header({ className, ...props }: HeaderProps): ReactElement<HeaderProps>
   );
 }
 
-export default memo(Header);
+export default Header;

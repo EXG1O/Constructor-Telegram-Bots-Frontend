@@ -16,9 +16,9 @@ import { TelegramBot } from 'api/telegram_bots/types';
 function TelegramBots(): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBots);
 
-  const { telegramBots: initialTelegramBots } = useTelegramBotsRouteLoaderData();
+  const { telegramBots: defaultTelegramBots } = useTelegramBotsRouteLoaderData();
 
-  const telegramBotsState = useState<TelegramBot[]>(initialTelegramBots);
+  const telegramBotsState = useState<TelegramBot[]>(defaultTelegramBots);
 
   return (
     <Page title={t('title')} flex gutters className='flex-auto'>
