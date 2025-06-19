@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { RouteID } from 'routes';
 
 import Block from 'components/ui/Block';
-import Page from 'components/shared/Page';
+import Page from 'components/ui/Page';
 
 import Footer from './components/Footer';
 import Toolbar from './components/Toolbar';
@@ -17,7 +17,7 @@ function Users(): ReactElement {
   const title = useMemo<string>(() => t('title'), [i18n.language]);
 
   return (
-    <Page title={title} grid>
+    <Page title={title} flex gutters className='flex-auto'>
       <StoreProvider>
         <Block variant='light'>
           <h3 className='fw-semibold text-center mb-3'>{title}</h3>

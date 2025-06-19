@@ -3,10 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-
-import Page from 'components/shared/Page';
+import Page from 'components/ui/Page';
 
 import Donations from './components/Donations';
 import Header from './components/Header';
@@ -16,19 +13,21 @@ function Home(): ReactElement {
   const { t } = useTranslation(RouteID.Home);
 
   return (
-    <Page title={t('title')} align='center'>
-      <Row className='g-3 g-lg-4'>
-        <Col xs={12}>
-          <Header />
-        </Col>
-        <Col xs={12} lg={6}>
-          <Stats className='h-[324px]' />
-        </Col>
-        <Col xs={12} lg={6}>
-          <Donations className='h-[324px]' />
-        </Col>
-      </Row>
-    </Page>
+    <main className='my-auto'>
+      <Page asChild title={t('title')} grid gutters>
+        <div className='grid-cols-1 lg:grid-cols-2'>
+          <div className='lg:col-span-2'>
+            <Header />
+          </div>
+          <div className='lg:col-span-1'>
+            <Stats className='h-[324px]' />
+          </div>
+          <div className='lg:col-span-1'>
+            <Donations className='h-[324px]' />
+          </div>
+        </div>
+      </Page>
+    </main>
   );
 }
 

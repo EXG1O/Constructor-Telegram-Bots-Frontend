@@ -4,7 +4,7 @@ import ClipboardJS from 'clipboard';
 
 import { RouteID } from 'routes';
 
-import Page from 'components/shared/Page';
+import Page from 'components/ui/Page';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import SystemVariables from './components/SystemVariables';
@@ -33,7 +33,7 @@ function Variables(): ReactElement {
   }, []);
 
   return (
-    <Page title={t('title')} grid>
+    <Page title={t('title')} flex gutters className='flex-auto'>
       <SystemVariables />
       <UserVariables.StoreProvider>
         <UserVariables />

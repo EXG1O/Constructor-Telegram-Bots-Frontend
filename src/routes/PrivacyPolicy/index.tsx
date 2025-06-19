@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Page from 'components/shared/Page';
+import Page from 'components/ui/Page';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -53,7 +53,7 @@ function PrivacyPolicy(): ReactElement {
   }, [i18n.language]);
 
   return (
-    <Page title={title} grid>
+    <Page title={title} flex gutters className='flex-auto'>
       <h2 className='text-center text-4xl font-semibold text-foreground'>{title}</h2>
       {!loading ? (
         sections.map((section) => <SectionItem key={section.id} section={section} />)

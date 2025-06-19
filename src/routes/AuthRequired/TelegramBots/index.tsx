@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Page from 'components/shared/Page';
+import Page from 'components/ui/Page';
 
 import Header from './components/Header';
 import TelegramBotList from './components/TelegramBotList';
@@ -21,7 +21,7 @@ function TelegramBots(): ReactElement {
   const telegramBotsState = useState<TelegramBot[]>(initialTelegramBots);
 
   return (
-    <Page title={t('title')} grid>
+    <Page title={t('title')} flex gutters className='flex-auto'>
       <TelegramBotsContext.Provider value={telegramBotsState}>
         <Header />
         <TelegramBotList />
