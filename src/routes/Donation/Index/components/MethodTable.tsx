@@ -19,7 +19,6 @@ function MethodTable({ className, ...props }: MethodTableProps): ReactElement | 
         'w-full',
         'bg-light',
         'text-foreground',
-        'text-nowrap',
         'border',
         'border-outline',
         'rounded-md',
@@ -27,7 +26,7 @@ function MethodTable({ className, ...props }: MethodTableProps): ReactElement | 
         className,
       )}
     >
-      <Table striped>
+      <Table striped className='text-nowrap'>
         <Table.Body>
           {methods.map((method, index) => (
             <Table.Row key={index}>
