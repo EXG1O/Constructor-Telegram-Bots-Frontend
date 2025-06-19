@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
@@ -12,6 +12,8 @@ import Stats from './components/Stats';
 function Home(): ReactElement {
   const { t } = useTranslation(RouteID.Home);
 
+  const [statsRef, setStatsRef] = useState<HTMLDivElement | null>(null);
+
   return (
     <main className='my-auto'>
       <Page asChild title={t('title')} grid gutters>
@@ -20,10 +22,10 @@ function Home(): ReactElement {
             <Header />
           </div>
           <div className='lg:col-span-1'>
-            <Stats className='h-[324px]' />
+            <Stats ref={setStatsRef} />
           </div>
           <div className='lg:col-span-1'>
-            <Donations className='h-[324px]' />
+            <Donations style={{ height: statsRef?.offsetHeight }} />
           </div>
         </div>
       </Page>

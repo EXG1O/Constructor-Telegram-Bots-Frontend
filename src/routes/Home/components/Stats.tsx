@@ -1,4 +1,4 @@
-import React, { memo, ReactElement } from 'react';
+import React, { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
@@ -8,20 +8,19 @@ import PrettyNumber from 'components/ui/PrettyNumber';
 
 import useHomeRouteLoaderData from '../hooks/useHomeRouteLoaderData';
 
-export type StatsProps = Omit<BlockProps, 'variant' | 'gradient' | 'children'>;
+export interface StatsProps
+  extends Omit<BlockProps, 'variant' | 'gradient' | 'children'> {}
 
-function Stats({ className, ...props }: StatsProps): ReactElement<StatsProps> {
+const Stats = forwardRef<HTMLDivElement, StatsProps>(({ className, ...props }, ref) => {
   const { t } = useTranslation(RouteID.Home, { keyPrefix: 'stats' });
 
   const { stats } = useHomeRouteLoaderData();
 
   return (
-    <Block {...props} variant='primary' gradient>
-      <h3 className='fw-semibold text-center mb-3'>{t('title')}</h3>
+    <Block {...props} ref={ref} variant='primary' gradient>
+      <h3 className='mb-3 text-center text-3xl font-semibold'>{t('title')}</h3>
       <div className='flex flex-col gap-2'>
-        <PrettyNumber description={t('usersTotal')}>
-          {stats.users.total}
-        </PrettyNumber>
+        <PrettyNumber description={t('usersTotal')}>{stats.users.total}</PrettyNumber>
         <PrettyNumber description={t('telegramBotsTotal')}>
           {stats.telegramBots.telegram_bots.total}
         </PrettyNumber>
@@ -34,6 +33,7 @@ function Stats({ className, ...props }: StatsProps): ReactElement<StatsProps> {
       </div>
     </Block>
   );
-}
+});
+Stats.displayName = 'Stats';
 
-export default memo(Stats);
+export default Stats;
