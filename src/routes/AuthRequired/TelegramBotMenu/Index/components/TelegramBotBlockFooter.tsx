@@ -1,27 +1,26 @@
-import React, { memo, ReactElement } from 'react';
+import React, { HTMLAttributes, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { reverse, RouteID } from 'routes';
 
-import { CardFooterProps } from 'react-bootstrap/CardFooter';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
-import Button from 'components/ui/Button';
-import Card from 'components/ui/Card';
-import Spinner from 'components/ui/Spinner';
 import useTelegramBot from 'components/shared/TelegramBotBlock/hooks/useTelegramBot';
+import Button from 'components/ui/Button';
+import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { TelegramBotAPI } from 'api/telegram_bots/main';
 
-export type TelegramBotBlockFooterProps = Omit<CardFooterProps, 'as' | 'children'>;
+import cn from 'utils/cn';
 
-function TelegramBotBlockFooter(
-  props: TelegramBotBlockFooterProps,
-): ReactElement<TelegramBotBlockFooterProps> {
+export interface TelegramBotBlockFooterProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+
+function TelegramBotBlockFooter({
+  className,
+  ...props
+}: TelegramBotBlockFooterProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenu, {
     keyPrefix: 'telegramBotBlockFooter',
   });
@@ -30,14 +29,31 @@ function TelegramBotBlockFooter(
 
   const [telegramBot, setTelegramBot] = useTelegramBot();
 
-  const setShowConfirmModal = useConfirmModalStore((state) => state.setShow);
+  const showConfirmModal = useConfirmModalStore((state) => state.setShow);
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
-  const setLoadingConfirmModal = useConfirmModalStore(
-    (state) => state.setLoading,
-  );
+  const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  function showDeleteModal(): void {
-    setShowConfirmModal({
+  async function handleActionClick(
+    action: 'start' | 'restart' | 'stop',
+  ): Promise<void> {
+    const response = await TelegramBotAPI[action](telegramBot.id);
+
+    if (!response.ok) {
+      createMessageToast({
+        message: t(`messages.${action}TelegramBot.error`),
+        level: 'error',
+      });
+    }
+
+    setTelegramBot({ ...telegramBot, is_loading: true });
+    createMessageToast({
+      message: t(`messages.${action}TelegramBot.success`),
+      level: 'info',
+    });
+  }
+
+  function handleDeleteClick(): void {
+    showConfirmModal({
       title: t('deleteModal.title'),
       text: t('deleteModal.text'),
       onConfirm: async () => {
@@ -65,76 +81,43 @@ function TelegramBotBlockFooter(
     });
   }
 
-  async function handleAction(action: 'start' | 'restart' | 'stop'): Promise<void> {
-    const response = await TelegramBotAPI[action](telegramBot.id);
-
-    if (!response.ok) {
-      createMessageToast({
-        message: t(`messages.${action}TelegramBot.error`),
-        level: 'error',
-      });
-    }
-
-    setTelegramBot({ ...telegramBot, is_loading: true });
-    createMessageToast({
-      message: t(`messages.${action}TelegramBot.success`),
-      level: 'info',
-    });
-  }
-
   return (
-    <Row className='g-3'>
-      <Card.Footer {...props} asChild>
-        {telegramBot.is_loading ? (
-          <Col>
-            <Button
-              disabled
-              variant='secondary'
-              className='w-100 d-flex justify-content-center'
-            >
-              <Spinner size='xs' />
-            </Button>
-          </Col>
-        ) : telegramBot.is_enabled ? (
-          <>
-            <Col>
-              <Button
-                variant='danger'
-                className='w-100'
-                onClick={() => handleAction('stop')}
-              >
-                {t('stopButton')}
-              </Button>
-            </Col>
-            <Col>
-              <Button
-                variant='success'
-                className='w-100'
-                onClick={() => handleAction('restart')}
-              >
-                {t('restartButton')}
-              </Button>
-            </Col>
-          </>
-        ) : (
-          <Col>
-            <Button
-              variant='success'
-              className='w-100'
-              onClick={() => handleAction('start')}
-            >
-              {t('startButton')}
-            </Button>
-          </Col>
-        )}
-        <Col {...(telegramBot.is_enabled ? { xs: '12', sm: true } : {})}>
-          <Button variant='danger' className='w-100' onClick={showDeleteModal}>
-            {t('deleteButton')}
+    <div {...props} className={cn('flex', 'flex-wrap', 'gap-3')}>
+      {telegramBot.is_loading ? (
+        <Button variant='secondary' disabled className='flex-auto'>
+          <Spinner size='xs' />
+        </Button>
+      ) : telegramBot.is_enabled ? (
+        <>
+          <Button
+            variant='danger'
+            className='flex-auto'
+            onClick={() => handleActionClick('stop')}
+          >
+            {t('stopButton')}
           </Button>
-        </Col>
-      </Card.Footer>
-    </Row>
+          <Button
+            variant='success'
+            className='flex-auto'
+            onClick={() => handleActionClick('restart')}
+          >
+            {t('restartButton')}
+          </Button>
+        </>
+      ) : (
+        <Button
+          variant='success'
+          className='flex-auto'
+          onClick={() => handleActionClick('start')}
+        >
+          {t('startButton')}
+        </Button>
+      )}
+      <Button variant='danger' className='flex-auto' onClick={handleDeleteClick}>
+        {t('deleteButton')}
+      </Button>
+    </div>
   );
 }
 
-export default memo(TelegramBotBlockFooter);
+export default TelegramBotBlockFooter;
