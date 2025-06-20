@@ -19,8 +19,6 @@ function MethodTable({ className, ...props }: MethodTableProps): ReactElement | 
         'w-full',
         'bg-light',
         'text-foreground',
-        'border',
-        'border-outline',
         'rounded-md',
         'overflow-hidden',
         className,
