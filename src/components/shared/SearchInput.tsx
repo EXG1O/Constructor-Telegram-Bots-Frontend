@@ -183,7 +183,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         <Button
           size={size}
           variant='dark'
-          className={cn(visibilityButtonVariants({ visible, className }))}
+          className={cn(visibilityButtonVariants({ visible }))}
           onClick={handleSearch}
         >
           {t('button')}
