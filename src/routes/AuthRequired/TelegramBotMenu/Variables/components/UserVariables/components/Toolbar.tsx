@@ -55,15 +55,17 @@ function Toolbar(): ReactElement {
         onSearch={handleSearch}
         onCancel={handleCancel}
       />
-      <div className='inline-flex justify-center max-md:w-full'>
-        <Pagination
-          size='sm'
-          itemCount={itemCount}
-          itemLimit={itemLimit}
-          itemOffset={itemOffset}
-          onPageChange={handlePageChange}
-        />
-      </div>
+      {itemCount > itemLimit && (
+        <div className='inline-flex justify-center max-md:w-full'>
+          <Pagination
+            size='sm'
+            itemCount={itemCount}
+            itemLimit={itemLimit}
+            itemOffset={itemOffset}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      )}
     </div>
   );
 }
