@@ -1,8 +1,9 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
+import { Clipboard } from 'lucide-react';
 
 import { Variable } from '..';
 
-import ClipboardIcon from 'assets/icons/clipboard.svg';
+import IconButton from 'components/ui/IconButton';
 import Table from 'components/ui/Table';
 
 export interface TableRowProps
@@ -10,20 +11,22 @@ export interface TableRowProps
   variable: Variable;
 }
 
-function TableRow({ variable, ...props }: TableRowProps): ReactElement<TableRowProps> {
+function TableRow({ variable, ...props }: TableRowProps): ReactElement {
   return (
     <Table.Row {...props}>
-      <Table.Cell className='w-50'>
-        <div className='d-flex align-items-center gap-2'>
-          <ClipboardIcon
-            cursor='pointer'
+      <Table.Cell className='w-1/2'>
+        <div className='flex items-center gap-1'>
+          <IconButton
+            size='sm'
             className='btn-clipboard'
             data-clipboard-text={`{{ ${variable.name} }}`}
-          />
-          <span className='flex-fill text-info-emphasis'>{variable.name}</span>
+          >
+            <Clipboard />
+          </IconButton>
+          <span className='flex-auto'>{variable.name}</span>
         </div>
       </Table.Cell>
-      <Table.Cell className='text-nowrap'>{variable.description}</Table.Cell>
+      <Table.Cell>{variable.description}</Table.Cell>
     </Table.Row>
   );
 }

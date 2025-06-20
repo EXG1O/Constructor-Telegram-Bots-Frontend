@@ -29,7 +29,7 @@ export interface StateActions {
     search?: StateParams['search'],
   ) => Promise<void>;
 
-  setLoading: (loading: boolean) => void;
+  setLoading: (loading: StateParams['loading']) => void;
 }
 
 export type State = StateParams & StateActions;

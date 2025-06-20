@@ -8,7 +8,7 @@
   },
   "system": {
     "title": "Системные переменные",
-    "typeButtonGroup": {
+    "typeTabs": {
       "personal": "Персональные",
       "global": "Глобальные"
     },

@@ -1,12 +1,16 @@
-import React, { memo, ReactElement, useEffect, useId } from 'react';
+import React, { ReactElement, useEffect, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import Button from 'components/ui/Button';
 import FormInputFeedback from 'components/shared/FormInputFeedback';
+import FormRichInputFeedback from 'components/shared/FormRichInputFeedback';
+import TelegramRichInputLayout, {
+  FORMATS,
+} from 'components/shared/TelegramRichInputLayout';
+import Button from 'components/ui/Button';
 import Modal from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -14,8 +18,6 @@ import { VariableAPI, VariablesAPI } from 'api/telegram_bots/main';
 import { Variable } from 'api/telegram_bots/types';
 
 import { useVariableModalStore } from './store';
-import FormRichInputFeedback from 'components/shared/FormRichInputFeedback';
-import TelegramRichInputLayout, { FORMATS } from 'components/shared/TelegramRichInputLayout';
 
 export interface FormValues {
   name: string;
@@ -164,4 +166,4 @@ function VariableModal({
   );
 }
 
-export default memo(VariableModal);
+export default VariableModal;

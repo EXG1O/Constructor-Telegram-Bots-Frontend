@@ -1,4 +1,4 @@
-import React, { memo, ReactElement, useCallback } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
@@ -19,13 +19,16 @@ function UserVariables(): ReactElement {
   });
 
   const updateVariables = useUserVariablesStore((state) => state.updateVariables);
-  const handleAddOrSaveVariable = useCallback(() => updateVariables(), []);
+
+  function handleApply(): void {
+    updateVariables();
+  }
 
   return (
     <>
-      <VariableModal onAdd={handleAddOrSaveVariable} onSave={handleAddOrSaveVariable} />
+      <VariableModal onAdd={handleApply} onSave={handleApply} />
       <Block variant='light'>
-        <h3 className='fw-semibold text-center mb-3'>{t('title')}</h3>
+        <h3 className='mb-3 text-center text-3xl font-semibold'>{t('title')}</h3>
         <div className='flex flex-col gap-2'>
           <Toolbar />
           <VariablesTable />
@@ -36,4 +39,4 @@ function UserVariables(): ReactElement {
   );
 }
 
-export default Object.assign(memo(UserVariables), { StoreProvider });
+export default Object.assign(UserVariables, { StoreProvider });
