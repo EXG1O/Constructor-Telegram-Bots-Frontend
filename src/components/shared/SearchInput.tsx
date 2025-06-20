@@ -1,4 +1,4 @@
-import React, { ChangeEvent, forwardRef, useEffect, useState } from 'react';
+import React, { ChangeEvent, forwardRef, HTMLAttributes, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cva } from 'class-variance-authority';
 import { Search, X } from 'lucide-react';
@@ -13,7 +13,7 @@ type Size = 'sm' | 'md' | 'lg';
 
 const DEFAULT_SIZE: Size = 'sm';
 
-const containerVariants = cva(['group', 'flex', 'w-full'], {
+const containerVariants = cva(['group', 'inline-flex'], {
   variants: {
     size: {
       sm: ['gap-2'],
@@ -95,6 +95,7 @@ const ICON_BUTTON_SIZE_MAP: Record<Size, NonNullable<IconButtonProps['size']>> =
 
 export interface SearchInputProps extends Omit<InputProps, 'size'> {
   size?: Size;
+  containerProps?: HTMLAttributes<HTMLDivElement>;
   onSearch?: (value: string) => void;
   onCancel?: () => void;
 }
@@ -103,8 +104,9 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   (
     {
       size = DEFAULT_SIZE,
-      value: externalValue,
+      containerProps,
       defaultValue,
+      value: externalValue,
       className,
       onSearch,
       onCancel,
@@ -154,7 +156,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     }
 
     return (
-      <div className={cn(containerVariants({ size }))} data-active={active}>
+      <div {...containerProps} className={cn(containerVariants({ size, className: containerProps?.className }))} data-active={active}>
         <div className='relative flex flex-auto'>
           <div className={cn(labelVariants({ size }))}>
             <Search />
