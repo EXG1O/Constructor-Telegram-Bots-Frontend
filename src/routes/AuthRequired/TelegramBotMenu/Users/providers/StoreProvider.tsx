@@ -1,4 +1,4 @@
-import React, { memo, ReactElement, ReactNode, useEffect, useMemo } from 'react';
+import React, { ReactElement, ReactNode, useEffect, useMemo } from 'react';
 
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
@@ -16,19 +16,26 @@ function StoreProvider({
   children,
 }: StoreProviderProps): ReactElement<StoreProviderProps> {
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
-  const { paginationData: initialPaginationData } =
+  const { paginationData: rawPaginationData } =
     useTelegramBotMenuUsersRouteLoaderData();
 
-  const paginationData = useMemo<Omit<InitialProps, 'telegramBot'>>(() => {
-    const { count, limit, offset, search, type, results } = initialPaginationData;
-    return { count, limit, offset, search, type, users: results };
-  }, [initialPaginationData]);
+  const paginationData = useMemo<
+    Pick<InitialProps, 'count' | 'limit' | 'offset' | 'search' | 'type' | 'users'>
+  >(() => {
+    const { results, ...paginationData } = rawPaginationData;
+    return { ...paginationData, users: results };
+  }, [rawPaginationData]);
+  const store = useMemo(
+    () => createStore({ telegramBot, ...paginationData }),
+    [telegramBot, paginationData],
+  );
 
-  const store = useMemo(() => createStore({ telegramBot, ...paginationData }), []);
-
-  useEffect(() => store.setState(paginationData), [paginationData]);
+  useEffect(
+    () => store.setState({ telegramBot, ...paginationData }),
+    [telegramBot, paginationData],
+  );
 
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
 }
 
-export default memo(StoreProvider);
+export default StoreProvider;

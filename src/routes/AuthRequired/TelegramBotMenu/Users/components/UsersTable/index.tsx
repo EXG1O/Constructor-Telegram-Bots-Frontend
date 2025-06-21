@@ -1,20 +1,19 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 
 import { RouteID } from 'routes';
 
 import Spinner from 'components/ui/Spinner';
-import Table from 'components/ui/Table';
+import Table, { TableProps } from 'components/ui/Table';
 
 import TableRow from './components/TableRow';
-import TableWrapper, { BlockProps } from './components/TableWrapper';
 
 import useUsersStore from '../../hooks/useUsersStore';
 
-export interface UsersTableProps extends Omit<BlockProps, 'children'> {}
+import cn from 'utils/cn';
 
-const tablePlaceholderClassName: string = 'text-center px-3 py-2';
+export interface UsersTableProps
+  extends Omit<TableProps, 'size' | 'striped' | 'children'> {}
 
 function UsersTable({
   className,
@@ -27,38 +26,38 @@ function UsersTable({
   const type = useUsersStore((state) => state.type);
   const users = useUsersStore((state) => state.users);
 
-  return !loading ? (
-    users.length ? (
-      <TableWrapper {...props} className={classNames('overflow-hidden', className)}>
-        <Table striped className='align-middle text-nowrap'>
-          <Table.Body>
-            {users.map((user) => (
-              <TableRow key={user.id} user={user} />
-            ))}
-          </Table.Body>
-        </Table>
-      </TableWrapper>
-    ) : search ? (
-      <TableWrapper className={tablePlaceholderClassName}>
-        {t('placeholders.notFound')}
-      </TableWrapper>
-    ) : type === 'allowed' ? (
-      <TableWrapper className={tablePlaceholderClassName}>
-        {t('placeholders.notAllowed')}
-      </TableWrapper>
-    ) : type === 'blocked' ? (
-      <TableWrapper className={tablePlaceholderClassName}>
-        {t('placeholders.notBlocked')}
-      </TableWrapper>
-    ) : (
-      <TableWrapper className={tablePlaceholderClassName}>
-        {t('placeholders.notActivated')}
-      </TableWrapper>
-    )
-  ) : (
-    <TableWrapper className='d-flex justify-content-center p-2'>
-      <Spinner size='sm' />
-    </TableWrapper>
+  return (
+    <div className='overflow-hidden rounded-sm'>
+      <Table {...props} striped className={cn('align-middle', className)}>
+        <Table.Body>
+          {!loading ? (
+            users.length ? (
+              users.map((user) => <TableRow key={user.id} user={user} />)
+            ) : (
+              <Table.Row>
+                <Table.Cell className='text-center'>
+                  {search
+                    ? t('placeholders.notFound')
+                    : type === 'allowed'
+                      ? t('placeholders.notAllowed')
+                      : type === 'blocked'
+                        ? t('placeholders.notBlocked')
+                        : t('placeholders.notActivated')}
+                </Table.Cell>
+              </Table.Row>
+            )
+          ) : (
+            <Table.Row>
+              <Table.Cell>
+                <div className='flex w-full justify-center'>
+                  <Spinner size='sm' />
+                </div>
+              </Table.Cell>
+            </Table.Row>
+          )}
+        </Table.Body>
+      </Table>
+    </div>
   );
 }
 

@@ -1,46 +1,30 @@
-import React, {
-  CSSProperties,
-  FC,
-  HTMLAttributes,
-  memo,
-  ReactElement,
-  SVGProps,
-} from 'react';
+import React, { HTMLAttributes, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import formatDate from 'i18n/formatDate';
+import { Shield, ShieldBan, Trash2, UserCheck, UserX } from 'lucide-react';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
+import IconButton from 'components/ui/IconButton';
+import Table from 'components/ui/Table';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useUsersStore from '../../../hooks/useUsersStore';
 
-import BanIcon from 'assets/icons/ban.svg';
-import BanFillIcon from 'assets/icons/ban-fill.svg';
-import KeyIcon from 'assets/icons/key.svg';
-import KeyFillIcon from 'assets/icons/key-fill.svg';
-import TrashIcon from 'assets/icons/trash.svg';
-
 import { makeRequest } from 'api/core';
 import { UserAPI } from 'api/telegram_bots/main';
 import { User } from 'api/telegram_bots/types';
-import Table from 'components/ui/Table';
+
+import cn from 'utils/cn';
 
 export interface TableRowProps
   extends Omit<HTMLAttributes<HTMLTableRowElement>, 'children'> {
   user: User;
 }
 
-const iconProps: SVGProps<SVGSVGElement> = {
-  width: 18,
-  height: '100%',
-  cursor: 'pointer',
-};
-const trashIconStyle: CSSProperties = { marginLeft: '5.5px' };
-
-function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps> {
+function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuUsers, {
     keyPrefix: 'table.row',
   });
@@ -49,11 +33,9 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
 
   const updateUsers = useUsersStore((state) => state.updateUsers);
 
-  const setShowConfirmModal = useConfirmModalStore((state) => state.setShow);
+  const showBaseConfirmModal = useConfirmModalStore((state) => state.setShow);
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
-  const setLoadingConfirmModal = useConfirmModalStore(
-    (state) => state.setLoading,
-  );
+  const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
   function showConfirmModal(
     title: string,
@@ -62,7 +44,7 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
     successMessage: string,
     errorMessage: string,
   ): void {
-    setShowConfirmModal({
+    showBaseConfirmModal({
       title,
       text,
       onConfirm: async () => {
@@ -90,7 +72,7 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
     });
   }
 
-  function showAllowModal(): void {
+  function handleAllowClick(): void {
     showConfirmModal(
       t('allowModal.title'),
       t('allowModal.text'),
@@ -103,7 +85,7 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
     );
   }
 
-  function showDisallowModal(): void {
+  function handleDisallowClick(): void {
     showConfirmModal(
       t('disallowModal.title'),
       t('disallowModal.text'),
@@ -116,7 +98,7 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
     );
   }
 
-  function showBlockModal(): void {
+  function handleBlockClick(): void {
     showConfirmModal(
       t('blockModal.title'),
       t('blockModal.text'),
@@ -129,7 +111,7 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
     );
   }
 
-  function showUnblockModal(): void {
+  function handleUnblockClick(): void {
     showConfirmModal(
       t('unblockModal.title'),
       t('unblockModal.text'),
@@ -142,7 +124,7 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
     );
   }
 
-  function showDeleteModal(): void {
+  function handleDeleteClick(): void {
     showConfirmModal(
       t('deleteModal.title'),
       t('deleteModal.text'),
@@ -152,44 +134,43 @@ function TableRow({ user, ...props }: TableRowProps): ReactElement<TableRowProps
     );
   }
 
-  const AllowedIcon: FC<SVGProps<SVGSVGElement>> = user.is_allowed
-    ? KeyFillIcon
-    : KeyIcon;
-  const BlockIcon: FC<SVGProps<SVGSVGElement>> = user.is_blocked
-    ? BanFillIcon
-    : BanIcon;
-
   return (
-    <Table.Row {...props}>
+    <Table.Row {...props} className={cn('text-nowrap', className)}>
       <Table.Cell className='text-success-emphasis'>{`[${formatDate(user.activated_date)}]`}</Table.Cell>
       <Table.Cell className='text-primary-emphasis'>{user.telegram_id}</Table.Cell>
-      <Table.Cell className='w-100'>{user.full_name}</Table.Cell>
+      <Table.Cell className='w-full'>{user.full_name}</Table.Cell>
       <Table.Cell>
-        <div className='d-flex'>
-          <div className='d-flex gap-2'>
-            {telegramBot.is_private && (
-              <AllowedIcon
-                {...iconProps}
-                className='text-warning'
-                onClick={user.is_allowed ? showDisallowModal : showAllowModal}
-              />
-            )}
-            <BlockIcon
-              {...iconProps}
-              className='text-danger'
-              onClick={user.is_blocked ? showUnblockModal : showBlockModal}
-            />
-          </div>
-          <TrashIcon
-            {...iconProps}
-            className='text-danger'
-            style={trashIconStyle}
-            onClick={showDeleteModal}
-          />
+        <div className='flex gap-1'>
+          {telegramBot.is_private &&
+            (user.is_allowed ? (
+              <IconButton
+                size='sm'
+                className='text-success'
+                onClick={handleDisallowClick}
+              >
+                <UserCheck />
+              </IconButton>
+            ) : (
+              <IconButton size='sm' className='text-danger' onClick={handleAllowClick}>
+                <UserX />
+              </IconButton>
+            ))}
+          {user.is_blocked ? (
+            <IconButton size='sm' className='text-danger' onClick={handleUnblockClick}>
+              <ShieldBan />
+            </IconButton>
+          ) : (
+            <IconButton size='sm' className='text-success' onClick={handleBlockClick}>
+              <Shield />
+            </IconButton>
+          )}
+          <IconButton size='sm' className='text-danger' onClick={handleDeleteClick}>
+            <Trash2 />
+          </IconButton>
         </div>
       </Table.Cell>
     </Table.Row>
   );
 }
 
-export default memo(TableRow);
+export default TableRow;

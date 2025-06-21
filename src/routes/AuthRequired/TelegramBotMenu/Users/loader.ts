@@ -29,7 +29,7 @@ async function loader({
   if (!response.ok) return null;
 
   return {
-    paginationData: { ...response.json, limit, offset, search: '', type: 'all' },
+    paginationData: { ...response.json, limit, offset, search: null, type: 'all' },
   };
 }
 

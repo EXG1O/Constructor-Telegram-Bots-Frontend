@@ -6,7 +6,7 @@
     }
   },
   "toolbar": {
-    "typeButtonGroup": {
+    "typeTabs": {
       "all": "Всі",
       "allowed": "Дозволені",
       "blocked": "Заблоковані"
