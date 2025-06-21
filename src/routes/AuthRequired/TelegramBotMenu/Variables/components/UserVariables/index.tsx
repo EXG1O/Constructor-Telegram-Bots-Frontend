@@ -27,13 +27,11 @@ function UserVariables(): ReactElement {
   return (
     <>
       <VariableModal onAdd={handleApply} onSave={handleApply} />
-      <Block variant='light'>
-        <h3 className='mb-3 text-center text-3xl font-semibold'>{t('title')}</h3>
-        <div className='flex flex-col gap-2'>
-          <Toolbar />
-          <VariablesTable />
-          <Footer />
-        </div>
+      <Block variant='light' className='flex flex-col gap-2'>
+        <h3 className='w-full text-center text-3xl font-semibold'>{t('title')}</h3>
+        <Toolbar />
+        <VariablesTable />
+        <Footer />
       </Block>
     </>
   );

@@ -5,15 +5,13 @@ import Markdown from 'components/ui/Markdown';
 
 import { Update } from 'api/updates/types';
 
-import cn from 'utils/cn';
-
 export interface UpdateDisplayProps extends Omit<BlockProps, 'children'> {
   update: Update;
 }
 
-function UpdateItem({ update, className, ...props }: UpdateDisplayProps): ReactElement {
+function UpdateItem({ update, ...props }: UpdateDisplayProps): ReactElement {
   return (
-    <Block {...props} className={cn('text-foreground', className)}>
+    <Block {...props} variant='light'>
       <Markdown>{update.description}</Markdown>
     </Block>
   );

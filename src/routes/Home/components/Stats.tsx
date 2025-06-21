@@ -17,7 +17,7 @@ const Stats = forwardRef<HTMLDivElement, StatsProps>(({ className, ...props }, r
   const { stats } = useHomeRouteLoaderData();
 
   return (
-    <Block {...props} ref={ref} variant='primary' gradient>
+    <Block {...props} ref={ref} size='xl' variant='primary' gradient>
       <h3 className='mb-3 text-center text-3xl font-semibold'>{t('title')}</h3>
       <div className='flex flex-col gap-2'>
         <PrettyNumber description={t('usersTotal')}>{stats.users.total}</PrettyNumber>

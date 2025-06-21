@@ -18,12 +18,10 @@ function SystemVariables(): ReactElement {
   const [type, setType] = useState<Type>('personal');
 
   return (
-    <Block variant='light'>
-      <h3 className='mb-3 text-center text-3xl font-semibold'>{t('title')}</h3>
-      <div className='flex flex-col gap-2'>
-        <TypeTabs type={type} onChange={setType} />
-        <VariablesTable type={type} />
-      </div>
+    <Block variant='light' className='flex flex-col gap-2'>
+      <h3 className='w-full text-center text-3xl font-semibold'>{t('title')}</h3>
+      <TypeTabs type={type} onChange={setType} />
+      <VariablesTable type={type} />
     </Block>
   );
 }

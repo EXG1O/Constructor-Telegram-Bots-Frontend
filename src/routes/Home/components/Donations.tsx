@@ -22,6 +22,7 @@ function Donations({ className, ...props }: DonationsProps): ReactElement {
   return (
     <Block
       {...props}
+      size='xl'
       variant='dark'
       gradient
       className={cn('flex', 'flex-col', 'text-center', 'gap-3', className)}

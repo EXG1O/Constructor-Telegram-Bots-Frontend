@@ -82,7 +82,7 @@ function TelegramBotBlockFooter({
   }
 
   return (
-    <div {...props} className={cn('flex', 'flex-wrap', 'gap-3')}>
+    <div {...props} className={cn('flex', 'flex-wrap', 'gap-2')}>
       {telegramBot.is_loading ? (
         <Button variant='secondary' disabled className='flex-auto'>
           <Spinner size='xs' />
