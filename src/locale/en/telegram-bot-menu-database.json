@@ -34,7 +34,7 @@
         "notFound": "No results found",
         "notAdded": "You haven't added any records yet"
       },
-      "display": {
+      "item": {
         "messages": {
           "deleteRecord": {
             "success": "You have successfully deleted the record.",

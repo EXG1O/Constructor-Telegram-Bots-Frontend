@@ -16,16 +16,16 @@ function Database(): ReactElement {
 
   return (
     <Page title={t('title')} flex gutters className='flex-auto'>
-      <StoreProvider>
-        <Block variant='light'>
-          <h3 className='fw-semibold mb-3 text-center'>{t('records.title')}</h3>
-          <div className='flex flex-col gap-2'>
-            <Toolbar />
-            <RecordList />
-            <Footer />
-          </div>
-        </Block>
-      </StoreProvider>
+      <Block variant='light' className='flex flex-col gap-2'>
+        <StoreProvider>
+          <h3 className='w-full text-center text-3xl font-semibold'>
+            {t('records.title')}
+          </h3>
+          <Toolbar />
+          <RecordList />
+          <Footer />
+        </StoreProvider>
+      </Block>
     </Page>
   );
 }

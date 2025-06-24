@@ -34,7 +34,7 @@
         "notFound": "Пошук за записами не дав результатів",
         "notAdded": "Ви ще не додали записів"
       },
-      "display": {
+      "item": {
         "messages": {
           "deleteRecord": {
             "success": "Ви успішно видалили запис.",

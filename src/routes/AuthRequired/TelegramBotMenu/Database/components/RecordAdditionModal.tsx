@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers } from 'formik';
 import monaco from 'monaco-editor';
@@ -6,8 +6,8 @@ import monaco from 'monaco-editor';
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import Button from 'components/ui/Button';
 import FormCodeInputFeedback from 'components/shared/FormCodeInputFeedback';
+import Button from 'components/ui/Button';
 import Modal, { ModalProps } from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -20,7 +20,7 @@ interface FormValues {
 }
 
 export interface RecordAdditionModalProps
-  extends Omit<ModalProps, 'loading' | 'children' | 'onHidden'> {
+  extends Omit<ModalProps, 'show' | 'loading' | 'children' | 'onHide' | 'onHidden'> {
   show: NonNullable<ModalProps['show']>;
   onHide: NonNullable<ModalProps['onHide']>;
 }
@@ -40,10 +40,12 @@ const monacoOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
 function RecordAdditionModal({
   onHide,
   ...props
-}: RecordAdditionModalProps): ReactElement<RecordAdditionModalProps> {
+}: RecordAdditionModalProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
     keyPrefix: 'records.recordAdditionModal',
   });
+
+  const formId = useId();
 
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
@@ -105,23 +107,23 @@ function RecordAdditionModal({
           onHide={onHide}
           onHidden={() => resetForm()}
         >
-          <Form>
-            <Modal.Header closeButton>
-              <Modal.Title>{t('title')}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
+          <Modal.Header closeButton>
+            <Modal.Title>{t('title')}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body asChild>
+            <Form id={formId}>
               <FormCodeInputFeedback
                 language='json'
                 name='data'
                 options={monacoOptions}
               />
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant='success' type='submit'>
-                {t('addButton')}
-              </Button>
-            </Modal.Footer>
-          </Form>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button form={formId} type='submit' variant='success' className='w-full'>
+              {t('addButton')}
+            </Button>
+          </Modal.Footer>
         </Modal>
       )}
     </Formik>
