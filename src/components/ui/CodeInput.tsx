@@ -33,6 +33,7 @@ export const codeInputVariants = cva(
   [
     'flex',
     'flex-col',
+    'w-full',
     'bg-background',
     'text-foreground',
     'border',
