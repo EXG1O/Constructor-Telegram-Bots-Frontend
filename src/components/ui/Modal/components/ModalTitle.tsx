@@ -9,7 +9,7 @@ export interface ModelTitleProps extends DialogTitleProps {}
 
 const ModelTitle = forwardRef<HTMLHeadingElement, ModelTitleProps>(
   ({ asChild, className, ...props }, ref) => {
-    const Component = asChild ? Slot : 'h5';
+    const Component = asChild ? Slot : 'h2';
 
     return (
       <DialogTitle asChild>
