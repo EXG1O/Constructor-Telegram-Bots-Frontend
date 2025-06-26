@@ -15,7 +15,6 @@ export interface CodeInputFeedbackProps extends CodeInputProps {
 function CodeInputFeedback({
   error,
   wrapperProps,
-  className,
   ...props
 }: CodeInputFeedbackProps): ReactElement {
   return (
