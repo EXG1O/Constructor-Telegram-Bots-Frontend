@@ -1,36 +1,53 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import FormTelegramQuillEditorFeedback from 'components/FormTelegramQuillEditorFeedback';
+import FormRichInputFeedback from 'components/shared/FormRichInputFeedback';
+import TelegramRichInputLayout, {
+  FORMATS,
+} from 'components/shared/TelegramRichInputLayout';
+import Block, { BlockProps } from 'components/ui/Block';
 
-import Block, { BlockProps } from '../../Block';
 import VariablesInfoText from '../../VariablesInfoText';
+
+import cn from 'utils/cn';
 
 export interface Message {
   text: string;
 }
 
-export type MessageBlockProps = Pick<BlockProps, 'className'>;
+export interface MessageBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 export const defaultMessage: Message = { text: '' };
 
-function MessageBlock(props: MessageBlockProps): ReactElement<MessageBlockProps> {
+function MessageBlock({ className, ...props }: MessageBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'commandOffcanvas.messageBlock',
   });
 
   return (
-    <Block {...props} title={t('title')} body>
-      <FormTelegramQuillEditorFeedback
-        height={220}
-        name='message.text'
-        placeholder={t('messageEditorPlaceholder')}
-      />
-      <VariablesInfoText />
+    <Block
+      {...props}
+      variant='light'
+      className={cn('flex', 'flex-col', 'gap-2', className)}
+    >
+      <Block.Title>
+        <h3 className='text-lg font-medium'>{t('title')}</h3>
+      </Block.Title>
+      <div>
+        <FormRichInputFeedback
+          name='message.text'
+          height='220px'
+          formats={FORMATS}
+          placeholder={t('messageEditorPlaceholder')}
+        >
+          <TelegramRichInputLayout />
+        </FormRichInputFeedback>
+        <VariablesInfoText />
+      </div>
     </Block>
   );
 }
 
-export default memo(MessageBlock);
+export default MessageBlock;

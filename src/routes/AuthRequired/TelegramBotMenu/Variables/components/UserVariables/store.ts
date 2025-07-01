@@ -4,7 +4,7 @@ import { create } from 'zustand';
 
 import { RouteID } from 'routes';
 
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { VariablesAPI } from 'api/telegram_bots/main';
 import { TelegramBot, Variable } from 'api/telegram_bots/types';
@@ -29,7 +29,7 @@ export interface StateActions {
     search?: StateParams['search'],
   ) => Promise<void>;
 
-  setLoading: (loading: boolean) => void;
+  setLoading: (loading: StateParams['loading']) => void;
 }
 
 export type State = StateParams & StateActions;

@@ -36,10 +36,12 @@ const config = (env: any, argv: any): Configuration => {
           hot: true,
           allowedHosts: 'all',
           historyApiFallback: true,
-          proxy: {
-            context: ['/api/', '/media/', '/admin/'],
-            target: 'http://localhost:8000/',
-          },
+          proxy: [
+            {
+              context: ['/api/', '/media/', '/admin/'],
+              target: 'http://localhost:8000/',
+            },
+          ],
           static: `${__dirname}/dist/frontend`,
         }
       : undefined,
@@ -55,11 +57,11 @@ const config = (env: any, argv: any): Configuration => {
           use: 'babel-loader',
         },
         {
-          test: /\.s?css$/,
+          test: /\.css$/,
           use: [
             isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
             'css-loader',
-            'sass-loader',
+            'postcss-loader',
           ],
         },
         {
@@ -111,7 +113,7 @@ const config = (env: any, argv: any): Configuration => {
         api: `${__dirname}/src/api/`,
         hooks: `${__dirname}/src/hooks/`,
         utils: `${__dirname}/src/utils/`,
-        styles: `${__dirname}/src/styles/`,
+        tokens: `${__dirname}/src/tokens/`,
       },
     },
     optimization: {

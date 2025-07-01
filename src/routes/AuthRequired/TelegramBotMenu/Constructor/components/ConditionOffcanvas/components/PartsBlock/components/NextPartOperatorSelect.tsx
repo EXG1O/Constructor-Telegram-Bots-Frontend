@@ -7,14 +7,14 @@ import { RouteID } from 'routes';
 
 import { Parts } from '..';
 
-import Select, { SelectProps } from 'components/Select';
+import SelectFeedback, { SelectFeedbackProps } from 'components/shared/SelectFeedback';
 
 import { defaultPart, Part } from './PartItem';
 
 export type NextPartOperator = '&&' | '||' | 'null';
 
 export interface NextPartOperatorSelectProps
-  extends Pick<SelectProps, 'size' | 'className'> {
+  extends Omit<SelectFeedbackProps, 'size' | 'children'> {
   index: number;
 }
 
@@ -25,15 +25,19 @@ export const defaultNextPartOperator: NextPartOperator = 'null';
 function NextPartOperatorSelect({
   index,
   ...props
-}: NextPartOperatorSelectProps): ReactElement<NextPartOperatorSelectProps> {
+}: NextPartOperatorSelectProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'conditionOffcanvas.partsBlock.nextPartOperatorSelect',
   });
 
-  const [{ value: parts }, _meta, { setValue }] = useField<Parts>('parts');
+  const [{ value: parts }, _meta, { setValue: setParts }] = useField<Parts>('parts');
+  const [field, meta] = useField<NextPartOperator>({
+    name: `parts[${index}].next_part_operator`,
+    ...props,
+  });
 
   function handleChange(event: ChangeEvent<HTMLSelectElement>) {
-    setValue(
+    setParts(
       produce(parts, (draft) => {
         const part: Part = draft[index];
         const operator = event.target.value as NextPartOperator;
@@ -50,14 +54,20 @@ function NextPartOperatorSelect({
   }
 
   return (
-    <Select {...props} value={parts[index].next_part_operator} onChange={handleChange}>
+    <SelectFeedback
+      {...props}
+      {...field}
+      size='sm'
+      error={meta.error}
+      onChange={handleChange}
+    >
       <option value='null'>-</option>
       {nextPartOperators.map((nextPartOperator, index) => (
         <option key={index} value={nextPartOperator}>
           {t(nextPartOperator)}
         </option>
       ))}
-    </Select>
+    </SelectFeedback>
   );
 }
 

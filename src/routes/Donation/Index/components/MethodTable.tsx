@@ -1,25 +1,53 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
-import Table from 'components/Table';
-
-import MethodTableRow from './MethodTableRow';
+import Table, { TableProps } from 'components/ui/Table';
 
 import useDonationRouteLoaderData from '../hooks/useDonationRouteLoaderData';
 
-function MethodTable(): ReactElement | null {
+import cn from 'utils/cn';
+
+export interface MethodTableProps extends Omit<TableProps, 'children'> {}
+
+function MethodTable({ className, ...props }: MethodTableProps): ReactElement | null {
   const { methods } = useDonationRouteLoaderData();
 
   return methods.length ? (
-    <div className='text-bg-white border rounded-1'>
-      <Table responsive striped borderless className='align-middle text-nowrap mb-0'>
-        <tbody>
+    <div
+      {...props}
+      className={cn(
+        'w-full',
+        'bg-light',
+        'text-foreground',
+        'rounded-md',
+        'overflow-hidden',
+        className,
+      )}
+    >
+      <Table striped className='text-nowrap'>
+        <Table.Body>
           {methods.map((method, index) => (
-            <MethodTableRow key={index} method={method} />
+            <Table.Row key={index}>
+              <Table.Head scope='row'>{method.text}</Table.Head>
+              <Table.Cell>
+                {method.link ? (
+                  <a
+                    href={method.link}
+                    target='_blank'
+                    rel='noreferrer'
+                    className='text-primary hover:text-primary-accent'
+                  >
+                    {method.link}
+                  </a>
+                ) : (
+                  <span className='select-all'>{method.value}</span>
+                )}
+              </Table.Cell>
+            </Table.Row>
           ))}
-        </tbody>
+        </Table.Body>
       </Table>
     </div>
   ) : null;
 }
 
-export default memo(MethodTable);
+export default MethodTable;

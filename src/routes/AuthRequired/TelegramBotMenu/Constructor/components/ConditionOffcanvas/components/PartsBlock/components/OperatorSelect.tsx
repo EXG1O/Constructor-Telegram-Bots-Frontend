@@ -1,14 +1,18 @@
-import React, { ChangeEvent, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useField } from 'formik';
 
 import { RouteID } from 'routes';
 
-import Select, { SelectProps } from 'components/Select';
+import FormSelectFeedback, {
+  FormSelectFeedbackProps,
+} from 'components/shared/FormSelectFeedback';
+
+import cn from 'utils/cn';
 
 export type Operator = '==' | '!=' | '>' | '>=' | '<' | '<=';
 
-export interface OperatorSelectProps extends Pick<SelectProps, 'size' | 'className'> {
+export interface OperatorSelectProps
+  extends Omit<FormSelectFeedbackProps, 'size' | 'name' | 'children'> {
   index: number;
 }
 
@@ -18,28 +22,26 @@ export const defaultOperator: Operator = '==';
 
 function OperatorSelect({
   index,
+  className,
   ...props
-}: OperatorSelectProps): ReactElement<OperatorSelectProps> {
+}: OperatorSelectProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'conditionOffcanvas.partsBlock.operatorSelect',
   });
 
-  const [{ value }, _meta, { setValue }] = useField<Operator>(
-    `parts[${index}].operator`,
-  );
-
-  function handleChange(event: ChangeEvent<HTMLSelectElement>): void {
-    setValue(event.target.value as Operator);
-  }
-
   return (
-    <Select {...props} value={value} className='text-truncate' onChange={handleChange}>
+    <FormSelectFeedback
+      {...props}
+      size='sm'
+      name={`parts[${index}].operator`}
+      className={cn('truncate', className)}
+    >
       {operators.map((operator, index) => (
         <option key={index} value={operator}>
           {t(operator)}
         </option>
       ))}
-    </Select>
+    </FormSelectFeedback>
   );
 }
 

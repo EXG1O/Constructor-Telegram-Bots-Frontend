@@ -8,7 +8,7 @@
   },
   "system": {
     "title": "System variables",
-    "typeButtonGroup": {
+    "typeTabs": {
       "personal": "Personal",
       "global": "Global"
     },

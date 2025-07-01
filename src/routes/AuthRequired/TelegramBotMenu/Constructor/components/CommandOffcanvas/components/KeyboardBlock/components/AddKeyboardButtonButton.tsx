@@ -1,17 +1,19 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Button, { ButtonProps } from 'components/Button';
+import Button, { ButtonProps } from 'components/ui/Button';
 
 import { useCommandOffcanvasStore } from '../../../store';
 
-export type AddKeyboardButtonButtonProps = Pick<ButtonProps, 'className'>;
+export interface AddKeyboardButtonButtonProps
+  extends Omit<ButtonProps, 'size' | 'variant' | 'children'> {}
 
-function AddKeyboardButtonButton(
-  props: AddKeyboardButtonButtonProps,
-): ReactElement<AddKeyboardButtonButtonProps> {
+function AddKeyboardButtonButton({
+  onClick,
+  ...props
+}: AddKeyboardButtonButtonProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'commandOffcanvas.keyboardBlock.addButtonButton',
   });
@@ -26,10 +28,11 @@ function AddKeyboardButtonButton(
     (state) => state.keyboardButtonBlock.hideBlock,
   );
 
-  function handleClick(): void {
+  function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
     addKeyboardButtonBlockVisible
       ? hideAddKeyboardButtonBlock()
       : showAddKeyboardButtonBlock();
+    onClick?.(event);
   }
 
   return (
@@ -44,4 +47,4 @@ function AddKeyboardButtonButton(
   );
 }
 
-export default memo(AddKeyboardButtonButton);
+export default AddKeyboardButtonButton;

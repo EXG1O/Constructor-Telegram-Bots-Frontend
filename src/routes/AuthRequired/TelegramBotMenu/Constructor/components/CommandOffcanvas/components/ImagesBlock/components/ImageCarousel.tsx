@@ -1,47 +1,36 @@
-import React, { memo, ReactElement, useEffect, useMemo, useState } from 'react';
-import classNames from 'classnames';
+import React, { ReactElement } from 'react';
 import { useField } from 'formik';
 
 import { Images } from '..';
 
-import Carousel, { CarouselProps } from 'components/Carousel';
+import Carousel, { CarouselProps } from 'components/ui/Carousel';
+import Spinner from 'components/ui/Spinner';
 
-export type ImageCarouselProps = Pick<CarouselProps, 'className'>;
+import { useCommandOffcanvasStore } from '../../../store';
 
-function ImageCarousel({
-  className,
-  ...props
-}: ImageCarouselProps): ReactElement<ImageCarouselProps> | null {
+export interface ImageCarouselProps
+  extends Omit<CarouselProps, 'height' | 'children'> {}
+
+function ImageCarousel(props: ImageCarouselProps): ReactElement | null {
   const [{ value: images }] = useField<Images>('images');
 
-  const [rawActiveIndex, setActiveIndex] = useState<number>(0);
-  const activeIndex = useMemo<number>(
-    () => (images.length < rawActiveIndex ? rawActiveIndex - 1 : rawActiveIndex),
-    [images, rawActiveIndex],
-  );
+  const loading = useCommandOffcanvasStore((state) => state.imagesLoading);
 
-  useEffect(() => {
-    if (activeIndex !== rawActiveIndex) setActiveIndex(activeIndex);
-  }, [activeIndex]);
-
-  return images.length ? (
-    <Carousel
-      {...props}
-      variant='dark'
-      interval={null}
-      controls={images.length > 1}
-      indicators={images.length > 1}
-      activeIndex={activeIndex}
-      className={classNames('bg-light overflow-hidden border rounded', className)}
-      onSelect={setActiveIndex}
-    >
-      {images.map((image) => (
-        <Carousel.Item key={image.key}>
-          <img height={200} src={image.url} className='w-100 object-fit-contain' />
+  return loading || images.length ? (
+    <Carousel {...props} height='200px'>
+      {!loading ? (
+        images.map((image) => (
+          <Carousel.Item key={image.key} className='bg-white'>
+            <Carousel.Item.Image src={image.url} />
+          </Carousel.Item>
+        ))
+      ) : (
+        <Carousel.Item className='flex items-center justify-center'>
+          <Spinner size='sm' />
         </Carousel.Item>
-      ))}
+      )}
     </Carousel>
   ) : null;
 }
 
-export default memo(ImageCarousel);
+export default ImageCarousel;

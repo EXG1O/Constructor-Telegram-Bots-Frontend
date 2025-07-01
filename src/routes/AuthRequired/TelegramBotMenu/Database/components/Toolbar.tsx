@@ -1,33 +1,20 @@
-import React, {
-  HTMLAttributes,
-  memo,
-  MouseEventHandler,
-  ReactElement,
-  useCallback,
-  useState,
-} from 'react';
+import React, { HTMLAttributes, ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
-import { Row } from 'react-bootstrap';
 
 import { RouteID } from 'routes';
 
-import AddButton from 'components/AddButton';
-import Pagination, { PaginationProps } from 'components/Pagination';
-import Search, { SearchProps } from 'components/Search';
+import PlusButton from 'components/shared/PlusButton';
+import SearchInput from 'components/shared/SearchInput';
+import Pagination from 'components/ui/Pagination';
 
-import RecordAdditionModal, { RecordAdditionModalProps } from './RecordAdditionModal';
+import RecordAdditionModal from './RecordAdditionModal';
 
 import useDatabaseRecordsStore from '../hooks/useDatabaseRecordsStore';
 
+import cn from 'utils/cn';
+
 export interface ToolbarProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
-
-type HideHandler = RecordAdditionModalProps['onHide'];
-type AddButtonClickHandler = MouseEventHandler<HTMLButtonElement>;
-type SearchHandler = SearchProps['onSearch'];
-type ClearHandler = SearchProps['onClear'];
-type PageChangeHandler = PaginationProps['onPageChange'];
 
 function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarProps> {
   const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
@@ -41,55 +28,56 @@ function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarPro
 
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const handleHide = useCallback<HideHandler>(() => setShowModal(false), []);
-  const handleAddButtonClick = useCallback<AddButtonClickHandler>(
-    () => setShowModal(true),
-    [],
-  );
-  const handleSearch = useCallback<SearchHandler>(
-    (value) => updateRecords(undefined, undefined, value),
-    [],
-  );
-  const handleClear = useCallback<ClearHandler>(
-    () => updateRecords(undefined, undefined, null),
-    [],
-  );
-  const handlePageChange = useCallback<PageChangeHandler>(
-    (newOffset) => updateRecords(undefined, newOffset),
-    [],
-  );
+  function handleHide(): void {
+    setShowModal(false);
+  }
+
+  function handleAddClick(): void {
+    setShowModal(true);
+  }
+
+  function handleSearch(value: string): void {
+    updateRecords(undefined, undefined, value);
+  }
+
+  function handleCancel(): void {
+    updateRecords(undefined, undefined, null);
+  }
+
+  function handlePageChange(nextOffset: number): void {
+    updateRecords(undefined, nextOffset);
+  }
 
   return (
-    <>
+    <div {...props} className={cn('flex', 'flex-wrap', 'w-full', 'gap-2', className)}>
       <RecordAdditionModal show={showModal} onHide={handleHide} />
-      <Row {...props} lg='auto' className={classNames('g-2', className)}>
-        <div>
-          <AddButton
+      <PlusButton
+        size='sm'
+        variant='dark'
+        className='max-md:w-full'
+        onClick={handleAddClick}
+      >
+        {t('addRecordButton')}
+      </PlusButton>
+      <SearchInput
+        size='sm'
+        containerProps={{ className: 'flex-auto' }}
+        onSearch={handleSearch}
+        onCancel={handleCancel}
+      />
+      {itemCount > itemLimit && (
+        <div className='inline-flex justify-center max-md:w-full'>
+          <Pagination
             size='sm'
-            variant='dark'
-            className='w-100'
-            onClick={handleAddButtonClick}
-          >
-            {t('addRecordButton')}
-          </AddButton>
+            itemCount={itemCount}
+            itemLimit={itemLimit}
+            itemOffset={itemOffset}
+            onPageChange={handlePageChange}
+          />
         </div>
-        <Search
-          size='sm'
-          className='flex-fill'
-          onSearch={handleSearch}
-          onClear={handleClear}
-        />
-        <Pagination
-          size='sm'
-          itemCount={itemCount}
-          itemLimit={itemLimit}
-          itemOffset={itemOffset}
-          className='justify-content-center ps-1'
-          onPageChange={handlePageChange}
-        />
-      </Row>
-    </>
+      )}
+    </div>
   );
 }
 
-export default memo(Toolbar);
+export default Toolbar;

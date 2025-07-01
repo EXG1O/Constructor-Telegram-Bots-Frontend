@@ -1,10 +1,9 @@
-import React, { memo, ReactElement, useCallback } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Block from 'components/Block';
-import Stack from 'components/Stack';
+import Block from 'components/ui/Block';
 
 import Footer from './components/Footer';
 import Toolbar from './components/Toolbar';
@@ -20,21 +19,24 @@ function UserVariables(): ReactElement {
   });
 
   const updateVariables = useUserVariablesStore((state) => state.updateVariables);
-  const handleAddOrSaveVariable = useCallback(() => updateVariables(), []);
+
+  function handleApply(): void {
+    updateVariables();
+  }
 
   return (
     <>
-      <VariableModal onAdd={handleAddOrSaveVariable} onSave={handleAddOrSaveVariable} />
-      <Block variant='light'>
-        <h3 className='fw-semibold text-center mb-3'>{t('title')}</h3>
-        <Stack gap={2}>
-          <Toolbar />
-          <VariablesTable />
-          <Footer />
-        </Stack>
+      <VariableModal onAdd={handleApply} onSave={handleApply} />
+      <Block variant='light' className='flex flex-col gap-2'>
+        <Block.Title>
+          <h3 className='text-3xl font-semibold'>{t('title')}</h3>
+        </Block.Title>
+        <Toolbar />
+        <VariablesTable />
+        <Footer />
       </Block>
     </>
   );
 }
 
-export default Object.assign(memo(UserVariables), { StoreProvider });
+export default Object.assign(UserVariables, { StoreProvider });

@@ -1,25 +1,23 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
 import BaseAPIRequestBlock, {
   APIRequest,
   APIRequestBlockProps as BaseAPIRequestBlockProps,
   defaultAPIRequest,
 } from '../../APIRequestBlock';
-import Block from '../../Block';
-
-export type APIRequestBlockProps = Pick<BaseAPIRequestBlockProps, 'className'>;
+import FormToggleSection from '../../FormToggleSection';
 
 export type { APIRequest };
 export { defaultAPIRequest };
 
-function APIRequestBlock(
-  props: APIRequestBlockProps,
-): ReactElement<APIRequestBlockProps> {
+export interface APIRequestBlockProps extends BaseAPIRequestBlockProps {}
+
+function APIRequestBlock(props: APIRequestBlockProps): ReactElement {
   return (
-    <Block.Collapse name='show_api_request_block'>
+    <FormToggleSection name='show_api_request_block'>
       <BaseAPIRequestBlock {...props} />
-    </Block.Collapse>
+    </FormToggleSection>
   );
 }
 
-export default memo(APIRequestBlock);
+export default APIRequestBlock;

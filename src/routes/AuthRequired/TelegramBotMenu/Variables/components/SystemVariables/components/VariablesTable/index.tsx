@@ -1,17 +1,18 @@
-import React, { HTMLAttributes, ReactElement, useMemo } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 
 import { RouteID } from 'routes';
 
-import Table from 'components/Table';
+import Table, { TableProps } from 'components/ui/Table';
 
 import TableRow from './components/TableRow';
+
+import cn from 'utils/cn';
 
 import { Type } from '../..';
 
 export interface VariablesTableProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+  extends Omit<TableProps, 'size' | 'striped' | 'children'> {
   type: Type;
 }
 
@@ -24,7 +25,7 @@ function VariablesTable({
   type,
   className,
   ...props
-}: VariablesTableProps): ReactElement<VariablesTableProps> {
+}: VariablesTableProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.TelegramBotMenuVariables, {
     keyPrefix: 'system.variables',
   });
@@ -60,16 +61,13 @@ function VariablesTable({
   );
 
   return (
-    <div
-      {...props}
-      className={classNames('overflow-hidden border rounded-1', className)}
-    >
-      <Table responsive borderless striped variant='white' className='mb-0'>
-        <tbody>
-          {variables[type].map((variable, index) => (
-            <TableRow key={index} variable={variable} />
+    <div className={cn('rounded-sm', 'overflow-hidden', className)}>
+      <Table {...props} striped className='text-nowrap'>
+        <Table.Body>
+          {variables[type].map((variable) => (
+            <TableRow key={variable.name} variable={variable} />
           ))}
-        </tbody>
+        </Table.Body>
       </Table>
     </div>
   );

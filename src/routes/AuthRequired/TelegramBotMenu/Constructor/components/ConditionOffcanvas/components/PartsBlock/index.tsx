@@ -1,20 +1,24 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useField } from 'formik';
-import { Stack } from 'react-bootstrap';
 
 import { RouteID } from 'routes';
 
+import Block, { BlockProps } from 'components/ui/Block';
+
 import PartItem, { defaultPart, Part } from './components/PartItem';
 
-import Block from '../../../Block';
 import VariablesInfoText from '../../../VariablesInfoText';
+
+import cn from 'utils/cn';
 
 export type Parts = Part[];
 
+export interface PartsBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
+
 export const defaultParts: Parts = [defaultPart];
 
-function PartsBlock(): ReactElement {
+function PartsBlock({ className, ...props }: PartsBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'conditionOffcanvas.partsBlock',
   });
@@ -22,15 +26,22 @@ function PartsBlock(): ReactElement {
   const [{ value: parts }] = useField<Parts>('parts');
 
   return (
-    <Block title={t('title')} body>
-      <Stack gap={1}>
+    <Block
+      {...props}
+      variant='light'
+      className={cn('flex', 'flex-col', 'gap-2', className)}
+    >
+      <Block.Title>
+        <h3 className='text-lg font-medium'>{t('title')}</h3>
+      </Block.Title>
+      <div className='flex flex-col gap-1'>
         {parts.map((_, index) => (
           <PartItem key={index} index={index} />
         ))}
         <VariablesInfoText />
-      </Stack>
+      </div>
     </Block>
   );
 }
 
-export default memo(PartsBlock);
+export default PartsBlock;

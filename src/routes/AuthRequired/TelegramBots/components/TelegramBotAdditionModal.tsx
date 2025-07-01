@@ -1,15 +1,14 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 
-import Button from 'components/Button';
-import FormCheckFeedback from 'components/FormCheckFeedback';
-import FormInputFeedback from 'components/FormInputFeedback';
-import Modal, { ModalProps } from 'components/Modal';
-import Stack from 'components/Stack';
-import { createMessageToast } from 'components/ToastContainer';
+import FormCheckFeedback from 'components/shared/FormCheckFeedback';
+import FormInputFeedback from 'components/shared/FormInputFeedback';
+import Button from 'components/ui/Button';
+import Modal, { ModalProps } from 'components/ui/Modal';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useTelegramBots from '../hooks/useTelegramBots';
 
@@ -19,7 +18,7 @@ import { Data } from 'api/telegram_bots/types';
 type FormValues = Data.TelegramBotsAPI.Create;
 
 export interface TelegramBotAdditionModalProps
-  extends Omit<ModalProps, 'loading' | 'children' | 'onExited'> {
+  extends Omit<ModalProps, 'loading' | 'children' | 'onHidden'> {
   show: NonNullable<ModalProps['show']>;
   onHide: NonNullable<ModalProps['onHide']>;
 }
@@ -29,10 +28,12 @@ const defaultFormValues: FormValues = { api_token: '', is_private: false };
 function TelegramBotAdditionModal({
   onHide,
   ...props
-}: TelegramBotAdditionModalProps): ReactElement<TelegramBotAdditionModalProps> {
+}: TelegramBotAdditionModalProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBots, {
     keyPrefix: 'telegramBotAdditionModal',
   });
+
+  const formId = useId();
 
   const [telegramBots, setTelegramBots] = useTelegramBots();
 
@@ -74,13 +75,13 @@ function TelegramBotAdditionModal({
           {...props}
           loading={isSubmitting}
           onHide={onHide}
-          onExited={() => resetForm()}
+          onHidden={() => resetForm()}
         >
-          <Form>
-            <Modal.Header closeButton>
-              <Modal.Title>{t('title')}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body as={Stack} gap={2}>
+          <Modal.Header closeButton>
+            <Modal.Title>{t('title')}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body asChild>
+            <Form id={formId} className='flex flex-col gap-2'>
               <FormInputFeedback
                 name='api_token'
                 placeholder={t('apiTokenInputPlaceholder')}
@@ -90,17 +91,17 @@ function TelegramBotAdditionModal({
                 name='is_private'
                 label={t('privateSwitchLabel')}
               />
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant='success' type='submit'>
-                {t('addButton')}
-              </Button>
-            </Modal.Footer>
-          </Form>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button type='submit' form={formId} variant='success' className='w-full'>
+              {t('addButton')}
+            </Button>
+          </Modal.Footer>
         </Modal>
       )}
     </Formik>
   );
 }
 
-export default memo(TelegramBotAdditionModal);
+export default TelegramBotAdditionModal;

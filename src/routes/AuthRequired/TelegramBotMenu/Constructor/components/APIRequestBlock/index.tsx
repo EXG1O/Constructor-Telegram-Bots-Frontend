@@ -1,20 +1,21 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import FormInputFeedback from 'components/FormInputFeedback';
-import Stack from 'components/Stack';
+import FormInputFeedback from 'components/shared/FormInputFeedback';
+import Block, { BlockProps } from 'components/ui/Block';
 
-import BodyBlock, { Body, defaultBody } from './components/BodyBlock';
-import HeadersBlock, { defaultHeaders, Headers } from './components/HeadersBlock';
-import MethodButtonGroup, {
+import APIRequestBody, { Body, defaultBody } from './components/APIRequestBody';
+import APIRequestHeaders, {
+  defaultHeaders,
+  Headers,
+} from './components/APIRequestHeaders';
+import APIRequestMethods, {
   defaultMethod,
   Method,
-} from './components/MethodButtonGroup';
-import TestBlock from './components/TestBlock';
-
-import Block, { BlockProps } from '../Block';
+} from './components/APIRequestMethods';
+import APIRequestTest from './components/APIRequestTest';
 
 export interface APIRequest {
   url: string;
@@ -23,7 +24,8 @@ export interface APIRequest {
   body: Body;
 }
 
-export type APIRequestBlockProps = Omit<BlockProps, 'title' | 'children'>;
+export interface APIRequestBlockProps
+  extends Omit<BlockProps, 'variant' | 'children'> {}
 
 export const defaultAPIRequest: APIRequest = {
   url: '',
@@ -32,27 +34,33 @@ export const defaultAPIRequest: APIRequest = {
   body: defaultBody,
 };
 
-function APIRequestBlock(
-  props: APIRequestBlockProps,
-): ReactElement<APIRequestBlockProps> {
+function APIRequestBlock(props: APIRequestBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'apiRequestBlock',
   });
 
   return (
-    <Block {...props} title={t('title')}>
-      <Block.Body as={Stack} gap={2}>
-        <FormInputFeedback
-          name='api_request.url'
-          placeholder={t('urlInputPlaceholder')}
-        />
-        <MethodButtonGroup />
-        <HeadersBlock />
-        <BodyBlock />
-        <TestBlock />
-      </Block.Body>
+    <Block {...props} variant='light'>
+      <Block.Title>
+        <h3 className='mb-2 text-lg font-medium'>{t('title')}</h3>
+      </Block.Title>
+      <FormInputFeedback
+        name='api_request.url'
+        placeholder={t('urlInputPlaceholder')}
+        wrapperProps={{ className: 'mb-2' }}
+      />
+      <APIRequestMethods className='mb-2' />
+      <APIRequestHeaders.ToggleSection className='mb-2'>
+        <APIRequestHeaders />
+      </APIRequestHeaders.ToggleSection>
+      <APIRequestBody.ToggleSection>
+        <APIRequestBody.ToggleInnerSection className='mb-2'>
+          <APIRequestBody />
+        </APIRequestBody.ToggleInnerSection>
+      </APIRequestBody.ToggleSection>
+      <APIRequestTest />
     </Block>
   );
 }
 
-export default memo(APIRequestBlock);
+export default APIRequestBlock;

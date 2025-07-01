@@ -1,23 +1,21 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useField } from 'formik';
 import { produce } from 'immer';
 
 import { RouteID } from 'routes';
 
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import Block, { BlockProps } from 'components/ui/Block';
+import Button from 'components/ui/Button';
 
-import Button from 'components/Button';
-
-import BlockCollapse from './components/BlockCollapse';
 import TextInput, { Text } from './components/TextInput';
+import ToggleSection from './components/ToggleSection';
 import URLInput, { URL as URLValue } from './components/URLInput';
-import URLInputCollapse from './components/URLInputCollapse';
 
-import Block, { BlockProps } from '../../../../../Block';
 import { KeyboardRow } from '../Keyboard/components/DraggableKeyboardRow';
-import { Type } from '../KeyboardTypeButtonGroup';
+import { Type } from '../KeyboardTypes';
+
+import cn from 'utils/cn';
 
 import { useCommandOffcanvasStore } from '../../../../store';
 
@@ -26,11 +24,13 @@ export interface KeyboardButton {
   url: URLValue;
 }
 
-export type KeyboardButtonBlockProps = Pick<BlockProps, 'className'>;
+export interface KeyboardButtonBlockProps
+  extends Omit<BlockProps, 'size' | 'variant' | 'children'> {}
 
-function KeyboardButtonBlock(
-  props: KeyboardButtonBlockProps,
-): ReactElement<KeyboardButtonBlockProps> {
+function KeyboardButtonBlock({
+  className,
+  ...props
+}: KeyboardButtonBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardButtonBlock',
   });
@@ -44,12 +44,12 @@ function KeyboardButtonBlock(
   );
 
   const [{ value: keyboardType }] = useField<Type>('keyboard.type');
-  const [{ value: rows }, _meta, { setValue }] =
+  const [{ value: rows }, _meta, { setValue: setRows }] =
     useField<KeyboardRow[]>(`keyboard.rows`);
 
   const showURLInput: boolean = shouldShowURLInput && keyboardType !== 'default';
 
-  function validateButton(): boolean {
+  function validateData(): boolean {
     const errors: Record<string, string> = {};
     const {
       keyboardButtonBlock: { text, url, setErrors },
@@ -76,14 +76,14 @@ function KeyboardButtonBlock(
     return true;
   }
 
-  function handleAddButton(): void {
-    if (!validateButton()) return;
+  function handleAddClick(): void {
+    if (!validateData()) return;
 
     const {
       keyboardButtonBlock: { text, url },
     } = useCommandOffcanvasStore.getState();
 
-    setValue(
+    setRows(
       produce(rows, (draft) => {
         draft.push({
           draggableId: crypto.randomUUID(),
@@ -100,8 +100,8 @@ function KeyboardButtonBlock(
     hideBlock();
   }
 
-  function handleSaveButton(): void {
-    if (!validateButton()) return;
+  function handleSaveClick(): void {
+    if (!validateData()) return;
 
     const {
       keyboardButtonBlock: { rowIndex, buttonIndex, text, url },
@@ -115,7 +115,7 @@ function KeyboardButtonBlock(
       throw Error('You call the save action, but buttonIndex state must not be null.');
     }
 
-    setValue(
+    setRows(
       produce(rows, (draft) => {
         const button = draft[rowIndex].buttons[buttonIndex];
         button.text = text;
@@ -125,13 +125,13 @@ function KeyboardButtonBlock(
     hideBlock();
   }
 
-  function handleDeleteButton(): void {
+  function handleDeleteClick(): void {
     const {
       keyboardButtonBlock: { rowIndex, buttonIndex },
     } = useCommandOffcanvasStore.getState();
 
     hideBlock();
-    setValue(
+    setRows(
       produce(rows, (draft) => {
         draft[rowIndex!].buttons.splice(buttonIndex!, 1);
       }),
@@ -139,43 +139,47 @@ function KeyboardButtonBlock(
   }
 
   return (
-    <BlockCollapse>
-      <Block {...props} title={t('title', { context: blockType })}>
-        <Block.Body>
-          <TextInput />
-          <URLInputCollapse>
+    <ToggleSection>
+      <Block
+        {...props}
+        size='sm'
+        variant='light'
+        className={cn('bg-light-accent', className)}
+      >
+        <Block.Title>
+          <h4 className='mb-1 text-base font-medium'>
+            {t('title', { context: blockType })}
+          </h4>
+        </Block.Title>
+        <TextInput wrapperProps={{ className: 'mb-1' }} />
+        <URLInput.ToggleSection>
+          <URLInput.ToggleInnerSection className='mb-1'>
             <URLInput />
-          </URLInputCollapse>
-        </Block.Body>
-        <Block.Footer>
-          <Row className='g-2'>
-            <Col xs={blockType === 'add' ? 12 : 6}>
-              <Button
-                size='sm'
-                variant='success'
-                className='w-100'
-                onClick={blockType === 'add' ? handleAddButton : handleSaveButton}
-              >
-                {t('actionButton', { context: blockType })}
-              </Button>
-            </Col>
-            {blockType === 'edit' && (
-              <Col xs={6}>
-                <Button
-                  size='sm'
-                  variant='danger'
-                  className='w-100'
-                  onClick={handleDeleteButton}
-                >
-                  {t('deleteButton')}
-                </Button>
-              </Col>
-            )}
-          </Row>
-        </Block.Footer>
+          </URLInput.ToggleInnerSection>
+        </URLInput.ToggleSection>
+        <div className='flex w-full gap-1'>
+          <Button
+            size='sm'
+            variant='success'
+            className='w-full'
+            onClick={blockType === 'add' ? handleAddClick : handleSaveClick}
+          >
+            {t('actionButton', { context: blockType })}
+          </Button>
+          {blockType === 'edit' && (
+            <Button
+              size='sm'
+              variant='danger'
+              className='w-full'
+              onClick={handleDeleteClick}
+            >
+              {t('deleteButton')}
+            </Button>
+          )}
+        </div>
       </Block>
-    </BlockCollapse>
+    </ToggleSection>
   );
 }
 
-export default memo(KeyboardButtonBlock);
+export default KeyboardButtonBlock;

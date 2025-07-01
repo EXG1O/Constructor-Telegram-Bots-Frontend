@@ -1,13 +1,13 @@
-import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Loading from 'components/Loading';
-import Page from 'components/Page';
-import { createMessageToast } from 'components/ToastContainer';
+import Page from 'components/ui/Page';
+import Spinner from 'components/ui/Spinner';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
-import SectionDisplay from './components/SectionDisplay';
+import SectionItem from './components/SectionItem';
 
 import usePrivacyPolicyRouteLoaderData from './hooks/usePrivacyPolicyRouteLoaderData';
 
@@ -19,11 +19,12 @@ function PrivacyPolicy(): ReactElement {
 
   const { sections: initialSections } = usePrivacyPolicyRouteLoaderData();
 
-  const title = useMemo<string>(() => t('title'), [i18n.language]);
-  const isInitialRender = useRef<boolean>(true);
+  const title: string = t('title');
 
   const [sections, setSections] = useState<Section[]>(initialSections);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const isInitialRenderRef = useRef<boolean>(true);
 
   async function updateSections(): Promise<void> {
     setLoading(true);
@@ -43,8 +44,8 @@ function PrivacyPolicy(): ReactElement {
   }
 
   useEffect(() => {
-    if (isInitialRender.current) {
-      isInitialRender.current = false;
+    if (isInitialRenderRef.current) {
+      isInitialRenderRef.current = false;
       return;
     }
 
@@ -52,12 +53,14 @@ function PrivacyPolicy(): ReactElement {
   }, [i18n.language]);
 
   return (
-    <Page title={title} grid>
-      <h1 className='fw-semibold text-center'>{title}</h1>
+    <Page title={title} flex gutters className='flex-auto'>
+      <h2 className='text-center text-4xl font-semibold text-foreground'>{title}</h2>
       {!loading ? (
-        sections.map((section) => <SectionDisplay key={section.id} section={section} />)
+        sections.map((section) => <SectionItem key={section.id} section={section} />)
       ) : (
-        <Loading size='lg' className='m-auto' />
+        <div className='flex flex-auto items-center justify-center'>
+          <Spinner />
+        </div>
       )}
     </Page>
   );

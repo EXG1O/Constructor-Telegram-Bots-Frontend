@@ -1,22 +1,24 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 
 import { RouteID } from 'routes';
 
-import Block, { BlockProps } from 'components/Block';
+import Block, { BlockProps } from 'components/ui/Block';
 
-export type HeaderProps = Omit<BlockProps, 'variant' | 'gradient' | 'children'>;
+export interface HeaderProps
+  extends Omit<BlockProps, 'variant' | 'gradient' | 'children'> {}
 
-function Header({ className, ...props }: HeaderProps): ReactElement<HeaderProps> {
+function Header(props: HeaderProps): ReactElement {
   const { t } = useTranslation(RouteID.Home, { keyPrefix: 'header' });
 
   return (
-    <Block {...props} variant='light' className={classNames(className, 'text-center')}>
-      <h1 className='fw-bold'>Constructor Telegram Bots</h1>
-      <p className='fs-5 w-100 w-xl-75 mx-xl-auto'>{t('text')}</p>
+    <Block {...props} size='xl' variant='light'>
+      <Block.Title>
+        <h1 className='text-5xl font-bold'>Constructor Telegram Bots</h1>
+      </Block.Title>
+      <p className='w-full text-center text-xl xl:mx-auto xl:w-3/4'>{t('text')}</p>
     </Block>
   );
 }
 
-export default memo(Header);
+export default Header;

@@ -1,134 +1,133 @@
-import React, { memo, ReactElement, useCallback } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Handle, NodeProps as RFNodeProps, Position, useStore } from 'reactflow';
+import {
+  Node as RFNode,
+  NodeProps as RFNodeProps,
+  Position,
+  useReactFlow,
+} from '@xyflow/react';
+import { Link } from 'lucide-react';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import './CommandNode.scss';
-
-import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
-import Stack from 'components/Stack';
-import { createMessageToast } from 'components/ToastContainer';
+import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
+import { telegramRichInputEditorInnerContentVariants } from 'components/shared/TelegramRichInputLayout';
+import { richInputEditorInnerContentVariants } from 'components/ui/RichInput/components/RichInputEditor';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
-import Node, { NodeProps } from './Node';
-
-import Link45DegIcon from 'assets/icons/link-45deg.svg';
+import Node from './Node';
 
 import { CommandAPI } from 'api/telegram_bots/main';
 import { DiagramBlock, DiagramCommand } from 'api/telegram_bots/types';
 
+import cn from 'utils/cn';
+
 type Data = Omit<DiagramCommand, keyof DiagramBlock>;
 
-export type CommandNodeProps = RFNodeProps<Data>;
+export interface CommandNodeProps extends RFNodeProps<RFNode<Data>> {}
 
-type EditHandler = NodeProps['onEdit'];
-
-function CommandNode({
-  id,
-  xPos,
-  yPos,
-  data: command,
-}: CommandNodeProps): ReactElement<CommandNodeProps> {
-  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+function CommandNode({ id, data: command }: CommandNodeProps): ReactElement {
+  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nodes.command',
   });
 
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-  const onNodesDelete = useStore((state) => state.onNodesDelete);
+  const reactFlow = useReactFlow();
 
   const showEditCommandOffcanvas = useCommandOffcanvasStore(
     (state) => state.showOffcanvas,
   );
 
-  const setShowAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
-  const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
-  const setLoadingAskConfirmModal = useAskConfirmModalStore(
-    (state) => state.setLoading,
-  );
+  const showConfirmModal = useConfirmModalStore((state) => state.setShow);
+  const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
+  const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const showDeleteModal = useCallback(
-    () =>
-      setShowAskConfirmModal({
-        title: t('deleteModal.title'),
-        text: t('deleteModal.text'),
-        onConfirm: async () => {
-          setLoadingAskConfirmModal(true);
+  function handleEdit(): void {
+    showEditCommandOffcanvas(command.id);
+  }
 
-          const response = await CommandAPI.delete(telegramBot.id, command.id);
+  function handleDelete(): void {
+    showConfirmModal({
+      title: t('deleteModal.title'),
+      text: t('deleteModal.text'),
+      onConfirm: async () => {
+        setLoadingConfirmModal(true);
 
-          if (response.ok) {
-            onNodesDelete?.([{ id, position: { x: xPos, y: yPos }, data: command }]);
-            hideAskConfirmModal();
-            createMessageToast({
-              message: t('messages.deleteCommand.success'),
-              level: 'success',
-            });
-          } else {
-            createMessageToast({
-              message: t('messages.deleteCommand.error'),
-              level: 'error',
-            });
-          }
+        const response = await CommandAPI.delete(telegramBot.id, command.id);
 
-          setLoadingAskConfirmModal(false);
-        },
-        onCancel: null,
-      }),
-    [i18n.language],
-  );
+        if (response.ok) {
+          reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
+          hideConfirmModal();
+          createMessageToast({
+            message: t('messages.deleteCommand.success'),
+            level: 'success',
+          });
+        } else {
+          createMessageToast({
+            message: t('messages.deleteCommand.error'),
+            level: 'error',
+          });
+        }
 
-  const handleEdit = useCallback<EditHandler>(
-    () => showEditCommandOffcanvas(command.id),
-    [command.id],
-  );
+        setLoadingConfirmModal(false);
+      },
+      onCancel: null,
+    });
+  }
 
   return (
-    <Node title={t('title')} onEdit={handleEdit} onDelete={showDeleteModal}>
-      <Node.Block className='position-relative text-center text-break'>
-        <Handle id={`${id}:left:0`} type='target' position={Position.Left} />
-        {command.name}
-        <Handle id={`${id}:right:0`} type='target' position={Position.Right} />
+    <Node title={t('title')} onEdit={handleEdit} onDelete={handleDelete}>
+      <Node.Block className='relative'>
+        <Node.Title>{command.name}</Node.Title>
+        <Node.Handle id={`${id}:left:0`} type='target' position={Position.Left} />
+        <Node.Handle id={`${id}:right:0`} type='target' position={Position.Right} />
       </Node.Block>
       <Node.Block
-        className='message-text-block'
+        className={cn(
+          richInputEditorInnerContentVariants({ size: 'sm' }),
+          telegramRichInputEditorInnerContentVariants({ size: 'sm' }),
+        )}
         dangerouslySetInnerHTML={{ __html: command.message.text }}
       />
       {command.keyboard?.buttons && (
-        <Stack gap={1}>
-          {command.keyboard.buttons.map((button) => (
-            <Node.Block
-              key={button.id}
-              variant='dark'
-              className='position-relative text-center text-break'
-            >
-              {button.url ? (
-                <>
-                  <Link45DegIcon width={16} height={16} /> {button.text}
-                </>
-              ) : (
-                <>
-                  <Handle
-                    id={`${id}:left:${button.id}`}
-                    type='source'
-                    position={Position.Left}
-                  />
-                  {button.text}
-                  <Handle
-                    id={`${id}:right:${button.id}`}
-                    type='source'
-                    position={Position.Right}
-                  />
-                </>
-              )}
-            </Node.Block>
-          ))}
-        </Stack>
+        <div className='flex flex-col gap-1'>
+          {command.keyboard.buttons.map((button) =>
+            button.url ? (
+              <Node.Block
+                key={button.id}
+                variant='dark'
+                className='flex flex-wrap items-center justify-center gap-1 wrap-break-word break-word'
+              >
+                {button.text}
+                <Link className='size-3' />
+              </Node.Block>
+            ) : (
+              <Node.Block
+                key={button.id}
+                variant='dark'
+                className='relative text-center'
+              >
+                {button.text}
+                <Node.Handle
+                  id={`${id}:left:${button.id}`}
+                  type='source'
+                  position={Position.Left}
+                />
+                <Node.Handle
+                  id={`${id}:right:${button.id}`}
+                  type='source'
+                  position={Position.Right}
+                />
+              </Node.Block>
+            ),
+          )}
+        </div>
       )}
     </Node>
   );
 }
 
-export default memo(CommandNode);
+export default CommandNode;

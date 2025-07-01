@@ -1,23 +1,20 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 import formatDate from 'i18n/formatDate';
 
 import { RouteID } from 'routes';
 
-import './Donations.scss';
-
-import Block, { BlockProps } from 'components/Block';
-import Table from 'components/Table';
+import Block, { BlockProps } from 'components/ui/Block';
+import Table from 'components/ui/Table';
 
 import useHomeRouteLoaderData from '../hooks/useHomeRouteLoaderData';
 
-export type DonationsProps = Omit<BlockProps, 'variant' | 'gradient' | 'children'>;
+import cn from 'utils/cn';
 
-function Donations({
-  className,
-  ...props
-}: DonationsProps): ReactElement<DonationsProps> {
+export interface DonationsProps
+  extends Omit<BlockProps, 'variant' | 'gradient' | 'children'> {}
+
+function Donations({ className, ...props }: DonationsProps): ReactElement {
   const { t } = useTranslation(RouteID.Home, { keyPrefix: 'donations' });
 
   const { donations } = useHomeRouteLoaderData();
@@ -25,30 +22,33 @@ function Donations({
   return (
     <Block
       {...props}
+      size='xl'
       variant='dark'
       gradient
-      className={classNames(className, 'text-center')}
+      className={cn('flex', 'flex-col', 'text-center', 'gap-3', className)}
     >
-      <h3 className='fw-semibold mb-3'>{t('title')}</h3>
-      <div className='donations-container overflow-y-auto'>
-        {donations.count ? (
-          <Table borderless className='align-middle mb-0'>
-            <tbody>
-              {donations.results.map((donation) => (
-                <tr key={donation.id}>
-                  <td className='sum'>{`${donation.sum}€`}</td>
-                  <td className='sender text-break'>{donation.sender}</td>
-                  <td className='date'>{formatDate(donation.date, 'd MMM yyyy')}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        ) : (
-          t('noDonations')
-        )}
-      </div>
+      <Block.Title>
+        <h3 className='text-3xl font-semibold'>{t('title')}</h3>
+      </Block.Title>
+      {donations.count ? (
+        <Table className='align-middle'>
+          <Table.Body>
+            {donations.results.map((donation) => (
+              <Table.Row key={donation.id}>
+                <Table.Cell className='w-1/4'>{`${donation.sum}€`}</Table.Cell>
+                <Table.Cell className='w-1/2'>{donation.sender}</Table.Cell>
+                <Table.Cell className='w-1/2'>
+                  {formatDate(donation.date, 'd MMM yyyy')}
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
+      ) : (
+        <span>{t('noDonations')}</span>
+      )}
     </Block>
   );
 }
 
-export default memo(Donations);
+export default Donations;

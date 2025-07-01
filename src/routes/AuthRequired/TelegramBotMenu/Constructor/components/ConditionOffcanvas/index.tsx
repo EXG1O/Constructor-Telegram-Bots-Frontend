@@ -5,10 +5,9 @@ import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import Button from 'components/Button';
-import Offcanvas, { OffcanvasProps } from 'components/Offcanvas';
-import Stack from 'components/Stack';
-import { createMessageToast } from 'components/ToastContainer';
+import Button from 'components/ui/Button';
+import Offcanvas, { OffcanvasProps } from 'components/ui/Offcanvas';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import PartsBlock, { defaultParts, Parts } from './components/PartsBlock';
 
@@ -24,16 +23,20 @@ export interface FormValues {
   parts: Parts;
 }
 
-type InnerConditionFormOffcanvasProps = Pick<OffcanvasProps, 'className'>;
+type InnerConditionFormOffcanvasProps = Omit<
+  OffcanvasProps,
+  'show' | 'loading' | 'children' | 'onHide'
+>;
 
 export const defaultFormValues: FormValues = {
   name: defaultName,
   parts: defaultParts,
 };
 
-function InnerConditionOffcanvas(
-  props: InnerConditionFormOffcanvasProps,
-): ReactElement<InnerConditionFormOffcanvasProps> {
+function InnerConditionOffcanvas({
+  onHidden,
+  ...props
+}: InnerConditionFormOffcanvasProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'conditionOffcanvas',
   });
@@ -52,35 +55,35 @@ function InnerConditionOffcanvas(
   const setLoading = useConditionOffcanvasStore((state) => state.setLoading);
 
   useEffect(() => {
-    if (conditionID) {
-      (async () => {
-        const response = await ConditionAPI.get(telegramBot.id, conditionID);
+    if (!conditionID) return;
+    (async () => {
+      const response = await ConditionAPI.get(telegramBot.id, conditionID);
 
-        if (!response.ok) {
-          hideOffcanvas();
-          createMessageToast({
-            message: t('messages.getCondition.error'),
-            level: 'error',
-          });
-          return;
-        }
-
-        const { id, parts, ...condition } = response.json;
-
-        setValues({
-          ...condition,
-          parts: parts.map(({ next_part_operator, ...part }) => ({
-            ...part,
-            next_part_operator: next_part_operator ?? 'null',
-          })),
+      if (!response.ok) {
+        hideOffcanvas();
+        createMessageToast({
+          message: t('messages.getCondition.error'),
+          level: 'error',
         });
-        setLoading(false);
-      })();
-    }
+        return;
+      }
+
+      const { id, parts, ...condition } = response.json;
+
+      setValues({
+        ...condition,
+        parts: parts.map(({ next_part_operator, ...part }) => ({
+          ...part,
+          next_part_operator: next_part_operator ?? 'null',
+        })),
+      });
+      setLoading(false);
+    })();
   }, [conditionID]);
 
-  function handleExited(): void {
+  function handleHidden(): void {
     resetForm();
+    onHidden?.();
   }
 
   return (
@@ -89,19 +92,19 @@ function InnerConditionOffcanvas(
       show={show}
       loading={isSubmitting || loading}
       onHide={hideOffcanvas}
-      onExited={handleExited}
+      onHidden={handleHidden}
     >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>{t('title', { context: type })}</Offcanvas.Title>
       </Offcanvas.Header>
-      <Offcanvas.Body as={Form} id={formID}>
-        <Stack gap={3}>
+      <Offcanvas.Body asChild>
+        <Form id={formID} className='flex flex-col gap-3'>
           <NameBlock />
           <PartsBlock />
-        </Stack>
+        </Form>
       </Offcanvas.Body>
-      <Offcanvas.Footer className='gap-2'>
-        <Button type='submit' form={formID} variant='success'>
+      <Offcanvas.Footer>
+        <Button form={formID} type='submit' variant='success' className='w-full'>
           {t('actionButton', { context: type })}
         </Button>
       </Offcanvas.Footer>
@@ -118,7 +121,7 @@ function ConditionOffcanvas({
   onAdd,
   onSave,
   ...props
-}: ConditionFormOffcanvasProps): ReactElement<ConditionFormOffcanvasProps> {
+}: ConditionFormOffcanvasProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'conditionOffcanvas',
   });

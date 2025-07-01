@@ -1,21 +1,21 @@
-import React, { CSSProperties, HTMLAttributes, memo, ReactElement } from 'react';
+import React, { HTMLAttributes, ReactElement } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import classNames from 'classnames';
 import { useField } from 'formik';
 import { produce } from 'immer';
 
 import { Documents } from '..';
 
-import DocumentDetail from './DocumentDetail';
+import DocumentItem from './DocumentItem';
 
-export type DocumentsListProps = Pick<HTMLAttributes<HTMLDivElement>, 'className'>;
+import cn from 'utils/cn';
 
-const blockStyle: CSSProperties = { maxHeight: 171 };
+export interface DocumentsListProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
 
 function DocumentsList({
   className,
   ...props
-}: DocumentsListProps): ReactElement<DocumentsListProps> | null {
+}: DocumentsListProps): ReactElement | null {
   const [{ value: documents }, _meta, { setValue: setDocuments }] =
     useField<Documents>('documents');
 
@@ -33,30 +33,34 @@ function DocumentsList({
   return documents.length ? (
     <div
       {...props}
-      className={classNames(
-        'bg-light overflow-auto border rounded-1 gap-1 p-1',
+      className={cn(
+        'w-full',
+        'bg-light-accent',
+        'rounded-sm',
+        'overflow-hidden',
         className,
       )}
-      style={blockStyle}
     >
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId='command-offcanvas-documents'>
-          {(provided) => (
-            <div
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              className='row g-1'
-            >
-              {documents.map((document, index) => (
-                <DocumentDetail key={document.key} index={index} />
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <div className='max-h-50 w-full overflow-y-auto p-1 scrollbar-thin'>
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId='command-offcanvas-documents'>
+            {(provided) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className='flex w-full flex-col gap-1'
+              >
+                {documents.map((document, index) => (
+                  <DocumentItem key={document.key} index={index} />
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
     </div>
   ) : null;
 }
 
-export default memo(DocumentsList);
+export default DocumentsList;

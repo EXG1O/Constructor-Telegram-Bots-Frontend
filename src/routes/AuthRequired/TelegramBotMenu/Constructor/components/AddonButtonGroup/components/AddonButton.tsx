@@ -1,27 +1,30 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useField } from 'formik';
 
-import Button, { ButtonProps } from 'components/Button';
+import Button, { ButtonProps } from 'components/ui/Button';
 
-export interface AddonButtonProps extends Pick<ButtonProps, 'className'> {
+export interface AddonButtonProps
+  extends Omit<ButtonProps, 'size' | 'variant' | 'children'> {
   name: string;
-  children: string;
+  children: NonNullable<ButtonProps['children']>;
 }
 
-function AddonButton({
-  name,
-  ...props
-}: AddonButtonProps): ReactElement<AddonButtonProps> {
-  const [{ value: show }, _meta, { setValue }] = useField<boolean>(name);
+function AddonButton({ name, onClick, ...props }: AddonButtonProps): ReactElement {
+  const [{ value: active }, _meta, { setValue }] = useField<boolean>(name);
+
+  function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
+    setValue(!active);
+    onClick?.(event);
+  }
 
   return (
     <Button
       {...props}
       size='sm'
-      variant={show ? 'secondary' : 'dark'}
-      onClick={() => setValue(!show)}
+      variant={active ? 'secondary' : 'dark'}
+      onClick={handleClick}
     />
   );
 }
 
-export default memo(AddonButton);
+export default AddonButton;

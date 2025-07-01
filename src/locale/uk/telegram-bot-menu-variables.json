@@ -8,7 +8,7 @@
   },
   "system": {
     "title": "Системні змінні",
-    "typeButtonGroup": {
+    "typeTabs": {
       "personal": "Персональні",
       "global": "Глобальні"
     },

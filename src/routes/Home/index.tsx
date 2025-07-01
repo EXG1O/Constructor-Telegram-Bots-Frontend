@@ -1,12 +1,9 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-
-import Page from 'components/Page';
+import Page from 'components/ui/Page';
 
 import Donations from './components/Donations';
 import Header from './components/Header';
@@ -15,20 +12,24 @@ import Stats from './components/Stats';
 function Home(): ReactElement {
   const { t } = useTranslation(RouteID.Home);
 
+  const [statsRef, setStatsRef] = useState<HTMLDivElement | null>(null);
+
   return (
-    <Page title={t('title')} align='center'>
-      <Row className='g-3 g-lg-4'>
-        <Col xs={12}>
-          <Header />
-        </Col>
-        <Col xs={12} lg={6}>
-          <Stats />
-        </Col>
-        <Col xs={12} lg={6}>
-          <Donations />
-        </Col>
-      </Row>
-    </Page>
+    <main className='my-auto'>
+      <Page asChild title={t('title')} grid gutters>
+        <div className='grid-cols-1 lg:grid-cols-2'>
+          <div className='lg:col-span-2'>
+            <Header />
+          </div>
+          <div className='lg:col-span-1'>
+            <Stats ref={setStatsRef} />
+          </div>
+          <div className='lg:col-span-1'>
+            <Donations style={{ height: statsRef?.offsetHeight }} />
+          </div>
+        </div>
+      </Page>
+    </main>
   );
 }
 

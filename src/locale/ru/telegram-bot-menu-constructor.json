@@ -112,7 +112,7 @@
     },
     "keyboardBlock": {
       "title": "Клавиатура",
-      "typeButtonGroup": {
+      "types": {
         "default": "Обычный",
         "inline": "Встроенный",
         "payment": "Платёжный"
@@ -218,6 +218,8 @@
     "actionButton_edit": "Сохранить"
   },
   "panel": {
+    "showButton": "Показать блоки",
+    "hideButton": "Скрыть блоки",
     "addCommandButton": "Добавить команду",
     "addConditionButton": "Добавить условие",
     "addBackgroundTaskButton": "Добавить фоновую задачу"

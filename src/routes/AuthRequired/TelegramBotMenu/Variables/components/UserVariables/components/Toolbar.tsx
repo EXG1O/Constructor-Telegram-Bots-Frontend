@@ -1,22 +1,15 @@
-import React, { memo, MouseEventHandler, ReactElement, useCallback } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Row from 'react-bootstrap/Row';
-
-import AddButton from 'components/AddButton';
-import Pagination, { PaginationProps } from 'components/Pagination';
-import Search, { SearchProps } from 'components/Search';
+import PlusButton from 'components/shared/PlusButton';
+import SearchInput from 'components/shared/SearchInput';
+import Pagination from 'components/ui/Pagination';
 
 import { useVariableModalStore } from './VariableModal/store';
 
 import useUserVariablesStore from '../hooks/useUserVariablesStore';
-
-type AddButtonClickHandler = MouseEventHandler<HTMLButtonElement>;
-type SearchHandler = SearchProps['onSearch'];
-type ClearHandler = SearchProps['onClear'];
-type PageChangeHandler = PaginationProps['onPageChange'];
 
 function Toolbar(): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
@@ -30,51 +23,51 @@ function Toolbar(): ReactElement {
   const itemOffset = useUserVariablesStore((state) => state.offset);
   const updateVariables = useUserVariablesStore((state) => state.updateVariables);
 
-  const handleAddButtonClick = useCallback<AddButtonClickHandler>(
-    () => showVariableModal(),
-    [],
-  );
-  const handleSearch = useCallback<SearchHandler>(
-    (value) => updateVariables(undefined, undefined, value),
-    [],
-  );
-  const handleClear = useCallback<ClearHandler>(
-    () => updateVariables(undefined, undefined, null),
-    [],
-  );
-  const handlePageChange = useCallback<PageChangeHandler>(
-    (newOffset) => updateVariables(undefined, newOffset),
-    [],
-  );
+  function handleAddClick(): void {
+    showVariableModal();
+  }
+
+  function handleSearch(value: string): void {
+    updateVariables(undefined, undefined, value);
+  }
+
+  function handleCancel(): void {
+    updateVariables(undefined, undefined, null);
+  }
+
+  function handlePageChange(nextOffset: number): void {
+    updateVariables(undefined, nextOffset);
+  }
 
   return (
-    <Row md='auto' className='g-2'>
-      <div>
-        <AddButton
-          size='sm'
-          variant='dark'
-          className='w-100'
-          onClick={handleAddButtonClick}
-        >
-          {t('addVariableButton')}
-        </AddButton>
-      </div>
-      <Search
+    <div className='flex w-full flex-wrap gap-2'>
+      <PlusButton
         size='sm'
-        className='flex-fill'
+        variant='dark'
+        className='max-md:w-full'
+        onClick={handleAddClick}
+      >
+        {t('addVariableButton')}
+      </PlusButton>
+      <SearchInput
+        size='sm'
+        containerProps={{ className: 'flex-auto' }}
         onSearch={handleSearch}
-        onClear={handleClear}
+        onCancel={handleCancel}
       />
-      <Pagination
-        size='sm'
-        itemCount={itemCount}
-        itemLimit={itemLimit}
-        itemOffset={itemOffset}
-        className='justify-content-center ps-1'
-        onPageChange={handlePageChange}
-      />
-    </Row>
+      {itemCount > itemLimit && (
+        <div className='inline-flex justify-center max-md:w-full'>
+          <Pagination
+            size='sm'
+            itemCount={itemCount}
+            itemLimit={itemLimit}
+            itemOffset={itemOffset}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      )}
+    </div>
   );
 }
 
-export default memo(Toolbar);
+export default Toolbar;

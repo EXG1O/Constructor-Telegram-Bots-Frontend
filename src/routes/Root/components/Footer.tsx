@@ -1,40 +1,35 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
-import Container from 'components/Container';
+import Container from 'components/ui/Container';
+import IconButton from 'components/ui/IconButton';
 
-import GithubIcon from 'assets/icons/github.svg';
-import TelegramIcon from 'assets/icons/telegram.svg';
-
-const linkClassName: string = 'd-flex align-items-center text-reset';
+import Github from 'assets/icons/github.svg';
+import Telegram from 'assets/icons/telegram.svg';
 
 function Footer(): ReactElement {
   return (
-    <footer className='py-2'>
-      <Container>
-        <div className='d-flex justify-content-between'>
-          <span>&copy; 2025 exg1o</span>
-          <div className='d-flex gap-1'>
-            <a
-              href='https://t.me/exg1o_channel'
-              rel='noreferrer'
-              target='_blank'
-              className={linkClassName}
-            >
-              <TelegramIcon />
+    <Container asChild>
+      <footer className='flex justify-between py-2 text-foreground'>
+        <span>&copy; 2025 exg1o</span>
+        <div className='flex gap-1'>
+          <IconButton asChild size='sm'>
+            <a href='https://t.me/exg1o_channel' target='_blank' rel='noreferrer'>
+              <Telegram />
             </a>
+          </IconButton>
+          <IconButton asChild size='sm'>
             <a
               href='https://github.com/EXG1O/Constructor-Telegram-Bots'
-              rel='noreferrer'
               target='_blank'
-              className={linkClassName}
+              rel='noreferrer'
             >
-              <GithubIcon />
+              <Github />
             </a>
-          </div>
+          </IconButton>
         </div>
-      </Container>
-    </footer>
+      </footer>
+    </Container>
   );
 }
 
-export default memo(Footer);
+export default Footer;

@@ -1,7 +1,8 @@
-import React, { HTMLAttributes, memo, ReactElement } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
-import classNames from 'classnames';
+import React, { LiHTMLAttributes, ReactElement } from 'react';
+import { Draggable, DraggableProps } from 'react-beautiful-dnd';
 import { useField } from 'formik';
+
+import cn from 'utils/cn';
 
 import { useCommandOffcanvasStore } from '../../../../../store';
 
@@ -13,7 +14,11 @@ export interface KeyboardButton {
 }
 
 export interface DraggableKeyboardButtonProps
-  extends Omit<HTMLAttributes<HTMLElement>, 'children'> {
+  extends Omit<LiHTMLAttributes<HTMLLIElement>, 'children'>,
+    Pick<
+      DraggableProps,
+      'isDragDisabled' | 'disableInteractiveElementBlocking' | 'shouldRespectForcePress'
+    > {
   rowIndex: number;
   buttonIndex: number;
 }
@@ -21,9 +26,12 @@ export interface DraggableKeyboardButtonProps
 function DraggableKeyboardButton({
   rowIndex,
   buttonIndex,
+  isDragDisabled,
+  disableInteractiveElementBlocking,
+  shouldRespectForcePress,
   className,
   ...props
-}: DraggableKeyboardButtonProps): ReactElement<DraggableKeyboardButtonProps> {
+}: DraggableKeyboardButtonProps): ReactElement {
   const [{ value: button }] = useField<KeyboardButton>(
     `keyboard.rows[${rowIndex}].buttons[${buttonIndex}]`,
   );
@@ -47,23 +55,30 @@ function DraggableKeyboardButton({
   return (
     <Draggable index={buttonIndex} draggableId={button.draggableId}>
       {({ innerRef, draggableProps, dragHandleProps }) => (
-        <small
-          ref={innerRef}
+        <li
           {...props}
           {...draggableProps}
           {...dragHandleProps}
-          className={classNames(
-            'rounded-1 text-center px-2 py-1',
-            { 'text-bg-dark': !select, 'text-bg-secondary': select },
+          ref={innerRef}
+          className={cn(
+            'w-full',
+            'rounded-sm',
+            'text-sm',
+            'text-center',
+            'px-2',
+            'py-1',
+            select
+              ? ['bg-secondary', 'text-secondary-foreground']
+              : ['bg-dark', 'text-dark-foreground'],
             className,
           )}
           onClick={handleClick}
         >
           {button.text}
-        </small>
+        </li>
       )}
     </Draggable>
   );
 }
 
-export default memo(DraggableKeyboardButton);
+export default DraggableKeyboardButton;

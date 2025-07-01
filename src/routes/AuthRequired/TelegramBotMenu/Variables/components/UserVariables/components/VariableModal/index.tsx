@@ -1,16 +1,18 @@
-import React, { memo, ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import Button from 'components/Button';
-import FormInputFeedback from 'components/FormInputFeedback';
-import FormTelegramQuillEditorFeedback from 'components/FormTelegramQuillEditorFeedback';
-import Modal from 'components/Modal';
-import Stack from 'components/Stack';
-import { createMessageToast } from 'components/ToastContainer';
+import FormInputFeedback from 'components/shared/FormInputFeedback';
+import FormRichInputFeedback from 'components/shared/FormRichInputFeedback';
+import TelegramRichInputLayout, {
+  FORMATS,
+} from 'components/shared/TelegramRichInputLayout';
+import Button from 'components/ui/Button';
+import Modal from 'components/ui/Modal';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { VariableAPI, VariablesAPI } from 'api/telegram_bots/main';
 import { Variable } from 'api/telegram_bots/types';
@@ -29,6 +31,8 @@ function InnerVariableModal(): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
     keyPrefix: 'user.variableModal',
   });
+
+  const formId = useId();
 
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
@@ -63,7 +67,7 @@ function InnerVariableModal(): ReactElement {
     }
   }, [variableID]);
 
-  function handleExited(): void {
+  function handleHidden(): void {
     resetForm();
   }
 
@@ -72,30 +76,33 @@ function InnerVariableModal(): ReactElement {
       show={show}
       loading={isSubmitting || loading}
       onHide={hideModal}
-      onExited={handleExited}
+      onHidden={handleHidden}
     >
-      <Form>
-        <Modal.Header closeButton>
-          <Modal.Title>{t('title', { context: type })}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body as={Stack} gap={2}>
+      <Modal.Header closeButton>
+        <Modal.Title>{t('title', { context: type })}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body asChild>
+        <Form id={formId} className='flex flex-col gap-2'>
           <FormInputFeedback name='name' placeholder={t('nameInput.placeholder')} />
-          <FormTelegramQuillEditorFeedback
-            height={220}
+          <FormRichInputFeedback
             name='value'
+            height='220px'
+            formats={FORMATS}
             placeholder={t('valueInput.placeholder')}
-          />
+          >
+            <TelegramRichInputLayout />
+          </FormRichInputFeedback>
           <FormInputFeedback
             name='description'
             placeholder={t('descriptionInput.placeholder')}
           />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant='success' type='submit'>
-            {t('actionButton', { context: type })}
-          </Button>
-        </Modal.Footer>
-      </Form>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button type='submit' form={formId} variant='success' className='w-full'>
+          {t('actionButton', { context: type })}
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 }
@@ -159,4 +166,4 @@ function VariableModal({
   );
 }
 
-export default memo(VariableModal);
+export default VariableModal;

@@ -1,22 +1,23 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ChangeEvent, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import InputFeedback, { InputFeedbackProps } from 'components/InputFeedback';
+import InputFeedback, { InputFeedbackProps } from 'components/shared/InputFeedback';
 
 import { useCommandOffcanvasStore } from '../../../../../store';
 
-export type TextInputProps = Omit<
-  InputFeedbackProps,
-  'size' | 'value' | 'placeholder' | 'children' | 'onChange'
->;
-
 export type Text = string;
+
+export interface TextInputProps
+  extends Omit<
+    InputFeedbackProps,
+    'size' | 'value' | 'error' | 'placeholder' | 'children' | 'onChange'
+  > {}
 
 export const defaultText: Text = '';
 
-function TextInput(props: TextInputProps): ReactElement<TextInputProps> {
+function TextInput(props: TextInputProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardButtonBlock.textInput',
   });
@@ -29,6 +30,10 @@ function TextInput(props: TextInputProps): ReactElement<TextInputProps> {
     (state) => state.keyboardButtonBlock.errors.text,
   );
 
+  function handleChange(event: ChangeEvent<HTMLInputElement>): void {
+    setText(event.target.value);
+  }
+
   return (
     <InputFeedback
       {...props}
@@ -36,9 +41,9 @@ function TextInput(props: TextInputProps): ReactElement<TextInputProps> {
       value={text}
       error={error}
       placeholder={t('placeholder')}
-      onChange={(e) => setText(e.target.value)}
+      onChange={handleChange}
     />
   );
 }
 
-export default memo(TextInput);
+export default TextInput;

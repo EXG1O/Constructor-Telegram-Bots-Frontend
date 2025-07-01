@@ -1,13 +1,14 @@
-import React, { ReactElement } from 'react';
-import { Stack } from 'react-bootstrap';
+import React, { HTMLAttributes, ReactElement } from 'react';
 
-import FormInputFeedback from 'components/FormInputFeedback';
+import FormInputFeedback from 'components/shared/FormInputFeedback';
 
 import NextPartOperatorSelect, {
   defaultNextPartOperator,
   NextPartOperator,
 } from './NextPartOperatorSelect';
 import OperatorSelect, { defaultOperator, Operator } from './OperatorSelect';
+
+import cn from 'utils/cn';
 
 export interface Part {
   id?: number;
@@ -18,7 +19,8 @@ export interface Part {
   next_part_operator: NextPartOperator;
 }
 
-export interface PartItemProps {
+export interface PartItemProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   index: number;
 }
 
@@ -30,14 +32,14 @@ export const defaultPart: Part = {
   next_part_operator: defaultNextPartOperator,
 };
 
-function PartItem({ index }: PartItemProps): ReactElement<PartItemProps> {
+function PartItem({ index, className, ...props }: PartItemProps): ReactElement {
   return (
-    <Stack direction='horizontal' gap={1}>
+    <div {...props} className={cn('flex', 'gap-1', className)}>
       <FormInputFeedback size='sm' name={`parts[${index}].first_value`} />
-      <OperatorSelect size='sm' index={index} />
+      <OperatorSelect index={index} />
       <FormInputFeedback size='sm' name={`parts[${index}].second_value`} />
-      <NextPartOperatorSelect size='sm' index={index} />
-    </Stack>
+      <NextPartOperatorSelect index={index} />
+    </div>
   );
 }
 

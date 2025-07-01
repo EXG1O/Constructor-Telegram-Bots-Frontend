@@ -1,7 +1,0 @@
-@import 'base';
-
-.dynamic-content {
-  > *:not(:last-child) {
-    margin-bottom: map-get($spacers, 2);
-  }
-}

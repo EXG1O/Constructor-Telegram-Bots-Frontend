@@ -1,34 +1,30 @@
-import React, { memo, ReactElement, SVGProps } from 'react';
+import React, { HTMLAttributes, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Clipboard, SquarePen, Trash2 } from 'lucide-react';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import { useAskConfirmModalStore } from 'components/AskConfirmModal/store';
-import { createMessageToast } from 'components/ToastContainer';
+import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
+import IconButton from 'components/ui/IconButton';
+import Table from 'components/ui/Table';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useVariableModalStore } from '../../VariableModal/store';
 
 import useUserVariablesStore from '../../../hooks/useUserVariablesStore';
 
-import ClipboardIcon from 'assets/icons/clipboard.svg';
-import PencilSquareIcon from 'assets/icons/pencil-square.svg';
-import TrashIcon from 'assets/icons/trash.svg';
-
 import { VariableAPI } from 'api/telegram_bots/main';
 import { Variable } from 'api/telegram_bots/types';
 
-export interface TableRowProps {
+import cn from 'utils/cn';
+
+export interface TableRowProps
+  extends Omit<HTMLAttributes<HTMLTableRowElement>, 'children'> {
   variable: Variable;
 }
 
-const iconProps: SVGProps<SVGSVGElement> = {
-  height: '100%',
-  width: 18,
-  cursor: 'pointer',
-};
-
-function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
+function TableRow({ variable, className, ...props }: TableRowProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
     keyPrefix: 'user.table.row',
   });
@@ -37,26 +33,28 @@ function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
 
   const updateVariables = useUserVariablesStore((state) => state.updateVariables);
 
-  const showAskConfirmModal = useAskConfirmModalStore((state) => state.setShow);
-  const hideAskConfirmModal = useAskConfirmModalStore((state) => state.setHide);
-  const setLoadingAskConfirmModal = useAskConfirmModalStore(
-    (state) => state.setLoading,
-  );
+  const showConfirmModal = useConfirmModalStore((state) => state.setShow);
+  const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
+  const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
   const showVariableModal = useVariableModalStore((state) => state.showModal);
 
-  function showDeleteModal(): void {
-    showAskConfirmModal({
+  function handleEditClick(): void {
+    showVariableModal(variable.id);
+  }
+
+  function handleDeleteClick(): void {
+    showConfirmModal({
       title: t('deleteModal.title'),
       text: t('deleteModal.text'),
       onConfirm: async () => {
-        setLoadingAskConfirmModal(true);
+        setLoadingConfirmModal(true);
 
         const response = await VariableAPI.delete(telegramBot.id, variable.id);
 
         if (response.ok) {
           updateVariables();
-          hideAskConfirmModal();
+          hideConfirmModal();
           createMessageToast({
             message: t('messages.deleteVariable.success'),
             level: 'success',
@@ -68,43 +66,39 @@ function TableRow({ variable }: TableRowProps): ReactElement<TableRowProps> {
           });
         }
 
-        setLoadingAskConfirmModal(false);
+        setLoadingConfirmModal(false);
       },
       onCancel: null,
     });
   }
 
   return (
-    <tr>
-      <td className='w-50'>
-        <div className='d-flex align-items-center gap-2'>
-          <ClipboardIcon
-            cursor='pointer'
+    <Table.Row {...props} className={cn('text-nowrap', className)}>
+      <Table.Cell className='w-1/2'>
+        <div className='flex items-center gap-1'>
+          <IconButton
+            size='sm'
             className='btn-clipboard'
             data-clipboard-text={`{{ ${variable.name} }}`}
-          />
-          <span className='flex-fill text-info-emphasis'>{variable.name}</span>
+          >
+            <Clipboard />
+          </IconButton>
+          <span className='text-info-emphasis'>{variable.name}</span>
         </div>
-      </td>
-      <td>
-        <div className='d-flex gap-2'>
-          <span className='flex-fill text-nowrap'>{variable.description}</span>
-          <div className='d-flex align-content-center gap-1'>
-            <PencilSquareIcon
-              {...iconProps}
-              className='text-secondary'
-              onClick={() => showVariableModal(variable.id)}
-            />
-            <TrashIcon
-              {...iconProps}
-              className='text-danger'
-              onClick={showDeleteModal}
-            />
-          </div>
+      </Table.Cell>
+      <Table.Cell>{variable.description}</Table.Cell>
+      <Table.Cell className='w-px'>
+        <div className='flex items-center gap-1'>
+          <IconButton size='sm' onClick={handleEditClick}>
+            <SquarePen />
+          </IconButton>
+          <IconButton size='sm' className='text-danger' onClick={handleDeleteClick}>
+            <Trash2 />
+          </IconButton>
         </div>
-      </td>
-    </tr>
+      </Table.Cell>
+    </Table.Row>
   );
 }
 
-export default memo(TableRow);
+export default TableRow;

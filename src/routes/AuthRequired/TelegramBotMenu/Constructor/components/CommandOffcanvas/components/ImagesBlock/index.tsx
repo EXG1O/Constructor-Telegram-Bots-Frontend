@@ -1,16 +1,17 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Stack from 'components/Stack';
+import Block, { BlockProps } from 'components/ui/Block';
 
 import AddImagesButton from './components/AddImagesButton';
 import ImageCarousel from './components/ImageCarousel';
 import ImageList from './components/ImageList';
-import ImagesLoading from './components/ImagesLoading';
 
-import Block, { BlockProps } from '../../../Block';
+import FormToggleSection from '../../../FormToggleSection';
+
+import cn from 'utils/cn';
 
 export interface Image {
   id?: number;
@@ -24,28 +25,31 @@ export interface Image {
 
 export type Images = Image[];
 
-export type ImagesBlockProps = Pick<BlockProps, 'className'>;
+export interface ImagesBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 export const defaultImages: Images = [];
 
-function ImagesBlock(props: ImagesBlockProps): ReactElement<ImagesBlockProps> {
+function ImagesBlock({ className, ...props }: ImagesBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'commandOffcanvas.imagesBlock',
   });
 
   return (
-    <Block.Collapse name='show_images_block'>
-      <Block {...props} title={t('title')}>
-        <Block.Body as={Stack} gap={2}>
-          <ImagesLoading>
-            <ImageCarousel />
-            <ImageList />
-          </ImagesLoading>
-          <AddImagesButton />
-        </Block.Body>
+    <FormToggleSection name='show_images_block'>
+      <Block
+        {...props}
+        variant='light'
+        className={cn('flex', 'flex-col', 'gap-2', className)}
+      >
+        <Block.Title>
+          <h3 className='text-lg font-medium'>{t('title')}</h3>
+        </Block.Title>
+        <ImageCarousel />
+        <ImageList />
+        <AddImagesButton />
       </Block>
-    </Block.Collapse>
+    </FormToggleSection>
   );
 }
 
-export default memo(ImagesBlock);
+export default ImagesBlock;

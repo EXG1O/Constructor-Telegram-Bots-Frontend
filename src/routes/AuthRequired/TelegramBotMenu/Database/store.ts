@@ -4,7 +4,7 @@ import { create } from 'zustand';
 
 import { RouteID } from 'routes';
 
-import { createMessageToast } from 'components/ToastContainer';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { DatabaseRecordsAPI } from 'api/telegram_bots/main';
 import { DatabaseRecord, TelegramBot } from 'api/telegram_bots/types';

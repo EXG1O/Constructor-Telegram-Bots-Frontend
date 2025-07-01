@@ -5,9 +5,9 @@ import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import Button from 'components/Button';
-import Offcanvas from 'components/Offcanvas';
-import { createMessageToast } from 'components/ToastContainer';
+import Button from 'components/ui/Button';
+import Offcanvas, { OffcanvasProps } from 'components/ui/Offcanvas';
+import { createMessageToast } from 'components/ui/ToastContainer';
 
 import APIRequestBlock, { defaultAPIRequest } from './components/APIRequestBlock';
 import { APIRequest } from './components/APIRequestBlock';
@@ -29,8 +29,6 @@ import TelegramBotStorage from './components/TelegramBotStorage';
 
 import AddonButtonGroup from '../AddonButtonGroup';
 import NameBlock, { defaultName, Name } from '../NameBlock';
-
-import './index.scss';
 
 import { CommandAPI, CommandsAPI } from 'api/telegram_bots/main';
 import { Command, Data } from 'api/telegram_bots/types';
@@ -58,6 +56,9 @@ export interface FormValues {
   show_database_block: boolean;
 }
 
+interface InnerCommandOffcanvasProps
+  extends Omit<OffcanvasProps, 'show' | 'loading' | 'children' | 'onHide'> {}
+
 export const defaultFormValues: FormValues = {
   name: defaultName,
   settings: defaultSettings,
@@ -79,12 +80,15 @@ export const defaultFormValues: FormValues = {
   show_database_block: false,
 };
 
-function InnerCommandOffcanvas(): ReactElement {
-  const formID = useId();
-
+function InnerCommandOffcanvas({
+  onHidden,
+  ...props
+}: InnerCommandOffcanvasProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor);
 
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+
+  const formID = useId();
 
   const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
 
@@ -96,147 +100,149 @@ function InnerCommandOffcanvas(): ReactElement {
   const setLoading = useCommandOffcanvasStore((state) => state.setLoading);
 
   useEffect(() => {
-    if (commandID) {
-      (async () => {
-        const response = await CommandAPI.get(telegramBot.id, commandID);
+    if (!commandID) return;
+    (async () => {
+      const response = await CommandAPI.get(telegramBot.id, commandID);
 
-        if (!response.ok) {
-          hideOffcanvas();
-          createMessageToast({
-            message: t('commandOffcanvas.messages.getCommand.error'),
-            level: 'error',
-          });
-          return;
-        }
-
-        const {
-          id,
-          images,
-          documents,
-          keyboard,
-          api_request,
-          database_record,
-          ...command
-        } = response.json;
-
-        setValues({
-          ...command,
-
-          images: images.length
-            ? images
-                .sort((a, b) => a.position - b.position)
-                .map<Image>(({ id, name, size, url, from_url }) => ({
-                  id,
-                  key: crypto.randomUUID(),
-                  file: null,
-                  name: name ?? from_url!,
-                  size: size ?? 0,
-                  url: url ?? from_url!,
-                  from_url,
-                }))
-            : defaultImages,
-          documents: documents.length
-            ? documents
-                .sort((a, b) => a.position - b.position)
-                .map<Document>(({ id, name, size, url, from_url }) => ({
-                  id,
-                  key: crypto.randomUUID(),
-                  file: null,
-                  name: name ?? from_url!,
-                  size: size ?? 0,
-                  url: url ?? from_url!,
-                  from_url,
-                }))
-            : defaultDocuments,
-          keyboard: keyboard
-            ? {
-                type: keyboard.type,
-                rows: keyboard.buttons.reduce<KeyboardRow[]>(
-                  (rows, { id, row: rowIndex, position: buttonIndex, text, url }) => {
-                    if (!rows[rowIndex]) {
-                      rows[rowIndex] = {
-                        draggableId: crypto.randomUUID(),
-                        buttons: [],
-                      };
-                    }
-
-                    rows[rowIndex].buttons[buttonIndex] = {
-                      id,
-                      draggableId: crypto.randomUUID(),
-                      text,
-                      url,
-                    };
-
-                    return rows;
-                  },
-                  [],
-                ),
-              }
-            : defaultKeyboard,
-          api_request: api_request
-            ? {
-                ...api_request,
-                headers: api_request.headers
-                  ? api_request.headers.map((header) => {
-                      const [[key, value]] = Object.entries(header);
-                      return { key, value };
-                    })
-                  : defaultAPIRequest.headers,
-                body: api_request.body
-                  ? JSON.stringify(api_request.body, undefined, 4)
-                  : defaultAPIRequest.body,
-              }
-            : defaultAPIRequest,
-          database_record: database_record
-            ? {
-                ...database_record,
-                data: JSON.stringify(database_record.data, undefined, 4),
-              }
-            : defaultDatabaseRecord,
-
-          show_images_block: Boolean(images.length),
-          show_documents_block: Boolean(documents.length),
-          show_keyboard_block: Boolean(keyboard),
-
-          show_api_request_block: Boolean(api_request),
-          show_api_request_headers_block: Boolean(api_request?.headers),
-          show_api_request_body_block: Boolean(api_request?.body),
-
-          show_database_block: Boolean(database_record),
+      if (!response.ok) {
+        hideOffcanvas();
+        createMessageToast({
+          message: t('commandOffcanvas.messages.getCommand.error'),
+          level: 'error',
         });
-        setLoading(false);
-      })();
-    }
+        return;
+      }
+
+      const {
+        id,
+        images,
+        documents,
+        keyboard,
+        api_request,
+        database_record,
+        ...command
+      } = response.json;
+
+      setValues({
+        ...command,
+
+        images: images.length
+          ? images
+              .sort((a, b) => a.position - b.position)
+              .map<Image>(({ id, name, size, url, from_url }) => ({
+                id,
+                key: crypto.randomUUID(),
+                file: null,
+                name: name ?? from_url!,
+                size: size ?? 0,
+                url: url ?? from_url!,
+                from_url,
+              }))
+          : defaultImages,
+        documents: documents.length
+          ? documents
+              .sort((a, b) => a.position - b.position)
+              .map<Document>(({ id, name, size, url, from_url }) => ({
+                id,
+                key: crypto.randomUUID(),
+                file: null,
+                name: name ?? from_url!,
+                size: size ?? 0,
+                url: url ?? from_url!,
+                from_url,
+              }))
+          : defaultDocuments,
+        keyboard: keyboard
+          ? {
+              type: keyboard.type,
+              rows: keyboard.buttons.reduce<KeyboardRow[]>(
+                (rows, { id, row: rowIndex, position: buttonIndex, text, url }) => {
+                  if (!rows[rowIndex]) {
+                    rows[rowIndex] = {
+                      draggableId: crypto.randomUUID(),
+                      buttons: [],
+                    };
+                  }
+
+                  rows[rowIndex].buttons[buttonIndex] = {
+                    id,
+                    draggableId: crypto.randomUUID(),
+                    text,
+                    url,
+                  };
+
+                  return rows;
+                },
+                [],
+              ),
+            }
+          : defaultKeyboard,
+        api_request: api_request
+          ? {
+              ...api_request,
+              headers: api_request.headers
+                ? api_request.headers.map((header) => {
+                    const [[key, value]] = Object.entries(header);
+                    return { key, value };
+                  })
+                : defaultAPIRequest.headers,
+              body: api_request.body
+                ? JSON.stringify(api_request.body, undefined, 4)
+                : defaultAPIRequest.body,
+            }
+          : defaultAPIRequest,
+        database_record: database_record
+          ? {
+              ...database_record,
+              data: JSON.stringify(database_record.data, undefined, 4),
+            }
+          : defaultDatabaseRecord,
+
+        show_images_block: Boolean(images.length),
+        show_documents_block: Boolean(documents.length),
+        show_keyboard_block: Boolean(keyboard),
+
+        show_api_request_block: Boolean(api_request),
+        show_api_request_headers_block: Boolean(api_request?.headers),
+        show_api_request_body_block: Boolean(api_request?.body),
+
+        show_database_block: Boolean(database_record),
+      });
+      setLoading(false);
+    })();
   }, [commandID]);
 
-  function handleExited(): void {
+  function handleHidden(): void {
     resetForm();
+    onHidden?.();
   }
 
   return (
     <Offcanvas
+      {...props}
       show={show}
       loading={isSubmitting || loading}
-      className='command'
       onHide={hideOffcanvas}
-      onExited={handleExited}
+      onHidden={handleHidden}
     >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
           {t('commandOffcanvas.title', { context: type })}
         </Offcanvas.Title>
       </Offcanvas.Header>
-      <Offcanvas.Body as={Form} id={formID}>
-        <NameBlock />
-        <SettingsBlock />
-        <ImagesBlock />
-        <DocumentsBlock />
-        <MessageBlock />
-        <KeyboardBlock />
-        <APIRequestBlock />
-        <DatabaseRecordBlock />
+      <Offcanvas.Body asChild>
+        <Form id={formID}>
+          <NameBlock className='mb-3' />
+          <SettingsBlock className='mb-3' />
+          <ImagesBlock className='mb-3' />
+          <DocumentsBlock className='mb-3' />
+          <MessageBlock className='mb-3' />
+          <KeyboardBlock className='mb-3' />
+          <APIRequestBlock className='mb-3' />
+          <DatabaseRecordBlock className='mb-3' />
+        </Form>
       </Offcanvas.Body>
-      <Offcanvas.Footer className='gap-2'>
+      <Offcanvas.Footer className='flex flex-col gap-2'>
         <TelegramBotStorage />
         <AddonButtonGroup>
           <AddonButtonGroup.Button name='show_images_block'>
@@ -255,7 +261,7 @@ function InnerCommandOffcanvas(): ReactElement {
             {t('commandOffcanvas.databaseRecordBlock.title')}
           </AddonButtonGroup.Button>
         </AddonButtonGroup>
-        <Button type='submit' form={formID} variant='success'>
+        <Button form={formID} type='submit' variant='success' className='w-full'>
           {t('commandOffcanvas.actionButton', { context: type })}
         </Button>
       </Offcanvas.Footer>
@@ -263,15 +269,12 @@ function InnerCommandOffcanvas(): ReactElement {
   );
 }
 
-export interface CommandOffcanvasProps {
+export interface CommandOffcanvasProps extends InnerCommandOffcanvasProps {
   onAdd?: (command: Command) => void;
   onSave?: (command: Command) => void;
 }
 
-function CommandOffcanvas({
-  onAdd,
-  onSave,
-}: CommandOffcanvasProps): ReactElement<CommandOffcanvasProps> {
+function CommandOffcanvas({ onAdd, onSave }: CommandOffcanvasProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'commandOffcanvas',
   });

@@ -1,41 +1,41 @@
-import React, { memo, ReactElement } from 'react';
+import React, { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Block, { BlockProps } from 'components/Block';
-import InfoArea from 'components/InfoArea';
-import Stack from 'components/Stack';
+import Block, { BlockProps } from 'components/ui/Block';
+import PrettyNumber from 'components/ui/PrettyNumber';
 
 import useHomeRouteLoaderData from '../hooks/useHomeRouteLoaderData';
 
-export type StatsProps = Omit<BlockProps, 'variant' | 'gradient' | 'children'>;
+export interface StatsProps
+  extends Omit<BlockProps, 'variant' | 'gradient' | 'children'> {}
 
-function Stats({ className, ...props }: StatsProps): ReactElement<StatsProps> {
+const Stats = forwardRef<HTMLDivElement, StatsProps>(({ className, ...props }, ref) => {
   const { t } = useTranslation(RouteID.Home, { keyPrefix: 'stats' });
 
   const { stats } = useHomeRouteLoaderData();
 
   return (
-    <Block {...props} variant='primary' gradient>
-      <h3 className='fw-semibold text-center mb-3'>{t('title')}</h3>
-      <Stack gap={2}>
-        <InfoArea number={stats.users.total} description={t('usersTotal')} />
-        <InfoArea
-          number={stats.telegramBots.telegram_bots.total}
-          description={t('telegramBotsTotal')}
-        />
-        <InfoArea
-          number={stats.telegramBots.telegram_bots.enabled}
-          description={t('telegramBotsEnabled')}
-        />
-        <InfoArea
-          number={stats.telegramBots.users.total}
-          description={t('telegramBotsUsers')}
-        />
-      </Stack>
+    <Block {...props} ref={ref} size='xl' variant='primary' gradient>
+      <Block.Title>
+        <h3 className='mb-3 text-3xl font-semibold'>{t('title')}</h3>
+      </Block.Title>
+      <div className='flex flex-col gap-2'>
+        <PrettyNumber description={t('usersTotal')}>{stats.users.total}</PrettyNumber>
+        <PrettyNumber description={t('telegramBotsTotal')}>
+          {stats.telegramBots.telegram_bots.total}
+        </PrettyNumber>
+        <PrettyNumber description={t('telegramBotsEnabled')}>
+          {stats.telegramBots.telegram_bots.enabled}
+        </PrettyNumber>
+        <PrettyNumber description={t('telegramBotsUsers')}>
+          {stats.telegramBots.users.total}
+        </PrettyNumber>
+      </div>
     </Block>
   );
-}
+});
+Stats.displayName = 'Stats';
 
-export default memo(Stats);
+export default Stats;
