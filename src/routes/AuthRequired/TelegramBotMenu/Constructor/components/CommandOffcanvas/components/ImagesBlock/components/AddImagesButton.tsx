@@ -1,4 +1,4 @@
-import React, { memo, ReactElement, useId } from 'react';
+import React, { ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useField } from 'formik';
 
@@ -13,17 +13,14 @@ import useTelegramBotStorage from '../../../hooks/useTelegramBotStorage';
 
 import { useCommandOffcanvasStore } from '../../../store';
 
-export type AddImagesButtonProps = Pick<ButtonProps, 'className'>;
+export interface AddImagesButtonProps
+  extends Omit<ButtonProps, 'size' | 'variant' | 'htmlFor'> {}
 
 interface ProcessedImage extends File {
   url?: string;
 }
 
-function AddImagesButton(
-  props: AddImagesButtonProps,
-): ReactElement<AddImagesButtonProps> {
-  const id = useId();
-
+function AddImagesButton(props: AddImagesButtonProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'commandOffcanvas.imagesBlock.addImagesButton',
   });
@@ -31,6 +28,8 @@ function AddImagesButton(
   const [{ value: images }, _meta, { setValue }] = useField<Images>('images');
 
   const setImagesLoading = useCommandOffcanvasStore((state) => state.setImagesLoading);
+
+  const id = useId();
 
   const { remainingStorageSize } = useTelegramBotStorage();
 
@@ -130,12 +129,10 @@ function AddImagesButton(
         onChange={handleChange}
       />
       <Button {...props} asChild size='sm' variant='dark'>
-        <label htmlFor={id}>
-          {t('text')}
-        </label>
+        <label htmlFor={id}>{t('text')}</label>
       </Button>
     </>
   );
 }
 
-export default memo(AddImagesButton);
+export default AddImagesButton;

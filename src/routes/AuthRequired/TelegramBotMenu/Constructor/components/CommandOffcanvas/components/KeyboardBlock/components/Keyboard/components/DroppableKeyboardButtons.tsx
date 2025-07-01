@@ -1,25 +1,24 @@
-import React, { CSSProperties, HTMLAttributes, memo, ReactElement } from 'react';
+import React, { OlHTMLAttributes, ReactElement } from 'react';
 import { Droppable, DroppableProps } from 'react-beautiful-dnd';
-import classNames from 'classnames';
 import { useField } from 'formik';
 
 import DraggableKeyboardButton from './DraggableKeyboardButton';
 import { KeyboardRow } from './DraggableKeyboardRow';
 
+import cn from 'utils/cn';
+
 export interface DroppableKeyboardButtonsProps
-  extends Pick<
+  extends Omit<OlHTMLAttributes<HTMLOListElement>, 'children'>,
+    Pick<
       DroppableProps,
       | 'isDropDisabled'
       | 'isCombineEnabled'
       | 'ignoreContainerClipping'
       | 'renderClone'
       | 'getContainerForClone'
-    >,
-    Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'style'> {
+    > {
   rowIndex: number;
 }
-
-const blockStyle: CSSProperties = { minHeight: 41 };
 
 function DroppableKeyboardButtons({
   rowIndex,
@@ -45,28 +44,31 @@ function DroppableKeyboardButtons({
       getContainerForClone={getContainerForClone}
     >
       {({ innerRef, droppableProps, placeholder }) => (
-        <div
-          ref={innerRef}
+        <ol
           {...props}
           {...droppableProps}
-          className={classNames(
-            'd-flex bg-light overflow-auto',
+          ref={innerRef}
+          className={cn(
+            'flex',
+            '-mr-1',
+            'overflow-x-auto',
+            'scrollbar-thin',
             className,
           )}
-          style={blockStyle}
         >
           {row.buttons.map((button, index) => (
             <DraggableKeyboardButton
               key={button.draggableId}
               rowIndex={rowIndex}
               buttonIndex={index}
+              className='mr-1'
             />
           ))}
           {placeholder}
-        </div>
+        </ol>
       )}
     </Droppable>
   );
 }
 
-export default memo(DroppableKeyboardButtons);
+export default DroppableKeyboardButtons;

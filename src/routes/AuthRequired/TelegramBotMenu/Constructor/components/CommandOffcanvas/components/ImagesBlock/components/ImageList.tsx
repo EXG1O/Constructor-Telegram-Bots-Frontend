@@ -1,27 +1,32 @@
-import React, { CSSProperties, HTMLAttributes, memo, ReactElement } from 'react';
+import React, { HTMLAttributes, ReactElement } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import classNames from 'classnames';
+import { Slot } from '@radix-ui/react-slot';
 import { useField } from 'formik';
 import { produce } from 'immer';
 
 import { Images } from '..';
 
-import ImageDetail from './ImageDetail';
+import Spinner from 'components/ui/Spinner';
 
-export type ImageListProps = Pick<HTMLAttributes<HTMLDivElement>, 'className'>;
+import ImageItem from './ImageItem';
 
-const blockStyle: CSSProperties = { maxHeight: 171 };
+import cn from 'utils/cn';
 
-function ImageList({
-  className,
-  ...props
-}: ImageListProps): ReactElement<ImageListProps> | null {
-  const [{ value: images }, _meta, { setValue }] = useField<Images>('images');
+import { useCommandOffcanvasStore } from '../../../store';
+
+export interface ImageListProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+
+function ImageList({ className, ...props }: ImageListProps): ReactElement | null {
+  const [{ value: images }, _meta, { setValue: setImages }] =
+    useField<Images>('images');
+
+  const loading = useCommandOffcanvasStore((state) => state.imagesLoading);
 
   function handleDragEnd(result: DropResult): void {
     if (!result.destination) return;
 
-    setValue(
+    setImages(
       produce(images, (draft) => {
         const [movedImage] = draft.splice(result.source.index, 1);
         draft.splice(result.destination!.index, 0, movedImage);
@@ -29,30 +34,45 @@ function ImageList({
     );
   }
 
-  return images.length ? (
+  return loading || images.length ? (
     <div
       {...props}
-      className={classNames('bg-light overflow-auto border rounded-1 p-1', className)}
-      style={blockStyle}
+      className={cn(
+        'w-full',
+        'bg-light-accent',
+        'rounded-sm',
+        'overflow-hidden',
+        className,
+      )}
     >
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId='command-offcanvas-images'>
-          {(provided) => (
-            <div
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              className='row g-1'
-            >
-              {images.map((image, index) => (
-                <ImageDetail key={image.key} index={index} />
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <Slot className='max-h-50 w-full'>
+        {!loading ? (
+          <div className='overflow-y-auto p-1 scrollbar-thin'>
+            <DragDropContext onDragEnd={handleDragEnd}>
+              <Droppable droppableId='command-offcanvas-images'>
+                {(provided) => (
+                  <div
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    className='flex w-full flex-col gap-1'
+                  >
+                    {images.map((image, index) => (
+                      <ImageItem key={image.key} index={index} />
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+          </div>
+        ) : (
+          <div className='flex items-center justify-center p-2'>
+            <Spinner size='sm' />
+          </div>
+        )}
+      </Slot>
     </div>
   ) : null;
 }
 
-export default memo(ImageList);
+export default ImageList;

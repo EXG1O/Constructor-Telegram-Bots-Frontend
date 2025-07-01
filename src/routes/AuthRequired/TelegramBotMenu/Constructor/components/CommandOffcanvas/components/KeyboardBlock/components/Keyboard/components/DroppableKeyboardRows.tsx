@@ -1,19 +1,19 @@
-import React, { HTMLAttributes, memo, ReactElement } from 'react';
+import React, { OlHTMLAttributes, ReactElement } from 'react';
 import { Droppable, DroppableProps } from 'react-beautiful-dnd';
-import classNames from 'classnames';
 import { useField } from 'formik';
 
 import DraggableKeyboardRow, { KeyboardRow } from './DraggableKeyboardRow';
 
-export type DroppableKeyboardRowsProps = Pick<
-  DroppableProps,
-  | 'isDropDisabled'
-  | 'isCombineEnabled'
-  | 'ignoreContainerClipping'
-  | 'renderClone'
-  | 'getContainerForClone'
-> &
-  Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+export interface DroppableKeyboardRowsProps
+  extends Omit<OlHTMLAttributes<HTMLOListElement>, 'children'>,
+    Pick<
+      DroppableProps,
+      | 'isDropDisabled'
+      | 'isCombineEnabled'
+      | 'ignoreContainerClipping'
+      | 'renderClone'
+      | 'getContainerForClone'
+    > {}
 
 function DroppableKeyboardRows({
   isDropDisabled,
@@ -21,9 +21,8 @@ function DroppableKeyboardRows({
   ignoreContainerClipping,
   renderClone,
   getContainerForClone,
-  className,
   ...props
-}: DroppableKeyboardRowsProps): ReactElement<DroppableKeyboardRowsProps> {
+}: DroppableKeyboardRowsProps): ReactElement {
   const [{ value: rows }] = useField<KeyboardRow[]>('keyboard.rows');
 
   return (
@@ -38,20 +37,19 @@ function DroppableKeyboardRows({
       getContainerForClone={getContainerForClone}
     >
       {({ innerRef, droppableProps, placeholder }) => (
-        <div
-          ref={innerRef}
-          {...props}
-          {...droppableProps}
-          className={classNames('row g-1', className)}
-        >
+        <ol {...props} {...droppableProps} ref={innerRef}>
           {rows.map((row, index) => (
-            <DraggableKeyboardRow key={row.draggableId} rowIndex={index} />
+            <DraggableKeyboardRow
+              key={row.draggableId}
+              rowIndex={index}
+              className='mb-1'
+            />
           ))}
           {placeholder}
-        </div>
+        </ol>
       )}
     </Droppable>
   );
 }
 
-export default memo(DroppableKeyboardRows);
+export default DroppableKeyboardRows;

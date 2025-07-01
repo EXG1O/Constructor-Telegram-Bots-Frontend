@@ -1,23 +1,38 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
-import classNames from 'classnames';
+import { cva, VariantProps } from 'class-variance-authority';
 
-import { FCA } from 'utils/helpers';
+import cn from 'utils/cn';
 
-export interface NodeBlockProps extends HTMLAttributes<HTMLDivElement> {
-  variant?: string;
-}
+export const nodeBlockVariants = cva(
+  ['w-full', 'border', 'border-outline', 'rounded-md', 'px-2.5', 'py-1.5'],
+  {
+    variants: {
+      variant: {
+        white: ['bg-white', 'text-foreground'],
+        dark: ['bg-dark', 'text-dark-foreground'],
+      },
+    },
+    defaultVariants: {
+      variant: 'white',
+    },
+  },
+);
 
-const NodeBlock: FCA<'div', NodeBlockProps> = forwardRef<
-  HTMLDivElement,
-  NodeBlockProps
->(function NodeBlock({ variant = 'white', className, ...props }, ref) {
-  return (
-    <div
-      {...props}
-      ref={ref}
-      className={classNames(className, `text-bg-${variant} border rounded px-3 py-2`)}
-    />
-  );
-});
+export interface NodeBlockProps
+  extends HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof nodeBlockVariants> {}
+
+const NodeBlock = forwardRef<HTMLDivElement, NodeBlockProps>(
+  ({ variant, className, ...props }, ref) => {
+    return (
+      <div
+        {...props}
+        ref={ref}
+        className={cn(nodeBlockVariants({ variant, className }))}
+      />
+    );
+  },
+);
+NodeBlock.displayName = 'NodeBlock';
 
 export default NodeBlock;

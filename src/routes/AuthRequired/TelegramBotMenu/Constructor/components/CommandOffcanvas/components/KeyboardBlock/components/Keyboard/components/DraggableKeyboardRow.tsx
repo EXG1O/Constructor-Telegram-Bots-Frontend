@@ -1,13 +1,15 @@
-import React, { memo, ReactElement } from 'react';
+import React, { LiHTMLAttributes, ReactElement } from 'react';
 import { Draggable, DraggableProps } from 'react-beautiful-dnd';
 import { useField } from 'formik';
 import { produce } from 'immer';
+import { LayoutGrid, Trash2 } from 'lucide-react';
+
+import IconButton from 'components/ui/IconButton';
 
 import { KeyboardButton } from './DraggableKeyboardButton';
 import DroppableKeyboardButtons from './DroppableKeyboardButtons';
 
-import GripVerticalIcon from 'assets/icons/grip-vertical.svg';
-import TrashIcon from 'assets/icons/trash.svg';
+import cn from 'utils/cn';
 
 export interface KeyboardRow {
   draggableId: string;
@@ -15,20 +17,28 @@ export interface KeyboardRow {
 }
 
 export interface DraggableKeyboardRowProps
-  extends Omit<DraggableProps, 'draggableId' | 'index' | 'children'> {
+  extends Omit<LiHTMLAttributes<HTMLLIElement>, 'children'>,
+    Pick<
+      DraggableProps,
+      'isDragDisabled' | 'disableInteractiveElementBlocking' | 'shouldRespectForcePress'
+    > {
   rowIndex: number;
 }
 
 function DraggableKeyboardRow({
   rowIndex,
+  isDragDisabled,
+  disableInteractiveElementBlocking,
+  shouldRespectForcePress,
+  className,
   ...props
-}: DraggableKeyboardRowProps): ReactElement<DraggableKeyboardRowProps> {
-  const [{ value: rows }, _meta, { setValue }] =
+}: DraggableKeyboardRowProps): ReactElement {
+  const [{ value: rows }, _meta, { setValue: setRows }] =
     useField<KeyboardRow[]>('keyboard.rows');
   const [{ value: row }] = useField<KeyboardRow>(`keyboard.rows[${rowIndex}]`);
 
-  function handleClick(): void {
-    setValue(
+  function handleDeleteClick(): void {
+    setRows(
       produce(rows, (draft) => {
         draft.splice(rowIndex, 1);
       }),
@@ -36,27 +46,42 @@ function DraggableKeyboardRow({
   }
 
   return (
-    <Draggable {...props} draggableId={row.draggableId} index={rowIndex}>
+    <Draggable
+      draggableId={row.draggableId}
+      index={rowIndex}
+      isDragDisabled={isDragDisabled}
+      disableInteractiveElementBlocking={disableInteractiveElementBlocking}
+      shouldRespectForcePress={shouldRespectForcePress}
+    >
       {({ innerRef, draggableProps, dragHandleProps }) => (
-        <div ref={innerRef} {...draggableProps} {...dragHandleProps} className='d-flex'>
-          <div className='d-flex align-items-center text-bg-light border border-end-0 rounded-start-1 px-1'>
-            <GripVerticalIcon />
-          </div>
-          <DroppableKeyboardButtons
-            rowIndex={rowIndex}
-            className='flex-fill border-top border-bottom py-1'
-          />
-          <div
-            className='d-flex align-items-center bg-light text-danger border border-start-0 rounded-end-1 px-1'
-            style={{ cursor: 'pointer' }}
-            onClick={handleClick}
-          >
-            <TrashIcon width={18} height={18} />
-          </div>
-        </div>
+        <li
+          {...props}
+          {...draggableProps}
+          {...dragHandleProps}
+          ref={innerRef}
+          className={cn(
+            'flex',
+            'items-center',
+            'h-9',
+            'bg-light-accent',
+            'text-light-foreground',
+            'rounded-sm',
+            'p-1',
+            'gap-1',
+            className,
+          )}
+        >
+          <IconButton size='sm' className='cursor-grab'>
+            <LayoutGrid />
+          </IconButton>
+          <DroppableKeyboardButtons rowIndex={rowIndex} className='h-full flex-auto' />
+          <IconButton size='sm' className='text-danger' onClick={handleDeleteClick}>
+            <Trash2 />
+          </IconButton>
+        </li>
       )}
     </Draggable>
   );
 }
 
-export default memo(DraggableKeyboardRow);
+export default DraggableKeyboardRow;

@@ -1,6 +1,6 @@
-import React, { CSSProperties, ReactElement, useCallback, useRef } from 'react';
+import React, { CSSProperties, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import ReactFlow, {
+import {
   addEdge as baseAddEdge,
   Background,
   BackgroundVariant,
@@ -12,15 +12,16 @@ import ReactFlow, {
   MiniMap,
   Node,
   NodeTypes,
-  OnNodesDelete,
-  updateEdge,
+  ReactFlow,
+  reconnectEdge,
   useEdgesState,
   useNodesState,
-} from 'reactflow';
+} from '@xyflow/react';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
+import { iconButtonVariants } from 'components/ui/IconButton';
 import Page from 'components/ui/Page';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -33,8 +34,6 @@ import ConditionOffcanvas from './components/ConditionOffcanvas';
 import Panel from './components/Panel';
 
 import useTelegramBotMenuConstructorRouteLoaderData from './hooks/useTelegramBotMenuConstructorRouteLoaderData';
-
-import 'reactflow/dist/base.css';
 
 import { APIResponse } from 'api/core';
 import {
@@ -53,6 +52,8 @@ import {
   DiagramCondition,
 } from 'api/telegram_bots/types';
 
+import cn from 'utils/cn';
+
 import {
   parseDiagramBackgroundTaskNodes,
   parseDiagramCommandNodes,
@@ -60,13 +61,15 @@ import {
   parseEdges,
 } from './utils';
 
-type Source = ['trigger' | 'command' | 'condition' | 'background_task', string];
+import('@xyflow/react/dist/base.css');
+
+type NodeType = 'command' | 'condition' | 'background_task';
+type NodeID = [NodeType, string];
+type Source = ['command' | 'condition' | 'background_task', string];
 type Target = ['command' | 'condition', string];
 type Handle = ['left' | 'right', string];
 type SourceHandle = [...Source, ...Handle];
 type TargetHandle = [...Target, ...Handle];
-
-const containerStyle: CSSProperties = { height: '100%', minHeight: '600px' };
 
 const nodeTypes: NodeTypes = {
   command: CommandNode,
@@ -79,9 +82,12 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
     strokeWidth: 1.8,
   },
 };
+const reactFlowStyle: CSSProperties = {
+  '--xy-attribution-background-color-default': 'unset',
+} as any;
 
 function Constructor(): ReactElement {
-  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor);
+  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor);
 
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
   const { diagramCommands, diagramConditions, diagramBackgroundTasks } =
@@ -95,181 +101,175 @@ function Constructor(): ReactElement {
   const [edges, setEdges, onEdgesChange] = useEdgesState(
     parseEdges(diagramCommands, diagramConditions, diagramBackgroundTasks),
   );
-  const edgeUpdating = useRef<Edge | null>(null);
 
-  const handleNodeDragStop = useCallback(
-    (_event: React.MouseEvent, _node: Node, nodes?: Node[]) => {
-      nodes?.forEach(async (node) => {
-        const [type, id] = node.id.split(':') as [
-          'command' | 'condition' | 'background_task',
-          string,
-        ];
+  function handleRef(element: HTMLDivElement | null): void {
+    if (!element) return;
 
-        await (
-          type === 'command'
-            ? DiagramCommandAPI
-            : type === 'condition'
-              ? DiagramConditionAPI
-              : type === 'background_task'
-                ? DiagramBackgroundTaskAPI
-                : undefined
-        )?.update(telegramBot.id, parseInt(id), node.position);
-      });
-    },
-    [],
-  );
+    element.querySelectorAll('.react-flow__panel').forEach((panel) => {
+      panel.className = cn(panel.className, '!m-3');
+    });
+    element.querySelectorAll('.react-flow__controls-button').forEach((button) => {
+      button.className = cn(
+        button.className,
+        iconButtonVariants({ size: 'sm' }),
+        'bg-white',
+        'text-foreground',
+        'rounded-none',
+        'hover:bg-gray-100',
+        'focus-visible:bg-gray-100',
+        'focus-visible:ring-white/50',
+      );
+    });
 
-  const handleNodesDelete = useCallback<OnNodesDelete>((deletedNodes) => {
-    const deletedNodeIds = new Set<string>(deletedNodes.map((node) => node.id));
-
-    setEdges((prevEdges) =>
-      prevEdges.filter(
-        (edge) => !deletedNodeIds.has(edge.source) && !deletedNodeIds.has(edge.target),
-      ),
+    const attrElement: Element | null = element.querySelector(
+      '.react-flow__attribution',
     );
-    setNodes((prevNodes) => prevNodes.filter((node) => !deletedNodeIds.has(node.id)));
-  }, []);
 
-  const addEdge = useCallback(
-    async (connection: Connection, shouldUpdateEdges: boolean = true) => {
-      if (
-        connection.source &&
-        connection.sourceHandle &&
-        connection.target &&
-        connection.targetHandle
-      ) {
-        const [
-          sourceObjectType,
-          sourceObjectId,
-          sourceHandlePosition,
-          sourceNestedObjectId,
-        ] = connection.sourceHandle.split(':') as SourceHandle;
-        const [
-          targetObjectType,
-          targetObjectId,
-          targetHandlePosition,
-          _targetNestedObjectId,
-        ] = connection.targetHandle.split(':') as TargetHandle;
+    if (attrElement) {
+      attrElement.className = cn(attrElement.className, '!text-[8px]', '!p-0', '!mb-0');
+    }
+  }
 
-        const response = await ConnectionsAPI.create(telegramBot.id, {
-          ...(sourceObjectType !== 'command'
-            ? {
-                source_object_type: sourceObjectType,
-                source_object_id: parseInt(sourceObjectId),
-              }
-            : {
-                source_object_type: 'command_keyboard_button',
-                source_object_id: parseInt(sourceNestedObjectId),
-              }),
-          source_handle_position: sourceHandlePosition,
-          target_object_type: targetObjectType,
-          target_object_id: parseInt(targetObjectId),
-          target_handle_position: targetHandlePosition,
+  async function addEdge(
+    edge: Edge | Connection,
+    shouldUpdateEdges: boolean = true,
+  ): Promise<void> {
+    if (edge.source && edge.sourceHandle && edge.target && edge.targetHandle) {
+      const [
+        sourceObjectType,
+        sourceObjectId,
+        sourceHandlePosition,
+        sourceNestedObjectId,
+      ] = edge.sourceHandle.split(':') as SourceHandle;
+      const [
+        targetObjectType,
+        targetObjectId,
+        targetHandlePosition,
+        _targetNestedObjectId,
+      ] = edge.targetHandle.split(':') as TargetHandle;
+
+      const response = await ConnectionsAPI.create(telegramBot.id, {
+        ...(sourceObjectType !== 'command'
+          ? {
+              source_object_type: sourceObjectType,
+              source_object_id: parseInt(sourceObjectId),
+            }
+          : {
+              source_object_type: 'command_keyboard_button',
+              source_object_id: parseInt(sourceNestedObjectId),
+            }),
+        source_handle_position: sourceHandlePosition,
+        target_object_type: targetObjectType,
+        target_object_id: parseInt(targetObjectId),
+        target_handle_position: targetHandlePosition,
+      });
+
+      if (!response.ok) {
+        const errors: APIResponse.ErrorDetail[] = response.json.errors;
+
+        createMessageToast({
+          message: errors.length
+            ? errors[0].detail
+            : t('messages.createConnection.error'),
+          level: 'error',
         });
-
-        if (!response.ok) {
-          const errors: APIResponse.ErrorDetail[] = response.json.errors;
-
-          createMessageToast({
-            message: errors.length
-              ? errors[0].detail
-              : t('messages.createConnection.error'),
-            level: 'error',
-          });
-          return;
-        }
-
-        if (shouldUpdateEdges) {
-          setEdges((prevEdges) =>
-            baseAddEdge(
-              { ...connection, id: `reactflow__edge-${response.json.id}` },
-              prevEdges,
-            ),
-          );
-        }
+        return;
       }
-    },
-    [i18n.language],
-  );
+
+      if (shouldUpdateEdges) {
+        setEdges((prevEdges) =>
+          baseAddEdge(
+            { ...edge, id: `reactflow__edge-${response.json.id}` },
+            prevEdges,
+          ),
+        );
+      }
+    }
+  }
 
   async function deleteEdge(
     edge: Edge,
     shouldUpdateEdges: boolean = true,
   ): Promise<void> {
-    if (edge.sourceHandle) {
-      const response = await ConnectionAPI.delete(
-        telegramBot.id,
-        parseInt(edge.id.split('-')[1]),
-      );
+    if (!edge.sourceHandle) return;
 
-      if (response.ok) {
-        if (shouldUpdateEdges) {
-          setEdges((prevEdges) =>
-            prevEdges.filter((prevEdge) => prevEdge.id !== edge.id),
-          );
-        }
-      } else {
-        createMessageToast({
-          message: t('messages.deleteConnection.error'),
-          level: 'error',
-        });
-      }
+    const response = await ConnectionAPI.delete(
+      telegramBot.id,
+      parseInt(edge.id.split('-')[1]),
+    );
+
+    if (!response.ok) {
+      createMessageToast({
+        message: t('messages.deleteConnection.error'),
+        level: 'error',
+      });
+      return;
+    }
+
+    if (shouldUpdateEdges) {
+      setEdges((prevEdges) => prevEdges.filter((prevEdge) => prevEdge.id !== edge.id));
     }
   }
 
-  const handleEdgeUpdateStart = useCallback((_event: React.MouseEvent, edge: Edge) => {
-    edgeUpdating.current = edge;
-  }, []);
+  async function handleNodeDragStop(
+    _event: React.MouseEvent,
+    _node: Node,
+    nodes: Node[],
+  ): Promise<void> {
+    nodes.forEach(async (node) => {
+      const [type, id] = node.id.split(':') as NodeID;
 
-  const handleEdgeUpdate = useCallback((oldEdge: Edge, newConnection: Connection) => {
+      await {
+        command: DiagramCommandAPI,
+        condition: DiagramConditionAPI,
+        background_task: DiagramBackgroundTaskAPI,
+      }[type].update(telegramBot.id, parseInt(id), node.position);
+    });
+  }
+
+  function handleNodesDelete(nodes: Node[]): void {
+    const nodeIDs = new Set<string>(nodes.map((node) => node.id));
+
+    setEdges((prevEdges) =>
+      prevEdges.filter(
+        (edge) => !nodeIDs.has(edge.source) && !nodeIDs.has(edge.target),
+      ),
+    );
+    setNodes((prevNodes) => prevNodes.filter((node) => !nodeIDs.has(node.id)));
+  }
+
+  function handleValidConnection(edge: Edge | Connection): boolean {
     if (
-      edgeUpdating.current &&
-      (edgeUpdating.current.sourceHandle !== newConnection.sourceHandle ||
-        edgeUpdating.current.targetHandle !== newConnection.targetHandle)
+      !edge.source ||
+      !edge.sourceHandle ||
+      !edge.target ||
+      !edge.targetHandle ||
+      edge.source === edge.target
     ) {
-      deleteEdge(oldEdge, false);
-      addEdge(newConnection, false);
-
-      setEdges((prevEdges) => updateEdge(oldEdge, newConnection, prevEdges));
+      return false;
     }
 
-    edgeUpdating.current = null;
-  }, []);
+    switch ((edge.source.split(':') as Source)[0]) {
+      case 'command':
+        return !edges.some((_edge) => _edge.sourceHandle === edge.sourceHandle);
+      case 'background_task':
+        return !edges.some((_edge) => _edge.source === edge.source);
+      default:
+        return true;
+    }
+  }
 
-  const handleEdgeUpdateEnd = useCallback(
-    (_event: MouseEvent | TouchEvent, edge: Edge) => {
-      if (edgeUpdating.current) {
-        deleteEdge(edge);
-      }
+  function handleConnect(connection: Connection): void {
+    addEdge(connection);
+  }
 
-      edgeUpdating.current = null;
-    },
-    [],
-  );
-
-  const handleCheckValidConnection = useCallback(
-    (connection: Connection): boolean => {
-      if (
-        !connection.source ||
-        !connection.sourceHandle ||
-        !connection.target ||
-        !connection.targetHandle ||
-        connection.source === connection.target
-      ) {
-        return false;
-      }
-
-      switch ((connection.source.split(':') as Source)[0]) {
-        case 'command':
-          return !edges.some((edge) => edge.sourceHandle === connection.sourceHandle);
-        case 'background_task':
-          return !edges.some((edge) => edge.source === connection.source);
-        default:
-          return true;
-      }
-    },
-    [edges],
-  );
+  async function handleReconnect(
+    oldEdge: Edge,
+    newConnection: Connection,
+  ): Promise<void> {
+    await Promise.all([deleteEdge(oldEdge, false), addEdge(newConnection, false)]);
+    setEdges((prevEdges) => reconnectEdge(oldEdge, newConnection, prevEdges));
+  }
 
   async function getDiagramCommand(
     commandID: Command['id'],
@@ -281,30 +281,32 @@ function Constructor(): ReactElement {
         message: t('messages.getDiagramCommand.error'),
         level: 'error',
       });
+      return null;
     }
 
-    return response.ok ? response.json : null;
+    return response.json;
   }
 
-  async function handleAddDiagramCommandToNode(command: Command): Promise<void> {
+  async function handleAddCommand(command: Command): Promise<void> {
     const diagramCommand: DiagramCommand | null = await getDiagramCommand(command.id);
-    if (diagramCommand)
-      setNodes((prevNodes) => [
-        ...prevNodes,
-        ...parseDiagramCommandNodes([diagramCommand]),
-      ]);
+    if (!diagramCommand) return;
+
+    setNodes((prevNodes) => [
+      ...prevNodes,
+      ...parseDiagramCommandNodes([diagramCommand]),
+    ]);
   }
 
-  async function handleSaveDiagramCommandNode(command: Command): Promise<void> {
+  async function handleSaveCommand(command: Command): Promise<void> {
     const diagramCommand: DiagramCommand | null = await getDiagramCommand(command.id);
-    if (diagramCommand)
-      setNodes((prevNodes) =>
-        prevNodes.map((node) =>
-          node.id === `command:${command.id}`
-            ? parseDiagramCommandNodes([diagramCommand])[0]
-            : node,
-        ),
-      );
+    if (!diagramCommand) return;
+    setNodes((prevNodes) =>
+      prevNodes.map((node) =>
+        node.id === `command:${command.id}`
+          ? parseDiagramCommandNodes([diagramCommand])[0]
+          : node,
+      ),
+    );
   }
 
   async function getDiagramCondition(
@@ -317,34 +319,35 @@ function Constructor(): ReactElement {
         message: t('messages.getDiagramCondition.error'),
         level: 'error',
       });
+      return null;
     }
 
-    return response.ok ? response.json : null;
+    return response.json;
   }
 
-  async function handleAddDiagramConditionToNode(condition: Condition): Promise<void> {
+  async function handleAddCondition(condition: Condition): Promise<void> {
     const diagramCondition: DiagramCondition | null = await getDiagramCondition(
       condition.id,
     );
-    if (diagramCondition)
-      setNodes((prevNodes) => [
-        ...prevNodes,
-        ...parseDiagramConditionNodes([diagramCondition]),
-      ]);
+    if (!diagramCondition) return;
+    setNodes((prevNodes) => [
+      ...prevNodes,
+      ...parseDiagramConditionNodes([diagramCondition]),
+    ]);
   }
 
-  async function handleSaveDiagramConditionNode(condition: Condition): Promise<void> {
+  async function handleSaveCondition(condition: Condition): Promise<void> {
     const diagramCondition: DiagramCondition | null = await getDiagramCondition(
       condition.id,
     );
-    if (diagramCondition)
-      setNodes((prevNodes) =>
-        prevNodes.map((node) =>
-          node.id === `condition:${condition.id}`
-            ? parseDiagramConditionNodes([diagramCondition])[0]
-            : node,
-        ),
-      );
+    if (!diagramCondition) return;
+    setNodes((prevNodes) =>
+      prevNodes.map((node) =>
+        node.id === `condition:${condition.id}`
+          ? parseDiagramConditionNodes([diagramCondition])[0]
+          : node,
+      ),
+    );
   }
 
   async function getDiagramBackgroundTask(
@@ -357,78 +360,74 @@ function Constructor(): ReactElement {
         message: t('messages.getDiagramBackgroundTask.error'),
         level: 'error',
       });
+      return null;
     }
 
-    return response.ok ? response.json : null;
+    return response.json;
   }
 
-  async function handleAddDiagramBackgroundTaskToNode(
-    condition: BackgroundTask,
-  ): Promise<void> {
+  async function handleAddBackgroundTask(condition: BackgroundTask): Promise<void> {
     const diagramBackgroundTask: DiagramBackgroundTask | null =
       await getDiagramBackgroundTask(condition.id);
-    if (diagramBackgroundTask)
-      setNodes((prevNodes) => [
-        ...prevNodes,
-        ...parseDiagramBackgroundTaskNodes([diagramBackgroundTask]),
-      ]);
+    if (!diagramBackgroundTask) return;
+    setNodes((prevNodes) => [
+      ...prevNodes,
+      ...parseDiagramBackgroundTaskNodes([diagramBackgroundTask]),
+    ]);
   }
 
-  async function handleSaveDiagramBackgroundTaskNode(
-    condition: BackgroundTask,
-  ): Promise<void> {
+  async function handleSaveBackgroundTask(condition: BackgroundTask): Promise<void> {
     const diagramBackgroundTask: DiagramBackgroundTask | null =
       await getDiagramBackgroundTask(condition.id);
-    if (diagramBackgroundTask)
-      setNodes((prevNodes) =>
-        prevNodes.map((node) =>
-          node.id === `background_task:${condition.id}`
-            ? parseDiagramBackgroundTaskNodes([diagramBackgroundTask])[0]
-            : node,
-        ),
-      );
+    if (!diagramBackgroundTask) return;
+    setNodes((prevNodes) =>
+      prevNodes.map((node) =>
+        node.id === `background_task:${condition.id}`
+          ? parseDiagramBackgroundTaskNodes([diagramBackgroundTask])[0]
+          : node,
+      ),
+    );
   }
 
   return (
     <Page title={t('title')} className='flex-auto'>
-      <CommandOffcanvas
-        onAdd={handleAddDiagramCommandToNode}
-        onSave={handleSaveDiagramCommandNode}
-      />
-      <ConditionOffcanvas
-        onAdd={handleAddDiagramConditionToNode}
-        onSave={handleSaveDiagramConditionNode}
-      />
+      <CommandOffcanvas onAdd={handleAddCommand} onSave={handleSaveCommand} />
+      <ConditionOffcanvas onAdd={handleAddCondition} onSave={handleSaveCondition} />
       <BackgroundTaskOffcanvas
-        onAdd={handleAddDiagramBackgroundTaskToNode}
-        onSave={handleSaveDiagramBackgroundTaskNode}
+        onAdd={handleAddBackgroundTask}
+        onSave={handleSaveBackgroundTask}
       />
-      <div className='bg-light rounded-4 overflow-hidden' style={containerStyle}>
+      <div
+        ref={handleRef}
+        className='h-full min-w-[600px] overflow-hidden rounded-lg bg-light'
+      >
         <ReactFlow
           fitView
+          minZoom={0.4}
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}
           defaultEdgeOptions={defaultEdgeOptions}
           deleteKeyCode={null}
+          style={reactFlowStyle}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onNodeDragStop={handleNodeDragStop}
           onNodesDelete={handleNodesDelete}
-          onEdgeUpdateStart={handleEdgeUpdateStart}
-          onEdgeUpdate={handleEdgeUpdate}
-          onEdgeUpdateEnd={handleEdgeUpdateEnd}
-          isValidConnection={handleCheckValidConnection}
-          onConnect={addEdge}
+          isValidConnection={handleValidConnection}
+          onConnect={handleConnect}
+          onReconnect={handleReconnect}
         >
           <Panel />
           <Controls
             showInteractive={false}
-            className='border rounded-1 overflow-hidden'
+            className='overflow-hidden rounded-sm shadow-sm'
           />
           <MiniMap
-            maskColor='rgba(var(--bs-light-rgb), var(--bs-bg-opacity))'
-            className='border rounded-1 overflow-hidden'
+            bgColor='var(--color-light)'
+            nodeColor='var(--color-light-accent)'
+            maskColor='var(--color-white)'
+            className='overflow-hidden rounded-sm shadow-sm'
           />
           <Background variant={BackgroundVariant.Dots} size={1} gap={20} />
         </ReactFlow>

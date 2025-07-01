@@ -4,22 +4,28 @@ import { useTranslation } from 'react-i18next';
 import { RouteID } from 'routes';
 
 import FormInputFeedback from 'components/shared/FormInputFeedback';
+import Block, { BlockProps } from 'components/ui/Block';
 
-import Block, { BlockProps } from './Block';
+import cn from 'utils/cn';
 
 export type Name = string;
 
-export type NameBlockProps = Pick<BlockProps, 'className'>;
+export interface NameBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 export const defaultName: Name = '';
 
-function NameBlock(props: NameBlockProps): ReactElement<NameBlockProps> {
+function NameBlock({ className, ...props }: NameBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nameBlock',
   });
 
   return (
-    <Block {...props} title={t('title')} body>
+    <Block
+      {...props}
+      variant='light'
+      className={cn('flex', 'flex-col', 'gap-2', className)}
+    >
+      <h3 className='w-full text-center text-lg font-medium'>{t('title')}</h3>
       <FormInputFeedback name='name' placeholder={t('inputPlaceholder')} />
     </Block>
   );

@@ -1,4 +1,4 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useField } from 'formik';
 
@@ -8,11 +8,16 @@ import { Header } from '..';
 
 import Button, { ButtonProps } from 'components/ui/Button';
 
-export type AddHeaderButtonProps = Pick<ButtonProps, 'className'>;
+import cn from 'utils/cn';
 
-function AddHeaderButton(
-  props: AddHeaderButtonProps,
-): ReactElement<AddHeaderButtonProps> {
+export interface AddHeaderButtonProps
+  extends Omit<ButtonProps, 'size' | 'variant' | 'children'> {}
+
+function AddHeaderButton({
+  className,
+  onClick,
+  ...props
+}: AddHeaderButtonProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'apiRequestBlock.headersBlock.addHeaderButton',
   });
@@ -20,15 +25,22 @@ function AddHeaderButton(
   const [{ value: headers }, _meta, { setValue }] =
     useField<Header[]>('api_request.headers');
 
-  function handleClick() {
+  function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
+    onClick?.(event);
     setValue([...headers, { key: '', value: '' }]);
   }
 
   return (
-    <Button {...props} size='sm' variant='dark' onClick={handleClick}>
+    <Button
+      {...props}
+      size='sm'
+      variant='dark'
+      className={cn('w-full', className)}
+      onClick={handleClick}
+    >
       {t('text')}
     </Button>
   );
 }
 
-export default memo(AddHeaderButton);
+export default AddHeaderButton;

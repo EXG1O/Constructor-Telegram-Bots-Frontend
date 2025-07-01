@@ -1,11 +1,12 @@
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
 import FormCheckFeedback from 'components/shared/FormCheckFeedback';
+import Block, { BlockProps } from 'components/ui/Block';
 
-import Block, { BlockProps } from '../../Block';
+import cn from 'utils/cn';
 
 export interface Settings {
   is_reply_to_user_message: boolean;
@@ -13,7 +14,7 @@ export interface Settings {
   is_send_as_new_message: boolean;
 }
 
-export type SettingsBlockProps = Pick<BlockProps, 'className'>;
+export interface SettingsBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 export const defaultSettings: Settings = {
   is_reply_to_user_message: false,
@@ -21,32 +22,35 @@ export const defaultSettings: Settings = {
   is_send_as_new_message: false,
 };
 
-function SettingsBlock(props: SettingsBlockProps): ReactElement<SettingsBlockProps> {
+function SettingsBlock({ className, ...props }: SettingsBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'commandOffcanvas.settingsBlock',
   });
 
   return (
-    <Block {...props} title={t('title')}>
-      <Block.Body className='flex flex-col gap-2'>
-        <FormCheckFeedback
-          type='switch'
-          name='settings.is_reply_to_user_message'
-          label={t('replyToUserMessageSwitch')}
-        />
-        <FormCheckFeedback
-          type='switch'
-          name='settings.is_delete_user_message'
-          label={t('deleteUserMessageSwitch')}
-        />
-        <FormCheckFeedback
-          type='switch'
-          name='settings.is_send_as_new_message'
-          label={t('sendAsNewMessageSwitch')}
-        />
-      </Block.Body>
+    <Block
+      {...props}
+      variant='light'
+      className={cn('flex', 'flex-col', 'gap-2', className)}
+    >
+      <h3 className='w-full text-center text-lg font-medium'>{t('title')}</h3>
+      <FormCheckFeedback
+        type='switch'
+        name='settings.is_reply_to_user_message'
+        label={t('replyToUserMessageSwitch')}
+      />
+      <FormCheckFeedback
+        type='switch'
+        name='settings.is_delete_user_message'
+        label={t('deleteUserMessageSwitch')}
+      />
+      <FormCheckFeedback
+        type='switch'
+        name='settings.is_send_as_new_message'
+        label={t('sendAsNewMessageSwitch')}
+      />
     </Block>
   );
 }
 
-export default memo(SettingsBlock);
+export default SettingsBlock;

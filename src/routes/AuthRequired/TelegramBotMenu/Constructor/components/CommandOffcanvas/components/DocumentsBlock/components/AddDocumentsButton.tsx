@@ -1,4 +1,4 @@
-import React, { memo, ReactElement, useId } from 'react';
+import React, { ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useField } from 'formik';
 
@@ -11,19 +11,18 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useTelegramBotStorage from '../../../hooks/useTelegramBotStorage';
 
-export type AddDocumentsButtonProps = Pick<ButtonProps, 'className'>;
+export interface AddDocumentsButtonProps
+  extends Omit<ButtonProps, 'size' | 'variant' | 'htmlFor'> {}
 
-function AddDocumentsButton(
-  props: AddDocumentsButtonProps,
-): ReactElement<AddDocumentsButtonProps> {
-  const id = useId();
-
+function AddDocumentsButton(props: AddDocumentsButtonProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'commandOffcanvas.documentsBlock.addDocumentsButton',
   });
 
   const [{ value: documents }, _meta, { setValue: setDocuments }] =
     useField<Documents>('documents');
+
+  const id = useId();
 
   const { remainingStorageSize } = useTelegramBotStorage();
 
@@ -90,12 +89,10 @@ function AddDocumentsButton(
     <>
       <input id={id} type='file' multiple hidden onChange={handleChange} />
       <Button {...props} asChild size='sm' variant='dark'>
-        <label htmlFor={id}>
-          {t('text')}
-        </label>
+        <label htmlFor={id}>{t('text')}</label>
       </Button>
     </>
   );
 }
 
-export default memo(AddDocumentsButton);
+export default AddDocumentsButton;

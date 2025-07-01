@@ -1,6 +1,11 @@
-import React, { memo, ReactElement, useCallback } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Handle, NodeProps as RFNodeProps, Position, useStore } from 'reactflow';
+import {
+  Node as RFNode,
+  NodeProps as RFNodeProps,
+  Position,
+  useReactFlow,
+} from '@xyflow/react';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
@@ -9,86 +14,74 @@ import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
-import Node, { NodeProps } from './Node';
+import Node from './Node';
 
 import { ConditionAPI } from 'api/telegram_bots/main';
 import { DiagramBlock, DiagramCondition } from 'api/telegram_bots/types';
 
 type Data = Omit<DiagramCondition, keyof DiagramBlock>;
 
-export type ConditionNodeProps = RFNodeProps<Data>;
+export interface ConditionNodeProps extends RFNodeProps<RFNode<Data>> {}
 
-type EditHandler = NodeProps['onEdit'];
-
-function ConditionNode({
-  id,
-  xPos,
-  yPos,
-  data: condition,
-}: ConditionNodeProps): ReactElement<ConditionNodeProps> {
-  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+function ConditionNode({ id, data: condition }: ConditionNodeProps): ReactElement {
+  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nodes.condition',
   });
 
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-  const onNodesDelete = useStore((state) => state.onNodesDelete);
+  const reactFlow = useReactFlow();
 
   const showEditConditionOffcanvas = useConditionOffcanvasStore(
     (state) => state.showOffcanvas,
   );
 
-  const setShowConfirmModal = useConfirmModalStore((state) => state.setShow);
+  const showConfirmModal = useConfirmModalStore((state) => state.setShow);
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
-  const setLoadingConfirmModal = useConfirmModalStore(
-    (state) => state.setLoading,
-  );
+  const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const showDeleteModal = useCallback(
-    () =>
-      setShowConfirmModal({
-        title: t('deleteModal.title'),
-        text: t('deleteModal.text'),
-        onConfirm: async () => {
-          setLoadingConfirmModal(true);
+  function handleDelete(): void {
+    showConfirmModal({
+      title: t('deleteModal.title'),
+      text: t('deleteModal.text'),
+      onConfirm: async () => {
+        setLoadingConfirmModal(true);
 
-          const response = await ConditionAPI.delete(telegramBot.id, condition.id);
+        const response = await ConditionAPI.delete(telegramBot.id, condition.id);
 
-          if (response.ok) {
-            onNodesDelete?.([{ id, position: { x: xPos, y: yPos }, data: condition }]);
-            hideConfirmModal();
-            createMessageToast({
-              message: t('messages.deleteCondition.success'),
-              level: 'success',
-            });
-          } else {
-            createMessageToast({
-              message: t('messages.deleteCondition.error'),
-              level: 'error',
-            });
-          }
+        if (response.ok) {
+          reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
+          hideConfirmModal();
+          createMessageToast({
+            message: t('messages.deleteCondition.success'),
+            level: 'success',
+          });
+        } else {
+          createMessageToast({
+            message: t('messages.deleteCondition.error'),
+            level: 'error',
+          });
+        }
 
-          setLoadingConfirmModal(false);
-        },
-        onCancel: null,
-      }),
-    [i18n.language],
-  );
+        setLoadingConfirmModal(false);
+      },
+      onCancel: null,
+    });
+  }
 
-  const handleEdit = useCallback<EditHandler>(
-    () => showEditConditionOffcanvas(condition.id),
-    [condition.id],
-  );
+  function handleEdit(): void {
+    showEditConditionOffcanvas(condition.id);
+  }
 
   return (
-    <Node title={t('title')} onEdit={handleEdit} onDelete={showDeleteModal}>
-      <Node.Block className='position-relative text-center text-break'>
-        <Handle id={`${id}:left:0`} type='target' position={Position.Left} />
-        {condition.name}
-        <Handle id={`${id}:right:0`} type='source' position={Position.Right} />
+    <Node title={t('title')} onEdit={handleEdit} onDelete={handleDelete}>
+      <Node.Block className='relative'>
+        <Node.Title>{condition.name}</Node.Title>
+        <Node.Handle id={`${id}:left:0`} type='target' position={Position.Left} />
+        <Node.Handle id={`${id}:right:0`} type='source' position={Position.Right} />
       </Node.Block>
     </Node>
   );
 }
 
-export default memo(ConditionNode);
+export default ConditionNode;

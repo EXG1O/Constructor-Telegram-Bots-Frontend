@@ -33,7 +33,8 @@ export interface FormValues {
   show_api_request_body_block: boolean;
 }
 
-type InnerBackgroundTaskOffcanvasProps = Pick<OffcanvasProps, 'className'>;
+interface InnerBackgroundTaskOffcanvasProps
+  extends Omit<OffcanvasProps, 'show' | 'loading' | 'children' | 'onHide'> {}
 
 export const defaultFormValues: FormValues = {
   name: defaultName,
@@ -45,14 +46,15 @@ export const defaultFormValues: FormValues = {
   show_api_request_body_block: false,
 };
 
-function InnerBackgroundTaskOffcanvas(
-  props: InnerBackgroundTaskOffcanvasProps,
-): ReactElement<InnerBackgroundTaskOffcanvasProps> {
+function InnerBackgroundTaskOffcanvas({
+  onHidden,
+  ...props
+}: InnerBackgroundTaskOffcanvasProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor);
 
-  const formID = useId();
-
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+
+  const formID = useId();
 
   const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
 
@@ -64,49 +66,49 @@ function InnerBackgroundTaskOffcanvas(
   const setLoading = useBackgroundTaskOffcanvasStore((state) => state.setLoading);
 
   useEffect(() => {
-    if (taskID) {
-      (async () => {
-        const response = await BackgroundTaskAPI.get(telegramBot.id, taskID);
+    if (!taskID) return;
+    (async () => {
+      const response = await BackgroundTaskAPI.get(telegramBot.id, taskID);
 
-        if (!response.ok) {
-          hideOffcanvas();
-          createMessageToast({
-            message: t('backgroundTaskOffcanvas.messages.getBackgroundTask.error'),
-            level: 'error',
-          });
-          return;
-        }
-
-        const { id, api_request, ...task } = response.json;
-
-        setValues({
-          ...task,
-          api_request: api_request
-            ? {
-                ...api_request,
-                headers: api_request.headers
-                  ? api_request.headers.map((header) => {
-                      const [[key, value]] = Object.entries(header);
-                      return { key, value };
-                    })
-                  : defaultAPIRequest.headers,
-                body: api_request.body
-                  ? JSON.stringify(api_request.body, undefined, 4)
-                  : defaultAPIRequest.body,
-              }
-            : defaultAPIRequest,
-
-          show_api_request_block: Boolean(api_request),
-          show_api_request_headers_block: Boolean(api_request?.headers),
-          show_api_request_body_block: Boolean(api_request?.body),
+      if (!response.ok) {
+        hideOffcanvas();
+        createMessageToast({
+          message: t('backgroundTaskOffcanvas.messages.getBackgroundTask.error'),
+          level: 'error',
         });
-        setLoading(false);
-      })();
-    }
+        return;
+      }
+
+      const { id, api_request, ...task } = response.json;
+
+      setValues({
+        ...task,
+        api_request: api_request
+          ? {
+              ...api_request,
+              headers: api_request.headers
+                ? api_request.headers.map((header) => {
+                    const [[key, value]] = Object.entries(header);
+                    return { key, value };
+                  })
+                : defaultAPIRequest.headers,
+              body: api_request.body
+                ? JSON.stringify(api_request.body, undefined, 4)
+                : defaultAPIRequest.body,
+            }
+          : defaultAPIRequest,
+
+        show_api_request_block: Boolean(api_request),
+        show_api_request_headers_block: Boolean(api_request?.headers),
+        show_api_request_body_block: Boolean(api_request?.body),
+      });
+      setLoading(false);
+    })();
   }, [taskID]);
 
   function handleHidden(): void {
     resetForm();
+    onHidden?.();
   }
 
   return (
@@ -114,7 +116,6 @@ function InnerBackgroundTaskOffcanvas(
       {...props}
       show={show}
       loading={isSubmitting || loading}
-      className='background-task'
       onHide={hideOffcanvas}
       onHidden={handleHidden}
     >
@@ -124,19 +125,19 @@ function InnerBackgroundTaskOffcanvas(
         </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body asChild>
-        <Form id={formID}>
+        <Form id={formID} className='flex flex-col gap-3'>
           <NameBlock />
           <IntervalBlock />
           <APIRequestBlock />
         </Form>
       </Offcanvas.Body>
-      <Offcanvas.Footer className='gap-2'>
+      <Offcanvas.Footer className='flex flex-col gap-2'>
         <AddonButtonGroup>
           <AddonButtonGroup.Button name='show_api_request_block'>
             {t('apiRequestBlock.title')}
           </AddonButtonGroup.Button>
         </AddonButtonGroup>
-        <Button type='submit' form={formID} variant='success'>
+        <Button form={formID} type='submit' variant='success' className='w-full'>
           {t('backgroundTaskOffcanvas.actionButton', { context: type })}
         </Button>
       </Offcanvas.Footer>
@@ -154,7 +155,7 @@ function BackgroundTaskOffcanvas({
   onAdd,
   onSave,
   ...props
-}: BackgroundTaskOffcanvasProps): ReactElement<BackgroundTaskOffcanvasProps> {
+}: BackgroundTaskOffcanvasProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'backgroundTaskOffcanvas',
   });

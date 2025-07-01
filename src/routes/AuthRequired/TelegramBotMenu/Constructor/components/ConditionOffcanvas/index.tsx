@@ -23,16 +23,20 @@ export interface FormValues {
   parts: Parts;
 }
 
-type InnerConditionFormOffcanvasProps = Pick<OffcanvasProps, 'className'>;
+type InnerConditionFormOffcanvasProps = Omit<
+  OffcanvasProps,
+  'show' | 'loading' | 'children' | 'onHide'
+>;
 
 export const defaultFormValues: FormValues = {
   name: defaultName,
   parts: defaultParts,
 };
 
-function InnerConditionOffcanvas(
-  props: InnerConditionFormOffcanvasProps,
-): ReactElement<InnerConditionFormOffcanvasProps> {
+function InnerConditionOffcanvas({
+  onHidden,
+  ...props
+}: InnerConditionFormOffcanvasProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'conditionOffcanvas',
   });
@@ -51,35 +55,35 @@ function InnerConditionOffcanvas(
   const setLoading = useConditionOffcanvasStore((state) => state.setLoading);
 
   useEffect(() => {
-    if (conditionID) {
-      (async () => {
-        const response = await ConditionAPI.get(telegramBot.id, conditionID);
+    if (!conditionID) return;
+    (async () => {
+      const response = await ConditionAPI.get(telegramBot.id, conditionID);
 
-        if (!response.ok) {
-          hideOffcanvas();
-          createMessageToast({
-            message: t('messages.getCondition.error'),
-            level: 'error',
-          });
-          return;
-        }
-
-        const { id, parts, ...condition } = response.json;
-
-        setValues({
-          ...condition,
-          parts: parts.map(({ next_part_operator, ...part }) => ({
-            ...part,
-            next_part_operator: next_part_operator ?? 'null',
-          })),
+      if (!response.ok) {
+        hideOffcanvas();
+        createMessageToast({
+          message: t('messages.getCondition.error'),
+          level: 'error',
         });
-        setLoading(false);
-      })();
-    }
+        return;
+      }
+
+      const { id, parts, ...condition } = response.json;
+
+      setValues({
+        ...condition,
+        parts: parts.map(({ next_part_operator, ...part }) => ({
+          ...part,
+          next_part_operator: next_part_operator ?? 'null',
+        })),
+      });
+      setLoading(false);
+    })();
   }, [conditionID]);
 
   function handleHidden(): void {
     resetForm();
+    onHidden?.();
   }
 
   return (
@@ -99,8 +103,8 @@ function InnerConditionOffcanvas(
           <PartsBlock />
         </Form>
       </Offcanvas.Body>
-      <Offcanvas.Footer className='gap-2'>
-        <Button type='submit' form={formID} variant='success'>
+      <Offcanvas.Footer>
+        <Button form={formID} type='submit' variant='success' className='w-full'>
           {t('actionButton', { context: type })}
         </Button>
       </Offcanvas.Footer>
@@ -117,7 +121,7 @@ function ConditionOffcanvas({
   onAdd,
   onSave,
   ...props
-}: ConditionFormOffcanvasProps): ReactElement<ConditionFormOffcanvasProps> {
+}: ConditionFormOffcanvasProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'conditionOffcanvas',
   });

@@ -112,7 +112,7 @@
     },
     "keyboardBlock": {
       "title": "Keyboard",
-      "typeButtonGroup": {
+      "types": {
         "default": "Regular",
         "inline": "Inline",
         "payment": "Payment"
@@ -218,6 +218,8 @@
     "actionButton_edit": "Save"
   },
   "panel": {
+    "showButton": "Show blocks",
+    "hideButton": "Hide blocks",
     "addCommandButton": "Add command",
     "addConditionButton": "Add condition",
     "addBackgroundTaskButton": "Add background task"
