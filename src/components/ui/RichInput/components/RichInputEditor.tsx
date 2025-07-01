@@ -145,7 +145,7 @@ const RichInputEditor = forwardRef<HTMLDivElement, RichInputEditorProps>(
       <Component
         {...props}
         ref={mergeRefs}
-        className={cn('block', 'relative', 'w-full', className)}
+        className={cn('relative', 'w-full', className)}
       >
         {!quill && value}
       </Component>

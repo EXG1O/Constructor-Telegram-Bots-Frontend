@@ -27,7 +27,6 @@ const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>(
         aria-valuemin={min}
         aria-valuemax={max}
         className={cn(
-          'block',
           'w-full',
           'h-3',
           'overflow-hidden',

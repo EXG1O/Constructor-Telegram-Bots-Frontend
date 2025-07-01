@@ -13,7 +13,7 @@ export interface SectionItemProps
 
 function SectionItem({ section, className, ...props }: SectionItemProps): ReactElement {
   return (
-    <div {...props} className={cn('block', 'w-full', 'text-foreground', className)}>
+    <div {...props} className={cn('w-full', 'text-foreground', className)}>
       <h3 className='mb-1 text-3xl font-semibold'>{section.title}</h3>
       <Markdown>{section.text}</Markdown>
     </div>

@@ -54,7 +54,7 @@ export const checkVariants = cva(
   },
 );
 
-const wrapperVariants = cva(['block', 'w-full', 'min-h-4'], {
+const wrapperVariants = cva(['w-full', 'min-h-4'], {
   variants: {
     type: {
       checkbox: ['pl-6'],

@@ -8,7 +8,6 @@ import cn from 'utils/cn';
 
 export const selectVariants = cva(
   [
-    'block',
     'w-full',
     'border',
     'border-outline',

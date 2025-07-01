@@ -15,7 +15,7 @@ export interface CheckFeedbackProps extends Omit<CheckProps, 'invalid'> {
 const CheckFeedback = forwardRef<HTMLInputElement, CheckFeedbackProps>(
   ({ error, wrapperProps, ...props }, ref) => {
     return (
-      <div {...wrapperProps} className={cn('block', 'w-full', wrapperProps?.className)}>
+      <div {...wrapperProps} className={cn('w-full', wrapperProps?.className)}>
         <Check {...props} ref={ref} invalid={Boolean(error)} />
         {error && <Feedback type='invalid'>{error}</Feedback>}
       </div>

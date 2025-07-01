@@ -23,7 +23,6 @@ const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
           ref={ref}
           sideOffset={sideOffset}
           className={cn(
-            'block',
             Z_INDEX.DROPDOWN,
             'min-w-30',
             'max-h-(--radix-dropdown-menu-content-available-height)',

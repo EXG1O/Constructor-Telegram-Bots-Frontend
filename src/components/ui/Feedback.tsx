@@ -5,7 +5,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 
 import cn from 'utils/cn';
 
-export const feedbackVariants = cva(['block', 'w-full', 'text-sm', 'mt-1'], {
+export const feedbackVariants = cva(['w-full', 'text-sm', 'mt-1'], {
   variants: {
     type: {
       invalid: ['text-danger'],

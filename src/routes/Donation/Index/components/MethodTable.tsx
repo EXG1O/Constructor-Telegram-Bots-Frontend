@@ -15,7 +15,6 @@ function MethodTable({ className, ...props }: MethodTableProps): ReactElement | 
     <div
       {...props}
       className={cn(
-        'block',
         'w-full',
         'bg-light',
         'text-foreground',

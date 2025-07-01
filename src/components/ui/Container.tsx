@@ -17,7 +17,6 @@ const Container = forwardRef<HTMLDivElement, ContainerProps>(
         {...props}
         ref={ref}
         className={cn(
-          'block',
           'w-full',
           'sm:max-w-sm',
           'md:max-w-md',

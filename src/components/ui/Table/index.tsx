@@ -21,7 +21,7 @@ export interface TableProps
 const Table = forwardRef<HTMLTableElement, TableProps>(
   ({ size = DEFAULT_SIZE, striped = false, className, children, ...props }, ref) => {
     return (
-      <div className='block w-full overflow-auto'>
+      <div className='w-full overflow-auto'>
         <table {...props} ref={ref} className={cn('w-full', className)}>
           <TableContext.Provider value={{ size, striped }}>
             {children}

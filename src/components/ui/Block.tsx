@@ -4,7 +4,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 
 import cn from 'utils/cn';
 
-export const blockVariants = cva(['block', 'w-full'], {
+export const blockVariants = cva(['w-full'], {
   variants: {
     variant: {
       light: ['bg-light', 'text-light-foreground'],

@@ -7,7 +7,6 @@ import cn from 'utils/cn';
 
 export const inputVariants = cva(
   [
-    'block',
     'w-full',
     'bg-background',
     'text-foreground',

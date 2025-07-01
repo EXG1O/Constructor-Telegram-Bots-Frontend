@@ -14,7 +14,7 @@ const MenuSeparator = forwardRef<HTMLDivElement, MenuSeparatorProps>(
       <DropdownMenuSeparator
         {...props}
         ref={ref}
-        className={cn('block', 'h-px', 'bg-outline', '-mx-1', 'my-1', className)}
+        className={cn('h-px', 'bg-outline', '-mx-1', 'my-1', className)}
       />
     );
   },
