@@ -14,7 +14,12 @@ function Header({ className, ...props }: HeaderProps): ReactElement {
   const { t } = useTranslation(RouteID.Home, { keyPrefix: 'header' });
 
   return (
-    <Block {...props} size='xl' variant='light' className={cn('text-center', className)}>
+    <Block
+      {...props}
+      size='xl'
+      variant='light'
+      className={cn('text-center', className)}
+    >
       <h1 className='text-5xl font-bold'>Constructor Telegram Bots</h1>
       <p className='w-full text-xl xl:mx-auto xl:w-3/4'>{t('text')}</p>
     </Block>

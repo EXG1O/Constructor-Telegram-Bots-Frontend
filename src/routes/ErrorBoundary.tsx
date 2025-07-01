@@ -12,7 +12,7 @@ function ErrorBoundary(): ReactElement {
     <main className='my-auto'>
       <Page asChild title={title}>
         <div className='text-center text-foreground'>
-          <h1 className='text-5xl font-bold mb-1'>{title}</h1>
+          <h1 className='mb-1 text-5xl font-bold'>{title}</h1>
           <p className='text-xl'>
             <Trans t={t} i18nKey='text' components={[<br key={0} />]} />
           </p>

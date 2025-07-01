@@ -14,7 +14,7 @@ function Completed(): ReactElement {
     <main className='my-auto'>
       <Page asChild title={title}>
         <div className='text-center text-foreground'>
-          <h2 className='text-4xl font-semibold mb-1'>{title}!</h2>
+          <h2 className='mb-1 text-4xl font-semibold'>{title}!</h2>
           <p className='text-lg'>
             <Trans t={t} i18nKey='text' components={[<br key={0} />]} />
           </p>

@@ -1,4 +1,10 @@
-import React, { ChangeEvent, forwardRef, HTMLAttributes, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  forwardRef,
+  HTMLAttributes,
+  useEffect,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { cva } from 'class-variance-authority';
 import { Search, X } from 'lucide-react';
@@ -156,7 +162,13 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     }
 
     return (
-      <div {...containerProps} className={cn(containerVariants({ size, className: containerProps?.className }))} data-active={active}>
+      <div
+        {...containerProps}
+        className={cn(
+          containerVariants({ size, className: containerProps?.className }),
+        )}
+        data-active={active}
+      >
         <div className='relative flex flex-auto'>
           <div className={cn(labelVariants({ size }))}>
             <Search />

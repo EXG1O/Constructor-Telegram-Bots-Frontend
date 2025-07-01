@@ -104,7 +104,7 @@ function APIRequestTest({ className, ...props }: APIRequestTestProps): ReactElem
           {!loading ? (
             result && (
               <div className='px-2 py-1'>
-                <div className='flex items-center w-full gap-1'>
+                <div className='flex w-full items-center gap-1'>
                   <label
                     htmlFor={statusID}
                     className={cn(
@@ -113,9 +113,11 @@ function APIRequestTest({ className, ...props }: APIRequestTestProps): ReactElem
                       result.status <= 399 ? 'bg-success' : 'bg-danger',
                     )}
                   ></label>
-                  <span id={statusID} className='text-sm font-medium'>{result.status}</span>
+                  <span id={statusID} className='text-sm font-medium'>
+                    {result.status}
+                  </span>
                 </div>
-                <code className='text-xs font-mono'>{result.body}</code>
+                <code className='font-mono text-xs'>{result.body}</code>
               </div>
             )
           ) : (
