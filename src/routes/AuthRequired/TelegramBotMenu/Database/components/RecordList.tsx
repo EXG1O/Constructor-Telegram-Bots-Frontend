@@ -30,7 +30,7 @@ function RecordList({ className, ...props }: RecordListProps): ReactElement {
         'flex',
         'flex-col',
         'w-full',
-        'bg-white',
+        'bg-light-accent',
         'rounded-sm',
         'p-2',
         'gap-2',
