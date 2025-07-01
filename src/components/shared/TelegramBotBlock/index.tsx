@@ -1,13 +1,6 @@
-import React, {
-  ReactElement,
-  TdHTMLAttributes,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import i18n from 'i18n';
+import { Slot } from '@radix-ui/react-slot';
 import formatDate from 'i18n/formatDate';
 
 import TelegramBotStorage from 'components/shared/TelegramBotStorage';
@@ -76,28 +69,6 @@ function TelegramBotBlock({
     };
   }, [telegramBot.is_loading]);
 
-  const loadingStatusProps = useMemo<TdHTMLAttributes<HTMLTableCellElement>>(
-    () => ({
-      className: 'text-secondary',
-      children: t('table.status.loading'),
-    }),
-    [i18n.language],
-  );
-  const enabledStatusProps = useMemo<TdHTMLAttributes<HTMLTableCellElement>>(
-    () => ({
-      className: 'text-success',
-      children: t('table.status.enabled'),
-    }),
-    [i18n.language],
-  );
-  const disabledStatusProps = useMemo<TdHTMLAttributes<HTMLTableCellElement>>(
-    () => ({
-      className: 'text-danger',
-      children: t('table.status.disabled'),
-    }),
-    [i18n.language],
-  );
-
   return (
     <TelegramBotContext.Provider value={[telegramBot, setTelegramBot]}>
       <Block
@@ -118,13 +89,21 @@ function TelegramBotBlock({
           <Table.Body>
             <Table.Row>
               <Table.Head scope='row'>{t('table.status.header')}:</Table.Head>
-              <Table.Cell
-                {...(telegramBot.is_loading
-                  ? loadingStatusProps
-                  : telegramBot.is_enabled
-                    ? enabledStatusProps
-                    : disabledStatusProps)}
-              />
+              <Slot className='w-full'>
+                {telegramBot.is_loading ? (
+                  <Table.Cell className='text-secondary'>
+                    {t('table.status.loading')}
+                  </Table.Cell>
+                ) : telegramBot.is_enabled ? (
+                  <Table.Cell className='text-success'>
+                    {t('table.status.enabled')}
+                  </Table.Cell>
+                ) : (
+                  <Table.Cell className='text-danger'>
+                    {t('table.status.disabled')}
+                  </Table.Cell>
+                )}
+              </Slot>
             </Table.Row>
             <Table.Row>
               <Table.Head scope='row' className='text-nowrap'>
