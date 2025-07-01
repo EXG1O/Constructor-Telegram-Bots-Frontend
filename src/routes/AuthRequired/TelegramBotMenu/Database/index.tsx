@@ -17,10 +17,10 @@ function Database(): ReactElement {
   return (
     <Page title={t('title')} flex gutters className='flex-auto'>
       <Block variant='light' className='flex flex-col gap-2'>
+        <Block.Title>
+          <h3 className='text-3xl font-semibold'>{t('records.title')}</h3>
+        </Block.Title>
         <StoreProvider>
-          <h3 className='w-full text-center text-3xl font-semibold'>
-            {t('records.title')}
-          </h3>
           <Toolbar />
           <RecordList />
           <Footer />

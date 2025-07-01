@@ -5,23 +5,18 @@ import { RouteID } from 'routes';
 
 import Block, { BlockProps } from 'components/ui/Block';
 
-import cn from 'utils/cn';
-
 export interface HeaderProps
   extends Omit<BlockProps, 'variant' | 'gradient' | 'children'> {}
 
-function Header({ className, ...props }: HeaderProps): ReactElement {
+function Header(props: HeaderProps): ReactElement {
   const { t } = useTranslation(RouteID.Home, { keyPrefix: 'header' });
 
   return (
-    <Block
-      {...props}
-      size='xl'
-      variant='light'
-      className={cn('text-center', className)}
-    >
-      <h1 className='text-5xl font-bold'>Constructor Telegram Bots</h1>
-      <p className='w-full text-xl xl:mx-auto xl:w-3/4'>{t('text')}</p>
+    <Block {...props} size='xl' variant='light'>
+      <Block.Title>
+        <h1 className='text-5xl font-bold'>Constructor Telegram Bots</h1>
+      </Block.Title>
+      <p className='w-full text-center text-xl xl:mx-auto xl:w-3/4'>{t('text')}</p>
     </Block>
   );
 }

@@ -2,6 +2,8 @@ import React, { forwardRef, HTMLAttributes } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, VariantProps } from 'class-variance-authority';
 
+import BlockTitle from './components/BlockTitle';
+
 import cn from 'utils/cn';
 
 export const blockVariants = cva(['w-full'], {
@@ -59,4 +61,4 @@ const Block = forwardRef<HTMLDivElement, BlockProps>(
 );
 Block.displayName = 'Block';
 
-export default Block;
+export default Object.assign(Block, { Title: BlockTitle });

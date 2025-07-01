@@ -46,7 +46,9 @@ function DatabaseRecordBlock({
         variant='light'
         className={cn('flex', 'flex-col', 'gap-2', className)}
       >
-        <h3 className='w-full text-center text-lg font-medium'>{t('title')}</h3>
+        <Block.Title>
+          <h3 className='text-lg font-medium'>{t('title')}</h3>
+        </Block.Title>
         <div>
           <FormCodeInputFeedback
             language='json'

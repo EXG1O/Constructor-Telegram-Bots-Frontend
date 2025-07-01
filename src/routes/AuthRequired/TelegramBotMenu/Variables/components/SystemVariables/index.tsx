@@ -19,7 +19,9 @@ function SystemVariables(): ReactElement {
 
   return (
     <Block variant='light' className='flex flex-col gap-2'>
-      <h3 className='w-full text-center text-3xl font-semibold'>{t('title')}</h3>
+      <Block.Title>
+        <h3 className='text-3xl font-semibold'>{t('title')}</h3>
+      </Block.Title>
       <TypeTabs type={type} onChange={setType} />
       <VariablesTable type={type} />
     </Block>

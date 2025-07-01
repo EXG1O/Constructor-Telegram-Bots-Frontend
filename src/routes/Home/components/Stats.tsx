@@ -18,7 +18,9 @@ const Stats = forwardRef<HTMLDivElement, StatsProps>(({ className, ...props }, r
 
   return (
     <Block {...props} ref={ref} size='xl' variant='primary' gradient>
-      <h3 className='mb-3 text-center text-3xl font-semibold'>{t('title')}</h3>
+      <Block.Title>
+        <h3 className='mb-3 text-3xl font-semibold'>{t('title')}</h3>
+      </Block.Title>
       <div className='flex flex-col gap-2'>
         <PrettyNumber description={t('usersTotal')}>{stats.users.total}</PrettyNumber>
         <PrettyNumber description={t('telegramBotsTotal')}>

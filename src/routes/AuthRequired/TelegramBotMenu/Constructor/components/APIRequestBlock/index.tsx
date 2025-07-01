@@ -41,7 +41,9 @@ function APIRequestBlock(props: APIRequestBlockProps): ReactElement {
 
   return (
     <Block {...props} variant='light'>
-      <h3 className='mb-2 w-full text-center text-lg font-medium'>{t('title')}</h3>
+      <Block.Title>
+        <h3 className='mb-2 text-lg font-medium'>{t('title')}</h3>
+      </Block.Title>
       <FormInputFeedback
         name='api_request.url'
         placeholder={t('urlInputPlaceholder')}

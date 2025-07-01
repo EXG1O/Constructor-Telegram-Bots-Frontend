@@ -76,15 +76,17 @@ function TelegramBotBlock({
         variant='light'
         className={cn('flex', 'flex-col', 'gap-1', className)}
       >
-        <h4 className='text-center text-2xl font-semibold'>
-          <a
-            href={`https://t.me/${telegramBot.username}`}
-            rel='noreferrer'
-            target='_blank'
-          >
-            {telegramBot.username}
-          </a>
-        </h4>
+        <Block.Title>
+          <h4 className='text-2xl font-semibold'>
+            <a
+              href={`https://t.me/${telegramBot.username}`}
+              rel='noreferrer'
+              target='_blank'
+            >
+              {telegramBot.username}
+            </a>
+          </h4>
+        </Block.Title>
         <Table size='sm' className='align-middle'>
           <Table.Body>
             <Table.Row>

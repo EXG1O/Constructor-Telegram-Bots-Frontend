@@ -23,7 +23,9 @@ function IntervalBlock(props: IntervalBlockProps): ReactElement {
 
   return (
     <Block {...props} variant='light' className={cn('flex', 'flex-col', 'gap-2')}>
-      <h3 className='w-full text-center text-lg font-medium'>{t('title')}</h3>
+      <Block.Title>
+        <h3 className='text-lg font-medium'>{t('title')}</h3>
+      </Block.Title>
       <FormSelectFeedback name='interval'>
         {intervals.map((interval, index) => (
           <option key={index} value={interval}>

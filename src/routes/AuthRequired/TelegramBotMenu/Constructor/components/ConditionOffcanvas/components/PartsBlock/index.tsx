@@ -31,7 +31,9 @@ function PartsBlock({ className, ...props }: PartsBlockProps): ReactElement {
       variant='light'
       className={cn('flex', 'flex-col', 'gap-2', className)}
     >
-      <h3 className='w-full text-center text-lg font-medium'>{t('title')}</h3>
+      <Block.Title>
+        <h3 className='text-lg font-medium'>{t('title')}</h3>
+      </Block.Title>
       <div className='flex flex-col gap-1'>
         {parts.map((_, index) => (
           <PartItem key={index} index={index} />

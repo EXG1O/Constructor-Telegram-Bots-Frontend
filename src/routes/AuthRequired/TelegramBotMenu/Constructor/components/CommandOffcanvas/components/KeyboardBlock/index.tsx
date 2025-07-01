@@ -30,7 +30,9 @@ function KeyboardBlock(props: KeyboardBlockProps): ReactElement {
   return (
     <FormToggleSection name='show_keyboard_block'>
       <Block {...props} variant='light'>
-        <h3 className='mb-2 w-full text-center text-lg font-medium'>{t('title')}</h3>
+        <Block.Title>
+          <h3 className='mb-2 text-lg font-medium'>{t('title')}</h3>
+        </Block.Title>
         <KeyboardTypes className='mb-2' />
         <KeyboardButtonBlock className='mb-2' />
         <Keyboard className='mb-2' />

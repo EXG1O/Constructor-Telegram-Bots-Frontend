@@ -146,9 +146,11 @@ function KeyboardButtonBlock({
         variant='light'
         className={cn('bg-light-accent', className)}
       >
-        <h4 className='mb-1 w-full text-center text-base font-medium'>
-          {t('title', { context: blockType })}
-        </h4>
+        <Block.Title>
+          <h4 className='mb-1 text-base font-medium'>
+            {t('title', { context: blockType })}
+          </h4>
+        </Block.Title>
         <TextInput wrapperProps={{ className: 'mb-1' }} />
         <URLInput.ToggleSection>
           <URLInput.ToggleInnerSection className='mb-1'>

@@ -20,7 +20,9 @@ function Users(): ReactElement {
     <Page title={title} flex gutters className='flex-auto'>
       <StoreProvider>
         <Block variant='light' className='flex flex-col gap-2'>
-          <h3 className='w-full text-center text-3xl font-semibold'>{title}</h3>
+          <Block.Title>
+            <h3 className='text-3xl font-semibold'>{title}</h3>
+          </Block.Title>
           <Toolbar />
           <UsersTable />
           <Footer />

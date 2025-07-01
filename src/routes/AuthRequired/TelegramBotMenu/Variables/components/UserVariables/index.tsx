@@ -28,7 +28,9 @@ function UserVariables(): ReactElement {
     <>
       <VariableModal onAdd={handleApply} onSave={handleApply} />
       <Block variant='light' className='flex flex-col gap-2'>
-        <h3 className='w-full text-center text-3xl font-semibold'>{t('title')}</h3>
+        <Block.Title>
+          <h3 className='text-3xl font-semibold'>{t('title')}</h3>
+        </Block.Title>
         <Toolbar />
         <VariablesTable />
         <Footer />
