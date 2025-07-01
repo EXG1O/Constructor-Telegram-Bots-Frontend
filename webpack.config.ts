@@ -36,10 +36,12 @@ const config = (env: any, argv: any): Configuration => {
           hot: true,
           allowedHosts: 'all',
           historyApiFallback: true,
-          proxy: {
-            context: ['/api/', '/media/', '/admin/'],
-            target: 'http://localhost:8000/',
-          },
+          proxy: [
+            {
+              context: ['/api/', '/media/', '/admin/'],
+              target: 'http://localhost:8000/',
+            },
+          ],
           static: `${__dirname}/dist/frontend`,
         }
       : undefined,
