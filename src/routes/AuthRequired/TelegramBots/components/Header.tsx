@@ -1,12 +1,13 @@
 import React, { HTMLAttributes, ReactElement, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 
 import { RouteID } from 'routes';
 
 import PlusButton from 'components/shared/PlusButton';
 
 import TelegramBotAdditionModal from './TelegramBotAdditionModal';
+
+import cn from 'utils/cn';
 
 export interface HeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
 
@@ -23,8 +24,13 @@ function Header({ className, ...props }: HeaderProps): ReactElement {
       <TelegramBotAdditionModal show={showModal} onHide={handleHideModal} />
       <div
         {...props}
-        className={classNames(
-          'flex flex-wrap items-center justify-between gap-1 lg:gap-2',
+        className={cn(
+          'flex',
+          'flex-wrap',
+          'justify-between',
+          'items-center',
+          'gap-1',
+          'lg:gap-2',
           className,
         )}
       >
