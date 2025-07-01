@@ -10,7 +10,7 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import settings from 'settings';
 
-import TelegramIcon from 'assets/icons/telegram.svg';
+import Telegram from 'assets/icons/telegram.svg';
 
 import { UsersAPI } from 'api/users/main';
 import { Data } from 'api/users/types';
@@ -119,7 +119,7 @@ const LoginButton = forwardRef<HTMLButtonElement, LoginButtonProps>(
         {!loading ? (
           (children ?? (
             <>
-              <TelegramIcon />
+              <Telegram />
               {t('text')}
             </>
           ))

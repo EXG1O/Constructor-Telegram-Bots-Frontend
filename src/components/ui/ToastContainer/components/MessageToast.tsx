@@ -4,9 +4,9 @@ import { cva, VariantProps } from 'class-variance-authority';
 
 import CloseButton from 'components/shared/CloseButton';
 
-import SuccessIcon from 'assets/icons/check-circle-fill.svg';
-import ErrorIcon from 'assets/icons/exclamation-triangle-fill.svg';
-import InfoIcon from 'assets/icons/info-circle-fill.svg';
+import SuccessCircleFill from 'assets/icons/check-circle-fill.svg';
+import ErrorCircleFill from 'assets/icons/exclamation-triangle-fill.svg';
+import InfoCircleFill from 'assets/icons/info-circle-fill.svg';
 
 import cn from 'utils/cn';
 
@@ -62,9 +62,9 @@ const iconMap: Record<
   NonNullable<MessageToastProps['level']>,
   FC<SVGProps<SVGSVGElement>>
 > = {
-  success: SuccessIcon,
-  error: ErrorIcon,
-  info: InfoIcon,
+  success: SuccessCircleFill,
+  error: ErrorCircleFill,
+  info: InfoCircleFill,
 };
 
 function MessageToast({
