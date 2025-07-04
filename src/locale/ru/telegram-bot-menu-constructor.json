@@ -27,22 +27,22 @@
   "apiRequestBlock": {
     "title": "API-запрос",
     "urlInputPlaceholder": "Введите URL-адрес",
-    "headersBlock": {
-      "showButton": "Добавить заголовки",
-      "hideButton": "Убрать заголовки",
+    "headers": {
       "headerInputGroup": {
         "keyInputPlaceholder": "Ключ",
         "valueInputPlaceholder": "Значение"
       },
       "addHeaderButton": {
         "text": "Добавить заголовок"
-      }
+      },
+      "showButton": "Добавить заголовки",
+      "hideButton": "Убрать заголовки"
     },
-    "bodyBlock": {
+    "body": {
       "showButton": "Добавить данные",
       "hideButton": "Убрать данные"
     },
-    "testBlock": {
+    "test": {
       "messages": {
         "makeTest": {
           "error": "Произошла ошибка во время отправки API-запроса.",

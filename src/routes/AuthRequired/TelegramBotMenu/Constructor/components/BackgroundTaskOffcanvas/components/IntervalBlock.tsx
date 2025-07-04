@@ -10,11 +10,18 @@ import cn from 'utils/cn';
 
 export type Interval = 1 | 3 | 7 | 14 | 28;
 
+export interface IntervalBlockFormValues {
+  interval: Interval;
+}
+
 export interface IntervalBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 const intervals: Interval[] = [1, 3, 7, 14, 28];
 
 export const defaultInterval: Interval = 1;
+export const defaultIntervalBlockFormValues: IntervalBlockFormValues = {
+  interval: defaultInterval,
+};
 
 function IntervalBlock(props: IntervalBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {

@@ -8,12 +8,13 @@ import {
   Controls,
   DefaultEdgeOptions,
   Edge,
+  FinalConnectionState,
+  HandleType,
   MarkerType,
   MiniMap,
   Node,
   NodeTypes,
   ReactFlow,
-  reconnectEdge,
   useEdgesState,
   useNodesState,
 } from '@xyflow/react';
@@ -47,29 +48,24 @@ import {
   BackgroundTask,
   Command,
   Condition,
-  DiagramBackgroundTask,
-  DiagramCommand,
-  DiagramCondition,
+  TelegramBot,
 } from 'api/telegram_bots/types';
 
 import cn from 'utils/cn';
 
 import {
-  parseDiagramBackgroundTaskNodes,
-  parseDiagramCommandNodes,
-  parseDiagramConditionNodes,
-  parseEdges,
-} from './utils';
+  convertDiagramBlocksToEdges,
+  parseEdgeSourceHandle,
+  parseEdgeTargetHandle,
+} from './utils/edges';
+import {
+  convertDiagramBlockToNode,
+  ExistingDiagramBlock,
+  NodeType,
+} from './utils/nodes';
+import { parseNodeID } from './utils/nodes';
 
 import('@xyflow/react/dist/base.css');
-
-type NodeType = 'command' | 'condition' | 'background_task';
-type NodeID = [NodeType, string];
-type Source = ['command' | 'condition' | 'background_task', string];
-type Target = ['command' | 'condition', string];
-type Handle = ['left' | 'right', string];
-type SourceHandle = [...Source, ...Handle];
-type TargetHandle = [...Target, ...Handle];
 
 const nodeTypes: NodeTypes = {
   command: CommandNode,
@@ -86,6 +82,31 @@ const reactFlowStyle: CSSProperties = {
   '--xy-attribution-background-color-default': 'unset',
 } as any;
 
+const diagramBlockAPIMap: Record<
+  NodeType,
+  {
+    get: (
+      telegramBotID: TelegramBot['id'],
+      id: number,
+    ) => Promise<
+      | APIResponse.Base<true, ExistingDiagramBlock>
+      | APIResponse.Base<false, APIResponse.ErrorList>
+    >;
+  }
+> = {
+  command: DiagramCommandAPI,
+  condition: DiagramConditionAPI,
+  background_task: DiagramBackgroundTaskAPI,
+};
+
+interface UpdateDiagramBlockOptions {
+  messages: {
+    getDiagramBlock: {
+      error: string;
+    };
+  };
+}
+
 function Constructor(): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor);
 
@@ -93,13 +114,23 @@ function Constructor(): ReactElement {
   const { diagramCommands, diagramConditions, diagramBackgroundTasks } =
     useTelegramBotMenuConstructorRouteLoaderData();
 
-  const [nodes, setNodes, onNodesChange] = useNodesState([
-    ...parseDiagramCommandNodes(diagramCommands),
-    ...parseDiagramConditionNodes(diagramConditions),
-    ...parseDiagramBackgroundTaskNodes(diagramBackgroundTasks),
-  ]);
+  const [nodes, setNodes, onNodesChange] = useNodesState(
+    Object.entries({
+      command: diagramCommands,
+      condition: diagramConditions,
+      background_task: diagramBackgroundTasks,
+    } as Record<NodeType, ExistingDiagramBlock[]>).flatMap(([type, diagramBlocks]) =>
+      diagramBlocks.map((diagramBlock) =>
+        convertDiagramBlockToNode(type as NodeType, diagramBlock),
+      ),
+    ),
+  );
   const [edges, setEdges, onEdgesChange] = useEdgesState(
-    parseEdges(diagramCommands, diagramConditions, diagramBackgroundTasks),
+    convertDiagramBlocksToEdges({
+      commands: diagramCommands,
+      conditions: diagramConditions,
+      backgroundTasks: diagramBackgroundTasks,
+    }),
   );
 
   function handleRef(element: HTMLDivElement | null): void {
@@ -135,33 +166,23 @@ function Constructor(): ReactElement {
     shouldUpdateEdges: boolean = true,
   ): Promise<void> {
     if (edge.source && edge.sourceHandle && edge.target && edge.targetHandle) {
-      const [
-        sourceObjectType,
-        sourceObjectId,
-        sourceHandlePosition,
-        sourceNestedObjectId,
-      ] = edge.sourceHandle.split(':') as SourceHandle;
-      const [
-        targetObjectType,
-        targetObjectId,
-        targetHandlePosition,
-        _targetNestedObjectId,
-      ] = edge.targetHandle.split(':') as TargetHandle;
+      const sourceHandle = parseEdgeSourceHandle(edge.sourceHandle);
+      const targetHandle = parseEdgeTargetHandle(edge.targetHandle);
 
       const response = await ConnectionsAPI.create(telegramBot.id, {
-        ...(sourceObjectType !== 'command'
+        ...(sourceHandle.objectType === 'command'
           ? {
-              source_object_type: sourceObjectType,
-              source_object_id: parseInt(sourceObjectId),
+              source_object_type: 'command_keyboard_button',
+              source_object_id: sourceHandle.nestedObjectID,
             }
           : {
-              source_object_type: 'command_keyboard_button',
-              source_object_id: parseInt(sourceNestedObjectId),
+              source_object_type: sourceHandle.objectType,
+              source_object_id: sourceHandle.objectID,
             }),
-        source_handle_position: sourceHandlePosition,
-        target_object_type: targetObjectType,
-        target_object_id: parseInt(targetObjectId),
-        target_handle_position: targetHandlePosition,
+        source_handle_position: sourceHandle.position,
+        target_object_type: targetHandle.objectType,
+        target_object_id: targetHandle.objectID,
+        target_handle_position: targetHandle.position,
       });
 
       if (!response.ok) {
@@ -178,10 +199,7 @@ function Constructor(): ReactElement {
 
       if (shouldUpdateEdges) {
         setEdges((prevEdges) =>
-          baseAddEdge(
-            { ...edge, id: `reactflow__edge-${response.json.id}` },
-            prevEdges,
-          ),
+          baseAddEdge({ ...edge, id: response.json.id.toString() }, prevEdges),
         );
       }
     }
@@ -193,10 +211,7 @@ function Constructor(): ReactElement {
   ): Promise<void> {
     if (!edge.sourceHandle) return;
 
-    const response = await ConnectionAPI.delete(
-      telegramBot.id,
-      parseInt(edge.id.split('-')[1]),
-    );
+    const response = await ConnectionAPI.delete(telegramBot.id, parseInt(edge.id));
 
     if (!response.ok) {
       createMessageToast({
@@ -217,13 +232,13 @@ function Constructor(): ReactElement {
     nodes: Node[],
   ): Promise<void> {
     nodes.forEach(async (node) => {
-      const [type, id] = node.id.split(':') as NodeID;
+      const nodeID = parseNodeID(node.id);
 
       await {
         command: DiagramCommandAPI,
         condition: DiagramConditionAPI,
         background_task: DiagramBackgroundTaskAPI,
-      }[type].update(telegramBot.id, parseInt(id), node.position);
+      }[nodeID.type].update(telegramBot.id, nodeID.id, node.position);
     });
   }
 
@@ -239,24 +254,10 @@ function Constructor(): ReactElement {
   }
 
   function handleValidConnection(edge: Edge | Connection): boolean {
-    if (
-      !edge.source ||
-      !edge.sourceHandle ||
-      !edge.target ||
-      !edge.targetHandle ||
-      edge.source === edge.target
-    ) {
-      return false;
-    }
-
-    switch ((edge.source.split(':') as Source)[0]) {
-      case 'command':
-        return !edges.some((_edge) => _edge.sourceHandle === edge.sourceHandle);
-      case 'background_task':
-        return !edges.some((_edge) => _edge.source === edge.source);
-      default:
-        return true;
-    }
+    // TODO: The implementation needs to be tested across various scenarios.
+    return Boolean(
+      edge.sourceHandle && edge.targetHandle && edge.source !== edge.target,
+    );
   }
 
   function handleConnect(connection: Connection): void {
@@ -267,135 +268,84 @@ function Constructor(): ReactElement {
     oldEdge: Edge,
     newConnection: Connection,
   ): Promise<void> {
-    await Promise.all([deleteEdge(oldEdge, false), addEdge(newConnection, false)]);
-    setEdges((prevEdges) => reconnectEdge(oldEdge, newConnection, prevEdges));
+    await deleteEdge(oldEdge);
+    await addEdge(newConnection);
   }
 
-  async function getDiagramCommand(
-    commandID: Command['id'],
-  ): Promise<DiagramCommand | null> {
-    const response = await DiagramCommandAPI.get(telegramBot.id, commandID);
+  async function handleReconnectEnd(
+    _event: MouseEvent | TouchEvent,
+    edge: Edge,
+    _handleType: HandleType,
+    connectionState: FinalConnectionState,
+  ): Promise<void> {
+    if (!connectionState.isValid) {
+      await deleteEdge(edge);
+    }
+  }
+
+  async function updateDiagramBlock(
+    type: NodeType,
+    id: number,
+    options: UpdateDiagramBlockOptions,
+  ): Promise<void> {
+    const response = await diagramBlockAPIMap[type].get(telegramBot.id, id);
 
     if (!response.ok) {
       createMessageToast({
-        message: t('messages.getDiagramCommand.error'),
+        message: options.messages.getDiagramBlock.error,
         level: 'error',
       });
-      return null;
+      return;
     }
 
-    return response.json;
+    const updatedNode: Node = convertDiagramBlockToNode(type, response.json);
+
+    setNodes((currentNodes) => {
+      const newNodes: Node[] = [...currentNodes];
+      const updatedNodeIndex = newNodes.findIndex((node) => node.id === updatedNode.id);
+
+      if (updatedNodeIndex !== -1) {
+        newNodes[updatedNodeIndex] = updatedNode;
+      } else {
+        newNodes.push(updatedNode);
+      }
+
+      return newNodes;
+    });
   }
 
-  async function handleAddCommand(command: Command): Promise<void> {
-    const diagramCommand: DiagramCommand | null = await getDiagramCommand(command.id);
-    if (!diagramCommand) return;
-
-    setNodes((prevNodes) => [
-      ...prevNodes,
-      ...parseDiagramCommandNodes([diagramCommand]),
-    ]);
+  async function handleCommandChange(command: Command): Promise<void> {
+    await updateDiagramBlock('command', command.id, {
+      messages: { getDiagramBlock: { error: t('messages.getDiagramCommand.error') } },
+    });
   }
 
-  async function handleSaveCommand(command: Command): Promise<void> {
-    const diagramCommand: DiagramCommand | null = await getDiagramCommand(command.id);
-    if (!diagramCommand) return;
-    setNodes((prevNodes) =>
-      prevNodes.map((node) =>
-        node.id === `command:${command.id}`
-          ? parseDiagramCommandNodes([diagramCommand])[0]
-          : node,
-      ),
-    );
+  async function handleConditionChange(condition: Condition): Promise<void> {
+    await updateDiagramBlock('condition', condition.id, {
+      messages: { getDiagramBlock: { error: t('messages.getDiagramCondition.error') } },
+    });
   }
 
-  async function getDiagramCondition(
-    conditionID: Condition['id'],
-  ): Promise<DiagramCondition | null> {
-    const response = await DiagramConditionAPI.get(telegramBot.id, conditionID);
-
-    if (!response.ok) {
-      createMessageToast({
-        message: t('messages.getDiagramCondition.error'),
-        level: 'error',
-      });
-      return null;
-    }
-
-    return response.json;
-  }
-
-  async function handleAddCondition(condition: Condition): Promise<void> {
-    const diagramCondition: DiagramCondition | null = await getDiagramCondition(
-      condition.id,
-    );
-    if (!diagramCondition) return;
-    setNodes((prevNodes) => [
-      ...prevNodes,
-      ...parseDiagramConditionNodes([diagramCondition]),
-    ]);
-  }
-
-  async function handleSaveCondition(condition: Condition): Promise<void> {
-    const diagramCondition: DiagramCondition | null = await getDiagramCondition(
-      condition.id,
-    );
-    if (!diagramCondition) return;
-    setNodes((prevNodes) =>
-      prevNodes.map((node) =>
-        node.id === `condition:${condition.id}`
-          ? parseDiagramConditionNodes([diagramCondition])[0]
-          : node,
-      ),
-    );
-  }
-
-  async function getDiagramBackgroundTask(
-    conditionID: BackgroundTask['id'],
-  ): Promise<DiagramBackgroundTask | null> {
-    const response = await DiagramBackgroundTaskAPI.get(telegramBot.id, conditionID);
-
-    if (!response.ok) {
-      createMessageToast({
-        message: t('messages.getDiagramBackgroundTask.error'),
-        level: 'error',
-      });
-      return null;
-    }
-
-    return response.json;
-  }
-
-  async function handleAddBackgroundTask(condition: BackgroundTask): Promise<void> {
-    const diagramBackgroundTask: DiagramBackgroundTask | null =
-      await getDiagramBackgroundTask(condition.id);
-    if (!diagramBackgroundTask) return;
-    setNodes((prevNodes) => [
-      ...prevNodes,
-      ...parseDiagramBackgroundTaskNodes([diagramBackgroundTask]),
-    ]);
-  }
-
-  async function handleSaveBackgroundTask(condition: BackgroundTask): Promise<void> {
-    const diagramBackgroundTask: DiagramBackgroundTask | null =
-      await getDiagramBackgroundTask(condition.id);
-    if (!diagramBackgroundTask) return;
-    setNodes((prevNodes) =>
-      prevNodes.map((node) =>
-        node.id === `background_task:${condition.id}`
-          ? parseDiagramBackgroundTaskNodes([diagramBackgroundTask])[0]
-          : node,
-      ),
-    );
+  async function handleBackgroundTaskChange(
+    backgroundTask: BackgroundTask,
+  ): Promise<void> {
+    await updateDiagramBlock('background_task', backgroundTask.id, {
+      messages: {
+        getDiagramBlock: { error: t('messages.getDiagramBackgroundTask.error') },
+      },
+    });
   }
 
   return (
     <Page title={t('title')} className='flex-auto'>
-      <CommandOffcanvas onAdd={handleAddCommand} onSave={handleSaveCommand} />
-      <ConditionOffcanvas onAdd={handleAddCondition} onSave={handleSaveCondition} />
+      <CommandOffcanvas onAdd={handleCommandChange} onSave={handleCommandChange} />
+      <ConditionOffcanvas
+        onAdd={handleConditionChange}
+        onSave={handleConditionChange}
+      />
       <BackgroundTaskOffcanvas
-        onAdd={handleAddBackgroundTask}
-        onSave={handleSaveBackgroundTask}
+        onAdd={handleBackgroundTaskChange}
+        onSave={handleBackgroundTaskChange}
       />
       <div
         ref={handleRef}
@@ -408,6 +358,7 @@ function Constructor(): ReactElement {
           edges={edges}
           nodeTypes={nodeTypes}
           defaultEdgeOptions={defaultEdgeOptions}
+          elevateEdgesOnSelect
           deleteKeyCode={null}
           style={reactFlowStyle}
           onNodesChange={onNodesChange}
@@ -417,6 +368,7 @@ function Constructor(): ReactElement {
           isValidConnection={handleValidConnection}
           onConnect={handleConnect}
           onReconnect={handleReconnect}
+          onReconnectEnd={handleReconnectEnd}
         >
           <Panel />
           <Controls

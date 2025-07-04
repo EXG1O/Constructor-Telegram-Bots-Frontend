@@ -14,12 +14,19 @@ export interface Settings {
   is_send_as_new_message: boolean;
 }
 
+export interface SettingsBlockFormValues {
+  settings: Settings;
+}
+
 export interface SettingsBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 export const defaultSettings: Settings = {
   is_reply_to_user_message: false,
   is_delete_user_message: false,
   is_send_as_new_message: false,
+};
+export const defaultSettingsBlockFormValues: SettingsBlockFormValues = {
+  settings: defaultSettings,
 };
 
 function SettingsBlock({ className, ...props }: SettingsBlockProps): ReactElement {

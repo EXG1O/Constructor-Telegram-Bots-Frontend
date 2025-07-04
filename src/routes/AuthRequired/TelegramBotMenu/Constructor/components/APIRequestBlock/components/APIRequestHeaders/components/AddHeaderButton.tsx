@@ -19,7 +19,7 @@ function AddHeaderButton({
   ...props
 }: AddHeaderButtonProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'apiRequestBlock.headersBlock.addHeaderButton',
+    keyPrefix: 'apiRequestBlock.headers.addHeaderButton',
   });
 
   const [{ value: headers }, _meta, { setValue }] =

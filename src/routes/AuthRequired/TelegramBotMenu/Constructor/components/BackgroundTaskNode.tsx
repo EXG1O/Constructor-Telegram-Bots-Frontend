@@ -19,6 +19,8 @@ import Node from './Node';
 import { BackgroundTaskAPI } from 'api/telegram_bots/main';
 import { DiagramBackgroundTask, DiagramBlock } from 'api/telegram_bots/types';
 
+import { buildEdgeSourceHandle, EdgeHandle } from '../utils/edges';
+
 type Data = Omit<DiagramBackgroundTask, keyof DiagramBlock>;
 
 export interface BackgroundTaskNodeProps extends RFNodeProps<RFNode<Data>> {}
@@ -26,7 +28,11 @@ export interface BackgroundTaskNodeProps extends RFNodeProps<RFNode<Data>> {}
 const NODE_PREFIX: string = 'nodes.backgroundTask';
 const OFFCANVAS_PREFIX: string = 'backgroundTaskOffcanvas';
 
-function BackgroundTaskNode({ id, data: task }: BackgroundTaskNodeProps): ReactElement {
+function BackgroundTaskNode({
+  id,
+  type,
+  data: task,
+}: BackgroundTaskNodeProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor);
 
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
@@ -40,6 +46,12 @@ function BackgroundTaskNode({ id, data: task }: BackgroundTaskNodeProps): ReactE
   const showConfirmModal = useConfirmModalStore((state) => state.setShow);
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
+
+  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<any>, 'position'> = {
+    objectType: type,
+    objectID: task.id,
+    nestedObjectID: 0,
+  };
 
   function handleDelete(): void {
     showConfirmModal({
@@ -78,8 +90,22 @@ function BackgroundTaskNode({ id, data: task }: BackgroundTaskNodeProps): ReactE
     <Node title={t(`${NODE_PREFIX}.title`)} onEdit={handleEdit} onDelete={handleDelete}>
       <Node.Block className='relative'>
         <Node.Title>{task.name}</Node.Title>
-        <Node.Handle id={`${id}:left:0`} type='source' position={Position.Left} />
-        <Node.Handle id={`${id}:right:0`} type='source' position={Position.Right} />
+        <Node.Handle
+          id={buildEdgeSourceHandle({
+            ...defaultEdgeHandleBuildParams,
+            position: 'left',
+          })}
+          type='source'
+          position={Position.Left}
+        />
+        <Node.Handle
+          id={buildEdgeSourceHandle({
+            ...defaultEdgeHandleBuildParams,
+            position: 'right',
+          })}
+          type='source'
+          position={Position.Right}
+        />
       </Node.Block>
       <Node.Block>
         <strong>{`${t(`${NODE_PREFIX}.interval`)}:`}</strong>{' '}

@@ -19,7 +19,7 @@ function ToggleInnerSection({
   ...props
 }: ToggleInnerSectionProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'apiRequestBlock.headersBlock',
+    keyPrefix: 'apiRequestBlock.headers',
   });
 
   const show = useCommandOffcanvasStore(

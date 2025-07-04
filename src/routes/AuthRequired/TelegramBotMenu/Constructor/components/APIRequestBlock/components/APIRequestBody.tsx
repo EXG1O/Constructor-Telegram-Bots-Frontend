@@ -3,10 +3,7 @@ import monaco from 'monaco-editor';
 
 import FormCodeInputFeedback from 'components/shared/FormCodeInputFeedback';
 
-import ToggleInnerSection from './components/ToggleInnerSection';
-import ToggleSection from './components/ToggleSection';
-
-import VariablesInfoText from '../../../VariablesInfoText';
+import VariablesInfoText from '../../VariablesInfoText';
 
 export type Body = string;
 
@@ -38,4 +35,4 @@ function APIRequestBody(props: APIRequestBodyProps): ReactElement {
   );
 }
 
-export default Object.assign(APIRequestBody, { ToggleSection, ToggleInnerSection });
+export default APIRequestBody;

@@ -9,41 +9,44 @@ import Button from 'components/ui/Button';
 import Offcanvas, { OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import APIRequestBlock, {
-  APIRequest,
-  defaultAPIRequest,
-} from './components/APIRequestBlock';
-import IntervalBlock, { defaultInterval, Interval } from './components/IntervalBlock';
+import IntervalBlock, {
+  defaultIntervalBlockFormValues,
+  IntervalBlockFormValues,
+} from './components/IntervalBlock';
 
 import AddonButtonGroup from '../AddonButtonGroup';
-import NameBlock, { defaultName, Name } from '../NameBlock';
+import APIRequestBlock, {
+  APIRequestBlockFormValues,
+  defaultAPIRequest,
+  defaultAPIRequestBlockFormValues,
+} from '../APIRequestBlock';
+import FormToggleSection from '../FormToggleSection';
+import NameBlock, {
+  defaultNameBlockFormValues,
+  NameBlockFormValues,
+} from '../NameBlock';
 
 import { BackgroundTaskAPI, BackgroundTasksAPI } from 'api/telegram_bots/main';
 import { BackgroundTask, Data } from 'api/telegram_bots/types';
 
 import { useBackgroundTaskOffcanvasStore } from './store';
 
-export interface FormValues {
-  name: Name;
-  interval: Interval;
-  api_request: APIRequest;
-
+export interface FormValues
+  extends NameBlockFormValues,
+    IntervalBlockFormValues,
+    APIRequestBlockFormValues {
   show_api_request_block: boolean;
-  show_api_request_headers_block: boolean;
-  show_api_request_body_block: boolean;
 }
 
 interface InnerBackgroundTaskOffcanvasProps
   extends Omit<OffcanvasProps, 'show' | 'loading' | 'children' | 'onHide'> {}
 
 export const defaultFormValues: FormValues = {
-  name: defaultName,
-  interval: defaultInterval,
-  api_request: defaultAPIRequest,
+  ...defaultNameBlockFormValues,
+  ...defaultIntervalBlockFormValues,
+  ...defaultAPIRequestBlockFormValues,
 
   show_api_request_block: false,
-  show_api_request_headers_block: false,
-  show_api_request_body_block: false,
 };
 
 function InnerBackgroundTaskOffcanvas({
@@ -54,8 +57,6 @@ function InnerBackgroundTaskOffcanvas({
 
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-  const formID = useId();
-
   const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
 
   const taskID = useBackgroundTaskOffcanvasStore((state) => state.taskID);
@@ -64,6 +65,8 @@ function InnerBackgroundTaskOffcanvas({
   const loading = useBackgroundTaskOffcanvasStore((state) => state.loading);
   const hideOffcanvas = useBackgroundTaskOffcanvasStore((state) => state.hideOffcanvas);
   const setLoading = useBackgroundTaskOffcanvasStore((state) => state.setLoading);
+
+  const formID = useId();
 
   useEffect(() => {
     if (!taskID) return;
@@ -99,8 +102,8 @@ function InnerBackgroundTaskOffcanvas({
           : defaultAPIRequest,
 
         show_api_request_block: Boolean(api_request),
-        show_api_request_headers_block: Boolean(api_request?.headers),
-        show_api_request_body_block: Boolean(api_request?.body),
+        show_api_request_headers: Boolean(api_request?.headers),
+        show_api_request_body: Boolean(api_request?.body),
       });
       setLoading(false);
     })();
@@ -128,7 +131,9 @@ function InnerBackgroundTaskOffcanvas({
         <Form id={formID} className='flex flex-col gap-3'>
           <NameBlock />
           <IntervalBlock />
-          <APIRequestBlock />
+          <FormToggleSection name='show_api_request_block'>
+            <APIRequestBlock />
+          </FormToggleSection>
         </Form>
       </Offcanvas.Body>
       <Offcanvas.Footer className='flex flex-col gap-2'>
@@ -170,21 +175,23 @@ function BackgroundTaskOffcanvas({
     {
       api_request,
       show_api_request_block,
-      show_api_request_headers_block,
-      show_api_request_body_block,
+      show_api_request_headers,
+      show_api_request_body,
       ...task
     }: FormValues,
     { setFieldError }: FormikHelpers<FormValues>,
   ): Promise<void> {
     let apiRequestBody: Record<string, any> | null = null;
 
-    try {
-      apiRequestBody = JSON.parse(api_request.body);
-    } catch (error) {
-      if (error instanceof SyntaxError) {
-        setFieldError('api_request.body', t('messages.validation.invalidJSON'));
+    if (show_api_request_body) {
+      try {
+        apiRequestBody = JSON.parse(api_request.body);
+      } catch (error) {
+        if (error instanceof SyntaxError) {
+          setFieldError('api_request.body', t('messages.validation.invalidJSON'));
+        }
+        return;
       }
-      return;
     }
 
     const data: Data.BackgroundTasksAPI.Create | Data.BackgroundTaskAPI.Update = {
@@ -192,7 +199,7 @@ function BackgroundTaskOffcanvas({
       api_request: show_api_request_block
         ? {
             ...api_request,
-            headers: show_api_request_headers_block
+            headers: show_api_request_headers
               ? api_request.headers.map((header) => ({
                   [header.key]: header.value,
                 }))

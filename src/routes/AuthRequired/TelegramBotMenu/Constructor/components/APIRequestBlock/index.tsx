@@ -17,11 +17,19 @@ import APIRequestMethods, {
 } from './components/APIRequestMethods';
 import APIRequestTest from './components/APIRequestTest';
 
+import FormToggleSection from '../FormToggleSection';
+
 export interface APIRequest {
   url: string;
   method: Method;
   headers: Headers;
   body: Body;
+}
+
+export interface APIRequestBlockFormValues {
+  api_request: APIRequest;
+  show_api_request_headers: boolean;
+  show_api_request_body: boolean;
 }
 
 export interface APIRequestBlockProps
@@ -32,6 +40,11 @@ export const defaultAPIRequest: APIRequest = {
   method: defaultMethod,
   headers: defaultHeaders,
   body: defaultBody,
+};
+export const defaultAPIRequestBlockFormValues: APIRequestBlockFormValues = {
+  api_request: defaultAPIRequest,
+  show_api_request_headers: false,
+  show_api_request_body: defaultAPIRequest.method !== 'get',
 };
 
 function APIRequestBlock(props: APIRequestBlockProps): ReactElement {
@@ -50,14 +63,40 @@ function APIRequestBlock(props: APIRequestBlockProps): ReactElement {
         wrapperProps={{ className: 'mb-2' }}
       />
       <APIRequestMethods className='mb-2' />
-      <APIRequestHeaders.ToggleSection className='mb-2'>
-        <APIRequestHeaders />
-      </APIRequestHeaders.ToggleSection>
-      <APIRequestBody.ToggleSection>
-        <APIRequestBody.ToggleInnerSection className='mb-2'>
-          <APIRequestBody />
-        </APIRequestBody.ToggleInnerSection>
-      </APIRequestBody.ToggleSection>
+      <FormToggleSection
+        advanced
+        name='show_api_request_headers'
+        className='mb-2 w-full'
+      >
+        <FormToggleSection.TriggerButton
+          size='sm'
+          openProps={{ children: t('headers.hideButton') }}
+          closedProps={{ children: t('headers.showButton') }}
+        />
+        <FormToggleSection.Body>
+          <APIRequestHeaders />
+        </FormToggleSection.Body>
+      </FormToggleSection>
+      <FormToggleSection
+        name='api_request.method'
+        getOpen={(method: Method) => method !== 'get'}
+        className='w-full'
+      >
+        <FormToggleSection
+          advanced
+          name='show_api_request_body'
+          className='mb-2 w-full'
+        >
+          <FormToggleSection.TriggerButton
+            size='sm'
+            openProps={{ children: t('body.hideButton') }}
+            closedProps={{ children: t('body.showButton') }}
+          />
+          <FormToggleSection.Body>
+            <APIRequestBody />
+          </FormToggleSection.Body>
+        </FormToggleSection>
+      </FormToggleSection>
       <APIRequestTest />
     </Block>
   );

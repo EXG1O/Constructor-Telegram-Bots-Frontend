@@ -24,11 +24,17 @@ import { DiagramBlock, DiagramCommand } from 'api/telegram_bots/types';
 
 import cn from 'utils/cn';
 
+import {
+  buildEdgeSourceHandle,
+  buildEdgeTargetHandle,
+  EdgeHandle,
+} from '../utils/edges';
+
 type Data = Omit<DiagramCommand, keyof DiagramBlock>;
 
 export interface CommandNodeProps extends RFNodeProps<RFNode<Data>> {}
 
-function CommandNode({ id, data: command }: CommandNodeProps): ReactElement {
+function CommandNode({ id, type, data: command }: CommandNodeProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nodes.command',
   });
@@ -44,6 +50,12 @@ function CommandNode({ id, data: command }: CommandNodeProps): ReactElement {
   const showConfirmModal = useConfirmModalStore((state) => state.setShow);
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
+
+  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<any>, 'position'> = {
+    objectType: type,
+    objectID: command.id,
+    nestedObjectID: 0,
+  };
 
   function handleEdit(): void {
     showEditCommandOffcanvas(command.id);
@@ -82,8 +94,22 @@ function CommandNode({ id, data: command }: CommandNodeProps): ReactElement {
     <Node title={t('title')} onEdit={handleEdit} onDelete={handleDelete}>
       <Node.Block className='relative'>
         <Node.Title>{command.name}</Node.Title>
-        <Node.Handle id={`${id}:left:0`} type='target' position={Position.Left} />
-        <Node.Handle id={`${id}:right:0`} type='target' position={Position.Right} />
+        <Node.Handle
+          id={buildEdgeTargetHandle({
+            ...defaultEdgeHandleBuildParams,
+            position: 'left',
+          })}
+          type='target'
+          position={Position.Left}
+        />
+        <Node.Handle
+          id={buildEdgeTargetHandle({
+            ...defaultEdgeHandleBuildParams,
+            position: 'right',
+          })}
+          type='target'
+          position={Position.Right}
+        />
       </Node.Block>
       <Node.Block
         className={cn(
@@ -112,12 +138,20 @@ function CommandNode({ id, data: command }: CommandNodeProps): ReactElement {
               >
                 {button.text}
                 <Node.Handle
-                  id={`${id}:left:${button.id}`}
+                  id={buildEdgeSourceHandle({
+                    ...defaultEdgeHandleBuildParams,
+                    position: 'left',
+                    nestedObjectID: button.id,
+                  })}
                   type='source'
                   position={Position.Left}
                 />
                 <Node.Handle
-                  id={`${id}:right:${button.id}`}
+                  id={buildEdgeSourceHandle({
+                    ...defaultEdgeHandleBuildParams,
+                    position: 'right',
+                    nestedObjectID: button.id,
+                  })}
                   type='source'
                   position={Position.Right}
                 />

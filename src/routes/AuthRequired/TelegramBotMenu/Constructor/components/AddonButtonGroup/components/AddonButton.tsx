@@ -10,10 +10,10 @@ export interface AddonButtonProps
 }
 
 function AddonButton({ name, onClick, ...props }: AddonButtonProps): ReactElement {
-  const [{ value: active }, _meta, { setValue }] = useField<boolean>(name);
+  const [{ value: active }, _meta, { setValue: setActive }] = useField<boolean>(name);
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
-    setValue(!active);
+    setActive(!active);
     onClick?.(event);
   }
 

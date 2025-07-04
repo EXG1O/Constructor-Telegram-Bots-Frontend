@@ -25,7 +25,7 @@ function ImageCarousel(props: ImageCarouselProps): ReactElement | null {
           </Carousel.Item>
         ))
       ) : (
-        <Carousel.Item className='flex items-center justify-center'>
+        <Carousel.Item className='flex items-center justify-center bg-white'>
           <Spinner size='sm' />
         </Carousel.Item>
       )}

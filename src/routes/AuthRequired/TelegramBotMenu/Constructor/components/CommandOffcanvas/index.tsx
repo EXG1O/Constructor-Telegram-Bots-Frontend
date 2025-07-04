@@ -9,50 +9,69 @@ import Button from 'components/ui/Button';
 import Offcanvas, { OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import APIRequestBlock, { defaultAPIRequest } from './components/APIRequestBlock';
-import { APIRequest } from './components/APIRequestBlock';
 import DatabaseRecordBlock, {
-  DatabaseRecord,
+  DatabaseRecordBlockFormValues,
   defaultDatabaseRecord,
+  defaultDatabaseRecordBlockFormValues,
 } from './components/DatabaseRecordBlock';
 import DocumentsBlock, {
   defaultDocuments,
+  defaultDocumentsBlockFormValues,
   Document,
-  Documents,
+  DocumentsBlockFormValues,
 } from './components/DocumentsBlock';
-import ImagesBlock, { defaultImages, Image, Images } from './components/ImagesBlock';
-import KeyboardBlock, { defaultKeyboard, Keyboard } from './components/KeyboardBlock';
+import ImagesBlock, {
+  defaultImages,
+  defaultImagesBlockFormValues,
+  Image,
+  ImagesBlockFormValues,
+} from './components/ImagesBlock';
+import KeyboardBlock, {
+  defaultKeyboard,
+  defaultKeyboardBlockFormValues,
+  KeyboardBlockFormValues,
+} from './components/KeyboardBlock';
 import { KeyboardRow } from './components/KeyboardBlock/components/Keyboard';
-import MessageBlock, { defaultMessage, Message } from './components/MessageBlock';
-import SettingsBlock, { defaultSettings, Settings } from './components/SettingsBlock';
+import MessageBlock, {
+  defaultMessageBlockFormValues,
+  MessageBlockFormValues,
+} from './components/MessageBlock';
+import SettingsBlock, {
+  defaultSettingsBlockFormValues,
+  SettingsBlockFormValues,
+} from './components/SettingsBlock';
 import TelegramBotStorage from './components/TelegramBotStorage';
 
 import AddonButtonGroup from '../AddonButtonGroup';
-import NameBlock, { defaultName, Name } from '../NameBlock';
+import APIRequestBlock, {
+  APIRequestBlockFormValues,
+  defaultAPIRequest,
+  defaultAPIRequestBlockFormValues,
+} from '../APIRequestBlock';
+import FormToggleSection from '../FormToggleSection';
+import NameBlock, {
+  defaultNameBlockFormValues,
+  NameBlockFormValues,
+} from '../NameBlock';
 
 import { CommandAPI, CommandsAPI } from 'api/telegram_bots/main';
 import { Command, Data } from 'api/telegram_bots/types';
 
 import { useCommandOffcanvasStore } from './store';
 
-export interface FormValues {
-  name: Name;
-  settings: Settings;
-  images: Images;
-  documents: Documents;
-  message: Message;
-  keyboard: Keyboard;
-  api_request: APIRequest;
-  database_record: DatabaseRecord;
-
+export interface FormValues
+  extends NameBlockFormValues,
+    SettingsBlockFormValues,
+    ImagesBlockFormValues,
+    DocumentsBlockFormValues,
+    MessageBlockFormValues,
+    KeyboardBlockFormValues,
+    APIRequestBlockFormValues,
+    DatabaseRecordBlockFormValues {
   show_images_block: boolean;
   show_documents_block: boolean;
   show_keyboard_block: boolean;
-
   show_api_request_block: boolean;
-  show_api_request_headers_block: boolean;
-  show_api_request_body_block: boolean;
-
   show_database_block: boolean;
 }
 
@@ -60,23 +79,19 @@ interface InnerCommandOffcanvasProps
   extends Omit<OffcanvasProps, 'show' | 'loading' | 'children' | 'onHide'> {}
 
 export const defaultFormValues: FormValues = {
-  name: defaultName,
-  settings: defaultSettings,
-  images: defaultImages,
-  documents: defaultDocuments,
-  message: defaultMessage,
-  keyboard: defaultKeyboard,
-  api_request: defaultAPIRequest,
-  database_record: defaultDatabaseRecord,
+  ...defaultNameBlockFormValues,
+  ...defaultSettingsBlockFormValues,
+  ...defaultImagesBlockFormValues,
+  ...defaultDocumentsBlockFormValues,
+  ...defaultMessageBlockFormValues,
+  ...defaultKeyboardBlockFormValues,
+  ...defaultAPIRequestBlockFormValues,
+  ...defaultDatabaseRecordBlockFormValues,
 
   show_images_block: false,
   show_documents_block: false,
   show_keyboard_block: false,
-
   show_api_request_block: false,
-  show_api_request_headers_block: false,
-  show_api_request_body_block: false,
-
   show_database_block: false,
 };
 
@@ -88,8 +103,6 @@ function InnerCommandOffcanvas({
 
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-  const formID = useId();
-
   const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
 
   const commandID = useCommandOffcanvasStore((state) => state.commandID);
@@ -98,6 +111,8 @@ function InnerCommandOffcanvas({
   const loading = useCommandOffcanvasStore((state) => state.loading);
   const hideOffcanvas = useCommandOffcanvasStore((state) => state.hideOffcanvas);
   const setLoading = useCommandOffcanvasStore((state) => state.setLoading);
+
+  const formID = useId();
 
   useEffect(() => {
     if (!commandID) return;
@@ -203,8 +218,8 @@ function InnerCommandOffcanvas({
         show_keyboard_block: Boolean(keyboard),
 
         show_api_request_block: Boolean(api_request),
-        show_api_request_headers_block: Boolean(api_request?.headers),
-        show_api_request_body_block: Boolean(api_request?.body),
+        show_api_request_headers: Boolean(api_request?.headers),
+        show_api_request_body: Boolean(api_request?.body),
 
         show_database_block: Boolean(database_record),
       });
@@ -234,12 +249,22 @@ function InnerCommandOffcanvas({
         <Form id={formID}>
           <NameBlock className='mb-3' />
           <SettingsBlock className='mb-3' />
-          <ImagesBlock className='mb-3' />
-          <DocumentsBlock className='mb-3' />
+          <FormToggleSection name='show_images_block'>
+            <ImagesBlock className='mb-3' />
+          </FormToggleSection>
+          <FormToggleSection name='show_documents_block'>
+            <DocumentsBlock className='mb-3' />
+          </FormToggleSection>
           <MessageBlock className='mb-3' />
-          <KeyboardBlock className='mb-3' />
-          <APIRequestBlock className='mb-3' />
-          <DatabaseRecordBlock className='mb-3' />
+          <FormToggleSection name='show_keyboard_block'>
+            <KeyboardBlock className='mb-3' />
+          </FormToggleSection>
+          <FormToggleSection name='show_api_request_block'>
+            <APIRequestBlock className='mb-3' />
+          </FormToggleSection>
+          <FormToggleSection name='show_database_block'>
+            <DatabaseRecordBlock className='mb-3' />
+          </FormToggleSection>
         </Form>
       </Offcanvas.Body>
       <Offcanvas.Footer className='flex flex-col gap-2'>
@@ -296,8 +321,8 @@ function CommandOffcanvas({ onAdd, onSave }: CommandOffcanvasProps): ReactElemen
       show_documents_block,
       show_keyboard_block,
       show_api_request_block,
-      show_api_request_headers_block,
-      show_api_request_body_block,
+      show_api_request_headers,
+      show_api_request_body,
       show_database_block,
       ...values
     }: FormValues,
@@ -306,7 +331,7 @@ function CommandOffcanvas({ onAdd, onSave }: CommandOffcanvasProps): ReactElemen
     let apiRequestBody: Record<string, any> | null = null;
     let databaseRecordData: Record<string, any> | null = null;
 
-    if (show_api_request_body_block) {
+    if (show_api_request_body) {
       try {
         apiRequestBody = JSON.parse(api_request.body);
       } catch (error) {
@@ -375,7 +400,7 @@ function CommandOffcanvas({ onAdd, onSave }: CommandOffcanvasProps): ReactElemen
       api_request: show_api_request_block
         ? {
             ...api_request,
-            headers: show_api_request_headers_block
+            headers: show_api_request_headers
               ? api_request.headers.map((header) => ({
                   [header.key]: header.value,
                 }))
