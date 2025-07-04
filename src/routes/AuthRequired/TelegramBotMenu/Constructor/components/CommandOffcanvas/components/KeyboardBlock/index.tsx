@@ -11,16 +11,21 @@ import Keyboard, { KeyboardRow } from './components/Keyboard';
 import KeyboardButtonBlock from './components/KeyboardButtonBlock';
 import KeyboardTypes, { defaultType, Type } from './components/KeyboardTypes';
 
-import FormToggleSection from '../../../FormToggleSection';
-
 export interface Keyboard {
   type: Type;
   rows: KeyboardRow[];
 }
 
+export interface KeyboardBlockFormValues {
+  keyboard: Keyboard;
+}
+
 export interface KeyboardBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 export const defaultKeyboard: Keyboard = { type: defaultType, rows: [] };
+export const defaultKeyboardBlockFormValues: KeyboardBlockFormValues = {
+  keyboard: defaultKeyboard,
+};
 
 function KeyboardBlock(props: KeyboardBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
@@ -28,20 +33,18 @@ function KeyboardBlock(props: KeyboardBlockProps): ReactElement {
   });
 
   return (
-    <FormToggleSection name='show_keyboard_block'>
-      <Block {...props} variant='light'>
-        <Block.Title>
-          <h3 className='mb-2 text-lg font-medium'>{t('title')}</h3>
-        </Block.Title>
-        <KeyboardTypes className='mb-2' />
-        <KeyboardButtonBlock className='mb-2' />
-        <Keyboard className='mb-2' />
-        <div className='flex w-full gap-2'>
-          <AddKeyboardButtonButton className='w-full' />
-          <AddKeyboardRowButton className='w-full' />
-        </div>
-      </Block>
-    </FormToggleSection>
+    <Block {...props} variant='light'>
+      <Block.Title>
+        <h3 className='mb-2 text-lg font-medium'>{t('title')}</h3>
+      </Block.Title>
+      <KeyboardTypes className='mb-2' />
+      <KeyboardButtonBlock className='mb-2' />
+      <Keyboard className='mb-2' />
+      <div className='flex w-full gap-2'>
+        <AddKeyboardButtonButton className='w-full' />
+        <AddKeyboardRowButton className='w-full' />
+      </div>
+    </Block>
   );
 }
 

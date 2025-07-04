@@ -34,9 +34,8 @@ async function loader({
     !diagramCommandsResponse.ok ||
     !diagramConditionsResponse.ok ||
     !diagramBackgroundTasksResponse.ok
-  ) {
+  )
     return null;
-  }
 
   return {
     diagramCommands: diagramCommandsResponse.json,

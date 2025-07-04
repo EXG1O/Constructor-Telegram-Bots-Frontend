@@ -8,8 +8,6 @@ import Block, { BlockProps } from 'components/ui/Block';
 import AddDocumentsButton from './components/AddDocumentsButton';
 import DocumentList from './components/DocumentList';
 
-import FormToggleSection from '../../../FormToggleSection';
-
 import cn from 'utils/cn';
 
 export interface Document extends Pick<File, 'name' | 'size'> {
@@ -23,9 +21,16 @@ export interface Document extends Pick<File, 'name' | 'size'> {
 
 export type Documents = Document[];
 
+export interface DocumentsBlockFormValues {
+  documents: Documents;
+}
+
 export interface DocumentsBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 export const defaultDocuments: Documents = [];
+export const defaultDocumentsBlockFormValues: DocumentsBlockFormValues = {
+  documents: defaultDocuments,
+};
 
 function DocumentsBlock({ className, ...props }: DocumentsBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
@@ -33,19 +38,17 @@ function DocumentsBlock({ className, ...props }: DocumentsBlockProps): ReactElem
   });
 
   return (
-    <FormToggleSection name='show_documents_block'>
-      <Block
-        {...props}
-        variant='light'
-        className={cn('flex', 'flex-col', 'gap-2', className)}
-      >
-        <Block.Title>
-          <h3 className='text-lg font-medium'>{t('title')}</h3>
-        </Block.Title>
-        <DocumentList />
-        <AddDocumentsButton />
-      </Block>
-    </FormToggleSection>
+    <Block
+      {...props}
+      variant='light'
+      className={cn('flex', 'flex-col', 'gap-2', className)}
+    >
+      <Block.Title>
+        <h3 className='text-lg font-medium'>{t('title')}</h3>
+      </Block.Title>
+      <DocumentList />
+      <AddDocumentsButton />
+    </Block>
   );
 }
 

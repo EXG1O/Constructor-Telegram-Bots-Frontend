@@ -27,22 +27,22 @@
   "apiRequestBlock": {
     "title": "API-request",
     "urlInputPlaceholder": "Enter URL",
-    "headersBlock": {
-      "showButton": "Add headers",
-      "hideButton": "Remove headers",
+    "headers": {
       "headerInputGroup": {
         "keyInputPlaceholder": "Key",
         "valueInputPlaceholder": "Value"
       },
       "addHeaderButton": {
         "text": "Add header"
-      }
+      },
+      "showButton": "Add headers",
+      "hideButton": "Remove headers"
     },
-    "bodyBlock": {
+    "body": {
       "showButton": "Add data",
       "hideButton": "Remove data"
     },
-    "testBlock": {
+    "test": {
       "messages": {
         "makeTest": {
           "error": "An error occurred while sending the API request.",

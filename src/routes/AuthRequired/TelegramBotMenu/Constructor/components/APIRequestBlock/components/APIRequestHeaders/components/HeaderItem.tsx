@@ -20,7 +20,7 @@ export interface HeaderItemProps
 
 function HeaderItem({ index, className, ...props }: HeaderItemProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'apiRequestBlock.headersBlock.headerInputGroup',
+    keyPrefix: 'apiRequestBlock.headers.headerInputGroup',
   });
 
   const [{ value: headers }, _meta, { setValue: setHeaders }] =

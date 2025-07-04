@@ -19,11 +19,21 @@ import Node from './Node';
 import { ConditionAPI } from 'api/telegram_bots/main';
 import { DiagramBlock, DiagramCondition } from 'api/telegram_bots/types';
 
+import {
+  buildEdgeSourceHandle,
+  buildEdgeTargetHandle,
+  EdgeHandle,
+} from '../utils/edges';
+
 type Data = Omit<DiagramCondition, keyof DiagramBlock>;
 
 export interface ConditionNodeProps extends RFNodeProps<RFNode<Data>> {}
 
-function ConditionNode({ id, data: condition }: ConditionNodeProps): ReactElement {
+function ConditionNode({
+  id,
+  type,
+  data: condition,
+}: ConditionNodeProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nodes.condition',
   });
@@ -39,6 +49,12 @@ function ConditionNode({ id, data: condition }: ConditionNodeProps): ReactElemen
   const showConfirmModal = useConfirmModalStore((state) => state.setShow);
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
+
+  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<any>, 'position'> = {
+    objectType: type,
+    objectID: condition.id,
+    nestedObjectID: 0,
+  };
 
   function handleDelete(): void {
     showConfirmModal({
@@ -77,8 +93,22 @@ function ConditionNode({ id, data: condition }: ConditionNodeProps): ReactElemen
     <Node title={t('title')} onEdit={handleEdit} onDelete={handleDelete}>
       <Node.Block className='relative'>
         <Node.Title>{condition.name}</Node.Title>
-        <Node.Handle id={`${id}:left:0`} type='target' position={Position.Left} />
-        <Node.Handle id={`${id}:right:0`} type='source' position={Position.Right} />
+        <Node.Handle
+          id={buildEdgeTargetHandle({
+            ...defaultEdgeHandleBuildParams,
+            position: 'left',
+          })}
+          type='target'
+          position={Position.Left}
+        />
+        <Node.Handle
+          id={buildEdgeSourceHandle({
+            ...defaultEdgeHandleBuildParams,
+            position: 'right',
+          })}
+          type='source'
+          position={Position.Right}
+        />
       </Node.Block>
     </Node>
   );

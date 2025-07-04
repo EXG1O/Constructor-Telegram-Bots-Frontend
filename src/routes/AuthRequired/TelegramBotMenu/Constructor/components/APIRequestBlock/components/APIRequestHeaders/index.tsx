@@ -3,7 +3,6 @@ import { useField } from 'formik';
 
 import AddHeaderButton from './components/AddHeaderButton';
 import HeaderInputGroup from './components/HeaderItem';
-import ToggleSection from './components/ToggleSection';
 
 import cn from 'utils/cn';
 
@@ -47,4 +46,4 @@ function APIRequestHeaders({
   );
 }
 
-export default Object.assign(APIRequestHeaders, { ToggleSection });
+export default APIRequestHeaders;

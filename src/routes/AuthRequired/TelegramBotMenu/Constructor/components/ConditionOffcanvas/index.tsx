@@ -9,39 +9,38 @@ import Button from 'components/ui/Button';
 import Offcanvas, { OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import PartsBlock, { defaultParts, Parts } from './components/PartsBlock';
+import PartsBlock, {
+  defaultPartsBlockFormValues,
+  PartsBlockFormValues,
+} from './components/PartsBlock';
 
-import NameBlock, { defaultName, Name } from '../NameBlock';
+import NameBlock, {
+  defaultNameBlockFormValues,
+  NameBlockFormValues,
+} from '../NameBlock';
 
 import { ConditionAPI, ConditionsAPI } from 'api/telegram_bots/main';
 import { Condition, Data } from 'api/telegram_bots/types';
 
 import { useConditionOffcanvasStore } from './store';
 
-export interface FormValues {
-  name: Name;
-  parts: Parts;
-}
+export interface FormValues extends NameBlockFormValues, PartsBlockFormValues {}
 
-type InnerConditionFormOffcanvasProps = Omit<
-  OffcanvasProps,
-  'show' | 'loading' | 'children' | 'onHide'
->;
+interface InnerConditionOffcanvasProps
+  extends Omit<OffcanvasProps, 'show' | 'loading' | 'children' | 'onHide'> {}
 
 export const defaultFormValues: FormValues = {
-  name: defaultName,
-  parts: defaultParts,
+  ...defaultNameBlockFormValues,
+  ...defaultPartsBlockFormValues,
 };
 
 function InnerConditionOffcanvas({
   onHidden,
   ...props
-}: InnerConditionFormOffcanvasProps): ReactElement {
+}: InnerConditionOffcanvasProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'conditionOffcanvas',
   });
-
-  const formID = useId();
 
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
@@ -53,6 +52,8 @@ function InnerConditionOffcanvas({
   const loading = useConditionOffcanvasStore((state) => state.loading);
   const hideOffcanvas = useConditionOffcanvasStore((state) => state.hideOffcanvas);
   const setLoading = useConditionOffcanvasStore((state) => state.setLoading);
+
+  const formID = useId();
 
   useEffect(() => {
     if (!conditionID) return;
@@ -112,7 +113,7 @@ function InnerConditionOffcanvas({
   );
 }
 
-export interface ConditionFormOffcanvasProps extends InnerConditionFormOffcanvasProps {
+export interface ConditionFormOffcanvasProps extends InnerConditionOffcanvasProps {
   onAdd?: (condition: Condition) => void;
   onSave?: (condition: Condition) => void;
 }

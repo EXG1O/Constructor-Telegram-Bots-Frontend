@@ -10,9 +10,16 @@ import cn from 'utils/cn';
 
 export type Name = string;
 
+export interface NameBlockFormValues {
+  name: Name;
+}
+
 export interface NameBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 export const defaultName: Name = '';
+export const defaultNameBlockFormValues: NameBlockFormValues = {
+  name: defaultName,
+};
 
 function NameBlock({ className, ...props }: NameBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {

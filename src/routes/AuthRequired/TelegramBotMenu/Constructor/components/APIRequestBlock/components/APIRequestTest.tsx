@@ -24,7 +24,7 @@ interface Result {
 
 function APIRequestTest({ className, ...props }: APIRequestTestProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'apiRequestBlock.testBlock',
+    keyPrefix: 'apiRequestBlock.test',
   });
 
   const statusID = useId();

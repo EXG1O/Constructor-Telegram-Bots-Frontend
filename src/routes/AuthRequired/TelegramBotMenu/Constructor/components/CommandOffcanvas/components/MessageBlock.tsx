@@ -17,9 +17,16 @@ export interface Message {
   text: string;
 }
 
+export interface MessageBlockFormValues {
+  message: Message;
+}
+
 export interface MessageBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 export const defaultMessage: Message = { text: '' };
+export const defaultMessageBlockFormValues: MessageBlockFormValues = {
+  message: defaultMessage,
+};
 
 function MessageBlock({ className, ...props }: MessageBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {

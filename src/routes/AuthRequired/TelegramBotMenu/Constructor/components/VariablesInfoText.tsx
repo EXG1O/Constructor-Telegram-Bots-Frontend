@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 import cn from 'utils/cn';
 
 export interface VariablesInfoTextProps
-  extends Omit<HTMLAttributes<HTMLElement>, 'children'> {}
+  extends Omit<HTMLAttributes<HTMLSpanElement>, 'children'> {}
 
 function VariablesInfoText({
   className,
@@ -17,9 +17,9 @@ function VariablesInfoText({
   });
 
   return (
-    <small {...props} className={cn('w-full', 'text-xs', 'text-muted', className)}>
+    <span {...props} className={cn('w-full', 'text-xs', 'text-muted', className)}>
       {t('text')}
-    </small>
+    </span>
   );
 }
 
