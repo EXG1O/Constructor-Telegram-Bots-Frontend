@@ -5,6 +5,7 @@ import {
   DiagramBackgroundTask,
   DiagramCommand,
   DiagramCondition,
+  DiagramTrigger,
 } from 'api/telegram_bots/types';
 
 export interface EdgePoint<ObjectType extends string> {
@@ -13,7 +14,7 @@ export interface EdgePoint<ObjectType extends string> {
 }
 
 export interface EdgeSource
-  extends EdgePoint<'command' | 'condition' | 'background_task'> {}
+  extends EdgePoint<'trigger' | 'command' | 'condition' | 'background_task'> {}
 
 export interface EdgeTarget extends EdgePoint<'command' | 'condition'> {}
 
@@ -43,7 +44,7 @@ export interface EdgeHandle<ObjectType extends string> {
 }
 
 export interface EdgeSourceHandle
-  extends EdgeHandle<'command' | 'condition' | 'background_task'> {}
+  extends EdgeHandle<'trigger' | 'command' | 'condition' | 'background_task'> {}
 
 export interface EdgeTargetHandle extends EdgeHandle<'command' | 'condition'> {}
 
@@ -87,6 +88,7 @@ export function buildEdgeTargetHandle(handle: EdgeTargetHandle): string {
 }
 
 export interface DiagramBlocks {
+  triggers?: DiagramTrigger[];
   commands?: DiagramCommand[];
   conditions?: DiagramCondition[];
   backgroundTasks?: DiagramBackgroundTask[];
@@ -94,6 +96,7 @@ export interface DiagramBlocks {
 
 export function convertDiagramBlocksToEdges(diagramBlocks: DiagramBlocks): Edge[] {
   const connections: Connection[] = [
+    ...(diagramBlocks.triggers?.flatMap((trigger) => trigger.source_connections) ?? []),
     ...(diagramBlocks.commands?.flatMap((command) => [
       ...command.target_connections,
       ...(command.keyboard?.buttons.flatMap((button) => button.source_connections) ??

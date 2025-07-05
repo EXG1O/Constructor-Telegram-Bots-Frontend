@@ -57,6 +57,54 @@
     "showButton": "Показать дополнения",
     "hideButton": "Скрыть дополнения"
   },
+  "triggerOffcanvas": {
+    "title_add": "Добавление триггера",
+    "title_edit": "Редактирование триггера",
+    "messages": {
+      "getTrigger": {
+        "error": "Не удалось получить данные триггера."
+      },
+      "addTrigger": {
+        "success": "Вы успешно добавили триггер.",
+        "error": "Не удалось добавить триггер."
+      },
+      "editTrigger": {
+        "success": "Вы успешно сохранили триггер.",
+        "error": "Не удалось сохранить триггер."
+      }
+    },
+    "typeBlock": {
+      "title": "Тип"
+    },
+    "startCommandBlock": {
+      "title": "Стартовая команда",
+      "payload": {
+        "showButton": "Добавить полезную нагрузку",
+        "hideButton": "Убрать полезную нагрузку",
+        "inputPlaceholder": "Введите данные"
+      },
+      "description": {
+        "showButton": "Показывать в меню",
+        "hideButton": "Убрать из меню",
+        "inputPlaceholder": "Введите описание"
+      }
+    },
+    "commandBlock": {
+      "title": "Команда",
+      "commandInputPlaceholder": "Введите команду",
+      "description": {
+        "showButton": "Показывать в меню",
+        "hideButton": "Убрать из меню",
+        "inputPlaceholder": "Введите описание"
+      }
+    },
+    "messageBlock": {
+      "title": "Сообщение",
+      "messageEditorPlaceholder": "Введите текст"
+    },
+    "actionButton_add": "Добавить",
+    "actionButton_edit": "Сохранить"
+  },
   "commandOffcanvas": {
     "title_add": "Добавление команды",
     "title_edit": "Редактирование команды",
@@ -220,11 +268,25 @@
   "panel": {
     "showButton": "Показать блоки",
     "hideButton": "Скрыть блоки",
+    "addTriggerButton": "Добавить триггер",
     "addCommandButton": "Добавить команду",
     "addConditionButton": "Добавить условие",
     "addBackgroundTaskButton": "Добавить фоновую задачу"
   },
   "nodes": {
+    "trigger": {
+      "title": "Триггер",
+      "messages": {
+        "deleteTrigger": {
+          "success": "Вы успешно удалили триггер.",
+          "error": "Не удалось удалить триггер."
+        }
+      },
+      "deleteModal": {
+        "title": "Удаление триггера",
+        "text": "Вы точно хотите удалить триггер?"
+      }
+    },
     "command": {
       "title": "Команда",
       "messages": {

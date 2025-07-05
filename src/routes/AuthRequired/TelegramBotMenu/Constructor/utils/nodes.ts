@@ -1,8 +1,10 @@
 import { Node } from '@xyflow/react';
 
+import { nodeTypes } from '..';
+
 import { DiagramBlock } from 'api/telegram_bots/types';
 
-export type NodeType = 'command' | 'condition' | 'background_task';
+export type NodeType = keyof typeof nodeTypes;
 
 export interface NodeID {
   type: NodeType;

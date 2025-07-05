@@ -13,7 +13,6 @@ import {
   MarkerType,
   MiniMap,
   Node,
-  NodeTypes,
   ReactFlow,
   useEdgesState,
   useNodesState,
@@ -33,6 +32,8 @@ import CommandOffcanvas from './components/CommandOffcanvas';
 import ConditionNode from './components/ConditionNode';
 import ConditionOffcanvas from './components/ConditionOffcanvas';
 import Panel from './components/Panel';
+import TriggerNode from './components/TriggerNode';
+import TriggerOffcanvas from './components/TriggerOffcanvas';
 
 import useTelegramBotMenuConstructorRouteLoaderData from './hooks/useTelegramBotMenuConstructorRouteLoaderData';
 
@@ -43,12 +44,14 @@ import {
   DiagramBackgroundTaskAPI,
   DiagramCommandAPI,
   DiagramConditionAPI,
+  DiagramTriggerAPI,
 } from 'api/telegram_bots/main';
 import {
   BackgroundTask,
   Command,
   Condition,
   TelegramBot,
+  Trigger,
 } from 'api/telegram_bots/types';
 
 import cn from 'utils/cn';
@@ -67,7 +70,8 @@ import { parseNodeID } from './utils/nodes';
 
 import('@xyflow/react/dist/base.css');
 
-const nodeTypes: NodeTypes = {
+export const nodeTypes = {
+  trigger: TriggerNode,
   command: CommandNode,
   condition: ConditionNode,
   background_task: BackgroundTaskNode,
@@ -87,13 +91,22 @@ const diagramBlockAPIMap: Record<
   {
     get: (
       telegramBotID: TelegramBot['id'],
-      id: number,
+      id: ExistingDiagramBlock['id'],
+    ) => Promise<
+      | APIResponse.Base<true, ExistingDiagramBlock>
+      | APIResponse.Base<false, APIResponse.ErrorList>
+    >;
+    update: (
+      telegramBotID: TelegramBot['id'],
+      id: ExistingDiagramBlock['id'],
+      data: Pick<ExistingDiagramBlock, 'x' | 'y'>,
     ) => Promise<
       | APIResponse.Base<true, ExistingDiagramBlock>
       | APIResponse.Base<false, APIResponse.ErrorList>
     >;
   }
 > = {
+  trigger: DiagramTriggerAPI,
   command: DiagramCommandAPI,
   condition: DiagramConditionAPI,
   background_task: DiagramBackgroundTaskAPI,
@@ -111,11 +124,16 @@ function Constructor(): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor);
 
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
-  const { diagramCommands, diagramConditions, diagramBackgroundTasks } =
-    useTelegramBotMenuConstructorRouteLoaderData();
+  const {
+    diagramTriggers,
+    diagramCommands,
+    diagramConditions,
+    diagramBackgroundTasks,
+  } = useTelegramBotMenuConstructorRouteLoaderData();
 
   const [nodes, setNodes, onNodesChange] = useNodesState(
     Object.entries({
+      trigger: diagramTriggers,
       command: diagramCommands,
       condition: diagramConditions,
       background_task: diagramBackgroundTasks,
@@ -127,6 +145,7 @@ function Constructor(): ReactElement {
   );
   const [edges, setEdges, onEdgesChange] = useEdgesState(
     convertDiagramBlocksToEdges({
+      triggers: diagramTriggers,
       commands: diagramCommands,
       conditions: diagramConditions,
       backgroundTasks: diagramBackgroundTasks,
@@ -234,11 +253,11 @@ function Constructor(): ReactElement {
     nodes.forEach(async (node) => {
       const nodeID = parseNodeID(node.id);
 
-      await {
-        command: DiagramCommandAPI,
-        condition: DiagramConditionAPI,
-        background_task: DiagramBackgroundTaskAPI,
-      }[nodeID.type].update(telegramBot.id, nodeID.id, node.position);
+      await diagramBlockAPIMap[nodeID.type].update(
+        telegramBot.id,
+        nodeID.id,
+        node.position,
+      );
     });
   }
 
@@ -314,6 +333,12 @@ function Constructor(): ReactElement {
     });
   }
 
+  async function handleTriggerChange(trigger: Trigger): Promise<void> {
+    await updateDiagramBlock('trigger', trigger.id, {
+      messages: { getDiagramBlock: { error: t('messages.getDiagramTrigger.error') } },
+    });
+  }
+
   async function handleCommandChange(command: Command): Promise<void> {
     await updateDiagramBlock('command', command.id, {
       messages: { getDiagramBlock: { error: t('messages.getDiagramCommand.error') } },
@@ -338,6 +363,7 @@ function Constructor(): ReactElement {
 
   return (
     <Page title={t('title')} className='flex-auto'>
+      <TriggerOffcanvas onAdd={handleTriggerChange} onSave={handleTriggerChange} />
       <CommandOffcanvas onAdd={handleCommandChange} onSave={handleCommandChange} />
       <ConditionOffcanvas
         onAdd={handleConditionChange}
