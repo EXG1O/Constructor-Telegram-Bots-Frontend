@@ -11,6 +11,7 @@ import Collapsible from 'components/ui/Collapsible';
 import { useBackgroundTaskOffcanvasStore } from './BackgroundTaskOffcanvas/store';
 import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
 import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
+import { useTriggerOffcanvasStore } from './TriggerOffcanvas/store';
 
 import cn from 'utils/cn';
 
@@ -26,6 +27,9 @@ function Panel({ className, ...props }: PanelProps): ReactElement {
 
   const [open, setOpen] = useState<boolean>(false);
 
+  const showAddTriggerOffcanvas = useTriggerOffcanvasStore(
+    (state) => state.showOffcanvas,
+  );
   const showAddCommandOffcanvas = useCommandOffcanvasStore(
     (state) => state.showOffcanvas,
   );
@@ -35,6 +39,10 @@ function Panel({ className, ...props }: PanelProps): ReactElement {
   const showAddBackgroundTaskOffcanvas = useBackgroundTaskOffcanvasStore(
     (state) => state.showOffcanvas,
   );
+
+  function handleAddTriggerClick(): void {
+    showAddTriggerOffcanvas();
+  }
 
   function handleAddCommandClick(): void {
     showAddCommandOffcanvas();
@@ -76,6 +84,9 @@ function Panel({ className, ...props }: PanelProps): ReactElement {
               className,
             )}
           >
+            <PlusButton size='sm' variant='dark' onClick={handleAddTriggerClick}>
+              {t('addTriggerButton')}
+            </PlusButton>
             <PlusButton size='sm' variant='dark' onClick={handleAddCommandClick}>
               {t('addCommandButton')}
             </PlusButton>

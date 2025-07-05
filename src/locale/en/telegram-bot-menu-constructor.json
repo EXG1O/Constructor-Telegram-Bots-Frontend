@@ -57,6 +57,54 @@
     "showButton": "Show addons",
     "hideButton": "Hide addons"
   },
+  "triggerOffcanvas": {
+    "title_add": "Adding a trigger",
+    "title_edit": "Editing the trigger",
+    "messages": {
+      "getTrigger": {
+        "error": "Failed to get trigger data."
+      },
+      "addTrigger": {
+        "success": "You have successfully added the trigger.",
+        "error": "Failed to add the trigger."
+      },
+      "editTrigger": {
+        "success": "You have successfully saved the trigger.",
+        "error": "Failed to save the trigger."
+      }
+    },
+    "typeBlock": {
+      "title": "Type"
+    },
+    "startCommandBlock": {
+      "title": "Start Command",
+      "payload": {
+        "showButton": "Add payload",
+        "hideButton": "Remove payload",
+        "inputPlaceholder": "Enter data"
+      },
+      "description": {
+        "showButton": "Add to menu",
+        "hideButton": "Remove from menu",
+        "inputPlaceholder": "Enter description"
+      }
+    },
+    "commandBlock": {
+      "title": "Command",
+      "commandInputPlaceholder": "Enter command",
+      "description": {
+        "showButton": "Add to menu",
+        "hideButton": "Remove from menu",
+        "inputPlaceholder": "Enter description"
+      }
+    },
+    "messageBlock": {
+      "title": "Message",
+      "messageEditorPlaceholder": "Enter text"
+    },
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save"
+  },
   "commandOffcanvas": {
     "title_add": "Adding a command",
     "title_edit": "Editing the command",
@@ -220,11 +268,25 @@
   "panel": {
     "showButton": "Show blocks",
     "hideButton": "Hide blocks",
+    "addTriggerButton": "Add trigger",
     "addCommandButton": "Add command",
     "addConditionButton": "Add condition",
     "addBackgroundTaskButton": "Add background task"
   },
   "nodes": {
+    "trigger": {
+      "title": "Trigger",
+      "messages": {
+        "deleteTrigger": {
+          "success": "You have successfully deleted the trigger.",
+          "error": "Failed to delete the trigger."
+        }
+      },
+      "deleteModal": {
+        "title": "Deleting the Trigger",
+        "text": "Are you sure you want to delete the trigger?"
+      }
+    },
     "command": {
       "title": "Command",
       "messages": {

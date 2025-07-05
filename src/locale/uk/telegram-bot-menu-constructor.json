@@ -57,6 +57,54 @@
     "showButton": "Показати доповнення",
     "hideButton": "Приховати доповнення"
   },
+  "triggerOffcanvas": {
+    "title_add": "Додавання тригер",
+    "title_edit": "Редагування тригер",
+    "messages": {
+      "getTrigger": {
+        "error": "Не вдалося отримати дані тригера."
+      },
+      "addTrigger": {
+        "success": "Ви успішно додали тригер.",
+        "error": "Не вдалося додати тригер."
+      },
+      "editTrigger": {
+        "success": "Ви успішно зберегли тригер.",
+        "error": "Не вдалося зберегти тригер."
+      }
+    },
+    "typeBlock": {
+      "title": "Тип"
+    },
+    "startCommandBlock": {
+      "title": "Стартова команда",
+      "payload": {
+        "showButton": "Додати навантаження",
+        "hideButton": "Прибрати навантаження",
+        "inputPlaceholder": "Введіть дані"
+      },
+      "description": {
+        "showButton": "Показувати в меню",
+        "hideButton": "Прибрати з меню",
+        "inputPlaceholder": "Введіть опис"
+      }
+    },
+    "commandBlock": {
+      "title": "Команда",
+      "commandInputPlaceholder": "Введіть команду",
+      "description": {
+        "showButton": "Показувати в меню",
+        "hideButton": "Прибрати з меню",
+        "inputPlaceholder": "Введіть опис"
+      }
+    },
+    "messageBlock": {
+      "title": "Повідомлення",
+      "messageEditorPlaceholder": "Введіть текст"
+    },
+    "actionButton_add": "Додати",
+    "actionButton_edit": "Зберегти"
+  },
   "commandOffcanvas": {
     "title_add": "Додавання команди",
     "title_edit": "Редагування команди",
@@ -220,11 +268,25 @@
   "panel": {
     "showButton": "Показати блоки",
     "hideButton": "Приховати блоки",
+    "addTriggerButton": "Додати тригер",
     "addCommandButton": "Додати команду",
     "addConditionButton": "Додати умову",
     "addBackgroundTaskButton": "Додати фонову задачу"
   },
   "nodes": {
+    "trigger": {
+      "title": "Тригер",
+      "messages": {
+        "deleteTrigger": {
+          "success": "Ви успішно видалили тригер.",
+          "error": "Не вдалося видалити тригер."
+        }
+      },
+      "deleteModal": {
+        "title": "Видалення тригера",
+        "text": "Ви точно хочете видалити тригер?"
+      }
+    },
     "command": {
       "title": "Команда",
       "messages": {
