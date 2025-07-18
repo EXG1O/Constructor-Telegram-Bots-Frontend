@@ -1,7 +1,7 @@
 import { Params } from 'react-router-dom';
 
-import { UsersAPI } from 'api/telegram_bots/main';
-import { APIResponse } from 'api/telegram_bots/types';
+import { UsersAPI } from 'api/telegram_bots/user';
+import { APIResponse } from 'api/telegram_bots/user/types';
 
 export type Type = 'all' | 'allowed' | 'blocked';
 

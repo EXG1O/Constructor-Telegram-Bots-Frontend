@@ -38,21 +38,16 @@ import TriggerOffcanvas from './components/TriggerOffcanvas';
 import useTelegramBotMenuConstructorRouteLoaderData from './hooks/useTelegramBotMenuConstructorRouteLoaderData';
 
 import { APIResponse } from 'api/core';
-import {
-  ConnectionAPI,
-  ConnectionsAPI,
-  DiagramBackgroundTaskAPI,
-  DiagramCommandAPI,
-  DiagramConditionAPI,
-  DiagramTriggerAPI,
-} from 'api/telegram_bots/main';
-import {
-  BackgroundTask,
-  Command,
-  Condition,
-  TelegramBot,
-  Trigger,
-} from 'api/telegram_bots/types';
+import { DiagramBackgroundTaskAPI } from 'api/telegram_bots/background_task';
+import { BackgroundTask } from 'api/telegram_bots/background_task/types';
+import { DiagramCommandAPI } from 'api/telegram_bots/command';
+import { Command } from 'api/telegram_bots/command/types';
+import { DiagramConditionAPI } from 'api/telegram_bots/condition';
+import { Condition } from 'api/telegram_bots/condition/types';
+import { ConnectionAPI, ConnectionsAPI } from 'api/telegram_bots/connection';
+import { TelegramBot } from 'api/telegram_bots/telegram_bot/types';
+import { DiagramTriggerAPI } from 'api/telegram_bots/trigger';
+import { Trigger } from 'api/telegram_bots/trigger/types';
 
 import cn from 'utils/cn';
 

@@ -16,8 +16,9 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
 import Node from './Node';
 
-import { ConditionAPI } from 'api/telegram_bots/main';
-import { DiagramBlock, DiagramCondition } from 'api/telegram_bots/types';
+import { ConditionAPI } from 'api/telegram_bots/condition';
+import { DiagramCondition } from 'api/telegram_bots/condition/types';
+import { DiagramBlock } from 'api/telegram_bots/diagram/types';
 
 import {
   buildEdgeSourceHandle,

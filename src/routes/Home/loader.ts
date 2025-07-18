@@ -1,13 +1,13 @@
 import { DonationsAPI } from 'api/donations/main';
 import { APIResponse as DonationsAPIResponse } from 'api/donations/types';
-import { StatsAPI as TelegramBotsStatsAPI } from 'api/telegram_bots/main';
-import { APIResponse as TelegramBotsAPIResponse } from 'api/telegram_bots/types';
+import { StatsAPI as TelegramBotsStatsAPI } from 'api/telegram_bots/stats';
+import { APIResponse as TelegramBotsStatsAPIResponse } from 'api/telegram_bots/stats/types';
 import { StatsAPI as UsersStatsAPI } from 'api/users/main';
 import { APIResponse as UsersAPIResponse } from 'api/users/types';
 
 interface Stats {
   users: UsersAPIResponse.StatsAPI.Get;
-  telegramBots: TelegramBotsAPIResponse.StatsAPI.Get;
+  telegramBots: TelegramBotsStatsAPIResponse.StatsAPI.Get;
 }
 
 export interface LoaderData {

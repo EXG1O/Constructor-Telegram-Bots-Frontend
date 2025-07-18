@@ -14,29 +14,20 @@ import IntervalBlock, {
   IntervalBlockFormValues,
 } from './components/IntervalBlock';
 
-import AddonButtonGroup from '../AddonButtonGroup';
-import APIRequestBlock, {
-  APIRequestBlockFormValues,
-  defaultAPIRequest,
-  defaultAPIRequestBlockFormValues,
-} from '../APIRequestBlock';
-import FormToggleSection from '../FormToggleSection';
 import NameBlock, {
   defaultNameBlockFormValues,
   NameBlockFormValues,
 } from '../NameBlock';
 
-import { BackgroundTaskAPI, BackgroundTasksAPI } from 'api/telegram_bots/main';
-import { BackgroundTask, Data } from 'api/telegram_bots/types';
+import {
+  BackgroundTaskAPI,
+  BackgroundTasksAPI,
+} from 'api/telegram_bots/background_task';
+import { BackgroundTask } from 'api/telegram_bots/background_task/types';
 
 import { useBackgroundTaskOffcanvasStore } from './store';
 
-export interface FormValues
-  extends NameBlockFormValues,
-    IntervalBlockFormValues,
-    APIRequestBlockFormValues {
-  show_api_request_block: boolean;
-}
+export interface FormValues extends NameBlockFormValues, IntervalBlockFormValues {}
 
 interface InnerBackgroundTaskOffcanvasProps
   extends Omit<OffcanvasProps, 'show' | 'loading' | 'children' | 'onHide'> {}
@@ -44,9 +35,6 @@ interface InnerBackgroundTaskOffcanvasProps
 export const defaultFormValues: FormValues = {
   ...defaultNameBlockFormValues,
   ...defaultIntervalBlockFormValues,
-  ...defaultAPIRequestBlockFormValues,
-
-  show_api_request_block: false,
 };
 
 function InnerBackgroundTaskOffcanvas({
@@ -82,29 +70,9 @@ function InnerBackgroundTaskOffcanvas({
         return;
       }
 
-      const { id, api_request, ...task } = response.json;
+      const { id, ...task } = response.json;
 
-      setValues({
-        ...task,
-        api_request: api_request
-          ? {
-              ...api_request,
-              headers: api_request.headers
-                ? api_request.headers.map((header) => {
-                    const [[key, value]] = Object.entries(header);
-                    return { key, value };
-                  })
-                : defaultAPIRequest.headers,
-              body: api_request.body
-                ? JSON.stringify(api_request.body, undefined, 4)
-                : defaultAPIRequest.body,
-            }
-          : defaultAPIRequest,
-
-        show_api_request_block: Boolean(api_request),
-        show_api_request_headers: Boolean(api_request?.headers),
-        show_api_request_body: Boolean(api_request?.body),
-      });
+      setValues(task);
       setLoading(false);
     })();
   }, [taskID]);
@@ -131,17 +99,9 @@ function InnerBackgroundTaskOffcanvas({
         <Form id={formID} className='flex flex-col gap-3'>
           <NameBlock />
           <IntervalBlock />
-          <FormToggleSection name='show_api_request_block'>
-            <APIRequestBlock />
-          </FormToggleSection>
         </Form>
       </Offcanvas.Body>
-      <Offcanvas.Footer className='flex flex-col gap-2'>
-        <AddonButtonGroup>
-          <AddonButtonGroup.Button name='show_api_request_block'>
-            {t('apiRequestBlock.title')}
-          </AddonButtonGroup.Button>
-        </AddonButtonGroup>
+      <Offcanvas.Footer>
         <Button form={formID} type='submit' variant='success' className='w-full'>
           {t('backgroundTaskOffcanvas.actionButton', { context: type })}
         </Button>
@@ -172,46 +132,12 @@ function BackgroundTaskOffcanvas({
   const hideOffcanvas = useBackgroundTaskOffcanvasStore((state) => state.hideOffcanvas);
 
   async function handleSubmit(
-    {
-      api_request,
-      show_api_request_block,
-      show_api_request_headers,
-      show_api_request_body,
-      ...task
-    }: FormValues,
+    values: FormValues,
     { setFieldError }: FormikHelpers<FormValues>,
   ): Promise<void> {
-    let apiRequestBody: Record<string, any> | null = null;
-
-    if (show_api_request_body) {
-      try {
-        apiRequestBody = JSON.parse(api_request.body);
-      } catch (error) {
-        if (error instanceof SyntaxError) {
-          setFieldError('api_request.body', t('messages.validation.invalidJSON'));
-        }
-        return;
-      }
-    }
-
-    const data: Data.BackgroundTasksAPI.Create | Data.BackgroundTaskAPI.Update = {
-      ...task,
-      api_request: show_api_request_block
-        ? {
-            ...api_request,
-            headers: show_api_request_headers
-              ? api_request.headers.map((header) => ({
-                  [header.key]: header.value,
-                }))
-              : null,
-            body: apiRequestBody,
-          }
-        : null,
-    };
-
     const response = await (taskID
-      ? BackgroundTaskAPI.update(telegramBot.id, taskID, data)
-      : BackgroundTasksAPI.create(telegramBot.id, data));
+      ? BackgroundTaskAPI.update(telegramBot.id, taskID, values)
+      : BackgroundTasksAPI.create(telegramBot.id, values));
 
     if (!response.ok) {
       for (const error of response.json.errors) {

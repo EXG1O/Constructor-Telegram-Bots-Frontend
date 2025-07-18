@@ -19,8 +19,9 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
 import Node from './Node';
 
-import { CommandAPI } from 'api/telegram_bots/main';
-import { DiagramBlock, DiagramCommand } from 'api/telegram_bots/types';
+import { CommandAPI } from 'api/telegram_bots/command';
+import { DiagramCommand } from 'api/telegram_bots/command/types';
+import { DiagramBlock } from 'api/telegram_bots/diagram/types';
 
 import cn from 'utils/cn';
 

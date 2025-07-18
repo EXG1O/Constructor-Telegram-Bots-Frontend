@@ -1,18 +1,19 @@
 import { Params } from 'react-router-dom';
 
-import {
-  DiagramBackgroundTasksAPI,
-  DiagramCommandsAPI,
-  DiagramConditionsAPI,
-  DiagramTriggersAPI,
-} from 'api/telegram_bots/main';
-import { APIResponse } from 'api/telegram_bots/types';
+import { DiagramBackgroundTasksAPI } from 'api/telegram_bots/background_task';
+import { APIResponse as BackgroundTaskAPIResponse } from 'api/telegram_bots/background_task/types';
+import { DiagramCommandsAPI } from 'api/telegram_bots/command';
+import { APIResponse as CommandAPIResponse } from 'api/telegram_bots/command/types';
+import { DiagramConditionsAPI } from 'api/telegram_bots/condition';
+import { APIResponse as ConditionAPIResponse } from 'api/telegram_bots/condition/types';
+import { DiagramTriggersAPI } from 'api/telegram_bots/trigger';
+import { APIResponse as TriggerAPIResponse } from 'api/telegram_bots/trigger/types';
 
 export interface LoaderData {
-  diagramTriggers: APIResponse.DiagramTriggersAPI.Get;
-  diagramCommands: APIResponse.DiagramCommandsAPI.Get;
-  diagramConditions: APIResponse.DiagramConditionsAPI.Get;
-  diagramBackgroundTasks: APIResponse.DiagramBackgroundTasksAPI.Get;
+  diagramTriggers: TriggerAPIResponse.DiagramTriggersAPI.Get;
+  diagramCommands: CommandAPIResponse.DiagramCommandsAPI.Get;
+  diagramConditions: ConditionAPIResponse.DiagramConditionsAPI.Get;
+  diagramBackgroundTasks: BackgroundTaskAPIResponse.DiagramBackgroundTasksAPI.Get;
 }
 
 async function loader({
