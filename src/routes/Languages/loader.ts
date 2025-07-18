@@ -1,4 +1,4 @@
-import { LanguagesAPI } from 'api/languages/main';
+import { LanguagesAPI } from 'api/languages';
 import { APIResponse } from 'api/languages/types';
 
 export interface LoaderData {

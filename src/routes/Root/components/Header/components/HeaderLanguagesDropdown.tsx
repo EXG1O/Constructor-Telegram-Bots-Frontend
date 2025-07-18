@@ -8,7 +8,7 @@ import Button from 'components/ui/Button';
 import Dropdown, { DropdownProps } from 'components/ui/Dropdown';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { LanguagesAPI } from 'api/languages/main';
+import { LanguagesAPI } from 'api/languages';
 
 export interface HeaderLanguagesDropdownProps extends Omit<DropdownProps, 'children'> {}
 
