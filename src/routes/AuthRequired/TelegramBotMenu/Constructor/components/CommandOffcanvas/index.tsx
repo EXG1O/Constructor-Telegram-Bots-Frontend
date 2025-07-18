@@ -221,12 +221,6 @@ function InnerCommandOffcanvas({
           <AddonButtonGroup.Button name='show_keyboard_block'>
             {t('commandOffcanvas.keyboardBlock.title')}
           </AddonButtonGroup.Button>
-          <AddonButtonGroup.Button name='show_api_request_block'>
-            {t('apiRequestBlock.title')}
-          </AddonButtonGroup.Button>
-          <AddonButtonGroup.Button name='show_database_block'>
-            {t('commandOffcanvas.databaseRecordBlock.title')}
-          </AddonButtonGroup.Button>
         </AddonButtonGroup>
         <Button form={formID} type='submit' variant='success' className='w-full'>
           {t('commandOffcanvas.actionButton', { context: type })}
