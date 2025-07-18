@@ -1,4 +1,4 @@
-import { DonationsAPI } from 'api/donations/main';
+import { DonationsAPI } from 'api/donations';
 import { APIResponse as DonationsAPIResponse } from 'api/donations/types';
 import { StatsAPI as TelegramBotsStatsAPI } from 'api/telegram_bots/stats';
 import { APIResponse as TelegramBotsStatsAPIResponse } from 'api/telegram_bots/stats/types';
