@@ -1,4 +1,4 @@
-import { UserAPI } from './users/main';
+import { UserAPI } from './users';
 
 export namespace APIResponse {
   export interface Base<Ok extends boolean, Json extends Record<string, any>>

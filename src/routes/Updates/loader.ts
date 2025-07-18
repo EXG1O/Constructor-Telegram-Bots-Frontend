@@ -1,4 +1,4 @@
-import { UpdatesAPI } from 'api/updates/main';
+import { UpdatesAPI } from 'api/updates';
 import { APIResponse } from 'api/updates/types';
 
 export interface PaginationData extends APIResponse.UpdatesAPI.Get.Pagination {

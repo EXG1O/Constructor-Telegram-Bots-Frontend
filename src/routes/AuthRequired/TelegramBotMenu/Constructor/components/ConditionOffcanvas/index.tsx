@@ -19,8 +19,8 @@ import NameBlock, {
   NameBlockFormValues,
 } from '../NameBlock';
 
-import { ConditionAPI, ConditionsAPI } from 'api/telegram_bots/main';
-import { Condition, Data } from 'api/telegram_bots/types';
+import { ConditionAPI, ConditionsAPI } from 'api/telegram_bots/condition';
+import { Condition, Data } from 'api/telegram_bots/condition/types';
 
 import { useConditionOffcanvasStore } from './store';
 

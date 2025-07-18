@@ -11,7 +11,7 @@ import SectionItem from './components/SectionItem';
 
 import usePrivacyPolicyRouteLoaderData from './hooks/usePrivacyPolicyRouteLoaderData';
 
-import { SectionsAPI } from 'api/privacy_policy/main';
+import { SectionsAPI } from 'api/privacy_policy';
 import { Section } from 'api/privacy_policy/types';
 
 function PrivacyPolicy(): ReactElement {

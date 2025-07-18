@@ -1,4 +1,4 @@
-import { SectionsAPI } from 'api/privacy_policy/main';
+import { SectionsAPI } from 'api/privacy_policy';
 import { APIResponse } from 'api/privacy_policy/types';
 
 export interface LoaderData {

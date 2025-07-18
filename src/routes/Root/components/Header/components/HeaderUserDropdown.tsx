@@ -9,7 +9,7 @@ import Button from 'components/ui/Button';
 import Dropdown, { DropdownProps } from 'components/ui/Dropdown';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { UserAPI } from 'api/users/main';
+import { UserAPI } from 'api/users';
 import { User } from 'api/users/types';
 
 export interface HeaderUserDropdownProps extends Omit<DropdownProps, 'children'> {

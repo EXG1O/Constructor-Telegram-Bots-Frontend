@@ -1,4 +1,4 @@
-import { MethodsAPI, SectionsAPI } from 'api/donations/main';
+import { MethodsAPI, SectionsAPI } from 'api/donations';
 import { APIResponse } from 'api/donations/types';
 
 export interface LoaderData {

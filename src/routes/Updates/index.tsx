@@ -12,7 +12,7 @@ import UpdateItem from './components/UpdateItem';
 
 import useUpdatesRouteLoaderData from './hooks/useUpdatesRouteLoaderData';
 
-import { UpdatesAPI } from 'api/updates/main';
+import { UpdatesAPI } from 'api/updates';
 
 import { PaginationData } from './loader';
 

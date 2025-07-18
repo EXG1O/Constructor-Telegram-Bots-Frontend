@@ -12,7 +12,7 @@ import SectionItem from './components/SectionItem';
 
 import useDonationRouteLoaderData from './hooks/useDonationRouteLoaderData';
 
-import { SectionsAPI } from 'api/donations/main';
+import { SectionsAPI } from 'api/donations';
 import { Section } from 'api/donations/types';
 
 function Index(): ReactElement {

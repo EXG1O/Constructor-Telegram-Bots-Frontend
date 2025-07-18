@@ -1,4 +1,4 @@
-import { UserAPI } from 'api/users/main';
+import { UserAPI } from 'api/users';
 import { User } from 'api/users/types';
 
 export interface LoaderData {

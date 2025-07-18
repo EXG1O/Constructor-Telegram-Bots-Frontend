@@ -18,7 +18,7 @@ import useRootRouteLoaderData from '../../hooks/useRootRouteLoaderData';
 
 import Logo from 'assets/logo/logo.svg';
 
-import { TelegramBot } from 'api/telegram_bots/types';
+import { TelegramBot } from 'api/telegram_bots/telegram_bot/types';
 
 import cn from 'utils/cn';
 

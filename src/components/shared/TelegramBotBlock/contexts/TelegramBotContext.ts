@@ -1,6 +1,6 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
 
-import { TelegramBot } from 'api/telegram_bots/types';
+import { TelegramBot } from 'api/telegram_bots/telegram_bot/types';
 
 export type TelegramBotContextType = [
   TelegramBot,

@@ -16,8 +16,9 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import { useBackgroundTaskOffcanvasStore } from './BackgroundTaskOffcanvas/store';
 import Node from './Node';
 
-import { BackgroundTaskAPI } from 'api/telegram_bots/main';
-import { DiagramBackgroundTask, DiagramBlock } from 'api/telegram_bots/types';
+import { BackgroundTaskAPI } from 'api/telegram_bots/background_task';
+import { DiagramBackgroundTask } from 'api/telegram_bots/background_task/types';
+import { DiagramBlock } from 'api/telegram_bots/diagram/types';
 
 import { buildEdgeSourceHandle, EdgeHandle } from '../utils/edges';
 

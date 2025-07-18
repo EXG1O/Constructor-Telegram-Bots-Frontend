@@ -12,7 +12,7 @@ import settings from 'settings';
 
 import Telegram from 'assets/icons/telegram.svg';
 
-import { UsersAPI } from 'api/users/main';
+import { UsersAPI } from 'api/users';
 import { Data } from 'api/users/types';
 
 export { buttonVariants as loginButtonVariants };

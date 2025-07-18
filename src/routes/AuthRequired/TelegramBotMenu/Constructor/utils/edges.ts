@@ -1,26 +1,26 @@
 import { Edge } from '@xyflow/react';
 
+import { DiagramBackgroundTask } from 'api/telegram_bots/background_task/types';
+import { DiagramCommand } from 'api/telegram_bots/command/types';
+import { DiagramCondition } from 'api/telegram_bots/condition/types';
 import {
   Connection,
-  DiagramBackgroundTask,
-  DiagramCommand,
-  DiagramCondition,
-  DiagramTrigger,
-} from 'api/telegram_bots/types';
+  ObjectType,
+  SourceObjectType,
+  TargetObjectType,
+} from 'api/telegram_bots/connection/types';
+import { DiagramTrigger } from 'api/telegram_bots/trigger/types';
 
-export interface EdgePoint<ObjectType extends string> {
-  objectType: ObjectType;
+export interface EdgePoint<OT extends ObjectType> {
+  objectType: OT;
   objectID: number;
 }
 
-export interface EdgeSource
-  extends EdgePoint<'trigger' | 'command' | 'condition' | 'background_task'> {}
+export interface EdgeSource extends EdgePoint<SourceObjectType> {}
 
-export interface EdgeTarget extends EdgePoint<'command' | 'condition'> {}
+export interface EdgeTarget extends EdgePoint<TargetObjectType> {}
 
-export function parseEdgePoint<ObjectType extends string>(
-  point: string,
-): EdgePoint<ObjectType> {
+export function parseEdgePoint<OT extends ObjectType>(point: string): EdgePoint<OT> {
   const [objectType, objectID] = point.split(':');
   return {
     objectType,

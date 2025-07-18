@@ -14,8 +14,8 @@ import { useVariableModalStore } from '../../VariableModal/store';
 
 import useUserVariablesStore from '../../../hooks/useUserVariablesStore';
 
-import { VariableAPI } from 'api/telegram_bots/main';
-import { Variable } from 'api/telegram_bots/types';
+import { VariableAPI } from 'api/telegram_bots/variable';
+import { Variable } from 'api/telegram_bots/variable/types';
 
 import cn from 'utils/cn';
 

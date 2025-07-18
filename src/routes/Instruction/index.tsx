@@ -11,7 +11,7 @@ import SectionItem from './components/SectionItem';
 
 import useInstructionRouteLoaderData from './hooks/useInstructionRouteLoaderData';
 
-import { SectionsAPI } from 'api/instruction/main';
+import { SectionsAPI } from 'api/instruction';
 import { Section } from 'api/instruction/types';
 
 function Instruction(): ReactElement {
