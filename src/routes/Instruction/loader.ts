@@ -1,4 +1,4 @@
-import { SectionsAPI } from 'api/instruction/main';
+import { SectionsAPI } from 'api/instruction';
 import { APIResponse } from 'api/instruction/types';
 
 export interface LoaderData {
