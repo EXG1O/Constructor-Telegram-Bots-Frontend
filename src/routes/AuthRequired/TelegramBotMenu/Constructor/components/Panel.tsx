@@ -8,6 +8,7 @@ import PlusButton from 'components/shared/PlusButton';
 import Button from 'components/ui/Button';
 import Collapsible from 'components/ui/Collapsible';
 
+import { useAPIRequestOffcanvasStore } from './APIRequestOffcanvas/store';
 import { useBackgroundTaskOffcanvasStore } from './BackgroundTaskOffcanvas/store';
 import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
 import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
@@ -39,6 +40,9 @@ function Panel({ className, ...props }: PanelProps): ReactElement {
   const showAddBackgroundTaskOffcanvas = useBackgroundTaskOffcanvasStore(
     (state) => state.showOffcanvas,
   );
+  const showAddAPIRequestOffcanvas = useAPIRequestOffcanvasStore(
+    (state) => state.showOffcanvas,
+  );
 
   function handleAddTriggerClick(): void {
     showAddTriggerOffcanvas();
@@ -54,6 +58,10 @@ function Panel({ className, ...props }: PanelProps): ReactElement {
 
   function handleAddBackgroundTaskClick(): void {
     showAddBackgroundTaskOffcanvas();
+  }
+
+  function handleAddAPIRequestClick(): void {
+    showAddAPIRequestOffcanvas();
   }
 
   return (
@@ -95,6 +103,9 @@ function Panel({ className, ...props }: PanelProps): ReactElement {
             </PlusButton>
             <PlusButton size='sm' variant='dark' onClick={handleAddBackgroundTaskClick}>
               {t('addBackgroundTaskButton')}
+            </PlusButton>
+            <PlusButton size='sm' variant='dark' onClick={handleAddAPIRequestClick}>
+              {t('addAPIRequestButton')}
             </PlusButton>
           </div>
         </Collapsible.Body>

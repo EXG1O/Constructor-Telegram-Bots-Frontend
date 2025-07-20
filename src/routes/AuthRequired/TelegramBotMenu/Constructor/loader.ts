@@ -1,5 +1,7 @@
 import { Params } from 'react-router-dom';
 
+import { DiagramAPIRequestsAPI } from 'api/telegram_bots/api_request';
+import { APIResponse as APIRequestAPIResponse } from 'api/telegram_bots/api_request/types';
 import { DiagramBackgroundTasksAPI } from 'api/telegram_bots/background_task';
 import { APIResponse as BackgroundTaskAPIResponse } from 'api/telegram_bots/background_task/types';
 import { DiagramCommandsAPI } from 'api/telegram_bots/command';
@@ -14,6 +16,7 @@ export interface LoaderData {
   diagramCommands: CommandAPIResponse.DiagramCommandsAPI.Get;
   diagramConditions: ConditionAPIResponse.DiagramConditionsAPI.Get;
   diagramBackgroundTasks: BackgroundTaskAPIResponse.DiagramBackgroundTasksAPI.Get;
+  diagramAPIRequests: APIRequestAPIResponse.DiagramAPIRequestsAPI.Get;
 }
 
 async function loader({
@@ -28,18 +31,21 @@ async function loader({
     diagramCommandsResponse,
     diagramConditionsResponse,
     diagramBackgroundTasksResponse,
+    diagramAPIRequestsResponse,
   ] = await Promise.all([
     DiagramTriggersAPI.get(telegramBotID),
     DiagramCommandsAPI.get(telegramBotID),
     DiagramConditionsAPI.get(telegramBotID),
     DiagramBackgroundTasksAPI.get(telegramBotID),
+    DiagramAPIRequestsAPI.get(telegramBotID),
   ]);
 
   if (
     !diagramTriggersResponse.ok ||
     !diagramCommandsResponse.ok ||
     !diagramConditionsResponse.ok ||
-    !diagramBackgroundTasksResponse.ok
+    !diagramBackgroundTasksResponse.ok ||
+    !diagramAPIRequestsResponse.ok
   )
     return null;
 
@@ -48,6 +54,7 @@ async function loader({
     diagramCommands: diagramCommandsResponse.json,
     diagramConditions: diagramConditionsResponse.json,
     diagramBackgroundTasks: diagramBackgroundTasksResponse.json,
+    diagramAPIRequests: diagramAPIRequestsResponse.json,
   };
 }
 

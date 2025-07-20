@@ -25,6 +25,8 @@ import { iconButtonVariants } from 'components/ui/IconButton';
 import Page from 'components/ui/Page';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
+import APIRequestNode from './components/APIRequestNode';
+import APIRequestOffcanvas from './components/APIRequestOffcanvas';
 import BackgroundTaskNode from './components/BackgroundTaskNode';
 import BackgroundTaskOffcanvas from './components/BackgroundTaskOffcanvas';
 import CommandNode from './components/CommandNode';
@@ -38,6 +40,8 @@ import TriggerOffcanvas from './components/TriggerOffcanvas';
 import useTelegramBotMenuConstructorRouteLoaderData from './hooks/useTelegramBotMenuConstructorRouteLoaderData';
 
 import { APIResponse } from 'api/core';
+import { DiagramAPIRequestAPI } from 'api/telegram_bots/api_request';
+import { APIRequest } from 'api/telegram_bots/api_request/types';
 import { DiagramBackgroundTaskAPI } from 'api/telegram_bots/background_task';
 import { BackgroundTask } from 'api/telegram_bots/background_task/types';
 import { DiagramCommandAPI } from 'api/telegram_bots/command';
@@ -70,6 +74,7 @@ export const nodeTypes = {
   command: CommandNode,
   condition: ConditionNode,
   background_task: BackgroundTaskNode,
+  api_request: APIRequestNode,
 };
 const defaultEdgeOptions: DefaultEdgeOptions = {
   markerEnd: {
@@ -105,6 +110,7 @@ const diagramBlockAPIMap: Record<
   command: DiagramCommandAPI,
   condition: DiagramConditionAPI,
   background_task: DiagramBackgroundTaskAPI,
+  api_request: DiagramAPIRequestAPI,
 };
 
 interface UpdateDiagramBlockOptions {
@@ -124,6 +130,7 @@ function Constructor(): ReactElement {
     diagramCommands,
     diagramConditions,
     diagramBackgroundTasks,
+    diagramAPIRequests,
   } = useTelegramBotMenuConstructorRouteLoaderData();
 
   const [nodes, setNodes, onNodesChange] = useNodesState(
@@ -132,6 +139,7 @@ function Constructor(): ReactElement {
       command: diagramCommands,
       condition: diagramConditions,
       background_task: diagramBackgroundTasks,
+      api_request: diagramAPIRequests,
     } as Record<NodeType, ExistingDiagramBlock[]>).flatMap(([type, diagramBlocks]) =>
       diagramBlocks.map((diagramBlock) =>
         convertDiagramBlockToNode(type as NodeType, diagramBlock),
@@ -356,6 +364,14 @@ function Constructor(): ReactElement {
     });
   }
 
+  async function handleAPIRequestChange(backgroundTask: APIRequest): Promise<void> {
+    await updateDiagramBlock('api_request', backgroundTask.id, {
+      messages: {
+        getDiagramBlock: { error: t('messages.getDiagramAPIRequest.error') },
+      },
+    });
+  }
+
   return (
     <Page title={t('title')} className='flex-auto'>
       <TriggerOffcanvas onAdd={handleTriggerChange} onSave={handleTriggerChange} />
@@ -367,6 +383,10 @@ function Constructor(): ReactElement {
       <BackgroundTaskOffcanvas
         onAdd={handleBackgroundTaskChange}
         onSave={handleBackgroundTaskChange}
+      />
+      <APIRequestOffcanvas
+        onAdd={handleAPIRequestChange}
+        onSave={handleAPIRequestChange}
       />
       <div
         ref={handleRef}

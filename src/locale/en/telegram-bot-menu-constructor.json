@@ -24,35 +24,6 @@
   "variablesInfoText": {
     "text": "You can use variables."
   },
-  "apiRequestBlock": {
-    "title": "API-request",
-    "urlInputPlaceholder": "Enter URL",
-    "headers": {
-      "headerInputGroup": {
-        "keyInputPlaceholder": "Key",
-        "valueInputPlaceholder": "Value"
-      },
-      "addHeaderButton": {
-        "text": "Add header"
-      },
-      "showButton": "Add headers",
-      "hideButton": "Remove headers"
-    },
-    "body": {
-      "showButton": "Add data",
-      "hideButton": "Remove data"
-    },
-    "test": {
-      "messages": {
-        "makeTest": {
-          "error": "An error occurred while sending the API request.",
-          "error_emptyURL": "Enter URL.",
-          "error_validURL": "Enter a valid URL."
-        }
-      },
-      "testButton": "Test"
-    }
-  },
   "addonButtonGroup": {
     "showButton": "Show addons",
     "hideButton": "Hide addons"
@@ -265,13 +236,68 @@
     "actionButton_add": "Add",
     "actionButton_edit": "Save"
   },
+  "apiRequestOffcanvas": {
+    "title_add": "Adding a API request",
+    "title_edit": "Editing the API request",
+    "messages": {
+      "getAPIRequest": {
+        "error": "Failed to get API request data."
+      },
+      "addAPIRequest": {
+        "success": "You have successfully added an API request.",
+        "error": "Failed to add API request."
+      },
+      "editAPIRequest": {
+        "success": "You have successfully saved the API request.",
+        "error": "Failed to save the API request."
+      }
+    },
+    "urlBlock": {
+      "title": "URL",
+      "urlInput": {
+        "placeholder": "Enter URL"
+      }
+    },
+    "methodBlock": {
+      "title": "Method"
+    },
+    "headersBlock": {
+      "title": "Headers",
+      "keyInput": {
+        "placeholder": "Key"
+      },
+      "valueInput": {
+        "placeholder": "Value"
+      },
+      "addHeaderButton": {
+        "text": "Add Header"
+      }
+    },
+    "bodyBlock": {
+      "title": "Body"
+    },
+    "testBlock": {
+      "title": "Testing",
+      "messages": {
+        "makeTest": {
+          "error": "An error occurred while sending the API request.",
+          "error_emptyURL": "Enter a URL.",
+          "error_validURL": "Enter a valid URL."
+        }
+      },
+      "testButton": "Test"
+    },
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save"
+  },
   "panel": {
     "showButton": "Show blocks",
     "hideButton": "Hide blocks",
     "addTriggerButton": "Add trigger",
     "addCommandButton": "Add command",
     "addConditionButton": "Add condition",
-    "addBackgroundTaskButton": "Add background task"
+    "addBackgroundTaskButton": "Add background task",
+    "addAPIRequestButton": "Add API request"
   },
   "nodes": {
     "trigger": {
@@ -326,6 +352,19 @@
         "text": "Are you sure you want to delete the background task?"
       },
       "interval": "Interval"
+    },
+    "apiRequest": {
+      "title": "API Request",
+      "messages": {
+        "deleteBackgroundTask": {
+          "success": "You have successfully deleted the API request.",
+          "error": "Failed to delete the API request."
+        }
+      },
+      "deleteModal": {
+        "title": "Deleting the API request",
+        "text": "Are you sure you want to delete the API request?"
+      }
     }
   }
 }

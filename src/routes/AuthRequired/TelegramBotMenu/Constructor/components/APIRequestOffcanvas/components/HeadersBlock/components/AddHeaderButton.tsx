@@ -4,7 +4,7 @@ import { useField } from 'formik';
 
 import { RouteID } from 'routes';
 
-import { Header } from '..';
+import { Headers } from '..';
 
 import Button, { ButtonProps } from 'components/ui/Button';
 
@@ -19,11 +19,10 @@ function AddHeaderButton({
   ...props
 }: AddHeaderButtonProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'apiRequestBlock.headers.addHeaderButton',
+    keyPrefix: 'apiRequestOffcanvas.headersBlock.addHeaderButton',
   });
 
-  const [{ value: headers }, _meta, { setValue }] =
-    useField<Header[]>('api_request.headers');
+  const [{ value: headers }, _meta, { setValue }] = useField<Headers>('headers');
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
     onClick?.(event);
