@@ -24,35 +24,6 @@
   "variablesInfoText": {
     "text": "Ви можете використовувати змінні."
   },
-  "apiRequestBlock": {
-    "title": "API-запит",
-    "urlInputPlaceholder": "Введіть URL-адресу",
-    "headers": {
-      "headerInputGroup": {
-        "keyInputPlaceholder": "Ключ",
-        "valueInputPlaceholder": "Значення"
-      },
-      "addHeaderButton": {
-        "text": "Додати заголовок"
-      },
-      "showButton": "Додати заголовки",
-      "hideButton": "Прибрати заголовки"
-    },
-    "body": {
-      "showButton": "Додати дані",
-      "hideButton": "Прибрати дані"
-    },
-    "test": {
-      "messages": {
-        "makeTest": {
-          "error": "Сталася помилка під час відправки API-запиту.",
-          "error_emptyURL": "Введіть URL-адресу.",
-          "error_validURL": "Введіть правильну URL-адресу."
-        }
-      },
-      "testButton": "Протестувати"
-    }
-  },
   "addonButtonGroup": {
     "showButton": "Показати доповнення",
     "hideButton": "Приховати доповнення"
@@ -265,13 +236,68 @@
     "actionButton_add": "Додати",
     "actionButton_edit": "Зберегти"
   },
+  "apiRequestOffcanvas": {
+    "title_add": "Додавання API-запиту",
+    "title_edit": "Редагування API-запиту",
+    "messages": {
+      "getAPIRequest": {
+        "error": "Не вдалося отримати дані API-запиту."
+      },
+      "addAPIRequest": {
+        "success": "Ви успішно додали API-запит.",
+        "error": "Не вдалося додати API-запит."
+      },
+      "editAPIRequest": {
+        "success": "Ви успішно зберегли API-запит.",
+        "error": "Не вдалося зберегти API-запит."
+      }
+    },
+    "urlBlock": {
+      "title": "URL-адреса",
+      "urlInput": {
+        "placeholder": "Введіть URL-адресу"
+      }
+    },
+    "methodBlock": {
+      "title": "Метод"
+    },
+    "headersBlock": {
+      "title": "Заголовки",
+      "keyInput": {
+        "placeholder": "Ключ"
+      },
+      "valueInput": {
+        "placeholder": "Значення"
+      },
+      "addHeaderButton": {
+        "text": "Додати заголовок"
+      }
+    },
+    "bodyBlock": {
+      "title": "Дані"
+    },
+    "testBlock": {
+      "title": "Тестування",
+      "messages": {
+        "makeTest": {
+          "error": "Сталася помилка під час надсилання API-запиту.",
+          "error_emptyURL": "Введіть URL-адресу.",
+          "error_validURL": "Введіть правильну URL-адресу."
+        }
+      },
+      "testButton": "Протестувати"
+    },
+    "actionButton_add": "Додати",
+    "actionButton_edit": "Зберегти"
+  },
   "panel": {
     "showButton": "Показати блоки",
     "hideButton": "Приховати блоки",
     "addTriggerButton": "Додати тригер",
     "addCommandButton": "Додати команду",
     "addConditionButton": "Додати умову",
-    "addBackgroundTaskButton": "Додати фонову задачу"
+    "addBackgroundTaskButton": "Додати фонову задачу",
+    "addAPIRequestButton": "Додати API-запит"
   },
   "nodes": {
     "trigger": {
@@ -326,6 +352,19 @@
         "text": "Ви точно хочете видалити фонову задачу?"
       },
       "interval": "Інтервал"
+    },
+    "apiRequest": {
+      "title": "API-запит",
+      "messages": {
+        "deleteAPIRequest": {
+          "success": "Ви успішно видалили API-запит.",
+          "error": "Не вдалося видалити API-запит."
+        }
+      },
+      "deleteModal": {
+        "title": "Видалення API-запиту",
+        "text": "Ви впевнені, що хочете видалити API-запит?"
+      }
     }
   }
 }

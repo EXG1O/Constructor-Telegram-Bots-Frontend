@@ -6,7 +6,7 @@ import { Trash2 } from 'lucide-react';
 
 import { RouteID } from 'routes';
 
-import { Header } from '..';
+import { Headers } from '..';
 
 import FormInputFeedback from 'components/shared/FormInputFeedback';
 import IconButton from 'components/ui/IconButton';
@@ -20,11 +20,11 @@ export interface HeaderItemProps
 
 function HeaderItem({ index, className, ...props }: HeaderItemProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'apiRequestBlock.headers.headerInputGroup',
+    keyPrefix: 'apiRequestOffcanvas.headersBlock',
   });
 
   const [{ value: headers }, _meta, { setValue: setHeaders }] =
-    useField<Header[]>('api_request.headers');
+    useField<Headers>('headers');
 
   function handleDeleteClick(): void {
     setHeaders(
@@ -39,14 +39,14 @@ function HeaderItem({ index, className, ...props }: HeaderItemProps): ReactEleme
       <div className='inline-flex flex-auto'>
         <FormInputFeedback
           size='sm'
-          name={`api_request.headers[${index}].key`}
-          placeholder={t('keyInputPlaceholder')}
+          name={`headers[${index}].key`}
+          placeholder={t('keyInput.placeholder')}
           className='relative rounded-e-none focus:z-1'
         />
         <FormInputFeedback
           size='sm'
-          name={`api_request.headers[${index}].value`}
-          placeholder={t('valueInputPlaceholder')}
+          name={`headers[${index}].value`}
+          placeholder={t('valueInput.placeholder')}
           className='relative -ms-px rounded-s-none'
         />
       </div>

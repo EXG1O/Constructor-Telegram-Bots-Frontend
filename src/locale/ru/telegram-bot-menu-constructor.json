@@ -24,35 +24,6 @@
   "variablesInfoText": {
     "text": "Вы можете использовать переменные."
   },
-  "apiRequestBlock": {
-    "title": "API-запрос",
-    "urlInputPlaceholder": "Введите URL-адрес",
-    "headers": {
-      "headerInputGroup": {
-        "keyInputPlaceholder": "Ключ",
-        "valueInputPlaceholder": "Значение"
-      },
-      "addHeaderButton": {
-        "text": "Добавить заголовок"
-      },
-      "showButton": "Добавить заголовки",
-      "hideButton": "Убрать заголовки"
-    },
-    "body": {
-      "showButton": "Добавить данные",
-      "hideButton": "Убрать данные"
-    },
-    "test": {
-      "messages": {
-        "makeTest": {
-          "error": "Произошла ошибка во время отправки API-запроса.",
-          "error_emptyURL": "Введите URL-адрес.",
-          "error_validURL": "Введите правильный URL-адрес."
-        }
-      },
-      "testButton": "Протестировать"
-    }
-  },
   "addonButtonGroup": {
     "showButton": "Показать дополнения",
     "hideButton": "Скрыть дополнения"
@@ -265,13 +236,68 @@
     "actionButton_add": "Добавить",
     "actionButton_edit": "Сохранить"
   },
+  "apiRequestOffcanvas": {
+    "title_add": "Добавление API-запроса",
+    "title_edit": "Редактирование API-запроса",
+    "messages": {
+      "getAPIRequest": {
+        "error": "Не удалось получить данные API-запроса."
+      },
+      "addAPIRequest": {
+        "success": "Вы успешно добавили API-запрос.",
+        "error": "Не удалось добавить API-запрос."
+      },
+      "editAPIRequest": {
+        "success": "Вы успешно сохранили API-запрос.",
+        "error": "Не удалось сохранить API-запрос."
+      }
+    },
+    "urlBlock": {
+      "title": "URL-адрес",
+      "urlInput": {
+        "placeholder": "Введите URL-адрес"
+      }
+    },
+    "methodBlock": {
+      "title": "Метод"
+    },
+    "headersBlock": {
+      "title": "Заголовки",
+      "keyInput": {
+        "placeholder": "Ключ"
+      },
+      "valueInput": {
+        "placeholder": "Значение"
+      },
+      "addHeaderButton": {
+        "text": "Добавить заголовок"
+      }
+    },
+    "bodyBlock": {
+      "title": "Данные"
+    },
+    "testBlock": {
+      "title": "Тестирование",
+      "messages": {
+        "makeTest": {
+          "error": "Произошла ошибка во время отправки API-запроса.",
+          "error_emptyURL": "Введите URL-адрес.",
+          "error_validURL": "Введите правильный URL-адрес."
+        }
+      },
+      "testButton": "Протестировать"
+    },
+    "actionButton_add": "Добавить",
+    "actionButton_edit": "Сохранить"
+  },
   "panel": {
     "showButton": "Показать блоки",
     "hideButton": "Скрыть блоки",
     "addTriggerButton": "Добавить триггер",
     "addCommandButton": "Добавить команду",
     "addConditionButton": "Добавить условие",
-    "addBackgroundTaskButton": "Добавить фоновую задачу"
+    "addBackgroundTaskButton": "Добавить фоновую задачу",
+    "addAPIRequestButton": "Добавить API-запрос"
   },
   "nodes": {
     "trigger": {
@@ -326,6 +352,19 @@
         "text": "Вы точно хотите удалить фоновую задачу?"
       },
       "interval": "Интервал"
+    },
+    "apiRequest": {
+      "title": "API-запрос",
+      "messages": {
+        "deleteAPIRequest": {
+          "success": "Вы успешно удалили API-запрос.",
+          "error": "Не удалось удалить API-запрос."
+        }
+      },
+      "deleteModal": {
+        "title": "Удаление API-запроса",
+        "text": "Вы точно хотите удалить API-запрос?"
+      }
     }
   }
 }
