@@ -1,5 +1,6 @@
 import { Edge } from '@xyflow/react';
 
+import { DiagramAPIRequest } from 'api/telegram_bots/api_request/types';
 import { DiagramBackgroundTask } from 'api/telegram_bots/background_task/types';
 import { DiagramCommand } from 'api/telegram_bots/command/types';
 import { DiagramCondition } from 'api/telegram_bots/condition/types';
@@ -92,6 +93,7 @@ export interface DiagramBlocks {
   commands?: DiagramCommand[];
   conditions?: DiagramCondition[];
   backgroundTasks?: DiagramBackgroundTask[];
+  apiRequests?: DiagramAPIRequest[];
 }
 
 export function convertDiagramBlocksToEdges(diagramBlocks: DiagramBlocks): Edge[] {
@@ -108,6 +110,10 @@ export function convertDiagramBlocksToEdges(diagramBlocks: DiagramBlocks): Edge[
     ]) ?? []),
     ...(diagramBlocks.backgroundTasks?.flatMap((task) => task.source_connections) ??
       []),
+    ...(diagramBlocks.apiRequests?.flatMap((request) => [
+      ...request.source_connections,
+      ...request.target_connections,
+    ]) ?? []),
   ];
 
   const seen = new Set<string>();
