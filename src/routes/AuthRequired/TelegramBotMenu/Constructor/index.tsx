@@ -152,6 +152,7 @@ function Constructor(): ReactElement {
       commands: diagramCommands,
       conditions: diagramConditions,
       backgroundTasks: diagramBackgroundTasks,
+      apiRequests: diagramAPIRequests,
     }),
   );
 
