@@ -12,6 +12,7 @@ import { useAPIRequestOffcanvasStore } from './APIRequestOffcanvas/store';
 import { useBackgroundTaskOffcanvasStore } from './BackgroundTaskOffcanvas/store';
 import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
 import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
+import { useDatabaseOperationOffcanvasStore } from './DatabaseOperationOffcanvas/store';
 import { useTriggerOffcanvasStore } from './TriggerOffcanvas/store';
 
 import cn from 'utils/cn';
@@ -43,6 +44,9 @@ function Panel({ className, ...props }: PanelProps): ReactElement {
   const showAddAPIRequestOffcanvas = useAPIRequestOffcanvasStore(
     (state) => state.showOffcanvas,
   );
+  const showAddDatabaseOperationOffcanvas = useDatabaseOperationOffcanvasStore(
+    (state) => state.showOffcanvas,
+  );
 
   function handleAddTriggerClick(): void {
     showAddTriggerOffcanvas();
@@ -62,6 +66,10 @@ function Panel({ className, ...props }: PanelProps): ReactElement {
 
   function handleAddAPIRequestClick(): void {
     showAddAPIRequestOffcanvas();
+  }
+
+  function handleAddDatabaseOperationClick(): void {
+    showAddDatabaseOperationOffcanvas();
   }
 
   return (
@@ -106,6 +114,13 @@ function Panel({ className, ...props }: PanelProps): ReactElement {
             </PlusButton>
             <PlusButton size='sm' variant='dark' onClick={handleAddAPIRequestClick}>
               {t('addAPIRequestButton')}
+            </PlusButton>
+            <PlusButton
+              size='sm'
+              variant='dark'
+              onClick={handleAddDatabaseOperationClick}
+            >
+              {t('addDatabaseOperationButton')}
             </PlusButton>
           </div>
         </Collapsible.Body>

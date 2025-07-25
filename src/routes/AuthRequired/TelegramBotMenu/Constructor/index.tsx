@@ -33,6 +33,8 @@ import CommandNode from './components/CommandNode';
 import CommandOffcanvas from './components/CommandOffcanvas';
 import ConditionNode from './components/ConditionNode';
 import ConditionOffcanvas from './components/ConditionOffcanvas';
+import DatabaseOperationNode from './components/DatabaseOperationNode';
+import DatabaseOperationOffcanvas from './components/DatabaseOperationOffcanvas';
 import Panel from './components/Panel';
 import TriggerNode from './components/TriggerNode';
 import TriggerOffcanvas from './components/TriggerOffcanvas';
@@ -49,6 +51,8 @@ import { Command } from 'api/telegram_bots/command/types';
 import { DiagramConditionAPI } from 'api/telegram_bots/condition';
 import { Condition } from 'api/telegram_bots/condition/types';
 import { ConnectionAPI, ConnectionsAPI } from 'api/telegram_bots/connection';
+import { DiagramDatabaseOperationAPI } from 'api/telegram_bots/database_operation';
+import { DatabaseOperation } from 'api/telegram_bots/database_operation/types';
 import { TelegramBot } from 'api/telegram_bots/telegram_bot/types';
 import { DiagramTriggerAPI } from 'api/telegram_bots/trigger';
 import { Trigger } from 'api/telegram_bots/trigger/types';
@@ -75,6 +79,7 @@ export const nodeTypes = {
   condition: ConditionNode,
   background_task: BackgroundTaskNode,
   api_request: APIRequestNode,
+  database_operation: DatabaseOperationNode,
 };
 const defaultEdgeOptions: DefaultEdgeOptions = {
   markerEnd: {
@@ -111,6 +116,7 @@ const diagramBlockAPIMap: Record<
   condition: DiagramConditionAPI,
   background_task: DiagramBackgroundTaskAPI,
   api_request: DiagramAPIRequestAPI,
+  database_operation: DiagramDatabaseOperationAPI,
 };
 
 interface UpdateDiagramBlockOptions {
@@ -131,6 +137,7 @@ function Constructor(): ReactElement {
     diagramConditions,
     diagramBackgroundTasks,
     diagramAPIRequests,
+    diagramDatabaseOperations,
   } = useTelegramBotMenuConstructorRouteLoaderData();
 
   const [nodes, setNodes, onNodesChange] = useNodesState(
@@ -140,6 +147,7 @@ function Constructor(): ReactElement {
       condition: diagramConditions,
       background_task: diagramBackgroundTasks,
       api_request: diagramAPIRequests,
+      database_operation: diagramDatabaseOperations,
     } as Record<NodeType, ExistingDiagramBlock[]>).flatMap(([type, diagramBlocks]) =>
       diagramBlocks.map((diagramBlock) =>
         convertDiagramBlockToNode(type as NodeType, diagramBlock),
@@ -153,6 +161,7 @@ function Constructor(): ReactElement {
       conditions: diagramConditions,
       backgroundTasks: diagramBackgroundTasks,
       apiRequests: diagramAPIRequests,
+      databaseOperations: diagramDatabaseOperations,
     }),
   );
 
@@ -373,6 +382,16 @@ function Constructor(): ReactElement {
     });
   }
 
+  async function handleDatabaseOperationChange(
+    operation: DatabaseOperation,
+  ): Promise<void> {
+    await updateDiagramBlock('database_operation', operation.id, {
+      messages: {
+        getDiagramBlock: { error: t('messages.getDiagramDatabaseOperation.error') },
+      },
+    });
+  }
+
   return (
     <Page title={t('title')} className='flex-auto'>
       <TriggerOffcanvas onAdd={handleTriggerChange} onSave={handleTriggerChange} />
@@ -388,6 +407,10 @@ function Constructor(): ReactElement {
       <APIRequestOffcanvas
         onAdd={handleAPIRequestChange}
         onSave={handleAPIRequestChange}
+      />
+      <DatabaseOperationOffcanvas
+        onAdd={handleDatabaseOperationChange}
+        onSave={handleDatabaseOperationChange}
       />
       <div
         ref={handleRef}

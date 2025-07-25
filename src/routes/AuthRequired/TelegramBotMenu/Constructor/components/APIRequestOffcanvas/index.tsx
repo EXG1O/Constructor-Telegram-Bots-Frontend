@@ -38,6 +38,7 @@ import NameBlock, {
 import { APIRequestAPI, APIRequestsAPI } from 'api/telegram_bots/api_request';
 import { APIRequest, Data } from 'api/telegram_bots/api_request/types';
 
+import parseJsonField from '../../utils/parseJsonField';
 import { useAPIRequestOffcanvasStore } from './store';
 import { convertHeadersToRecord, getBodyBlockOpen } from './utils';
 
@@ -171,14 +172,8 @@ function APIRequestOffcanvas({
     let body: Record<string, any> | null = null;
 
     if (getBodyBlockOpen(values.method)) {
-      try {
-        body = JSON.parse(values.body);
-      } catch (error) {
-        if (error instanceof SyntaxError) {
-          setFieldError('body', t('messages.validation.invalidJSON'));
-        }
-        return;
-      }
+      body = parseJsonField(values.body, 'body', setFieldError);
+      if (!body) return;
     }
 
     const data: Data.APIRequestsAPI.Create | Data.APIRequestAPI.Update = {

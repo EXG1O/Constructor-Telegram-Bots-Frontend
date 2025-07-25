@@ -1,6 +1,9 @@
 {
   "title": "Конструктор",
   "messages": {
+    "validation": {
+      "invalidJSON": "Введите данные в формате JSON."
+    },
     "getDiagramCommand": {
       "error": "Не удалось получить данные команды для диаграммы."
     },
@@ -80,9 +83,6 @@
     "title_add": "Добавление команды",
     "title_edit": "Редактирование команды",
     "messages": {
-      "validation": {
-        "invalidJSON": "Введите данные в формате JSON."
-      },
       "getCommand": {
         "error": "Не удалось получить данные команды."
       },
@@ -164,9 +164,6 @@
         "text": "Добавить ряд"
       }
     },
-    "databaseRecordBlock": {
-      "title": "Запись в базу данных"
-    },
     "actionButton_add": "Добавить",
     "actionButton_edit": "Сохранить"
   },
@@ -208,9 +205,6 @@
     "title_add": "Добавление фоновой задачи",
     "title_edit": "Редактирование фоновой задачи",
     "messages": {
-      "validation": {
-        "invalidJSON": "Введите данные в формате JSON."
-      },
       "getBackgroundTask": {
         "error": "Не удалось получить данные фоновой задачи."
       },
@@ -290,6 +284,46 @@
     "actionButton_add": "Добавить",
     "actionButton_edit": "Сохранить"
   },
+  "databaseOperationOffcanvas": {
+    "title_add": "Добавление операции базы данных",
+    "title_edit": "Редактирование операции базы данных",
+    "messages": {
+      "getDatabaseOperation": {
+        "error": "Не удалось получить данные операции базы данных."
+      },
+      "addDatabaseOperation": {
+        "success": "Вы успешно добавили операцию базы данных.",
+        "error": "Не удалось добавить операцию базы данных."
+      },
+      "editDatabaseOperation": {
+        "success": "Вы успешно сохранили операцию базы данных.",
+        "error": "Не удалось сохранить операцию базы данных."
+      }
+    },
+    "typeBlock": {
+      "title": "Тип"
+    },
+    "createBlock": {
+      "title": "Создание записи"
+    },
+    "updateBlock": {
+      "title": "Обновление записи",
+      "overwriteSwitch": {
+        "label": "Перезаписать"
+      },
+      "lookupFieldNameInput": {
+        "placeholder": "Введите название поля для поиска"
+      },
+      "lookupFieldValueInput": {
+        "placeholder": "Введите значение поля для поиска"
+      },
+      "createIfNotFoundSwitch": {
+        "label": "Создать, если не найдена"
+      }
+    },
+    "actionButton_add": "Добавить",
+    "actionButton_edit": "Сохранить"
+  },
   "panel": {
     "showButton": "Показать блоки",
     "hideButton": "Скрыть блоки",
@@ -297,7 +331,8 @@
     "addCommandButton": "Добавить команду",
     "addConditionButton": "Добавить условие",
     "addBackgroundTaskButton": "Добавить фоновую задачу",
-    "addAPIRequestButton": "Добавить API-запрос"
+    "addAPIRequestButton": "Добавить API-запрос",
+    "addDatabaseOperationButton": "Добавить операцию базы данных"
   },
   "nodes": {
     "trigger": {
@@ -364,6 +399,19 @@
       "deleteModal": {
         "title": "Удаление API-запроса",
         "text": "Вы точно хотите удалить API-запрос?"
+      }
+    },
+    "databaseOperation": {
+      "title": "Операция базы данных",
+      "messages": {
+        "deleteAPIRequest": {
+          "success": "Вы успешно удалили операцию базы данных.",
+          "error": "Не удалось удалить операцию базы данных."
+        }
+      },
+      "deleteModal": {
+        "title": "Удаление операции базы данных",
+        "text": "Вы точно хотите удалить операцию базы данных?"
       }
     }
   }

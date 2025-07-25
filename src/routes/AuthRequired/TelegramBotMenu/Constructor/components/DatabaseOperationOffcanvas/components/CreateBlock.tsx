@@ -7,26 +7,23 @@ import { RouteID } from 'routes';
 import FormCodeInputFeedback from 'components/shared/FormCodeInputFeedback';
 import Block, { BlockProps } from 'components/ui/Block';
 
-import VariablesInfoText from '../../VariablesInfoText';
-
 import cn from 'utils/cn';
 
-export interface DatabaseRecord {
+export interface CreateOperation {
   data: string;
 }
 
-export interface DatabaseRecordBlockFormValues {
-  database_record: DatabaseRecord;
+export interface CreateBlockFormValues {
+  create_operation: CreateOperation;
 }
 
-export interface DatabaseRecordBlockProps
-  extends Omit<BlockProps, 'variant' | 'children'> {}
+export interface CreateBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
-export const defaultDatabaseRecord: DatabaseRecord = {
+export const defaultCreateOperation: CreateOperation = {
   data: JSON.stringify({ key: 'value' }, undefined, 2),
 };
-export const defaultDatabaseRecordBlockFormValues: DatabaseRecordBlockFormValues = {
-  database_record: defaultDatabaseRecord,
+export const defaultCreateBlockFormValues: CreateBlockFormValues = {
+  create_operation: defaultCreateOperation,
 };
 
 const monacoOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
@@ -37,12 +34,9 @@ const monacoOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
   lineNumbersMinChars: 0,
 };
 
-function DatabaseRecordBlock({
-  className,
-  ...props
-}: DatabaseRecordBlockProps): ReactElement {
+function CreateBlock({ className, ...props }: CreateBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'commandOffcanvas.databaseRecordBlock',
+    keyPrefix: 'databaseOperationOffcanvas.createBlock',
   });
 
   return (
@@ -54,16 +48,13 @@ function DatabaseRecordBlock({
       <Block.Title>
         <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
-      <div>
-        <FormCodeInputFeedback
-          language='json'
-          name='database_record.data'
-          options={monacoOptions}
-        />
-        <VariablesInfoText />
-      </div>
+      <FormCodeInputFeedback
+        name='create_operation.data'
+        language='json'
+        options={monacoOptions}
+      />
     </Block>
   );
 }
 
-export default DatabaseRecordBlock;
+export default CreateBlock;

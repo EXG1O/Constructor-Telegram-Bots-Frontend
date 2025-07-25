@@ -1,6 +1,9 @@
 {
   "title": "Constructor",
   "messages": {
+    "validation": {
+      "invalidJSON": "Please enter the data in JSON format."
+    },
     "getDiagramCommand": {
       "error": "Failed to get command data for the diagram."
     },
@@ -80,9 +83,6 @@
     "title_add": "Adding a command",
     "title_edit": "Editing the command",
     "messages": {
-      "validation": {
-        "invalidJSON": "Please enter the data in JSON format."
-      },
       "getCommand": {
         "error": "Failed to get command data."
       },
@@ -164,9 +164,6 @@
         "text": "Add row"
       }
     },
-    "databaseRecordBlock": {
-      "title": "Record to database"
-    },
     "actionButton_add": "Add",
     "actionButton_edit": "Save"
   },
@@ -208,9 +205,6 @@
     "title_add": "Adding a background task",
     "title_edit": "Editing the background task",
     "messages": {
-      "validation": {
-        "invalidJSON": "Please enter the data in JSON format."
-      },
       "getBackgroundTask": {
         "error": "Failed to get background task data."
       },
@@ -290,6 +284,46 @@
     "actionButton_add": "Add",
     "actionButton_edit": "Save"
   },
+  "databaseOperationOffcanvas": {
+    "title_add": "Adding a database operation",
+    "title_edit": "Editing the database operation",
+    "messages": {
+      "getDatabaseOperation": {
+        "error": "Failed to get database operation data."
+      },
+      "addDatabaseOperation": {
+        "success": "You have successfully added a database operation.",
+        "error": "Failed to add database operation."
+      },
+      "editDatabaseOperation": {
+        "success": "You have successfully saved the database operation.",
+        "error": "Failed to save the database operation."
+      }
+    },
+    "typeBlock": {
+      "title": "Type"
+    },
+    "createBlock": {
+      "title": "Create record"
+    },
+    "updateBlock": {
+      "title": "Update record",
+      "overwriteSwitch": {
+        "label": "Overwrite"
+      },
+      "lookupFieldNameInput": {
+        "placeholder": "Enter field name for lookup"
+      },
+      "lookupFieldValueInput": {
+        "placeholder": "Enter field value for lookup"
+      },
+      "createIfNotFoundSwitch": {
+        "label": "Create if not found"
+      }
+    },
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save"
+  },
   "panel": {
     "showButton": "Show blocks",
     "hideButton": "Hide blocks",
@@ -297,7 +331,8 @@
     "addCommandButton": "Add command",
     "addConditionButton": "Add condition",
     "addBackgroundTaskButton": "Add background task",
-    "addAPIRequestButton": "Add API request"
+    "addAPIRequestButton": "Add API request",
+    "addDatabaseOperationButton": "Add database operation"
   },
   "nodes": {
     "trigger": {
@@ -364,6 +399,19 @@
       "deleteModal": {
         "title": "Deleting the API request",
         "text": "Are you sure you want to delete the API request?"
+      }
+    },
+    "databaseOperation": {
+      "title": "Database Operation",
+      "messages": {
+        "deleteAPIRequest": {
+          "success": "You have successfully deleted the database operation.",
+          "error": "Failed to delete the database operation."
+        }
+      },
+      "deleteModal": {
+        "title": "Deleting the database operation",
+        "text": "Are you sure you want to delete the database operation?"
       }
     }
   }
