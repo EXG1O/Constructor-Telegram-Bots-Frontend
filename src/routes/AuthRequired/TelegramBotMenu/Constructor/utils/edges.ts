@@ -10,6 +10,7 @@ import {
   SourceObjectType,
   TargetObjectType,
 } from 'api/telegram_bots/connection/types';
+import { DiagramDatabaseOperation } from 'api/telegram_bots/database_operation/types';
 import { DiagramTrigger } from 'api/telegram_bots/trigger/types';
 
 export interface EdgePoint<OT extends ObjectType> {
@@ -94,6 +95,7 @@ export interface DiagramBlocks {
   conditions?: DiagramCondition[];
   backgroundTasks?: DiagramBackgroundTask[];
   apiRequests?: DiagramAPIRequest[];
+  databaseOperations?: DiagramDatabaseOperation[];
 }
 
 export function convertDiagramBlocksToEdges(diagramBlocks: DiagramBlocks): Edge[] {
@@ -113,6 +115,10 @@ export function convertDiagramBlocksToEdges(diagramBlocks: DiagramBlocks): Edge[
     ...(diagramBlocks.apiRequests?.flatMap((request) => [
       ...request.source_connections,
       ...request.target_connections,
+    ]) ?? []),
+    ...(diagramBlocks.databaseOperations?.flatMap((operation) => [
+      ...operation.source_connections,
+      ...operation.target_connections,
     ]) ?? []),
   ];
 
