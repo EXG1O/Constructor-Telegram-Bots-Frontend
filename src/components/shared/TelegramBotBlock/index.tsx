@@ -13,8 +13,8 @@ import APITokenEditing from './components/APITokenEditing';
 import PrivateSwitch from './components/PrivateSwitch';
 import TelegramBotContext from './contexts/TelegramBotContext';
 
-import { TelegramBotAPI } from 'api/telegram_bots/telegram_bot';
-import { TelegramBot } from 'api/telegram_bots/telegram_bot/types';
+import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
+import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 
 import cn from 'utils/cn';
 

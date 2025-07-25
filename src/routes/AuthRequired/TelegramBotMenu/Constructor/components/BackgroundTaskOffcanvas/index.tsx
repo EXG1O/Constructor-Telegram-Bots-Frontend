@@ -22,8 +22,8 @@ import NameBlock, {
 import {
   BackgroundTaskAPI,
   BackgroundTasksAPI,
-} from 'api/telegram_bots/background_task';
-import { BackgroundTask } from 'api/telegram_bots/background_task/types';
+} from 'api/telegram-bots/background-task';
+import { BackgroundTask } from 'api/telegram-bots/background-task/types';
 
 import { useBackgroundTaskOffcanvasStore } from './store';
 

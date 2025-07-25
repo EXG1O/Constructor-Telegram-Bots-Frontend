@@ -1,7 +1,7 @@
 import { makeRequest } from 'api/core';
 
-import { TelegramBotAPI } from '../telegram_bot';
-import { TelegramBot } from '../telegram_bot/types';
+import { TelegramBotAPI } from '../telegram-bot';
+import { TelegramBot } from '../telegram-bot/types';
 import { APIResponse, Connection, Data } from './types';
 
 export class ConnectionsAPI {

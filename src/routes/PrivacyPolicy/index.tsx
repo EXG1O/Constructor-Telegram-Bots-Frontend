@@ -11,8 +11,8 @@ import SectionItem from './components/SectionItem';
 
 import usePrivacyPolicyRouteLoaderData from './hooks/usePrivacyPolicyRouteLoaderData';
 
-import { SectionsAPI } from 'api/privacy_policy';
-import { Section } from 'api/privacy_policy/types';
+import { SectionsAPI } from 'api/privacy-policy';
+import { Section } from 'api/privacy-policy/types';
 
 function PrivacyPolicy(): ReactElement {
   const { t, i18n } = useTranslation(RouteID.PrivacyPolicy);

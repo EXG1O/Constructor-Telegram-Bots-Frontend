@@ -6,9 +6,9 @@ import { RouteID } from 'routes';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { TelegramBot } from 'api/telegram_bots/telegram_bot/types';
-import { VariablesAPI } from 'api/telegram_bots/variable';
-import { Variable } from 'api/telegram_bots/variable/types';
+import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
+import { VariablesAPI } from 'api/telegram-bots/variable';
+import { Variable } from 'api/telegram-bots/variable/types';
 
 export interface StateParams {
   telegramBot: TelegramBot;

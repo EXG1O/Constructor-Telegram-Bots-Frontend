@@ -1,6 +1,6 @@
 import { Headers } from './components/HeadersBlock';
 
-import { Method } from 'api/telegram_bots/api_request/types';
+import { Method } from 'api/telegram-bots/api-request/types';
 
 export function getBodyBlockOpen(method: Method): boolean {
   return ['post', 'put', 'patch'].includes(method);

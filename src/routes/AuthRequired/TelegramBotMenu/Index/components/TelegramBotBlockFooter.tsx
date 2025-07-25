@@ -10,7 +10,7 @@ import Button from 'components/ui/Button';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { TelegramBotAPI } from 'api/telegram_bots/telegram_bot';
+import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
 
 import cn from 'utils/cn';
 

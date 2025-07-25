@@ -37,8 +37,8 @@ import NameBlock, {
   NameBlockFormValues,
 } from '../NameBlock';
 
-import { TriggerAPI, TriggersAPI } from 'api/telegram_bots/trigger';
-import { Data, Trigger } from 'api/telegram_bots/trigger/types';
+import { TriggerAPI, TriggersAPI } from 'api/telegram-bots/trigger';
+import { Data, Trigger } from 'api/telegram-bots/trigger/types';
 
 import { useTriggerOffcanvasStore } from './store';
 

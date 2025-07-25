@@ -20,8 +20,8 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useDatabaseRecordsStore from '../hooks/useDatabaseRecordsStore';
 
-import { DatabaseRecordAPI } from 'api/telegram_bots/database_record';
-import { DatabaseRecord } from 'api/telegram_bots/database_record/types';
+import { DatabaseRecordAPI } from 'api/telegram-bots/database-record';
+import { DatabaseRecord } from 'api/telegram-bots/database-record/types';
 
 import cn from 'utils/cn';
 

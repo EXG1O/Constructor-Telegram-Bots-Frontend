@@ -35,8 +35,8 @@ import NameBlock, {
 import {
   DatabaseOperationAPI,
   DatabaseOperationsAPI,
-} from 'api/telegram_bots/database_operation';
-import { Data, DatabaseOperation } from 'api/telegram_bots/database_operation/types';
+} from 'api/telegram-bots/database-operation';
+import { Data, DatabaseOperation } from 'api/telegram-bots/database-operation/types';
 
 import parseJsonField from '../../utils/parseJsonField';
 import { useDatabaseOperationOffcanvasStore } from './store';

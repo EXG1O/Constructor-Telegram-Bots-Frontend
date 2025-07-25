@@ -14,8 +14,8 @@ import Button from 'components/ui/Button';
 import Modal from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { VariableAPI, VariablesAPI } from 'api/telegram_bots/variable';
-import { Variable } from 'api/telegram_bots/variable/types';
+import { VariableAPI, VariablesAPI } from 'api/telegram-bots/variable';
+import { Variable } from 'api/telegram-bots/variable/types';
 
 import { useVariableModalStore } from './store';
 
