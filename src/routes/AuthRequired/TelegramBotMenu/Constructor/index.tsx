@@ -42,20 +42,20 @@ import TriggerOffcanvas from './components/TriggerOffcanvas';
 import useTelegramBotMenuConstructorRouteLoaderData from './hooks/useTelegramBotMenuConstructorRouteLoaderData';
 
 import { APIResponse } from 'api/core';
-import { DiagramAPIRequestAPI } from 'api/telegram_bots/api_request';
-import { APIRequest } from 'api/telegram_bots/api_request/types';
-import { DiagramBackgroundTaskAPI } from 'api/telegram_bots/background_task';
-import { BackgroundTask } from 'api/telegram_bots/background_task/types';
-import { DiagramCommandAPI } from 'api/telegram_bots/command';
-import { Command } from 'api/telegram_bots/command/types';
-import { DiagramConditionAPI } from 'api/telegram_bots/condition';
-import { Condition } from 'api/telegram_bots/condition/types';
-import { ConnectionAPI, ConnectionsAPI } from 'api/telegram_bots/connection';
-import { DiagramDatabaseOperationAPI } from 'api/telegram_bots/database_operation';
-import { DatabaseOperation } from 'api/telegram_bots/database_operation/types';
-import { TelegramBot } from 'api/telegram_bots/telegram_bot/types';
-import { DiagramTriggerAPI } from 'api/telegram_bots/trigger';
-import { Trigger } from 'api/telegram_bots/trigger/types';
+import { DiagramAPIRequestAPI } from 'api/telegram-bots/api-request';
+import { APIRequest } from 'api/telegram-bots/api-request/types';
+import { DiagramBackgroundTaskAPI } from 'api/telegram-bots/background-task';
+import { BackgroundTask } from 'api/telegram-bots/background-task/types';
+import { DiagramCommandAPI } from 'api/telegram-bots/command';
+import { Command } from 'api/telegram-bots/command/types';
+import { DiagramConditionAPI } from 'api/telegram-bots/condition';
+import { Condition } from 'api/telegram-bots/condition/types';
+import { ConnectionAPI, ConnectionsAPI } from 'api/telegram-bots/connection';
+import { DiagramDatabaseOperationAPI } from 'api/telegram-bots/database-operation';
+import { DatabaseOperation } from 'api/telegram-bots/database-operation/types';
+import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
+import { DiagramTriggerAPI } from 'api/telegram-bots/trigger';
+import { Trigger } from 'api/telegram-bots/trigger/types';
 
 import cn from 'utils/cn';
 

@@ -16,9 +16,9 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import { useAPIRequestOffcanvasStore } from './APIRequestOffcanvas/store';
 import Node from './Node';
 
-import { APIRequestAPI } from 'api/telegram_bots/api_request';
-import { DiagramAPIRequest } from 'api/telegram_bots/api_request/types';
-import { DiagramBlock } from 'api/telegram_bots/diagram/types';
+import { APIRequestAPI } from 'api/telegram-bots/api-request';
+import { DiagramAPIRequest } from 'api/telegram-bots/api-request/types';
+import { DiagramBlock } from 'api/telegram-bots/diagram/types';
 
 import {
   buildEdgeSourceHandle,

@@ -12,8 +12,8 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useTelegramBots from '../hooks/useTelegramBots';
 
-import { TelegramBotsAPI } from 'api/telegram_bots/telegram_bot';
-import { Data } from 'api/telegram_bots/telegram_bot/types';
+import { TelegramBotsAPI } from 'api/telegram-bots/telegram-bot';
+import { Data } from 'api/telegram-bots/telegram-bot/types';
 
 type FormValues = Data.TelegramBotsAPI.Create;
 

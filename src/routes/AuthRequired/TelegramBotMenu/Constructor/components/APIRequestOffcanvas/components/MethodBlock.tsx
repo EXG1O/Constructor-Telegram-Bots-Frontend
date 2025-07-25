@@ -7,7 +7,7 @@ import { RouteID } from 'routes';
 import Block, { BlockProps } from 'components/ui/Block';
 import Tabs from 'components/ui/Tabs';
 
-import { Method } from 'api/telegram_bots/api_request/types';
+import { Method } from 'api/telegram-bots/api-request/types';
 
 import cn from 'utils/cn';
 

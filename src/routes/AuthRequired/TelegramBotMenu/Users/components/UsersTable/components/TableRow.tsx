@@ -14,8 +14,8 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import useUsersStore from '../../../hooks/useUsersStore';
 
 import { makeRequest } from 'api/core';
-import { UserAPI } from 'api/telegram_bots/user';
-import { User } from 'api/telegram_bots/user/types';
+import { UserAPI } from 'api/telegram-bots/user';
+import { User } from 'api/telegram-bots/user/types';
 
 import cn from 'utils/cn';
 

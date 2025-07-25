@@ -2,7 +2,7 @@ import React, { HTMLAttributes, ReactElement } from 'react';
 
 import Markdown from 'components/ui/Markdown';
 
-import { Section } from 'api/privacy_policy/types';
+import { Section } from 'api/privacy-policy/types';
 
 import cn from 'utils/cn';
 

@@ -16,9 +16,9 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import { useDatabaseOperationOffcanvasStore } from './DatabaseOperationOffcanvas/store';
 import Node from './Node';
 
-import { DatabaseOperationAPI } from 'api/telegram_bots/database_operation';
-import { DiagramDatabaseOperation } from 'api/telegram_bots/database_operation/types';
-import { DiagramBlock } from 'api/telegram_bots/diagram/types';
+import { DatabaseOperationAPI } from 'api/telegram-bots/database-operation';
+import { DiagramDatabaseOperation } from 'api/telegram-bots/database-operation/types';
+import { DiagramBlock } from 'api/telegram-bots/diagram/types';
 
 import {
   buildEdgeSourceHandle,

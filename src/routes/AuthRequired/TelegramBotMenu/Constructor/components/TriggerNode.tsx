@@ -16,9 +16,9 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import Node from './Node';
 import { useTriggerOffcanvasStore } from './TriggerOffcanvas/store';
 
-import { DiagramBlock } from 'api/telegram_bots/diagram/types';
-import { TriggerAPI } from 'api/telegram_bots/trigger';
-import { DiagramTrigger } from 'api/telegram_bots/trigger/types';
+import { DiagramBlock } from 'api/telegram-bots/diagram/types';
+import { TriggerAPI } from 'api/telegram-bots/trigger';
+import { DiagramTrigger } from 'api/telegram-bots/trigger/types';
 
 import {
   buildEdgeSourceHandle,

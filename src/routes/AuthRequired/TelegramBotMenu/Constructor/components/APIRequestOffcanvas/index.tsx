@@ -35,8 +35,8 @@ import NameBlock, {
   NameBlockFormValues,
 } from '../NameBlock';
 
-import { APIRequestAPI, APIRequestsAPI } from 'api/telegram_bots/api_request';
-import { APIRequest, Data } from 'api/telegram_bots/api_request/types';
+import { APIRequestAPI, APIRequestsAPI } from 'api/telegram-bots/api-request';
+import { APIRequest, Data } from 'api/telegram-bots/api-request/types';
 
 import parseJsonField from '../../utils/parseJsonField';
 import { useAPIRequestOffcanvasStore } from './store';

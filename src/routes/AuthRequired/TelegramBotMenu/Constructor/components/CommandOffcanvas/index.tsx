@@ -44,8 +44,8 @@ import NameBlock, {
   NameBlockFormValues,
 } from '../NameBlock';
 
-import { CommandAPI, CommandsAPI } from 'api/telegram_bots/command';
-import { Command, Data } from 'api/telegram_bots/command/types';
+import { CommandAPI, CommandsAPI } from 'api/telegram-bots/command';
+import { Command, Data } from 'api/telegram-bots/command/types';
 
 import { useCommandOffcanvasStore } from './store';
 

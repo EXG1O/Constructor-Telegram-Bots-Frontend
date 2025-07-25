@@ -7,7 +7,7 @@ import { reverse, RouteID } from 'routes';
 import Button from 'components/ui/Button';
 import Dropdown, { DropdownProps } from 'components/ui/Dropdown';
 
-import { TelegramBot } from 'api/telegram_bots/telegram_bot/types';
+import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 
 export interface HeaderTelegramBotDropdownProps
   extends Omit<DropdownProps, 'children'> {

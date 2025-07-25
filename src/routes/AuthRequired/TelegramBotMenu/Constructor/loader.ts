@@ -1,17 +1,17 @@
 import { Params } from 'react-router-dom';
 
-import { DiagramAPIRequestsAPI } from 'api/telegram_bots/api_request';
-import { APIResponse as APIRequestAPIResponse } from 'api/telegram_bots/api_request/types';
-import { DiagramBackgroundTasksAPI } from 'api/telegram_bots/background_task';
-import { APIResponse as BackgroundTaskAPIResponse } from 'api/telegram_bots/background_task/types';
-import { DiagramCommandsAPI } from 'api/telegram_bots/command';
-import { APIResponse as CommandAPIResponse } from 'api/telegram_bots/command/types';
-import { DiagramConditionsAPI } from 'api/telegram_bots/condition';
-import { APIResponse as ConditionAPIResponse } from 'api/telegram_bots/condition/types';
-import { DiagramDatabaseOperationsAPI } from 'api/telegram_bots/database_operation';
-import { APIResponse as DatabaseOperationAPIResponse } from 'api/telegram_bots/database_operation/types';
-import { DiagramTriggersAPI } from 'api/telegram_bots/trigger';
-import { APIResponse as TriggerAPIResponse } from 'api/telegram_bots/trigger/types';
+import { DiagramAPIRequestsAPI } from 'api/telegram-bots/api-request';
+import { APIResponse as APIRequestAPIResponse } from 'api/telegram-bots/api-request/types';
+import { DiagramBackgroundTasksAPI } from 'api/telegram-bots/background-task';
+import { APIResponse as BackgroundTaskAPIResponse } from 'api/telegram-bots/background-task/types';
+import { DiagramCommandsAPI } from 'api/telegram-bots/command';
+import { APIResponse as CommandAPIResponse } from 'api/telegram-bots/command/types';
+import { DiagramConditionsAPI } from 'api/telegram-bots/condition';
+import { APIResponse as ConditionAPIResponse } from 'api/telegram-bots/condition/types';
+import { DiagramDatabaseOperationsAPI } from 'api/telegram-bots/database-operation';
+import { APIResponse as DatabaseOperationAPIResponse } from 'api/telegram-bots/database-operation/types';
+import { DiagramTriggersAPI } from 'api/telegram-bots/trigger';
+import { APIResponse as TriggerAPIResponse } from 'api/telegram-bots/trigger/types';
 
 export interface LoaderData {
   diagramTriggers: TriggerAPIResponse.DiagramTriggersAPI.Get;

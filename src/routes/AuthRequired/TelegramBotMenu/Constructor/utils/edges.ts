@@ -1,17 +1,17 @@
 import { Edge } from '@xyflow/react';
 
-import { DiagramAPIRequest } from 'api/telegram_bots/api_request/types';
-import { DiagramBackgroundTask } from 'api/telegram_bots/background_task/types';
-import { DiagramCommand } from 'api/telegram_bots/command/types';
-import { DiagramCondition } from 'api/telegram_bots/condition/types';
+import { DiagramAPIRequest } from 'api/telegram-bots/api-request/types';
+import { DiagramBackgroundTask } from 'api/telegram-bots/background-task/types';
+import { DiagramCommand } from 'api/telegram-bots/command/types';
+import { DiagramCondition } from 'api/telegram-bots/condition/types';
 import {
   Connection,
   ObjectType,
   SourceObjectType,
   TargetObjectType,
-} from 'api/telegram_bots/connection/types';
-import { DiagramDatabaseOperation } from 'api/telegram_bots/database_operation/types';
-import { DiagramTrigger } from 'api/telegram_bots/trigger/types';
+} from 'api/telegram-bots/connection/types';
+import { DiagramDatabaseOperation } from 'api/telegram-bots/database-operation/types';
+import { DiagramTrigger } from 'api/telegram-bots/trigger/types';
 
 export interface EdgePoint<OT extends ObjectType> {
   objectType: OT;
