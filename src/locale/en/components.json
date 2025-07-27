@@ -8,12 +8,6 @@
     "button": "Find"
   },
   "loginButton": {
-    "messages": {
-      "userLogin": {
-        "success": "Successful authorization.",
-        "error": "Authorization failed for unknown reasons."
-      }
-    },
     "text": "Login via Telegram"
   },
   "telegramBotBlock": {

@@ -4,10 +4,13 @@ import { Link } from 'react-router-dom';
 
 import { reverse, RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import useLoginLoaderData from 'routes/Login/hooks/useLoginRouteLoaderData';
 
 import LoginButton from 'components/shared/LoginButton';
+import Button from 'components/ui/Button';
 import Container from 'components/ui/Container';
 import IconButton from 'components/ui/IconButton';
+import Spinner from 'components/ui/Spinner';
 
 import HeaderLanguagesDropdown from './components/HeaderLanguagesDropdown';
 import HeaderLink from './components/HeaderLink';
@@ -25,6 +28,9 @@ import cn from 'utils/cn';
 function Header(): ReactElement {
   const { t } = useTranslation(RouteID.Root, { keyPrefix: 'header' });
 
+  const login = useLoginLoaderData() as
+    | ReturnType<typeof useLoginLoaderData>
+    | undefined;
   const { user } = useRootRouteLoaderData();
   const telegramBot: TelegramBot | undefined = (
     useTelegramBotMenuRootRouteLoaderData() as
@@ -70,8 +76,12 @@ function Header(): ReactElement {
               <HeaderUserDropdown user={user} />
               {telegramBot && <HeaderTelegramBotDropdown telegramBot={telegramBot} />}
             </>
-          ) : (
+          ) : login === undefined ? (
             <LoginButton />
+          ) : (
+            <Button variant='dark' disabled>
+              <Spinner size='xs' />
+            </Button>
           )}
         </div>
       </nav>
