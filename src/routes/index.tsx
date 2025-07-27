@@ -5,6 +5,7 @@ import ErrorBoundary from './ErrorBoundary';
 export enum RouteID {
   Languages = 'languages',
   Root = 'root',
+  Login = 'login',
   Home = 'home',
   Updates = 'updates',
   Donation = 'donation-index',
@@ -46,6 +47,21 @@ export const routes: RouteObject[] = [
         },
         shouldRevalidate: () => true,
         children: [
+          {
+            id: RouteID.Login,
+            path: 'login/',
+            async lazy() {
+              const [component, loader] = await Promise.all([
+                await import('./Login'),
+                await import('./Login/loader'),
+              ]);
+
+              return {
+                Component: component.default,
+                loader: loader.default,
+              };
+            },
+          },
           {
             id: RouteID.Home,
             index: true,

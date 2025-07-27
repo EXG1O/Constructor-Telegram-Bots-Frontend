@@ -8,12 +8,6 @@
     "button": "Знайти"
   },
   "loginButton": {
-    "messages": {
-      "userLogin": {
-        "success": "Успішна авторизація.",
-        "error": "Не вдалося пройти авторизацію з невідомих причин."
-      }
-    },
     "text": "Увійти через Telegram"
   },
   "telegramBotBlock": {

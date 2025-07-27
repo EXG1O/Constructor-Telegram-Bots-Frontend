@@ -1,0 +1,9 @@
+{
+  "title": "Authorization",
+  "messages": {
+    "userLogin": {
+      "success": "Successful authorization.",
+      "error": "Authorization failed for unknown reasons."
+    }
+  }
+}
