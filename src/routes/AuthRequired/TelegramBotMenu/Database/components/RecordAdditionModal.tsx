@@ -20,10 +20,8 @@ interface FormValues {
 }
 
 export interface RecordAdditionModalProps
-  extends Omit<ModalProps, 'show' | 'loading' | 'children' | 'onHide' | 'onHidden'> {
-  show: NonNullable<ModalProps['show']>;
-  onHide: NonNullable<ModalProps['onHide']>;
-}
+  extends Omit<ModalProps, 'show' | 'loading' | 'children' | 'onHide' | 'onHidden'>,
+    Required<Pick<ModalProps, 'show' | 'onHide'>> {}
 
 const defaultFormValues: FormValues = {
   data: JSON.stringify({ key: 'value' }, undefined, 4),
@@ -107,23 +105,25 @@ function RecordAdditionModal({
           onHide={onHide}
           onHidden={() => resetForm()}
         >
-          <Modal.Header closeButton>
-            <Modal.Title>{t('title')}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body asChild>
-            <Form id={formId}>
-              <FormCodeInputFeedback
-                language='json'
-                name='data'
-                options={monacoOptions}
-              />
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button form={formId} type='submit' variant='success' className='w-full'>
-              {t('addButton')}
-            </Button>
-          </Modal.Footer>
+          <Modal.Content>
+            <Modal.Header closeButton>
+              <Modal.Title>{t('title')}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body asChild>
+              <Form id={formId}>
+                <FormCodeInputFeedback
+                  language='json'
+                  name='data'
+                  options={monacoOptions}
+                />
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button form={formId} type='submit' variant='success' className='w-full'>
+                {t('addButton')}
+              </Button>
+            </Modal.Footer>
+          </Modal.Content>
         </Modal>
       )}
     </Formik>
