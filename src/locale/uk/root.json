@@ -13,7 +13,7 @@
         }
       }
     },
-    "userMenuDropdown": {
+    "userDropdown": {
       "messages": {
         "logout": {
           "success": "Ви успішно вийшли з облікового запису.",
@@ -28,7 +28,7 @@
       "telegramBots": "Telegram боти",
       "exit": "Вийти"
     },
-    "telegramBotMenuDropdown": {
+    "telegramBotDropdown": {
       "telegramBot": "Telegram бот",
       "variables": "Змінні",
       "users": "Користувачі",
