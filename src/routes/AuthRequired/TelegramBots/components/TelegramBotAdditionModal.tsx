@@ -18,10 +18,8 @@ import { Data } from 'api/telegram-bots/telegram-bot/types';
 type FormValues = Data.TelegramBotsAPI.Create;
 
 export interface TelegramBotAdditionModalProps
-  extends Omit<ModalProps, 'loading' | 'children' | 'onHidden'> {
-  show: NonNullable<ModalProps['show']>;
-  onHide: NonNullable<ModalProps['onHide']>;
-}
+  extends Omit<ModalProps, 'show' | 'loading' | 'children' | 'onHide' | 'onHidden'>,
+    Required<Pick<ModalProps, 'show' | 'onHide'>> {}
 
 const defaultFormValues: FormValues = { api_token: '', is_private: false };
 
@@ -77,27 +75,29 @@ function TelegramBotAdditionModal({
           onHide={onHide}
           onHidden={() => resetForm()}
         >
-          <Modal.Header closeButton>
-            <Modal.Title>{t('title')}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body asChild>
-            <Form id={formId} className='flex flex-col gap-2'>
-              <FormInputFeedback
-                name='api_token'
-                placeholder={t('apiTokenInputPlaceholder')}
-              />
-              <FormCheckFeedback
-                type='switch'
-                name='is_private'
-                label={t('privateSwitchLabel')}
-              />
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button type='submit' form={formId} variant='success' className='w-full'>
-              {t('addButton')}
-            </Button>
-          </Modal.Footer>
+          <Modal.Content>
+            <Modal.Header closeButton>
+              <Modal.Title>{t('title')}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body asChild>
+              <Form id={formId} className='flex flex-col gap-2'>
+                <FormInputFeedback
+                  name='api_token'
+                  placeholder={t('apiTokenInputPlaceholder')}
+                />
+                <FormCheckFeedback
+                  type='switch'
+                  name='is_private'
+                  label={t('privateSwitchLabel')}
+                />
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button type='submit' form={formId} variant='success' className='w-full'>
+                {t('addButton')}
+              </Button>
+            </Modal.Footer>
+          </Modal.Content>
         </Modal>
       )}
     </Formik>

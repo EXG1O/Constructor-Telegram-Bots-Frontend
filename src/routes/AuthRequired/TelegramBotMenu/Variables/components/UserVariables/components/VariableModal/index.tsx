@@ -78,31 +78,33 @@ function InnerVariableModal(): ReactElement {
       onHide={hideModal}
       onHidden={handleHidden}
     >
-      <Modal.Header closeButton>
-        <Modal.Title>{t('title', { context: type })}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body asChild>
-        <Form id={formId} className='flex flex-col gap-2'>
-          <FormInputFeedback name='name' placeholder={t('nameInput.placeholder')} />
-          <FormRichInputFeedback
-            name='value'
-            height='220px'
-            formats={FORMATS}
-            placeholder={t('valueInput.placeholder')}
-          >
-            <TelegramRichInputLayout />
-          </FormRichInputFeedback>
-          <FormInputFeedback
-            name='description'
-            placeholder={t('descriptionInput.placeholder')}
-          />
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button type='submit' form={formId} variant='success' className='w-full'>
-          {t('actionButton', { context: type })}
-        </Button>
-      </Modal.Footer>
+      <Modal.Content>
+        <Modal.Header closeButton>
+          <Modal.Title>{t('title', { context: type })}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body asChild>
+          <Form id={formId} className='flex flex-col gap-2'>
+            <FormInputFeedback name='name' placeholder={t('nameInput.placeholder')} />
+            <FormRichInputFeedback
+              name='value'
+              height='220px'
+              formats={FORMATS}
+              placeholder={t('valueInput.placeholder')}
+            >
+              <TelegramRichInputLayout />
+            </FormRichInputFeedback>
+            <FormInputFeedback
+              name='description'
+              placeholder={t('descriptionInput.placeholder')}
+            />
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button type='submit' form={formId} variant='success' className='w-full'>
+            {t('actionButton', { context: type })}
+          </Button>
+        </Modal.Footer>
+      </Modal.Content>
     </Modal>
   );
 }
@@ -112,10 +114,7 @@ export interface VariableModalProps {
   onSave?: (variable: Variable) => void;
 }
 
-function VariableModal({
-  onAdd,
-  onSave,
-}: VariableModalProps): ReactElement<VariableModalProps> {
+function VariableModal({ onAdd, onSave }: VariableModalProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
     keyPrefix: 'user.variableModal',
   });
