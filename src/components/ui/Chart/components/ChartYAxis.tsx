@@ -11,9 +11,9 @@ const ChartYAxis = forwardRef<YAxis, ChartYAxisProps>((props, ref) => {
     <YAxis
       width='auto'
       domain={defaultDomain}
+      stroke='var(--color-foreground)'
       {...props}
       ref={ref}
-      stroke='var(--color-foreground)'
     />
   );
 });
