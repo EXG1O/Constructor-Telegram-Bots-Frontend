@@ -6,10 +6,14 @@ import ChartTooltip from './components/ChartTooltip';
 import ChartXAxis from './components/ChartXAxis';
 import ChartYAxis from './components/ChartYAxis';
 
+import cn from 'utils/cn';
+
 export interface ChartProps extends ResponsiveContainerProps {}
 
-const Chart = forwardRef<HTMLDivElement, ChartProps>((props, ref) => {
-  return <ResponsiveContainer {...props} ref={ref} />;
+const Chart = forwardRef<HTMLDivElement, ChartProps>(({ className, ...props }, ref) => {
+  return (
+    <ResponsiveContainer {...props} ref={ref} className={cn('text-sm', className)} />
+  );
 });
 Chart.displayName = 'Chart';
 
