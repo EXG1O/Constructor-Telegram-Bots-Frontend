@@ -6,11 +6,11 @@ export interface ChartXAxisProps extends Omit<XAxisProps, 'stoke'> {}
 const ChartXAxis = forwardRef<XAxis, ChartXAxisProps>((props, ref) => {
   return (
     <XAxis
-      height={22}
+      height={26}
       interval='preserveStart'
+      stroke='var(--color-foreground)'
       {...props}
       ref={ref}
-      stroke='var(--color-foreground)'
     />
   );
 });

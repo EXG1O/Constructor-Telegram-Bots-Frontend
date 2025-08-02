@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { ResponsiveContainer, ResponsiveContainerProps } from 'recharts';
 
+import ChartBrush from './components/ChartBrush';
 import ChartLine from './components/ChartLine';
 import ChartTooltip from './components/ChartTooltip';
 import ChartXAxis from './components/ChartXAxis';
@@ -22,4 +23,5 @@ export default Object.assign(Chart, {
   XAxis: ChartXAxis,
   YAxis: ChartYAxis,
   Tooltip: ChartTooltip,
+  Brush: ChartBrush,
 });
