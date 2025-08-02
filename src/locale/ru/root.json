@@ -8,6 +8,9 @@
     },
     "languagesDropdown": {
       "messages": {
+        "getLanguage": {
+          "error": "Не удалось получить список языков."
+        },
         "changeLanguage": {
           "error": "Не удалось изменить язык."
         }
