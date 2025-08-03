@@ -32,7 +32,25 @@
       "exit": "Выйти"
     },
     "telegramBotDropdown": {
+      "statsModal": {
+        "title": "Статистика Telegram бота",
+        "messages": {
+          "getNewUserStats": {
+            "error": "Не удалось получить статистику новых пользователей."
+          },
+          "getUserActivityStats": {
+            "error": "Не удалось получить статистику активности пользователей."
+          }
+        },
+        "newUsersChart": {
+          "title": "Новые пользователи"
+        },
+        "userActivityChart": {
+          "title": "Активность пользователей"
+        }
+      },
       "telegramBot": "Telegram бот",
+      "stats": "Статистика",
       "variables": "Переменные",
       "users": "Пользователи",
       "database": "База данных",

@@ -32,7 +32,25 @@
       "exit": "Exit"
     },
     "telegramBotDropdown": {
+      "statsModal": {
+        "title": "Telegram bot statistics",
+        "messages": {
+          "getNewUserStats": {
+            "error": "Failed to get new user statistics."
+          },
+          "getUserActivityStats": {
+            "error": "Failed to get user activity statistics."
+          }
+        },
+        "newUsersChart": {
+          "title": "New Users"
+        },
+        "userActivityChart": {
+          "title": "User Activity"
+        }
+      },
       "telegramBot": "Telegram bot",
+      "stats": "Statistics",
       "variables": "Variables",
       "users": "Users",
       "database": "Database",

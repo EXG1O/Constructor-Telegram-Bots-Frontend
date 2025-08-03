@@ -33,6 +33,22 @@ export class UsersAPI {
         : APIResponse.UsersAPI.Get.Default
     >(url, 'GET', undefined, true);
   }
+  static async timelineStats(
+    telegramBotID: TelegramBot['id'],
+    field?: 'last_activity_date' | 'activated_date',
+    days?: number,
+  ) {
+    let url: string = this.url(telegramBotID) + 'timeline-stats/';
+
+    if (field || days) {
+      const params = new URLSearchParams();
+      field && params.set('field', field);
+      days && params.set('days', days.toString());
+      url += `?${params.toString()}`;
+    }
+
+    return makeRequest<APIResponse.UsersAPI.TimelineStats>(url, 'GET', undefined, true);
+  }
 }
 
 export class UserAPI {
