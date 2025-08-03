@@ -23,6 +23,7 @@ export namespace APIResponse {
         results: User[];
       }
     }
+    export type TimelineStats = { date: string; count: number }[];
   }
 
   export namespace UserAPI {
