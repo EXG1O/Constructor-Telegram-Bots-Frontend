@@ -5,18 +5,20 @@ import Check from 'components/ui/Check';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import useTelegramBot from '../hooks/useTelegramBot';
+import useTelegramBotContentStore from '../hooks/useTelegramBotContentStore';
 
 import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
 
-export type PrivateSwitchProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+export interface PrivateSwitchProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
 
-function PrivateSwitch(props: PrivateSwitchProps): ReactElement<PrivateSwitchProps> {
+function PrivateSwitch(props: PrivateSwitchProps): ReactElement {
   const { t } = useTranslation('components', {
-    keyPrefix: 'telegramBotBlock.table.private',
+    keyPrefix: 'telegramBotContent.table.private',
   });
 
-  const [telegramBot, setTelegramBot] = useTelegramBot();
+  const telegramBot = useTelegramBotContentStore((state) => state.telegramBot);
+  const setTelegramBot = useTelegramBotContentStore((state) => state.setTelegramBot);
 
   const [loading, setLoading] = useState<boolean>(false);
 

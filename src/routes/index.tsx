@@ -13,7 +13,6 @@ export enum RouteID {
   PrivacyPolicy = 'privacy-policy',
   TelegramBots = 'telegram-bots',
   TelegramBotMenuRoot = 'telegram-bot-menu-root',
-  TelegramBotMenu = 'telegram-bot-menu-index',
   TelegramBotMenuVariables = 'telegram-bot-menu-variables',
   TelegramBotMenuUsers = 'telegram-bot-menu-users',
   TelegramBotMenuDatabase = 'telegram-bot-menu-database',
@@ -174,15 +173,6 @@ export const routes: RouteObject[] = [
             },
             shouldRevalidate: () => true,
             children: [
-              {
-                id: RouteID.TelegramBotMenu,
-                index: true,
-                async lazy() {
-                  const module = await import('./AuthRequired/TelegramBotMenu/Index');
-
-                  return { Component: module.default };
-                },
-              },
               {
                 id: RouteID.TelegramBotMenuVariables,
                 path: 'variables/',

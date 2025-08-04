@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ import Button from 'components/ui/Button';
 import Dropdown, { DropdownProps } from 'components/ui/Dropdown';
 
 import StatsModal from './components/StatsModal';
+import TelegramBotModal from './components/TelegramBotModal';
 
 import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 
@@ -24,20 +25,46 @@ function HeaderTelegramBotDropdown({
     keyPrefix: 'header.telegramBotDropdown',
   });
 
+  const [showTelegramBotModal, setShowTelegramBotModal] = useState<boolean>(false);
+  const [showStatsModal, setShowStatsModal] = useState<boolean>(false);
+
+  function handleTelegramBotModalHide(): void {
+    setShowTelegramBotModal(false);
+  }
+
+  function handleTelegramBotSelect(): void {
+    setShowTelegramBotModal(true);
+  }
+
+  function handleStatsModalHide(): void {
+    setShowStatsModal(false);
+  }
+
+  function handleStatsSelect(): void {
+    setShowStatsModal(true);
+  }
+
   return (
-    <Dropdown {...props}>
-      <Dropdown.Trigger asChild>
-        <Button variant='dark' className='max-w-37.5'>
-          <span className='truncate'>{telegramBot.username}</span>
-        </Button>
-      </Dropdown.Trigger>
-      <StatsModal>
-        <Dropdown.Menu>
-          <StatsModal.Trigger asChild>
-            <Dropdown.Menu.Item>{t('stats')}</Dropdown.Menu.Item>
-          </StatsModal.Trigger>
+    <>
+      <TelegramBotModal
+        show={showTelegramBotModal}
+        onHide={handleTelegramBotModalHide}
+      />
+      <StatsModal show={showStatsModal} onHide={handleStatsModalHide} />
+      <Dropdown {...props}>
+        <Dropdown.Trigger asChild>
+          <Button variant='dark' className='max-w-37.5'>
+            <span className='truncate'>{telegramBot.username}</span>
+          </Button>
+        </Dropdown.Trigger>
+        <Dropdown.Menu hideWhenDetached>
+          <Dropdown.Menu.Item onSelect={handleTelegramBotSelect}>
+            {t('telegramBot')}
+          </Dropdown.Menu.Item>
+          <Dropdown.Menu.Item onSelect={handleStatsSelect}>
+            {t('stats')}
+          </Dropdown.Menu.Item>
           {Object.entries({
-            [RouteID.TelegramBotMenu]: t('telegramBot'),
             [RouteID.TelegramBotMenuVariables]: t('variables'),
             [RouteID.TelegramBotMenuUsers]: t('users'),
             [RouteID.TelegramBotMenuDatabase]: t('database'),
@@ -50,8 +77,8 @@ function HeaderTelegramBotDropdown({
             </Dropdown.Menu.Item>
           ))}
         </Dropdown.Menu>
-      </StatsModal>
-    </Dropdown>
+      </Dropdown>
+    </>
   );
 }
 

@@ -5,7 +5,6 @@ import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import Modal, { ModalProps } from 'components/ui/Modal';
-import ModalTrigger from 'components/ui/Modal/components/ModalTrigger';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -14,9 +13,9 @@ import { UsersAPI } from 'api/telegram-bots/user';
 
 const ChartBlock = lazy(() => import('./components/ChartBlock'));
 
-export interface StatsModalProps extends ModalProps {}
+export interface StatsModalProps extends Omit<ModalProps, 'children'> {}
 
-function StatsModal({ children, ...props }: StatsModalProps): ReactElement {
+function StatsModal(props: StatsModalProps): ReactElement {
   const { t } = useTranslation(RouteID.Root, {
     keyPrefix: 'header.telegramBotDropdown.statsModal',
   });
@@ -56,7 +55,6 @@ function StatsModal({ children, ...props }: StatsModalProps): ReactElement {
 
   return (
     <Modal {...props}>
-      {children}
       <Modal.Content>
         <Modal.Header closeButton>
           <Modal.Title>{t('title')}</Modal.Title>
@@ -78,4 +76,4 @@ function StatsModal({ children, ...props }: StatsModalProps): ReactElement {
   );
 }
 
-export default Object.assign(StatsModal, { Trigger: ModalTrigger });
+export default StatsModal;

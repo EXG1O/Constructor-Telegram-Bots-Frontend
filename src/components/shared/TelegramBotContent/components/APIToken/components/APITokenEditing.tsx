@@ -13,7 +13,7 @@ import IconButton from 'components/ui/IconButton';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import useTelegramBot from '../hooks/useTelegramBot';
+import useTelegramBotContentStore from '../../../hooks/useTelegramBotContentStore';
 
 import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
 
@@ -24,22 +24,18 @@ const inputWrapperProps: InputFeedbackProps['wrapperProps'] = {
 };
 
 export interface APITokenEditingProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
-  onSaved: () => void;
-  onCancel: () => void;
-}
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
 
-function APITokenEditing({
-  className,
-  onSaved,
-  onCancel,
-  ...props
-}: APITokenEditingProps): ReactElement<APITokenEditingProps> {
+function APITokenEditing({ className, ...props }: APITokenEditingProps): ReactElement {
   const { t } = useTranslation('components', {
-    keyPrefix: 'telegramBotBlock.table.apiToken',
+    keyPrefix: 'telegramBotContent.table.apiToken',
   });
 
-  const [telegramBot, setTelegramBot] = useTelegramBot();
+  const telegramBot = useTelegramBotContentStore((state) => state.telegramBot);
+  const setTelegramBot = useTelegramBotContentStore((state) => state.setTelegramBot);
+  const toggleAPITokenState = useTelegramBotContentStore(
+    (state) => state.toggleAPITokenState,
+  );
 
   const [value, setValue] = useState<string>(telegramBot.api_token);
   const [loading, setLoading] = useState<boolean>(false);
@@ -59,8 +55,8 @@ function APITokenEditing({
     });
 
     if (response.ok) {
-      onSaved();
       setTelegramBot(response.json);
+      toggleAPITokenState();
       createMessageToast({
         message: t('messages.updateTelegramBotAPIToken.success'),
         level: 'success',
@@ -80,7 +76,7 @@ function APITokenEditing({
   }
 
   function handleCancelClick(): void {
-    onCancel();
+    toggleAPITokenState();
   }
 
   return (
