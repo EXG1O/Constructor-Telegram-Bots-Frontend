@@ -10,7 +10,7 @@
   "loginButton": {
     "text": "Login via Telegram"
   },
-  "telegramBotBlock": {
+  "telegramBotContent": {
     "messages": {
       "getTelegramBot": {
         "error": "Failed to retrieve Telegram bot data."

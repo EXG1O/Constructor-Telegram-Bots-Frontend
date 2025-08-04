@@ -10,7 +10,7 @@
   "loginButton": {
     "text": "Войти через Telegram"
   },
-  "telegramBotBlock": {
+  "telegramBotContent": {
     "messages": {
       "getTelegramBot": {
         "error": "Не удалось получить данные о Telegram боте."

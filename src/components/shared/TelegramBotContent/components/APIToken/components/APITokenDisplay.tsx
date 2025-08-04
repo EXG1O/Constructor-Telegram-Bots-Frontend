@@ -3,21 +3,18 @@ import { Eye, EyeOff, SquarePen } from 'lucide-react';
 
 import IconButton from 'components/ui/IconButton';
 
-import useTelegramBot from '../hooks/useTelegramBot';
+import useTelegramBotContentStore from '../../../hooks/useTelegramBotContentStore';
 
 import cn from 'utils/cn';
 
 export interface APITokenDisplayProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
-  onEdit: () => void;
-}
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
 
-function APITokenDisplay({
-  className,
-  onEdit,
-  ...props
-}: APITokenDisplayProps): ReactElement<APITokenDisplayProps> {
-  const [telegramBot] = useTelegramBot();
+function APITokenDisplay({ className, ...props }: APITokenDisplayProps): ReactElement {
+  const telegramBot = useTelegramBotContentStore((state) => state.telegramBot);
+  const toggleAPITokenState = useTelegramBotContentStore(
+    (state) => state.toggleAPITokenState,
+  );
 
   const [show, setShow] = useState<boolean>(false);
 
@@ -27,7 +24,7 @@ function APITokenDisplay({
   }, [telegramBot.api_token]);
 
   function handleEditClick(): void {
-    onEdit();
+    toggleAPITokenState();
   }
 
   function handleShowClick(): void {
