@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { TelegramBotSystemVariableType } from 'constants/telegramBotSystemVariables';
 
 import { RouteID } from 'routes';
 
@@ -8,14 +9,12 @@ import Block from 'components/ui/Block';
 import TypeTabs from './components/TypeTabs';
 import VariablesTable from './components/VariablesTable';
 
-export type Type = 'personal' | 'global';
-
 function SystemVariables(): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
     keyPrefix: 'system',
   });
 
-  const [type, setType] = useState<Type>('personal');
+  const [type, setType] = useState<TelegramBotSystemVariableType>('personal');
 
   return (
     <Block variant='light' className='flex flex-col gap-2'>

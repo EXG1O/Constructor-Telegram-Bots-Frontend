@@ -14,19 +14,19 @@
     },
     "variables": {
       "personal": {
-        "userID": "User ID",
-        "userUsername": "User @username",
-        "userFirstName": "User first name",
-        "userLastName": "User last name",
-        "userFullName": "User full name",
-        "userLanguageCode": "User language tag",
-        "userMessageID": "User message ID",
-        "userMessageText": "User message text",
-        "userMessageDate": "User message date"
+        "USER_ID": "User ID",
+        "USER_USERNAME": "User @username",
+        "USER_FIRST_NAME": "User first name",
+        "USER_LAST_NAME": "User last name",
+        "USER_FULL_NAME": "User full name",
+        "USER_LANGUAGE_CODE": "User language tag",
+        "USER_MESSAGE_ID": "User message ID",
+        "USER_MESSAGE_TEXT": "User message text",
+        "USER_MESSAGE_DATE": "User message date"
       },
       "global": {
-        "botName": "Bot name",
-        "botUsername": "Bot @username"
+        "BOT_NAME": "Bot name",
+        "BOT_USERNAME": "Bot @username"
       }
     }
   },

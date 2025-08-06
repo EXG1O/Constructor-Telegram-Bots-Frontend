@@ -14,19 +14,19 @@
     },
     "variables": {
       "personal": {
-        "userID": "ID користувача",
-        "userUsername": "@username користувача",
-        "userFirstName": "Ім'я користувача",
-        "userLastName": "Прізвище користувача",
-        "userFullName": "Ім'я та прізвище користувача",
-        "userLanguageCode": "Мовний тег користувача",
-        "userMessageID": "ID повідомлення користувача",
-        "userMessageText": "Текст повідомлення користувача",
-        "userMessageDate": "Дата відправки повідомлення користувача"
+        "USER_ID": "ID користувача",
+        "USER_USERNAME": "@username користувача",
+        "USER_FIRST_NAME": "Ім'я користувача",
+        "USER_LAST_NAME": "Прізвище користувача",
+        "USER_FULL_NAME": "Ім'я та прізвище користувача",
+        "USER_LANGUAGE_CODE": "Мовний тег користувача",
+        "USER_MESSAGE_ID": "ID повідомлення користувача",
+        "USER_MESSAGE_TEXT": "Текст повідомлення користувача",
+        "USER_MESSAGE_DATE": "Дата відправки повідомлення користувача"
       },
       "global": {
-        "botName": "Назва бота",
-        "botUsername": "@username бота"
+        "BOT_NAME": "Назва бота",
+        "BOT_USERNAME": "@username бота"
       }
     }
   },

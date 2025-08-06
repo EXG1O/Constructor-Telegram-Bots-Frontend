@@ -21,7 +21,8 @@
       "api/*": ["./src/api/*"],
       "hooks/*": ["./src/hooks/*"],
       "utils/*": ["./src/utils/*"],
-      "tokens/*": ["./src/tokens/*"]
+      "tokens/*": ["./src/tokens/*"],
+      "constants/*": ["./src/constants/*"]
     }
   },
   "include": ["./**/*.ts", "./**/*.tsx"],
