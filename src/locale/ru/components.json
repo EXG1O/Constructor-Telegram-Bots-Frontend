@@ -51,5 +51,9 @@
         "header": "Добавлен"
       }
     }
+  },
+  "telegramBotSystemVariablesTypeTabs": {
+    "personal": "Персональные",
+    "global": "Глобальные"
   }
 }

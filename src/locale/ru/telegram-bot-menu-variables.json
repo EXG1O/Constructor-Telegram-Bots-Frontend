@@ -8,10 +8,6 @@
   },
   "system": {
     "title": "Системные переменные",
-    "typeTabs": {
-      "personal": "Персональные",
-      "global": "Глобальные"
-    },
     "variables": {
       "personal": {
         "USER_ID": "ID пользователя",

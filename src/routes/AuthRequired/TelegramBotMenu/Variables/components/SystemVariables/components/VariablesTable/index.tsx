@@ -1,7 +1,7 @@
 import React, { ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import telegramBotSystemVariables, {
-  TelegramBotSystemVariableType,
+  TelegramBotSystemVariablesType,
 } from 'constants/telegramBotSystemVariables';
 
 import { RouteID } from 'routes';
@@ -14,7 +14,7 @@ import cn from 'utils/cn';
 
 export interface VariablesTableProps
   extends Omit<TableProps, 'size' | 'striped' | 'children'> {
-  type: TelegramBotSystemVariableType;
+  type: TelegramBotSystemVariablesType;
 }
 
 export interface Variable {
@@ -22,7 +22,7 @@ export interface Variable {
   description: string;
 }
 
-type Variables = Record<TelegramBotSystemVariableType, Variable[]>;
+type Variables = Record<TelegramBotSystemVariablesType, Variable[]>;
 
 function VariablesTable({
   type,
@@ -36,7 +36,7 @@ function VariablesTable({
   const variables = useMemo<Variables>(
     () =>
       Object.keys(telegramBotSystemVariables).reduce<Variables>((acc, value) => {
-        const type = value as TelegramBotSystemVariableType;
+        const type = value as TelegramBotSystemVariablesType;
         acc[type] = telegramBotSystemVariables[type].map((variable) => ({
           name: variable,
           description: t(`${type}.${variable}`),
