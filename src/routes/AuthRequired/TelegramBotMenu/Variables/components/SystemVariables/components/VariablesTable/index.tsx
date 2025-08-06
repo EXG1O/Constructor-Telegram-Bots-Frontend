@@ -1,5 +1,8 @@
 import React, { ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import telegramBotSystemVariables, {
+  TelegramBotSystemVariableType,
+} from 'constants/telegramBotSystemVariables';
 
 import { RouteID } from 'routes';
 
@@ -9,17 +12,17 @@ import TableRow from './components/TableRow';
 
 import cn from 'utils/cn';
 
-import { Type } from '../..';
-
 export interface VariablesTableProps
   extends Omit<TableProps, 'size' | 'striped' | 'children'> {
-  type: Type;
+  type: TelegramBotSystemVariableType;
 }
 
 export interface Variable {
   name: string;
   description: string;
 }
+
+type Variables = Record<TelegramBotSystemVariableType, Variable[]>;
 
 function VariablesTable({
   type,
@@ -30,33 +33,16 @@ function VariablesTable({
     keyPrefix: 'system.variables',
   });
 
-  const variables = useMemo<Record<Type, Variable[]>>(
-    () => ({
-      personal: [
-        { name: 'USER_ID', description: t('personal.userID') },
-        { name: 'USER_USERNAME', description: t('personal.userUsername') },
-        { name: 'USER_FIRST_NAME', description: t('personal.userFirstName') },
-        { name: 'USER_LAST_NAME', description: t('personal.userLastName') },
-        { name: 'USER_FULL_NAME', description: t('personal.userFullName') },
-        {
-          name: 'USER_LANGUAGE_CODE',
-          description: t('personal.userLanguageCode'),
-        },
-        { name: 'USER_MESSAGE_ID', description: t('personal.userMessageID') },
-        {
-          name: 'USER_MESSAGE_TEXT',
-          description: t('personal.userMessageText'),
-        },
-        {
-          name: 'USER_MESSAGE_DATE',
-          description: t('personal.userMessageDate'),
-        },
-      ],
-      global: [
-        { name: 'BOT_NAME', description: t('global.botName') },
-        { name: 'BOT_USERNAME', description: t('global.botUsername') },
-      ],
-    }),
+  const variables = useMemo<Variables>(
+    () =>
+      Object.keys(telegramBotSystemVariables).reduce<Variables>((acc, value) => {
+        const type = value as TelegramBotSystemVariableType;
+        acc[type] = telegramBotSystemVariables[type].map((variable) => ({
+          name: variable,
+          description: t(`${type}.${variable}`),
+        }));
+        return acc;
+      }, {} as Variables),
     [i18n.language],
   );
 

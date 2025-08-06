@@ -114,6 +114,7 @@ const config = (env: any, argv: any): Configuration => {
         hooks: `${__dirname}/src/hooks/`,
         utils: `${__dirname}/src/utils/`,
         tokens: `${__dirname}/src/tokens/`,
+        constants: `${__dirname}/src/constants/`,
       },
     },
     optimization: {
