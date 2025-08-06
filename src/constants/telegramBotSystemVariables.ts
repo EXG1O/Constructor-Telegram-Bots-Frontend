@@ -1,6 +1,6 @@
-export type TelegramBotSystemVariableType = 'personal' | 'global';
+export type TelegramBotSystemVariablesType = 'personal' | 'global';
 
-const telegramBotSystemVariables: Record<TelegramBotSystemVariableType, string[]> = {
+const telegramBotSystemVariables: Record<TelegramBotSystemVariablesType, string[]> = {
   personal: [
     'USER_ID',
     'USER_USERNAME',

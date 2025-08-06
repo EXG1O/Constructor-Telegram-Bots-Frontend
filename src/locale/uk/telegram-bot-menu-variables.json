@@ -8,10 +8,6 @@
   },
   "system": {
     "title": "Системні змінні",
-    "typeTabs": {
-      "personal": "Персональні",
-      "global": "Глобальні"
-    },
     "variables": {
       "personal": {
         "USER_ID": "ID користувача",

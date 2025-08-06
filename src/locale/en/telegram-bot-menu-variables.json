@@ -8,10 +8,6 @@
   },
   "system": {
     "title": "System variables",
-    "typeTabs": {
-      "personal": "Personal",
-      "global": "Global"
-    },
     "variables": {
       "personal": {
         "USER_ID": "User ID",
