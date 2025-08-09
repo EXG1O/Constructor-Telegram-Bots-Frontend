@@ -1,4 +1,5 @@
 import React, { HTMLAttributes, ReactElement, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
@@ -25,6 +26,10 @@ interface Data {
 }
 
 function DatabaseRecords({ className, ...props }: DatabaseRecordsProps): ReactElement {
+  const { t } = useTranslation('components', {
+    keyPrefix: 'telegramBotVariablesPopover.databaseRecords',
+  });
+
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
   const [data, setData] = useState<Data>({
@@ -63,11 +68,15 @@ function DatabaseRecords({ className, ...props }: DatabaseRecordsProps): ReactEl
     <div {...props} className={cn('flex', 'flex-col', 'w-full', 'gap-1.5', className)}>
       <List size='sm' striped>
         <ul className='w-full overflow-hidden rounded-sm text-sm'>
-          {data.results.map((record) => (
-            <List.Item key={record.id}>
-              <RecordData record={record} />
-            </List.Item>
-          ))}
+          {data.count ? (
+            data.results.map((record) => (
+              <List.Item key={record.id}>
+                <RecordData record={record} />
+              </List.Item>
+            ))
+          ) : (
+            <List.Item className='text-center'>{t('placeholders.empty')}</List.Item>
+          )}
         </ul>
       </List>
       <Pagination

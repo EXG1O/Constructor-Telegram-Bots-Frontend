@@ -61,6 +61,16 @@
       "system": "Системные переменные",
       "user": "Пользовательские переменные",
       "database": "База данных"
+    },
+    "userVariables": {
+      "placeholders": {
+        "empty": "Вы ещё не добавили переменные"
+      }
+    },
+    "databaseRecords": {
+      "placeholders": {
+        "empty": "Вы ещё не добавили записи"
+      }
     }
   }
 }

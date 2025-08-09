@@ -1,4 +1,5 @@
 import React, { HTMLAttributes, ReactElement, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
@@ -24,6 +25,10 @@ interface Data {
 }
 
 function UserVariables({ className, ...props }: UserVariablesProps): ReactElement {
+  const { t } = useTranslation('components', {
+    keyPrefix: 'telegramBotVariablesPopover.userVariables',
+  });
+
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
   const [data, setData] = useState<Data>({
@@ -62,12 +67,16 @@ function UserVariables({ className, ...props }: UserVariablesProps): ReactElemen
     <div {...props} className={cn('flex', 'flex-col', 'w-full', 'gap-1.5', className)}>
       <List size='sm' striped>
         <ul className='w-full overflow-hidden rounded-sm text-sm'>
-          {data.results.map((variable) => (
+          {data.count ? (
+            data.results.map((variable) => (
             <List.Item key={variable.id} className='flex gap-1'>
               <span className='flex-auto'>{variable.name}</span>
               <SelectButton variable={variable.name} />
             </List.Item>
-          ))}
+            ))
+          ) : (
+            <List.Item className='text-center'>{t('placeholders.empty')}</List.Item>
+          )}
         </ul>
       </List>
       <Pagination
