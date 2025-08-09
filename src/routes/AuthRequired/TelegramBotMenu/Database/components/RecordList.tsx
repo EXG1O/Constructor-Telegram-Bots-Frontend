@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
+import List from 'components/ui/List';
 import Spinner from 'components/ui/Spinner';
 
 import RecordItem from './RecordItem';
@@ -24,33 +25,26 @@ function RecordList({ className, ...props }: RecordListProps): ReactElement {
   const records = useDatabaseRecordsStore((state) => state.records);
 
   return (
-    <ul
-      {...props}
-      className={cn(
-        'flex',
-        'flex-col',
-        'w-full',
-        'bg-light-accent',
-        'rounded-sm',
-        'p-2',
-        'gap-2',
-        className,
-      )}
-    >
-      {!loading ? (
-        records.length ? (
-          records.map((record) => <RecordItem key={record.id} record={record} />)
+    <List striped size='sm'>
+      <ol
+        {...props}
+        className={cn('w-full', 'rounded-sm', 'overflow-hidden', className)}
+      >
+        {!loading ? (
+          records.length ? (
+            records.map((record) => <RecordItem key={record.id} record={record} />)
+          ) : (
+            <List.Item className='text-center'>
+              {search ? t('placeholders.notFound') : t('placeholders.notAdded')}
+            </List.Item>
+          )
         ) : (
-          <li className='w-full text-center'>
-            {search ? t('placeholders.notFound') : t('placeholders.notAdded')}
-          </li>
-        )
-      ) : (
-        <li className='flex w-full justify-center'>
-          <Spinner size='sm' />
-        </li>
-      )}
-    </ul>
+          <List.Item className='flex justify-center'>
+            <Spinner size='sm' />
+          </List.Item>
+        )}
+      </ol>
+    </List>
   );
 }
 
