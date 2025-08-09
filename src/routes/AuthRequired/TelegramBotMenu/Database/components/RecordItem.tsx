@@ -153,7 +153,7 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
   }
 
   return !loading ? (
-    <List.Item {...props} className={cn('flex', 'items-center', 'gap-1', className)}>
+    <List.Item {...props} className={cn('flex', 'items-center', 'gap-2', className)}>
       <CodeInput
         size='sm'
         value={value}
@@ -164,7 +164,7 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
       />
       <div className='inline-flex gap-2'>
         {value !== defaultValue && (
-          <div className='ms-1 inline-flex gap-1'>
+          <div className='inline-flex gap-1'>
             <IconButton size='sm' className='text-success' onClick={handleConfirmClick}>
               <Check />
             </IconButton>
