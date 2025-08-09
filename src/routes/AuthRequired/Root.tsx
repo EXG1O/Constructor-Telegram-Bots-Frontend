@@ -1,10 +1,12 @@
 import React, { ReactElement, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import { reverse, RouteID } from 'routes';
+import { RouteID } from 'routes';
 import useRootRouteLoaderData from 'routes/Root/hooks/useRootRouteLoaderData';
 
 import Spinner from 'components/ui/Spinner';
+
+import reverse from 'utils/reverse';
 
 function Root(): ReactElement {
   const { user } = useRootRouteLoaderData();

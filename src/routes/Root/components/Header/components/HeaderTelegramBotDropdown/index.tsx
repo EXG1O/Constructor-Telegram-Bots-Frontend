@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { reverse, RouteID } from 'routes';
+import { RouteID } from 'routes';
 
 import Button from 'components/ui/Button';
 import Dropdown, { DropdownProps } from 'components/ui/Dropdown';
@@ -11,6 +11,8 @@ import StatsModal from './components/StatsModal';
 import TelegramBotModal from './components/TelegramBotModal';
 
 import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
+
+import reverse from 'utils/reverse';
 
 export interface HeaderTelegramBotDropdownProps
   extends Omit<DropdownProps, 'children'> {

@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { reverse, RouteID } from 'routes';
+import { RouteID } from 'routes';
 
 import TelegramBotContent, {
   TelegramBotContentProps,
@@ -11,6 +11,7 @@ import Block, { BlockProps } from 'components/ui/Block';
 import Button from 'components/ui/Button';
 
 import cn from 'utils/cn';
+import reverse from 'utils/reverse';
 
 export interface TelegramBotItemProps
   extends Omit<BlockProps, 'variant' | 'children'>,

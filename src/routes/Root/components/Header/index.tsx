@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { reverse, RouteID } from 'routes';
+import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 import useLoginLoaderData from 'routes/Login/hooks/useLoginRouteLoaderData';
 
@@ -24,6 +24,7 @@ import Logo from 'assets/logo/logo.svg';
 import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 
 import cn from 'utils/cn';
+import reverse from 'utils/reverse';
 
 function Header(): ReactElement {
   const { t } = useTranslation(RouteID.Root, { keyPrefix: 'header' });

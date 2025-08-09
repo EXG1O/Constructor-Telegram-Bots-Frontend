@@ -2,9 +2,11 @@ import { redirect } from 'react-router-dom';
 import i18n from 'i18n';
 import { TOptions } from 'i18next';
 
-import { reverse, RouteID } from 'routes';
+import { RouteID } from 'routes';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
+
+import reverse from 'utils/reverse';
 
 export type LoaderData = Response;
 
