@@ -1,11 +1,4 @@
-import React, {
-  LiHTMLAttributes,
-  ReactElement,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Check, Trash2, X } from 'lucide-react';
 
@@ -15,6 +8,8 @@ import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramB
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import CodeInput, { CodeInputProps, Editor } from 'components/ui/CodeInput';
 import IconButton from 'components/ui/IconButton';
+import List from 'components/ui/List';
+import { ListItemProps } from 'components/ui/List/components/ListItem';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -25,8 +20,7 @@ import { DatabaseRecord } from 'api/telegram-bots/database-record/types';
 
 import cn from 'utils/cn';
 
-export interface RecordItemProps
-  extends Omit<LiHTMLAttributes<HTMLLIElement>, 'children'> {
+export interface RecordItemProps extends Omit<ListItemProps, 'children'> {
   record: DatabaseRecord;
 }
 
@@ -159,7 +153,7 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
   }
 
   return !loading ? (
-    <li {...props} className={cn('flex', 'items-center', 'w-full', 'gap-2', className)}>
+    <List.Item {...props} className={cn('flex', 'items-center', 'gap-1', className)}>
       <CodeInput
         size='sm'
         value={value}
@@ -170,7 +164,7 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
       />
       <div className='inline-flex gap-2'>
         {value !== defaultValue && (
-          <div className='inline-flex gap-1'>
+          <div className='ms-1 inline-flex gap-1'>
             <IconButton size='sm' className='text-success' onClick={handleConfirmClick}>
               <Check />
             </IconButton>
@@ -183,11 +177,11 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
           <Trash2 />
         </IconButton>
       </div>
-    </li>
+    </List.Item>
   ) : (
-    <li className='flex w-full justify-center'>
+    <List.Item className='flex justify-center'>
       <Spinner size='sm' />
-    </li>
+    </List.Item>
   );
 }
 
