@@ -25,7 +25,7 @@ function RecordList({ className, ...props }: RecordListProps): ReactElement {
   const records = useDatabaseRecordsStore((state) => state.records);
 
   return (
-    <List striped size='sm'>
+    <List striped>
       <ol
         {...props}
         className={cn('w-full', 'rounded-sm', 'overflow-hidden', className)}
