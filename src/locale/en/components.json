@@ -55,5 +55,22 @@
   "telegramBotSystemVariablesTypeTabs": {
     "personal": "Personal",
     "global": "Global"
+  },
+  "telegramBotVariablesPopover": {
+    "types": {
+      "system": "System variables",
+      "user": "User variables",
+      "database": "Database"
+    },
+    "userVariables": {
+      "placeholders": {
+        "empty": "You haven't added any variables yet"
+      }
+    },
+    "databaseRecords": {
+      "placeholders": {
+        "empty": "You haven't added any records yet"
+      }
+    }
   }
 }
