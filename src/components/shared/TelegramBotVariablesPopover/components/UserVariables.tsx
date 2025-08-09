@@ -60,7 +60,7 @@ function UserVariables({ className, ...props }: UserVariablesProps): ReactElemen
   }, []);
 
   function handlePageChange(newOffset: number): void {
-    setData({ ...data, offset: newOffset });
+    updateVariables(undefined, newOffset);
   }
 
   return !loading ? (
@@ -69,10 +69,10 @@ function UserVariables({ className, ...props }: UserVariablesProps): ReactElemen
         <ul className='w-full overflow-hidden rounded-sm text-sm'>
           {data.count ? (
             data.results.map((variable) => (
-            <List.Item key={variable.id} className='flex gap-1'>
-              <span className='flex-auto'>{variable.name}</span>
-              <SelectButton variable={variable.name} />
-            </List.Item>
+              <List.Item key={variable.id} className='flex gap-1'>
+                <span className='flex-auto'>{variable.name}</span>
+                <SelectButton variable={variable.name} />
+              </List.Item>
             ))
           ) : (
             <List.Item className='text-center'>{t('placeholders.empty')}</List.Item>
