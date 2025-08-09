@@ -10,7 +10,7 @@ i18n
   .init({
     debug: settings.DEBUG,
     lng: document.querySelector('html')?.getAttribute('lang') ?? 'ru',
-    ns: 'global',
+    ns: ['global', 'error-boundary'],
     defaultNS: 'global',
     fallbackLng: false,
     backend: {
