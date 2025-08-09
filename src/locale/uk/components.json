@@ -55,5 +55,12 @@
   "telegramBotSystemVariablesTypeTabs": {
     "personal": "Персональні",
     "global": "Глобальні"
+  },
+  "telegramBotVariablesPopover": {
+    "types": {
+      "system": "Системні змінні",
+      "user": "Користувацькі змінні",
+      "database": "База даних"
+    }
   }
 }
