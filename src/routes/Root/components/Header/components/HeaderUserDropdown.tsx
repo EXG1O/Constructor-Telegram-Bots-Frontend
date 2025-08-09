@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { reverse, RouteID } from 'routes';
+import { RouteID } from 'routes';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import Button from 'components/ui/Button';
@@ -11,6 +11,8 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { UserAPI } from 'api/users';
 import { User } from 'api/users/types';
+
+import reverse from 'utils/reverse';
 
 export interface HeaderUserDropdownProps extends Omit<DropdownProps, 'children'> {
   user: User;

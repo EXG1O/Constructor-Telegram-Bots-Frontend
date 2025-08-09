@@ -1,9 +1,11 @@
 import { Params, redirect } from 'react-router-dom';
 
-import { reverse, RouteID } from 'routes';
+import { RouteID } from 'routes';
 
 import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
 import { APIResponse } from 'api/telegram-bots/telegram-bot/types';
+
+import reverse from 'utils/reverse';
 
 export interface LoaderData {
   telegramBot: APIResponse.TelegramBotAPI.Get;

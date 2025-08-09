@@ -1,13 +1,15 @@
 import React, { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { reverse, RouteID } from 'routes';
+import { RouteID } from 'routes';
 
 import Button, { ButtonProps, buttonVariants } from 'components/ui/Button';
 
 import settings from 'settings';
 
 import Telegram from 'assets/icons/telegram.svg';
+
+import reverse from 'utils/reverse';
 
 export { buttonVariants as loginButtonVariants };
 

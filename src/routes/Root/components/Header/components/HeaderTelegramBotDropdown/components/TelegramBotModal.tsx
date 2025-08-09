@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { reverse, RouteID } from 'routes';
+import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
@@ -14,6 +14,8 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
 import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
+
+import reverse from 'utils/reverse';
 
 export interface TelegramBotModalProps extends Omit<ModalProps, 'children'> {}
 

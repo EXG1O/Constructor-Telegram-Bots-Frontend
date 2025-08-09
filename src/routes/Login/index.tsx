@@ -2,13 +2,15 @@ import React, { ReactElement, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavigateOptions, useNavigate } from 'react-router-dom';
 
-import { reverse, RouteID } from 'routes';
+import { RouteID } from 'routes';
 
 import Page from 'components/ui/Page';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useLoginLoaderData from './hooks/useLoginRouteLoaderData';
+
+import reverse from 'utils/reverse';
 
 const navigateOptions: NavigateOptions = {
   replace: true,
