@@ -105,7 +105,7 @@ function APITokenEditing({ className, ...props }: APITokenEditingProps): ReactEl
           </div>
         </>
       ) : (
-        <Spinner size='xxs' />
+        <Spinner size='2xs' />
       )}
     </div>
   );

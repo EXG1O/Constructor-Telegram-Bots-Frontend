@@ -14,7 +14,8 @@ export const spinnerVariants = cva(
   {
     variants: {
       size: {
-        xxs: ['size-5', 'border-2'],
+        '3xs': ['size-4', 'border-[1.2px]'],
+        '2xs': ['size-5', 'border-2'],
         xs: ['size-6', 'border-[2.4px]'],
         sm: ['size-8', 'border-[3.2px]'],
         md: ['size-10', 'border-4'],

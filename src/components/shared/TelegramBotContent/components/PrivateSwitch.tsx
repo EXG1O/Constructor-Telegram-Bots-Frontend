@@ -57,7 +57,7 @@ function PrivateSwitch(props: PrivateSwitchProps): ReactElement {
       onChange={handleChange}
     />
   ) : (
-    <Spinner size='xxs' />
+    <Spinner size='2xs' />
   );
 }
 
