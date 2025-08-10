@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 
 import { ButtonProps } from 'components/ui/Button';
 import IconButton from 'components/ui/IconButton';
+import Popover from 'components/ui/Popover';
 
 import useTelegramBotVariablesPopover from '../hooks/useTelegramBotVariablesPopover';
 
@@ -18,14 +19,16 @@ function SelectButton({
   const { onSelect } = useTelegramBotVariablesPopover();
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
-    onSelect(variable);
     onClick?.(event);
+    onSelect(variable);
   }
 
   return (
-    <IconButton {...props} size='sm' onClick={handleClick}>
-      <ArrowRight />
-    </IconButton>
+    <Popover.Close asChild>
+      <IconButton {...props} size='sm' onClick={handleClick}>
+        <ArrowRight />
+      </IconButton>
+    </Popover.Close>
   );
 }
 
