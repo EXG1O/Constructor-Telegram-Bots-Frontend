@@ -9,8 +9,6 @@ import TelegramRichInputLayout, {
 } from 'components/shared/TelegramRichInputLayout';
 import Block, { BlockProps } from 'components/ui/Block';
 
-import VariablesInfoText from '../../VariablesInfoText';
-
 import cn from 'utils/cn';
 
 export interface Message {
@@ -49,9 +47,8 @@ function MessageBlock({ className, ...props }: MessageBlockProps): ReactElement 
           formats={FORMATS}
           placeholder={t('messageEditorPlaceholder')}
         >
-          <TelegramRichInputLayout />
+          <TelegramRichInputLayout toolbarVariables />
         </FormRichInputFeedback>
-        <VariablesInfoText />
       </div>
     </Block>
   );
