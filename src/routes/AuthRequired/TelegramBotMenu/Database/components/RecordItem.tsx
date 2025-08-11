@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
+import React, { ReactElement, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Check, Trash2, X } from 'lucide-react';
 
@@ -42,26 +42,20 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
   const [loading, setLoading] = useState<boolean>(false);
 
   const editorRef = useRef<Editor | null>(null);
-  const oldValue = useRef<string>(value);
 
   const showConfirmModal = useConfirmModalStore((state) => state.setShow);
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
-
-  useEffect(() => {
-    if (!editorRef.current) return;
-
-    if (oldValue.current === defaultValue || value === defaultValue) {
-      editorRef.current?.updateLayout(true);
-    }
-  }, [value]);
 
   function handleMount(editor: Editor): void {
     editorRef.current = editor;
   }
 
   function handleChange(_editor: Editor, nextValue: string): void {
-    oldValue.current = value;
+    if (value === defaultValue || nextValue === defaultValue) {
+      editorRef.current?.updateLayout(true);
+    }
+
     setValue(nextValue);
   }
 
@@ -111,8 +105,7 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
   }
 
   function handleCancelClick(): void {
-    oldValue.current = value;
-    setValue(defaultValue);
+    editorRef.current?.setValue(defaultValue);
   }
 
   function handleDeleteClick(): void {
