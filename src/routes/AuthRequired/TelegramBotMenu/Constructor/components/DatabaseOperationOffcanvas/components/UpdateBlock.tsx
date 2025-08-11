@@ -6,6 +6,7 @@ import { RouteID } from 'routes';
 import FormCheckFeedback from 'components/shared/FormCheckFeedback';
 import FormCodeInputFeedback from 'components/shared/FormCodeInputFeedback';
 import FormInputFeedback from 'components/shared/FormInputFeedback';
+import TelegramCodeInputLayout from 'components/shared/TelegramCodeInputLayout';
 import Block, { BlockProps } from 'components/ui/Block';
 
 import cn from 'utils/cn';
@@ -67,7 +68,9 @@ function UpdateBlock({ className, ...props }: UpdateBlockProps): ReactElement {
         name='update_operation.create_if_not_found'
         label={t('createIfNotFoundSwitch.label')}
       />
-      <FormCodeInputFeedback name='update_operation.new_data' language='json' />
+      <FormCodeInputFeedback name='update_operation.new_data' language='json'>
+        <TelegramCodeInputLayout toolbarVariables />
+      </FormCodeInputFeedback>
     </Block>
   );
 }
