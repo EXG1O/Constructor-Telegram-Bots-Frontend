@@ -3,11 +3,8 @@ import { useField } from 'formik';
 
 import CodeInputFeedback, {
   CodeInputFeedbackProps,
-  codeInputFeedbackVariants,
 } from 'components/shared/CodeInputFeedback';
 import { Editor } from 'components/ui/CodeInput';
-
-export { codeInputFeedbackVariants as formCodeInputFeedbackVariants };
 
 export interface FormCodeInputFeedbackProps
   extends Omit<CodeInputFeedbackProps, 'error'> {

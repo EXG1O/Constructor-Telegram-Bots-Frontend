@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
-import CodeInput, { CodeInputProps, Editor } from 'components/ui/CodeInput';
+import CodeInput, { Editor } from 'components/ui/CodeInput';
 import IconButton from 'components/ui/IconButton';
 import List from 'components/ui/List';
 import { ListItemProps } from 'components/ui/List/components/ListItem';
@@ -23,14 +23,6 @@ import cn from 'utils/cn';
 export interface RecordItemProps extends Omit<ListItemProps, 'children'> {
   record: DatabaseRecord;
 }
-
-const options: NonNullable<CodeInputProps['options']> = {
-  glyphMargin: false,
-  folding: false,
-  lineNumbers: 'off',
-  lineDecorationsWidth: 0,
-  lineNumbersMinChars: 0,
-};
 
 function RecordItem({ record, className, ...props }: RecordItemProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
@@ -158,7 +150,6 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
         size='sm'
         value={value}
         language='json'
-        options={options}
         onMount={handleMount}
         onChange={handleChange}
       />

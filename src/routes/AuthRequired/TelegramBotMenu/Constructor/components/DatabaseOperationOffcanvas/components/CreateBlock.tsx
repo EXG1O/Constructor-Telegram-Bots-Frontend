@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import monaco from 'monaco-editor';
 
 import { RouteID } from 'routes';
 
@@ -26,14 +25,6 @@ export const defaultCreateBlockFormValues: CreateBlockFormValues = {
   create_operation: defaultCreateOperation,
 };
 
-const monacoOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
-  glyphMargin: false,
-  folding: false,
-  lineNumbers: 'off',
-  lineDecorationsWidth: 0,
-  lineNumbersMinChars: 0,
-};
-
 function CreateBlock({ className, ...props }: CreateBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'databaseOperationOffcanvas.createBlock',
@@ -48,11 +39,7 @@ function CreateBlock({ className, ...props }: CreateBlockProps): ReactElement {
       <Block.Title>
         <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
-      <FormCodeInputFeedback
-        name='create_operation.data'
-        language='json'
-        options={monacoOptions}
-      />
+      <FormCodeInputFeedback name='create_operation.data' language='json' />
     </Block>
   );
 }

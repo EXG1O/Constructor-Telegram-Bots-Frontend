@@ -1,7 +1,6 @@
 import React, { ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers } from 'formik';
-import monaco from 'monaco-editor';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
@@ -25,14 +24,6 @@ export interface RecordAdditionModalProps
 
 const defaultFormValues: FormValues = {
   data: JSON.stringify({ key: 'value' }, undefined, 4),
-};
-
-const monacoOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
-  glyphMargin: false,
-  folding: false,
-  lineNumbers: 'off',
-  lineDecorationsWidth: 0,
-  lineNumbersMinChars: 0,
 };
 
 function RecordAdditionModal({
@@ -111,11 +102,7 @@ function RecordAdditionModal({
             </Modal.Header>
             <Modal.Body asChild>
               <Form id={formId}>
-                <FormCodeInputFeedback
-                  language='json'
-                  name='data'
-                  options={monacoOptions}
-                />
+                <FormCodeInputFeedback language='json' name='data' />
               </Form>
             </Modal.Body>
             <Modal.Footer>
