@@ -21,10 +21,16 @@ const ToolbarVariablesButton = forwardRef<
   function handleSelect(variable: string): void {
     if (!quill) return;
     const range: Range | null = quill.getSelection();
-    quill.insertText(
-      range ? range.index + range.length : quill.getLength() - 1,
-      `{{ ${variable} }}`,
-    );
+
+    const text: string = `{{ ${variable} }}`;
+
+    if (range) {
+      quill.deleteText(range);
+      quill.insertText(range.index, text);
+      quill.setSelection(range.index + text.length, 0);
+    } else {
+      quill.insertText(quill.getLength() - 1, text);
+    }
   }
 
   return (
