@@ -40,7 +40,7 @@ function RecordData({ record, className, ...props }: RecordDataProps): ReactElem
         return (
           <div key={lineIndex} className='flex gap-1 even:bg-foreground/5'>
             <span className='flex-auto overflow-x-auto scrollbar-thin'>{value}</span>
-            {path && <SelectButton variable={path} />}
+            {path && <SelectButton variable={`DATABASE.${path}`} />}
           </div>
         );
       })}
