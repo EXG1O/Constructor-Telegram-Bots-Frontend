@@ -4,9 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { RouteID } from 'routes';
 
 import FormCodeInputFeedback from 'components/shared/FormCodeInputFeedback';
+import TelegramCodeInputLayout from 'components/shared/TelegramCodeInputLayout';
 import Block, { BlockProps } from 'components/ui/Block';
-
-import VariablesInfoText from '../../VariablesInfoText';
 
 import cn from 'utils/cn';
 
@@ -37,10 +36,9 @@ function BodyBlock({ className, ...props }: BodyBlockProps): ReactElement {
       <Block.Title>
         <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
-      <div>
-        <FormCodeInputFeedback name='body' language='json' />
-        <VariablesInfoText />
-      </div>
+      <FormCodeInputFeedback name='body' language='json'>
+        <TelegramCodeInputLayout toolbarVariables />
+      </FormCodeInputFeedback>
     </Block>
   );
 }
