@@ -70,7 +70,9 @@ function UserVariables({ className, ...props }: UserVariablesProps): ReactElemen
           {data.count ? (
             data.results.map((variable) => (
               <List.Item key={variable.id} className='flex gap-1'>
-                <span className='flex-auto'>{variable.name}</span>
+                <span className='flex-auto overflow-x-auto scrollbar-thin'>
+                  {variable.name}
+                </span>
                 <SelectButton variable={variable.name} />
               </List.Item>
             ))
