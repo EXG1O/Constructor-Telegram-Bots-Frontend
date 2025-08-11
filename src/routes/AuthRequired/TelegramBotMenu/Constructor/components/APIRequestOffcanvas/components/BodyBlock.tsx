@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import monaco from 'monaco-editor';
 
 import { RouteID } from 'routes';
 
@@ -24,14 +23,6 @@ export const defaultBodyBlockFormValues: BodyBlockFormValues = {
   body: defaultBody,
 };
 
-const monacoOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
-  glyphMargin: false,
-  folding: false,
-  lineNumbers: 'off',
-  lineDecorationsWidth: 0,
-  lineNumbersMinChars: 0,
-};
-
 function BodyBlock({ className, ...props }: BodyBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'apiRequestOffcanvas.bodyBlock',
@@ -47,7 +38,7 @@ function BodyBlock({ className, ...props }: BodyBlockProps): ReactElement {
         <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
       <div>
-        <FormCodeInputFeedback name='body' language='json' options={monacoOptions} />
+        <FormCodeInputFeedback name='body' language='json' />
         <VariablesInfoText />
       </div>
     </Block>

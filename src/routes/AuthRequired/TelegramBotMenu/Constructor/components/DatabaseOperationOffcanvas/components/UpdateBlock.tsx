@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import monaco from 'monaco-editor';
 
 import { RouteID } from 'routes';
 
@@ -36,14 +35,6 @@ export const defaultUpdateBlockFormValues: UpdateBlockFormValues = {
   update_operation: defaultUpdateOperation,
 };
 
-const monacoOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
-  glyphMargin: false,
-  folding: false,
-  lineNumbers: 'off',
-  lineDecorationsWidth: 0,
-  lineNumbersMinChars: 0,
-};
-
 function UpdateBlock({ className, ...props }: UpdateBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'databaseOperationOffcanvas.updateBlock',
@@ -76,11 +67,7 @@ function UpdateBlock({ className, ...props }: UpdateBlockProps): ReactElement {
         name='update_operation.create_if_not_found'
         label={t('createIfNotFoundSwitch.label')}
       />
-      <FormCodeInputFeedback
-        name='update_operation.new_data'
-        language='json'
-        options={monacoOptions}
-      />
+      <FormCodeInputFeedback name='update_operation.new_data' language='json' />
     </Block>
   );
 }

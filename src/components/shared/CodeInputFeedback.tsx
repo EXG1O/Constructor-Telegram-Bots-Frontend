@@ -1,11 +1,9 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
 
-import CodeInput, { CodeInputProps, codeInputVariants } from 'components/ui/CodeInput';
+import CodeInput, { CodeInputProps } from 'components/ui/CodeInput';
 import Feedback from 'components/ui/Feedback';
 
 import cn from 'utils/cn';
-
-export { codeInputVariants as codeInputFeedbackVariants };
 
 export interface CodeInputFeedbackProps extends CodeInputProps {
   error?: string;
