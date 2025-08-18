@@ -2,9 +2,9 @@ import { Connection } from '../connection/types';
 import { DiagramBlock } from '../diagram/types';
 
 export interface CommandSettings {
-  is_reply_to_user_message: boolean;
-  is_delete_user_message: boolean;
-  is_send_as_new_message: boolean;
+  reply_to_user_message: boolean;
+  delete_user_message: boolean;
+  send_as_new_message: boolean;
 }
 
 export interface CommandMedia {
