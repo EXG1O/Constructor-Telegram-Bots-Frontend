@@ -9,9 +9,9 @@ import Block, { BlockProps } from 'components/ui/Block';
 import cn from 'utils/cn';
 
 export interface Settings {
-  is_reply_to_user_message: boolean;
-  is_delete_user_message: boolean;
-  is_send_as_new_message: boolean;
+  reply_to_user_message: boolean;
+  delete_user_message: boolean;
+  send_as_new_message: boolean;
 }
 
 export interface SettingsBlockFormValues {
@@ -21,9 +21,9 @@ export interface SettingsBlockFormValues {
 export interface SettingsBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 export const defaultSettings: Settings = {
-  is_reply_to_user_message: false,
-  is_delete_user_message: false,
-  is_send_as_new_message: false,
+  reply_to_user_message: false,
+  delete_user_message: false,
+  send_as_new_message: true,
 };
 export const defaultSettingsBlockFormValues: SettingsBlockFormValues = {
   settings: defaultSettings,
@@ -45,17 +45,17 @@ function SettingsBlock({ className, ...props }: SettingsBlockProps): ReactElemen
       </Block.Title>
       <FormCheckFeedback
         type='switch'
-        name='settings.is_reply_to_user_message'
+        name='settings.reply_to_user_message'
         label={t('replyToUserMessageSwitch')}
       />
       <FormCheckFeedback
         type='switch'
-        name='settings.is_delete_user_message'
+        name='settings.delete_user_message'
         label={t('deleteUserMessageSwitch')}
       />
       <FormCheckFeedback
         type='switch'
-        name='settings.is_send_as_new_message'
+        name='settings.send_as_new_message'
         label={t('sendAsNewMessageSwitch')}
       />
     </Block>
