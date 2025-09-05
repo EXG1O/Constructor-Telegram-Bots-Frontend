@@ -73,7 +73,7 @@ function UserVariables({ className, ...props }: UserVariablesProps): ReactElemen
                 <span className='flex-auto overflow-x-auto scrollbar-thin'>
                   {variable.name}
                 </span>
-                <SelectButton variable={variable.name} />
+                <SelectButton variable={`USER.${variable.name}`} />
               </List.Item>
             ))
           ) : (

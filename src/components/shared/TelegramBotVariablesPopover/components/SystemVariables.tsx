@@ -24,7 +24,7 @@ function SystemVariables({ className, ...props }: SystemVariablesProps): ReactEl
           {telegramBotSystemVariables[type].map((variable) => (
             <List.Item key={variable} className='flex gap-1'>
               <span className='flex-auto'>{variable}</span>
-              <SelectButton variable={variable} />
+              <SelectButton variable={`SYSTEM.${variable}`} />
             </List.Item>
           ))}
         </ul>
