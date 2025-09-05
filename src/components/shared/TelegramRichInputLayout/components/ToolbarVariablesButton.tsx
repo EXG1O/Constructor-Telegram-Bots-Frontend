@@ -1,5 +1,4 @@
 import React, { forwardRef } from 'react';
-import { Variable } from 'lucide-react';
 import { Range } from 'quill';
 
 import TelegramBotVariablesPopover from 'components/shared/TelegramBotVariablesPopover';
@@ -37,7 +36,7 @@ const ToolbarVariablesButton = forwardRef<
     <TelegramBotVariablesPopover onSelect={handleSelect}>
       <TelegramBotVariablesPopover.Trigger asChild>
         <ToolbarButton {...props} ref={ref} format='variables'>
-          <Variable />
+          <TelegramBotVariablesPopover.Trigger.Icon />
         </ToolbarButton>
       </TelegramBotVariablesPopover.Trigger>
     </TelegramBotVariablesPopover>

@@ -5,6 +5,7 @@ import Popover, { PopoverProps } from 'components/ui/Popover';
 import { PopoverBodyProps } from 'components/ui/Popover/components/PopoverBody';
 
 import Loading from './components/Loading';
+import TriggerIcon from './components/TriggerIcon';
 import TypeSelect, { Type } from './components/TypeSelect';
 import TelegramBotVariablesPopoverContext, {
   TelegramBotVariablesPopoverContextProps,
@@ -72,4 +73,6 @@ const TelegramBotVariablesPopover = forwardRef<
 );
 TelegramBotVariablesPopover.displayName = 'TelegramBotVariablesPopover';
 
-export default Object.assign(TelegramBotVariablesPopover, { Trigger: Popover.Trigger });
+export default Object.assign(TelegramBotVariablesPopover, {
+  Trigger: Object.assign(Popover.Trigger, { Icon: TriggerIcon }),
+});
