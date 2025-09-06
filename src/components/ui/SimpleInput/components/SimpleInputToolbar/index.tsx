@@ -15,9 +15,9 @@ export const codeInputToolbarVariants = cva(
   {
     variants: {
       size: {
-        sm: ['gap-4.5', 'px-2.5', 'py-1'],
+        sm: ['gap-4', 'px-2', 'py-1'],
         md: ['gap-5.5', 'px-3', 'py-1.5'],
-        lg: ['gap-6.5', 'px-3.5', 'py-2'],
+        lg: ['gap-7', 'px-4', 'py-2'],
       },
     },
     defaultVariants: {
