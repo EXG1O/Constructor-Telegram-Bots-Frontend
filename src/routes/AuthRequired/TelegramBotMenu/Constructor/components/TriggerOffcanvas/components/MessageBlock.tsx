@@ -1,15 +1,21 @@
-import React, { ReactElement } from 'react';
+import React, { lazy, ReactElement, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import FormRichInputFeedback from 'components/shared/FormRichInputFeedback';
-import TelegramRichInputLayout, {
-  FORMATS,
-} from 'components/shared/TelegramRichInputLayout';
+import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import Block, { BlockProps } from 'components/ui/Block';
+import SimpleInput from 'components/ui/SimpleInput';
+import Spinner from 'components/ui/Spinner';
 
 import cn from 'utils/cn';
+
+const ToolbarVariablesButton = lazy(
+  () =>
+    import(
+      'components/shared/TelegramSimpleInputLayout/components/ToolbarVariablesButton'
+    ),
+);
 
 export interface Message {
   text: string;
@@ -40,16 +46,21 @@ function MessageBlock({ className, ...props }: MessageBlockProps): ReactElement 
       <Block.Title>
         <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
-      <div>
-        <FormRichInputFeedback
-          name='message.text'
-          height='220px'
-          formats={FORMATS}
-          placeholder={t('messageEditorPlaceholder')}
-        >
-          <TelegramRichInputLayout toolbarVariables />
-        </FormRichInputFeedback>
-      </div>
+      <FormSimpleInputFeedback
+        name='message.text'
+        placeholder={t('messageEditorPlaceholder')}
+      >
+        <SimpleInput.Container>
+          <SimpleInput.Toolbar className='justify-end'>
+            <Suspense fallback={<Spinner size='3xs' />}>
+              <ToolbarVariablesButton />
+            </Suspense>
+          </SimpleInput.Toolbar>
+          <SimpleInput.Editor asChild>
+            <textarea rows={8} className='resize-none' />
+          </SimpleInput.Editor>
+        </SimpleInput.Container>
+      </FormSimpleInputFeedback>
     </Block>
   );
 }
