@@ -25,6 +25,7 @@ function SimpleInputStoreProvider({
     const stateProps: typeof props = {
       size: state.size,
       invalid: state.invalid,
+      autoFocus: state.autoFocus,
       value: state.value,
       placeholder: state.placeholder,
       onChange: state.onChange,
