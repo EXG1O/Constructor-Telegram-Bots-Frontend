@@ -1,6 +1,8 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
 
 import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
+import TelegramSimpleInputLayout from 'components/shared/TelegramSimpleInputLayout';
+import { SelectProps } from 'components/ui/Select';
 
 import NextPartOperatorSelect, {
   defaultNextPartOperator,
@@ -32,13 +34,19 @@ export const defaultPart: Part = {
   next_part_operator: defaultNextPartOperator,
 };
 
+const selectContainerProps: SelectProps['containerProps'] = { className: 'mt-5.75' };
+
 function PartItem({ index, className, ...props }: PartItemProps): ReactElement {
   return (
-    <div {...props} className={cn('flex', 'gap-1', className)}>
-      <FormSimpleInputFeedback size='sm' name={`parts[${index}].first_value`} />
-      <OperatorSelect index={index} />
-      <FormSimpleInputFeedback size='sm' name={`parts[${index}].second_value`} />
-      <NextPartOperatorSelect index={index} />
+    <div {...props} className={cn('flex', 'w-full', 'gap-1', className)}>
+      <FormSimpleInputFeedback size='sm' name={`parts[${index}].first_value`}>
+        <TelegramSimpleInputLayout toolbarVariables />
+      </FormSimpleInputFeedback>
+      <OperatorSelect index={index} containerProps={selectContainerProps} />
+      <FormSimpleInputFeedback size='sm' name={`parts[${index}].second_value`}>
+        <TelegramSimpleInputLayout toolbarVariables />
+      </FormSimpleInputFeedback>
+      <NextPartOperatorSelect index={index} containerProps={selectContainerProps} />
     </div>
   );
 }
