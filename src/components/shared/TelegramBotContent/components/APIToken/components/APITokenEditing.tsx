@@ -1,14 +1,10 @@
-import React, {
-  ChangeEvent,
-  HTMLAttributes,
-  ReactElement,
-  useEffect,
-  useState,
-} from 'react';
+import React, { HTMLAttributes, ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Check, X } from 'lucide-react';
 
-import InputFeedback, { InputFeedbackProps } from 'components/shared/InputFeedback';
+import SimpleInputFeedback, {
+  SimpleInputFeedbackProps,
+} from 'components/shared/SimpleInputFeedback';
 import IconButton from 'components/ui/IconButton';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
@@ -19,7 +15,7 @@ import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
 
 import cn from 'utils/cn';
 
-const inputWrapperProps: InputFeedbackProps['wrapperProps'] = {
+const inputWrapperProps: SimpleInputFeedbackProps['wrapperProps'] = {
   className: 'flex-auto',
 };
 
@@ -42,10 +38,6 @@ function APITokenEditing({ className, ...props }: APITokenEditingProps): ReactEl
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => setValue(telegramBot.api_token), [telegramBot.api_token]);
-
-  function handleInputChange(event: ChangeEvent<HTMLInputElement>): void {
-    setValue(event.target.value);
-  }
 
   async function handleSaveClick(): Promise<void> {
     setLoading(true);
@@ -86,14 +78,14 @@ function APITokenEditing({ className, ...props }: APITokenEditingProps): ReactEl
     >
       {!loading ? (
         <>
-          <InputFeedback
+          <SimpleInputFeedback
             autoFocus
             size='sm'
             value={value}
             error={error ?? undefined}
             wrapperProps={inputWrapperProps}
             placeholder={t('inputPlaceholder')}
-            onChange={handleInputChange}
+            onChange={setValue}
           />
           <div className='flex gap-0.5'>
             <IconButton size='lg' className='text-success' onClick={handleSaveClick}>

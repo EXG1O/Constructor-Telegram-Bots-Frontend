@@ -8,8 +8,9 @@ import { RouteID } from 'routes';
 
 import { Headers } from '..';
 
-import FormInputFeedback from 'components/shared/FormInputFeedback';
+import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import IconButton from 'components/ui/IconButton';
+import SimpleInput from 'components/ui/SimpleInput';
 
 import cn from 'utils/cn';
 
@@ -37,18 +38,24 @@ function HeaderItem({ index, className, ...props }: HeaderItemProps): ReactEleme
   return (
     <div {...props} className={cn('flex', 'w-full', 'gap-1', className)}>
       <div className='inline-flex flex-auto'>
-        <FormInputFeedback
+        <FormSimpleInputFeedback
           size='sm'
           name={`headers[${index}].key`}
           placeholder={t('keyInput.placeholder')}
-          className='relative rounded-e-none focus:z-1'
-        />
-        <FormInputFeedback
+        >
+          <SimpleInput.Container className='relative rounded-e-none focus:z-1'>
+            <SimpleInput.Editor />
+          </SimpleInput.Container>
+        </FormSimpleInputFeedback>
+        <FormSimpleInputFeedback
           size='sm'
           name={`headers[${index}].value`}
           placeholder={t('valueInput.placeholder')}
-          className='relative -ms-px rounded-s-none'
-        />
+        >
+          <SimpleInput.Container className='relative -ms-px rounded-s-none'>
+            <SimpleInput.Editor />
+          </SimpleInput.Container>
+        </FormSimpleInputFeedback>
       </div>
       <IconButton size='sm' className='text-danger' onClick={handleDeleteClick}>
         <Trash2 />

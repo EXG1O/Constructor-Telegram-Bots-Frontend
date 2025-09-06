@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import FormInputFeedback from 'components/shared/FormInputFeedback';
+import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import Block, { BlockProps } from 'components/ui/Block';
+import SimpleInput from 'components/ui/SimpleInput';
 
 import FormToggleSection from '../../FormToggleSection';
 
@@ -46,11 +47,14 @@ function CommandBlock({ className, ...props }: CommandBlockProps): ReactElement 
         <span className='rounded-s-md border border-outline px-3 py-1.5 font-semibold'>
           /
         </span>
-        <FormInputFeedback
+        <FormSimpleInputFeedback
           name='command.command'
           placeholder={t('commandInputPlaceholder')}
-          className='-ms-px flex-auto rounded-s-none'
-        />
+        >
+          <SimpleInput.Container className='-ms-px flex-auto rounded-s-none'>
+            <SimpleInput.Editor />
+          </SimpleInput.Container>
+        </FormSimpleInputFeedback>
       </div>
       <FormToggleSection advanced name='show_command_description' className='w-full'>
         <FormToggleSection.TriggerButton
@@ -59,12 +63,15 @@ function CommandBlock({ className, ...props }: CommandBlockProps): ReactElement 
           closedProps={{ children: t('description.showButton') }}
         />
         <FormToggleSection.Body>
-          <FormInputFeedback
+          <FormSimpleInputFeedback
             size='sm'
             name='command.description'
             placeholder={t('description.inputPlaceholder')}
-            className='rounded-t-none border-t-0'
-          />
+          >
+            <SimpleInput.Container className='rounded-t-none border-t-0'>
+              <SimpleInput.Editor />
+            </SimpleInput.Container>
+          </FormSimpleInputFeedback>
         </FormToggleSection.Body>
       </FormToggleSection>
     </Block>

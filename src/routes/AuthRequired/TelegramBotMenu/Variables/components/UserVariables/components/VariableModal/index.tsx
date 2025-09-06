@@ -5,8 +5,8 @@ import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import FormInputFeedback from 'components/shared/FormInputFeedback';
 import FormRichInputFeedback from 'components/shared/FormRichInputFeedback';
+import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import TelegramRichInputLayout, {
   FORMATS,
 } from 'components/shared/TelegramRichInputLayout';
@@ -84,7 +84,10 @@ function InnerVariableModal(): ReactElement {
         </Modal.Header>
         <Modal.Body asChild>
           <Form id={formId} className='flex flex-col gap-2'>
-            <FormInputFeedback name='name' placeholder={t('nameInput.placeholder')} />
+            <FormSimpleInputFeedback
+              name='name'
+              placeholder={t('nameInput.placeholder')}
+            />
             <FormRichInputFeedback
               name='value'
               height='220px'
@@ -93,7 +96,7 @@ function InnerVariableModal(): ReactElement {
             >
               <TelegramRichInputLayout />
             </FormRichInputFeedback>
-            <FormInputFeedback
+            <FormSimpleInputFeedback
               name='description'
               placeholder={t('descriptionInput.placeholder')}
             />

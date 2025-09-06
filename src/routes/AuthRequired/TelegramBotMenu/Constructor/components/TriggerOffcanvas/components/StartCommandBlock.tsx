@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import FormInputFeedback from 'components/shared/FormInputFeedback';
+import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import Block, { BlockProps } from 'components/ui/Block';
+import SimpleInput from 'components/ui/SimpleInput';
 
 import FormToggleSection from '../../FormToggleSection';
 
@@ -55,12 +56,15 @@ function StartCommandBlock({
           closedProps={{ children: t('payload.showButton') }}
         />
         <FormToggleSection.Body>
-          <FormInputFeedback
+          <FormSimpleInputFeedback
             size='sm'
             name='start_command.payload'
             placeholder={t('payload.inputPlaceholder')}
-            className='rounded-t-none border-t-0'
-          />
+          >
+            <SimpleInput.Container className='rounded-t-none border-t-0'>
+              <SimpleInput.Editor />
+            </SimpleInput.Container>
+          </FormSimpleInputFeedback>
         </FormToggleSection.Body>
       </FormToggleSection>
       <FormToggleSection
@@ -74,12 +78,15 @@ function StartCommandBlock({
           closedProps={{ children: t('description.showButton') }}
         />
         <FormToggleSection.Body>
-          <FormInputFeedback
+          <FormSimpleInputFeedback
             size='sm'
             name='start_command.description'
             placeholder={t('description.inputPlaceholder')}
-            className='rounded-t-none border-t-0'
-          />
+          >
+            <SimpleInput.Container className='rounded-t-none border-t-0'>
+              <SimpleInput.Editor />
+            </SimpleInput.Container>
+          </FormSimpleInputFeedback>
         </FormToggleSection.Body>
       </FormToggleSection>
     </Block>

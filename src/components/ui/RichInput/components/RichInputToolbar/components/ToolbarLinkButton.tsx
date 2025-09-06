@@ -1,11 +1,11 @@
-import React, { ChangeEvent, forwardRef, useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { Check, ExternalLink, Link, SquarePen, Trash2, X } from 'lucide-react';
 import Quill from 'quill';
 
 import IconButton from 'components/ui/IconButton';
-import Input from 'components/ui/Input';
 import Popover from 'components/ui/Popover';
+import SimpleInput from 'components/ui/SimpleInput';
 
 import ToolbarButton, { ToolbarButtonProps } from './ToolbarButton';
 
@@ -52,10 +52,6 @@ const ToolbarLinkButton = forwardRef<HTMLButtonElement, ToolbarLinkButtonProps>(
       setShow(!show);
     }
 
-    function handleInputChange(event: ChangeEvent<HTMLInputElement>): void {
-      setValue(event.target.value);
-    }
-
     function handleConfirmClick(): void {
       const quill = getQuill();
 
@@ -95,7 +91,7 @@ const ToolbarLinkButton = forwardRef<HTMLButtonElement, ToolbarLinkButtonProps>(
           <Slot className='flex gap-1.5'>
             {mode == 'edit' ? (
               <div>
-                <Input size='sm' autoFocus value={value} onChange={handleInputChange} />
+                <SimpleInput size='sm' autoFocus value={value} onChange={setValue} />
                 <div className='flex gap-0.5'>
                   <IconButton className='text-success' onClick={handleConfirmClick}>
                     <Check />

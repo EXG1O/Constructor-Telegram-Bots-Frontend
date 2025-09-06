@@ -1,23 +1,18 @@
-import React, {
-  ChangeEvent,
-  forwardRef,
-  HTMLAttributes,
-  useEffect,
-  useState,
-} from 'react';
+import React, { forwardRef, HTMLAttributes, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cva } from 'class-variance-authority';
 import { Search, X } from 'lucide-react';
 
 import Button from 'components/ui/Button';
 import IconButton, { IconButtonProps } from 'components/ui/IconButton';
-import Input, { InputProps } from 'components/ui/Input';
+import SimpleInput, {
+  DEFAULT_SIZE,
+  SimpleInputProps,
+  Size,
+} from 'components/ui/SimpleInput';
+import { SimpleInputEditorProps } from 'components/ui/SimpleInput/components/SimpleInputEditor';
 
 import cn from 'utils/cn';
-
-type Size = 'sm' | 'md' | 'lg';
-
-const DEFAULT_SIZE: Size = 'sm';
 
 const containerVariants = cva(['group', 'inline-flex'], {
   variants: {
@@ -48,7 +43,7 @@ const labelVariants = cva(
   },
 );
 
-const inputVariants = cva(['rounded-l-none', '-ms-px'], {
+const inputEditorVariants = cva([], {
   variants: {
     size: {
       sm: ['pr-6'],
@@ -93,25 +88,25 @@ const visibilityButtonVariants = cva(
   },
 );
 
+export interface SearchInputProps
+  extends Omit<SimpleInputProps, 'invalid' | 'children'>,
+    Omit<SimpleInputEditorProps, 'size'> {
+  containerProps?: HTMLAttributes<HTMLDivElement>;
+  onSearch?: (value: string) => void;
+  onCancel?: () => void;
+}
+
 const ICON_BUTTON_SIZE_MAP: Record<Size, NonNullable<IconButtonProps['size']>> = {
   sm: 'xs',
   md: 'sm',
   lg: 'md',
 };
 
-export interface SearchInputProps extends Omit<InputProps, 'size'> {
-  size?: Size;
-  containerProps?: HTMLAttributes<HTMLDivElement>;
-  onSearch?: (value: string) => void;
-  onCancel?: () => void;
-}
-
 const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   (
     {
       size = DEFAULT_SIZE,
       containerProps,
-      defaultValue,
       value: externalValue,
       className,
       onSearch,
@@ -123,18 +118,15 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   ) => {
     const { t } = useTranslation('components', { keyPrefix: 'search' });
 
-    const [value, setValue] = useState<string>(defaultValue?.toString() ?? '');
+    const [value, setValue] = useState<string>('');
     const [searchDone, setSearchDone] = useState<boolean>(false);
     const [visible, setVisible] = useState<boolean>(false);
 
     const active = Boolean(value) || searchDone;
 
     useEffect(() => {
-      const nextValue: string = externalValue?.toString() ?? '';
-
-      if (nextValue) {
-        setValue(nextValue);
-      }
+      if (!externalValue) return;
+      setValue(externalValue);
     }, [externalValue]);
     useEffect(() => {
       if (active) {
@@ -145,9 +137,9 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       }
     }, [active]);
 
-    function handleChange(event: ChangeEvent<HTMLInputElement>): void {
-      setValue(event.target.value);
-      onChange?.(event);
+    function handleChange(nextValue: string): void {
+      setValue(nextValue);
+      onChange?.(nextValue);
     }
 
     function handleSearch(): void {
@@ -173,15 +165,20 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
           <div className={cn(labelVariants({ size }))}>
             <Search />
           </div>
-          <Input
-            {...props}
-            ref={ref}
+          <SimpleInput
             size={size}
             value={value}
             placeholder={t('inputPlaceholder')}
-            className={cn(inputVariants({ size, className }))}
             onChange={handleChange}
-          />
+          >
+            <SimpleInput.Container className='-ms-px rounded-l-none'>
+              <SimpleInput.Editor
+                {...props}
+                ref={ref}
+                className={cn(inputEditorVariants({ size, className }))}
+              />
+            </SimpleInput.Container>
+          </SimpleInput>
           <IconButton
             size={ICON_BUTTON_SIZE_MAP[size]}
             className={cn(
