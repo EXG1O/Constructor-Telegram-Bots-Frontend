@@ -1,4 +1,4 @@
-import React, { SelectHTMLAttributes } from 'react';
+import React, { HTMLAttributes, SelectHTMLAttributes } from 'react';
 import { forwardRef } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, VariantProps } from 'class-variance-authority';
@@ -59,14 +59,18 @@ export interface SelectProps
   extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size'>,
     VariantProps<typeof selectVariants> {
   asChild?: boolean;
+  containerProps?: HTMLAttributes<HTMLDivElement>;
 }
 
 const Select = forwardRef<HTMLSelectElement, SelectProps>(
-  ({ asChild, size, invalid, className, ...props }, ref) => {
+  ({ asChild, size, invalid, className, containerProps, ...props }, ref) => {
     const Component = asChild ? Slot : 'select';
 
     return (
-      <div className='relative w-full'>
+      <div
+        {...containerProps}
+        className={cn('relative', 'w-full', containerProps?.className)}
+      >
         <Component
           {...props}
           ref={ref}
