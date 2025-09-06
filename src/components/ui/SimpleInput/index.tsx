@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 
 import SimpleInputContainer from './components/SimpleInputContainer';
 import SimpleInputEditor from './components/SimpleInputEditor';
@@ -9,7 +9,10 @@ import SimpleInputStoreProvider, {
 
 export type Size = 'sm' | 'md' | 'lg';
 
-export interface SimpleInputProps extends SimpleInputStoreProviderProps {}
+export interface SimpleInputProps
+  extends Omit<SimpleInputStoreProviderProps, 'children'> {
+  children?: ReactNode;
+}
 
 export const DEFAULT_SIZE: Size = 'md';
 
