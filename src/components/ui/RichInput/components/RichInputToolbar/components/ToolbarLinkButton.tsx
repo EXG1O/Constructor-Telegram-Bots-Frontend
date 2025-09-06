@@ -91,12 +91,7 @@ const ToolbarLinkButton = forwardRef<HTMLButtonElement, ToolbarLinkButtonProps>(
           <Slot className='flex gap-1.5'>
             {mode == 'edit' ? (
               <div>
-                <SimpleInput
-                  size='sm'
-                  autoFocus
-                  value={value}
-                  onChange={setValue}
-                />
+                <SimpleInput size='sm' autoFocus value={value} onChange={setValue} />
                 <div className='flex gap-0.5'>
                   <IconButton className='text-success' onClick={handleConfirmClick}>
                     <Check />
