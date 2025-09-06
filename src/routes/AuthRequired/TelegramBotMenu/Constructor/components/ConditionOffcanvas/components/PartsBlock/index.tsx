@@ -8,8 +8,6 @@ import Block, { BlockProps } from 'components/ui/Block';
 
 import PartItem, { defaultPart, Part } from './components/PartItem';
 
-import VariablesInfoText from '../../../VariablesInfoText';
-
 import cn from 'utils/cn';
 
 export type Parts = Part[];
@@ -45,7 +43,6 @@ function PartsBlock({ className, ...props }: PartsBlockProps): ReactElement {
         {parts.map((_, index) => (
           <PartItem key={index} index={index} />
         ))}
-        <VariablesInfoText />
       </div>
     </Block>
   );
