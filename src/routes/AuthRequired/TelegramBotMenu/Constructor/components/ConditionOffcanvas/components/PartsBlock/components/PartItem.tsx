@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
 
-import FormInputFeedback from 'components/shared/FormInputFeedback';
+import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 
 import NextPartOperatorSelect, {
   defaultNextPartOperator,
@@ -35,9 +35,9 @@ export const defaultPart: Part = {
 function PartItem({ index, className, ...props }: PartItemProps): ReactElement {
   return (
     <div {...props} className={cn('flex', 'gap-1', className)}>
-      <FormInputFeedback size='sm' name={`parts[${index}].first_value`} />
+      <FormSimpleInputFeedback size='sm' name={`parts[${index}].first_value`} />
       <OperatorSelect index={index} />
-      <FormInputFeedback size='sm' name={`parts[${index}].second_value`} />
+      <FormSimpleInputFeedback size='sm' name={`parts[${index}].second_value`} />
       <NextPartOperatorSelect index={index} />
     </div>
   );

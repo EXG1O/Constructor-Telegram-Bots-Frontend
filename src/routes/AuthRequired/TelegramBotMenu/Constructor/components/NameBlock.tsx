@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import FormInputFeedback from 'components/shared/FormInputFeedback';
+import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import Block, { BlockProps } from 'components/ui/Block';
 
 import cn from 'utils/cn';
@@ -35,7 +35,7 @@ function NameBlock({ className, ...props }: NameBlockProps): ReactElement {
       <Block.Title>
         <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
-      <FormInputFeedback name='name' placeholder={t('inputPlaceholder')} />
+      <FormSimpleInputFeedback name='name' placeholder={t('inputPlaceholder')} />
     </Block>
   );
 }

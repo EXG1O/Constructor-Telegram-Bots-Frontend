@@ -5,7 +5,7 @@ import { Form, Formik, FormikHelpers } from 'formik';
 import { RouteID } from 'routes';
 
 import FormCheckFeedback from 'components/shared/FormCheckFeedback';
-import FormInputFeedback from 'components/shared/FormInputFeedback';
+import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import Button from 'components/ui/Button';
 import Modal, { ModalProps } from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
@@ -81,7 +81,7 @@ function TelegramBotAdditionModal({
             </Modal.Header>
             <Modal.Body asChild>
               <Form id={formId} className='flex flex-col gap-2'>
-                <FormInputFeedback
+                <FormSimpleInputFeedback
                   name='api_token'
                   placeholder={t('apiTokenInputPlaceholder')}
                 />

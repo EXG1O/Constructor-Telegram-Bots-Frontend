@@ -1,9 +1,11 @@
-import React, { ChangeEvent, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import InputFeedback, { InputFeedbackProps } from 'components/shared/InputFeedback';
+import SimpleInputFeedback, {
+  SimpleInputFeedbackProps,
+} from 'components/shared/SimpleInputFeedback';
 
 import { useCommandOffcanvasStore } from '../../../../../store';
 
@@ -11,7 +13,7 @@ export type Text = string;
 
 export interface TextInputProps
   extends Omit<
-    InputFeedbackProps,
+    SimpleInputFeedbackProps,
     'size' | 'value' | 'error' | 'placeholder' | 'children' | 'onChange'
   > {}
 
@@ -30,18 +32,14 @@ function TextInput(props: TextInputProps): ReactElement {
     (state) => state.keyboardButtonBlock.errors.text,
   );
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>): void {
-    setText(event.target.value);
-  }
-
   return (
-    <InputFeedback
+    <SimpleInputFeedback
       {...props}
       size='sm'
       value={text}
       error={error}
       placeholder={t('placeholder')}
-      onChange={handleChange}
+      onChange={setText}
     />
   );
 }

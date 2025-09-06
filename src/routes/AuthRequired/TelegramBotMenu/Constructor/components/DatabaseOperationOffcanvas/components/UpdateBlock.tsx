@@ -5,7 +5,7 @@ import { RouteID } from 'routes';
 
 import FormCheckFeedback from 'components/shared/FormCheckFeedback';
 import FormCodeInputFeedback from 'components/shared/FormCodeInputFeedback';
-import FormInputFeedback from 'components/shared/FormInputFeedback';
+import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import TelegramCodeInputLayout from 'components/shared/TelegramCodeInputLayout';
 import Block, { BlockProps } from 'components/ui/Block';
 
@@ -55,11 +55,11 @@ function UpdateBlock({ className, ...props }: UpdateBlockProps): ReactElement {
         name='update_operation.overwrite'
         label={t('overwriteSwitch.label')}
       />
-      <FormInputFeedback
+      <FormSimpleInputFeedback
         name='update_operation.lookup_field_name'
         placeholder={t('lookupFieldNameInput.placeholder')}
       />
-      <FormInputFeedback
+      <FormSimpleInputFeedback
         name='update_operation.lookup_field_value'
         placeholder={t('lookupFieldValueInput.placeholder')}
       />

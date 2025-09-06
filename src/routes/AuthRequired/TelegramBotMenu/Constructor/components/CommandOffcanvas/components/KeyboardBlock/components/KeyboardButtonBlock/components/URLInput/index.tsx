@@ -1,14 +1,15 @@
-import React, { ChangeEvent, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import InputFeedback, { InputFeedbackProps } from 'components/shared/InputFeedback';
+import SimpleInputFeedback, {
+  SimpleInputFeedbackProps,
+} from 'components/shared/SimpleInputFeedback';
+import SimpleInput from 'components/ui/SimpleInput';
 
 import ToggleInnerSection from './components/ToggleInnerSection';
 import ToggleSection from './components/ToggleSection';
-
-import cn from 'utils/cn';
 
 import { useCommandOffcanvasStore } from '../../../../../../store';
 
@@ -16,13 +17,13 @@ export type URL = string;
 
 export interface URLInputProps
   extends Omit<
-    InputFeedbackProps,
+    SimpleInputFeedbackProps,
     'size' | 'value' | 'error' | 'placeholder' | 'children' | 'onChange'
   > {}
 
 export const defaultURL: URL = '';
 
-function URLInput({ className, ...props }: URLInputProps): ReactElement {
+function URLInput(props: URLInputProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'commandOffcanvas.keyboardBlock.keyboardButtonBlock.urlInput',
   });
@@ -33,20 +34,19 @@ function URLInput({ className, ...props }: URLInputProps): ReactElement {
     (state) => state.keyboardButtonBlock.errors.url,
   );
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>): void {
-    setURL(event.target.value);
-  }
-
   return (
-    <InputFeedback
+    <SimpleInputFeedback
       {...props}
       size='sm'
       value={url}
       error={error}
-      className={cn('border-t-0', 'rounded-t-none', className)}
       placeholder={t('placeholder')}
-      onChange={handleChange}
-    />
+      onChange={setURL}
+    >
+      <SimpleInput.Container className='rounded-t-none border-t-0'>
+        <SimpleInput.Editor />
+      </SimpleInput.Container>
+    </SimpleInputFeedback>
   );
 }
 
