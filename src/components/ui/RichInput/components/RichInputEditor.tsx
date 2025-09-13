@@ -9,7 +9,8 @@ import cn from 'utils/cn';
 export const richInputEditorInnerContentVariants = cva(
   [
     'text-foreground',
-    'whitespace-pre-wrap',
+    'whitespace-break-spaces',
+    'break-word',
     '*:first:mt-0',
     '*:last:mb-0',
     '[&_a]:text-primary',
