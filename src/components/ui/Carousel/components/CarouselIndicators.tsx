@@ -41,7 +41,7 @@ const CarouselIndicators = forwardRef<HTMLDivElement, CarouselIndicatorsProps>(
       api?.scrollTo(nextIndex);
     }
 
-    return (
+    return scrollSnaps.length > 1 ? (
       <div {...props} ref={ref} className={cn('flex', 'justify-center', className)}>
         {children}
         <Pagination
@@ -52,7 +52,7 @@ const CarouselIndicators = forwardRef<HTMLDivElement, CarouselIndicatorsProps>(
           onPageChange={handlePageChange}
         />
       </div>
-    );
+    ) : null;
   },
 );
 CarouselIndicators.displayName = 'CarouselIndicators';
