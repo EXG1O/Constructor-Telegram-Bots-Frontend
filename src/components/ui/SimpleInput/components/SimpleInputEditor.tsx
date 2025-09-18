@@ -39,10 +39,10 @@ const SimpleInputEditor = forwardRef<HTMLInputElement, SimpleInputEditorProps>(
     const size = useSimpleInputStore((state) => state.size);
     const value = useSimpleInputStore((state) => state.value);
     const placeholder = useSimpleInputStore((state) => state.placeholder);
-    const onChange = useSimpleInputStore((state) => state.onChange);
+    const setValue = useSimpleInputStore((state) => state.setValue);
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
-      onChange?.(event.target.value);
+      setValue(event.target.value);
     }
 
     return (

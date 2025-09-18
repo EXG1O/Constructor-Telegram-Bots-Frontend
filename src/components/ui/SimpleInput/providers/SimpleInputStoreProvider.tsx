@@ -1,40 +1,46 @@
-import React, { ReactElement, ReactNode, useEffect, useMemo } from 'react';
-import isEqual from 'lodash/isEqual';
-
-import { DEFAULT_SIZE } from '..';
+import React, {
+  memo,
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
+import { useStore } from 'zustand';
 
 import StoreContext from '../contexts/SimpleInputStoreContext';
 
-import { createStore, State, StateProps } from '../store';
+import { createStore, StateProps } from '../store';
 
 export interface SimpleInputStoreProviderProps extends StateProps {
   children: ReactNode;
 }
 
 function SimpleInputStoreProvider({
+  value,
   children,
   ...props
 }: SimpleInputStoreProviderProps): ReactElement {
-  props.size ??= DEFAULT_SIZE;
-  props.invalid ??= false;
+  const storeJustCreated = useRef<boolean>(true);
 
-  const store = useMemo(() => createStore(props), []);
+  const store = useMemo(() => {
+    storeJustCreated.current = false;
+    return createStore(props);
+  }, []);
+
+  const setValue = useStore(store, (state) => state.setValue);
 
   useEffect(() => {
-    const state: State = store.getState();
-    const stateProps: typeof props = {
-      size: state.size,
-      invalid: state.invalid,
-      autoFocus: state.autoFocus,
-      value: state.value,
-      placeholder: state.placeholder,
-      onChange: state.onChange,
-    };
-    if (isEqual(props, stateProps)) return;
+    if (storeJustCreated) return;
     store.setState(props);
   }, [props]);
+  useEffect(() => {
+    const state = store.getState();
+    if (value === state.value) return;
+    setValue(value as string);
+  }, [value]);
 
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
 }
 
-export default SimpleInputStoreProvider;
+export default memo(SimpleInputStoreProvider);
