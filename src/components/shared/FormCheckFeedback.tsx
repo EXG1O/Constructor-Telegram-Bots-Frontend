@@ -27,7 +27,7 @@ const FormCheckFeedback = forwardRef<HTMLInputElement, FormCheckFeedbackProps>(
     }
 
     return (
-      <FastField name={name}>
+      <FastField name={name} type='checkbox'>
         {({ field, meta, form }: FastFieldProps) => (
           <CheckFeedback
             {...props}
