@@ -450,10 +450,7 @@ function Constructor(): ReactElement {
         onAdd={handleDatabaseOperationChange}
         onSave={handleDatabaseOperationChange}
       />
-      <div
-        ref={handleRef}
-        className='h-full min-w-[600px] overflow-hidden rounded-lg bg-light'
-      >
+      <div ref={handleRef} className='size-full overflow-hidden rounded-lg bg-light'>
         <ReactFlow
           fitView
           minZoom={0.4}
