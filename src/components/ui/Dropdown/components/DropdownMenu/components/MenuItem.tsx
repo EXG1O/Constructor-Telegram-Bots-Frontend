@@ -26,6 +26,7 @@ const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
           'select-none',
           'transition',
           'hover:bg-gray-200',
+          'data-highlighted:bg-gray-200',
           '[&_svg]:shrink-0',
           '[&_svg]:size-3.5',
           className,
