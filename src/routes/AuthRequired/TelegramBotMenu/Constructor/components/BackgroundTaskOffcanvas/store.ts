@@ -3,7 +3,7 @@ import { create } from 'zustand';
 export interface StateParams {
   taskID: number | null;
 
-  type: 'add' | 'edit';
+  action: 'add' | 'edit';
   show: boolean;
   loading: boolean;
 }
@@ -20,14 +20,14 @@ export type State = StateParams & StateActions;
 export const useBackgroundTaskOffcanvasStore = create<State>()((set) => ({
   taskID: null,
 
-  type: 'add',
+  action: 'add',
   show: false,
   loading: false,
 
   showOffcanvas: (taskID) =>
     set({
       taskID,
-      type: taskID ? 'edit' : 'add',
+      action: taskID ? 'edit' : 'add',
       show: true,
       loading: Boolean(taskID),
     }),

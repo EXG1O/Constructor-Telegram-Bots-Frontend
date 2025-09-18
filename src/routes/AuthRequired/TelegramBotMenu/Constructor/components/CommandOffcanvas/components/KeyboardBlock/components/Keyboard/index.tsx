@@ -1,11 +1,12 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { useField } from 'formik';
+import { FastField, FastFieldProps, FieldInputProps, FormikProps } from 'formik';
 import { produce } from 'immer';
 
 import { KeyboardRow } from './components/DraggableKeyboardRow';
 import DroppableKeyboardRows from './components/DroppableKeyboardRows';
 
+import { FormValues } from '../../../..';
 import { useCommandOffcanvasStore } from '../../../../store';
 
 export type { KeyboardButton } from './components/DraggableKeyboardButton';
@@ -14,12 +15,16 @@ export type { KeyboardRow } from './components/DraggableKeyboardRow';
 export interface KeyboardProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
 
-function Keyboard(props: KeyboardProps): ReactElement | null {
-  const [{ value: rows }, _meta, { setValue: setRows }] =
-    useField<KeyboardRow[]>('keyboard.rows');
-
-  function handleDragEnd({ source, destination, type }: DropResult): void {
+function Keyboard(props: KeyboardProps): ReactElement {
+  function handleDragEnd(
+    form: FormikProps<FormValues>,
+    field: FieldInputProps<KeyboardRow[]>,
+    { source, destination, type }: DropResult,
+  ): void {
     if (!destination) return;
+
+    const rows = field.value;
+    const setRows = (newRows: KeyboardRow[]) => form.setFieldValue(field.name, newRows);
 
     if (type === 'ROW') {
       setRows(
@@ -85,13 +90,21 @@ function Keyboard(props: KeyboardProps): ReactElement | null {
     }
   }
 
-  return rows.length ? (
-    <div {...props}>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <DroppableKeyboardRows />
-      </DragDropContext>
-    </div>
-  ) : null;
+  return (
+    <FastField name='keyboard.rows'>
+      {({ field, form }: FastFieldProps) => {
+        const rows: KeyboardRow[] = field.value;
+
+        return rows.length ? (
+          <div {...props}>
+            <DragDropContext onDragEnd={(result) => handleDragEnd(form, field, result)}>
+              <DroppableKeyboardRows />
+            </DragDropContext>
+          </div>
+        ) : null;
+      }}
+    </FastField>
+  );
 }
 
 export default Keyboard;

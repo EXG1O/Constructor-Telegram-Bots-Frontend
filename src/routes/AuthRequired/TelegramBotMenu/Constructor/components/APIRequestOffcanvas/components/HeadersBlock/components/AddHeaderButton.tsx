@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useField } from 'formik';
+import { FastField, FastFieldProps, FieldInputProps, FormikProps } from 'formik';
 
 import { RouteID } from 'routes';
 
@@ -22,23 +22,29 @@ function AddHeaderButton({
     keyPrefix: 'apiRequestOffcanvas.headersBlock.addHeaderButton',
   });
 
-  const [{ value: headers }, _meta, { setValue }] = useField<Headers>('headers');
-
-  function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
+  function handleClick(
+    form: FormikProps<any>,
+    field: FieldInputProps<Headers>,
+    event: React.MouseEvent<HTMLButtonElement>,
+  ): void {
+    form.setFieldValue(field.name, [...field.value, { key: '', value: '' }]);
     onClick?.(event);
-    setValue([...headers, { key: '', value: '' }]);
   }
 
   return (
-    <Button
-      {...props}
-      size='sm'
-      variant='dark'
-      className={cn('w-full', className)}
-      onClick={handleClick}
-    >
-      {t('text')}
-    </Button>
+    <FastField name='headers'>
+      {({ field, form }: FastFieldProps) => (
+        <Button
+          {...props}
+          size='sm'
+          variant='dark'
+          className={cn('w-full', className)}
+          onClick={(event) => handleClick(form, field, event)}
+        >
+          {t('text')}
+        </Button>
+      )}
+    </FastField>
   );
 }
 

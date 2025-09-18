@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useField } from 'formik';
+import { FastField, FastFieldProps, FieldInputProps, FormikProps } from 'formik';
 import { produce } from 'immer';
 
 import { RouteID } from 'routes';
@@ -8,6 +8,8 @@ import { RouteID } from 'routes';
 import Button, { ButtonProps } from 'components/ui/Button';
 
 import { KeyboardRow } from './Keyboard';
+
+import { FormValues } from '../../..';
 
 export interface AddKeyboardRowButtonProps
   extends Omit<ButtonProps, 'size' | 'variant' | 'children'> {}
@@ -20,12 +22,14 @@ function AddKeyboardRowButton({
     keyPrefix: 'commandOffcanvas.keyboardBlock.addRowButton',
   });
 
-  const [{ value: rows }, _meta, { setValue }] =
-    useField<KeyboardRow[]>('keyboard.rows');
-
-  function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
-    setValue(
-      produce(rows, (draft) => {
+  function handleClick(
+    form: FormikProps<FormValues>,
+    field: FieldInputProps<KeyboardRow[]>,
+    event: React.MouseEvent<HTMLButtonElement>,
+  ): void {
+    form.setFieldValue(
+      field.name,
+      produce(field.value, (draft) => {
         draft.push({ draggableId: crypto.randomUUID(), buttons: [] });
       }),
     );
@@ -33,9 +37,18 @@ function AddKeyboardRowButton({
   }
 
   return (
-    <Button {...props} size='sm' variant='dark' onClick={handleClick}>
-      {t('text')}
-    </Button>
+    <FastField name='keyboard.rows'>
+      {({ field, form }: FastFieldProps) => (
+        <Button
+          {...props}
+          size='sm'
+          variant='dark'
+          onClick={(event) => handleClick(form, field, event)}
+        >
+          {t('text')}
+        </Button>
+      )}
+    </FastField>
   );
 }
 

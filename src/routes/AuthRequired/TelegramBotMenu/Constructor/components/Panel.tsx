@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { memo, ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Panel as RFPanel, PanelProps as RFPanelProps } from '@xyflow/react';
 
@@ -17,8 +17,8 @@ import { useTriggerOffcanvasStore } from './TriggerOffcanvas/store';
 
 import cn from 'utils/cn';
 
-const BasePanel = RFPanel;
-BasePanel.displayName = 'BasePanel';
+const PrimitivePanel = RFPanel;
+PrimitivePanel.displayName = 'PrimitivePanel';
 
 export interface PanelProps extends Omit<RFPanelProps, 'position' | 'children'> {}
 
@@ -73,7 +73,7 @@ function Panel({ className, ...props }: PanelProps): ReactElement {
   }
 
   return (
-    <BasePanel
+    <PrimitivePanel
       {...props}
       position='top-right'
       className={cn('rounded-sm', 'shadow-sm', 'overflow-hidden', className)}
@@ -125,8 +125,8 @@ function Panel({ className, ...props }: PanelProps): ReactElement {
           </div>
         </Collapsible.Body>
       </Collapsible>
-    </BasePanel>
+    </PrimitivePanel>
   );
 }
 
-export default Panel;
+export default memo(Panel);

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { useField } from 'formik';
+import { FastField, FastFieldProps, FormikProps } from 'formik';
 
 import CodeInputFeedback, {
   CodeInputFeedbackProps,
@@ -7,7 +7,7 @@ import CodeInputFeedback, {
 import { Editor } from 'components/ui/CodeInput';
 
 export interface FormCodeInputFeedbackProps
-  extends Omit<CodeInputFeedbackProps, 'error'> {
+  extends Omit<CodeInputFeedbackProps, 'value' | 'error'> {
   name: string;
 }
 
@@ -16,20 +16,22 @@ function FormCodeInputFeedback({
   onChange,
   ...props
 }: FormCodeInputFeedbackProps): ReactElement {
-  const [field, meta, { setValue }] = useField<(typeof props)['value']>(name);
-
-  function handleChange(editor: Editor, value: string): void {
-    setValue(value);
+  function handleChange(form: FormikProps<any>, editor: Editor, value: string): void {
+    form.setFieldValue(name, value);
     onChange?.(editor, value);
   }
 
   return (
-    <CodeInputFeedback
-      {...props}
-      value={field.value}
-      error={meta.error}
-      onChange={handleChange}
-    />
+    <FastField name={name}>
+      {({ field, meta, form }: FastFieldProps) => (
+        <CodeInputFeedback
+          {...props}
+          value={field.value}
+          error={meta.error}
+          onChange={(editor, value) => handleChange(form, editor, value)}
+        />
+      )}
+    </FastField>
   );
 }
 

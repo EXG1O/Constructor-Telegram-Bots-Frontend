@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { useField } from 'formik';
+import { FastField, FastFieldProps, FormikProps } from 'formik';
 
 import SimpleInputFeedback, {
   SimpleInputFeedbackProps,
@@ -15,20 +15,22 @@ function FormSimpleInputFeedback({
   onChange,
   ...props
 }: FormSimpleInputFeedbackProps): ReactElement {
-  const [field, meta, { setValue }] = useField(name);
-
-  function handleChange(value: string): void {
-    setValue(value);
+  function handleChange(form: FormikProps<any>, value: string): void {
+    form.setFieldValue(name, value);
     onChange?.(value);
   }
 
   return (
-    <SimpleInputFeedback
-      {...props}
-      value={field.value}
-      error={meta.error}
-      onChange={handleChange}
-    />
+    <FastField name={name}>
+      {({ field, meta, form }: FastFieldProps) => (
+        <SimpleInputFeedback
+          {...props}
+          value={field.value}
+          error={meta.error}
+          onChange={(value) => handleChange(form, value)}
+        />
+      )}
+    </FastField>
   );
 }
 

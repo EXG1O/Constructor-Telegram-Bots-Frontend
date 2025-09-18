@@ -1,10 +1,16 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
-import { NodeToolbar as BaseNodeToolbar } from '@xyflow/react';
+import React, { FC, forwardRef, HTMLAttributes } from 'react';
+import {
+  NodeToolbar as FRNodeToolbar,
+  NodeToolbarProps as FRToolbarProps,
+} from '@xyflow/react';
 import { SquarePen, Trash2 } from 'lucide-react';
 
 import IconButton from 'components/ui/IconButton';
 
 import cn from 'utils/cn';
+
+const PrimitiveNodeToolbar: FC<FRToolbarProps> = FRNodeToolbar;
+PrimitiveNodeToolbar.displayName = 'PrimitiveNodeToolbar';
 
 export interface NodeToolbarProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
@@ -16,7 +22,7 @@ export interface NodeToolbarProps
 const NodeToolbar = forwardRef<HTMLDivElement, NodeToolbarProps>(
   ({ title, className, onEdit, onDelete, ...props }, ref) => {
     return (
-      <BaseNodeToolbar isVisible offset={8}>
+      <PrimitiveNodeToolbar isVisible offset={8}>
         <div
           {...props}
           ref={ref}
@@ -32,7 +38,7 @@ const NodeToolbar = forwardRef<HTMLDivElement, NodeToolbarProps>(
             <Trash2 />
           </IconButton>
         </div>
-      </BaseNodeToolbar>
+      </PrimitiveNodeToolbar>
     );
   },
 );

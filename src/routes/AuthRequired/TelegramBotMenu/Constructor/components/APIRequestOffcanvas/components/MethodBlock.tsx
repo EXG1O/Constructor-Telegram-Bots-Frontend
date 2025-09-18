@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useField } from 'formik';
 
 import { RouteID } from 'routes';
 
+import FormTabs from 'components/shared/FormTabs';
 import Block, { BlockProps } from 'components/ui/Block';
 import Tabs from 'components/ui/Tabs';
 
@@ -31,12 +31,6 @@ function MethodBlock({ className, ...props }: MethodBlockProps): ReactElement {
     keyPrefix: 'apiRequestOffcanvas.methodBlock',
   });
 
-  const [{ value }, _meta, { setValue }] = useField<Method>('method');
-
-  function handleChange(value: string): void {
-    setValue(value as Method);
-  }
-
   return (
     <Block
       {...props}
@@ -46,13 +40,13 @@ function MethodBlock({ className, ...props }: MethodBlockProps): ReactElement {
       <Block.Title>
         <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
-      <Tabs size='sm' value={value} onChange={handleChange}>
+      <FormTabs name='method' size='sm'>
         {methods.map((method, index) => (
           <Tabs.Button key={index} value={method}>
             {method.toUpperCase()}
           </Tabs.Button>
         ))}
-      </Tabs>
+      </FormTabs>
     </Block>
   );
 }

@@ -1,15 +1,15 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useField } from 'formik';
 
 import { RouteID } from 'routes';
 
-import Tabs, { TabsProps } from 'components/ui/Tabs';
+import FormTabs, { FormTabsProps } from 'components/shared/FormTabs';
+import Tabs from 'components/ui/Tabs';
 
 export type Type = 'default' | 'inline' | 'payment';
 
 export interface KeyboardTypeButtonGroupProps
-  extends Omit<TabsProps, 'size' | 'value' | 'children'> {}
+  extends Omit<FormTabsProps, 'name' | 'size' | 'children'> {}
 
 // const types: Type[] = ['default', 'inline', 'payment'];
 const types: Type[] = ['default', 'inline'];
@@ -24,21 +24,14 @@ function KeyboardTypes({
     keyPrefix: 'commandOffcanvas.keyboardBlock.types',
   });
 
-  const [{ value }, _meta, { setValue }] = useField<Type>('keyboard.type');
-
-  function handleChange(value: string): void {
-    setValue(value as Type);
-    onChange?.(value);
-  }
-
   return (
-    <Tabs {...props} size='sm' value={value} onChange={handleChange}>
+    <FormTabs {...props} name='keyboard.type' size='sm'>
       {types.map((type, index) => (
         <Tabs.Button key={index} value={type}>
           {t(type)}
         </Tabs.Button>
       ))}
-    </Tabs>
+    </FormTabs>
   );
 }
 

@@ -1,6 +1,6 @@
-import React, { LiHTMLAttributes, ReactElement } from 'react';
+import React, { LiHTMLAttributes, memo, ReactElement } from 'react';
 import { Draggable, DraggableProps } from 'react-beautiful-dnd';
-import { useField } from 'formik';
+import { FastField, FastFieldProps, FormikProps } from 'formik';
 import { produce } from 'immer';
 import { LayoutGrid, Trash2 } from 'lucide-react';
 
@@ -10,6 +10,8 @@ import { KeyboardButton } from './DraggableKeyboardButton';
 import DroppableKeyboardButtons from './DroppableKeyboardButtons';
 
 import cn from 'utils/cn';
+
+import { FormValues } from '../../../../..';
 
 export interface KeyboardRow {
   draggableId: string;
@@ -33,55 +35,68 @@ function DraggableKeyboardRow({
   className,
   ...props
 }: DraggableKeyboardRowProps): ReactElement {
-  const [{ value: rows }, _meta, { setValue: setRows }] =
-    useField<KeyboardRow[]>('keyboard.rows');
-  const [{ value: row }] = useField<KeyboardRow>(`keyboard.rows[${rowIndex}]`);
-
-  function handleDeleteClick(): void {
-    setRows(
-      produce(rows, (draft) => {
+  function handleDeleteClick(form: FormikProps<FormValues>): void {
+    const field = form.getFieldProps<KeyboardRow[]>('keyboard.rows');
+    form.setFieldValue(
+      field.name,
+      produce(field.value, (draft) => {
         draft.splice(rowIndex, 1);
       }),
     );
   }
 
   return (
-    <Draggable
-      draggableId={row.draggableId}
-      index={rowIndex}
-      isDragDisabled={isDragDisabled}
-      disableInteractiveElementBlocking={disableInteractiveElementBlocking}
-      shouldRespectForcePress={shouldRespectForcePress}
-    >
-      {({ innerRef, draggableProps, dragHandleProps }) => (
-        <li
-          {...props}
-          {...draggableProps}
-          {...dragHandleProps}
-          ref={innerRef}
-          className={cn(
-            'flex',
-            'items-center',
-            'h-9',
-            'bg-light-accent',
-            'text-light-foreground',
-            'rounded-sm',
-            'p-1',
-            'gap-1',
-            className,
-          )}
-        >
-          <IconButton size='sm' className='cursor-grab'>
-            <LayoutGrid />
-          </IconButton>
-          <DroppableKeyboardButtons rowIndex={rowIndex} className='h-full flex-auto' />
-          <IconButton size='sm' className='text-danger' onClick={handleDeleteClick}>
-            <Trash2 />
-          </IconButton>
-        </li>
-      )}
-    </Draggable>
+    <FastField name={`keyboard.rows[${rowIndex}]`}>
+      {({ field, form }: FastFieldProps) => {
+        const row: KeyboardRow = field.value;
+
+        return (
+          <Draggable
+            draggableId={row.draggableId}
+            index={rowIndex}
+            isDragDisabled={isDragDisabled}
+            disableInteractiveElementBlocking={disableInteractiveElementBlocking}
+            shouldRespectForcePress={shouldRespectForcePress}
+          >
+            {({ innerRef, draggableProps, dragHandleProps }) => (
+              <li
+                {...props}
+                {...draggableProps}
+                {...dragHandleProps}
+                ref={innerRef}
+                className={cn(
+                  'flex',
+                  'items-center',
+                  'h-9',
+                  'bg-light-accent',
+                  'text-light-foreground',
+                  'rounded-sm',
+                  'p-1',
+                  'gap-1',
+                  className,
+                )}
+              >
+                <IconButton size='sm' className='cursor-grab'>
+                  <LayoutGrid />
+                </IconButton>
+                <DroppableKeyboardButtons
+                  rowIndex={rowIndex}
+                  className='h-full flex-auto'
+                />
+                <IconButton
+                  size='sm'
+                  className='text-danger'
+                  onClick={() => handleDeleteClick(form)}
+                >
+                  <Trash2 />
+                </IconButton>
+              </li>
+            )}
+          </Draggable>
+        );
+      }}
+    </FastField>
   );
 }
 
-export default DraggableKeyboardRow;
+export default memo(DraggableKeyboardRow);

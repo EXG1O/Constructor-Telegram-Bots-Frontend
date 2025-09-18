@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import Container from 'components/ui/Container';
 import IconButton from 'components/ui/IconButton';
@@ -32,4 +32,4 @@ function Footer(): ReactElement {
   );
 }
 
-export default Footer;
+export default memo(Footer);

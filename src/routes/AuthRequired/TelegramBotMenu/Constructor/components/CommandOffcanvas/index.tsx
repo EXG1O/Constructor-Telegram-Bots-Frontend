@@ -1,48 +1,35 @@
-import React, { ReactElement, useEffect, useId } from 'react';
+import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import Button from 'components/ui/Button';
-import Offcanvas, { OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import DocumentsBlock, {
-  defaultDocuments,
+import {
   defaultDocumentsBlockFormValues,
-  Document,
   DocumentsBlockFormValues,
 } from './components/DocumentsBlock';
-import ImagesBlock, {
-  defaultImages,
+import {
   defaultImagesBlockFormValues,
-  Image,
   ImagesBlockFormValues,
 } from './components/ImagesBlock';
-import KeyboardBlock, {
-  defaultKeyboard,
+import {
   defaultKeyboardBlockFormValues,
   KeyboardBlockFormValues,
 } from './components/KeyboardBlock';
-import { KeyboardRow } from './components/KeyboardBlock/components/Keyboard';
-import MessageBlock, {
+import {
   defaultMessageBlockFormValues,
   MessageBlockFormValues,
 } from './components/MessageBlock';
-import SettingsBlock, {
+import OffcanvasInner, { OffcanvasInnerProps } from './components/OffcanvasInner';
+import {
   defaultSettingsBlockFormValues,
   SettingsBlockFormValues,
 } from './components/SettingsBlock';
-import TelegramBotStorage from './components/TelegramBotStorage';
 
-import AddonButtonGroup from '../AddonButtonGroup';
-import FormToggleSection from '../FormToggleSection';
-import NameBlock, {
-  defaultNameBlockFormValues,
-  NameBlockFormValues,
-} from '../NameBlock';
+import { defaultNameBlockFormValues, NameBlockFormValues } from '../NameBlock';
 
 import { CommandAPI, CommandsAPI } from 'api/telegram-bots/command';
 import { Command, Data } from 'api/telegram-bots/command/types';
@@ -61,9 +48,6 @@ export interface FormValues
   show_keyboard_block: boolean;
 }
 
-interface InnerCommandOffcanvasProps
-  extends Omit<OffcanvasProps, 'show' | 'loading' | 'children' | 'onHide'> {}
-
 export const defaultFormValues: FormValues = {
   ...defaultNameBlockFormValues,
   ...defaultSettingsBlockFormValues,
@@ -77,160 +61,7 @@ export const defaultFormValues: FormValues = {
   show_keyboard_block: false,
 };
 
-function InnerCommandOffcanvas({
-  onHidden,
-  ...props
-}: InnerCommandOffcanvasProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor);
-
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
-
-  const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
-
-  const commandID = useCommandOffcanvasStore((state) => state.commandID);
-  const type = useCommandOffcanvasStore((state) => state.type);
-  const show = useCommandOffcanvasStore((state) => state.show);
-  const loading = useCommandOffcanvasStore((state) => state.loading);
-  const hideOffcanvas = useCommandOffcanvasStore((state) => state.hideOffcanvas);
-  const setLoading = useCommandOffcanvasStore((state) => state.setLoading);
-
-  const formID = useId();
-
-  useEffect(() => {
-    if (!commandID) return;
-    (async () => {
-      const response = await CommandAPI.get(telegramBot.id, commandID);
-
-      if (!response.ok) {
-        hideOffcanvas();
-        createMessageToast({
-          message: t('commandOffcanvas.messages.getCommand.error'),
-          level: 'error',
-        });
-        return;
-      }
-
-      const { id, images, documents, keyboard, ...command } = response.json;
-
-      setValues({
-        ...command,
-
-        images: images.length
-          ? images
-              .sort((a, b) => a.position - b.position)
-              .map<Image>(({ id, name, size, url, from_url }) => ({
-                id,
-                key: crypto.randomUUID(),
-                file: null,
-                name: name ?? from_url!,
-                size: size ?? 0,
-                url: url ?? from_url!,
-                from_url,
-              }))
-          : defaultImages,
-        documents: documents.length
-          ? documents
-              .sort((a, b) => a.position - b.position)
-              .map<Document>(({ id, name, size, url, from_url }) => ({
-                id,
-                key: crypto.randomUUID(),
-                file: null,
-                name: name ?? from_url!,
-                size: size ?? 0,
-                url: url ?? from_url!,
-                from_url,
-              }))
-          : defaultDocuments,
-        keyboard: keyboard
-          ? {
-              type: keyboard.type,
-              rows: keyboard.buttons.reduce<KeyboardRow[]>(
-                (rows, { id, row: rowIndex, position: buttonIndex, text, url }) => {
-                  if (!rows[rowIndex]) {
-                    rows[rowIndex] = {
-                      draggableId: crypto.randomUUID(),
-                      buttons: [],
-                    };
-                  }
-
-                  rows[rowIndex].buttons[buttonIndex] = {
-                    id,
-                    draggableId: crypto.randomUUID(),
-                    text,
-                    url,
-                  };
-
-                  return rows;
-                },
-                [],
-              ),
-            }
-          : defaultKeyboard,
-
-        show_images_block: Boolean(images.length),
-        show_documents_block: Boolean(documents.length),
-        show_keyboard_block: Boolean(keyboard),
-      });
-      setLoading(false);
-    })();
-  }, [commandID]);
-
-  function handleHidden(): void {
-    resetForm();
-    onHidden?.();
-  }
-
-  return (
-    <Offcanvas
-      {...props}
-      show={show}
-      loading={isSubmitting || loading}
-      onHide={hideOffcanvas}
-      onHidden={handleHidden}
-    >
-      <Offcanvas.Header closeButton>
-        <Offcanvas.Title>
-          {t('commandOffcanvas.title', { context: type })}
-        </Offcanvas.Title>
-      </Offcanvas.Header>
-      <Offcanvas.Body asChild>
-        <Form id={formID}>
-          <NameBlock className='mb-3' />
-          <SettingsBlock className='mb-3' />
-          <FormToggleSection name='show_images_block'>
-            <ImagesBlock className='mb-3' />
-          </FormToggleSection>
-          <FormToggleSection name='show_documents_block'>
-            <DocumentsBlock className='mb-3' />
-          </FormToggleSection>
-          <MessageBlock className='mb-3' />
-          <FormToggleSection name='show_keyboard_block'>
-            <KeyboardBlock className='mb-3' />
-          </FormToggleSection>
-        </Form>
-      </Offcanvas.Body>
-      <Offcanvas.Footer className='flex flex-col gap-2'>
-        <TelegramBotStorage />
-        <AddonButtonGroup>
-          <AddonButtonGroup.Button name='show_images_block'>
-            {t('commandOffcanvas.imagesBlock.title')}
-          </AddonButtonGroup.Button>
-          <AddonButtonGroup.Button name='show_documents_block'>
-            {t('commandOffcanvas.documentsBlock.title')}
-          </AddonButtonGroup.Button>
-          <AddonButtonGroup.Button name='show_keyboard_block'>
-            {t('commandOffcanvas.keyboardBlock.title')}
-          </AddonButtonGroup.Button>
-        </AddonButtonGroup>
-        <Button form={formID} type='submit' variant='success' className='w-full'>
-          {t('commandOffcanvas.actionButton', { context: type })}
-        </Button>
-      </Offcanvas.Footer>
-    </Offcanvas>
-  );
-}
-
-export interface CommandOffcanvasProps extends InnerCommandOffcanvasProps {
+export interface CommandOffcanvasProps extends OffcanvasInnerProps {
   onAdd?: (command: Command) => void;
   onSave?: (command: Command) => void;
 }
@@ -243,7 +74,7 @@ function CommandOffcanvas({ onAdd, onSave }: CommandOffcanvasProps): ReactElemen
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
   const commandID = useCommandOffcanvasStore((state) => state.commandID);
-  const type = useCommandOffcanvasStore((state) => state.type);
+  const action = useCommandOffcanvasStore((state) => state.action);
   const hideOffcanvas = useCommandOffcanvasStore((state) => state.hideOffcanvas);
 
   async function handleSubmit(
@@ -304,7 +135,7 @@ function CommandOffcanvas({ onAdd, onSave }: CommandOffcanvasProps): ReactElemen
         : null,
     };
 
-    const response = await (type === 'add'
+    const response = await (action === 'add'
       ? CommandsAPI.create(telegramBot.id, data)
       : CommandAPI.update(telegramBot.id, commandID!, data));
 
@@ -314,16 +145,16 @@ function CommandOffcanvas({ onAdd, onSave }: CommandOffcanvasProps): ReactElemen
         setFieldError(error.attr, error.detail);
       }
       createMessageToast({
-        message: t(`messages.${type}Command.error`),
+        message: t(`messages.${action}Command.error`),
         level: 'error',
       });
       return;
     }
 
-    (type === 'add' ? onAdd : onSave)?.(response.json);
+    (action === 'add' ? onAdd : onSave)?.(response.json);
     hideOffcanvas();
     createMessageToast({
-      message: t(`messages.${type}Command.success`),
+      message: t(`messages.${action}Command.success`),
       level: 'success',
     });
   }
@@ -335,9 +166,9 @@ function CommandOffcanvas({ onAdd, onSave }: CommandOffcanvasProps): ReactElemen
       validateOnChange={false}
       onSubmit={handleSubmit}
     >
-      <InnerCommandOffcanvas />
+      <OffcanvasInner />
     </Formik>
   );
 }
 
-export default CommandOffcanvas;
+export default memo(CommandOffcanvas);

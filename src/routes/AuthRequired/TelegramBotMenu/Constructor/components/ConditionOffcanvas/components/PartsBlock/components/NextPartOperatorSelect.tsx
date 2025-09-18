@@ -1,6 +1,6 @@
 import React, { ChangeEvent, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useField } from 'formik';
+import { FastField, FastFieldProps, FormikProps } from 'formik';
 import { produce } from 'immer';
 
 import { RouteID } from 'routes';
@@ -11,10 +11,12 @@ import SelectFeedback, { SelectFeedbackProps } from 'components/shared/SelectFee
 
 import { defaultPart, Part } from './PartItem';
 
+import { FormValues } from '../../..';
+
 export type NextPartOperator = '&&' | '||' | 'null';
 
 export interface NextPartOperatorSelectProps
-  extends Omit<SelectFeedbackProps, 'size' | 'children'> {
+  extends Omit<SelectFeedbackProps, 'size' | 'value' | 'error' | 'children'> {
   index: number;
 }
 
@@ -30,15 +32,14 @@ function NextPartOperatorSelect({
     keyPrefix: 'conditionOffcanvas.partsBlock.nextPartOperatorSelect',
   });
 
-  const [{ value: parts }, _meta, { setValue: setParts }] = useField<Parts>('parts');
-  const [field, meta] = useField<NextPartOperator>({
-    name: `parts[${index}].next_part_operator`,
-    ...props,
-  });
-
-  function handleChange(event: ChangeEvent<HTMLSelectElement>) {
-    setParts(
-      produce(parts, (draft) => {
+  function handleChange(
+    form: FormikProps<FormValues>,
+    event: ChangeEvent<HTMLSelectElement>,
+  ) {
+    const field = form.getFieldProps<Parts>('parts');
+    form.setFieldValue(
+      field.name,
+      produce(field.value, (draft) => {
         const part: Part = draft[index];
         const operator = event.target.value as NextPartOperator;
 
@@ -54,20 +55,24 @@ function NextPartOperatorSelect({
   }
 
   return (
-    <SelectFeedback
-      {...props}
-      {...field}
-      size='sm'
-      error={meta.error}
-      onChange={handleChange}
-    >
-      <option value='null'>-</option>
-      {nextPartOperators.map((nextPartOperator, index) => (
-        <option key={index} value={nextPartOperator}>
-          {t(nextPartOperator)}
-        </option>
-      ))}
-    </SelectFeedback>
+    <FastField name={`parts[${index}].next_part_operator`}>
+      {({ field, meta, form }: FastFieldProps) => (
+        <SelectFeedback
+          {...props}
+          size='sm'
+          value={field.value}
+          error={meta.error}
+          onChange={(event) => handleChange(form, event)}
+        >
+          <option value='null'>-</option>
+          {nextPartOperators.map((nextPartOperator, index) => (
+            <option key={index} value={nextPartOperator}>
+              {t(nextPartOperator)}
+            </option>
+          ))}
+        </SelectFeedback>
+      )}
+    </FastField>
   );
 }
 

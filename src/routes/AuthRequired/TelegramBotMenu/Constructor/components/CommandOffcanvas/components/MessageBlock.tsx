@@ -40,16 +40,14 @@ function MessageBlock({ className, ...props }: MessageBlockProps): ReactElement 
       <Block.Title>
         <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
-      <div>
-        <FormRichInputFeedback
-          name='message.text'
-          height='220px'
-          formats={FORMATS}
-          placeholder={t('messageEditorPlaceholder')}
-        >
-          <TelegramRichInputLayout toolbarVariables />
-        </FormRichInputFeedback>
-      </div>
+      <FormRichInputFeedback
+        name='message.text'
+        height='220px'
+        formats={FORMATS}
+        placeholder={t('messageEditorPlaceholder')}
+      >
+        <TelegramRichInputLayout toolbarVariables />
+      </FormRichInputFeedback>
     </Block>
   );
 }

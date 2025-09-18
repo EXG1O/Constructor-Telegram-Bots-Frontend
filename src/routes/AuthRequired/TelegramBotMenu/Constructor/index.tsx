@@ -1,7 +1,7 @@
-import React, { CSSProperties, ReactElement } from 'react';
+import React, { CSSProperties, ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  addEdge as baseAddEdge,
+  addEdge as RFAddEdge,
   Background,
   BackgroundVariant,
   Connection,
@@ -10,9 +10,14 @@ import {
   Edge,
   FinalConnectionState,
   HandleType,
+  IsValidConnection,
   MarkerType,
   MiniMap,
   Node,
+  OnConnect,
+  OnNodeDrag,
+  OnNodesDelete,
+  OnReconnect,
   ReactFlow,
   useEdgesState,
   useNodesState,
@@ -61,12 +66,15 @@ import cn from 'utils/cn';
 
 import {
   convertDiagramBlocksToEdges,
+  EdgeSourceHandle,
+  EdgeTargetHandle,
   parseEdgeSourceHandle,
   parseEdgeTargetHandle,
 } from './utils/edges';
 import {
   convertDiagramBlockToNode,
   ExistingDiagramBlock,
+  NodeID,
   NodeType,
 } from './utils/nodes';
 import { parseNodeID } from './utils/nodes';
@@ -193,13 +201,12 @@ function Constructor(): ReactElement {
     }
   }
 
-  async function addEdge(
-    edge: Edge | Connection,
-    shouldUpdateEdges: boolean = true,
-  ): Promise<void> {
-    if (edge.source && edge.sourceHandle && edge.target && edge.targetHandle) {
-      const sourceHandle = parseEdgeSourceHandle(edge.sourceHandle);
-      const targetHandle = parseEdgeTargetHandle(edge.targetHandle);
+  const addEdge = useCallback(
+    async (edge: Edge | Connection, shouldUpdateEdges: boolean = true) => {
+      if (!edge.sourceHandle || !edge.targetHandle) return;
+
+      const sourceHandle: EdgeSourceHandle = parseEdgeSourceHandle(edge.sourceHandle);
+      const targetHandle: EdgeTargetHandle = parseEdgeTargetHandle(edge.targetHandle);
 
       const response = await ConnectionsAPI.create(telegramBot.id, {
         ...(sourceHandle.objectType === 'command'
@@ -218,12 +225,12 @@ function Constructor(): ReactElement {
       });
 
       if (!response.ok) {
-        const errors: APIResponse.ErrorDetail[] = response.json.errors;
-
+        for (const error of response.json.errors) {
+          if (error.attr) continue;
+          createMessageToast({ message: error.detail, level: 'error' });
+        }
         createMessageToast({
-          message: errors.length
-            ? errors[0].detail
-            : t('messages.createConnection.error'),
+          message: t('messages.createConnection.error'),
           level: 'error',
         });
         return;
@@ -231,50 +238,56 @@ function Constructor(): ReactElement {
 
       if (shouldUpdateEdges) {
         setEdges((prevEdges) =>
-          baseAddEdge({ ...edge, id: response.json.id.toString() }, prevEdges),
+          RFAddEdge({ ...edge, id: response.json.id.toString() }, prevEdges),
         );
       }
-    }
-  }
+    },
+    [telegramBot],
+  );
 
-  async function deleteEdge(
-    edge: Edge,
-    shouldUpdateEdges: boolean = true,
-  ): Promise<void> {
-    if (!edge.sourceHandle) return;
+  const deleteEdge = useCallback(
+    async (edge: Edge, shouldUpdateEdges: boolean = true) => {
+      const response = await ConnectionAPI.delete(telegramBot.id, parseInt(edge.id));
 
-    const response = await ConnectionAPI.delete(telegramBot.id, parseInt(edge.id));
+      if (!response.ok) {
+        for (const error of response.json.errors) {
+          if (error.attr) continue;
+          createMessageToast({ message: error.detail, level: 'error' });
+        }
+        createMessageToast({
+          message: t('messages.deleteConnection.error'),
+          level: 'error',
+        });
+        return;
+      }
 
-    if (!response.ok) {
-      createMessageToast({
-        message: t('messages.deleteConnection.error'),
-        level: 'error',
-      });
-      return;
-    }
+      if (shouldUpdateEdges) {
+        setEdges((prevEdges) =>
+          prevEdges.filter((prevEdge) => prevEdge.id !== edge.id),
+        );
+      }
+    },
+    [telegramBot],
+  );
 
-    if (shouldUpdateEdges) {
-      setEdges((prevEdges) => prevEdges.filter((prevEdge) => prevEdge.id !== edge.id));
-    }
-  }
+  const handleNodeDragStop = useCallback<OnNodeDrag>(
+    async (_event, _node, nodes) => {
+      await Promise.all(
+        nodes.map((node) => {
+          const nodeID: NodeID = parseNodeID(node.id);
 
-  async function handleNodeDragStop(
-    _event: React.MouseEvent,
-    _node: Node,
-    nodes: Node[],
-  ): Promise<void> {
-    nodes.forEach(async (node) => {
-      const nodeID = parseNodeID(node.id);
-
-      await diagramBlockAPIMap[nodeID.type].update(
-        telegramBot.id,
-        nodeID.id,
-        node.position,
+          return diagramBlockAPIMap[nodeID.type].update(
+            telegramBot.id,
+            nodeID.id,
+            node.position,
+          );
+        }),
       );
-    });
-  }
+    },
+    [telegramBot],
+  );
 
-  function handleNodesDelete(nodes: Node[]): void {
+  const handleNodesDelete = useCallback<OnNodesDelete>((nodes) => {
     const nodeIDs = new Set<string>(nodes.map((node) => node.id));
 
     setEdges((prevEdges) =>
@@ -283,114 +296,139 @@ function Constructor(): ReactElement {
       ),
     );
     setNodes((prevNodes) => prevNodes.filter((node) => !nodeIDs.has(node.id)));
-  }
+  }, []);
 
-  function handleValidConnection(edge: Edge | Connection): boolean {
+  const handleValidConnection = useCallback<IsValidConnection>((edge) => {
     // TODO: The implementation needs to be tested across various scenarios.
     return Boolean(
       edge.sourceHandle && edge.targetHandle && edge.source !== edge.target,
     );
-  }
+  }, []);
 
-  function handleConnect(connection: Connection): void {
-    addEdge(connection);
-  }
+  const handleConnect = useCallback<OnConnect>(
+    (connection: Connection) => addEdge(connection),
+    [addEdge],
+  );
 
-  async function handleReconnect(
-    oldEdge: Edge,
-    newConnection: Connection,
-  ): Promise<void> {
-    await deleteEdge(oldEdge);
-    await addEdge(newConnection);
-  }
+  const handleReconnect = useCallback<OnReconnect>(
+    async (oldEdge, newConnection) => {
+      await deleteEdge(oldEdge);
+      await addEdge(newConnection);
+    },
+    [deleteEdge, addEdge],
+  );
 
-  async function handleReconnectEnd(
-    _event: MouseEvent | TouchEvent,
-    edge: Edge,
-    _handleType: HandleType,
-    connectionState: FinalConnectionState,
-  ): Promise<void> {
-    if (!connectionState.isValid) {
-      await deleteEdge(edge);
-    }
-  }
+  const handleReconnectEnd = useCallback(
+    async (
+      _event: MouseEvent | TouchEvent,
+      edge: Edge,
+      _handleType: HandleType,
+      connectionState: FinalConnectionState,
+    ) => {
+      if (!connectionState.isValid) {
+        await deleteEdge(edge);
+      }
+    },
+    [deleteEdge],
+  );
 
-  async function updateDiagramBlock(
-    type: NodeType,
-    id: number,
-    options: UpdateDiagramBlockOptions,
-  ): Promise<void> {
-    const response = await diagramBlockAPIMap[type].get(telegramBot.id, id);
+  const updateDiagramBlock = useCallback(
+    async (type: NodeType, id: number, options: UpdateDiagramBlockOptions) => {
+      const response = await diagramBlockAPIMap[type].get(telegramBot.id, id);
 
-    if (!response.ok) {
-      createMessageToast({
-        message: options.messages.getDiagramBlock.error,
-        level: 'error',
-      });
-      return;
-    }
-
-    const updatedNode: Node = convertDiagramBlockToNode(type, response.json);
-
-    setNodes((currentNodes) => {
-      const newNodes: Node[] = [...currentNodes];
-      const updatedNodeIndex = newNodes.findIndex((node) => node.id === updatedNode.id);
-
-      if (updatedNodeIndex !== -1) {
-        newNodes[updatedNodeIndex] = updatedNode;
-      } else {
-        newNodes.push(updatedNode);
+      if (!response.ok) {
+        for (const error of response.json.errors) {
+          if (error.attr) continue;
+          createMessageToast({ message: error.detail, level: 'error' });
+        }
+        createMessageToast({
+          message: options.messages.getDiagramBlock.error,
+          level: 'error',
+        });
+        return;
       }
 
-      return newNodes;
-    });
-  }
+      const updatedNode: Node = convertDiagramBlockToNode(type, response.json);
 
-  async function handleTriggerChange(trigger: Trigger): Promise<void> {
-    await updateDiagramBlock('trigger', trigger.id, {
-      messages: { getDiagramBlock: { error: t('messages.getDiagramTrigger.error') } },
-    });
-  }
+      setNodes((prevNodes) => {
+        const newNodes: Node[] = [...prevNodes];
+        const updatedNodeIndex = newNodes.findIndex(
+          (node) => node.id === updatedNode.id,
+        );
 
-  async function handleCommandChange(command: Command): Promise<void> {
-    await updateDiagramBlock('command', command.id, {
-      messages: { getDiagramBlock: { error: t('messages.getDiagramCommand.error') } },
-    });
-  }
+        if (updatedNodeIndex !== -1) {
+          newNodes[updatedNodeIndex] = updatedNode;
+        } else {
+          newNodes.push(updatedNode);
+        }
 
-  async function handleConditionChange(condition: Condition): Promise<void> {
-    await updateDiagramBlock('condition', condition.id, {
-      messages: { getDiagramBlock: { error: t('messages.getDiagramCondition.error') } },
-    });
-  }
+        return newNodes;
+      });
+    },
+    [telegramBot],
+  );
 
-  async function handleBackgroundTaskChange(
-    backgroundTask: BackgroundTask,
-  ): Promise<void> {
-    await updateDiagramBlock('background_task', backgroundTask.id, {
-      messages: {
-        getDiagramBlock: { error: t('messages.getDiagramBackgroundTask.error') },
-      },
-    });
-  }
+  const handleTriggerChange = useCallback(
+    async (trigger: Trigger) => {
+      await updateDiagramBlock('trigger', trigger.id, {
+        messages: { getDiagramBlock: { error: t('messages.getDiagramTrigger.error') } },
+      });
+    },
+    [updateDiagramBlock],
+  );
 
-  async function handleAPIRequestChange(backgroundTask: APIRequest): Promise<void> {
-    await updateDiagramBlock('api_request', backgroundTask.id, {
-      messages: {
-        getDiagramBlock: { error: t('messages.getDiagramAPIRequest.error') },
-      },
-    });
-  }
+  const handleCommandChange = useCallback(
+    async (command: Command) => {
+      await updateDiagramBlock('command', command.id, {
+        messages: { getDiagramBlock: { error: t('messages.getDiagramCommand.error') } },
+      });
+    },
+    [updateDiagramBlock],
+  );
 
-  async function handleDatabaseOperationChange(
-    operation: DatabaseOperation,
-  ): Promise<void> {
-    await updateDiagramBlock('database_operation', operation.id, {
-      messages: {
-        getDiagramBlock: { error: t('messages.getDiagramDatabaseOperation.error') },
-      },
-    });
-  }
+  const handleConditionChange = useCallback(
+    async (condition: Condition) => {
+      await updateDiagramBlock('condition', condition.id, {
+        messages: {
+          getDiagramBlock: { error: t('messages.getDiagramCondition.error') },
+        },
+      });
+    },
+    [updateDiagramBlock],
+  );
+
+  const handleBackgroundTaskChange = useCallback(
+    async (backgroundTask: BackgroundTask) => {
+      await updateDiagramBlock('background_task', backgroundTask.id, {
+        messages: {
+          getDiagramBlock: { error: t('messages.getDiagramBackgroundTask.error') },
+        },
+      });
+    },
+    [updateDiagramBlock],
+  );
+
+  const handleAPIRequestChange = useCallback(
+    async (backgroundTask: APIRequest) => {
+      await updateDiagramBlock('api_request', backgroundTask.id, {
+        messages: {
+          getDiagramBlock: { error: t('messages.getDiagramAPIRequest.error') },
+        },
+      });
+    },
+    [updateDiagramBlock],
+  );
+
+  const handleDatabaseOperationChange = useCallback(
+    async (operation: DatabaseOperation) => {
+      await updateDiagramBlock('database_operation', operation.id, {
+        messages: {
+          getDiagramBlock: { error: t('messages.getDiagramDatabaseOperation.error') },
+        },
+      });
+    },
+    [updateDiagramBlock],
+  );
 
   return (
     <Page title={t('title')} className='flex-auto'>

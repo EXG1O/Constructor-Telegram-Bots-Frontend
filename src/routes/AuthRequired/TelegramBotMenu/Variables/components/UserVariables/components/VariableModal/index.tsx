@@ -1,18 +1,13 @@
-import React, { ReactElement, useEffect, useId } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import FormRichInputFeedback from 'components/shared/FormRichInputFeedback';
-import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
-import TelegramRichInputLayout, {
-  FORMATS,
-} from 'components/shared/TelegramRichInputLayout';
-import Button from 'components/ui/Button';
-import Modal from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
+
+import ModalInner, { ModalInnerProps } from './components/ModalInner';
 
 import { VariableAPI, VariablesAPI } from 'api/telegram-bots/variable';
 import { Variable } from 'api/telegram-bots/variable/types';
@@ -25,99 +20,14 @@ export interface FormValues {
   description: string;
 }
 
-export const defaultFormValues: FormValues = { name: '', value: '', description: '' };
-
-function InnerVariableModal(): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
-    keyPrefix: 'user.variableModal',
-  });
-
-  const formId = useId();
-
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
-
-  const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
-
-  const variableID = useVariableModalStore((state) => state.variableID);
-  const type = useVariableModalStore((state) => state.type);
-  const show = useVariableModalStore((state) => state.show);
-  const loading = useVariableModalStore((state) => state.loading);
-  const hideModal = useVariableModalStore((state) => state.hideModal);
-  const setLoading = useVariableModalStore((state) => state.setLoading);
-
-  useEffect(() => {
-    if (variableID) {
-      (async () => {
-        const response = await VariableAPI.get(telegramBot.id, variableID);
-
-        if (!response.ok) {
-          hideModal();
-          createMessageToast({
-            message: t('messages.getVariable.error'),
-            level: 'error',
-          });
-          return;
-        }
-
-        const { id, ...variable } = response.json;
-
-        setValues(variable);
-        setLoading(false);
-      })();
-    }
-  }, [variableID]);
-
-  function handleHidden(): void {
-    resetForm();
-  }
-
-  return (
-    <Modal
-      show={show}
-      loading={isSubmitting || loading}
-      onHide={hideModal}
-      onHidden={handleHidden}
-    >
-      <Modal.Content>
-        <Modal.Header closeButton>
-          <Modal.Title>{t('title', { context: type })}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body asChild>
-          <Form id={formId} className='flex flex-col gap-2'>
-            <FormSimpleInputFeedback
-              name='name'
-              placeholder={t('nameInput.placeholder')}
-            />
-            <FormRichInputFeedback
-              name='value'
-              height='220px'
-              formats={FORMATS}
-              placeholder={t('valueInput.placeholder')}
-            >
-              <TelegramRichInputLayout />
-            </FormRichInputFeedback>
-            <FormSimpleInputFeedback
-              name='description'
-              placeholder={t('descriptionInput.placeholder')}
-            />
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button type='submit' form={formId} variant='success' className='w-full'>
-            {t('actionButton', { context: type })}
-          </Button>
-        </Modal.Footer>
-      </Modal.Content>
-    </Modal>
-  );
-}
-
-export interface VariableModalProps {
+export interface VariableModalProps extends ModalInnerProps {
   onAdd?: (variable: Variable) => void;
   onSave?: (variable: Variable) => void;
 }
 
-function VariableModal({ onAdd, onSave }: VariableModalProps): ReactElement {
+export const defaultFormValues: FormValues = { name: '', value: '', description: '' };
+
+function VariableModal({ onAdd, onSave, ...props }: VariableModalProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
     keyPrefix: 'user.variableModal',
   });
@@ -125,7 +35,7 @@ function VariableModal({ onAdd, onSave }: VariableModalProps): ReactElement {
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
   const variableID = useVariableModalStore((state) => state.variableID);
-  const type = useVariableModalStore((state) => state.type);
+  const action = useVariableModalStore((state) => state.action);
   const hideModal = useVariableModalStore((state) => state.hideModal);
 
   async function handleSubmit(
@@ -142,7 +52,7 @@ function VariableModal({ onAdd, onSave }: VariableModalProps): ReactElement {
         setFieldError(error.attr, error.detail);
       }
       createMessageToast({
-        message: t(`messages.${type}Variable.error`),
+        message: t(`messages.${action}Variable.error`),
         level: 'error',
       });
       return;
@@ -151,7 +61,7 @@ function VariableModal({ onAdd, onSave }: VariableModalProps): ReactElement {
     (variableID ? onSave : onAdd)?.(response.json);
     hideModal();
     createMessageToast({
-      message: t(`messages.${type}Variable.success`),
+      message: t(`messages.${action}Variable.success`),
       level: 'success',
     });
   }
@@ -163,7 +73,7 @@ function VariableModal({ onAdd, onSave }: VariableModalProps): ReactElement {
       validateOnChange={false}
       onSubmit={handleSubmit}
     >
-      <InnerVariableModal />
+      <ModalInner {...props} />
     </Formik>
   );
 }

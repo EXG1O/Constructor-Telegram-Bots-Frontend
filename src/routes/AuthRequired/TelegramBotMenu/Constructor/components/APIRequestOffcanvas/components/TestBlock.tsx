@@ -1,9 +1,11 @@
 import React, { ReactElement, useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Slot } from '@radix-ui/react-slot';
-import { useField } from 'formik';
+import { FastField, FastFieldProps, FormikProps } from 'formik';
 
 import { RouteID } from 'routes';
+
+import { FormValues } from '..';
 
 import Block, { BlockProps } from 'components/ui/Block';
 import Button from 'components/ui/Button';
@@ -32,22 +34,19 @@ function TestBlock(props: TestBlockProps): ReactElement {
     keyPrefix: 'apiRequestOffcanvas.testBlock',
   });
 
-  const statusLabelID = useId();
-
-  const [{ value: url }] = useField<URL>('url');
-  const [{ value: method }] = useField<Method>('method');
-  const [{ value: headers }] = useField<Headers>('headers');
-  const [{ value: body }] = useField<Body>('body');
-
   const [result, setResult] = useState<Result | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const statusLabelID = useId();
+
   const open: boolean = loading || Boolean(result);
 
-  async function handleClick(): Promise<void> {
+  async function handleClick(form: FormikProps<FormValues>): Promise<void> {
     setLoading(true);
 
     try {
+      const url = form.getFieldProps<URL>('url').value;
+
       if (!url) {
         createMessageToast({
           message: t('messages.makeTest.error', { context: 'emptyURL' }),
@@ -65,6 +64,10 @@ function TestBlock(props: TestBlockProps): ReactElement {
         });
         return;
       }
+
+      const method = form.getFieldProps<Method>('method').value;
+      const headers = form.getFieldProps<Headers>('headers').value;
+      const body = form.getFieldProps<Body>('body').value;
 
       try {
         const response = await fetch(url, {
@@ -119,9 +122,18 @@ function TestBlock(props: TestBlockProps): ReactElement {
           </Slot>
         </Collapsible.Body>
       </Collapsible>
-      <Button size='sm' variant='dark' className='w-full' onClick={handleClick}>
-        {t('testButton')}
-      </Button>
+      <FastField>
+        {({ form }: FastFieldProps) => (
+          <Button
+            size='sm'
+            variant='dark'
+            className='w-full'
+            onClick={() => handleClick(form)}
+          >
+            {t('testButton')}
+          </Button>
+        )}
+      </FastField>
     </Block>
   );
 }

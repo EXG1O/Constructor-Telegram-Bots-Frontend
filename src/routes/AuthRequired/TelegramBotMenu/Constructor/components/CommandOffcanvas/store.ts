@@ -12,7 +12,7 @@ import {
 export interface StateParams {
   commandID: number | null;
 
-  type: 'add' | 'edit';
+  action: 'add' | 'edit';
   show: boolean;
   loading: boolean;
 }
@@ -32,7 +32,7 @@ export type State = StateParams &
 export const useCommandOffcanvasStore = create<State>((set, get, api) => ({
   commandID: null,
 
-  type: 'add',
+  action: 'add',
   show: false,
   loading: false,
 
@@ -42,7 +42,7 @@ export const useCommandOffcanvasStore = create<State>((set, get, api) => ({
   showOffcanvas: (commandID) =>
     set({
       commandID,
-      type: commandID ? 'edit' : 'add',
+      action: commandID ? 'edit' : 'add',
       show: true,
       loading: Boolean(commandID),
     }),

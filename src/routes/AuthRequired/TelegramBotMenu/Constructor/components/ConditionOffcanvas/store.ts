@@ -3,7 +3,7 @@ import { create } from 'zustand';
 export interface StateParams {
   conditionID: number | null;
 
-  type: 'add' | 'edit';
+  action: 'add' | 'edit';
   show: boolean;
   loading: boolean;
 }
@@ -20,14 +20,14 @@ export type State = StateParams & StateActions;
 export const useConditionOffcanvasStore = create<State>()((set) => ({
   conditionID: null,
 
-  type: 'add',
+  action: 'add',
   show: false,
   loading: false,
 
   showOffcanvas: (conditionID) =>
     set({
       conditionID,
-      type: conditionID ? 'edit' : 'add',
+      action: conditionID ? 'edit' : 'add',
       show: true,
       loading: Boolean(conditionID),
     }),

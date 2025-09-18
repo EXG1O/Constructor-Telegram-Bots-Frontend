@@ -1,23 +1,19 @@
-import React, { ReactElement, useEffect, useId } from 'react';
+import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import Button from 'components/ui/Button';
-import Offcanvas, { OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import IntervalBlock, {
+import {
   defaultIntervalBlockFormValues,
   IntervalBlockFormValues,
 } from './components/IntervalBlock';
+import OffcanvasInner, { OffcanvasInnerProps } from './components/OffcanvasInner';
 
-import NameBlock, {
-  defaultNameBlockFormValues,
-  NameBlockFormValues,
-} from '../NameBlock';
+import { defaultNameBlockFormValues, NameBlockFormValues } from '../NameBlock';
 
 import {
   BackgroundTaskAPI,
@@ -29,89 +25,12 @@ import { useBackgroundTaskOffcanvasStore } from './store';
 
 export interface FormValues extends NameBlockFormValues, IntervalBlockFormValues {}
 
-interface InnerBackgroundTaskOffcanvasProps
-  extends Omit<OffcanvasProps, 'show' | 'loading' | 'children' | 'onHide'> {}
-
 export const defaultFormValues: FormValues = {
   ...defaultNameBlockFormValues,
   ...defaultIntervalBlockFormValues,
 };
 
-function InnerBackgroundTaskOffcanvas({
-  onHidden,
-  ...props
-}: InnerBackgroundTaskOffcanvasProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor);
-
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
-
-  const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
-
-  const taskID = useBackgroundTaskOffcanvasStore((state) => state.taskID);
-  const type = useBackgroundTaskOffcanvasStore((state) => state.type);
-  const show = useBackgroundTaskOffcanvasStore((state) => state.show);
-  const loading = useBackgroundTaskOffcanvasStore((state) => state.loading);
-  const hideOffcanvas = useBackgroundTaskOffcanvasStore((state) => state.hideOffcanvas);
-  const setLoading = useBackgroundTaskOffcanvasStore((state) => state.setLoading);
-
-  const formID = useId();
-
-  useEffect(() => {
-    if (!taskID) return;
-    (async () => {
-      const response = await BackgroundTaskAPI.get(telegramBot.id, taskID);
-
-      if (!response.ok) {
-        hideOffcanvas();
-        createMessageToast({
-          message: t('backgroundTaskOffcanvas.messages.getBackgroundTask.error'),
-          level: 'error',
-        });
-        return;
-      }
-
-      const { id, ...task } = response.json;
-
-      setValues(task);
-      setLoading(false);
-    })();
-  }, [taskID]);
-
-  function handleHidden(): void {
-    resetForm();
-    onHidden?.();
-  }
-
-  return (
-    <Offcanvas
-      {...props}
-      show={show}
-      loading={isSubmitting || loading}
-      onHide={hideOffcanvas}
-      onHidden={handleHidden}
-    >
-      <Offcanvas.Header closeButton>
-        <Offcanvas.Title>
-          {t('backgroundTaskOffcanvas.title', { context: type })}
-        </Offcanvas.Title>
-      </Offcanvas.Header>
-      <Offcanvas.Body asChild>
-        <Form id={formID} className='flex flex-col gap-3'>
-          <NameBlock />
-          <IntervalBlock />
-        </Form>
-      </Offcanvas.Body>
-      <Offcanvas.Footer>
-        <Button form={formID} type='submit' variant='success' className='w-full'>
-          {t('backgroundTaskOffcanvas.actionButton', { context: type })}
-        </Button>
-      </Offcanvas.Footer>
-    </Offcanvas>
-  );
-}
-
-export interface BackgroundTaskOffcanvasProps
-  extends InnerBackgroundTaskOffcanvasProps {
+export interface BackgroundTaskOffcanvasProps extends OffcanvasInnerProps {
   onAdd?: (task: BackgroundTask) => void;
   onSave?: (task: BackgroundTask) => void;
 }
@@ -128,7 +47,7 @@ function BackgroundTaskOffcanvas({
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
   const taskID = useBackgroundTaskOffcanvasStore((state) => state.taskID);
-  const type = useBackgroundTaskOffcanvasStore((state) => state.type);
+  const action = useBackgroundTaskOffcanvasStore((state) => state.action);
   const hideOffcanvas = useBackgroundTaskOffcanvasStore((state) => state.hideOffcanvas);
 
   async function handleSubmit(
@@ -145,7 +64,7 @@ function BackgroundTaskOffcanvas({
         setFieldError(error.attr, error.detail);
       }
       createMessageToast({
-        message: t(`messages.${type}BackgroundTask.error`),
+        message: t(`messages.${action}BackgroundTask.error`),
         level: 'error',
       });
       return;
@@ -154,7 +73,7 @@ function BackgroundTaskOffcanvas({
     (taskID ? onSave : onAdd)?.(response.json);
     hideOffcanvas();
     createMessageToast({
-      message: t(`messages.${type}BackgroundTask.success`),
+      message: t(`messages.${action}BackgroundTask.success`),
       level: 'success',
     });
   }
@@ -166,9 +85,9 @@ function BackgroundTaskOffcanvas({
       validateOnChange={false}
       onSubmit={handleSubmit}
     >
-      <InnerBackgroundTaskOffcanvas {...props} />
+      <OffcanvasInner {...props} />
     </Formik>
   );
 }
 
-export default BackgroundTaskOffcanvas;
+export default memo(BackgroundTaskOffcanvas);

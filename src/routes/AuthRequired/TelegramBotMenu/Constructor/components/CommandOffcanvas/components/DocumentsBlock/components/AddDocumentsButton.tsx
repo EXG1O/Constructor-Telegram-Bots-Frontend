@@ -22,9 +22,9 @@ function AddDocumentsButton(props: AddDocumentsButtonProps): ReactElement {
   const [{ value: documents }, _meta, { setValue: setDocuments }] =
     useField<Documents>('documents');
 
-  const id = useId();
-
   const { remainingStorageSize } = useTelegramBotStorage();
+
+  const id = useId();
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
     if (!event.target.files) return;

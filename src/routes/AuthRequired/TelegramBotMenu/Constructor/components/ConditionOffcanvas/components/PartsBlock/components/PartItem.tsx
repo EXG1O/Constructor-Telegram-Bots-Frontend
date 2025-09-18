@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
+import React, { HTMLAttributes, memo, ReactElement } from 'react';
 
 import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import TelegramSimpleInputLayout from 'components/shared/TelegramSimpleInputLayout';
@@ -51,4 +51,4 @@ function PartItem({ index, className, ...props }: PartItemProps): ReactElement {
   );
 }
 
-export default PartItem;
+export default memo(PartItem);

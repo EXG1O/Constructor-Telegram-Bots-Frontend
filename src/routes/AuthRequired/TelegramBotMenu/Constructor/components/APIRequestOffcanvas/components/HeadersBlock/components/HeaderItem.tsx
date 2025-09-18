@@ -1,6 +1,6 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
+import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useField } from 'formik';
+import { FastField, FastFieldProps, FieldInputProps, FormikProps } from 'formik';
 import { produce } from 'immer';
 import { Trash2 } from 'lucide-react';
 
@@ -24,12 +24,13 @@ function HeaderItem({ index, className, ...props }: HeaderItemProps): ReactEleme
     keyPrefix: 'apiRequestOffcanvas.headersBlock',
   });
 
-  const [{ value: headers }, _meta, { setValue: setHeaders }] =
-    useField<Headers>('headers');
-
-  function handleDeleteClick(): void {
-    setHeaders(
-      produce(headers, (draft) => {
+  function handleDeleteClick(
+    form: FormikProps<any>,
+    field: FieldInputProps<Headers>,
+  ): void {
+    form.setFieldValue(
+      field.name,
+      produce(field.value, (draft) => {
         draft.splice(index, 1);
       }),
     );
@@ -57,11 +58,19 @@ function HeaderItem({ index, className, ...props }: HeaderItemProps): ReactEleme
           </SimpleInput.Container>
         </FormSimpleInputFeedback>
       </div>
-      <IconButton size='sm' className='text-danger' onClick={handleDeleteClick}>
-        <Trash2 />
-      </IconButton>
+      <FastField name='headers'>
+        {({ field, form }: FastFieldProps) => (
+          <IconButton
+            size='sm'
+            className='text-danger'
+            onClick={() => handleDeleteClick(form, field)}
+          >
+            <Trash2 />
+          </IconButton>
+        )}
+      </FastField>
     </div>
   );
 }
 
-export default HeaderItem;
+export default memo(HeaderItem);

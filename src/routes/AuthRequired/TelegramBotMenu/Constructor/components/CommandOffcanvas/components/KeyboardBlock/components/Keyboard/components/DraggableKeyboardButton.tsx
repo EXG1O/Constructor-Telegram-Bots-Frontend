@@ -1,6 +1,6 @@
-import React, { LiHTMLAttributes, ReactElement } from 'react';
+import React, { LiHTMLAttributes, memo, ReactElement } from 'react';
 import { Draggable, DraggableProps } from 'react-beautiful-dnd';
-import { useField } from 'formik';
+import { FastField, FastFieldProps } from 'formik';
 
 import cn from 'utils/cn';
 
@@ -32,10 +32,6 @@ function DraggableKeyboardButton({
   className,
   ...props
 }: DraggableKeyboardButtonProps): ReactElement {
-  const [{ value: button }] = useField<KeyboardButton>(
-    `keyboard.rows[${rowIndex}].buttons[${buttonIndex}]`,
-  );
-
   const select = useCommandOffcanvasStore(
     (state) =>
       state.keyboardButtonBlock.rowIndex === rowIndex &&
@@ -48,37 +44,45 @@ function DraggableKeyboardButton({
     (state) => state.keyboardButtonBlock.hideBlock,
   );
 
-  function handleClick(): void {
+  function handleClick(button: KeyboardButton): void {
     select ? hideEditButtonBlock() : showEditButtonBlock(button, rowIndex, buttonIndex);
   }
 
   return (
-    <Draggable index={buttonIndex} draggableId={button.draggableId}>
-      {({ innerRef, draggableProps, dragHandleProps }) => (
-        <li
-          {...props}
-          {...draggableProps}
-          {...dragHandleProps}
-          ref={innerRef}
-          className={cn(
-            'w-full',
-            'rounded-sm',
-            'text-sm',
-            'text-center',
-            'px-2',
-            'py-1',
-            select
-              ? ['bg-secondary', 'text-secondary-foreground']
-              : ['bg-dark', 'text-dark-foreground'],
-            className,
-          )}
-          onClick={handleClick}
-        >
-          {button.text}
-        </li>
-      )}
-    </Draggable>
+    <FastField name={`keyboard.rows[${rowIndex}].buttons[${buttonIndex}]`}>
+      {({ field }: FastFieldProps) => {
+        const button: KeyboardButton = field.value;
+
+        return (
+          <Draggable index={buttonIndex} draggableId={button.draggableId}>
+            {({ innerRef, draggableProps, dragHandleProps }) => (
+              <li
+                {...props}
+                {...draggableProps}
+                {...dragHandleProps}
+                ref={innerRef}
+                className={cn(
+                  'w-full',
+                  'rounded-sm',
+                  'text-sm',
+                  'text-center',
+                  'px-2',
+                  'py-1',
+                  select
+                    ? ['bg-secondary', 'text-secondary-foreground']
+                    : ['bg-dark', 'text-dark-foreground'],
+                  className,
+                )}
+                onClick={() => handleClick(button)}
+              >
+                {button.text}
+              </li>
+            )}
+          </Draggable>
+        );
+      }}
+    </FastField>
   );
 }
 
-export default DraggableKeyboardButton;
+export default memo(DraggableKeyboardButton);
