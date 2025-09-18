@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode, useEffect, useMemo } from 'react';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 
 import StoreContext from '../contexts/StoreContext';
 
