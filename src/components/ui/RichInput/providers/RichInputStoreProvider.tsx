@@ -1,4 +1,11 @@
-import React, { ReactElement, ReactNode, useEffect, useMemo, useRef } from 'react';
+import React, {
+  memo,
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import { useStore } from 'zustand';
 
 import StoreContext from '../contexts/RichInputStoreContext';
@@ -41,19 +48,19 @@ function RichInputStoreProvider({
     store.setState(props);
   }, [props]);
   useEffect(() => {
-    if (storeJustCreated.current) return;
+    if (readOnly === undefined || storeJustCreated.current) return;
     setReadOnly(Boolean(readOnly));
   }, [readOnly]);
   useEffect(() => {
-    if (storeJustCreated.current) return;
-    setPlaceholder(placeholder ?? '');
+    if (placeholder === undefined || storeJustCreated.current) return;
+    setPlaceholder(placeholder);
   }, [placeholder]);
   useEffect(() => {
-    if (!value || !quill || value === quill.getSemanticHTML()) return;
-    setValue(value);
+    if (!quill || value === quill.getSemanticHTML()) return;
+    setValue(value as string);
   }, [quill, value]);
 
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
 }
 
-export default RichInputStoreProvider;
+export default memo(RichInputStoreProvider);
