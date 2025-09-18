@@ -3,7 +3,7 @@ import { create } from 'zustand';
 export interface StateParams {
   requestID: number | null;
 
-  type: 'add' | 'edit';
+  action: 'add' | 'edit';
   show: boolean;
   loading: boolean;
 }
@@ -20,14 +20,14 @@ export type State = StateParams & StateActions;
 export const useAPIRequestOffcanvasStore = create<State>()((set) => ({
   requestID: null,
 
-  type: 'add',
+  action: 'add',
   show: false,
   loading: false,
 
   showOffcanvas: (requestID) =>
     set({
       requestID,
-      type: requestID ? 'edit' : 'add',
+      action: requestID ? 'edit' : 'add',
       show: true,
       loading: Boolean(requestID),
     }),

@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useField } from 'formik';
+import { FastField, FastFieldProps, FormikProps } from 'formik';
 
 import SelectFeedback, {
   SelectFeedbackProps,
@@ -8,16 +8,36 @@ import SelectFeedback, {
 
 export { selectFeedbackVariants as formSelectFeedbackVariants };
 
-export interface FormSelectFeedbackProps extends Omit<SelectFeedbackProps, 'error'> {
+export interface FormSelectFeedbackProps
+  extends Omit<
+    SelectFeedbackProps,
+    'value' | 'defaultValue' | 'checked' | 'defaultChecked' | 'error'
+  > {
   name: string;
 }
 
 const FormSelectFeedback = forwardRef<HTMLSelectElement, FormSelectFeedbackProps>(
-  ({ size, ...props }, ref) => {
-    const [field, meta] = useField<(typeof props)['value']>(props);
+  ({ name, onChange, ...props }, ref) => {
+    function handleChange(
+      form: FormikProps<any>,
+      event: React.ChangeEvent<HTMLSelectElement>,
+    ): void {
+      form.setFieldValue(name, event.target.value);
+      onChange?.(event);
+    }
 
     return (
-      <SelectFeedback {...props} {...field} ref={ref} size={size} error={meta.error} />
+      <FastField name={name}>
+        {({ field, meta, form }: FastFieldProps) => (
+          <SelectFeedback
+            {...props}
+            ref={ref}
+            value={field.value}
+            error={meta.error}
+            onChange={(event) => handleChange(form, event)}
+          />
+        )}
+      </FastField>
     );
   },
 );

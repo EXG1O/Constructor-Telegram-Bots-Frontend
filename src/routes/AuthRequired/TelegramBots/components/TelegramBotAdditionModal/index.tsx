@@ -1,16 +1,15 @@
-import React, { ReactElement, useId } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Formik, FormikHelpers } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 
-import FormCheckFeedback from 'components/shared/FormCheckFeedback';
-import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
-import Button from 'components/ui/Button';
 import Modal, { ModalProps } from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import useTelegramBots from '../hooks/useTelegramBots';
+import ModalContent from './components/ModalContent';
+
+import useTelegramBots from '../../hooks/useTelegramBots';
 
 import { TelegramBotsAPI } from 'api/telegram-bots/telegram-bot';
 import { Data } from 'api/telegram-bots/telegram-bot/types';
@@ -30,8 +29,6 @@ function TelegramBotAdditionModal({
   const { t } = useTranslation(RouteID.TelegramBots, {
     keyPrefix: 'telegramBotAdditionModal',
   });
-
-  const formId = useId();
 
   const [telegramBots, setTelegramBots] = useTelegramBots();
 
@@ -69,35 +66,8 @@ function TelegramBotAdditionModal({
       onSubmit={handleSubmit}
     >
       {({ isSubmitting, resetForm }) => (
-        <Modal
-          {...props}
-          loading={isSubmitting}
-          onHide={onHide}
-          onHidden={() => resetForm()}
-        >
-          <Modal.Content>
-            <Modal.Header closeButton>
-              <Modal.Title>{t('title')}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body asChild>
-              <Form id={formId} className='flex flex-col gap-2'>
-                <FormSimpleInputFeedback
-                  name='api_token'
-                  placeholder={t('apiTokenInputPlaceholder')}
-                />
-                <FormCheckFeedback
-                  type='switch'
-                  name='is_private'
-                  label={t('privateSwitchLabel')}
-                />
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button type='submit' form={formId} variant='success' className='w-full'>
-                {t('addButton')}
-              </Button>
-            </Modal.Footer>
-          </Modal.Content>
+        <Modal {...props} loading={isSubmitting} onHide={onHide} onHidden={resetForm}>
+          <ModalContent />
         </Modal>
       )}
     </Formik>

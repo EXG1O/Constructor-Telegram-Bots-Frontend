@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes, useMemo } from 'react';
 import { forwardRef } from 'react';
 import {
   Dialog,
@@ -44,6 +44,11 @@ const Offcanvas = forwardRef<HTMLDivElement, OffcanvasProps>(
     },
     ref,
   ) => {
+    const contextValue = useMemo<OffcanvasContextProps>(
+      () => ({ loading: Boolean(loading) }),
+      [loading],
+    );
+
     function handleOpenChange(open: boolean): void {
       (open ? onShow : onHide)?.();
     }
@@ -98,7 +103,7 @@ const Offcanvas = forwardRef<HTMLDivElement, OffcanvasProps>(
             )}
             onAnimationEnd={handleAnimationEnd}
           >
-            <OffcanvasContext.Provider value={{ loading: Boolean(loading) }}>
+            <OffcanvasContext.Provider value={contextValue}>
               {children}
               {loading && (
                 <div className='flex flex-auto items-center justify-center'>

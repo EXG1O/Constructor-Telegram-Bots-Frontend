@@ -1,16 +1,16 @@
-import React, { ReactElement, useId } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Formik, FormikHelpers } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import FormCodeInputFeedback from 'components/shared/FormCodeInputFeedback';
-import Button from 'components/ui/Button';
 import Modal, { ModalProps } from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import useDatabaseRecordsStore from '../hooks/useDatabaseRecordsStore';
+import ModalContent from './components/ModalContent';
+
+import useDatabaseRecordsStore from '../../hooks/useDatabaseRecordsStore';
 
 import { DatabaseRecordsAPI } from 'api/telegram-bots/database-record';
 
@@ -23,7 +23,7 @@ export interface RecordAdditionModalProps
     Required<Pick<ModalProps, 'show' | 'onHide'>> {}
 
 const defaultFormValues: FormValues = {
-  data: JSON.stringify({ key: 'value' }, undefined, 4),
+  data: JSON.stringify({ key: 'value' }, null, 2),
 };
 
 function RecordAdditionModal({
@@ -33,8 +33,6 @@ function RecordAdditionModal({
   const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
     keyPrefix: 'records.recordAdditionModal',
   });
-
-  const formId = useId();
 
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
@@ -90,27 +88,8 @@ function RecordAdditionModal({
       onSubmit={handleSubmit}
     >
       {({ isSubmitting, resetForm }) => (
-        <Modal
-          {...props}
-          loading={isSubmitting}
-          onHide={onHide}
-          onHidden={() => resetForm()}
-        >
-          <Modal.Content>
-            <Modal.Header closeButton>
-              <Modal.Title>{t('title')}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body asChild>
-              <Form id={formId}>
-                <FormCodeInputFeedback language='json' name='data' />
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button form={formId} type='submit' variant='success' className='w-full'>
-                {t('addButton')}
-              </Button>
-            </Modal.Footer>
-          </Modal.Content>
+        <Modal {...props} loading={isSubmitting} onHide={onHide} onHidden={resetForm}>
+          <ModalContent />
         </Modal>
       )}
     </Formik>

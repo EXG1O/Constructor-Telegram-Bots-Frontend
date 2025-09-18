@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { useField } from 'formik';
+import { FastField, FastFieldProps, FormikProps } from 'formik';
 
 import Collapsible, { CollapsibleProps } from 'components/ui/Collapsible';
 
@@ -13,24 +13,41 @@ export interface FormToggleSectionProps extends Omit<CollapsibleProps, 'open'> {
 }
 
 function FormToggleSection({
+  name,
   advanced,
   children,
   getOpen,
+  onOpenChange,
   ...props
 }: FormToggleSectionProps): ReactElement {
-  const [{ value }, _meta, { setValue: setOpen }] = useField<any>(props);
-  const open: boolean = getOpen ? getOpen(value) : Boolean(value);
+  function handleOpenChange(form: FormikProps<any>, value: boolean): void {
+    if (!advanced) return;
+    form.setFieldValue(name, value);
+    onOpenChange?.(value);
+  }
 
   return (
-    <Collapsible {...props} open={open} onOpenChange={advanced ? setOpen : undefined}>
-      {advanced ? (
-        <FormToggleSectionContext.Provider value={{ open }}>
-          {children}
-        </FormToggleSectionContext.Provider>
-      ) : (
-        <Collapsible.Body>{children}</Collapsible.Body>
-      )}
-    </Collapsible>
+    <FastField name={name}>
+      {({ field, form }: FastFieldProps) => {
+        const open: boolean = getOpen ? getOpen(field.value) : Boolean(field.value);
+
+        return (
+          <Collapsible
+            {...props}
+            open={open}
+            onOpenChange={(value) => handleOpenChange(form, value)}
+          >
+            {advanced ? (
+              <FormToggleSectionContext.Provider value={{ open }}>
+                {children}
+              </FormToggleSectionContext.Provider>
+            ) : (
+              <Collapsible.Body>{children}</Collapsible.Body>
+            )}
+          </Collapsible>
+        );
+      }}
+    </FastField>
   );
 }
 

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { useField } from 'formik';
+import { FastField, FastFieldProps, FieldInputProps, FormikProps } from 'formik';
 
 import Button, { ButtonProps } from 'components/ui/Button';
 
@@ -10,20 +10,26 @@ export interface AddonButtonProps
 }
 
 function AddonButton({ name, onClick, ...props }: AddonButtonProps): ReactElement {
-  const [{ value: active }, _meta, { setValue: setActive }] = useField<boolean>(name);
-
-  function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
-    setActive(!active);
+  function handleClick(
+    form: FormikProps<any>,
+    field: FieldInputProps<boolean>,
+    event: React.MouseEvent<HTMLButtonElement>,
+  ): void {
+    form.setFieldValue(name, !field.value);
     onClick?.(event);
   }
 
   return (
-    <Button
-      {...props}
-      size='sm'
-      variant={active ? 'secondary' : 'dark'}
-      onClick={handleClick}
-    />
+    <FastField name={name}>
+      {({ field, form }: FastFieldProps) => (
+        <Button
+          {...props}
+          size='sm'
+          variant={field.value ? 'secondary' : 'dark'}
+          onClick={(event) => handleClick(form, field, event)}
+        />
+      )}
+    </FastField>
   );
 }
 

@@ -1,6 +1,6 @@
-import React, { OlHTMLAttributes, ReactElement } from 'react';
+import React, { memo, OlHTMLAttributes, ReactElement } from 'react';
 import { Droppable, DroppableProps } from 'react-beautiful-dnd';
-import { useField } from 'formik';
+import { FastField, FastFieldProps } from 'formik';
 
 import DraggableKeyboardRow, { KeyboardRow } from './DraggableKeyboardRow';
 
@@ -23,8 +23,6 @@ function DroppableKeyboardRows({
   getContainerForClone,
   ...props
 }: DroppableKeyboardRowsProps): ReactElement {
-  const [{ value: rows }] = useField<KeyboardRow[]>('keyboard.rows');
-
   return (
     <Droppable
       droppableId='all-rows'
@@ -37,19 +35,23 @@ function DroppableKeyboardRows({
       getContainerForClone={getContainerForClone}
     >
       {({ innerRef, droppableProps, placeholder }) => (
-        <ol {...props} {...droppableProps} ref={innerRef}>
-          {rows.map((row, index) => (
-            <DraggableKeyboardRow
-              key={row.draggableId}
-              rowIndex={index}
-              className='mb-1'
-            />
-          ))}
-          {placeholder}
-        </ol>
+        <FastField name='keyboard.rows'>
+          {({ field }: FastFieldProps<KeyboardRow[]>) => (
+            <ol {...props} {...droppableProps} ref={innerRef}>
+              {field.value.map((row, index) => (
+                <DraggableKeyboardRow
+                  key={row.draggableId}
+                  rowIndex={index}
+                  className='mb-1'
+                />
+              ))}
+              {placeholder}
+            </ol>
+          )}
+        </FastField>
       )}
     </Droppable>
   );
 }
 
-export default DroppableKeyboardRows;
+export default memo(DroppableKeyboardRows);

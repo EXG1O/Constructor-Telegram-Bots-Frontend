@@ -14,15 +14,14 @@ import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 
 import reverse from 'utils/reverse';
 
-export interface HeaderTelegramBotDropdownProps
-  extends Omit<DropdownProps, 'children'> {
+export interface TelegramBotDropdownProps extends Omit<DropdownProps, 'children'> {
   telegramBot: TelegramBot;
 }
 
-function HeaderTelegramBotDropdown({
+function TelegramBotDropdown({
   telegramBot,
   ...props
-}: HeaderTelegramBotDropdownProps): ReactElement {
+}: TelegramBotDropdownProps): ReactElement {
   const { t } = useTranslation(RouteID.Root, {
     keyPrefix: 'header.telegramBotDropdown',
   });
@@ -84,4 +83,4 @@ function HeaderTelegramBotDropdown({
   );
 }
 
-export default HeaderTelegramBotDropdown;
+export default TelegramBotDropdown;

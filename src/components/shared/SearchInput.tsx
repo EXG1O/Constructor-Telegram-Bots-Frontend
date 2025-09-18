@@ -149,6 +149,8 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 
     function handleCancel(): void {
       setValue('');
+
+      if (!searchDone) return;
       onCancel?.();
       setSearchDone(false);
     }

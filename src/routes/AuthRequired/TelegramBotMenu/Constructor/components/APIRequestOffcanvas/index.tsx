@@ -1,39 +1,28 @@
-import React, { ReactElement, useEffect, useId } from 'react';
+import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import Button from 'components/ui/Button';
-import Offcanvas, { OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import BodyBlock, {
+import {
   BodyBlockFormValues,
-  defaultBody,
   defaultBodyBlockFormValues,
 } from './components/BodyBlock';
-import HeadersBlock, {
-  defaultHeaders,
+import {
   defaultHeadersBlockFormValues,
   HeadersBlockFormValues,
 } from './components/HeadersBlock';
-import MethodBlock, {
+import {
   defaultMethodBlockFormValues,
   MethodBlockFormValues,
 } from './components/MethodBlock';
-import TestBlock from './components/TestBlock';
-import URLBlock, {
-  defaultURLBlockFormValues,
-  URLBlockFormValues,
-} from './components/URLBlock';
+import OffcanvasInner, { OffcanvasInnerProps } from './components/OffcanvasInner';
+import { defaultURLBlockFormValues, URLBlockFormValues } from './components/URLBlock';
 
-import FormToggleSection from '../FormToggleSection';
-import NameBlock, {
-  defaultNameBlockFormValues,
-  NameBlockFormValues,
-} from '../NameBlock';
+import { defaultNameBlockFormValues, NameBlockFormValues } from '../NameBlock';
 
 import { APIRequestAPI, APIRequestsAPI } from 'api/telegram-bots/api-request';
 import { APIRequest, Data } from 'api/telegram-bots/api-request/types';
@@ -49,9 +38,6 @@ export interface FormValues
     HeadersBlockFormValues,
     BodyBlockFormValues {}
 
-interface InnerAPIRequestOffcanvasProps
-  extends Omit<OffcanvasProps, 'show' | 'loading' | 'children' | 'onHide'> {}
-
 export const defaultFormValues: FormValues = {
   ...defaultNameBlockFormValues,
   ...defaultURLBlockFormValues,
@@ -60,92 +46,7 @@ export const defaultFormValues: FormValues = {
   ...defaultBodyBlockFormValues,
 };
 
-function InnerAPIRequestOffcanvas({
-  onHidden,
-  ...props
-}: InnerAPIRequestOffcanvasProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'apiRequestOffcanvas',
-  });
-
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
-
-  const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
-
-  const requestID = useAPIRequestOffcanvasStore((state) => state.requestID);
-  const type = useAPIRequestOffcanvasStore((state) => state.type);
-  const show = useAPIRequestOffcanvasStore((state) => state.show);
-  const loading = useAPIRequestOffcanvasStore((state) => state.loading);
-  const hideOffcanvas = useAPIRequestOffcanvasStore((state) => state.hideOffcanvas);
-  const setLoading = useAPIRequestOffcanvasStore((state) => state.setLoading);
-
-  const formID = useId();
-
-  useEffect(() => {
-    if (!requestID) return;
-    (async () => {
-      const response = await APIRequestAPI.get(telegramBot.id, requestID);
-
-      if (!response.ok) {
-        hideOffcanvas();
-        createMessageToast({
-          message: t('messages.getAPIRequest.error'),
-          level: 'error',
-        });
-        return;
-      }
-
-      const { id, headers, body, ...request } = response.json;
-
-      setValues({
-        ...request,
-        headers: headers
-          ? Object.entries(headers).map(([key, value]) => ({ key, value }))
-          : defaultHeaders,
-        body: body ? JSON.stringify(body, undefined, 2) : defaultBody,
-      });
-      setLoading(false);
-    })();
-  }, [requestID]);
-
-  function handleHidden(): void {
-    resetForm();
-    onHidden?.();
-  }
-
-  return (
-    <Offcanvas
-      {...props}
-      show={show}
-      loading={isSubmitting || loading}
-      onHide={hideOffcanvas}
-      onHidden={handleHidden}
-    >
-      <Offcanvas.Header closeButton>
-        <Offcanvas.Title>{t('title', { context: type })}</Offcanvas.Title>
-      </Offcanvas.Header>
-      <Offcanvas.Body asChild>
-        <Form id={formID}>
-          <NameBlock className='mb-3' />
-          <URLBlock className='mb-3' />
-          <MethodBlock className='mb-3' />
-          <HeadersBlock className='mb-3' />
-          <FormToggleSection name='method' getOpen={getBodyBlockOpen}>
-            <BodyBlock className='mb-3' />
-          </FormToggleSection>
-          <TestBlock />
-        </Form>
-      </Offcanvas.Body>
-      <Offcanvas.Footer className='flex flex-col gap-2'>
-        <Button form={formID} type='submit' variant='success' className='w-full'>
-          {t('actionButton', { context: type })}
-        </Button>
-      </Offcanvas.Footer>
-    </Offcanvas>
-  );
-}
-
-export interface APIRequestOffcanvasProps extends InnerAPIRequestOffcanvasProps {
+export interface APIRequestOffcanvasProps extends OffcanvasInnerProps {
   onAdd?: (request: APIRequest) => void;
   onSave?: (request: APIRequest) => void;
 }
@@ -162,7 +63,7 @@ function APIRequestOffcanvas({
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
   const requestID = useAPIRequestOffcanvasStore((state) => state.requestID);
-  const type = useAPIRequestOffcanvasStore((state) => state.type);
+  const action = useAPIRequestOffcanvasStore((state) => state.action);
   const hideOffcanvas = useAPIRequestOffcanvasStore((state) => state.hideOffcanvas);
 
   async function handleSubmit(
@@ -192,7 +93,7 @@ function APIRequestOffcanvas({
         setFieldError(error.attr, error.detail);
       }
       createMessageToast({
-        message: t(`messages.${type}APIRequest.error`),
+        message: t(`messages.${action}APIRequest.error`),
         level: 'error',
       });
       return;
@@ -201,7 +102,7 @@ function APIRequestOffcanvas({
     (requestID ? onSave : onAdd)?.(response.json);
     hideOffcanvas();
     createMessageToast({
-      message: t(`messages.${type}APIRequest.success`),
+      message: t(`messages.${action}APIRequest.success`),
       level: 'success',
     });
   }
@@ -213,9 +114,9 @@ function APIRequestOffcanvas({
       validateOnChange={false}
       onSubmit={handleSubmit}
     >
-      <InnerAPIRequestOffcanvas {...props} />
+      <OffcanvasInner {...props} />
     </Formik>
   );
 }
 
-export default APIRequestOffcanvas;
+export default memo(APIRequestOffcanvas);

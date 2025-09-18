@@ -14,11 +14,11 @@ import { User } from 'api/users/types';
 
 import reverse from 'utils/reverse';
 
-export interface HeaderUserDropdownProps extends Omit<DropdownProps, 'children'> {
+export interface UserDropdownProps extends Omit<DropdownProps, 'children'> {
   user: User;
 }
 
-function HeaderUserDropdown({ user, ...props }: HeaderUserDropdownProps): ReactElement {
+function UserDropdown({ user, ...props }: UserDropdownProps): ReactElement {
   const { t } = useTranslation(RouteID.Root, { keyPrefix: 'header.userDropdown' });
 
   const navigate = useNavigate();
@@ -81,4 +81,4 @@ function HeaderUserDropdown({ user, ...props }: HeaderUserDropdownProps): ReactE
   );
 }
 
-export default HeaderUserDropdown;
+export default UserDropdown;

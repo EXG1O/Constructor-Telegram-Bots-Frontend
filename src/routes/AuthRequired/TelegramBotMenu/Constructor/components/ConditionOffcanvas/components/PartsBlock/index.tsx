@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useField } from 'formik';
+import { FastField, FastFieldProps } from 'formik';
 
 import { RouteID } from 'routes';
 
@@ -28,8 +28,6 @@ function PartsBlock({ className, ...props }: PartsBlockProps): ReactElement {
     keyPrefix: 'conditionOffcanvas.partsBlock',
   });
 
-  const [{ value: parts }] = useField<Parts>('parts');
-
   return (
     <Block
       {...props}
@@ -39,11 +37,15 @@ function PartsBlock({ className, ...props }: PartsBlockProps): ReactElement {
       <Block.Title>
         <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
-      <div className='flex w-full flex-col gap-1'>
-        {parts.map((_, index) => (
-          <PartItem key={index} index={index} />
-        ))}
-      </div>
+      <FastField name='parts'>
+        {({ field }: FastFieldProps<Parts>) => (
+          <div className='flex w-full flex-col gap-1'>
+            {field.value.map((_, index) => (
+              <PartItem key={index} index={index} />
+            ))}
+          </div>
+        )}
+      </FastField>
     </Block>
   );
 }

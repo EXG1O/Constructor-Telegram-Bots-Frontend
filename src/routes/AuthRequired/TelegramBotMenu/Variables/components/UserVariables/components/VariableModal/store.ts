@@ -3,7 +3,7 @@ import { create } from 'zustand';
 export interface StateParams {
   variableID: number | null;
 
-  type: 'add' | 'edit';
+  action: 'add' | 'edit';
   show: boolean;
   loading: boolean;
 }
@@ -22,7 +22,7 @@ export type InitialState = Omit<StateParams, 'onAdd' | 'onSave'>;
 const initialState: InitialState = {
   variableID: null,
 
-  type: 'add',
+  action: 'add',
   show: false,
   loading: false,
 };
@@ -33,7 +33,7 @@ export const useVariableModalStore = create<State>((set) => ({
   showModal: (variableID) =>
     set({
       variableID,
-      type: variableID ? 'edit' : 'add',
+      action: variableID ? 'edit' : 'add',
       show: true,
       loading: Boolean(variableID),
     }),

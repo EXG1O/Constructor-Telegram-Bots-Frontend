@@ -25,13 +25,14 @@ function AddImagesButton(props: AddImagesButtonProps): ReactElement {
     keyPrefix: 'commandOffcanvas.imagesBlock.addImagesButton',
   });
 
-  const [{ value: images }, _meta, { setValue }] = useField<Images>('images');
+  const [{ value: images }, _meta, { setValue: setImages }] =
+    useField<Images>('images');
 
   const setImagesLoading = useCommandOffcanvasStore((state) => state.setImagesLoading);
 
-  const id = useId();
-
   const { remainingStorageSize } = useTelegramBotStorage();
+
+  const id = useId();
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
     if (!event.target.files) return;
@@ -100,7 +101,7 @@ function AddImagesButton(props: AddImagesButtonProps): ReactElement {
           return;
         }
       }
-      setValue([
+      setImages([
         ...images,
         ...processedImages.map<Image>((file) => ({
           key: crypto.randomUUID(),
@@ -111,7 +112,6 @@ function AddImagesButton(props: AddImagesButtonProps): ReactElement {
           from_url: null,
         })),
       ]);
-
       setImagesLoading(false);
     };
 

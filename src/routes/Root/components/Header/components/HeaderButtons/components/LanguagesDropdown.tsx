@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { memo, ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
@@ -12,9 +12,9 @@ import { LanguagesAPI } from 'api/languages';
 
 type Languages = Record<string, string>;
 
-export interface HeaderLanguagesDropdownProps extends Omit<DropdownProps, 'children'> {}
+export interface LanguagesDropdownProps extends Omit<DropdownProps, 'children'> {}
 
-function HeaderLanguagesDropdown(props: HeaderLanguagesDropdownProps): ReactElement {
+function LanguagesDropdown(props: LanguagesDropdownProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.Root, {
     keyPrefix: 'header.languagesDropdown',
   });
@@ -76,4 +76,4 @@ function HeaderLanguagesDropdown(props: HeaderLanguagesDropdownProps): ReactElem
   );
 }
 
-export default HeaderLanguagesDropdown;
+export default memo(LanguagesDropdown);

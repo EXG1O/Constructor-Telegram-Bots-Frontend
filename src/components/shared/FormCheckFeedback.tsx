@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useField } from 'formik';
+import { FastField, FastFieldProps, FormikProps } from 'formik';
 
 import CheckFeedback, {
   CheckFeedbackProps,
@@ -8,18 +8,37 @@ import CheckFeedback, {
 
 export { checkFeedbackVariants as formCheckFeedbackVariants };
 
-export interface FormCheckFeedbackProps extends Omit<CheckFeedbackProps, 'error'> {
+export interface FormCheckFeedbackProps
+  extends Omit<
+    CheckFeedbackProps,
+    'value' | 'defaultValue' | 'checked' | 'defaultChecked' | 'error'
+  > {
   name: string;
 }
 
 const FormCheckFeedback = forwardRef<HTMLInputElement, FormCheckFeedbackProps>(
-  (props, ref) => {
-    const [field, meta] = useField<(typeof props)['value']>({
-      ...props,
-      type: 'checkbox',
-    });
+  ({ name, onChange, ...props }, ref) => {
+    function handleChange(
+      form: FormikProps<any>,
+      event: React.ChangeEvent<HTMLInputElement>,
+    ): void {
+      form.setFieldValue(name, event.target.checked);
+      onChange?.(event);
+    }
 
-    return <CheckFeedback {...props} {...field} ref={ref} error={meta.error} />;
+    return (
+      <FastField name={name}>
+        {({ field, meta, form }: FastFieldProps) => (
+          <CheckFeedback
+            {...props}
+            ref={ref}
+            checked={field.checked}
+            error={meta.error}
+            onChange={(event) => handleChange(form, event)}
+          />
+        )}
+      </FastField>
+    );
   },
 );
 FormCheckFeedback.displayName = 'FormCheckFeedback';

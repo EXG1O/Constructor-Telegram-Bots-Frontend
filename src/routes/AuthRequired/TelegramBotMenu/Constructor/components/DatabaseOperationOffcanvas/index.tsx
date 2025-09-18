@@ -1,36 +1,27 @@
-import React, { ReactElement, useEffect, useId } from 'react';
+import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Formik, FormikHelpers, useFormikContext } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
-import Button from 'components/ui/Button';
-import Offcanvas, { OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import CreateBlock, {
+import {
   CreateBlockFormValues,
   defaultCreateBlockFormValues,
-  defaultCreateOperation,
 } from './components/CreateBlock';
-import TypeBlock, {
-  defaultType,
+import OffcanvasInner, { OffcanvasInnerProps } from './components/OffcanvasInner';
+import {
   defaultTypeBlockFormValues,
-  Type,
   TypeBlockFormValues,
 } from './components/TypeBlock';
-import UpdateBlock, {
+import {
   defaultUpdateBlockFormValues,
-  defaultUpdateOperation,
   UpdateBlockFormValues,
 } from './components/UpdateBlock';
 
-import FormToggleSection from '../FormToggleSection';
-import NameBlock, {
-  defaultNameBlockFormValues,
-  NameBlockFormValues,
-} from '../NameBlock';
+import { defaultNameBlockFormValues, NameBlockFormValues } from '../NameBlock';
 
 import {
   DatabaseOperationAPI,
@@ -48,9 +39,6 @@ export interface FormValues
     CreateBlockFormValues,
     UpdateBlockFormValues {}
 
-interface InnerDatabaseOperationOffcanvasProps
-  extends Omit<OffcanvasProps, 'show' | 'loading' | 'children' | 'onHide'> {}
-
 export const defaultFormValues: FormValues = {
   ...defaultNameBlockFormValues,
   ...defaultTypeBlockFormValues,
@@ -58,105 +46,7 @@ export const defaultFormValues: FormValues = {
   ...defaultUpdateBlockFormValues,
 };
 
-function InnerDatabaseOperationOffcanvas({
-  onHidden,
-  ...props
-}: InnerDatabaseOperationOffcanvasProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'databaseOperationOffcanvas',
-  });
-
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
-
-  const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
-
-  const operationID = useDatabaseOperationOffcanvasStore((state) => state.operationID);
-  const action = useDatabaseOperationOffcanvasStore((state) => state.action);
-  const show = useDatabaseOperationOffcanvasStore((state) => state.show);
-  const loading = useDatabaseOperationOffcanvasStore((state) => state.loading);
-  const hideOffcanvas = useDatabaseOperationOffcanvasStore(
-    (state) => state.hideOffcanvas,
-  );
-  const setLoading = useDatabaseOperationOffcanvasStore((state) => state.setLoading);
-
-  const formID = useId();
-
-  useEffect(() => {
-    if (!operationID) return;
-    (async () => {
-      const response = await DatabaseOperationAPI.get(telegramBot.id, operationID);
-
-      if (!response.ok) {
-        hideOffcanvas();
-        createMessageToast({
-          message: t('messages.getDatabaseOperation.error'),
-          level: 'error',
-        });
-        return;
-      }
-
-      const { id, create_operation, update_operation, ...operation } = response.json;
-
-      setValues({
-        ...operation,
-        type: create_operation
-          ? Type.Create
-          : update_operation
-            ? Type.Update
-            : defaultType,
-        create_operation: create_operation
-          ? { data: JSON.stringify(create_operation.data, undefined, 2) }
-          : defaultCreateOperation,
-        update_operation: update_operation
-          ? {
-              ...update_operation,
-              new_data: JSON.stringify(update_operation.new_data, undefined, 2),
-            }
-          : defaultUpdateOperation,
-      });
-      setLoading(false);
-    })();
-  }, [operationID]);
-
-  function handleHidden(): void {
-    resetForm();
-    onHidden?.();
-  }
-
-  return (
-    <Offcanvas
-      {...props}
-      show={show}
-      loading={isSubmitting || loading}
-      onHide={hideOffcanvas}
-      onHidden={handleHidden}
-    >
-      <Offcanvas.Header closeButton>
-        <Offcanvas.Title>{t('title', { context: action })}</Offcanvas.Title>
-      </Offcanvas.Header>
-      <Offcanvas.Body asChild>
-        <Form id={formID}>
-          <NameBlock className='mb-3' />
-          <TypeBlock className='mb-3' />
-          <FormToggleSection name='type' getOpen={getCreateBlockOpen}>
-            <CreateBlock />
-          </FormToggleSection>
-          <FormToggleSection name='type' getOpen={getUpdateBlockOpen}>
-            <UpdateBlock />
-          </FormToggleSection>
-        </Form>
-      </Offcanvas.Body>
-      <Offcanvas.Footer>
-        <Button form={formID} type='submit' variant='success' className='w-full'>
-          {t('actionButton', { context: action })}
-        </Button>
-      </Offcanvas.Footer>
-    </Offcanvas>
-  );
-}
-
-export interface DatabaseOperationOffcanvasProps
-  extends InnerDatabaseOperationOffcanvasProps {
+export interface DatabaseOperationOffcanvasProps extends OffcanvasInnerProps {
   onAdd?: (operation: DatabaseOperation) => void;
   onSave?: (operation: DatabaseOperation) => void;
 }
@@ -242,9 +132,9 @@ function DatabaseOperationOffcanvas({
       validateOnChange={false}
       onSubmit={handleSubmit}
     >
-      <InnerDatabaseOperationOffcanvas {...props} />
+      <OffcanvasInner {...props} />
     </Formik>
   );
 }
 
-export default DatabaseOperationOffcanvas;
+export default memo(DatabaseOperationOffcanvas);
