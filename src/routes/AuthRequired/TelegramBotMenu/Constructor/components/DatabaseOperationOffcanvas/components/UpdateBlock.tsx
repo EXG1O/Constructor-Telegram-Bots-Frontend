@@ -7,6 +7,7 @@ import FormCheckFeedback from 'components/shared/FormCheckFeedback';
 import FormCodeInputFeedback from 'components/shared/FormCodeInputFeedback';
 import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import TelegramCodeInputLayout from 'components/shared/TelegramCodeInputLayout';
+import TelegramSimpleInputLayout from 'components/shared/TelegramSimpleInputLayout';
 import Block, { BlockProps } from 'components/ui/Block';
 
 import cn from 'utils/cn';
@@ -62,7 +63,9 @@ function UpdateBlock({ className, ...props }: UpdateBlockProps): ReactElement {
       <FormSimpleInputFeedback
         name='update_operation.lookup_field_value'
         placeholder={t('lookupFieldValueInput.placeholder')}
-      />
+      >
+        <TelegramSimpleInputLayout toolbarVariables />
+      </FormSimpleInputFeedback>
       <FormCheckFeedback
         type='switch'
         name='update_operation.create_if_not_found'
