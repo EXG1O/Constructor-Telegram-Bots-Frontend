@@ -8,7 +8,11 @@ export interface HeaderLinkProps extends LinkProps {}
 
 function HeaderLink({ to, className, ...props }: HeaderLinkProps): ReactElement {
   return (
-    <Link {...props} to={to} className={cn('text-foreground', 'p-2', className)} />
+    <Link
+      {...props}
+      to={to}
+      className={cn('text-foreground', 'text-nowrap', 'p-2', className)}
+    />
   );
 }
 
