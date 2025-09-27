@@ -105,23 +105,23 @@ function TelegramBotModal(props: TelegramBotModalProps): ReactElement {
             onChange={setTelegramBot}
           />
         </Modal.Body>
-        <Modal.Footer className='flex gap-4'>
+        <Modal.Footer className='flex gap-4 max-sm:flex-wrap'>
           {telegramBot.is_loading ? (
-            <Button variant='secondary' disabled className='w-full'>
+            <Button variant='secondary' disabled className='max-sm:flex-auto sm:w-full'>
               <Spinner size='xs' />
             </Button>
           ) : telegramBot.is_enabled ? (
             <>
               <Button
                 variant='danger'
-                className='w-full'
+                className='max-sm:flex-auto sm:w-full'
                 onClick={() => handleActionClick('stop')}
               >
                 {t('stopButton')}
               </Button>
               <Button
                 variant='success'
-                className='w-full'
+                className='max-sm:flex-auto sm:w-full'
                 onClick={() => handleActionClick('restart')}
               >
                 {t('restartButton')}
@@ -130,13 +130,17 @@ function TelegramBotModal(props: TelegramBotModalProps): ReactElement {
           ) : (
             <Button
               variant='success'
-              className='w-full'
+              className='max-sm:flex-auto sm:w-full'
               onClick={() => handleActionClick('start')}
             >
               {t('startButton')}
             </Button>
           )}
-          <Button variant='danger' className='w-full' onClick={handleDeleteClick}>
+          <Button
+            variant='danger'
+            className='max-sm:flex-auto sm:w-full'
+            onClick={handleDeleteClick}
+          >
             {t('deleteButton')}
           </Button>
         </Modal.Footer>
