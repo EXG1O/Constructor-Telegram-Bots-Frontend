@@ -202,7 +202,7 @@ function Constructor(): ReactElement {
   }
 
   const addEdge = useCallback(
-    async (edge: Edge | Connection, shouldUpdateEdges: boolean = true) => {
+    async (edge: Edge | Connection) => {
       if (!edge.sourceHandle || !edge.targetHandle) return;
 
       const sourceHandle: EdgeSourceHandle = parseEdgeSourceHandle(edge.sourceHandle);
@@ -236,20 +236,29 @@ function Constructor(): ReactElement {
         return;
       }
 
-      if (shouldUpdateEdges) {
-        setEdges((prevEdges) =>
-          RFAddEdge({ ...edge, id: response.json.id.toString() }, prevEdges),
-        );
-      }
+      setEdges((prevEdges) =>
+        RFAddEdge({ ...edge, id: response.json.id.toString() }, prevEdges),
+      );
     },
     [telegramBot],
   );
 
   const deleteEdge = useCallback(
-    async (edge: Edge, shouldUpdateEdges: boolean = true) => {
+    async (edge: Edge) => {
+      setEdges((prevEdges) =>
+        prevEdges.map((prevEdge) =>
+          prevEdge.id === edge.id ? { ...prevEdge, hidden: true } : prevEdge,
+        ),
+      );
+
       const response = await ConnectionAPI.delete(telegramBot.id, parseInt(edge.id));
 
       if (!response.ok) {
+        setEdges((prevEdges) =>
+          prevEdges.map((prevEdge) =>
+            prevEdge.id === edge.id ? { ...prevEdge, hidden: false } : prevEdge,
+          ),
+        );
         for (const error of response.json.errors) {
           if (error.attr) continue;
           createMessageToast({ message: error.detail, level: 'error' });
@@ -261,11 +270,7 @@ function Constructor(): ReactElement {
         return;
       }
 
-      if (shouldUpdateEdges) {
-        setEdges((prevEdges) =>
-          prevEdges.filter((prevEdge) => prevEdge.id !== edge.id),
-        );
-      }
+      setEdges((prevEdges) => prevEdges.filter((prevEdge) => prevEdge.id !== edge.id));
     },
     [telegramBot],
   );
