@@ -458,7 +458,8 @@ function Constructor(): ReactElement {
       <div ref={handleRef} className='size-full overflow-hidden rounded-lg bg-light'>
         <ReactFlow
           fitView
-          minZoom={0.4}
+          minZoom={0.25}
+          maxZoom={4}
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}
