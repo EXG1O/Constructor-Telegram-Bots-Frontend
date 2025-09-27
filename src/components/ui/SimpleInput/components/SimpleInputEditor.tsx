@@ -9,7 +9,13 @@ import useSimpleInputStore from '../hooks/useSimpleInputStore';
 import cn from 'utils/cn';
 
 export const simpleInputEditorVariants = cva(
-  ['w-full', 'text-foreground', 'appearance-none', 'focus:outline-none'],
+  [
+    'w-full',
+    'text-foreground',
+    'appearance-none',
+    'placeholder:text-muted',
+    'focus:outline-none',
+  ],
   {
     variants: {
       size: {
