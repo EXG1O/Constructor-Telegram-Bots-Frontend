@@ -38,7 +38,7 @@ function APITokenDisplay({ className, ...props }: APITokenDisplayProps): ReactEl
       {...props}
       className={cn('flex', 'items-center', 'w-full', 'gap-2', className)}
     >
-      <span className='flex-auto wrap-break-word break-word'>
+      <span className='flex-auto wrap-anywhere'>
         {show ? telegramBot.api_token : hiddenAPIToken}
       </span>
       <div className='flex gap-1'>

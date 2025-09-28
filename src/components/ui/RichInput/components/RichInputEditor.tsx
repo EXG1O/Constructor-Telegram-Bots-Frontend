@@ -10,7 +10,7 @@ export const richInputEditorInnerContentVariants = cva(
   [
     'text-foreground',
     'whitespace-break-spaces',
-    'break-word',
+    'wrap-anywhere',
     '*:first:mt-0',
     '*:last:mb-0',
     '[&_a]:text-primary',

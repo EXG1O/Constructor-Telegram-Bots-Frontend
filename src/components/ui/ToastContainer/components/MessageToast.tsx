@@ -112,9 +112,7 @@ function MessageToast({
     >
       <Icon className='size-4' />
       <ToastDescription asChild>
-        <strong className='flex-auto text-sm wrap-break-word break-word'>
-          {message}
-        </strong>
+        <strong className='flex-auto text-sm wrap-anywhere'>{message}</strong>
       </ToastDescription>
       <ToastClose asChild>
         <CloseButton />

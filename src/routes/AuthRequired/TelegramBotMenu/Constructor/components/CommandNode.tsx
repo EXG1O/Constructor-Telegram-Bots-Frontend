@@ -126,7 +126,7 @@ function CommandNode({ id, type, data: command }: CommandNodeProps): ReactElemen
               <Node.Block
                 key={button.id}
                 variant='dark'
-                className='flex flex-wrap items-center justify-center gap-1 wrap-break-word break-word'
+                className='flex flex-wrap items-center justify-center gap-1 wrap-anywhere'
               >
                 {button.text}
                 <Link className='size-3' />
