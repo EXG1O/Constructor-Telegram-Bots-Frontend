@@ -6,7 +6,6 @@ export enum RouteID {
   Root = 'root',
   Login = 'login',
   Home = 'home',
-  Updates = 'updates',
   Donation = 'donation-index',
   DonationCompleted = 'donation-completed',
   Instruction = 'instruction',
@@ -59,21 +58,6 @@ export const routes: RouteObject[] = [
           const [component, loader] = await Promise.all([
             await import('./Home'),
             await import('./Home/loader'),
-          ]);
-
-          return {
-            Component: component.default,
-            loader: loader.default,
-          };
-        },
-      },
-      {
-        id: RouteID.Updates,
-        path: 'updates/',
-        async lazy() {
-          const [component, loader] = await Promise.all([
-            await import('./Updates'),
-            await import('./Updates/loader'),
           ]);
 
           return {
