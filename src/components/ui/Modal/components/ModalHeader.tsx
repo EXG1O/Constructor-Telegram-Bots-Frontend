@@ -1,8 +1,9 @@
 import React, { forwardRef, HTMLAttributes } from 'react';
-import { Close } from '@radix-ui/react-dialog';
 import { Slot } from '@radix-ui/react-slot';
 
 import CloseButton from 'components/shared/CloseButton';
+
+import ModalClose from './ModalClose';
 
 import cn from 'utils/cn';
 
@@ -23,9 +24,9 @@ const ModalHeader = forwardRef<HTMLDivElement, ModalHeaderProps>(
       >
         {children}
         {closeButton && (
-          <Close asChild>
+          <ModalClose asChild>
             <CloseButton className='text-foreground' />
-          </Close>
+          </ModalClose>
         )}
       </Component>
     );

@@ -2,6 +2,7 @@ import React, { ReactElement, useMemo } from 'react';
 import { Dialog, DialogProps } from '@radix-ui/react-dialog';
 
 import ModalBody from './components/ModalBody';
+import ModalClose from './components/ModalClose';
 import ModalContent from './components/ModalContent';
 import ModalFooter from './components/ModalFooter';
 import ModalHeader from './components/ModalHeader';
@@ -44,6 +45,7 @@ function Modal({
 export default Object.assign(Modal, {
   Trigger: ModalTrigger,
   Content: ModalContent,
+  Close: ModalClose,
   Header: ModalHeader,
   Title: ModalTitle,
   Body: ModalBody,
