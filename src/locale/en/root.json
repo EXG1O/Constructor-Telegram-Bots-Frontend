@@ -62,18 +62,18 @@
       "statsModal": {
         "title": "Telegram bot statistics",
         "messages": {
-          "getNewUserStats": {
-            "error": "Failed to get new user statistics."
+          "getNewUsersStats": {
+            "error": "Failed to get new users statistics."
           },
-          "getUserActivityStats": {
-            "error": "Failed to get user activity statistics."
+          "getUsersLastActivityStats": {
+            "error": "Failed to get latest users activity statistics."
           }
         },
         "newUsersChart": {
           "title": "New Users"
         },
-        "userActivityChart": {
-          "title": "User Activity"
+        "usersLastActivityChart": {
+          "title": "Last Users Activity"
         }
       },
       "telegramBot": "Telegram bot",

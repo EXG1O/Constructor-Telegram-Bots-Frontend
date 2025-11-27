@@ -62,18 +62,18 @@
       "statsModal": {
         "title": "Статистика Telegram бота",
         "messages": {
-          "getNewUserStats": {
+          "getNewUsersStats": {
             "error": "Не вдалося отримати статистику нових користувачів."
           },
-          "getUserActivityStats": {
-            "error": "Не вдалося отримати статистику активності користувачів."
+          "getUsersLastActivityStats": {
+            "error": "Не вдалося отримати статистику останньої активності користувачів."
           }
         },
         "newUsersChart": {
           "title": "Нові користувачі"
         },
-        "userActivityChart": {
-          "title": "Активність користувачів"
+        "usersLastActivityChart": {
+          "title": "Остання активність користувачів"
         }
       },
       "telegramBot": "Telegram бот",
