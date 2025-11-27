@@ -39,17 +39,17 @@ function StatsModal(props: StatsModalProps): ReactElement {
     return response.json;
   }
 
-  async function getNewUserStatsData(): Promise<any[] | null> {
+  async function getNewUsersStatsData(): Promise<any[] | null> {
     return getData(
       () => UsersAPI.timelineStats(telegramBot.id, 'activated_date', 90),
-      t('messages.getNewUserStats.error'),
+      t('messages.getNewUsersStats.error'),
     );
   }
 
-  async function getUserActivityStatsData(): Promise<any[] | null> {
+  async function getUsersLastActivityStatsData(): Promise<any[] | null> {
     return getData(
       () => UsersAPI.timelineStats(telegramBot.id, 'last_activity_date', 90),
-      t('messages.getUserActivityStats.error'),
+      t('messages.getUsersLastActivityStats.error'),
     );
   }
 
@@ -63,11 +63,11 @@ function StatsModal(props: StatsModalProps): ReactElement {
           <Suspense fallback={<Spinner className='self-center' />}>
             <ChartBlock
               title={t('newUsersChart.title')}
-              getData={getNewUserStatsData}
+              getData={getNewUsersStatsData}
             />
             <ChartBlock
-              title={t('userActivityChart.title')}
-              getData={getUserActivityStatsData}
+              title={t('usersLastActivityChart.title')}
+              getData={getUsersLastActivityStatsData}
             />
           </Suspense>
         </Modal.Body>
