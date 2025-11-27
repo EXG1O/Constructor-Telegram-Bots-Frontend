@@ -21,7 +21,7 @@ function Panel({ className, ...props }: PanelProps): ReactElement {
   return (
     <PrimitivePanel {...props} position='top-right'>
       <SelectBlockModal>
-        <SelectBlockModal.Trigger>
+        <SelectBlockModal.Trigger asChild>
           <PlusButton size='sm' variant='dark' className='shadow-sm'>
             {t('addBlockButton')}
           </PlusButton>
