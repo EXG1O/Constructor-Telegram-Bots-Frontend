@@ -325,14 +325,36 @@
     "actionButton_edit": "Save"
   },
   "panel": {
-    "showButton": "Show blocks",
-    "hideButton": "Hide blocks",
-    "addTriggerButton": "Add trigger",
-    "addCommandButton": "Add command",
-    "addConditionButton": "Add condition",
-    "addBackgroundTaskButton": "Add background task",
-    "addAPIRequestButton": "Add API request",
-    "addDatabaseOperationButton": "Add database operation"
+    "addBlockButton": "Add block"
+  },
+  "selectBlockModal": {
+    "title": "Select block type",
+    "blocks": {
+      "trigger": {
+        "name": "Trigger",
+        "description": "Defines the event to respond to."
+      },
+      "command": {
+        "name": "Command",
+        "description": "Sends a message to the user."
+      },
+      "condition": {
+        "name": "Condition",
+        "description": "Branches the logic depending on the data."
+      },
+      "backgroundTask": {
+        "name": "Background task",
+        "description": "Automatically runs logic at a specified interval."
+      },
+      "apiRequest": {
+        "name": "API request",
+        "description": "Sends a request to an external API."
+      },
+      "databaseOperation": {
+        "name": "Database operation",
+        "description": "Adds or updates data in the bot's database."
+      }
+    }
   },
   "nodes": {
     "trigger": {

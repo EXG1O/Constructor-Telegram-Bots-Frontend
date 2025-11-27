@@ -1,21 +1,12 @@
-import React, { memo, ReactElement, useState } from 'react';
+import React, { memo, ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Panel as RFPanel, PanelProps as RFPanelProps } from '@xyflow/react';
 
 import { RouteID } from 'routes';
 
 import PlusButton from 'components/shared/PlusButton';
-import Button from 'components/ui/Button';
-import Collapsible from 'components/ui/Collapsible';
 
-import { useAPIRequestOffcanvasStore } from './APIRequestOffcanvas/store';
-import { useBackgroundTaskOffcanvasStore } from './BackgroundTaskOffcanvas/store';
-import { useCommandOffcanvasStore } from './CommandOffcanvas/store';
-import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
-import { useDatabaseOperationOffcanvasStore } from './DatabaseOperationOffcanvas/store';
-import { useTriggerOffcanvasStore } from './TriggerOffcanvas/store';
-
-import cn from 'utils/cn';
+import SelectBlockModal from './SelectBlockModal';
 
 const PrimitivePanel = RFPanel;
 PrimitivePanel.displayName = 'PrimitivePanel';
@@ -27,104 +18,15 @@ function Panel({ className, ...props }: PanelProps): ReactElement {
     keyPrefix: 'panel',
   });
 
-  const [open, setOpen] = useState<boolean>(false);
-
-  const showAddTriggerOffcanvas = useTriggerOffcanvasStore(
-    (state) => state.showOffcanvas,
-  );
-  const showAddCommandOffcanvas = useCommandOffcanvasStore(
-    (state) => state.showOffcanvas,
-  );
-  const showAddConditionOffcanvas = useConditionOffcanvasStore(
-    (state) => state.showOffcanvas,
-  );
-  const showAddBackgroundTaskOffcanvas = useBackgroundTaskOffcanvasStore(
-    (state) => state.showOffcanvas,
-  );
-  const showAddAPIRequestOffcanvas = useAPIRequestOffcanvasStore(
-    (state) => state.showOffcanvas,
-  );
-  const showAddDatabaseOperationOffcanvas = useDatabaseOperationOffcanvasStore(
-    (state) => state.showOffcanvas,
-  );
-
-  function handleAddTriggerClick(): void {
-    showAddTriggerOffcanvas();
-  }
-
-  function handleAddCommandClick(): void {
-    showAddCommandOffcanvas();
-  }
-
-  function handleAddConditionClick(): void {
-    showAddConditionOffcanvas();
-  }
-
-  function handleAddBackgroundTaskClick(): void {
-    showAddBackgroundTaskOffcanvas();
-  }
-
-  function handleAddAPIRequestClick(): void {
-    showAddAPIRequestOffcanvas();
-  }
-
-  function handleAddDatabaseOperationClick(): void {
-    showAddDatabaseOperationOffcanvas();
-  }
-
   return (
-    <PrimitivePanel
-      {...props}
-      position='top-right'
-      className={cn('rounded-sm', 'shadow-sm', 'overflow-hidden', className)}
-    >
-      <Collapsible open={open} onOpenChange={setOpen}>
-        <Collapsible.Trigger asChild>
-          <Button
-            size='sm'
-            variant={open ? 'secondary' : 'dark'}
-            className={cn('w-full', open && 'rounded-b-none')}
-          >
-            {open ? t('hideButton') : t('showButton')}
-          </Button>
-        </Collapsible.Trigger>
-        <Collapsible.Body>
-          <div
-            className={cn(
-              'flex',
-              'flex-col',
-              'w-full',
-              'bg-white',
-              'p-1',
-              'gap-1',
-              className,
-            )}
-          >
-            <PlusButton size='sm' variant='dark' onClick={handleAddTriggerClick}>
-              {t('addTriggerButton')}
-            </PlusButton>
-            <PlusButton size='sm' variant='dark' onClick={handleAddCommandClick}>
-              {t('addCommandButton')}
-            </PlusButton>
-            <PlusButton size='sm' variant='dark' onClick={handleAddConditionClick}>
-              {t('addConditionButton')}
-            </PlusButton>
-            <PlusButton size='sm' variant='dark' onClick={handleAddBackgroundTaskClick}>
-              {t('addBackgroundTaskButton')}
-            </PlusButton>
-            <PlusButton size='sm' variant='dark' onClick={handleAddAPIRequestClick}>
-              {t('addAPIRequestButton')}
-            </PlusButton>
-            <PlusButton
-              size='sm'
-              variant='dark'
-              onClick={handleAddDatabaseOperationClick}
-            >
-              {t('addDatabaseOperationButton')}
-            </PlusButton>
-          </div>
-        </Collapsible.Body>
-      </Collapsible>
+    <PrimitivePanel {...props} position='top-right'>
+      <SelectBlockModal>
+        <SelectBlockModal.Trigger>
+          <PlusButton size='sm' variant='dark' className='shadow-sm'>
+            {t('addBlockButton')}
+          </PlusButton>
+        </SelectBlockModal.Trigger>
+      </SelectBlockModal>
     </PrimitivePanel>
   );
 }
