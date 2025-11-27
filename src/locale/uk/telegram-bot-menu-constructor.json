@@ -325,14 +325,36 @@
     "actionButton_edit": "Зберегти"
   },
   "panel": {
-    "showButton": "Показати блоки",
-    "hideButton": "Приховати блоки",
-    "addTriggerButton": "Додати тригер",
-    "addCommandButton": "Додати команду",
-    "addConditionButton": "Додати умову",
-    "addBackgroundTaskButton": "Додати фонову задачу",
-    "addAPIRequestButton": "Додати API-запит",
-    "addDatabaseOperationButton": "Додати операцію бази даних"
+    "addBlockButton": "Додати блок"
+  },
+  "selectBlockModal": {
+    "title": "Виберіть тип блоку",
+    "blocks": {
+      "trigger": {
+        "name": "Тригер",
+        "description": "Визначає подію, на яку слід реагувати."
+      },
+      "command": {
+        "name": "Команда",
+        "description": "Надсилає повідомлення користувачу."
+      },
+      "condition": {
+        "name": "Умова",
+        "description": "Розгалужує логіку залежно від даних."
+      },
+      "backgroundTask": {
+        "name": "Фонова задача",
+        "description": "Автоматично запускає логику з заданим інтервалом."
+      },
+      "apiRequest": {
+        "name": "API-запит",
+        "description": "Виконує запит до зовнішнього API."
+      },
+      "databaseOperation": {
+        "name": "Операція бази даних",
+        "description": "Додає або оновлює дані в базі даних бота."
+      }
+    }
   },
   "nodes": {
     "trigger": {
