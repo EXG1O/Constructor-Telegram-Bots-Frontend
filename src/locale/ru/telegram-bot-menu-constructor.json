@@ -48,7 +48,13 @@
       }
     },
     "typeBlock": {
-      "title": "Тип"
+      "title": "Тип",
+      "types": {
+        "startCommand": "Стартовая команда",
+        "command": "Команда",
+        "message": "Сообщение",
+        "anyMessage": "Любое сообщение"
+      }
     },
     "startCommandBlock": {
       "title": "Стартовая команда",
