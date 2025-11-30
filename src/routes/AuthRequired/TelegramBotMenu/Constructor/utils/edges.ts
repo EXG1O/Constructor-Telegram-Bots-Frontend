@@ -46,9 +46,11 @@ export interface EdgeHandle<ObjectType extends string> {
 }
 
 export interface EdgeSourceHandle
-  extends EdgeHandle<'trigger' | 'command' | 'condition' | 'background_task'> {}
+  extends EdgeHandle<
+    Exclude<SourceObjectType, 'command_keyboard_button'> | 'command'
+  > {}
 
-export interface EdgeTargetHandle extends EdgeHandle<'command' | 'condition'> {}
+export interface EdgeTargetHandle extends EdgeHandle<TargetObjectType> {}
 
 export function parseEdgeHandle<ObjectType extends string>(
   handle: string,
@@ -100,8 +102,12 @@ export interface DiagramBlocks {
 
 export function convertDiagramBlocksToEdges(diagramBlocks: DiagramBlocks): Edge[] {
   const connections: Connection[] = [
-    ...(diagramBlocks.triggers?.flatMap((trigger) => trigger.source_connections) ?? []),
+    ...(diagramBlocks.triggers?.flatMap((trigger) => [
+      ...trigger.source_connections,
+      ...trigger.target_connections,
+    ]) ?? []),
     ...(diagramBlocks.commands?.flatMap((command) => [
+      ...command.source_connections,
       ...command.target_connections,
       ...(command.keyboard?.buttons.flatMap((button) => button.source_connections) ??
         []),

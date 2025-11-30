@@ -56,7 +56,7 @@ export interface DiagramCommandKeyboard extends Pick<CommandKeyboard, 'type'> {
 
 export interface DiagramCommand
   extends Pick<Command, 'id' | 'name' | 'message'>,
-    Omit<DiagramBlock, 'source_connections'> {
+    DiagramBlock {
   keyboard: DiagramCommandKeyboard | null;
 }
 
