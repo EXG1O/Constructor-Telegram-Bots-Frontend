@@ -209,7 +209,7 @@ function Constructor(): ReactElement {
       const targetHandle: EdgeTargetHandle = parseEdgeTargetHandle(edge.targetHandle);
 
       const response = await ConnectionsAPI.create(telegramBot.id, {
-        ...(sourceHandle.objectType === 'command'
+        ...(sourceHandle.objectType === 'command' && sourceHandle.nestedObjectID
           ? {
               source_object_type: 'command_keyboard_button',
               source_object_id: sourceHandle.nestedObjectID,

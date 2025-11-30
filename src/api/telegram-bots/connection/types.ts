@@ -9,6 +9,7 @@ export type ObjectType =
 export type SourceObjectType = Extract<
   ObjectType,
   | 'trigger'
+  | 'command'
   | 'command_keyboard_button'
   | 'condition'
   | 'background_task'
@@ -17,7 +18,7 @@ export type SourceObjectType = Extract<
 >;
 export type TargetObjectType = Extract<
   ObjectType,
-  'command' | 'condition' | 'api_request' | 'database_operation'
+  'trigger' | 'command' | 'condition' | 'api_request' | 'database_operation'
 >;
 
 export type HandlePosition = 'left' | 'right';

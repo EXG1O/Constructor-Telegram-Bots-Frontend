@@ -104,11 +104,11 @@ function CommandNode({ id, type, data: command }: CommandNodeProps): ReactElemen
           position={Position.Left}
         />
         <Node.Handle
-          id={buildEdgeTargetHandle({
+          id={buildEdgeSourceHandle({
             ...defaultEdgeHandleBuildParams,
             position: 'right',
           })}
-          type='target'
+          type='source'
           position={Position.Right}
         />
       </Node.Block>

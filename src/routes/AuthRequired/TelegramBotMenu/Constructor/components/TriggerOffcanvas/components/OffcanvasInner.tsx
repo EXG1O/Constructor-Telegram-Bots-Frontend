@@ -82,7 +82,9 @@ function OffcanvasInner({
                 description: command.description ?? defaultCommand.description,
               }
             : defaultCommand,
-        message: message ?? defaultMessage,
+        message: message
+          ? { ...message, text: message.text ?? defaultMessage.text }
+          : defaultMessage,
 
         show_start_command_payload: Boolean(command?.payload),
         show_start_command_description: Boolean(command?.description),

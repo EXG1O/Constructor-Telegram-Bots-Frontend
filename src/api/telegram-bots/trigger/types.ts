@@ -7,7 +7,7 @@ export interface TriggerCommand {
 }
 
 export interface TriggerMessage {
-  text: string;
+  text: string | null;
 }
 
 export interface Trigger {
@@ -17,9 +17,7 @@ export interface Trigger {
   message: TriggerMessage | null;
 }
 
-export interface DiagramTrigger
-  extends Pick<Trigger, 'id' | 'name'>,
-    Omit<DiagramBlock, 'target_connections'> {}
+export interface DiagramTrigger extends Pick<Trigger, 'id' | 'name'>, DiagramBlock {}
 
 export namespace Data {
   export namespace TriggersAPI {
