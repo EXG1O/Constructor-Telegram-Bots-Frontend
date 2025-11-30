@@ -48,7 +48,13 @@
       }
     },
     "typeBlock": {
-      "title": "Type"
+      "title": "Type",
+      "types": {
+        "startCommand": "Start command",
+        "command": "Command",
+        "message": "Message",
+        "anyMessage": "Any message"
+      }
     },
     "startCommandBlock": {
       "title": "Start Command",

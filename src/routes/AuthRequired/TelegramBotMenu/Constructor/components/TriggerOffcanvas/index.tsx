@@ -99,7 +99,12 @@ function TriggerOffcanvas({
                 description: show_command_description ? command.description : null,
               }
             : null,
-      message: type === Type.Message ? message : null,
+      message:
+        type === Type.Message
+          ? message
+          : type === Type.AnyMessage
+            ? { text: null }
+            : null,
     };
 
     const response = await (triggerID

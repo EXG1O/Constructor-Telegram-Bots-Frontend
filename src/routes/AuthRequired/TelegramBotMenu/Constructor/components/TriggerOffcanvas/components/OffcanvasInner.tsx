@@ -66,7 +66,9 @@ function OffcanvasInner({
             ? Type.StartCommand
             : Type.Command
           : message
-            ? Type.Message
+            ? message.text
+              ? Type.Message
+              : Type.AnyMessage
             : defaultType,
         start_command:
           command && command.command === 'start'

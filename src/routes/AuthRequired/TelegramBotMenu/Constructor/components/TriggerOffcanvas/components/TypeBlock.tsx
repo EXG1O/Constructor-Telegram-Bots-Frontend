@@ -12,6 +12,7 @@ export enum Type {
   StartCommand = 'startCommand',
   Command = 'command',
   Message = 'message',
+  AnyMessage = 'anyMessage',
 }
 
 export interface TypeBlockFormValues {
@@ -27,7 +28,7 @@ export const defaultTypeBlockFormValues: TypeBlockFormValues = {
 
 function TypeBlock({ className, ...props }: TypeBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'triggerOffcanvas',
+    keyPrefix: 'triggerOffcanvas.typeBlock',
   });
 
   return (
@@ -37,12 +38,13 @@ function TypeBlock({ className, ...props }: TypeBlockProps): ReactElement {
       className={cn('flex', 'flex-col', 'gap-2', className)}
     >
       <Block.Title>
-        <h3 className='text-lg font-medium'>{t('typeBlock.title')}</h3>
+        <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
       <FormSelectFeedback name='type'>
-        <option value={Type.StartCommand}>{t('startCommandBlock.title')}</option>
-        <option value={Type.Command}>{t('commandBlock.title')}</option>
-        <option value={Type.Message}>{t('messageBlock.title')}</option>
+        <option value={Type.StartCommand}>{t('types.startCommand')}</option>
+        <option value={Type.Command}>{t('types.command')}</option>
+        <option value={Type.Message}>{t('types.message')}</option>
+        <option value={Type.AnyMessage}>{t('types.anyMessage')}</option>
       </FormSelectFeedback>
     </Block>
   );
