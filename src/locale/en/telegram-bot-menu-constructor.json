@@ -4,8 +4,8 @@
     "validation": {
       "invalidJSON": "Please enter the data in JSON format."
     },
-    "getDiagramCommand": {
-      "error": "Failed to get command data for the diagram."
+    "getDiagramMessage": {
+      "error": "Failed to get message data for the diagram."
     },
     "getDiagramCondition": {
       "error": "Failed to get condition data for the diagram."
@@ -85,20 +85,20 @@
     "actionButton_add": "Add",
     "actionButton_edit": "Save"
   },
-  "commandOffcanvas": {
-    "title_add": "Adding a command",
-    "title_edit": "Editing the command",
+  "messageOffcanvas": {
+    "title_add": "Adding a message",
+    "title_edit": "Editing the message",
     "messages": {
-      "getCommand": {
-        "error": "Failed to get command data."
+      "getMessage": {
+        "error": "Failed to get message data."
       },
-      "addCommand": {
-        "success": "You have successfully added the command.",
-        "error": "Failed to add the command."
+      "addMessage": {
+        "success": "You have successfully added the message.",
+        "error": "Failed to add the message."
       },
-      "editCommand": {
-        "success": "You have successfully saved the command.",
-        "error": "Failed to save the command."
+      "editMessage": {
+        "success": "You have successfully saved the message.",
+        "error": "Failed to save the message."
       }
     },
     "settingsBlock": {
@@ -131,9 +131,9 @@
         "text": "Add documents"
       }
     },
-    "messageBlock": {
-      "title": "Message",
-      "messageEditorPlaceholder": "Enter text"
+    "textBlock": {
+      "title": "Text",
+      "editorPlaceholder": "Enter text"
     },
     "keyboardBlock": {
       "title": "Keyboard",
@@ -340,8 +340,8 @@
         "name": "Trigger",
         "description": "Defines the event to respond to."
       },
-      "command": {
-        "name": "Command",
+      "message": {
+        "name": "Message",
         "description": "Sends a message to the user."
       },
       "condition": {
@@ -376,17 +376,17 @@
         "text": "Are you sure you want to delete the trigger?"
       }
     },
-    "command": {
-      "title": "Command",
+    "message": {
+      "title": "Message",
       "messages": {
-        "deleteCommand": {
-          "success": "You have successfully deleted the command.",
-          "error": "Failed to delete the command."
+        "deleteMessage": {
+          "success": "You have successfully deleted the message.",
+          "error": "Failed to delete the message."
         }
       },
       "deleteModal": {
-        "title": "Deleting the command",
-        "text": "Are you sure you want to delete the command?"
+        "title": "Deleting the message",
+        "text": "Are you sure you want to delete the message?"
       }
     },
     "condition": {

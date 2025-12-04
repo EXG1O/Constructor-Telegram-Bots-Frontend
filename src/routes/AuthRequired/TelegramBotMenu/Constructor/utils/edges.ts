@@ -2,7 +2,6 @@ import { Edge } from '@xyflow/react';
 
 import { DiagramAPIRequest } from 'api/telegram-bots/api-request/types';
 import { DiagramBackgroundTask } from 'api/telegram-bots/background-task/types';
-import { DiagramCommand } from 'api/telegram-bots/command/types';
 import { DiagramCondition } from 'api/telegram-bots/condition/types';
 import {
   Connection,
@@ -11,6 +10,7 @@ import {
   TargetObjectType,
 } from 'api/telegram-bots/connection/types';
 import { DiagramDatabaseOperation } from 'api/telegram-bots/database-operation/types';
+import { DiagramMessage } from 'api/telegram-bots/message/types';
 import { DiagramTrigger } from 'api/telegram-bots/trigger/types';
 
 export interface EdgePoint<OT extends ObjectType> {
@@ -47,7 +47,7 @@ export interface EdgeHandle<ObjectType extends string> {
 
 export interface EdgeSourceHandle
   extends EdgeHandle<
-    Exclude<SourceObjectType, 'command_keyboard_button'> | 'command'
+    Exclude<SourceObjectType, 'message_keyboard_button'> | 'message'
   > {}
 
 export interface EdgeTargetHandle extends EdgeHandle<TargetObjectType> {}
@@ -93,7 +93,7 @@ export function buildEdgeTargetHandle(handle: EdgeTargetHandle): string {
 
 export interface DiagramBlocks {
   triggers?: DiagramTrigger[];
-  commands?: DiagramCommand[];
+  messages?: DiagramMessage[];
   conditions?: DiagramCondition[];
   backgroundTasks?: DiagramBackgroundTask[];
   apiRequests?: DiagramAPIRequest[];
@@ -106,10 +106,10 @@ export function convertDiagramBlocksToEdges(diagramBlocks: DiagramBlocks): Edge[
       ...trigger.source_connections,
       ...trigger.target_connections,
     ]) ?? []),
-    ...(diagramBlocks.commands?.flatMap((command) => [
-      ...command.source_connections,
-      ...command.target_connections,
-      ...(command.keyboard?.buttons.flatMap((button) => button.source_connections) ??
+    ...(diagramBlocks.messages?.flatMap((message) => [
+      ...message.source_connections,
+      ...message.target_connections,
+      ...(message.keyboard?.buttons.flatMap((button) => button.source_connections) ??
         []),
     ]) ?? []),
     ...(diagramBlocks.conditions?.flatMap((condition) => [
@@ -140,12 +140,12 @@ export function convertDiagramBlocksToEdges(diagramBlocks: DiagramBlocks): Edge[
 
   return uniqueConnections.map((connection) => {
     const isKeyboardButtonConnection: boolean =
-      connection.source_object_type === 'command_keyboard_button';
+      connection.source_object_type === 'message_keyboard_button';
 
     const source: string = isKeyboardButtonConnection
-      ? `command:${
-          diagramBlocks.commands?.find((command) =>
-            command.keyboard?.buttons.some(
+      ? `message:${
+          diagramBlocks.messages?.find((message) =>
+            message.keyboard?.buttons.some(
               (button) => button.id === connection.source_object_id,
             ),
           )?.id
