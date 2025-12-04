@@ -9,9 +9,9 @@ import BlockButton from './components/BlockButton';
 
 import { useAPIRequestOffcanvasStore } from '../APIRequestOffcanvas/store';
 import { useBackgroundTaskOffcanvasStore } from '../BackgroundTaskOffcanvas/store';
-import { useCommandOffcanvasStore } from '../CommandOffcanvas/store';
 import { useConditionOffcanvasStore } from '../ConditionOffcanvas/store';
 import { useDatabaseOperationOffcanvasStore } from '../DatabaseOperationOffcanvas/store';
+import { useMessageOffcanvasStore } from '../MessageOffcanvas/store';
 import { useTriggerOffcanvasStore } from '../TriggerOffcanvas/store';
 
 export interface SelectBlockModalProps extends ModalProps {}
@@ -24,7 +24,7 @@ function SelectBlockModal({ children, ...props }: SelectBlockModalProps): ReactE
   const showAddTriggerOffcanvas = useTriggerOffcanvasStore(
     (state) => state.showOffcanvas,
   );
-  const showAddCommandOffcanvas = useCommandOffcanvasStore(
+  const showAddMessageOffcanvas = useMessageOffcanvasStore(
     (state) => state.showOffcanvas,
   );
   const showAddConditionOffcanvas = useConditionOffcanvasStore(
@@ -49,7 +49,7 @@ function SelectBlockModal({ children, ...props }: SelectBlockModalProps): ReactE
         </Modal.Header>
         <Modal.Body className='grid grid-cols-2 gap-2'>
           <BlockButton blockName='trigger' onClick={() => showAddTriggerOffcanvas()} />
-          <BlockButton blockName='command' onClick={() => showAddCommandOffcanvas()} />
+          <BlockButton blockName='message' onClick={() => showAddMessageOffcanvas()} />
           <BlockButton
             blockName='condition'
             onClick={() => showAddConditionOffcanvas()}

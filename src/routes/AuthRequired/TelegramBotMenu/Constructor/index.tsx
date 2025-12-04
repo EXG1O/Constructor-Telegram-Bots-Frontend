@@ -34,12 +34,12 @@ import APIRequestNode from './components/APIRequestNode';
 import APIRequestOffcanvas from './components/APIRequestOffcanvas';
 import BackgroundTaskNode from './components/BackgroundTaskNode';
 import BackgroundTaskOffcanvas from './components/BackgroundTaskOffcanvas';
-import CommandNode from './components/CommandNode';
-import CommandOffcanvas from './components/CommandOffcanvas';
 import ConditionNode from './components/ConditionNode';
 import ConditionOffcanvas from './components/ConditionOffcanvas';
 import DatabaseOperationNode from './components/DatabaseOperationNode';
 import DatabaseOperationOffcanvas from './components/DatabaseOperationOffcanvas';
+import MessageNode from './components/MessageNode';
+import MessageOffcanvas from './components/MessageOffcanvas';
 import Panel from './components/Panel';
 import TriggerNode from './components/TriggerNode';
 import TriggerOffcanvas from './components/TriggerOffcanvas';
@@ -51,13 +51,13 @@ import { DiagramAPIRequestAPI } from 'api/telegram-bots/api-request';
 import { APIRequest } from 'api/telegram-bots/api-request/types';
 import { DiagramBackgroundTaskAPI } from 'api/telegram-bots/background-task';
 import { BackgroundTask } from 'api/telegram-bots/background-task/types';
-import { DiagramCommandAPI } from 'api/telegram-bots/command';
-import { Command } from 'api/telegram-bots/command/types';
 import { DiagramConditionAPI } from 'api/telegram-bots/condition';
 import { Condition } from 'api/telegram-bots/condition/types';
 import { ConnectionAPI, ConnectionsAPI } from 'api/telegram-bots/connection';
 import { DiagramDatabaseOperationAPI } from 'api/telegram-bots/database-operation';
 import { DatabaseOperation } from 'api/telegram-bots/database-operation/types';
+import { DiagramMessageAPI } from 'api/telegram-bots/message';
+import { Message } from 'api/telegram-bots/message/types';
 import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 import { DiagramTriggerAPI } from 'api/telegram-bots/trigger';
 import { Trigger } from 'api/telegram-bots/trigger/types';
@@ -83,7 +83,7 @@ import('@xyflow/react/dist/base.css');
 
 export const nodeTypes = {
   trigger: TriggerNode,
-  command: CommandNode,
+  message: MessageNode,
   condition: ConditionNode,
   background_task: BackgroundTaskNode,
   api_request: APIRequestNode,
@@ -120,7 +120,7 @@ const diagramBlockAPIMap: Record<
   }
 > = {
   trigger: DiagramTriggerAPI,
-  command: DiagramCommandAPI,
+  message: DiagramMessageAPI,
   condition: DiagramConditionAPI,
   background_task: DiagramBackgroundTaskAPI,
   api_request: DiagramAPIRequestAPI,
@@ -141,7 +141,7 @@ function Constructor(): ReactElement {
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
   const {
     diagramTriggers,
-    diagramCommands,
+    diagramMessages,
     diagramConditions,
     diagramBackgroundTasks,
     diagramAPIRequests,
@@ -151,7 +151,7 @@ function Constructor(): ReactElement {
   const [nodes, setNodes, onNodesChange] = useNodesState(
     Object.entries({
       trigger: diagramTriggers,
-      command: diagramCommands,
+      message: diagramMessages,
       condition: diagramConditions,
       background_task: diagramBackgroundTasks,
       api_request: diagramAPIRequests,
@@ -165,7 +165,7 @@ function Constructor(): ReactElement {
   const [edges, setEdges, onEdgesChange] = useEdgesState(
     convertDiagramBlocksToEdges({
       triggers: diagramTriggers,
-      commands: diagramCommands,
+      messages: diagramMessages,
       conditions: diagramConditions,
       backgroundTasks: diagramBackgroundTasks,
       apiRequests: diagramAPIRequests,
@@ -209,9 +209,9 @@ function Constructor(): ReactElement {
       const targetHandle: EdgeTargetHandle = parseEdgeTargetHandle(edge.targetHandle);
 
       const response = await ConnectionsAPI.create(telegramBot.id, {
-        ...(sourceHandle.objectType === 'command' && sourceHandle.nestedObjectID
+        ...(sourceHandle.objectType === 'message' && sourceHandle.nestedObjectID
           ? {
-              source_object_type: 'command_keyboard_button',
+              source_object_type: 'message_keyboard_button',
               source_object_id: sourceHandle.nestedObjectID,
             }
           : {
@@ -382,10 +382,10 @@ function Constructor(): ReactElement {
     [updateDiagramBlock],
   );
 
-  const handleCommandChange = useCallback(
-    async (command: Command) => {
-      await updateDiagramBlock('command', command.id, {
-        messages: { getDiagramBlock: { error: t('messages.getDiagramCommand.error') } },
+  const handleMessageChange = useCallback(
+    async (message: Message) => {
+      await updateDiagramBlock('message', message.id, {
+        messages: { getDiagramBlock: { error: t('messages.getDiagramMessage.error') } },
       });
     },
     [updateDiagramBlock],
@@ -438,7 +438,7 @@ function Constructor(): ReactElement {
   return (
     <Page title={t('title')} className='flex-auto'>
       <TriggerOffcanvas onAdd={handleTriggerChange} onSave={handleTriggerChange} />
-      <CommandOffcanvas onAdd={handleCommandChange} onSave={handleCommandChange} />
+      <MessageOffcanvas onAdd={handleMessageChange} onSave={handleMessageChange} />
       <ConditionOffcanvas
         onAdd={handleConditionChange}
         onSave={handleConditionChange}
