@@ -1,3 +1,4 @@
+import { JWTStorage } from 'api/storage';
 import { UsersAPI } from 'api/users';
 import { Data } from 'api/users/types';
 
@@ -35,6 +36,13 @@ async function loader(): Promise<LoaderData> {
   }
 
   const response = await UsersAPI.login(data);
+
+  if (response.ok) {
+    const { refresh_token, access_token } = response.json;
+
+    JWTStorage.setRefreshToken(refresh_token);
+    JWTStorage.setAccessToken(access_token);
+  }
 
   return { success: response.status === 200 };
 }
