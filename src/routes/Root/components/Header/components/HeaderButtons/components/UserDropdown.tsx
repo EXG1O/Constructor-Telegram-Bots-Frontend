@@ -9,6 +9,7 @@ import Button from 'components/ui/Button';
 import Dropdown, { DropdownProps } from 'components/ui/Dropdown';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
+import { JWTStorage } from 'api/storage';
 import { UserAPI } from 'api/users';
 import { User } from 'api/users/types';
 
@@ -37,6 +38,7 @@ function UserDropdown({ user, ...props }: UserDropdownProps): ReactElement {
         const response = await UserAPI.logout();
 
         if (response.ok) {
+          JWTStorage.clearTokens();
           hideConfirmModal();
           navigate(reverse(RouteID.Home));
           createMessageToast({
@@ -44,13 +46,12 @@ function UserDropdown({ user, ...props }: UserDropdownProps): ReactElement {
             level: 'success',
           });
         } else {
+          setLoadingConfirmModal(false);
           createMessageToast({
             message: t('messages.logout.error'),
             level: 'error',
           });
         }
-
-        setLoadingConfirmModal(false);
       },
       onCancel: null,
     });

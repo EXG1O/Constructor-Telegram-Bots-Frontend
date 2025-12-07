@@ -16,7 +16,7 @@ export class UsersAPI {
   static url: string = rootURL;
 
   static async login(data: Data.UsersAPI.Login) {
-    return makeRequest(this.url + 'login/', 'POST', data);
+    return makeRequest<APIResponse.UsersAPI.Login>(this.url + 'login/', 'POST', data);
   }
 }
 
@@ -32,8 +32,12 @@ export class UserAPI {
   static async logoutAll() {
     return makeRequest(this.url + 'logout-all/', 'POST', undefined, true);
   }
-  static async tokenRefresh() {
-    return makeRequest(this.url + 'token-refresh/', 'POST', undefined);
+  static async tokenRefresh(data: Data.UserAPI.TokenRefresh) {
+    return makeRequest<APIResponse.UserAPI.TokenRefresh>(
+      this.url + 'token-refresh/',
+      'POST',
+      data,
+    );
   }
   static async delete() {
     return makeRequest(this.url, 'DELETE', undefined, true);

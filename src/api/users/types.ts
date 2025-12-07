@@ -20,6 +20,12 @@ export namespace Data {
       hash: string;
     }
   }
+
+  export namespace UserAPI {
+    export interface TokenRefresh {
+      refresh_token: string;
+    }
+  }
 }
 
 export namespace APIResponse {
@@ -29,7 +35,17 @@ export namespace APIResponse {
     }
   }
 
+  export namespace UsersAPI {
+    export interface Login {
+      refresh_token: string;
+      access_token: string;
+    }
+  }
+
   export namespace UserAPI {
     export type Get = User;
+    export interface TokenRefresh {
+      access_token: string;
+    }
   }
 }
