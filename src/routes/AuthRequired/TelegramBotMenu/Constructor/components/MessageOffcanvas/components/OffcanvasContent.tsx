@@ -12,7 +12,7 @@ import ImagesBlock from './ImagesBlock';
 import KeyboardBlock from './KeyboardBlock';
 import SettingsBlock from './SettingsBlock';
 import TelegramBotStorage from './TelegramBotStorage';
-import MessageBlock from './TextBlock';
+import TextBlock from './TextBlock';
 
 import AddonButtonGroup from '../../AddonButtonGroup';
 import FormToggleSection from '../../FormToggleSection';
@@ -44,7 +44,9 @@ function OffcanvasContent(): ReactElement {
           <FormToggleSection name='show_documents_block'>
             <DocumentsBlock className='mb-3' />
           </FormToggleSection>
-          <MessageBlock className='mb-3' />
+          <FormToggleSection name='show_text_block'>
+            <TextBlock className='mb-3' />
+          </FormToggleSection>
           <FormToggleSection name='show_keyboard_block'>
             <KeyboardBlock className='mb-3' />
           </FormToggleSection>
@@ -58,6 +60,9 @@ function OffcanvasContent(): ReactElement {
           </AddonButtonGroup.Button>
           <AddonButtonGroup.Button name='show_documents_block'>
             {t('documentsBlock.title')}
+          </AddonButtonGroup.Button>
+          <AddonButtonGroup.Button name='show_text_block'>
+            {t('textBlock.title')}
           </AddonButtonGroup.Button>
           <AddonButtonGroup.Button name='show_keyboard_block'>
             {t('keyboardBlock.title')}

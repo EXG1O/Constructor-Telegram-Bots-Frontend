@@ -15,6 +15,7 @@ import { defaultImages, Image } from './ImagesBlock';
 import { defaultKeyboard } from './KeyboardBlock';
 import { KeyboardRow } from './KeyboardBlock/components/Keyboard';
 import OffcanvasContent from './OffcanvasContent';
+import { defaultText } from './TextBlock';
 
 import { MessageAPI } from 'api/telegram-bots/message';
 
@@ -56,7 +57,7 @@ function OffcanvasInner({
         return;
       }
 
-      const { id, images, documents, keyboard, ...message } = response.json;
+      const { id, text, images, documents, keyboard, ...message } = response.json;
 
       setValues({
         ...message,
@@ -87,6 +88,7 @@ function OffcanvasInner({
                 from_url,
               }))
           : defaultDocuments,
+        text: text ?? defaultText,
         keyboard: keyboard
           ? {
               type: keyboard.type,
@@ -115,6 +117,7 @@ function OffcanvasInner({
 
         show_images_block: Boolean(images.length),
         show_documents_block: Boolean(documents.length),
+        show_text_block: text !== null,
         show_keyboard_block: Boolean(keyboard),
       });
       setLoading(false);

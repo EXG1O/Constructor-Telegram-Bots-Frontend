@@ -45,6 +45,7 @@ export interface FormValues
     KeyboardBlockFormValues {
   show_images_block: boolean;
   show_documents_block: boolean;
+  show_text_block: boolean;
   show_keyboard_block: boolean;
 }
 
@@ -58,6 +59,7 @@ export const defaultFormValues: FormValues = {
 
   show_images_block: false,
   show_documents_block: false,
+  show_text_block: false,
   show_keyboard_block: false,
 };
 
@@ -81,14 +83,37 @@ function MessageOffcanvas({ onAdd, onSave }: MessageOffcanvasProps): ReactElemen
     {
       images,
       documents,
+      text,
       keyboard,
       show_images_block,
       show_documents_block,
+      show_text_block,
       show_keyboard_block,
       ...values
     }: FormValues,
     { setFieldError }: FormikHelpers<FormValues>,
   ): Promise<void> {
+    if (
+      !show_images_block &&
+      !show_documents_block &&
+      !show_text_block &&
+      !show_keyboard_block
+    ) {
+      createMessageToast({
+        message: t(`messages.validation.error`, { context: 'noAddons' }),
+        level: 'error',
+      });
+      return;
+    }
+
+    if (show_keyboard_block && !show_text_block) {
+      createMessageToast({
+        message: t(`messages.validation.error`, { context: 'keyboardRequiresText' }),
+        level: 'error',
+      });
+      return;
+    }
+
     const data: Data.MessagesAPI.Create | Data.MessageAPI.Update = {
       ...values,
       images:
@@ -113,6 +138,7 @@ function MessageOffcanvas({ onAdd, onSave }: MessageOffcanvasProps): ReactElemen
               }),
             )
           : null,
+      text: show_text_block ? text : null,
       keyboard: show_keyboard_block
         ? {
             type: keyboard.type,

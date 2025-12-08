@@ -99,6 +99,10 @@
       "editMessage": {
         "success": "You have successfully saved the message.",
         "error": "Failed to save the message."
+      },
+      "validation": {
+        "error_noAddons": "You must specify at least one addon.",
+        "error_keyboardRequiresText": "The «Keyboard» addon cannot be used without the «Text» addon."
       }
     },
     "settingsBlock": {
