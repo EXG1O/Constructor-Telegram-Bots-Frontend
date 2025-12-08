@@ -423,7 +423,7 @@
     "apiRequest": {
       "title": "API Request",
       "messages": {
-        "deleteBackgroundTask": {
+        "deleteAPIRequest": {
           "success": "You have successfully deleted the API request.",
           "error": "Failed to delete the API request."
         }
@@ -436,7 +436,7 @@
     "databaseOperation": {
       "title": "Database Operation",
       "messages": {
-        "deleteAPIRequest": {
+        "deleteDatabaseOperation": {
           "success": "You have successfully deleted the database operation.",
           "error": "Failed to delete the database operation."
         }
