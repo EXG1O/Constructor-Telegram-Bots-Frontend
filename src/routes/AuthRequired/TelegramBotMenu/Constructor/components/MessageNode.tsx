@@ -112,13 +112,15 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
           position={Position.Right}
         />
       </Node.Block>
-      <Node.Block
-        className={cn(
-          richInputEditorInnerContentVariants({ size: 'sm' }),
-          telegramRichInputEditorInnerContentVariants({ size: 'sm' }),
-        )}
-        dangerouslySetInnerHTML={{ __html: message.text }}
-      />
+      {message.text && (
+        <Node.Block
+          className={cn(
+            richInputEditorInnerContentVariants({ size: 'sm' }),
+            telegramRichInputEditorInnerContentVariants({ size: 'sm' }),
+          )}
+          dangerouslySetInnerHTML={{ __html: message.text }}
+        />
+      )}
       {message.keyboard?.buttons && (
         <div className='flex flex-col gap-1'>
           {message.keyboard.buttons.map((button) =>

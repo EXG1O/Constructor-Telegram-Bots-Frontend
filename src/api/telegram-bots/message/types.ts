@@ -35,7 +35,7 @@ export interface MessageKeyboard {
 export interface Message {
   id: number;
   name: string;
-  text: string;
+  text: string | null;
   settings: MessageSettings;
   images: MessageImage[];
   documents: MessageDocument[];
