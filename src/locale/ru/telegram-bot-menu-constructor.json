@@ -436,7 +436,7 @@
     "databaseOperation": {
       "title": "Операция базы данных",
       "messages": {
-        "deleteAPIRequest": {
+        "deleteDatabaseOperation": {
           "success": "Вы успешно удалили операцию базы данных.",
           "error": "Не удалось удалить операцию базы данных."
         }
