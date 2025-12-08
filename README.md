@@ -9,7 +9,7 @@ To install, execute the following commands:
 ```bash
 git clone https://github.com/EXG1O/Constructor-Telegram-Bots-Frontend.git
 cd Constructor-Telegram-Bots-Frontend
-git checkout tags/v2.2.0
+git checkout tags/v2.2.1
 npm ci
 npm run build
 ```
