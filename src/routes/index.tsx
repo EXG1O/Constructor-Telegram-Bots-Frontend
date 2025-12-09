@@ -10,6 +10,7 @@ export enum RouteID {
   DonationCompleted = 'donation-completed',
   Instruction = 'instruction',
   PrivacyPolicy = 'privacy-policy',
+  TermsOfService = 'terms-of-service',
   TelegramBots = 'telegram-bots',
   TelegramBotMenuRoot = 'telegram-bot-menu-root',
   TelegramBotMenuVariables = 'telegram-bot-menu-variables',
@@ -117,6 +118,21 @@ export const routes: RouteObject[] = [
           const [component, loader] = await Promise.all([
             await import('./PrivacyPolicy'),
             await import('./PrivacyPolicy/loader'),
+          ]);
+
+          return {
+            Component: component.default,
+            loader: loader.default,
+          };
+        },
+      },
+      {
+        id: RouteID.TermsOfService,
+        path: 'terms-of-service/',
+        async lazy() {
+          const [component, loader] = await Promise.all([
+            await import('./TermsOfService'),
+            await import('./TermsOfService/loader'),
           ]);
 
           return {

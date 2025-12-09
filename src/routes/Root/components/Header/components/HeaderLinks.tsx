@@ -22,7 +22,7 @@ function HeaderLinks({ className, ...props }: HeaderLinksProps): ReactElement {
         'flex',
         'flex-nowrap',
         'max-lg:w-[calc(100%-var(--spacing)*11.5)]',
-        'xl:justify-center',
+        '2xl:justify-center',
         'items-center',
         'overflow-x-auto',
         'scrollbar-thin',
@@ -31,6 +31,9 @@ function HeaderLinks({ className, ...props }: HeaderLinksProps): ReactElement {
     >
       <HeaderLink to={reverse(RouteID.Instruction)}>{t('instruction')}</HeaderLink>
       <HeaderLink to={reverse(RouteID.PrivacyPolicy)}>{t('privacyPolicy')}</HeaderLink>
+      <HeaderLink to={reverse(RouteID.TermsOfService)}>
+        {t('termsOfService')}
+      </HeaderLink>
       <HeaderLink to={reverse(RouteID.Donation)}>{t('donation')}</HeaderLink>
     </div>
   );
