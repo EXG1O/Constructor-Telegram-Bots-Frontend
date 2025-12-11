@@ -4,6 +4,7 @@ export interface User {
   first_name: string;
   last_name: string | null;
   full_name: string;
+  accepted_terms: boolean;
   is_staff: boolean;
   joined_date: string;
 }
