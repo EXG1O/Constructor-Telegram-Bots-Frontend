@@ -1,4 +1,21 @@
 {
+  "acceptTermsModal": {
+    "title": "Terms of Service",
+    "messages": {
+      "acceptTerms": {
+        "success": "You have successfully accepted the Terms of Service and can continue using the service.",
+        "error": "Failed to record your acceptance of the Terms of Service."
+      },
+      "declineTerms": {
+        "success": "You have successfully declined the Terms of Service and all your personal data has been removed from the service database.",
+        "error": "Failed to record your decline of the Terms of Service."
+      }
+    },
+    "text": "Please accept the <0>Terms of Service</0> to continue using the service.",
+    "disclaimer": "If you decline the Terms of Service, we will promptly delete your personal data from the service database in accordance with our <0>Privacy Policy</0>.",
+    "acceptButton": "Accept",
+    "declineButton": "Decline"
+  },
   "header": {
     "links": {
       "instruction": "Instruction",

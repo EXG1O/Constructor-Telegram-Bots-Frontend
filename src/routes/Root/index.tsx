@@ -5,14 +5,20 @@ import ConfirmModal from 'components/shared/ConfirmModal';
 import Spinner from 'components/ui/Spinner';
 import ToastContainer from 'components/ui/ToastContainer';
 
+import AcceptTermsModal from './components/AcceptTermsModal';
 import Footer from './components/Footer';
 import Header from './components/Header';
 
+import useRootRouteLoaderData from './hooks/useRootRouteLoaderData';
+
 function Root(): ReactElement {
+  const { user } = useRootRouteLoaderData();
+
   const navigation = useNavigation();
 
   return (
     <>
+      {!user?.accepted_terms && <AcceptTermsModal />}
       <ConfirmModal />
       <ToastContainer />
       <Header />

@@ -39,6 +39,9 @@ export class UserAPI {
       data,
     );
   }
+  static async acceptTerms() {
+    return makeRequest(this.url + 'accept-terms/', 'POST', undefined, true);
+  }
   static async delete() {
     return makeRequest(this.url, 'DELETE', undefined, true);
   }
