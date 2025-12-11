@@ -18,7 +18,7 @@ function Root(): ReactElement {
 
   return (
     <>
-      {!user?.accepted_terms && <AcceptTermsModal />}
+      {user && !user.accepted_terms && <AcceptTermsModal />}
       <ConfirmModal />
       <ToastContainer />
       <Header />
