@@ -62,6 +62,7 @@ function Markdown({
           return (
             <a
               {...props}
+              target='_blank'
               className={cn('text-primary', 'hover:text-primary-accent', className)}
             />
           );
