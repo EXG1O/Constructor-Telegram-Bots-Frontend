@@ -11,8 +11,8 @@ import SectionItem from './components/SectionItem';
 
 import useTermsOfServiceRouteLoaderData from './hooks/useTermsOfServiceRouteLoaderData';
 
-import { SectionsAPI } from 'api/privacy-policy';
-import { Section } from 'api/privacy-policy/types';
+import { SectionsAPI } from 'api/terms-of-service';
+import { Section } from 'api/terms-of-service/types';
 
 function TermsOfService(): ReactElement {
   const { t, i18n } = useTranslation(RouteID.TermsOfService);
