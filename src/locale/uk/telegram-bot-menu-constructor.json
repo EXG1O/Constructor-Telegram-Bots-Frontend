@@ -4,6 +4,9 @@
     "validation": {
       "invalidJSON": "Введіть дані у форматі JSON."
     },
+    "getDiagramTrigger": {
+      "error": "Не вдалося отримати дані тригерів для діаграми."
+    },
     "getDiagramMessage": {
       "error": "Не вдалося отримати дані повідомлень для діаграми."
     },
@@ -12,6 +15,12 @@
     },
     "getDiagramBackgroundTask": {
       "error": "Не вдалося отримати дані фонової задачі для діаграми."
+    },
+    "getDiagramAPIRequest": {
+      "error": "Не вдалося отримати дані API-запитів для діаграми."
+    },
+    "getDiagramDatabaseOperation": {
+      "error": "Не вдалося отримати дані операцій бази даних для діаграми."
     },
     "createConnection": {
       "error": "Не вдалося підключити блок до іншого блоку."
