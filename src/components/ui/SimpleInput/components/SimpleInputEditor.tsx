@@ -44,6 +44,7 @@ const SimpleInputEditor = forwardRef<HTMLInputElement, SimpleInputEditorProps>(
 
     const size = useSimpleInputStore((state) => state.size);
     const autoFocus = useSimpleInputStore((state) => state.autoFocus);
+    const inputMode = useSimpleInputStore((state) => state.inputMode);
     const value = useSimpleInputStore((state) => state.value);
     const placeholder = useSimpleInputStore((state) => state.placeholder);
     const setValue = useSimpleInputStore((state) => state.setValue);
@@ -57,6 +58,7 @@ const SimpleInputEditor = forwardRef<HTMLInputElement, SimpleInputEditorProps>(
         {...props}
         ref={ref}
         autoFocus={autoFocus}
+        inputMode={inputMode}
         value={value}
         placeholder={placeholder}
         className={cn(simpleInputEditorVariants({ size, className }))}
