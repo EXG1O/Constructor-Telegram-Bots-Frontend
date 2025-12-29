@@ -38,6 +38,7 @@ function URLInput(props: URLInputProps): ReactElement {
     <SimpleInputFeedback
       {...props}
       size='sm'
+      inputMode='url'
       value={url}
       error={error}
       placeholder={t('placeholder')}

@@ -35,7 +35,11 @@ function URLBlock({ className, ...props }: URLBlockProps): ReactElement {
       <Block.Title>
         <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
-      <FormSimpleInputFeedback name='url' placeholder={t('urlInput.placeholder')} />
+      <FormSimpleInputFeedback
+        name='url'
+        inputMode='url'
+        placeholder={t('urlInput.placeholder')}
+      />
     </Block>
   );
 }

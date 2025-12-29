@@ -90,7 +90,7 @@ const visibilityButtonVariants = cva(
 
 export interface SearchInputProps
   extends Omit<SimpleInputProps, 'invalid' | 'children'>,
-    Omit<SimpleInputEditorProps, 'size'> {
+    Omit<SimpleInputEditorProps, keyof SimpleInputProps> {
   containerProps?: HTMLAttributes<HTMLDivElement>;
   onSearch?: (value: string) => void;
   onCancel?: () => void;
@@ -169,6 +169,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
           </div>
           <SimpleInput
             size={size}
+            inputMode='search'
             value={value}
             placeholder={t('inputPlaceholder')}
             onChange={handleChange}

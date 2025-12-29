@@ -1,14 +1,17 @@
+import { InputHTMLAttributes } from 'react';
 import { create } from 'zustand';
 
 import { DEFAULT_SIZE, Size } from '.';
 
-export interface StateParams {
+export interface StateParams
+  extends Pick<
+    InputHTMLAttributes<HTMLInputElement>,
+    'autoFocus' | 'inputMode' | 'placeholder'
+  > {
   size: Size;
   invalid: boolean;
   value: string;
 
-  autoFocus?: boolean;
-  placeholder?: string;
   onChange?: (value: string) => void;
 }
 
@@ -18,7 +21,7 @@ export interface StateActions {
 
 export type State = StateParams & StateActions;
 export type StateProps = Partial<Pick<StateParams, 'size' | 'invalid' | 'value'>> &
-  Pick<StateParams, 'autoFocus' | 'placeholder' | 'onChange'>;
+  Pick<StateParams, 'autoFocus' | 'inputMode' | 'placeholder' | 'onChange'>;
 
 export function createStore({
   size = DEFAULT_SIZE,
