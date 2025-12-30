@@ -38,6 +38,8 @@ import ConditionNode from './components/ConditionNode';
 import ConditionOffcanvas from './components/ConditionOffcanvas';
 import DatabaseOperationNode from './components/DatabaseOperationNode';
 import DatabaseOperationOffcanvas from './components/DatabaseOperationOffcanvas';
+import InvoiceNode from './components/InvoiceNode';
+import InvoiceOffcanvas from './components/InvoiceOffcanvas';
 import MessageNode from './components/MessageNode';
 import MessageOffcanvas from './components/MessageOffcanvas';
 import Panel from './components/Panel';
@@ -56,6 +58,8 @@ import { Condition } from 'api/telegram-bots/condition/types';
 import { ConnectionAPI, ConnectionsAPI } from 'api/telegram-bots/connection';
 import { DiagramDatabaseOperationAPI } from 'api/telegram-bots/database-operation';
 import { DatabaseOperation } from 'api/telegram-bots/database-operation/types';
+import { DiagramInvoiceAPI } from 'api/telegram-bots/invoice';
+import { Invoice } from 'api/telegram-bots/invoice/types';
 import { DiagramMessageAPI } from 'api/telegram-bots/message';
 import { Message } from 'api/telegram-bots/message/types';
 import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
@@ -88,6 +92,7 @@ export const nodeTypes = {
   background_task: BackgroundTaskNode,
   api_request: APIRequestNode,
   database_operation: DatabaseOperationNode,
+  invoice: InvoiceNode,
 };
 const defaultEdgeOptions: DefaultEdgeOptions = {
   markerEnd: {
@@ -125,6 +130,7 @@ const diagramBlockAPIMap: Record<
   background_task: DiagramBackgroundTaskAPI,
   api_request: DiagramAPIRequestAPI,
   database_operation: DiagramDatabaseOperationAPI,
+  invoice: DiagramInvoiceAPI,
 };
 
 interface UpdateDiagramBlockOptions {
@@ -146,6 +152,7 @@ function Constructor(): ReactElement {
     diagramBackgroundTasks,
     diagramAPIRequests,
     diagramDatabaseOperations,
+    diagramInvoices,
   } = useTelegramBotMenuConstructorRouteLoaderData();
 
   const [nodes, setNodes, onNodesChange] = useNodesState(
@@ -156,6 +163,7 @@ function Constructor(): ReactElement {
       background_task: diagramBackgroundTasks,
       api_request: diagramAPIRequests,
       database_operation: diagramDatabaseOperations,
+      invoice: diagramInvoices,
     } as Record<NodeType, ExistingDiagramBlock[]>).flatMap(([type, diagramBlocks]) =>
       diagramBlocks.map((diagramBlock) =>
         convertDiagramBlockToNode(type as NodeType, diagramBlock),
@@ -170,6 +178,7 @@ function Constructor(): ReactElement {
       backgroundTasks: diagramBackgroundTasks,
       apiRequests: diagramAPIRequests,
       databaseOperations: diagramDatabaseOperations,
+      invoices: diagramInvoices,
     }),
   );
 
@@ -435,6 +444,17 @@ function Constructor(): ReactElement {
     [updateDiagramBlock],
   );
 
+  const handleInvoiceChange = useCallback(
+    async (invoice: Invoice) => {
+      await updateDiagramBlock('invoice', invoice.id, {
+        messages: {
+          getDiagramBlock: { error: t('messages.getDiagramInvoice.error') },
+        },
+      });
+    },
+    [updateDiagramBlock],
+  );
+
   return (
     <Page title={t('title')} className='flex-auto'>
       <TriggerOffcanvas onAdd={handleTriggerChange} onSave={handleTriggerChange} />
@@ -455,6 +475,7 @@ function Constructor(): ReactElement {
         onAdd={handleDatabaseOperationChange}
         onSave={handleDatabaseOperationChange}
       />
+      <InvoiceOffcanvas onAdd={handleInvoiceChange} onSave={handleInvoiceChange} />
       <div ref={handleRef} className='size-full overflow-hidden rounded-lg bg-light'>
         <ReactFlow
           fitView

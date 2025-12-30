@@ -343,6 +343,53 @@
     "actionButton_add": "Add",
     "actionButton_edit": "Save"
   },
+  "invoiceOffcanvas": {
+    "title_add": "Adding a invoice",
+    "title_edit": "Editing the invoice",
+    "messages": {
+      "getInvoice": {
+        "error": "Failed to retrieve invoice data."
+      },
+      "addInvoice": {
+        "success": "You have successfully added the invoice.",
+        "error": "Failed to add the invoice."
+      },
+      "editInvoice": {
+        "success": "You have successfully saved the invoice.",
+        "error": "Failed to save the invoice."
+      }
+    },
+    "titleBlock": {
+      "title": "Title",
+      "inputPlaceholder": "Enter title"
+    },
+    "imageBlock": {
+      "title": "Image",
+      "messages": {
+        "addImage": {
+          "error": "Failed to add the image {{name}}.",
+          "error_tooLarge": "Image {{name}} is larger than 2.5MB.",
+          "error_notEnoughStorage": "Unable to add image {{name}}, not enough storage space."
+        }
+      },
+      "addButton": "Add image"
+    },
+    "descriptionBlock": {
+      "title": "Description",
+      "inputPlaceholder": "Enter description"
+    },
+    "priceBlock": {
+      "title": "Price",
+      "label": {
+        "inputPlaceholder": "Enter label"
+      },
+      "amount": {
+        "inputPlaceholder": "Enter price in Telegram Stars"
+      }
+    },
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save"
+  },
   "panel": {
     "addBlockButton": "Add block"
   },
@@ -372,6 +419,10 @@
       "databaseOperation": {
         "name": "Database operation",
         "description": "Adds or updates data in the bot's database."
+      },
+      "invoice": {
+        "name": "Invoice",
+        "description": "Sends an invoice for payment."
       }
     }
   },
@@ -453,6 +504,19 @@
       "deleteModal": {
         "title": "Deleting the database operation",
         "text": "Are you sure you want to delete the database operation?"
+      }
+    },
+    "invoice": {
+      "title": "Invoice",
+      "messages": {
+        "deleteInvoice": {
+          "success": "You have successfully deleted the invoice.",
+          "error": "Failed to delete the invoice."
+        }
+      },
+      "deleteModal": {
+        "title": "Deleting the invoice",
+        "text": "Are you sure you want to delete the invoice?"
       }
     }
   }

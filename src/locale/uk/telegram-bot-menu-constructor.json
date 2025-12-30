@@ -343,6 +343,53 @@
     "actionButton_add": "Додати",
     "actionButton_edit": "Зберегти"
   },
+  "invoiceOffcanvas": {
+    "title_add": "Додавання рахунку",
+    "title_edit": "Редагування рахунку",
+    "messages": {
+      "getInvoice": {
+        "error": "Не вдалося отримати дані рахунку."
+      },
+      "addInvoice": {
+        "success": "Ви успішно додали рахунок.",
+        "error": "Не вдалося додати рахунок."
+      },
+      "editInvoice": {
+        "success": "Ви успішно зберегли рахунок.",
+        "error": "Не вдалося зберегти рахунок."
+      }
+    },
+    "titleBlock": {
+      "title": "Заголовок",
+      "inputPlaceholder": "Введіть заголовок"
+    },
+    "imageBlock": {
+      "title": "Зображення",
+      "messages": {
+        "addImage": {
+          "error": "Не вдалося додати зображення {{name}}.",
+          "error_tooLarge": "Зображення {{name}} має розмір понад 2.5 МБ.",
+          "error_notEnoughStorage": "Неможливо додати зображення {{name}}, оскільки недостатньо місця в сховищі."
+        }
+      },
+      "addButton": "Додати зображення"
+    },
+    "descriptionBlock": {
+      "title": "Опис",
+      "inputPlaceholder": "Введіть опис"
+    },
+    "priceBlock": {
+      "title": "Ціна",
+      "label": {
+        "inputPlaceholder": "Введіть підпис"
+      },
+      "amount": {
+        "inputPlaceholder": "Введіть ціну в Telegram Stars"
+      }
+    },
+    "actionButton_add": "Додати",
+    "actionButton_edit": "Зберегти"
+  },
   "panel": {
     "addBlockButton": "Додати блок"
   },
@@ -372,6 +419,10 @@
       "databaseOperation": {
         "name": "Операція бази даних",
         "description": "Додає або оновлює дані в базі даних бота."
+      },
+      "invoice": {
+        "name": "Рахунок",
+        "description": "Надсилає рахунок на оплату."
       }
     }
   },
@@ -453,6 +504,19 @@
       "deleteModal": {
         "title": "Видалення операції бази даних",
         "text": "Ви впевнені, що хочете видалити операцію бази даних?"
+      }
+    },
+    "invoice": {
+      "title": "Рахунок",
+      "messages": {
+        "deleteInvoice": {
+          "success": "Ви успішно видалили рахунок.",
+          "error": "Не вдалося видалити рахунок."
+        }
+      },
+      "deleteModal": {
+        "title": "Видалення рахунку",
+        "text": "Ви точно хочете видалити рахунок?"
       }
     }
   }

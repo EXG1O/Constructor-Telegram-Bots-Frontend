@@ -343,6 +343,53 @@
     "actionButton_add": "Добавить",
     "actionButton_edit": "Сохранить"
   },
+  "invoiceOffcanvas": {
+    "title_add": "Добавление счёта",
+    "title_edit": "Редактирование счёта",
+    "messages": {
+      "getInvoice": {
+        "error": "Не удалось получить данные счёта."
+      },
+      "addInvoice": {
+        "success": "Вы успешно добавили счёт.",
+        "error": "Не удалось добавить счёт."
+      },
+      "editInvoice": {
+        "success": "Вы успешно сохранили счёт.",
+        "error": "Не удалось сохранить счёт."
+      }
+    },
+    "titleBlock": {
+      "title": "Заголовок",
+      "inputPlaceholder": "Введите заголовок"
+    },
+    "imageBlock": {
+      "title": "Изображение",
+      "messages": {
+        "addImage": {
+          "error": "Не удалось добавить изображение {{name}}.",
+          "error_tooLarge": "Изображение {{name}} весит больше 2.5МБ.",
+          "error_notEnoughStorage": "Невозможно добавить изображение {{name}}, потому что не хватает места в хранилище."
+        }
+      },
+      "addButton": "Добавить изображение"
+    },
+    "descriptionBlock": {
+      "title": "Описание",
+      "inputPlaceholder": "Введите описание"
+    },
+    "priceBlock": {
+      "title": "Цена",
+      "label": {
+        "inputPlaceholder": "Введите подпись"
+      },
+      "amount": {
+        "inputPlaceholder": "Введите цену в Telegram Stars"
+      }
+    },
+    "actionButton_add": "Добавить",
+    "actionButton_edit": "Сохранить"
+  },
   "panel": {
     "addBlockButton": "Добавить блок"
   },
@@ -372,6 +419,10 @@
       "databaseOperation": {
         "name": "Операция базы данных",
         "description": "Добавляет или обновляет данные в базе данных бота."
+      },
+      "invoice": {
+        "name": "Счёт",
+        "description": "Отправляет счёт на оплату."
       }
     }
   },
@@ -453,6 +504,19 @@
       "deleteModal": {
         "title": "Удаление операции базы данных",
         "text": "Вы точно хотите удалить операцию базы данных?"
+      }
+    },
+    "invoice": {
+      "title": "Счёт",
+      "messages": {
+        "deleteInvoice": {
+          "success": "Вы успешно удалили счёт.",
+          "error": "Не удалось удалить счёт."
+        }
+      },
+      "deleteModal": {
+        "title": "Удаление операции базы данных",
+        "text": "Вы точно хотите удалить счёт?"
       }
     }
   }
