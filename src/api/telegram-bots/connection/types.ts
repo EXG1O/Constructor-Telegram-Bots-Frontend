@@ -5,7 +5,8 @@ export type ObjectType =
   | 'condition'
   | 'background_task'
   | 'api_request'
-  | 'database_operation';
+  | 'database_operation'
+  | 'invoice';
 export type SourceObjectType = Extract<
   ObjectType,
   | 'trigger'
@@ -15,10 +16,11 @@ export type SourceObjectType = Extract<
   | 'background_task'
   | 'api_request'
   | 'database_operation'
+  | 'invoice'
 >;
 export type TargetObjectType = Extract<
   ObjectType,
-  'trigger' | 'message' | 'condition' | 'api_request' | 'database_operation'
+  'trigger' | 'message' | 'condition' | 'api_request' | 'database_operation' | 'invoice'
 >;
 
 export type HandlePosition = 'left' | 'right';

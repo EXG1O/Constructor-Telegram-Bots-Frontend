@@ -10,6 +10,7 @@ import {
   TargetObjectType,
 } from 'api/telegram-bots/connection/types';
 import { DiagramDatabaseOperation } from 'api/telegram-bots/database-operation/types';
+import { DiagramInvoice } from 'api/telegram-bots/invoice/types';
 import { DiagramMessage } from 'api/telegram-bots/message/types';
 import { DiagramTrigger } from 'api/telegram-bots/trigger/types';
 
@@ -98,6 +99,7 @@ export interface DiagramBlocks {
   backgroundTasks?: DiagramBackgroundTask[];
   apiRequests?: DiagramAPIRequest[];
   databaseOperations?: DiagramDatabaseOperation[];
+  invoices?: DiagramInvoice[];
 }
 
 export function convertDiagramBlocksToEdges(diagramBlocks: DiagramBlocks): Edge[] {
@@ -125,6 +127,10 @@ export function convertDiagramBlocksToEdges(diagramBlocks: DiagramBlocks): Edge[
     ...(diagramBlocks.databaseOperations?.flatMap((operation) => [
       ...operation.source_connections,
       ...operation.target_connections,
+    ]) ?? []),
+    ...(diagramBlocks.invoices?.flatMap((invoice) => [
+      ...invoice.source_connections,
+      ...invoice.target_connections,
     ]) ?? []),
   ];
 

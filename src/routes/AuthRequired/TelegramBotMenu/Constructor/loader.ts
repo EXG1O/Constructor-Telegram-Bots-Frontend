@@ -8,6 +8,8 @@ import { DiagramConditionsAPI } from 'api/telegram-bots/condition';
 import { APIResponse as ConditionAPIResponse } from 'api/telegram-bots/condition/types';
 import { DiagramDatabaseOperationsAPI } from 'api/telegram-bots/database-operation';
 import { APIResponse as DatabaseOperationAPIResponse } from 'api/telegram-bots/database-operation/types';
+import { DiagramInvoicesAPI } from 'api/telegram-bots/invoice';
+import { APIResponse as InvoiceAPIResponse } from 'api/telegram-bots/invoice/types';
 import { DiagramMessagesAPI } from 'api/telegram-bots/message';
 import { APIResponse as MessageAPIResponse } from 'api/telegram-bots/message/types';
 import { DiagramTriggersAPI } from 'api/telegram-bots/trigger';
@@ -20,6 +22,7 @@ export interface LoaderData {
   diagramBackgroundTasks: BackgroundTaskAPIResponse.DiagramBackgroundTasksAPI.Get;
   diagramAPIRequests: APIRequestAPIResponse.DiagramAPIRequestsAPI.Get;
   diagramDatabaseOperations: DatabaseOperationAPIResponse.DiagramDatabaseOperationsAPI.Get;
+  diagramInvoices: InvoiceAPIResponse.DiagramInvoicesAPI.Get;
 }
 
 async function loader({
@@ -36,6 +39,7 @@ async function loader({
     diagramBackgroundTasksResponse,
     diagramAPIRequestsResponse,
     diagramDatabaseOperationsResponse,
+    diagramInvoicesResponse,
   ] = await Promise.all([
     DiagramTriggersAPI.get(telegramBotID),
     DiagramMessagesAPI.get(telegramBotID),
@@ -43,6 +47,7 @@ async function loader({
     DiagramBackgroundTasksAPI.get(telegramBotID),
     DiagramAPIRequestsAPI.get(telegramBotID),
     DiagramDatabaseOperationsAPI.get(telegramBotID),
+    DiagramInvoicesAPI.get(telegramBotID),
   ]);
 
   if (
@@ -51,7 +56,8 @@ async function loader({
     !diagramConditionsResponse.ok ||
     !diagramBackgroundTasksResponse.ok ||
     !diagramAPIRequestsResponse.ok ||
-    !diagramDatabaseOperationsResponse.ok
+    !diagramDatabaseOperationsResponse.ok ||
+    !diagramInvoicesResponse.ok
   )
     return null;
 
@@ -62,6 +68,7 @@ async function loader({
     diagramBackgroundTasks: diagramBackgroundTasksResponse.json,
     diagramAPIRequests: diagramAPIRequestsResponse.json,
     diagramDatabaseOperations: diagramDatabaseOperationsResponse.json,
+    diagramInvoices: diagramInvoicesResponse.json,
   };
 }
 

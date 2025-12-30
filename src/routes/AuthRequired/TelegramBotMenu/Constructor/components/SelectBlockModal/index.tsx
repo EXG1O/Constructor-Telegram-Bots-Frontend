@@ -11,6 +11,7 @@ import { useAPIRequestOffcanvasStore } from '../APIRequestOffcanvas/store';
 import { useBackgroundTaskOffcanvasStore } from '../BackgroundTaskOffcanvas/store';
 import { useConditionOffcanvasStore } from '../ConditionOffcanvas/store';
 import { useDatabaseOperationOffcanvasStore } from '../DatabaseOperationOffcanvas/store';
+import { useInvoiceOffcanvasStore } from '../InvoiceOffcanvas/store';
 import { useMessageOffcanvasStore } from '../MessageOffcanvas/store';
 import { useTriggerOffcanvasStore } from '../TriggerOffcanvas/store';
 
@@ -37,6 +38,9 @@ function SelectBlockModal({ children, ...props }: SelectBlockModalProps): ReactE
     (state) => state.showOffcanvas,
   );
   const showAddDatabaseOperationOffcanvas = useDatabaseOperationOffcanvasStore(
+    (state) => state.showOffcanvas,
+  );
+  const showAddInvoiceOffcanvas = useInvoiceOffcanvasStore(
     (state) => state.showOffcanvas,
   );
 
@@ -66,6 +70,7 @@ function SelectBlockModal({ children, ...props }: SelectBlockModalProps): ReactE
             blockName='databaseOperation'
             onClick={() => showAddDatabaseOperationOffcanvas()}
           />
+          <BlockButton blockName='invoice' onClick={() => showAddInvoiceOffcanvas()} />
         </Modal.Body>
       </Modal.Content>
     </Modal>
