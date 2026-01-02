@@ -58,6 +58,7 @@ import { Condition } from 'api/telegram-bots/condition/types';
 import { ConnectionAPI, ConnectionsAPI } from 'api/telegram-bots/connection';
 import { DiagramDatabaseOperationAPI } from 'api/telegram-bots/database-operation';
 import { DatabaseOperation } from 'api/telegram-bots/database-operation/types';
+import { DiagramBlock } from 'api/telegram-bots/diagram/types';
 import { DiagramInvoiceAPI } from 'api/telegram-bots/invoice';
 import { Invoice } from 'api/telegram-bots/invoice/types';
 import { DiagramMessageAPI } from 'api/telegram-bots/message';
@@ -75,12 +76,7 @@ import {
   parseEdgeSourceHandle,
   parseEdgeTargetHandle,
 } from './utils/edges';
-import {
-  convertDiagramBlockToNode,
-  ExistingDiagramBlock,
-  NodeID,
-  NodeType,
-} from './utils/nodes';
+import { convertDiagramBlockToNode, NodeID, NodeType } from './utils/nodes';
 import { parseNodeID } from './utils/nodes';
 
 import('@xyflow/react/dist/base.css');
@@ -109,17 +105,17 @@ const diagramBlockAPIMap: Record<
   {
     get: (
       telegramBotID: TelegramBot['id'],
-      id: ExistingDiagramBlock['id'],
+      id: DiagramBlock['id'],
     ) => Promise<
-      | APIResponse.Base<true, ExistingDiagramBlock>
+      | APIResponse.Base<true, DiagramBlock>
       | APIResponse.Base<false, APIResponse.ErrorList>
     >;
     update: (
       telegramBotID: TelegramBot['id'],
-      id: ExistingDiagramBlock['id'],
-      data: Pick<ExistingDiagramBlock, 'x' | 'y'>,
+      id: DiagramBlock['id'],
+      data: Pick<DiagramBlock, 'x' | 'y'>,
     ) => Promise<
-      | APIResponse.Base<true, ExistingDiagramBlock>
+      | APIResponse.Base<true, DiagramBlock>
       | APIResponse.Base<false, APIResponse.ErrorList>
     >;
   }
@@ -164,7 +160,7 @@ function Constructor(): ReactElement {
       api_request: diagramAPIRequests,
       database_operation: diagramDatabaseOperations,
       invoice: diagramInvoices,
-    } as Record<NodeType, ExistingDiagramBlock[]>).flatMap(([type, diagramBlocks]) =>
+    } as Record<NodeType, DiagramBlock[]>).flatMap(([type, diagramBlocks]) =>
       diagramBlocks.map((diagramBlock) =>
         convertDiagramBlockToNode(type as NodeType, diagramBlock),
       ),
@@ -172,13 +168,15 @@ function Constructor(): ReactElement {
   );
   const [edges, setEdges, onEdgesChange] = useEdgesState(
     convertDiagramBlocksToEdges({
-      triggers: diagramTriggers,
       messages: diagramMessages,
-      conditions: diagramConditions,
-      backgroundTasks: diagramBackgroundTasks,
-      apiRequests: diagramAPIRequests,
-      databaseOperations: diagramDatabaseOperations,
-      invoices: diagramInvoices,
+      other: [
+        ...diagramTriggers,
+        ...diagramConditions,
+        ...diagramBackgroundTasks,
+        ...diagramAPIRequests,
+        ...diagramDatabaseOperations,
+        ...diagramInvoices,
+      ],
     }),
   );
 

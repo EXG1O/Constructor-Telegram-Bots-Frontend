@@ -7,8 +7,8 @@ export interface BackgroundTask {
 }
 
 export interface DiagramBackgroundTask
-  extends Pick<BackgroundTask, 'id' | 'name' | 'interval'>,
-    Omit<DiagramBlock, 'target_connections'> {}
+  extends DiagramBlock<BackgroundTask['id']>,
+    Pick<BackgroundTask, 'name' | 'interval'> {}
 
 export namespace Data {
   export namespace BackgroundTasksAPI {

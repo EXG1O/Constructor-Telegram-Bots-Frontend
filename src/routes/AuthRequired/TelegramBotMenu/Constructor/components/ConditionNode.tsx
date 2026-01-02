@@ -18,7 +18,6 @@ import Node from './Node';
 
 import { ConditionAPI } from 'api/telegram-bots/condition';
 import { DiagramCondition } from 'api/telegram-bots/condition/types';
-import { DiagramBlock } from 'api/telegram-bots/diagram/types';
 
 import {
   buildEdgeSourceHandle,
@@ -26,7 +25,7 @@ import {
   EdgeHandle,
 } from '../utils/edges';
 
-type Data = Omit<DiagramCondition, keyof DiagramBlock>;
+type Data = Omit<DiagramCondition, 'x' | 'y' | 'source_connections'>;
 
 export interface ConditionNodeProps extends RFNodeProps<RFNode<Data>> {}
 

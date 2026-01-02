@@ -18,7 +18,6 @@ import Node from './Node';
 
 import { DatabaseOperationAPI } from 'api/telegram-bots/database-operation';
 import { DiagramDatabaseOperation } from 'api/telegram-bots/database-operation/types';
-import { DiagramBlock } from 'api/telegram-bots/diagram/types';
 
 import {
   buildEdgeSourceHandle,
@@ -26,7 +25,7 @@ import {
   EdgeHandle,
 } from '../utils/edges';
 
-type Data = Omit<DiagramDatabaseOperation, keyof DiagramBlock>;
+type Data = Omit<DiagramDatabaseOperation, 'x' | 'y' | 'source_connections'>;
 
 export interface DatabaseOperationNodeProps extends RFNodeProps<RFNode<Data>> {}
 

@@ -20,8 +20,7 @@ export interface DatabaseOperation {
 }
 
 export interface DiagramDatabaseOperation
-  extends Pick<DatabaseOperation, 'id' | 'name'>,
-    DiagramBlock {}
+  extends DiagramBlock<DatabaseOperation['id']> {}
 
 export namespace Data {
   export namespace DatabaseOperationsAPI {

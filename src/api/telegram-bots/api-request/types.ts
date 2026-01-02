@@ -11,9 +11,7 @@ export interface APIRequest {
   body: any[] | Record<string, any> | null;
 }
 
-export interface DiagramAPIRequest
-  extends Pick<APIRequest, 'id' | 'name'>,
-    DiagramBlock {}
+export interface DiagramAPIRequest extends DiagramBlock<APIRequest['id']> {}
 
 export namespace Data {
   export namespace APIRequestsAPI {

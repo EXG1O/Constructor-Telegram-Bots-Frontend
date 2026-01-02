@@ -1,18 +1,13 @@
 import { Edge } from '@xyflow/react';
 
-import { DiagramAPIRequest } from 'api/telegram-bots/api-request/types';
-import { DiagramBackgroundTask } from 'api/telegram-bots/background-task/types';
-import { DiagramCondition } from 'api/telegram-bots/condition/types';
 import {
   Connection,
   ObjectType,
   SourceObjectType,
   TargetObjectType,
 } from 'api/telegram-bots/connection/types';
-import { DiagramDatabaseOperation } from 'api/telegram-bots/database-operation/types';
-import { DiagramInvoice } from 'api/telegram-bots/invoice/types';
+import { DiagramBlock } from 'api/telegram-bots/diagram/types';
 import { DiagramMessage } from 'api/telegram-bots/message/types';
-import { DiagramTrigger } from 'api/telegram-bots/trigger/types';
 
 export interface EdgePoint<OT extends ObjectType> {
   objectType: OT;
@@ -93,58 +88,21 @@ export function buildEdgeTargetHandle(handle: EdgeTargetHandle): string {
 }
 
 export interface DiagramBlocks {
-  triggers?: DiagramTrigger[];
   messages?: DiagramMessage[];
-  conditions?: DiagramCondition[];
-  backgroundTasks?: DiagramBackgroundTask[];
-  apiRequests?: DiagramAPIRequest[];
-  databaseOperations?: DiagramDatabaseOperation[];
-  invoices?: DiagramInvoice[];
+  other?: DiagramBlock[];
 }
 
 export function convertDiagramBlocksToEdges(diagramBlocks: DiagramBlocks): Edge[] {
   const connections: Connection[] = [
-    ...(diagramBlocks.triggers?.flatMap((trigger) => [
-      ...trigger.source_connections,
-      ...trigger.target_connections,
-    ]) ?? []),
     ...(diagramBlocks.messages?.flatMap((message) => [
       ...message.source_connections,
-      ...message.target_connections,
       ...(message.keyboard?.buttons.flatMap((button) => button.source_connections) ??
         []),
     ]) ?? []),
-    ...(diagramBlocks.conditions?.flatMap((condition) => [
-      ...condition.source_connections,
-      ...condition.target_connections,
-    ]) ?? []),
-    ...(diagramBlocks.backgroundTasks?.flatMap((task) => task.source_connections) ??
-      []),
-    ...(diagramBlocks.apiRequests?.flatMap((request) => [
-      ...request.source_connections,
-      ...request.target_connections,
-    ]) ?? []),
-    ...(diagramBlocks.databaseOperations?.flatMap((operation) => [
-      ...operation.source_connections,
-      ...operation.target_connections,
-    ]) ?? []),
-    ...(diagramBlocks.invoices?.flatMap((invoice) => [
-      ...invoice.source_connections,
-      ...invoice.target_connections,
-    ]) ?? []),
+    ...(diagramBlocks.other?.flatMap((other) => other.source_connections) ?? []),
   ];
 
-  const seen = new Set<string>();
-  const uniqueConnections: Connection[] = connections.filter((connection) => {
-    const key = connection.id.toString();
-
-    if (seen.has(key)) return false;
-
-    seen.add(key);
-    return true;
-  });
-
-  return uniqueConnections.map((connection) => {
+  return connections.map((connection) => {
     const isKeyboardButtonConnection: boolean =
       connection.source_object_type === 'message_keyboard_button';
 
