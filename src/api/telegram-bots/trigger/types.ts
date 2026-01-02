@@ -17,7 +17,7 @@ export interface Trigger {
   message: TriggerMessage | null;
 }
 
-export interface DiagramTrigger extends Pick<Trigger, 'id' | 'name'>, DiagramBlock {}
+export interface DiagramTrigger extends DiagramBlock<Trigger['id']> {}
 
 export namespace Data {
   export namespace TriggersAPI {

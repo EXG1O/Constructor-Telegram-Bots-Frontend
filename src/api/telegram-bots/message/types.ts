@@ -51,8 +51,8 @@ export interface DiagramMessageKeyboard extends Pick<MessageKeyboard, 'type'> {
 }
 
 export interface DiagramMessage
-  extends Pick<Message, 'id' | 'name' | 'text'>,
-    DiagramBlock {
+  extends DiagramBlock<Message['id']>,
+    Pick<Message, 'text'> {
   keyboard: DiagramMessageKeyboard | null;
 }
 

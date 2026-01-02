@@ -18,7 +18,6 @@ import Node from './Node';
 
 import { APIRequestAPI } from 'api/telegram-bots/api-request';
 import { DiagramAPIRequest } from 'api/telegram-bots/api-request/types';
-import { DiagramBlock } from 'api/telegram-bots/diagram/types';
 
 import {
   buildEdgeSourceHandle,
@@ -26,7 +25,7 @@ import {
   EdgeHandle,
 } from '../utils/edges';
 
-type Data = Omit<DiagramAPIRequest, keyof DiagramBlock>;
+type Data = Omit<DiagramAPIRequest, 'x' | 'y' | 'source_connections'>;
 
 export interface APIRequestNodeProps extends RFNodeProps<RFNode<Data>> {}
 

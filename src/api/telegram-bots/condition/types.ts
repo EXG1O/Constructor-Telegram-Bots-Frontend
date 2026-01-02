@@ -15,9 +15,7 @@ export interface Condition {
   parts: ConditionPart[];
 }
 
-export interface DiagramCondition
-  extends Pick<Condition, 'id' | 'name'>,
-    DiagramBlock {}
+export interface DiagramCondition extends DiagramBlock<Condition['id']> {}
 
 export namespace Data {
   export namespace ConditionsAPI {

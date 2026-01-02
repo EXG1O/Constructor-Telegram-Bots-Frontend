@@ -18,11 +18,10 @@ import Node from './Node';
 
 import { BackgroundTaskAPI } from 'api/telegram-bots/background-task';
 import { DiagramBackgroundTask } from 'api/telegram-bots/background-task/types';
-import { DiagramBlock } from 'api/telegram-bots/diagram/types';
 
 import { buildEdgeSourceHandle, EdgeHandle } from '../utils/edges';
 
-type Data = Omit<DiagramBackgroundTask, keyof DiagramBlock>;
+type Data = Omit<DiagramBackgroundTask, 'x' | 'y' | 'source_connections'>;
 
 export interface BackgroundTaskNodeProps extends RFNodeProps<RFNode<Data>> {}
 

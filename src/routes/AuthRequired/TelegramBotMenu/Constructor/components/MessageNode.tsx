@@ -19,7 +19,6 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import { useMessageOffcanvasStore } from './MessageOffcanvas/store';
 import Node from './Node';
 
-import { DiagramBlock } from 'api/telegram-bots/diagram/types';
 import { MessageAPI } from 'api/telegram-bots/message';
 import { DiagramMessage } from 'api/telegram-bots/message/types';
 
@@ -31,7 +30,7 @@ import {
   EdgeHandle,
 } from '../utils/edges';
 
-type Data = Omit<DiagramMessage, keyof DiagramBlock>;
+type Data = Omit<DiagramMessage, 'x' | 'y' | 'source_connections'>;
 
 export interface MessageNodeProps extends RFNodeProps<RFNode<Data>> {}
 

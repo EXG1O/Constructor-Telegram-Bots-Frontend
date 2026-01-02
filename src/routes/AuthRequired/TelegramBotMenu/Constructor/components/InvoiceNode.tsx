@@ -16,7 +16,6 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import { useInvoiceOffcanvasStore } from './InvoiceOffcanvas/store';
 import Node from './Node';
 
-import { DiagramBlock } from 'api/telegram-bots/diagram/types';
 import { InvoiceAPI } from 'api/telegram-bots/invoice';
 import { DiagramInvoice } from 'api/telegram-bots/invoice/types';
 
@@ -26,7 +25,7 @@ import {
   EdgeHandle,
 } from '../utils/edges';
 
-type Data = Omit<DiagramInvoice, keyof DiagramBlock>;
+type Data = Omit<DiagramInvoice, 'x' | 'y' | 'source_connections'>;
 
 export interface InvoiceNodeProps extends RFNodeProps<RFNode<Data>> {}
 

@@ -22,7 +22,7 @@ export interface Invoice {
   prices: InvoicePrice[];
 }
 
-export interface DiagramInvoice extends Pick<Invoice, 'id' | 'name'>, DiagramBlock {}
+export interface DiagramInvoice extends DiagramBlock<Invoice['id']> {}
 
 export namespace Data {
   export namespace InvoicesAPI {
