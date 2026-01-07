@@ -13,6 +13,7 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import OffcanvasContent from './OffcanvasContent';
 
 import { InvoiceAPI } from 'api/telegram-bots/invoice';
+import fetchFile from 'api/utils/fetchFile';
 
 import { useInvoiceOffcanvasStore } from '../store';
 
@@ -59,13 +60,16 @@ function OffcanvasInner({
         ...invoice
       } = response.json;
 
+      const imageFile: File | null =
+        image && image.url && image.name
+          ? await fetchFile(image.url, image.name)
+          : null;
+
       setValues({
         ...invoice,
         image: image && {
-          name: (image.name ?? image.from_url)!,
-          size: image.size ?? 0,
-          url: (image.url ?? image.from_url)!,
-          file: null,
+          file: imageFile,
+          file_url: imageFile && URL.createObjectURL(imageFile),
           from_url: image.from_url,
         },
         price: { label: price.label, amount: price.amount.toString() },

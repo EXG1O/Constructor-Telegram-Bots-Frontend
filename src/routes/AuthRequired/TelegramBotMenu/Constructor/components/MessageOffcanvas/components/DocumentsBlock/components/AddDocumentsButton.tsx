@@ -39,16 +39,6 @@ function AddDocumentsButton(props: AddDocumentsButtonProps): ReactElement {
       ...documents,
       ...newDocuments
         .filter((newDocument) => {
-          if (
-            documents.some(
-              (document) =>
-                newDocument.name === document.name &&
-                newDocument.size === document.size,
-            )
-          ) {
-            return false;
-          }
-
           if (newDocument.size > 2621440) {
             createMessageToast({
               message: t('messages.addDocuments.error', {
@@ -77,8 +67,6 @@ function AddDocumentsButton(props: AddDocumentsButtonProps): ReactElement {
         })
         .map<Document>((file) => ({
           key: crypto.randomUUID(),
-          name: file.name,
-          size: file.size,
           file,
           from_url: null,
         })),

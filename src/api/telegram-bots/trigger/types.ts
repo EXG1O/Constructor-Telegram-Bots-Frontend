@@ -1,4 +1,4 @@
-import { DiagramBlock } from '../diagram/types';
+import { DiagramBlock } from '../base/types';
 
 export interface TriggerCommand {
   command: string;

@@ -1,4 +1,4 @@
-import { DiagramBlock } from '../diagram/types';
+import { DiagramBlock } from '../base/types';
 
 export interface DatabaseCreateOperation {
   data: any[] | Record<string, any>;

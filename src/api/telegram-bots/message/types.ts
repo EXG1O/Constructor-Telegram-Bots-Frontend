@@ -1,5 +1,5 @@
+import { DiagramBlock, Media } from '../base/types';
 import { Connection } from '../connection/types';
-import { DiagramBlock } from '../diagram/types';
 
 export interface MessageSettings {
   reply_to_user_message: boolean;
@@ -7,13 +7,9 @@ export interface MessageSettings {
   send_as_new_message: boolean;
 }
 
-export interface MessageMedia {
+export interface MessageMedia extends Media {
   id: number;
   position: number;
-  name: string | null;
-  size: number | null;
-  url: string | null;
-  from_url: string | null;
 }
 
 export interface MessageImage extends MessageMedia {}

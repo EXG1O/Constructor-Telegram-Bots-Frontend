@@ -1,11 +1,6 @@
-import { DiagramBlock } from '../diagram/types';
+import { DiagramBlock, Media } from '../base/types';
 
-export interface InvoiceImage {
-  name: string | null;
-  size: number | null;
-  url: string | null;
-  from_url: string | null;
-}
+export interface InvoiceImage extends Media {}
 
 export interface InvoicePrice {
   id: number;

@@ -10,11 +10,9 @@ import DocumentList from './components/DocumentList';
 
 import cn from 'utils/cn';
 
-export interface Document extends Pick<File, 'name' | 'size'> {
+export interface Document {
   id?: number;
   key: string;
-  name: string;
-  size: number;
   file: File | null;
   from_url: string | null;
 }

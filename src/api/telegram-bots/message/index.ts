@@ -1,5 +1,6 @@
 import { makeRequest } from 'api/core';
 
+import appendMedia from '../../utils/appendMedia';
 import { TelegramBotAPI } from '../telegram-bot';
 import { TelegramBot } from '../telegram-bot/types';
 import { APIResponse, Data, Message } from './types';
@@ -7,23 +8,6 @@ import { APIResponse, Data, Message } from './types';
 export class MessagesAPI {
   static url(telegramBotID: TelegramBot['id']): string {
     return TelegramBotAPI.url(telegramBotID) + 'messages/';
-  }
-
-  static parseMedia(
-    index: number,
-    formData: FormData,
-    mediaType: 'image' | 'document',
-    { file, from_url, ...extraData }: Data.MessagesAPI.CreateMessageMedia,
-  ): void {
-    const name: string = `${mediaType}:${index}`;
-
-    if (file) {
-      formData.append(name, file, file.name);
-    } else if (from_url) {
-      formData.append(name, from_url);
-    }
-
-    formData.append(`${name}:extra_data`, JSON.stringify(extraData));
   }
 
   static async get(telegramBotID: TelegramBot['id']) {
@@ -39,12 +23,12 @@ export class MessagesAPI {
     { images, documents, ...data }: Data.MessagesAPI.Create,
   ) {
     const formData = new FormData();
-    images?.forEach((media, index) =>
-      MessagesAPI.parseMedia(index, formData, 'image', media),
-    );
-    documents?.forEach((media, index) =>
-      MessagesAPI.parseMedia(index, formData, 'document', media),
-    );
+    if (images) {
+      appendMedia(formData, 'images', images);
+    }
+    if (documents) {
+      appendMedia(formData, 'documents', documents);
+    }
     formData.append('data', JSON.stringify(data));
 
     return makeRequest<APIResponse.MessagesAPI.Create>(
@@ -61,25 +45,6 @@ export class MessageAPI {
     return MessagesAPI.url(telegramBotID) + `${messageID}/`;
   }
 
-  static parseMedia(
-    index: number,
-    formData: FormData,
-    mediaType: 'image' | 'document',
-    { id, file, from_url, ...extraData }: Partial<Data.MessageAPI.UpdateMessageMedia>,
-  ): void {
-    const name: string = `${mediaType}:${index}`;
-
-    if (file) {
-      formData.append(name, file, file.name);
-    } else if (id) {
-      formData.append(name, id.toString());
-    } else if (from_url) {
-      formData.append(name, from_url);
-    }
-
-    formData.append(`${name}:extra_data`, JSON.stringify(extraData));
-  }
-
   static async get(telegramBotID: TelegramBot['id'], messageID: Message['id']) {
     return makeRequest<APIResponse.MessageAPI.Get>(
       this.url(telegramBotID, messageID),
@@ -94,12 +59,12 @@ export class MessageAPI {
     { images, documents, ...data }: Data.MessageAPI.Update,
   ) {
     const formData = new FormData();
-    images?.forEach((media, index) =>
-      MessageAPI.parseMedia(index, formData, 'image', media),
-    );
-    documents?.forEach((media, index) =>
-      MessageAPI.parseMedia(index, formData, 'document', media),
-    );
+    if (images) {
+      appendMedia(formData, 'images', images);
+    }
+    if (documents) {
+      appendMedia(formData, 'documents', documents);
+    }
     formData.append('data', JSON.stringify(data));
 
     return makeRequest<APIResponse.MessageAPI.Update>(
@@ -115,12 +80,12 @@ export class MessageAPI {
     { images, documents, ...data }: Data.MessageAPI.PartialUpdate,
   ) {
     const formData = new FormData();
-    images?.forEach((media, index) =>
-      MessageAPI.parseMedia(index, formData, 'image', media),
-    );
-    documents?.forEach((media, index) =>
-      MessageAPI.parseMedia(index, formData, 'document', media),
-    );
+    if (images) {
+      appendMedia(formData, 'images', images);
+    }
+    if (documents) {
+      appendMedia(formData, 'documents', documents);
+    }
     formData.append('data', JSON.stringify(data));
 
     return makeRequest<APIResponse.MessageAPI.PartialUpdate>(

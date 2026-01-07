@@ -16,10 +16,6 @@ import { useMessageOffcanvasStore } from '../../../store';
 export interface AddImagesButtonProps
   extends Omit<ButtonProps, 'size' | 'variant' | 'htmlFor'> {}
 
-interface ProcessedImage extends File {
-  url?: string;
-}
-
 function AddImagesButton(props: AddImagesButtonProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'messageOffcanvas.imagesBlock.addImagesButton',
@@ -40,82 +36,48 @@ function AddImagesButton(props: AddImagesButtonProps): ReactElement {
     setImagesLoading(true);
 
     const newImages: File[] = Object.values(event.target.files);
-    let availableStorageSize: number = remainingStorageSize;
-
     event.target.value = '';
 
-    const processedImages: ProcessedImage[] = newImages
-      .filter((newImage) => {
-        if (
-          images.some(
-            (image) => newImage.name === image.name && newImage.size === image.size,
-          )
-        ) {
-          return false;
-        }
+    let availableStorageSize: number = remainingStorageSize;
 
-        if (newImage.size > 2621440) {
-          createMessageToast({
-            message: t('messages.addImages.error', {
-              context: 'tooLarge',
-              name: newImage.name,
-            }),
-            level: 'error',
-          });
-          return false;
-        }
-
-        if (availableStorageSize - newImage.size < 0) {
-          createMessageToast({
-            message: t('messages.addImages.error', {
-              context: 'notEnoughStorage',
-              name: newImage.name,
-            }),
-            level: 'error',
-          });
-          return false;
-        }
-
-        availableStorageSize -= newImage.size;
-
-        return true;
-      })
-      .map((image, index) => {
-        const fileRender = new FileReader();
-        fileRender.readAsDataURL(image);
-        fileRender.addEventListener('loadend', (e) => {
-          if (e.target?.result) {
-            processedImages[index].url = e.target.result.toString();
-          } else {
-            processedImages.splice(index, 1);
+    setImages([
+      ...images,
+      ...newImages
+        .filter((newImage) => {
+          if (newImage.size > 2621440) {
+            createMessageToast({
+              message: t('messages.addImages.error', {
+                context: 'tooLarge',
+                name: newImage.name,
+              }),
+              level: 'error',
+            });
+            return false;
           }
-        });
 
-        return image;
-      });
+          if (availableStorageSize - newImage.size < 0) {
+            createMessageToast({
+              message: t('messages.addImages.error', {
+                context: 'notEnoughStorage',
+                name: newImage.name,
+              }),
+              level: 'error',
+            });
+            return false;
+          }
 
-    const checkImagesResult = () => {
-      for (const processedImage of processedImages) {
-        if (!processedImage.url) {
-          setTimeout(checkImagesResult, 500);
-          return;
-        }
-      }
-      setImages([
-        ...images,
-        ...processedImages.map<Image>((file) => ({
+          availableStorageSize -= newImage.size;
+
+          return true;
+        })
+        .map<Image>((file) => ({
           key: crypto.randomUUID(),
           file: file,
-          name: file.name,
-          size: file.size,
-          url: file.url!,
+          file_url: URL.createObjectURL(file),
           from_url: null,
         })),
-      ]);
-      setImagesLoading(false);
-    };
-
-    checkImagesResult();
+    ]);
+    setImagesLoading(false);
   }
 
   return (
