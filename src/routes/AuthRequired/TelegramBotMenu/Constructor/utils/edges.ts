@@ -1,12 +1,12 @@
 import { Edge } from '@xyflow/react';
 
+import { DiagramBlock } from 'api/telegram-bots/base/types';
 import {
   Connection,
   ObjectType,
   SourceObjectType,
   TargetObjectType,
 } from 'api/telegram-bots/connection/types';
-import { DiagramBlock } from 'api/telegram-bots/diagram/types';
 import { DiagramMessage } from 'api/telegram-bots/message/types';
 
 export interface EdgePoint<OT extends ObjectType> {

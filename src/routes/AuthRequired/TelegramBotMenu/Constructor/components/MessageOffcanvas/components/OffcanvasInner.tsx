@@ -18,6 +18,7 @@ import OffcanvasContent from './OffcanvasContent';
 import { defaultText } from './TextBlock';
 
 import { MessageAPI } from 'api/telegram-bots/message';
+import fetchFile from 'api/utils/fetchFile';
 
 import { useMessageOffcanvasStore } from '../store';
 
@@ -59,35 +60,39 @@ function OffcanvasInner({
 
       const { id, text, images, documents, keyboard, ...message } = response.json;
 
+      const [loadedImages, loadedDocuments] = await Promise.all([
+        Promise.all(
+          images
+            .sort((a, b) => a.position - b.position)
+            .map<Promise<Image>>(async ({ id, name, url, from_url }) => {
+              const file: File | null = url && name ? await fetchFile(url, name) : null;
+
+              return {
+                id,
+                key: crypto.randomUUID(),
+                file,
+                file_url: file && URL.createObjectURL(file),
+                from_url,
+              };
+            }),
+        ),
+        Promise.all(
+          documents
+            .sort((a, b) => a.position - b.position)
+            .map<Promise<Document>>(async ({ id, name, url, from_url }) => ({
+              id,
+              key: crypto.randomUUID(),
+              file: url && name ? await fetchFile(url, name) : null,
+              from_url,
+            })),
+        ),
+      ]);
+
       setValues({
         ...message,
 
-        images: images.length
-          ? images
-              .sort((a, b) => a.position - b.position)
-              .map<Image>(({ id, name, size, url, from_url }) => ({
-                id,
-                key: crypto.randomUUID(),
-                file: null,
-                name: name ?? from_url!,
-                size: size ?? 0,
-                url: url ?? from_url!,
-                from_url,
-              }))
-          : defaultImages,
-        documents: documents.length
-          ? documents
-              .sort((a, b) => a.position - b.position)
-              .map<Document>(({ id, name, size, url, from_url }) => ({
-                id,
-                key: crypto.randomUUID(),
-                file: null,
-                name: name ?? from_url!,
-                size: size ?? 0,
-                url: url ?? from_url!,
-                from_url,
-              }))
-          : defaultDocuments,
+        images: loadedImages.length ? loadedImages : defaultImages,
+        documents: loadedDocuments.length ? loadedDocuments : defaultDocuments,
         text: text ?? defaultText,
         keyboard: keyboard
           ? {

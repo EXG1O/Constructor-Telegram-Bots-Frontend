@@ -13,11 +13,11 @@ export interface TelegramBotStorage {
 function useTelegramBotStorage(): TelegramBotStorage {
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-  const [{ value: showImage }] = useField<boolean>('show_image_block');
   const [{ value: image }] = useField<FormValues['image']>('image');
+  const [{ value: showImage }] = useField<boolean>('show_image_block');
 
   const usedStorageSize: number =
-    telegramBot.used_storage_size + (showImage && image ? image.size : 0);
+    telegramBot.used_storage_size + (showImage && image?.file ? image.file.size : 0);
 
   return {
     storageSize: telegramBot.storage_size,

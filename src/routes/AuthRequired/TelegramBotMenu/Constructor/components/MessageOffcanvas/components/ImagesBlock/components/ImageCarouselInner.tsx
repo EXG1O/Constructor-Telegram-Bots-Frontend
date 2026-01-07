@@ -5,6 +5,8 @@ import { Images } from '..';
 import Carousel, { CarouselProps } from 'components/ui/Carousel';
 import Spinner from 'components/ui/Spinner';
 
+import ImageCarouselImage from './ImageCarouselImage';
+
 import { useMessageOffcanvasStore } from '../../../store';
 
 export interface ImageCarouselInnerProps
@@ -23,7 +25,7 @@ function ImageCarouselInner({
       {!loading ? (
         images.map((image) => (
           <Carousel.Item key={image.key} className='bg-white'>
-            <Carousel.Item.Image src={image.url} />
+            <ImageCarouselImage image={image} />
           </Carousel.Item>
         ))
       ) : (

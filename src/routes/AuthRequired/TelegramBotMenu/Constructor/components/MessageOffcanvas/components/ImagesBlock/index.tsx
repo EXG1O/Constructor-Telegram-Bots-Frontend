@@ -14,10 +14,8 @@ import cn from 'utils/cn';
 export interface Image {
   id?: number;
   key: string;
-  name: string;
-  size: number;
-  url: string;
   file: File | null;
+  file_url: string | null;
   from_url: string | null;
 }
 

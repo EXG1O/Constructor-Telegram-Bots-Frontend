@@ -1,4 +1,4 @@
-import React, { ReactElement, useId, useState } from 'react';
+import React, { ReactElement, useEffect, useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Slot } from '@radix-ui/react-slot';
 import { useField } from 'formik';
@@ -15,15 +15,9 @@ import useTelegramBotStorage from '../hooks/useTelegramBotStorage';
 import cn from 'utils/cn';
 
 export interface Image {
-  name: string;
-  size: number;
-  url: string;
   file: File | null;
+  file_url: string | null;
   from_url: string | null;
-}
-
-interface ProcessedImage extends File {
-  url?: string;
 }
 
 export interface ImageBlockFormValues {
@@ -51,6 +45,13 @@ function ImageBlock({ className, ...props }: ImageBlockProps): ReactElement {
 
   const inputID = useId();
 
+  useEffect(() => {
+    return () => {
+      if (!image?.file_url) return;
+      URL.revokeObjectURL(image.file_url);
+    };
+  }, [image?.file_url]);
+
   function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
     if (!event.target.files) return;
 
@@ -67,6 +68,7 @@ function ImageBlock({ className, ...props }: ImageBlockProps): ReactElement {
         }),
         level: 'error',
       });
+      setLoading(false);
       return;
     }
 
@@ -78,48 +80,16 @@ function ImageBlock({ className, ...props }: ImageBlockProps): ReactElement {
         }),
         level: 'error',
       });
+      setLoading(false);
       return;
     }
 
-    let processedImage: ProcessedImage | null = newImage;
-
-    const fileRender = new FileReader();
-    fileRender.readAsDataURL(newImage);
-    fileRender.addEventListener('loadend', (event) => {
-      if (!processedImage) return;
-
-      if (event.target?.result) {
-        processedImage.url = event.target.result.toString();
-      } else {
-        processedImage = null;
-      }
+    setImage({
+      file: newImage,
+      file_url: URL.createObjectURL(newImage),
+      from_url: null,
     });
-
-    const checkImageResult = () => {
-      if (!processedImage) {
-        createMessageToast({
-          message: t('messages.addImage.error', { name: newImage.name }),
-          level: 'error',
-        });
-        return;
-      }
-
-      if (!processedImage.url) {
-        setTimeout(checkImageResult, 500);
-        return;
-      }
-
-      setImage({
-        name: processedImage.name,
-        size: processedImage.size,
-        url: processedImage.url,
-        file: processedImage,
-        from_url: null,
-      });
-      setLoading(false);
-    };
-
-    checkImageResult();
+    setLoading(false);
   }
 
   return (
@@ -136,7 +106,10 @@ function ImageBlock({ className, ...props }: ImageBlockProps): ReactElement {
           {!loading ? (
             image && (
               <div>
-                <img src={image.url} className='size-full object-contain' />
+                <img
+                  src={image.file_url ?? image.from_url ?? undefined}
+                  className='size-full object-contain'
+                />
               </div>
             )
           ) : (

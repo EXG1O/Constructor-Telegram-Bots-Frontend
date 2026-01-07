@@ -44,7 +44,7 @@ function ImageItem({ index, className, ...props }: ImageItemProps): ReactElement
                 className={cn('flex', 'items-center', 'w-full', 'gap-1', className)}
               >
                 <span className='flex-auto rounded-sm bg-dark px-2 py-1 text-sm text-dark-foreground'>
-                  {image.name}
+                  {image.file?.name ?? image.from_url ?? 'UNKNOWN'}
                 </span>
                 <IconButton
                   size='sm'

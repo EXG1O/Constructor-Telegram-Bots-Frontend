@@ -47,7 +47,7 @@ function DocumentItem({ index, className, ...props }: DocumentItemProps): ReactE
                 className={cn('flex', 'items-center', 'w-full', 'gap-1', className)}
               >
                 <span className='flex-auto rounded-sm bg-dark px-2 py-1 text-sm text-dark-foreground'>
-                  {document.name}
+                  {document.file?.name ?? document.from_url ?? 'UNKNOWN'}
                 </span>
                 <IconButton
                   size='sm'

@@ -15,14 +15,14 @@ export interface TelegramBotStorage {
 function useTelegramBotStorage(): TelegramBotStorage {
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-  const [{ value: showImages }] = useField<boolean>('show_images_block');
-  const [{ value: showDocuments }] = useField<boolean>('show_documents_block');
   const [{ value: images }] = useField<Images>('images');
   const [{ value: documents }] = useField<Documents>('documents');
+  const [{ value: showImages }] = useField<boolean>('show_images_block');
+  const [{ value: showDocuments }] = useField<boolean>('show_documents_block');
 
   const usedStorageSize = useMemo<number>(() => {
     const calcMediaSize = (media: Images | Documents): number =>
-      media.reduce((totalSize, file) => totalSize + file.size, 0);
+      media.reduce((totalSize, item) => totalSize + (item.file?.size ?? 0), 0);
 
     const imagesSize: number = showImages
       ? calcMediaSize(images.filter((image) => image.file))
