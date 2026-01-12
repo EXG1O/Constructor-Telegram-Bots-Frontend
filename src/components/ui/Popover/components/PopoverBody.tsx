@@ -13,12 +13,15 @@ import cn from 'utils/cn';
 export const popoverBodyVariants = cva(
   [
     Z_INDEX.POPOVER,
+    'max-h-(--radix-popover-content-available-height)',
     'bg-background',
     'text-foreground',
     'border',
     'border-outline',
     'outline-none',
     'shadow-sm',
+    'overflow-y-auto',
+    'scrollbar-thin',
     'data-[state=open]:animate-in',
     'data-[state=open]:fade-in-0',
     'data-[state=open]:zoom-in-85',
@@ -50,19 +53,30 @@ export interface PopoverBodyProps
     VariantProps<typeof popoverBodyVariants> {}
 
 const PopoverBody = React.forwardRef<HTMLDivElement, PopoverBodyProps>(
-  ({ sideOffset = 4, size, className, children, ...props }, ref) => (
-    <PopoverPortal>
-      <PopoverContent
-        {...props}
-        ref={ref}
-        sideOffset={sideOffset}
-        className={cn(popoverBodyVariants({ size, className }))}
-      >
-        <PopoverArrow className='fill-outline' />
-        {children}
-      </PopoverContent>
-    </PopoverPortal>
-  ),
+  (
+    { sideOffset = 4, collisionPadding = 8, size, className, children, ...props },
+    ref,
+  ) => {
+    function handleWheel(event: React.WheelEvent<HTMLDivElement>): void {
+      event.stopPropagation();
+    }
+
+    return (
+      <PopoverPortal>
+        <PopoverContent
+          {...props}
+          ref={ref}
+          sideOffset={sideOffset}
+          collisionPadding={collisionPadding}
+          onWheel={handleWheel}
+          className={cn(popoverBodyVariants({ size, className }))}
+        >
+          <PopoverArrow className='fill-outline' />
+          {children}
+        </PopoverContent>
+      </PopoverPortal>
+    );
+  },
 );
 PopoverBody.displayName = 'PopoverBody';
 
