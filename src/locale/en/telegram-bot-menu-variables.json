@@ -10,19 +10,33 @@
     "title": "System variables",
     "variables": {
       "personal": {
+        "CHAT_ID": "Chat ID",
+        "CHAT_TYPE": "Chat type",
+        "CHAT_NAME": "Chat name",
+        "CHAT_USERNAME": "Chat @username",
+        "CHAT_FULL_NAME": "Chat full name",
+        "CHAT_LINK": "Chat link",
         "USER_ID": "User ID",
+        "USER_IS_BOT": "Is the user a bot",
+        "USER_IS_PREMIUM": "Does the user have Telegram Premium",
+        "USER_NAME": "User name",
         "USER_USERNAME": "User @username",
         "USER_FIRST_NAME": "User first name",
         "USER_LAST_NAME": "User last name",
         "USER_FULL_NAME": "User full name",
         "USER_LANGUAGE_CODE": "User language tag",
+        "USER_LINK": "User link",
         "USER_MESSAGE_ID": "User message ID",
         "USER_MESSAGE_TEXT": "User message text",
-        "USER_MESSAGE_DATE": "User message date"
+        "USER_MESSAGE_DATE": "User message sent date",
+        "USER_MESSAGE_LINK": "User message link"
       },
       "global": {
+        "BOT_ID": "Bot ID",
         "BOT_NAME": "Bot name",
-        "BOT_USERNAME": "Bot @username"
+        "BOT_USERNAME": "Bot @username",
+        "BOT_FULL_NAME": "Bot full name",
+        "BOT_LINK": "Bot link"
       }
     }
   },
