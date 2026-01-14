@@ -61,6 +61,10 @@ const PopoverBody = React.forwardRef<HTMLDivElement, PopoverBodyProps>(
       event.stopPropagation();
     }
 
+    function handleTouchMove(event: React.TouchEvent<HTMLDivElement>): void {
+      event.stopPropagation();
+    }
+
     return (
       <PopoverPortal>
         <PopoverContent
@@ -69,6 +73,7 @@ const PopoverBody = React.forwardRef<HTMLDivElement, PopoverBodyProps>(
           sideOffset={sideOffset}
           collisionPadding={collisionPadding}
           onWheel={handleWheel}
+          onTouchMove={handleTouchMove}
           className={cn(popoverBodyVariants({ size, className }))}
         >
           <PopoverArrow className='fill-outline' />
