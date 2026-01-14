@@ -54,11 +54,26 @@ export interface PopoverBodyProps
 
 const PopoverBody = React.forwardRef<HTMLDivElement, PopoverBodyProps>(
   (
-    { sideOffset = 4, collisionPadding = 8, size, className, children, ...props },
+    {
+      sideOffset = 4,
+      collisionPadding = 8,
+      size,
+      className,
+      children,
+      onWheel,
+      onTouchMove,
+      ...props
+    },
     ref,
   ) => {
     function handleWheel(event: React.WheelEvent<HTMLDivElement>): void {
       event.stopPropagation();
+      onWheel?.(event);
+    }
+
+    function handleTouchMove(event: React.TouchEvent<HTMLDivElement>): void {
+      event.stopPropagation();
+      onTouchMove?.(event);
     }
 
     return (
@@ -69,6 +84,7 @@ const PopoverBody = React.forwardRef<HTMLDivElement, PopoverBodyProps>(
           sideOffset={sideOffset}
           collisionPadding={collisionPadding}
           onWheel={handleWheel}
+          onTouchMove={handleTouchMove}
           className={cn(popoverBodyVariants({ size, className }))}
         >
           <PopoverArrow className='fill-outline' />
