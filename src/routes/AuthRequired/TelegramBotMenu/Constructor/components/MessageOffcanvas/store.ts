@@ -4,10 +4,6 @@ import {
   createImagesBlockSlice,
   ImagesBlockSlice,
 } from './components/ImagesBlock/store';
-import {
-  createKeyboardButtonBlockSlice,
-  KeyboardButtonBlockSlice,
-} from './components/KeyboardBlock/components/KeyboardButtonBlock/store';
 
 export interface StateParams {
   messageID: number | null;
@@ -24,10 +20,7 @@ export interface StateActions {
   setLoading: (loading: boolean) => void;
 }
 
-export type State = StateParams &
-  StateActions &
-  ImagesBlockSlice &
-  KeyboardButtonBlockSlice;
+export type State = StateParams & StateActions & ImagesBlockSlice;
 
 export const useMessageOffcanvasStore = create<State>((set, get, api) => ({
   messageID: null,
@@ -37,7 +30,6 @@ export const useMessageOffcanvasStore = create<State>((set, get, api) => ({
   loading: false,
 
   ...createImagesBlockSlice(set, get, api),
-  ...createKeyboardButtonBlockSlice(set, get, api),
 
   showOffcanvas: (messageID) =>
     set({
@@ -46,11 +38,7 @@ export const useMessageOffcanvasStore = create<State>((set, get, api) => ({
       show: true,
       loading: Boolean(messageID),
     }),
-  hideOffcanvas: () => {
-    const { keyboardButtonBlock } = get();
-    keyboardButtonBlock.hideBlock();
-    set({ messageID: null, show: false });
-  },
+  hideOffcanvas: () => set({ messageID: null, show: false }),
 
   setLoading: (loading) => set({ loading }),
 }));

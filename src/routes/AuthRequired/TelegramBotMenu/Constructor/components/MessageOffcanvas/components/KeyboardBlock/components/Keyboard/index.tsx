@@ -7,7 +7,6 @@ import { KeyboardRow } from './components/DraggableKeyboardRow';
 import DroppableKeyboardRows from './components/DroppableKeyboardRows';
 
 import { FormValues } from '../../../..';
-import { useMessageOffcanvasStore } from '../../../../store';
 
 export type { KeyboardButton } from './components/DraggableKeyboardButton';
 export type { KeyboardRow } from './components/DraggableKeyboardRow';
@@ -33,14 +32,6 @@ function Keyboard(props: KeyboardProps): ReactElement {
           draft.splice(destination.index, 0, movedRow);
         }),
       );
-
-      const {
-        keyboardButtonBlock: { rowIndex, setRowIndex },
-      } = useMessageOffcanvasStore.getState();
-
-      if (rowIndex !== null) {
-        setRowIndex(destination.index);
-      }
     } else if (source.droppableId === destination.droppableId) {
       setRows(
         produce(rows, (draft) => {
@@ -50,14 +41,6 @@ function Keyboard(props: KeyboardProps): ReactElement {
           row.buttons.splice(destination.index, 0, movedButton);
         }),
       );
-
-      const {
-        keyboardButtonBlock: { buttonIndex, setButtonIndex },
-      } = useMessageOffcanvasStore.getState();
-
-      if (buttonIndex !== null) {
-        setButtonIndex(destination.index);
-      }
     } else {
       setRows(
         produce(rows, (draft) => {
@@ -76,17 +59,6 @@ function Keyboard(props: KeyboardProps): ReactElement {
           destRow.buttons.splice(destination.index, 0, movedButton);
         }),
       );
-
-      const {
-        keyboardButtonBlock: { rowIndex, buttonIndex, setRowIndex, setButtonIndex },
-      } = useMessageOffcanvasStore.getState();
-
-      if (rowIndex !== null && buttonIndex !== null) {
-        setRowIndex(
-          rows.findIndex((row) => row.draggableId === destination.droppableId),
-        );
-        setButtonIndex(destination.index);
-      }
     }
   }
 

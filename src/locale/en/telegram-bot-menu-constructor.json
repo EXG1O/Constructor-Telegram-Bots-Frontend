@@ -155,9 +155,7 @@
         "inline": "Inline",
         "payment": "Payment"
       },
-      "keyboardButtonBlock": {
-        "title_add": "Adding a button",
-        "title_edit": "Editing the button",
+      "keyboardButtonPopover": {
         "messages": {
           "emptyTextError": "This field cannot be empty.",
           "invalidURLError": "Invalid URL."

@@ -8,26 +8,22 @@ import Collapsible, { CollapsibleProps } from 'components/ui/Collapsible';
 
 import cn from 'utils/cn';
 
-import { useMessageOffcanvasStore } from '../../../../../../../store';
+import { useKeyboardButtonPopoverStore } from '../../../store';
 
-export interface ToggleInnerSectionProps
+export interface ToggleSectionProps
   extends Omit<CollapsibleProps, 'open' | 'onOpenChange'> {}
 
-function ToggleInnerSection({
+function ToggleSection({
   className,
   children,
   ...props
-}: ToggleInnerSectionProps): ReactElement {
+}: ToggleSectionProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas.keyboardBlock.keyboardButtonBlock.urlInputCollapse',
+    keyPrefix: 'messageOffcanvas.keyboardBlock.keyboardButtonPopover.urlInputCollapse',
   });
 
-  const show = useMessageOffcanvasStore(
-    (state) => state.keyboardButtonBlock.showURLInput,
-  );
-  const setShow = useMessageOffcanvasStore(
-    (state) => state.keyboardButtonBlock.setShowURLInput,
-  );
+  const show = useKeyboardButtonPopoverStore((state) => state.showURLInput);
+  const setShow = useKeyboardButtonPopoverStore((state) => state.setShowURLInput);
 
   return (
     <Collapsible
@@ -50,4 +46,4 @@ function ToggleInnerSection({
   );
 }
 
-export default ToggleInnerSection;
+export default ToggleSection;

@@ -8,8 +8,9 @@ import Block, { BlockProps } from 'components/ui/Block';
 import AddKeyboardButtonButton from './components/AddKeyboardButtonButton';
 import AddKeyboardRowButton from './components/AddKeyboardRowButton';
 import Keyboard, { KeyboardRow } from './components/Keyboard';
-import KeyboardButtonBlock from './components/KeyboardButtonBlock';
 import KeyboardTypes, { defaultType, Type } from './components/KeyboardTypes';
+
+import cn from 'utils/cn';
 
 export interface Keyboard {
   type: Type;
@@ -27,19 +28,22 @@ export const defaultKeyboardBlockFormValues: KeyboardBlockFormValues = {
   keyboard: defaultKeyboard,
 };
 
-function KeyboardBlock(props: KeyboardBlockProps): ReactElement {
+function KeyboardBlock({ className, ...props }: KeyboardBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'messageOffcanvas.keyboardBlock',
   });
 
   return (
-    <Block {...props} variant='light'>
+    <Block
+      {...props}
+      variant='light'
+      className={cn('flex', 'flex-col', 'gap-2', className)}
+    >
       <Block.Title>
-        <h3 className='mb-2 text-lg font-medium'>{t('title')}</h3>
+        <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
-      <KeyboardTypes className='mb-2' />
-      <KeyboardButtonBlock className='mb-2' />
-      <Keyboard className='mb-2' />
+      <KeyboardTypes />
+      <Keyboard />
       <div className='flex w-full gap-2'>
         <AddKeyboardButtonButton className='w-full' />
         <AddKeyboardRowButton className='w-full' />

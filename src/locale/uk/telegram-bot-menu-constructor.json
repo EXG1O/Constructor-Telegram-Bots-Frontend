@@ -155,9 +155,7 @@
         "inline": "Вбудована",
         "payment": "Платіжна"
       },
-      "keyboardButtonBlock": {
-        "title_add": "Додавання кнопки",
-        "title_edit": "Редагування кнопки",
+      "keyboardButtonPopover": {
         "messages": {
           "emptyTextError": "Це поле не може бути порожнім.",
           "invalidURLError": "Неправильна URL-адреса."
