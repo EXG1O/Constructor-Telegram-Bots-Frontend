@@ -7,7 +7,7 @@ import SimpleInputFeedback, {
   SimpleInputFeedbackProps,
 } from 'components/shared/SimpleInputFeedback';
 
-import { useMessageOffcanvasStore } from '../../../../../store';
+import { useKeyboardButtonPopoverStore } from '../store';
 
 export type Text = string;
 
@@ -21,15 +21,13 @@ export const defaultText: Text = '';
 
 function TextInput(props: TextInputProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas.keyboardBlock.keyboardButtonBlock.textInput',
+    keyPrefix: 'messageOffcanvas.keyboardBlock.keyboardButtonPopover.textInput',
   });
 
-  const text = useMessageOffcanvasStore((state) => state.keyboardButtonBlock.text);
-  const setText = useMessageOffcanvasStore(
-    (state) => state.keyboardButtonBlock.setText,
-  );
-  const error = useMessageOffcanvasStore(
-    (state) => state.keyboardButtonBlock.errors.text,
+  const text = useKeyboardButtonPopoverStore((state) => state.text);
+  const setText = useKeyboardButtonPopoverStore((state) => state.setText);
+  const error = useKeyboardButtonPopoverStore<string | undefined>(
+    (state) => state.errors.text,
   );
 
   return (

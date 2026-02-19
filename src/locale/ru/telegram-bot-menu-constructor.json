@@ -155,9 +155,7 @@
         "inline": "Встроенный",
         "payment": "Платёжный"
       },
-      "keyboardButtonBlock": {
-        "title_add": "Добавление кнопки",
-        "title_edit": "Редактирование кнопки",
+      "keyboardButtonPopover": {
         "messages": {
           "emptyTextError": "Это поле не может быть пустым.",
           "invalidURLError": "Неверный URL-адрес."

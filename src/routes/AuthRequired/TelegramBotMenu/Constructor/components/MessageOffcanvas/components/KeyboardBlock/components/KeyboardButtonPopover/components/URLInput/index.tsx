@@ -8,10 +8,9 @@ import SimpleInputFeedback, {
 } from 'components/shared/SimpleInputFeedback';
 import SimpleInput from 'components/ui/SimpleInput';
 
-import ToggleInnerSection from './components/ToggleInnerSection';
-import ToggleSection from './components/ToggleSection';
+import ToggleSection from './components/ToggleInnerSection';
 
-import { useMessageOffcanvasStore } from '../../../../../../store';
+import { useKeyboardButtonPopoverStore } from '../../store';
 
 export type URL = string;
 
@@ -25,13 +24,13 @@ export const defaultURL: URL = '';
 
 function URLInput(props: URLInputProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas.keyboardBlock.keyboardButtonBlock.urlInput',
+    keyPrefix: 'messageOffcanvas.keyboardBlock.keyboardButtonPopover.urlInput',
   });
 
-  const url = useMessageOffcanvasStore((state) => state.keyboardButtonBlock.url);
-  const setURL = useMessageOffcanvasStore((state) => state.keyboardButtonBlock.setURL);
-  const error = useMessageOffcanvasStore(
-    (state) => state.keyboardButtonBlock.errors.url,
+  const url = useKeyboardButtonPopoverStore((state) => state.url);
+  const setURL = useKeyboardButtonPopoverStore((state) => state.setURL);
+  const error = useKeyboardButtonPopoverStore<string | undefined>(
+    (state) => state.errors.url,
   );
 
   return (
@@ -51,4 +50,4 @@ function URLInput(props: URLInputProps): ReactElement {
   );
 }
 
-export default Object.assign(URLInput, { ToggleSection, ToggleInnerSection });
+export default Object.assign(URLInput, { ToggleSection });

@@ -2,9 +2,9 @@ import React, { LiHTMLAttributes, memo, ReactElement } from 'react';
 import { Draggable, DraggableProps } from 'react-beautiful-dnd';
 import { FastField, FastFieldProps } from 'formik';
 
-import cn from 'utils/cn';
+import KeyboardButtonPopover from '../../KeyboardButtonPopover';
 
-import { useMessageOffcanvasStore } from '../../../../../store';
+import cn from 'utils/cn';
 
 export interface KeyboardButton {
   id?: number;
@@ -32,22 +32,6 @@ function DraggableKeyboardButton({
   className,
   ...props
 }: DraggableKeyboardButtonProps): ReactElement {
-  const select = useMessageOffcanvasStore(
-    (state) =>
-      state.keyboardButtonBlock.rowIndex === rowIndex &&
-      state.keyboardButtonBlock.buttonIndex === buttonIndex,
-  );
-  const showEditButtonBlock = useMessageOffcanvasStore(
-    (state) => state.keyboardButtonBlock.showBlock,
-  );
-  const hideEditButtonBlock = useMessageOffcanvasStore(
-    (state) => state.keyboardButtonBlock.hideBlock,
-  );
-
-  function handleClick(button: KeyboardButton): void {
-    select ? hideEditButtonBlock() : showEditButtonBlock(button, rowIndex, buttonIndex);
-  }
-
   return (
     <FastField name={`keyboard.rows[${rowIndex}].buttons[${buttonIndex}]`}>
       {({ field }: FastFieldProps) => {
@@ -56,27 +40,33 @@ function DraggableKeyboardButton({
         return (
           <Draggable index={buttonIndex} draggableId={button.draggableId}>
             {({ innerRef, draggableProps, dragHandleProps }) => (
-              <li
-                {...props}
-                {...draggableProps}
-                {...dragHandleProps}
-                ref={innerRef}
-                className={cn(
-                  'w-full',
-                  'rounded-sm',
-                  'text-sm',
-                  'text-center',
-                  'px-2',
-                  'py-1',
-                  select
-                    ? ['bg-secondary', 'text-secondary-foreground']
-                    : ['bg-dark', 'text-dark-foreground'],
-                  className,
-                )}
-                onClick={() => handleClick(button)}
+              <KeyboardButtonPopover
+                rowIndex={rowIndex}
+                buttonIndex={buttonIndex}
+                button={button}
               >
-                {button.text}
-              </li>
+                <KeyboardButtonPopover.Trigger asChild>
+                  <li
+                    {...props}
+                    {...draggableProps}
+                    {...dragHandleProps}
+                    ref={innerRef}
+                    className={cn(
+                      'w-full',
+                      'bg-dark',
+                      'text-dark-foreground',
+                      'rounded-sm',
+                      'text-sm',
+                      'text-center',
+                      'px-2',
+                      'py-1',
+                      className,
+                    )}
+                  >
+                    {button.text}
+                  </li>
+                </KeyboardButtonPopover.Trigger>
+              </KeyboardButtonPopover>
             )}
           </Draggable>
         );
