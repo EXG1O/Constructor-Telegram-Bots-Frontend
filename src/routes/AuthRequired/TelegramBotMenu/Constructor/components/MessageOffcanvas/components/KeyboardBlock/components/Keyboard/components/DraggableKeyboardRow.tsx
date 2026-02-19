@@ -1,7 +1,6 @@
 import React, { LiHTMLAttributes, memo, ReactElement } from 'react';
 import { Draggable, DraggableProps } from 'react-beautiful-dnd';
-import { FastField, FastFieldProps, FormikProps } from 'formik';
-import { produce } from 'immer';
+import { FastField, FastFieldProps, FieldArray } from 'formik';
 import { LayoutGrid, Trash2 } from 'lucide-react';
 
 import IconButton from 'components/ui/IconButton';
@@ -10,8 +9,6 @@ import { KeyboardButton } from './DraggableKeyboardButton';
 import DroppableKeyboardButtons from './DroppableKeyboardButtons';
 
 import cn from 'utils/cn';
-
-import { FormValues } from '../../../../..';
 
 export interface KeyboardRow {
   draggableId: string;
@@ -35,19 +32,9 @@ function DraggableKeyboardRow({
   className,
   ...props
 }: DraggableKeyboardRowProps): ReactElement {
-  function handleDeleteClick(form: FormikProps<FormValues>): void {
-    const field = form.getFieldProps<KeyboardRow[]>('keyboard.rows');
-    form.setFieldValue(
-      field.name,
-      produce(field.value, (draft) => {
-        draft.splice(rowIndex, 1);
-      }),
-    );
-  }
-
   return (
     <FastField name={`keyboard.rows[${rowIndex}]`}>
-      {({ field, form }: FastFieldProps) => {
+      {({ field }: FastFieldProps) => {
         const row: KeyboardRow = field.value;
 
         return (
@@ -83,13 +70,17 @@ function DraggableKeyboardRow({
                   rowIndex={rowIndex}
                   className='h-full flex-auto'
                 />
-                <IconButton
-                  size='sm'
-                  className='text-danger'
-                  onClick={() => handleDeleteClick(form)}
-                >
-                  <Trash2 />
-                </IconButton>
+                <FieldArray name='keyboard.rows'>
+                  {({ remove }) => (
+                    <IconButton
+                      size='sm'
+                      className='text-danger'
+                      onClick={() => remove(rowIndex)}
+                    >
+                      <Trash2 />
+                    </IconButton>
+                  )}
+                </FieldArray>
               </li>
             )}
           </Draggable>
