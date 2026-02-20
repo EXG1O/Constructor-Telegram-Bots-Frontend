@@ -170,6 +170,15 @@
         "urlInput": {
           "placeholder": "Enter URL"
         },
+        "styleSelect": {
+          "label": "Style:",
+          "styles": {
+            "default": "Default",
+            "primary": "Primary",
+            "success": "Success",
+            "danger": "Danger"
+          }
+        },
         "actionButton_add": "Add",
         "actionButton_edit": "Save",
         "deleteButton": "Delete"

@@ -9,6 +9,7 @@ import Button from 'components/ui/Button';
 import Popover, { PopoverProps } from 'components/ui/Popover';
 import { PopoverBodyProps } from 'components/ui/Popover/components/PopoverBody';
 
+import StyleSelect, { Style } from './components/StyleSelect';
 import TextInput, { Text } from './components/TextInput';
 import URLInput, { URL as URLValue } from './components/URLInput';
 
@@ -20,9 +21,10 @@ import cn from 'utils/cn';
 
 import { useKeyboardButtonPopoverStore } from './store';
 
-export interface Data {
+export interface FormData {
   text: Text;
   url: URLValue;
+  style: Style;
 }
 
 export interface KeyboardButtonPopoverProps
@@ -61,7 +63,7 @@ function KeyboardButtonPopover({
     );
   }
 
-  function validateData(data: Data): boolean {
+  function validateData(data: Omit<FormData, 'style'>): boolean {
     const errors: Record<string, string> = {};
 
     if (!data.text) {
@@ -87,7 +89,7 @@ function KeyboardButtonPopover({
   }
 
   function handleAddClick(event: React.MouseEvent<HTMLButtonElement>): void {
-    const { text, url } = useKeyboardButtonPopoverStore.getState();
+    const { text, url, style } = useKeyboardButtonPopoverStore.getState();
 
     if (!validateData({ text, url })) {
       event.preventDefault();
@@ -103,6 +105,7 @@ function KeyboardButtonPopover({
               draggableId: crypto.randomUUID(),
               text,
               url: urlInputVisible() ? url : null,
+              style,
             },
           ],
         });
@@ -111,7 +114,7 @@ function KeyboardButtonPopover({
   }
 
   function handleSaveClick(event: React.MouseEvent<HTMLButtonElement>): void {
-    const { text, url } = useKeyboardButtonPopoverStore.getState();
+    const { text, url, style } = useKeyboardButtonPopoverStore.getState();
 
     if (!validateData({ text, url })) {
       event.preventDefault();
@@ -123,6 +126,7 @@ function KeyboardButtonPopover({
         const button = draft[rowIndex!].buttons[buttonIndex!];
         button.text = text;
         button.url = urlInputVisible() ? url : null;
+        button.style = style;
       }),
     );
   }
@@ -155,6 +159,7 @@ function KeyboardButtonPopover({
             <URLInput />
           </URLInput.ToggleSection>
         )}
+        <StyleSelect />
         <div className='flex w-full gap-1'>
           <Popover.Close asChild>
             <Button

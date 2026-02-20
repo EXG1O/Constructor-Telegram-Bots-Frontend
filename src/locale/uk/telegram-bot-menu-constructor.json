@@ -170,6 +170,15 @@
         "urlInput": {
           "placeholder": "Введіть URL-адресу"
         },
+        "styleSelect": {
+          "label": "Стиль:",
+          "styles": {
+            "default": "За замовчуванням",
+            "primary": "Основний",
+            "success": "Успіх",
+            "danger": "Небезпека"
+          }
+        },
         "actionButton_add": "Додати",
         "actionButton_edit": "Зберегти",
         "deleteButton": "Видалити"

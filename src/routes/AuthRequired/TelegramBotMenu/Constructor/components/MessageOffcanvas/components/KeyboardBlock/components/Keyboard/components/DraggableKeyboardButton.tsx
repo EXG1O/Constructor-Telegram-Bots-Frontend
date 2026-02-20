@@ -3,14 +3,20 @@ import { Draggable, DraggableProps } from 'react-beautiful-dnd';
 import { FastField, FastFieldProps } from 'formik';
 
 import KeyboardButtonPopover from '../../KeyboardButtonPopover';
+import { Style } from '../../KeyboardButtonPopover/components/StyleSelect';
+import { Text } from '../../KeyboardButtonPopover/components/TextInput';
+import { URL } from '../../KeyboardButtonPopover/components/URLInput';
 
 import cn from 'utils/cn';
+
+import { messageKeyboardButtonStyleVariants } from '../../../../../../../styles/messageKeyboardButtonStyle';
 
 export interface KeyboardButton {
   id?: number;
   draggableId: string;
-  text: string;
-  url: string | null;
+  text: Text;
+  url: URL | null;
+  style: Style;
 }
 
 export interface DraggableKeyboardButtonProps
@@ -53,8 +59,7 @@ function DraggableKeyboardButton({
                     ref={innerRef}
                     className={cn(
                       'w-full',
-                      'bg-dark',
-                      'text-dark-foreground',
+                      messageKeyboardButtonStyleVariants({ style: button.style }),
                       'rounded-sm',
                       'text-sm',
                       'text-center',
