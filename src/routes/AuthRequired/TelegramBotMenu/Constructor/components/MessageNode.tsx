@@ -24,6 +24,7 @@ import { DiagramMessage } from 'api/telegram-bots/message/types';
 
 import cn from 'utils/cn';
 
+import { messageKeyboardButtonStyleVariants } from '../styles/messageKeyboardButtonStyle';
 import {
   buildEdgeSourceHandle,
   buildEdgeTargetHandle,
@@ -126,8 +127,16 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
             button.url ? (
               <Node.Block
                 key={button.id}
-                variant='dark'
-                className='flex flex-wrap items-center justify-center gap-1 wrap-anywhere'
+                variant={null}
+                className={cn(
+                  'flex',
+                  'flex-wrap',
+                  'items-center',
+                  'justify-center',
+                  'gap-1',
+                  'wrap-anywhere',
+                  messageKeyboardButtonStyleVariants(),
+                )}
               >
                 {button.text}
                 <Link className='size-3' />
@@ -135,8 +144,12 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
             ) : (
               <Node.Block
                 key={button.id}
-                variant='dark'
-                className='relative text-center'
+                variant={null}
+                className={cn(
+                  'relative',
+                  'text-center',
+                  messageKeyboardButtonStyleVariants({ style: button.style }),
+                )}
               >
                 {button.text}
                 <Node.Handle

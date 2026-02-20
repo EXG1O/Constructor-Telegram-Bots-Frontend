@@ -9,7 +9,6 @@ export const nodeBlockVariants = cva(
     variants: {
       variant: {
         white: ['bg-white', 'text-foreground'],
-        dark: ['bg-dark', 'text-dark-foreground'],
       },
     },
     defaultVariants: {

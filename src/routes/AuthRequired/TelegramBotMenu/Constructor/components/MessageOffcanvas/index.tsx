@@ -146,12 +146,13 @@ function MessageOffcanvas({ onAdd, onSave }: MessageOffcanvasProps): ReactElemen
               Data.MessagesAPI.CreateMessageKeyboardButton[]
             >((buttons, row, rowIndex) => {
               buttons.push(
-                ...row.buttons.map(({ id, text, url }, buttonIndex) => ({
+                ...row.buttons.map(({ id, text, url, style }, buttonIndex) => ({
                   id,
                   row: rowIndex,
                   position: buttonIndex,
                   text,
                   url,
+                  style,
                 })),
               );
 

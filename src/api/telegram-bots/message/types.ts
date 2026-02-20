@@ -15,12 +15,15 @@ export interface MessageMedia extends Media {
 export interface MessageImage extends MessageMedia {}
 export interface MessageDocument extends MessageMedia {}
 
+export type MessageKeyboardButtonStyle = 'default' | 'primary' | 'success' | 'danger';
+
 export interface MessageKeyboardButton {
   id: number;
   row: number;
   position: number;
   text: string;
   url: string | null;
+  style: MessageKeyboardButtonStyle;
 }
 
 export interface MessageKeyboard {

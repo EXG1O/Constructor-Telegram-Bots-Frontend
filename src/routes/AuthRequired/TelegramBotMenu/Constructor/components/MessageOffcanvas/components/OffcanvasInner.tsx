@@ -98,7 +98,10 @@ function OffcanvasInner({
           ? {
               type: keyboard.type,
               rows: keyboard.buttons.reduce<KeyboardRow[]>(
-                (rows, { id, row: rowIndex, position: buttonIndex, text, url }) => {
+                (
+                  rows,
+                  { id, row: rowIndex, position: buttonIndex, text, url, style },
+                ) => {
                   if (!rows[rowIndex]) {
                     rows[rowIndex] = {
                       draggableId: crypto.randomUUID(),
@@ -111,6 +114,7 @@ function OffcanvasInner({
                     draggableId: crypto.randomUUID(),
                     text,
                     url,
+                    style,
                   };
 
                   return rows;
