@@ -1,8 +1,8 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
 
-import Markdown from 'components/ui/Markdown';
+import { Section } from '..';
 
-import { Section } from 'api/instruction/types';
+import Markdown from 'components/ui/Markdown';
 
 import cn from 'utils/cn';
 
