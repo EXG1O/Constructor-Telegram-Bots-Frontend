@@ -10,6 +10,7 @@ import IconButton from 'components/ui/IconButton';
 import Table from 'components/ui/Table';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
+import ClipboardButtonSlot from '../../../../ClipboardButtonSlot';
 import { useVariableModalStore } from '../../VariableModal/store';
 
 import useUserVariablesStore from '../../../hooks/useUserVariablesStore';
@@ -76,13 +77,11 @@ function TableRow({ variable, className, ...props }: TableRowProps): ReactElemen
     <Table.Row {...props} className={cn('text-nowrap', className)}>
       <Table.Cell className='w-1/2'>
         <div className='flex items-center gap-1'>
-          <IconButton
-            size='sm'
-            className='btn-clipboard'
-            data-clipboard-text={`{{ ${variable.name} }}`}
-          >
-            <Clipboard />
-          </IconButton>
+          <ClipboardButtonSlot variable={['USER', variable.name].join('.')}>
+            <IconButton size='sm'>
+              <Clipboard />
+            </IconButton>
+          </ClipboardButtonSlot>
           <span className='text-info-emphasis'>{variable.name}</span>
         </div>
       </Table.Cell>
