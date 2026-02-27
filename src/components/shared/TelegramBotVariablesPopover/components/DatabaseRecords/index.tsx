@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
 
+import SearchInput from 'components/shared/SearchInput';
 import List from 'components/ui/List';
 import Pagination from 'components/ui/Pagination';
 
@@ -18,10 +19,11 @@ import cn from 'utils/cn';
 export interface DatabaseRecordsProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
 
-interface Data {
+interface PaginationData {
   count: number;
   limit: number;
   offset: number;
+  search: string | null;
   results: DatabaseRecord[];
 }
 
@@ -32,27 +34,34 @@ function DatabaseRecords({ className, ...props }: DatabaseRecordsProps): ReactEl
 
   const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
 
-  const [data, setData] = useState<Data>({
+  const [pagination, setPagination] = useState<PaginationData>({
     count: 0,
     limit: 3,
     offset: 0,
+    search: null,
     results: [],
   });
   const [loading, setLoading] = useState<boolean>(true);
 
-  async function updateRecords(newLimit?: number, newOffset?: number): Promise<void> {
+  async function updateRecords(
+    params?: Partial<Pick<PaginationData, 'limit' | 'offset' | 'search'>>,
+  ): Promise<void> {
     setLoading(true);
 
-    const limit = newLimit ?? data.limit;
-    const offset = newOffset ?? data.offset;
+    const limit = params?.limit ?? pagination.limit;
+    const offset = params?.offset ?? pagination.offset;
+    const search =
+      params && params.search !== undefined ? params.search : pagination.search;
 
-    const response = await DatabaseRecordsAPI.get(telegramBot.id, limit, offset);
+    const response = await DatabaseRecordsAPI.get(
+      telegramBot.id,
+      limit,
+      offset,
+      search ?? undefined,
+    );
+    if (!response.ok) return;
 
-    if (!response.ok) {
-      return;
-    }
-
-    setData({ ...response.json, limit, offset });
+    setPagination({ ...response.json, limit, offset, search });
     setLoading(false);
   }
 
@@ -60,36 +69,47 @@ function DatabaseRecords({ className, ...props }: DatabaseRecordsProps): ReactEl
     updateRecords();
   }, []);
 
-  function handlePageChange(newOffset: number): void {
-    updateRecords(undefined, newOffset);
+  function handleSearch(value: string): void {
+    updateRecords({ search: value });
   }
 
-  return !loading ? (
+  function handleCancel(): void {
+    updateRecords({ search: null });
+  }
+
+  function handlePageChange(offset: number): void {
+    updateRecords({ offset });
+  }
+
+  return (
     <div {...props} className={cn('flex', 'flex-col', 'w-full', 'gap-1.5', className)}>
-      <List size='sm' striped>
-        <ul className='w-full overflow-hidden rounded-sm text-sm'>
-          {data.count ? (
-            data.results.map((record) => (
-              <List.Item key={record.id}>
-                <RecordData record={record} />
-              </List.Item>
-            ))
-          ) : (
-            <List.Item className='text-center'>{t('placeholders.empty')}</List.Item>
-          )}
-        </ul>
-      </List>
+      <SearchInput size='sm' onSearch={handleSearch} onCancel={handleCancel} />
+      {!loading ? (
+        <List size='sm' striped>
+          <ul className='w-full overflow-hidden rounded-sm text-sm'>
+            {pagination.count ? (
+              pagination.results.map((record) => (
+                <List.Item key={record.id}>
+                  <RecordData appliedSearch={pagination.search} data={record.data} />
+                </List.Item>
+              ))
+            ) : (
+              <List.Item className='text-center'>{t('placeholders.empty')}</List.Item>
+            )}
+          </ul>
+        </List>
+      ) : (
+        <Loading />
+      )}
       <Pagination
         size='sm'
-        itemCount={data.count}
-        itemLimit={data.limit}
-        itemOffset={data.offset}
+        itemCount={pagination.count}
+        itemLimit={pagination.limit}
+        itemOffset={pagination.offset}
         className='self-center'
         onPageChange={handlePageChange}
       />
     </div>
-  ) : (
-    <Loading {...props} className={className} />
   );
 }
 

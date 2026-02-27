@@ -13,7 +13,7 @@ function Loading({ className, ...props }: LoadingProps): ReactElement {
       {...props}
       className={cn('flex', 'w-full', 'justify-center', 'items-center', className)}
     >
-      <Spinner size='sm' />
+      <Spinner size='xs' />
     </div>
   );
 }
