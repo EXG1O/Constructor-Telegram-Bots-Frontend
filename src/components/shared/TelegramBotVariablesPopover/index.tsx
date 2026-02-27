@@ -1,6 +1,5 @@
 import React, { forwardRef, lazy, Suspense, useMemo, useState } from 'react';
 
-import Collapsible from 'components/ui/Collapsible';
 import Popover, { PopoverProps } from 'components/ui/Popover';
 import { PopoverBodyProps } from 'components/ui/Popover/components/PopoverBody';
 
@@ -40,30 +39,17 @@ const TelegramBotVariablesPopover = forwardRef<
     return (
       <Popover defaultOpen={defaultOpen} open={open} onOpenChange={onOpenChange}>
         {children}
-        <Popover.Body
-          {...props}
-          ref={ref}
-          size='sm'
-          className={cn('w-[280px]', className)}
-        >
+        <Popover.Body {...props} ref={ref} size='sm' className={cn('w-70', className)}>
           <TelegramBotVariablesPopoverContext.Provider value={contextValue}>
             <TypeSelect type={type} className='mb-1.5' onChange={setType} />
             <Suspense fallback={<Loading />}>
-              <Collapsible open={type === 'system'} className='w-full'>
-                <Collapsible.Body>
-                  <SystemVariables />
-                </Collapsible.Body>
-              </Collapsible>
-              <Collapsible open={type === 'user'} className='w-full'>
-                <Collapsible.Body>
-                  <UserVariables />
-                </Collapsible.Body>
-              </Collapsible>
-              <Collapsible open={type === 'database'} className='w-full'>
-                <Collapsible.Body>
-                  <DatabaseRecords />
-                </Collapsible.Body>
-              </Collapsible>
+              {type === 'system' ? (
+                <SystemVariables />
+              ) : type === 'user' ? (
+                <UserVariables />
+              ) : type == 'database' ? (
+                <DatabaseRecords />
+              ) : null}
             </Suspense>
           </TelegramBotVariablesPopoverContext.Provider>
         </Popover.Body>

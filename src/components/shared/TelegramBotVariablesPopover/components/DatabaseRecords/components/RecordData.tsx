@@ -8,19 +8,22 @@ import cn from 'utils/cn';
 import getJSONPathLines, { JSONPath } from 'utils/getJSONPathLines';
 
 export interface RecordDataProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
-  record: DatabaseRecord;
+  extends Pick<DatabaseRecord, 'data'>,
+    Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+  appliedSearch: string | null;
 }
 
-function RecordData({ record, className, ...props }: RecordDataProps): ReactElement {
-  const jsonDataLines = useMemo<string[]>(
-    () => JSON.stringify(record.data, null, 2).split('\n'),
-    [record.data],
+function RecordData({
+  appliedSearch,
+  data,
+  className,
+  ...props
+}: RecordDataProps): ReactElement {
+  const jsonLines = useMemo<string[]>(
+    () => JSON.stringify(data, null, 2).split('\n'),
+    [data],
   );
-  const pathLines = useMemo<JSONPath[]>(
-    () => getJSONPathLines(record.data),
-    [record.data],
-  );
+  const jsonPathLines = useMemo<JSONPath[]>(() => getJSONPathLines(data), [data]);
 
   return (
     <div
@@ -34,13 +37,21 @@ function RecordData({ record, className, ...props }: RecordDataProps): ReactElem
         className,
       )}
     >
-      {jsonDataLines.map((value, lineIndex) => {
-        const path: string | null = pathLines[lineIndex];
+      {jsonLines.map((value, lineIndex) => {
+        const path: string | null = jsonPathLines[lineIndex];
 
         return (
-          <div key={lineIndex} className='flex gap-1 even:bg-foreground/5'>
+          <div key={lineIndex} className='flex w-full gap-1 even:bg-foreground/5'>
             <span className='flex-auto overflow-x-auto scrollbar-thin'>{value}</span>
-            {path && <SelectButton variable={`DATABASE.${path}`} />}
+            {path && (
+              <SelectButton
+                variable={[
+                  'DATABASE',
+                  ...(appliedSearch ? [`[search=${appliedSearch}]`] : []),
+                  path,
+                ].join('.')}
+              />
+            )}
           </div>
         );
       })}
