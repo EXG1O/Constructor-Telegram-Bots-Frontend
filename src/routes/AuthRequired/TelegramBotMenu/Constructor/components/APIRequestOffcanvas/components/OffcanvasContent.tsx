@@ -39,7 +39,10 @@ function OffcanvasContent(): ReactElement {
           <URLBlock className='mb-3' />
           <MethodBlock className='mb-3' />
           <HeadersBlock className='mb-3' />
-          <FormToggleSection name='method' getOpen={getBodyBlockOpen}>
+          <FormToggleSection
+            name='method'
+            getOpen={(field) => getBodyBlockOpen(field.value)}
+          >
             <BodyBlock className='mb-3' />
           </FormToggleSection>
           <TestBlock />

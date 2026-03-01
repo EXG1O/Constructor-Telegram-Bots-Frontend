@@ -35,10 +35,16 @@ function OffcanvasContent(): ReactElement {
         <Form id={formID}>
           <NameBlock className='mb-3' />
           <TypeBlock className='mb-3' />
-          <FormToggleSection name='type' getOpen={getCreateBlockOpen}>
+          <FormToggleSection
+            name='type'
+            getOpen={(field) => getCreateBlockOpen(field.value)}
+          >
             <CreateBlock />
           </FormToggleSection>
-          <FormToggleSection name='type' getOpen={getUpdateBlockOpen}>
+          <FormToggleSection
+            name='type'
+            getOpen={(field) => getUpdateBlockOpen(field.value)}
+          >
             <UpdateBlock />
           </FormToggleSection>
         </Form>
