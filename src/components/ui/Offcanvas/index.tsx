@@ -8,11 +8,10 @@ import {
 } from '@radix-ui/react-dialog';
 import Z_INDEX from 'tokens/z-index';
 
-import Spinner from 'components/ui/Spinner';
-
 import OffcanvasBody from './components/OffcanvasBody';
 import OffcanvasFooter from './components/OffcanvasFooter';
 import OffcanvasHeader from './components/OffcanvasHeader';
+import OffcanvasLoading from './components/OffcanvasLoading';
 import OffcanvasTitle from './components/OffcanvasTitle';
 import OffcanvasContext, { OffcanvasContextProps } from './contexts/OffcanvasContext';
 
@@ -105,11 +104,7 @@ const Offcanvas = forwardRef<HTMLDivElement, OffcanvasProps>(
           >
             <OffcanvasContext.Provider value={contextValue}>
               {children}
-              {loading && (
-                <div className='flex flex-auto items-center justify-center'>
-                  <Spinner />
-                </div>
-              )}
+              {loading && <OffcanvasLoading />}
             </OffcanvasContext.Provider>
           </DialogContent>
         </DialogPortal>
@@ -123,5 +118,6 @@ export default Object.assign(Offcanvas, {
   Header: OffcanvasHeader,
   Title: OffcanvasTitle,
   Body: OffcanvasBody,
+  Loading: OffcanvasLoading,
   Footer: OffcanvasFooter,
 });
