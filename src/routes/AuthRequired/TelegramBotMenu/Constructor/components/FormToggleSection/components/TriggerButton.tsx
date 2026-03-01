@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import Button, { ButtonProps } from 'components/ui/Button';
 import Collapsible from 'components/ui/Collapsible';
 
-import useFormToggleSection from '../hooks/useFormToggleSection';
+import useFormToggleSectionStore from '../hooks/useTelegramBotContentStore';
 
 import cn from 'utils/cn';
 
@@ -14,7 +14,7 @@ export interface TriggerButtonProps extends ButtonProps {
 
 const TriggerButton = forwardRef<HTMLButtonElement, TriggerButtonProps>(
   ({ variant, openProps, closedProps, className, ...props }, ref) => {
-    const { open } = useFormToggleSection();
+    const open = useFormToggleSectionStore((state) => state.open);
 
     const {
       variant: activeVariant,

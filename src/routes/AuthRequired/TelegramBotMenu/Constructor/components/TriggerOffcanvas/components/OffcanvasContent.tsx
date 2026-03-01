@@ -42,21 +42,21 @@ function OffcanvasContent(): ReactElement {
           <TypeBlock className='mb-3' />
           <FormToggleSection
             name='type'
-            getOpen={getStartCommandBlockOpen}
+            getOpen={(field) => getStartCommandBlockOpen(field.value)}
             className='w-full'
           >
             <StartCommandBlock />
           </FormToggleSection>
           <FormToggleSection
             name='type'
-            getOpen={getCommandBlockOpen}
+            getOpen={(field) => getCommandBlockOpen(field.value)}
             className='w-full'
           >
             <CommandBlock />
           </FormToggleSection>
           <FormToggleSection
             name='type'
-            getOpen={getMessageBlockOpen}
+            getOpen={(field) => getMessageBlockOpen(field.value)}
             className='w-full'
           >
             <MessageBlock />
