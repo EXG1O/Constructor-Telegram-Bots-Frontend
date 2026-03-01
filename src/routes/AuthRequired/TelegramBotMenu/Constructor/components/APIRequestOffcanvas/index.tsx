@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -60,7 +60,7 @@ function APIRequestOffcanvas({
     keyPrefix: 'apiRequestOffcanvas',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const requestID = useAPIRequestOffcanvasStore((state) => state.requestID);
   const action = useAPIRequestOffcanvasStore((state) => state.action);
@@ -84,8 +84,8 @@ function APIRequestOffcanvas({
     };
 
     const response = await (requestID
-      ? APIRequestAPI.update(telegramBot.id, requestID, data)
-      : APIRequestsAPI.create(telegramBot.id, data));
+      ? APIRequestAPI.update(telegramBotID, requestID, data)
+      : APIRequestsAPI.create(telegramBotID, data));
 
     if (!response.ok) {
       for (const error of response.json.errors) {

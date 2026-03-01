@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import SearchInput from 'components/shared/SearchInput';
 import List from 'components/ui/List';
@@ -32,7 +32,7 @@ function DatabaseRecords({ className, ...props }: DatabaseRecordsProps): ReactEl
     keyPrefix: 'telegramBotVariablesPopover.databaseRecords',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const [pagination, setPagination] = useState<PaginationData>({
     count: 0,
@@ -54,7 +54,7 @@ function DatabaseRecords({ className, ...props }: DatabaseRecordsProps): ReactEl
       params && params.search !== undefined ? params.search : pagination.search;
 
     const response = await DatabaseRecordsAPI.get(
-      telegramBot.id,
+      telegramBotID,
       limit,
       offset,
       search ?? undefined,
@@ -67,7 +67,7 @@ function DatabaseRecords({ className, ...props }: DatabaseRecordsProps): ReactEl
 
   useEffect(() => {
     updateRecords();
-  }, []);
+  }, [telegramBotID]);
 
   function handleSearch(value: string): void {
     updateRecords({ search: value });

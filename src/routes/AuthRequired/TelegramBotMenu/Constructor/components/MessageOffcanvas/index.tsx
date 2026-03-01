@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -73,7 +73,8 @@ function MessageOffcanvas({ onAdd, onSave }: MessageOffcanvasProps): ReactElemen
     keyPrefix: 'messageOffcanvas',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const setTelegramBot = useTelegramBotStore((state) => state.setTelegramBot);
 
   const messageID = useMessageOffcanvasStore((state) => state.messageID);
   const action = useMessageOffcanvasStore((state) => state.action);
@@ -163,8 +164,8 @@ function MessageOffcanvas({ onAdd, onSave }: MessageOffcanvasProps): ReactElemen
     };
 
     const response = await (action === 'add'
-      ? MessagesAPI.create(telegramBot.id, data)
-      : MessageAPI.update(telegramBot.id, messageID!, data));
+      ? MessagesAPI.create(telegramBotID, data)
+      : MessageAPI.update(telegramBotID, messageID!, data));
 
     if (!response.ok) {
       for (const error of response.json.errors) {
@@ -178,7 +179,12 @@ function MessageOffcanvas({ onAdd, onSave }: MessageOffcanvasProps): ReactElemen
       return;
     }
 
+    const { usedStorageSize } = useMessageOffcanvasStore.getState();
+
     (action === 'add' ? onAdd : onSave)?.(response.json);
+    setTelegramBot((telegramBot) => {
+      telegramBot!.used_storage_size = usedStorageSize;
+    });
     hideOffcanvas();
     createMessageToast({
       message: t(`messages.${action}Message.success`),

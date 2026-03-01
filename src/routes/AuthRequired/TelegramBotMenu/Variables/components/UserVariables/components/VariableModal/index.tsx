@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -32,7 +32,7 @@ function VariableModal({ onAdd, onSave, ...props }: VariableModalProps): ReactEl
     keyPrefix: 'user.variableModal',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const variableID = useVariableModalStore((state) => state.variableID);
   const action = useVariableModalStore((state) => state.action);
@@ -43,8 +43,8 @@ function VariableModal({ onAdd, onSave, ...props }: VariableModalProps): ReactEl
     { setFieldError }: FormikHelpers<FormValues>,
   ): Promise<void> {
     const response = await (variableID
-      ? VariableAPI.update(telegramBot.id, variableID, values)
-      : VariablesAPI.create(telegramBot.id, values));
+      ? VariableAPI.update(telegramBotID, variableID, values)
+      : VariablesAPI.create(telegramBotID, values));
 
     if (!response.ok) {
       for (const error of response.json.errors) {

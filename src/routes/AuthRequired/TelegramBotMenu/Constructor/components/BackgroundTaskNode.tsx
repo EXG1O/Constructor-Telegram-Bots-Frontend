@@ -8,7 +8,7 @@ import {
 } from '@xyflow/react';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
@@ -35,9 +35,9 @@ function BackgroundTaskNode({
 }: BackgroundTaskNodeProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor);
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
-
   const reactFlow = useReactFlow();
+
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const showEditBackgroundTaskOffcanvas = useBackgroundTaskOffcanvasStore(
     (state) => state.showOffcanvas,
@@ -60,7 +60,7 @@ function BackgroundTaskNode({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await BackgroundTaskAPI.delete(telegramBot.id, task.id);
+        const response = await BackgroundTaskAPI.delete(telegramBotID, task.id);
 
         if (response.ok) {
           reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));

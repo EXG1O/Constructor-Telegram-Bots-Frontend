@@ -4,7 +4,7 @@ import formatDate from 'i18n/formatDate';
 import { Shield, ShieldBan, Trash2, UserCheck, UserX } from 'lucide-react';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import IconButton from 'components/ui/IconButton';
@@ -29,7 +29,10 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
     keyPrefix: 'table.row',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const telegramBotIsPrivate = useTelegramBotStore(
+    (state) => state.telegramBot!.is_private,
+  );
 
   const updateUsers = useUsersStore((state) => state.updateUsers);
 
@@ -77,7 +80,7 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
       t('allowModal.title'),
       t('allowModal.text'),
       () =>
-        UserAPI.partialUpdate(telegramBot.id, user.id, {
+        UserAPI.partialUpdate(telegramBotID, user.id, {
           is_allowed: true,
         }),
       t('messages.allowUser.success'),
@@ -90,7 +93,7 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
       t('disallowModal.title'),
       t('disallowModal.text'),
       () =>
-        UserAPI.partialUpdate(telegramBot.id, user.id, {
+        UserAPI.partialUpdate(telegramBotID, user.id, {
           is_allowed: false,
         }),
       t('messages.disallowUser.success'),
@@ -103,7 +106,7 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
       t('blockModal.title'),
       t('blockModal.text'),
       () =>
-        UserAPI.partialUpdate(telegramBot.id, user.id, {
+        UserAPI.partialUpdate(telegramBotID, user.id, {
           is_blocked: true,
         }),
       t('messages.blockUser.success'),
@@ -116,7 +119,7 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
       t('unblockModal.title'),
       t('unblockModal.text'),
       () =>
-        UserAPI.partialUpdate(telegramBot.id, user.id, {
+        UserAPI.partialUpdate(telegramBotID, user.id, {
           is_blocked: false,
         }),
       t('messages.unblockUser.success'),
@@ -128,7 +131,7 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
     showConfirmModal(
       t('deleteModal.title'),
       t('deleteModal.text'),
-      () => UserAPI.delete(telegramBot.id, user.id),
+      () => UserAPI.delete(telegramBotID, user.id),
       t('messages.deleteUser.success'),
       t('messages.deleteUser.error'),
     );
@@ -141,7 +144,7 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
       <Table.Cell className='w-full'>{user.full_name}</Table.Cell>
       <Table.Cell>
         <div className='flex gap-1'>
-          {telegramBot.is_private &&
+          {telegramBotIsPrivate &&
             (user.is_allowed ? (
               <IconButton
                 size='sm'

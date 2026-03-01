@@ -13,7 +13,7 @@ export interface PaginationData extends APIResponse.UsersAPI.Get.Pagination {
 }
 
 export interface LoaderData {
-  paginationData: PaginationData;
+  pagination: PaginationData;
 }
 
 async function loader({
@@ -21,16 +21,15 @@ async function loader({
 }: {
   params: Params<'telegramBotID'>;
 }): Promise<LoaderData | null> {
-  const telegramBotID: number = parseInt(params.telegramBotID!);
+  const telegramBotID = Number(params.telegramBotID);
+  if (Number.isNaN(telegramBotID)) return null;
+
   const [limit, offset] = [20, 0];
 
   const response = await UsersAPI.get(telegramBotID, limit, offset);
-
   if (!response.ok) return null;
 
-  return {
-    paginationData: { ...response.json, limit, offset, search: null, type: 'all' },
-  };
+  return { pagination: { ...response.json, limit, offset, search: null, type: 'all' } };
 }
 
 export default loader;

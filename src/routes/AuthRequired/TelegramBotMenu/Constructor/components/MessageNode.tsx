@@ -9,7 +9,7 @@ import {
 import { Link } from 'lucide-react';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { telegramRichInputEditorInnerContentVariants } from 'components/shared/TelegramRichInputLayout';
@@ -40,9 +40,9 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
     keyPrefix: 'nodes.message',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
-
   const reactFlow = useReactFlow();
+
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const showEditMessageOffcanvas = useMessageOffcanvasStore(
     (state) => state.showOffcanvas,
@@ -69,7 +69,7 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await MessageAPI.delete(telegramBot.id, message.id);
+        const response = await MessageAPI.delete(telegramBotID, message.id);
 
         if (response.ok) {
           reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));

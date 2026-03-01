@@ -167,9 +167,15 @@ export const routes: RouteObject[] = [
             id: RouteID.TelegramBotMenuRoot,
             path: 'telegram-bot-menu/:telegramBotID/',
             async lazy() {
-              const loader = await import('./AuthRequired/TelegramBotMenu/Root/loader');
+              const [component, loader] = await Promise.all([
+                await import('./AuthRequired/TelegramBotMenu/Root'),
+                await import('./AuthRequired/TelegramBotMenu/Root/loader'),
+              ]);
 
-              return { loader: loader.default };
+              return {
+                Component: component.default,
+                loader: loader.default,
+              };
             },
             shouldRevalidate: () => true,
             children: [

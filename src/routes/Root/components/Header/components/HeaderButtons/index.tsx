@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
 
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 import useLoginLoaderData from 'routes/Login/hooks/useLoginRouteLoaderData';
 import useRootRouteLoaderData from 'routes/Root/hooks/useRootRouteLoaderData';
 
@@ -12,8 +12,6 @@ import LanguagesDropdown from './components/LanguagesDropdown';
 import TelegramBotDropdown from './components/TelegramBotDropdown';
 import UserDropdown from './components/UserDropdown';
 
-import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
-
 import cn from 'utils/cn';
 
 export interface HeaderButtonsProps
@@ -24,11 +22,7 @@ function HeaderButtons({ className, ...props }: HeaderButtonsProps): ReactElemen
     | ReturnType<typeof useLoginLoaderData>
     | undefined;
   const { user } = useRootRouteLoaderData();
-  const telegramBot: TelegramBot | undefined = (
-    useTelegramBotMenuRootRouteLoaderData() as
-      | ReturnType<typeof useTelegramBotMenuRootRouteLoaderData>
-      | undefined
-  )?.telegramBot;
+  const telegramBot = useTelegramBotStore((state) => state.telegramBot);
 
   return (
     <div

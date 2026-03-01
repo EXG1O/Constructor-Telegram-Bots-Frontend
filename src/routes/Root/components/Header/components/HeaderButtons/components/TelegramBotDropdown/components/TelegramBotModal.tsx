@@ -1,9 +1,9 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import TelegramBotContent from 'components/shared/TelegramBotContent';
@@ -13,7 +13,6 @@ import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
-import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 
 import reverse from 'utils/reverse';
 
@@ -26,11 +25,8 @@ function TelegramBotModal(props: TelegramBotModalProps): ReactElement {
 
   const navigate = useNavigate();
 
-  const { telegramBot: originalTelegramBot } = useTelegramBotMenuRootRouteLoaderData();
-
-  const [telegramBot, setTelegramBot] = useState<TelegramBot>(originalTelegramBot);
-
-  useEffect(() => setTelegramBot(originalTelegramBot), [originalTelegramBot]);
+  const telegramBot = useTelegramBotStore((state) => state.telegramBot!);
+  const setTelegramBot = useTelegramBotStore((state) => state.setTelegramBot);
 
   const showConfirmModal = useConfirmModalStore((state) => state.setShow);
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
@@ -48,7 +44,9 @@ function TelegramBotModal(props: TelegramBotModalProps): ReactElement {
       });
     }
 
-    setTelegramBot({ ...telegramBot, is_loading: true });
+    setTelegramBot((telegramBot) => {
+      telegramBot!.is_loading = true;
+    });
     createMessageToast({
       message: t(`messages.${action}TelegramBot.success`),
       level: 'info',

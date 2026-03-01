@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useFormikContext } from 'formik';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { FormValues } from '..';
 
@@ -20,6 +20,7 @@ import { defaultText } from './TextBlock';
 import { MessageAPI } from 'api/telegram-bots/message';
 import fetchFile from 'api/utils/fetchFile';
 
+import calcMediaSize from '../../../utils/calcMediaSize';
 import { useMessageOffcanvasStore } from '../store';
 
 export interface OffcanvasInnerProps
@@ -34,7 +35,7 @@ function OffcanvasInner({
     keyPrefix: 'messageOffcanvas',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
 
@@ -43,11 +44,14 @@ function OffcanvasInner({
   const loading = useMessageOffcanvasStore((state) => state.loading);
   const hideOffcanvas = useMessageOffcanvasStore((state) => state.hideOffcanvas);
   const setLoading = useMessageOffcanvasStore((state) => state.setLoading);
+  const setUsedStorageSize = useMessageOffcanvasStore(
+    (state) => state.setUsedStorageSize,
+  );
 
   useEffect(() => {
     if (!messageID) return;
     (async () => {
-      const response = await MessageAPI.get(telegramBot.id, messageID);
+      const response = await MessageAPI.get(telegramBotID, messageID);
 
       if (!response.ok) {
         hideOffcanvas();
@@ -87,8 +91,7 @@ function OffcanvasInner({
             })),
         ),
       ]);
-
-      setValues({
+      const values: FormValues = {
         ...message,
 
         images: loadedImages.length ? loadedImages : defaultImages,
@@ -128,10 +131,17 @@ function OffcanvasInner({
         show_documents_block: Boolean(documents.length),
         show_text_block: text !== null,
         show_keyboard_block: Boolean(keyboard),
-      });
+      };
+
+      setValues(values);
+      setUsedStorageSize(
+        useTelegramBotStore.getState().telegramBot!.used_storage_size -
+          ((values.show_images_block ? calcMediaSize(values.images) : 0) +
+            (values.show_documents_block ? calcMediaSize(values.documents) : 0)),
+      );
       setLoading(false);
     })();
-  }, [telegramBot, messageID]);
+  }, [telegramBotID, messageID]);
 
   function handleHide(): void {
     hideOffcanvas();

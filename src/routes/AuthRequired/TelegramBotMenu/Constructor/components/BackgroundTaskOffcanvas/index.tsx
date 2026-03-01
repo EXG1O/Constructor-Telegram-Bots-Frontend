@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -44,7 +44,7 @@ function BackgroundTaskOffcanvas({
     keyPrefix: 'backgroundTaskOffcanvas',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const taskID = useBackgroundTaskOffcanvasStore((state) => state.taskID);
   const action = useBackgroundTaskOffcanvasStore((state) => state.action);
@@ -55,8 +55,8 @@ function BackgroundTaskOffcanvas({
     { setFieldError }: FormikHelpers<FormValues>,
   ): Promise<void> {
     const response = await (taskID
-      ? BackgroundTaskAPI.update(telegramBot.id, taskID, values)
-      : BackgroundTasksAPI.create(telegramBot.id, values));
+      ? BackgroundTaskAPI.update(telegramBotID, taskID, values)
+      : BackgroundTasksAPI.create(telegramBotID, values));
 
     if (!response.ok) {
       for (const error of response.json.errors) {

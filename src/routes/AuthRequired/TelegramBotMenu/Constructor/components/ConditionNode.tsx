@@ -8,7 +8,7 @@ import {
 } from '@xyflow/react';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
@@ -38,9 +38,9 @@ function ConditionNode({
     keyPrefix: 'nodes.condition',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
-
   const reactFlow = useReactFlow();
+
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const showEditConditionOffcanvas = useConditionOffcanvasStore(
     (state) => state.showOffcanvas,
@@ -63,7 +63,7 @@ function ConditionNode({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await ConditionAPI.delete(telegramBot.id, condition.id);
+        const response = await ConditionAPI.delete(telegramBotID, condition.id);
 
         if (response.ok) {
           reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));

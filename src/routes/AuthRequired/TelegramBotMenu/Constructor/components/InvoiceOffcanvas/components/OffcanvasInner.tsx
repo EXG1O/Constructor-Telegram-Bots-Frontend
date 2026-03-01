@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useFormikContext } from 'formik';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { FormValues } from '..';
 
@@ -29,7 +29,7 @@ function OffcanvasInner({
     keyPrefix: 'invoiceOffcanvas',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
 
@@ -38,11 +38,14 @@ function OffcanvasInner({
   const loading = useInvoiceOffcanvasStore((state) => state.loading);
   const hideOffcanvas = useInvoiceOffcanvasStore((state) => state.hideOffcanvas);
   const setLoading = useInvoiceOffcanvasStore((state) => state.setLoading);
+  const setUsedStorageSize = useInvoiceOffcanvasStore(
+    (state) => state.setUsedStorageSize,
+  );
 
   useEffect(() => {
     if (!invoiceID) return;
     (async () => {
-      const response = await InvoiceAPI.get(telegramBot.id, invoiceID);
+      const response = await InvoiceAPI.get(telegramBotID, invoiceID);
 
       if (!response.ok) {
         hideOffcanvas();
@@ -75,9 +78,17 @@ function OffcanvasInner({
         price: { label: price.label, amount: price.amount.toString() },
         show_image_block: Boolean(image),
       });
+
+      if (imageFile) {
+        setUsedStorageSize(
+          useTelegramBotStore.getState().telegramBot!.used_storage_size -
+            imageFile.size,
+        );
+      }
+
       setLoading(false);
     })();
-  }, [telegramBot, invoiceID]);
+  }, [telegramBotID, invoiceID]);
 
   function handleHide(): void {
     hideOffcanvas();
