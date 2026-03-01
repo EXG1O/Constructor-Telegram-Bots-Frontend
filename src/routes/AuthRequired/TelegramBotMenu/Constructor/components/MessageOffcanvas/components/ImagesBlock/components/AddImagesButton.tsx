@@ -9,8 +9,6 @@ import { Image, Images } from '..';
 import Button, { ButtonProps } from 'components/ui/Button';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import useTelegramBotStorage from '../../../hooks/useTelegramBotStorage';
-
 import { useMessageOffcanvasStore } from '../../../store';
 
 export interface AddImagesButtonProps
@@ -21,12 +19,16 @@ function AddImagesButton(props: AddImagesButtonProps): ReactElement {
     keyPrefix: 'messageOffcanvas.imagesBlock.addImagesButton',
   });
 
+  const getRemainingStorageSize = useMessageOffcanvasStore(
+    (state) => state.getRemainingStorageSize,
+  );
+  const setImagesLoading = useMessageOffcanvasStore((state) => state.setImagesLoading);
+  const setUsedStorageSize = useMessageOffcanvasStore(
+    (state) => state.setUsedStorageSize,
+  );
+
   const [{ value: images }, _meta, { setValue: setImages }] =
     useField<Images>('images');
-
-  const setImagesLoading = useMessageOffcanvasStore((state) => state.setImagesLoading);
-
-  const { remainingStorageSize } = useTelegramBotStorage();
 
   const id = useId();
 
@@ -38,7 +40,8 @@ function AddImagesButton(props: AddImagesButtonProps): ReactElement {
     const newImages: File[] = Object.values(event.target.files);
     event.target.value = '';
 
-    let availableStorageSize: number = remainingStorageSize;
+    let availableStorageSize: number = getRemainingStorageSize();
+    let newImagesTotalSize: number = 0;
 
     setImages([
       ...images,
@@ -67,6 +70,7 @@ function AddImagesButton(props: AddImagesButtonProps): ReactElement {
           }
 
           availableStorageSize -= newImage.size;
+          newImagesTotalSize += newImage.size;
 
           return true;
         })
@@ -77,6 +81,7 @@ function AddImagesButton(props: AddImagesButtonProps): ReactElement {
           from_url: null,
         })),
     ]);
+    setUsedStorageSize((prev) => prev + newImagesTotalSize);
     setImagesLoading(false);
   }
 

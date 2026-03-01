@@ -8,7 +8,7 @@ import {
 } from '@xyflow/react';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
@@ -38,9 +38,9 @@ function APIRequestNode({
     keyPrefix: 'nodes.apiRequest',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
-
   const reactFlow = useReactFlow();
+
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const showEditAPIRequestOffcanvas = useAPIRequestOffcanvasStore(
     (state) => state.showOffcanvas,
@@ -63,7 +63,7 @@ function APIRequestNode({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await APIRequestAPI.delete(telegramBot.id, request.id);
+        const response = await APIRequestAPI.delete(telegramBotID, request.id);
 
         if (response.ok) {
           reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));

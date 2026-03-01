@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -65,7 +65,8 @@ function InvoiceOffcanvas({
     keyPrefix: 'invoiceOffcanvas',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const setTelegramBot = useTelegramBotStore((state) => state.setTelegramBot);
 
   const invoiceID = useInvoiceOffcanvasStore((state) => state.invoiceID);
   const action = useInvoiceOffcanvasStore((state) => state.action);
@@ -85,8 +86,8 @@ function InvoiceOffcanvas({
     };
 
     const response = await (invoiceID
-      ? InvoiceAPI.update(telegramBot.id, invoiceID, data)
-      : InvoicesAPI.create(telegramBot.id, data));
+      ? InvoiceAPI.update(telegramBotID, invoiceID, data)
+      : InvoicesAPI.create(telegramBotID, data));
 
     if (!response.ok) {
       for (const error of response.json.errors) {
@@ -105,7 +106,12 @@ function InvoiceOffcanvas({
       return;
     }
 
+    const { usedStorageSize } = useInvoiceOffcanvasStore.getState();
+
     (invoiceID ? onSave : onAdd)?.(response.json);
+    setTelegramBot((telegramBot) => {
+      telegramBot!.used_storage_size = usedStorageSize;
+    });
     hideOffcanvas();
     createMessageToast({
       message: t(`messages.${action}Invoice.success`),

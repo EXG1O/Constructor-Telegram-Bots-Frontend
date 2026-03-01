@@ -1,8 +1,10 @@
 import React, { memo, ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form } from 'formik';
+import { Form, FormikProps } from 'formik';
 
 import { RouteID } from 'routes';
+
+import { FormValues } from '..';
 
 import Button from 'components/ui/Button';
 import Offcanvas from 'components/ui/Offcanvas';
@@ -25,8 +27,20 @@ function OffcanvasContent(): ReactElement {
   });
 
   const action = useInvoiceOffcanvasStore((state) => state.action);
+  const setUsedStorageSize = useInvoiceOffcanvasStore(
+    (state) => state.setUsedStorageSize,
+  );
 
   const formID = useId();
+
+  function handleImageBlockOpenChange(
+    form: FormikProps<FormValues>,
+    open: boolean,
+  ): void {
+    const file: File | null = form.values.image?.file ?? null;
+    if (file === null) return;
+    setUsedStorageSize((prev) => (open ? prev + file.size : prev - file.size));
+  }
 
   return (
     <>
@@ -37,7 +51,10 @@ function OffcanvasContent(): ReactElement {
         <Form id={formID}>
           <NameBlock className='mb-3' />
           <TitleBlock className='mb-3' />
-          <FormToggleSection name='show_image_block'>
+          <FormToggleSection
+            name='show_image_block'
+            onOpenChange={handleImageBlockOpenChange}
+          >
             <ImageBlock className='mb-3' />
           </FormToggleSection>
           <DescriptionBlock className='mb-3' />

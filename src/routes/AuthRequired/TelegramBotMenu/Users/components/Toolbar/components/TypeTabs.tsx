@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import Tabs, { TabsProps } from 'components/ui/Tabs';
 
@@ -18,7 +18,9 @@ function TypeTabs(props: TypeTabsProps): ReactElement {
     keyPrefix: 'toolbar.typeTabs',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotIsPrivate = useTelegramBotStore(
+    (state) => state.telegramBot!.is_private,
+  );
 
   const type = useUsersStore((state) => state.type);
   const updateUsers = useUsersStore((state) => state.updateUsers);
@@ -30,7 +32,9 @@ function TypeTabs(props: TypeTabsProps): ReactElement {
   return (
     <Tabs {...props} size='sm' value={type} onChange={handleChange}>
       <Tabs.Button value='all'>{t('all')}</Tabs.Button>
-      {telegramBot && <Tabs.Button value='allowed'>{t('allowed')}</Tabs.Button>}
+      {telegramBotIsPrivate && (
+        <Tabs.Button value='allowed'>{t('allowed')}</Tabs.Button>
+      )}
       <Tabs.Button value='blocked'>{t('blocked')}</Tabs.Button>
     </Tabs>
   );

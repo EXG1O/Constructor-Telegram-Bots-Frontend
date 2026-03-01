@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -41,7 +41,7 @@ function ConditionOffcanvas({
     keyPrefix: 'conditionOffcanvas',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const conditionID = useConditionOffcanvasStore((state) => state.conditionID);
   const action = useConditionOffcanvasStore((state) => state.action);
@@ -60,8 +60,8 @@ function ConditionOffcanvas({
     };
 
     const response = await (conditionID
-      ? ConditionAPI.update(telegramBot.id, conditionID, data)
-      : ConditionsAPI.create(telegramBot.id, data));
+      ? ConditionAPI.update(telegramBotID, conditionID, data)
+      : ConditionsAPI.create(telegramBotID, data));
 
     if (!response.ok) {
       for (const error of response.json.errors) {

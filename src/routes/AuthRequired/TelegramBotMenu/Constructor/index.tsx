@@ -24,7 +24,7 @@ import {
 } from '@xyflow/react';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { iconButtonVariants } from 'components/ui/IconButton';
 import Page from 'components/ui/Page';
@@ -140,7 +140,8 @@ interface UpdateDiagramBlockOptions {
 function Constructor(): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor);
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+
   const {
     diagramTriggers,
     diagramMessages,
@@ -215,7 +216,7 @@ function Constructor(): ReactElement {
       const sourceHandle: EdgeSourceHandle = parseEdgeSourceHandle(edge.sourceHandle);
       const targetHandle: EdgeTargetHandle = parseEdgeTargetHandle(edge.targetHandle);
 
-      const response = await ConnectionsAPI.create(telegramBot.id, {
+      const response = await ConnectionsAPI.create(telegramBotID, {
         ...(sourceHandle.objectType === 'message' && sourceHandle.nestedObjectID
           ? {
               source_object_type: 'message_keyboard_button',
@@ -247,7 +248,7 @@ function Constructor(): ReactElement {
         RFAddEdge({ ...edge, id: response.json.id.toString() }, prevEdges),
       );
     },
-    [telegramBot],
+    [telegramBotID],
   );
 
   const deleteEdge = useCallback(
@@ -258,7 +259,7 @@ function Constructor(): ReactElement {
         ),
       );
 
-      const response = await ConnectionAPI.delete(telegramBot.id, parseInt(edge.id));
+      const response = await ConnectionAPI.delete(telegramBotID, parseInt(edge.id));
 
       if (!response.ok) {
         setEdges((prevEdges) =>
@@ -279,7 +280,7 @@ function Constructor(): ReactElement {
 
       setEdges((prevEdges) => prevEdges.filter((prevEdge) => prevEdge.id !== edge.id));
     },
-    [telegramBot],
+    [telegramBotID],
   );
 
   const handleNodeDragStop = useCallback<OnNodeDrag>(
@@ -289,14 +290,14 @@ function Constructor(): ReactElement {
           const nodeID: NodeID = parseNodeID(node.id);
 
           return diagramBlockAPIMap[nodeID.type].update(
-            telegramBot.id,
+            telegramBotID,
             nodeID.id,
             node.position,
           );
         }),
       );
     },
-    [telegramBot],
+    [telegramBotID],
   );
 
   const handleNodesDelete = useCallback<OnNodesDelete>((nodes) => {
@@ -346,7 +347,7 @@ function Constructor(): ReactElement {
 
   const updateDiagramBlock = useCallback(
     async (type: NodeType, id: number, options: UpdateDiagramBlockOptions) => {
-      const response = await diagramBlockAPIMap[type].get(telegramBot.id, id);
+      const response = await diagramBlockAPIMap[type].get(telegramBotID, id);
 
       if (!response.ok) {
         for (const error of response.json.errors) {
@@ -377,7 +378,7 @@ function Constructor(): ReactElement {
         return newNodes;
       });
     },
-    [telegramBot],
+    [telegramBotID],
   );
 
   const handleTriggerChange = useCallback(

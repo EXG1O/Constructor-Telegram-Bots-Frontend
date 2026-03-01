@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import Modal, { ModalProps } from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
@@ -34,7 +34,7 @@ function RecordAdditionModal({
     keyPrefix: 'records.recordAdditionModal',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const updateRecords = useDatabaseRecordsStore((state) => state.updateRecords);
 
@@ -58,7 +58,7 @@ function RecordAdditionModal({
       return;
     }
 
-    const response = await DatabaseRecordsAPI.create(telegramBot.id, { data });
+    const response = await DatabaseRecordsAPI.create(telegramBotID, { data });
 
     if (!response.ok) {
       for (const error of response.json.errors) {

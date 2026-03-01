@@ -8,7 +8,7 @@ import {
 } from '@xyflow/react';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
@@ -34,9 +34,9 @@ function TriggerNode({ id, type, data: trigger }: TriggerNodeProps): ReactElemen
     keyPrefix: 'nodes.trigger',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
-
   const reactFlow = useReactFlow();
+
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const showEditTriggerOffcanvas = useTriggerOffcanvasStore(
     (state) => state.showOffcanvas,
@@ -63,7 +63,7 @@ function TriggerNode({ id, type, data: trigger }: TriggerNodeProps): ReactElemen
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await TriggerAPI.delete(telegramBot.id, trigger.id);
+        const response = await TriggerAPI.delete(telegramBotID, trigger.id);
 
         if (response.ok) {
           reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));

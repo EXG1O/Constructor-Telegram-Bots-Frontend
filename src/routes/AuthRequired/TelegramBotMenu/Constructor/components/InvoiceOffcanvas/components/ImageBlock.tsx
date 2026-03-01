@@ -10,9 +10,9 @@ import Button from 'components/ui/Button';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import useTelegramBotStorage from '../hooks/useTelegramBotStorage';
-
 import cn from 'utils/cn';
+
+import { useInvoiceOffcanvasStore } from '../store';
 
 export interface Image {
   file: File | null;
@@ -36,12 +36,17 @@ function ImageBlock({ className, ...props }: ImageBlockProps): ReactElement {
     keyPrefix: 'invoiceOffcanvas.imageBlock',
   });
 
+  const getRemainingStorageSize = useInvoiceOffcanvasStore(
+    (state) => state.getRemainingStorageSize,
+  );
+  const setUsedStorageSize = useInvoiceOffcanvasStore(
+    (state) => state.setUsedStorageSize,
+  );
+
   const [{ value: image }, _meta, { setValue: setImage }] =
     useField<ImageBlockFormValues['image']>('image');
 
   const [loading, setLoading] = useState<boolean>(false);
-
-  const { remainingStorageSize } = useTelegramBotStorage();
 
   const inputID = useId();
 
@@ -72,7 +77,7 @@ function ImageBlock({ className, ...props }: ImageBlockProps): ReactElement {
       return;
     }
 
-    if (remainingStorageSize - newImage.size < 0) {
+    if (getRemainingStorageSize() - newImage.size < 0) {
       createMessageToast({
         message: t('messages.addImage.error', {
           context: 'notEnoughStorage',
@@ -89,6 +94,7 @@ function ImageBlock({ className, ...props }: ImageBlockProps): ReactElement {
       file_url: URL.createObjectURL(newImage),
       from_url: null,
     });
+    setUsedStorageSize((prev) => prev - (image?.file?.size ?? 0) + newImage.size);
     setLoading(false);
   }
 

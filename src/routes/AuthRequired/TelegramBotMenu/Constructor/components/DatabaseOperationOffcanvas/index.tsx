@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Formik, FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -60,7 +60,7 @@ function DatabaseOperationOffcanvas({
     keyPrefix: 'databaseOperationOffcanvas',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const operationID = useDatabaseOperationOffcanvasStore((state) => state.operationID);
   const action = useDatabaseOperationOffcanvasStore((state) => state.action);
@@ -102,8 +102,8 @@ function DatabaseOperationOffcanvas({
     };
 
     const response = await (operationID
-      ? DatabaseOperationAPI.update(telegramBot.id, operationID, data)
-      : DatabaseOperationsAPI.create(telegramBot.id, data));
+      ? DatabaseOperationAPI.update(telegramBotID, operationID, data)
+      : DatabaseOperationsAPI.create(telegramBotID, data));
 
     if (!response.ok) {
       for (const error of response.json.errors) {

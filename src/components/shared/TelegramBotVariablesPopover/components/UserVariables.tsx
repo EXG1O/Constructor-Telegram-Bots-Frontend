@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import List from 'components/ui/List';
 import Pagination from 'components/ui/Pagination';
@@ -29,7 +29,7 @@ function UserVariables({ className, ...props }: UserVariablesProps): ReactElemen
     keyPrefix: 'telegramBotVariablesPopover.userVariables',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const [pagination, setPagination] = useState<PaginationData>({
     count: 0,
@@ -47,7 +47,7 @@ function UserVariables({ className, ...props }: UserVariablesProps): ReactElemen
     const limit = params?.limit ?? pagination.limit;
     const offset = params?.offset ?? pagination.offset;
 
-    const response = await VariablesAPI.get(telegramBot.id, limit, offset);
+    const response = await VariablesAPI.get(telegramBotID, limit, offset);
     if (!response.ok) return;
 
     setPagination({ ...response.json, limit, offset });
@@ -56,7 +56,7 @@ function UserVariables({ className, ...props }: UserVariablesProps): ReactElemen
 
   useEffect(() => {
     updateVariables();
-  }, []);
+  }, [telegramBotID]);
 
   function handlePageChange(offset: number): void {
     updateVariables({ offset });

@@ -8,7 +8,7 @@ import {
 } from '@xyflow/react';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
@@ -38,9 +38,9 @@ function DatabaseOperationNode({
     keyPrefix: 'nodes.databaseOperation',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
-
   const reactFlow = useReactFlow();
+
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const showEditDatabaseOperationOffcanvas = useDatabaseOperationOffcanvasStore(
     (state) => state.showOffcanvas,
@@ -63,10 +63,7 @@ function DatabaseOperationNode({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await DatabaseOperationAPI.delete(
-          telegramBot.id,
-          operation.id,
-        );
+        const response = await DatabaseOperationAPI.delete(telegramBotID, operation.id);
 
         if (response.ok) {
           reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));

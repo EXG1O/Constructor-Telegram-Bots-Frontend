@@ -3,18 +3,16 @@ import { TOptions } from 'i18next';
 import { create } from 'zustand';
 
 import { RouteID } from 'routes';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 import { UsersAPI } from 'api/telegram-bots/user';
 import { User } from 'api/telegram-bots/user/types';
 
 import { Type } from './loader';
 
 export interface StateParams {
-  telegramBot: TelegramBot;
-
   loading: boolean;
 
   count: number;
@@ -41,7 +39,7 @@ export type State = StateParams & StateActions;
 
 export type InitialProps = Pick<
   StateParams,
-  'telegramBot' | 'count' | 'limit' | 'offset' | 'search' | 'type' | 'users'
+  'count' | 'limit' | 'offset' | 'search' | 'type' | 'users'
 >;
 export type InitialState = Omit<StateParams, keyof InitialProps>;
 
@@ -57,8 +55,8 @@ export function createStore(initialProps: InitialProps) {
     updateUsers: async (newLimit, newOffset, newSearch, newType) => {
       set({ loading: true });
 
+      const telegramBot = useTelegramBotStore.getState().telegramBot!;
       const {
-        telegramBot,
         limit: currentLimit,
         offset: currentOffset,
         search: currentSearch,

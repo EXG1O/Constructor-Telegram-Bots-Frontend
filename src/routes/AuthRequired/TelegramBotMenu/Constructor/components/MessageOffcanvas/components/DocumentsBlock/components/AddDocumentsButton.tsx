@@ -9,7 +9,7 @@ import { Document, Documents } from '..';
 import Button, { ButtonProps } from 'components/ui/Button';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import useTelegramBotStorage from '../../../hooks/useTelegramBotStorage';
+import { useMessageOffcanvasStore } from '../../../store';
 
 export interface AddDocumentsButtonProps
   extends Omit<ButtonProps, 'size' | 'variant' | 'htmlFor'> {}
@@ -19,10 +19,15 @@ function AddDocumentsButton(props: AddDocumentsButtonProps): ReactElement {
     keyPrefix: 'messageOffcanvas.documentsBlock.addDocumentsButton',
   });
 
+  const getRemainingStorageSize = useMessageOffcanvasStore(
+    (state) => state.getRemainingStorageSize,
+  );
+  const setUsedStorageSize = useMessageOffcanvasStore(
+    (state) => state.setUsedStorageSize,
+  );
+
   const [{ value: documents }, _meta, { setValue: setDocuments }] =
     useField<Documents>('documents');
-
-  const { remainingStorageSize } = useTelegramBotStorage();
 
   const id = useId();
 
@@ -30,10 +35,10 @@ function AddDocumentsButton(props: AddDocumentsButtonProps): ReactElement {
     if (!event.target.files) return;
 
     const newDocuments: File[] = Object.values(event.target.files);
-
     event.target.value = '';
 
-    let availableStorageSize = remainingStorageSize;
+    let availableStorageSize: number = getRemainingStorageSize();
+    let newDocumentsTotalSize: number = 0;
 
     setDocuments([
       ...documents,
@@ -62,6 +67,7 @@ function AddDocumentsButton(props: AddDocumentsButtonProps): ReactElement {
           }
 
           availableStorageSize -= newDocument.size;
+          newDocumentsTotalSize += newDocument.size;
 
           return true;
         })
@@ -71,6 +77,7 @@ function AddDocumentsButton(props: AddDocumentsButtonProps): ReactElement {
           from_url: null,
         })),
     ]);
+    setUsedStorageSize((prev) => prev + newDocumentsTotalSize);
   }
 
   return (

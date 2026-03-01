@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Check, Trash2, X } from 'lucide-react';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import CodeInput, { Editor } from 'components/ui/CodeInput';
@@ -29,7 +29,7 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
     keyPrefix: 'records',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const updateRecords = useDatabaseRecordsStore((state) => state.updateRecords);
 
@@ -65,11 +65,9 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
     try {
       const data: Record<string, any> = JSON.parse(value);
 
-      const response = await DatabaseRecordAPI.partialUpdate(
-        telegramBot.id,
-        record.id,
-        { data },
-      );
+      const response = await DatabaseRecordAPI.partialUpdate(telegramBotID, record.id, {
+        data,
+      });
 
       if (response.ok) {
         updateRecords();
@@ -115,7 +113,7 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await DatabaseRecordAPI.delete(telegramBot.id, record.id);
+        const response = await DatabaseRecordAPI.delete(telegramBotID, record.id);
 
         if (response.ok) {
           updateRecords();

@@ -1,12 +1,12 @@
 import React, { ReactElement } from 'react';
 
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import BaseTelegramBotStorage, {
   TelegramBotStorageProps as BaseTelegramBotStorageProps,
 } from 'components/shared/TelegramBotStorage';
 
-import useTelegramBotStorage from '../hooks/useTelegramBotStorage';
+import { useInvoiceOffcanvasStore } from '../store';
 
 export interface TelegramBotStorageProps
   extends Omit<
@@ -15,9 +15,8 @@ export interface TelegramBotStorageProps
   > {}
 
 function TelegramBotStorage(props: TelegramBotStorageProps): ReactElement {
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
-
-  const { usedStorageSize } = useTelegramBotStorage();
+  const telegramBot = useTelegramBotStore((state) => state.telegramBot!);
+  const usedStorageSize = useInvoiceOffcanvasStore((state) => state.usedStorageSize);
 
   return (
     <BaseTelegramBotStorage

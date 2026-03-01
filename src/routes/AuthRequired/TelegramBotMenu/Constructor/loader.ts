@@ -30,7 +30,8 @@ async function loader({
 }: {
   params: Params<'telegramBotID'>;
 }): Promise<LoaderData | null> {
-  const telegramBotID: number = parseInt(params.telegramBotID!);
+  const telegramBotID = Number(params.telegramBotID);
+  if (Number.isNaN(telegramBotID)) return null;
 
   const [
     diagramTriggersResponse,

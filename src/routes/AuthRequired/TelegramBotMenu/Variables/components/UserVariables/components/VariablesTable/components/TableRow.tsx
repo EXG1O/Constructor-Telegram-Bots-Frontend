@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Clipboard, SquarePen, Trash2 } from 'lucide-react';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import IconButton from 'components/ui/IconButton';
@@ -30,7 +30,7 @@ function TableRow({ variable, className, ...props }: TableRowProps): ReactElemen
     keyPrefix: 'user.table.row',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const updateVariables = useUserVariablesStore((state) => state.updateVariables);
 
@@ -51,7 +51,7 @@ function TableRow({ variable, className, ...props }: TableRowProps): ReactElemen
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await VariableAPI.delete(telegramBot.id, variable.id);
+        const response = await VariableAPI.delete(telegramBotID, variable.id);
 
         if (response.ok) {
           updateVariables();

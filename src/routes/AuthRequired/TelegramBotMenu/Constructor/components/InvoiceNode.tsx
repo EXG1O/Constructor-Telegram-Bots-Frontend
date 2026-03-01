@@ -8,7 +8,7 @@ import {
 } from '@xyflow/react';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
@@ -34,9 +34,9 @@ function InvoiceNode({ id, type, data: invoice }: InvoiceNodeProps): ReactElemen
     keyPrefix: 'nodes.invoice',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
-
   const reactFlow = useReactFlow();
+
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const showEditInvoiceOffcanvas = useInvoiceOffcanvasStore(
     (state) => state.showOffcanvas,
@@ -59,7 +59,7 @@ function InvoiceNode({ id, type, data: invoice }: InvoiceNodeProps): ReactElemen
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await InvoiceAPI.delete(telegramBot.id, invoice.id);
+        const response = await InvoiceAPI.delete(telegramBotID, invoice.id);
 
         if (response.ok) {
           reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));

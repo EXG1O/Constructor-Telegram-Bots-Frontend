@@ -11,6 +11,7 @@ import IconButton from 'components/ui/IconButton';
 import cn from 'utils/cn';
 
 import { FormValues } from '../../..';
+import { useMessageOffcanvasStore } from '../../../store';
 
 export interface DocumentItemProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
@@ -18,14 +19,24 @@ export interface DocumentItemProps
 }
 
 function DocumentItem({ index, className, ...props }: DocumentItemProps): ReactElement {
+  const setUsedStorageSize = useMessageOffcanvasStore(
+    (state) => state.setUsedStorageSize,
+  );
+
   function handleDeleteClick(form: FormikProps<FormValues>): void {
     const field = form.getFieldProps<Documents>('documents');
+    const file: File | null = field.value[index].file;
+
     form.setFieldValue(
       field.name,
       produce(field.value, (draft) => {
         draft.splice(index, 1);
       }),
     );
+
+    if (file) {
+      setUsedStorageSize((prev) => prev - file.size);
+    }
   }
 
   return (

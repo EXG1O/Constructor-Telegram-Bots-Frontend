@@ -1,8 +1,10 @@
 import React, { memo, ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form } from 'formik';
+import { Form, FormikProps } from 'formik';
 
 import { RouteID } from 'routes';
+
+import { FormValues } from '..';
 
 import Button from 'components/ui/Button';
 import Offcanvas from 'components/ui/Offcanvas';
@@ -18,6 +20,7 @@ import AddonButtonGroup from '../../AddonButtonGroup';
 import FormToggleSection from '../../FormToggleSection';
 import NameBlock from '../../NameBlock';
 
+import calcMediaSize from '../../../utils/calcMediaSize';
 import { useMessageOffcanvasStore } from '../store';
 
 function OffcanvasContent(): ReactElement {
@@ -26,8 +29,20 @@ function OffcanvasContent(): ReactElement {
   });
 
   const action = useMessageOffcanvasStore((state) => state.action);
+  const setUsedStorageSize = useMessageOffcanvasStore(
+    (state) => state.setUsedStorageSize,
+  );
 
   const formID = useId();
+
+  function handleMediaBlockOpenChange(
+    form: FormikProps<FormValues>,
+    open: boolean,
+    field: keyof Pick<FormValues, 'images' | 'documents'>,
+  ): void {
+    const totalSize: number = calcMediaSize(form.values[field]);
+    setUsedStorageSize((prev) => (open ? prev + totalSize : prev - totalSize));
+  }
 
   return (
     <>
@@ -38,10 +53,20 @@ function OffcanvasContent(): ReactElement {
         <Form id={formID}>
           <NameBlock className='mb-3' />
           <SettingsBlock className='mb-3' />
-          <FormToggleSection name='show_images_block'>
+          <FormToggleSection
+            name='show_images_block'
+            onOpenChange={(form, open) =>
+              handleMediaBlockOpenChange(form, open, 'images')
+            }
+          >
             <ImagesBlock className='mb-3' />
           </FormToggleSection>
-          <FormToggleSection name='show_documents_block'>
+          <FormToggleSection
+            name='show_documents_block'
+            onOpenChange={(form, open) =>
+              handleMediaBlockOpenChange(form, open, 'documents')
+            }
+          >
             <DocumentsBlock className='mb-3' />
           </FormToggleSection>
           <FormToggleSection name='show_text_block'>

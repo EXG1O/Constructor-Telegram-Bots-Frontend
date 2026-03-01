@@ -2,7 +2,7 @@ import React, { lazy, ReactElement, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import Modal, { ModalProps } from 'components/ui/Modal';
 import Spinner from 'components/ui/Spinner';
@@ -20,7 +20,7 @@ function StatsModal(props: StatsModalProps): ReactElement {
     keyPrefix: 'header.telegramBotDropdown.statsModal',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   async function getData(
     api: () => ReturnType<typeof makeRequest<any[]>>,
@@ -41,14 +41,14 @@ function StatsModal(props: StatsModalProps): ReactElement {
 
   async function getNewUsersStatsData(): Promise<any[] | null> {
     return getData(
-      () => UsersAPI.timelineStats(telegramBot.id, 'activated_date', 90),
+      () => UsersAPI.timelineStats(telegramBotID, 'activated_date', 90),
       t('messages.getNewUsersStats.error'),
     );
   }
 
   async function getUsersLastActivityStatsData(): Promise<any[] | null> {
     return getData(
-      () => UsersAPI.timelineStats(telegramBot.id, 'last_activity_date', 90),
+      () => UsersAPI.timelineStats(telegramBotID, 'last_activity_date', 90),
       t('messages.getUsersLastActivityStats.error'),
     );
   }

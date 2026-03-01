@@ -10,7 +10,7 @@ export interface PaginationData extends APIResponse.DatabaseRecordsAPI.Get.Pagin
 }
 
 export interface LoaderData {
-  paginationData: PaginationData;
+  pagination: PaginationData;
 }
 
 async function loader({
@@ -18,14 +18,15 @@ async function loader({
 }: {
   params: Params<'telegramBotID'>;
 }): Promise<LoaderData | null> {
-  const telegramBotID: number = parseInt(params.telegramBotID!);
+  const telegramBotID = Number(params.telegramBotID);
+  if (Number.isNaN(telegramBotID)) return null;
+
   const [limit, offset] = [10, 0];
 
   const response = await DatabaseRecordsAPI.get(telegramBotID, limit, offset);
-
   if (!response.ok) return null;
 
-  return { paginationData: { ...response.json, limit, offset, search: null } };
+  return { pagination: { ...response.json, limit, offset, search: null } };
 }
 
 export default loader;

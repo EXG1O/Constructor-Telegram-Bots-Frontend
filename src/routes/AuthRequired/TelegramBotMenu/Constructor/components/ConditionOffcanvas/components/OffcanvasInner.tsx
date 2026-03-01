@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useFormikContext } from 'formik';
 
 import { RouteID } from 'routes';
-import useTelegramBotMenuRootRouteLoaderData from 'routes/AuthRequired/TelegramBotMenu/Root/hooks/useTelegramBotMenuRootRouteLoaderData';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { FormValues } from '..';
 
@@ -28,7 +28,7 @@ function OffcanvasInner({
     keyPrefix: 'conditionOffcanvas',
   });
 
-  const { telegramBot } = useTelegramBotMenuRootRouteLoaderData();
+  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
 
@@ -41,7 +41,7 @@ function OffcanvasInner({
   useEffect(() => {
     if (!conditionID) return;
     (async () => {
-      const response = await ConditionAPI.get(telegramBot.id, conditionID);
+      const response = await ConditionAPI.get(telegramBotID, conditionID);
 
       if (!response.ok) {
         hideOffcanvas();
@@ -63,7 +63,7 @@ function OffcanvasInner({
       });
       setLoading(false);
     })();
-  }, [telegramBot, conditionID]);
+  }, [telegramBotID, conditionID]);
 
   function handleHide(): void {
     hideOffcanvas();
