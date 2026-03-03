@@ -1,16 +1,14 @@
 import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { FastField, FastFieldProps, FormikProps } from 'formik';
-import { produce } from 'immer';
+import { FastField, FastFieldProps, FieldArray, FieldArrayRenderProps } from 'formik';
 import { Trash2 } from 'lucide-react';
 
-import { Document, Documents } from '..';
+import { Document } from '..';
 
 import IconButton from 'components/ui/IconButton';
 
 import cn from 'utils/cn';
 
-import { FormValues } from '../../..';
 import { useMessageOffcanvasStore } from '../../../store';
 
 export interface DocumentItemProps
@@ -23,16 +21,13 @@ function DocumentItem({ index, className, ...props }: DocumentItemProps): ReactE
     (state) => state.setUsedStorageSize,
   );
 
-  function handleDeleteClick(form: FormikProps<FormValues>): void {
-    const field = form.getFieldProps<Documents>('documents');
-    const file: File | null = field.value[index].file;
+  function handleDeleteClick(
+    document: Document,
+    arrayField: FieldArrayRenderProps,
+  ): void {
+    const file: File | null = document.file;
 
-    form.setFieldValue(
-      field.name,
-      produce(field.value, (draft) => {
-        draft.splice(index, 1);
-      }),
-    );
+    arrayField.remove(index);
 
     if (file) {
       setUsedStorageSize((prev) => prev - file.size);
@@ -41,7 +36,7 @@ function DocumentItem({ index, className, ...props }: DocumentItemProps): ReactE
 
   return (
     <FastField name={`documents[${index}]`}>
-      {({ field, form }: FastFieldProps) => {
+      {({ field }: FastFieldProps) => {
         const document: Document = field.value;
 
         return (
@@ -60,13 +55,17 @@ function DocumentItem({ index, className, ...props }: DocumentItemProps): ReactE
                 <span className='flex-auto rounded-sm bg-dark px-2 py-1 text-sm text-dark-foreground'>
                   {document.file?.name ?? document.from_url ?? 'UNKNOWN'}
                 </span>
-                <IconButton
-                  size='sm'
-                  className='text-danger'
-                  onClick={() => handleDeleteClick(form)}
-                >
-                  <Trash2 />
-                </IconButton>
+                <FieldArray name='documents'>
+                  {(arrayField) => (
+                    <IconButton
+                      size='sm'
+                      className='text-danger'
+                      onClick={() => handleDeleteClick(document, arrayField)}
+                    >
+                      <Trash2 />
+                    </IconButton>
+                  )}
+                </FieldArray>
               </div>
             )}
           </Draggable>
