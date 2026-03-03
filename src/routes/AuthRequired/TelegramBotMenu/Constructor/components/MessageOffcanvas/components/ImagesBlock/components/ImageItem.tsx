@@ -1,16 +1,14 @@
 import React, { HTMLAttributes, memo, ReactElement } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { FastField, FastFieldProps, FormikProps } from 'formik';
-import { produce } from 'immer';
+import { FastField, FastFieldProps, FieldArray, FieldArrayRenderProps } from 'formik';
 import { Trash2 } from 'lucide-react';
 
-import { Image, Images } from '..';
+import { Image } from '..';
 
 import IconButton from 'components/ui/IconButton';
 
 import cn from 'utils/cn';
 
-import { FormValues } from '../../..';
 import { useMessageOffcanvasStore } from '../../../store';
 
 export interface ImageItemProps
@@ -23,16 +21,10 @@ function ImageItem({ index, className, ...props }: ImageItemProps): ReactElement
     (state) => state.setUsedStorageSize,
   );
 
-  function handleDeleteClick(form: FormikProps<FormValues>): void {
-    const field = form.getFieldProps<Images>('images');
-    const file: File | null = field.value[index].file;
+  function handleDeleteClick(image: Image, arrayField: FieldArrayRenderProps): void {
+    const file: File | null = image.file;
 
-    form.setFieldValue(
-      field.name,
-      produce(field.value, (draft) => {
-        draft.splice(index, 1);
-      }),
-    );
+    arrayField.remove(index);
 
     if (file) {
       setUsedStorageSize((prev) => prev - file.size);
@@ -41,7 +33,7 @@ function ImageItem({ index, className, ...props }: ImageItemProps): ReactElement
 
   return (
     <FastField name={`images[${index}]`}>
-      {({ field, form }: FastFieldProps) => {
+      {({ field }: FastFieldProps) => {
         const image: Image = field.value;
 
         return (
@@ -57,13 +49,17 @@ function ImageItem({ index, className, ...props }: ImageItemProps): ReactElement
                 <span className='flex-auto rounded-sm bg-dark px-2 py-1 text-sm text-dark-foreground'>
                   {image.file?.name ?? image.from_url ?? 'UNKNOWN'}
                 </span>
-                <IconButton
-                  size='sm'
-                  className='text-danger'
-                  onClick={() => handleDeleteClick(form)}
-                >
-                  <Trash2 />
-                </IconButton>
+                <FieldArray name='images'>
+                  {(arrayField) => (
+                    <IconButton
+                      size='sm'
+                      className='text-danger'
+                      onClick={() => handleDeleteClick(image, arrayField)}
+                    >
+                      <Trash2 />
+                    </IconButton>
+                  )}
+                </FieldArray>
               </div>
             )}
           </Draggable>
