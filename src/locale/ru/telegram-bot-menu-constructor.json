@@ -22,6 +22,9 @@
     "getDiagramDatabaseOperation": {
       "error": "Не удалось получить данные операций базы данных для диаграммы."
     },
+    "getDiagramTemporaryVariable": {
+      "error": "Не удалось получить данные временных переменных для диаграммы."
+    },
     "createConnection": {
       "error": "Не удалось подключить блок к другому блоку."
     },
@@ -397,6 +400,29 @@
     "actionButton_add": "Добавить",
     "actionButton_edit": "Сохранить"
   },
+  "temporaryVariableOffcanvas": {
+    "title_add": "Добавление переменной",
+    "title_edit": "Редактирование переменной",
+    "messages": {
+      "getTemporaryVariable": {
+        "error": "Не удалось получить данные временной переменной."
+      },
+      "addTemporaryVariable": {
+        "success": "Вы успешно добавили временную переменную.",
+        "error": "Не удалось добавить временную переменную."
+      },
+      "editTemporaryVariable": {
+        "success": "Вы успешно сохранили временную переменную.",
+        "error": "Не удалось сохранить временную переменную."
+      }
+    },
+    "valueBlock": {
+      "title": "Значение",
+      "inputPlaceholder": "Введите значение"
+    },
+    "actionButton_add": "Добавить",
+    "actionButton_edit": "Сохранить"
+  },
   "panel": {
     "addBlockButton": "Добавить блок"
   },
@@ -430,6 +456,10 @@
       "invoice": {
         "name": "Счёт",
         "description": "Отправляет счёт на оплату."
+      },
+      "temporaryVariable": {
+        "name": "Временная переменная",
+        "description": "Создаёт временную переменную в цепочки логики."
       }
     }
   },
@@ -524,6 +554,19 @@
       "deleteModal": {
         "title": "Удаление операции базы данных",
         "text": "Вы точно хотите удалить счёт?"
+      }
+    },
+    "temporaryVariable": {
+      "title": "Временная переменная",
+      "messages": {
+        "deleteInvoice": {
+          "success": "Вы успешно удалили временную переменную.",
+          "error": "Не удалось удалить временную переменную."
+        }
+      },
+      "deleteModal": {
+        "title": "Удаление временной переменной",
+        "text": "Вы точно хотите удалить временную переменную?"
       }
     }
   }

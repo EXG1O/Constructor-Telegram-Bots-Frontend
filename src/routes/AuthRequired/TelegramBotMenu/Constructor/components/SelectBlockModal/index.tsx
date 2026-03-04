@@ -13,6 +13,7 @@ import { useConditionOffcanvasStore } from '../ConditionOffcanvas/store';
 import { useDatabaseOperationOffcanvasStore } from '../DatabaseOperationOffcanvas/store';
 import { useInvoiceOffcanvasStore } from '../InvoiceOffcanvas/store';
 import { useMessageOffcanvasStore } from '../MessageOffcanvas/store';
+import { useTemporaryVariableOffcanvasStore } from '../TemporaryVariableOffcanvas/store';
 import { useTriggerOffcanvasStore } from '../TriggerOffcanvas/store';
 
 export interface SelectBlockModalProps extends ModalProps {}
@@ -43,6 +44,9 @@ function SelectBlockModal({ children, ...props }: SelectBlockModalProps): ReactE
   const showAddInvoiceOffcanvas = useInvoiceOffcanvasStore(
     (state) => state.showOffcanvas,
   );
+  const showAddTemporaryVariableOffcanvas = useTemporaryVariableOffcanvasStore(
+    (state) => state.showOffcanvas,
+  );
 
   return (
     <Modal {...props}>
@@ -71,6 +75,10 @@ function SelectBlockModal({ children, ...props }: SelectBlockModalProps): ReactE
             onClick={() => showAddDatabaseOperationOffcanvas()}
           />
           <BlockButton blockName='invoice' onClick={() => showAddInvoiceOffcanvas()} />
+          <BlockButton
+            blockName='temporaryVariable'
+            onClick={() => showAddTemporaryVariableOffcanvas()}
+          />
         </Modal.Body>
       </Modal.Content>
     </Modal>

@@ -22,6 +22,9 @@
     "getDiagramDatabaseOperation": {
       "error": "Failed to get database operation data for the diagram."
     },
+    "getDiagramTemporaryVariable": {
+      "error": "Failed to get temporary variable data for the diagram."
+    },
     "createConnection": {
       "error": "Failed to connect one block to another."
     },
@@ -397,6 +400,29 @@
     "actionButton_add": "Add",
     "actionButton_edit": "Save"
   },
+  "temporaryVariableOffcanvas": {
+    "title_add": "Adding a variable",
+    "title_edit": "Editing the variable",
+    "messages": {
+      "getTemporaryVariable": {
+        "error": "Failed to retrieve temporary variable data."
+      },
+      "addTemporaryVariable": {
+        "success": "You have successfully added the temporary variable.",
+        "error": "Failed to add the temporary variable."
+      },
+      "editTemporaryVariable": {
+        "success": "You have successfully saved the temporary variable.",
+        "error": "Failed to save the temporary variable."
+      }
+    },
+    "valueBlock": {
+      "title": "Value",
+      "inputPlaceholder": "Enter value"
+    },
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save"
+  },
   "panel": {
     "addBlockButton": "Add block"
   },
@@ -430,6 +456,10 @@
       "invoice": {
         "name": "Invoice",
         "description": "Sends an invoice for payment."
+      },
+      "temporaryVariable": {
+        "name": "Temporary variable",
+        "description": "Creates a temporary variable in the logic chain."
       }
     }
   },
@@ -524,6 +554,19 @@
       "deleteModal": {
         "title": "Deleting the invoice",
         "text": "Are you sure you want to delete the invoice?"
+      }
+    },
+    "temporaryVariable": {
+      "title": "Temporary variable",
+      "messages": {
+        "deleteInvoice": {
+          "success": "You have successfully deleted the temporary variable.",
+          "error": "Failed to delete the temporary variable."
+        }
+      },
+      "deleteModal": {
+        "title": "Delete temporary variable",
+        "text": "Are you sure you want to delete the temporary variable?"
       }
     }
   }

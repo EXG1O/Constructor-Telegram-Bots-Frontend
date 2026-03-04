@@ -22,6 +22,9 @@
     "getDiagramDatabaseOperation": {
       "error": "Не вдалося отримати дані операцій бази даних для діаграми."
     },
+    "getDiagramTemporaryVariable": {
+      "error": "Не вдалося отримати дані тимчасових змінних для діаграми."
+    },
     "createConnection": {
       "error": "Не вдалося підключити блок до іншого блоку."
     },
@@ -397,6 +400,29 @@
     "actionButton_add": "Додати",
     "actionButton_edit": "Зберегти"
   },
+  "temporaryVariableOffcanvas": {
+    "title_add": "Додавання змінної",
+    "title_edit": "Редагування змінної",
+    "messages": {
+      "getTemporaryVariable": {
+        "error": "Не вдалося отримати дані тимчасової змінної."
+      },
+      "addTemporaryVariable": {
+        "success": "Ви успішно додали тимчасову змінну.",
+        "error": "Не вдалося додати тимчасову змінну."
+      },
+      "editTemporaryVariable": {
+        "success": "Ви успішно зберегли тимчасову змінну.",
+        "error": "Не вдалося зберегти тимчасову змінну."
+      }
+    },
+    "valueBlock": {
+      "title": "Значення",
+      "inputPlaceholder": "Введіть значення"
+    },
+    "actionButton_add": "Додати",
+    "actionButton_edit": "Зберегти"
+  },
   "panel": {
     "addBlockButton": "Додати блок"
   },
@@ -430,6 +456,10 @@
       "invoice": {
         "name": "Рахунок",
         "description": "Надсилає рахунок на оплату."
+      },
+      "temporaryVariable": {
+        "name": "Тимчасова змінна",
+        "description": "Створює тимчасову змінну в ланцюжку логіки."
       }
     }
   },
@@ -524,6 +554,19 @@
       "deleteModal": {
         "title": "Видалення рахунку",
         "text": "Ви точно хочете видалити рахунок?"
+      }
+    },
+    "temporaryVariable": {
+      "title": "Тимчасова змінна",
+      "messages": {
+        "deleteInvoice": {
+          "success": "Ви успішно видалили тимчасову змінну.",
+          "error": "Не вдалося видалити тимчасову змінну."
+        }
+      },
+      "deleteModal": {
+        "title": "Видалення тимчасової змінної",
+        "text": "Ви точно хочете видалити тимчасову змінну?"
       }
     }
   }
