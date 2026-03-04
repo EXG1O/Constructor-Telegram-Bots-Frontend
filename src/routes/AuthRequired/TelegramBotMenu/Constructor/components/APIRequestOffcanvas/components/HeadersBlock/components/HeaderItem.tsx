@@ -14,8 +14,10 @@ import SimpleInput from 'components/ui/SimpleInput';
 
 import cn from 'utils/cn';
 
-export interface HeaderItemProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface HeaderItemProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
   index: number;
 }
 

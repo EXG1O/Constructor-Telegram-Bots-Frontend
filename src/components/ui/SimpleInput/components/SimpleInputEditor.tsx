@@ -30,11 +30,10 @@ export const simpleInputEditorVariants = cva(
   },
 );
 
-export interface SimpleInputEditorProps
-  extends Omit<
-    InputHTMLAttributes<HTMLInputElement>,
-    'value' | 'onChange' | 'placeholder'
-  > {
+export interface SimpleInputEditorProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'value' | 'onChange' | 'placeholder'
+> {
   asChild?: boolean;
 }
 

@@ -9,8 +9,10 @@ import useUsersStore from '../../hooks/useUsersStore';
 
 import cn from 'utils/cn';
 
-export interface ToolbarProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+export interface ToolbarProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {}
 
 function Toolbar({ className, ...props }: ToolbarProps): ReactElement {
   const itemCount = useUsersStore((state) => state.count);

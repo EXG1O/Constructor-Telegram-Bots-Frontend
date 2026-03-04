@@ -9,8 +9,10 @@ import useTelegramBots from '../hooks/useTelegramBots';
 
 import cn from 'utils/cn';
 
-export interface TelegramBotListProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+export interface TelegramBotListProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {}
 
 function TelegramBotList({ className, ...props }: TelegramBotListProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBots);

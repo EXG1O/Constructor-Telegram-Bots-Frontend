@@ -16,7 +16,8 @@ export interface KeyboardRow {
 }
 
 export interface DraggableKeyboardRowProps
-  extends Omit<LiHTMLAttributes<HTMLLIElement>, 'children'>,
+  extends
+    Omit<LiHTMLAttributes<HTMLLIElement>, 'children'>,
     Pick<
       DraggableProps,
       'isDragDisabled' | 'disableInteractiveElementBlocking' | 'shouldRespectForcePress'

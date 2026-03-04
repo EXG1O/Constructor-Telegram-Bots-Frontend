@@ -7,8 +7,10 @@ import HeaderItem from './HeaderItem';
 
 import cn from 'utils/cn';
 
-export interface HeaderListProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+export interface HeaderListProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {}
 
 function HeaderList({ className, ...props }: HeaderListProps): ReactElement {
   return (

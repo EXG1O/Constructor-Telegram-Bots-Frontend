@@ -10,8 +10,10 @@ import SelectButton from './SelectButton';
 
 import cn from 'utils/cn';
 
-export interface SystemVariablesProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+export interface SystemVariablesProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {}
 
 function SystemVariables({ className, ...props }: SystemVariablesProps): ReactElement {
   const [type, setType] = useState<TelegramBotSystemVariablesType>('personal');

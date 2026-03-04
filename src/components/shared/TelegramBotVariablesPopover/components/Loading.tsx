@@ -4,8 +4,10 @@ import Spinner from 'components/ui/Spinner';
 
 import cn from 'utils/cn';
 
-export interface LoadingProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+export interface LoadingProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {}
 
 function Loading({ className, ...props }: LoadingProps): ReactElement {
   return (

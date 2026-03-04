@@ -8,11 +8,10 @@ import BaseTelegramBotStorage, {
 
 import { useMessageOffcanvasStore } from '../store';
 
-export interface TelegramBotStorageProps
-  extends Omit<
-    BaseTelegramBotStorageProps,
-    'size' | 'telegramBot' | 'usedStorageSize' | 'children'
-  > {}
+export interface TelegramBotStorageProps extends Omit<
+  BaseTelegramBotStorageProps,
+  'size' | 'telegramBot' | 'usedStorageSize' | 'children'
+> {}
 
 function TelegramBotStorage(props: TelegramBotStorageProps): ReactElement {
   const telegramBot = useTelegramBotStore((state) => state.telegramBot!);

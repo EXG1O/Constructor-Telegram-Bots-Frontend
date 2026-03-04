@@ -10,8 +10,10 @@ import Button, { ButtonProps } from 'components/ui/Button';
 
 import cn from 'utils/cn';
 
-export interface AddHeaderButtonProps
-  extends Omit<ButtonProps, 'size' | 'variant' | 'children'> {}
+export interface AddHeaderButtonProps extends Omit<
+  ButtonProps,
+  'size' | 'variant' | 'children'
+> {}
 
 function AddHeaderButton({
   className,

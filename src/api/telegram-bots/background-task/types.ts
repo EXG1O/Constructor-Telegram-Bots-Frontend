@@ -7,7 +7,8 @@ export interface BackgroundTask {
 }
 
 export interface DiagramBackgroundTask
-  extends DiagramBlock<BackgroundTask['id']>,
+  extends
+    DiagramBlock<BackgroundTask['id']>,
     Pick<BackgroundTask, 'name' | 'interval'> {}
 
 export namespace Data {

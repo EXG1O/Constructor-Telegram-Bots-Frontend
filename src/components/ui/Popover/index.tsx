@@ -1,3 +1,4 @@
+import React, { ReactElement } from 'react';
 import * as Primitive from '@radix-ui/react-popover';
 
 import PopoverAnchor from './components/PopoverAnchor';
@@ -5,10 +6,11 @@ import PopoverBody from './components/PopoverBody';
 import PopoverClose from './components/PopoverClose';
 import PopoverTrigger from './components/PopoverTrigger';
 
-export type PopoverProps = Primitive.PopoverProps;
+export interface PopoverProps extends Primitive.PopoverProps {}
 
-const Popover = Primitive.Popover;
-Popover.defaultProps = { modal: false };
+function Popover({ modal, ...props }: PopoverProps): ReactElement {
+  return <Primitive.Popover {...props} modal={modal} />;
+}
 
 export default Object.assign(Popover, {
   Anchor: PopoverAnchor,

@@ -8,7 +8,8 @@ import { KeyboardRow } from './DraggableKeyboardRow';
 import cn from 'utils/cn';
 
 export interface DroppableKeyboardButtonsProps
-  extends Omit<OlHTMLAttributes<HTMLOListElement>, 'children'>,
+  extends
+    Omit<OlHTMLAttributes<HTMLOListElement>, 'children'>,
     Pick<
       DroppableProps,
       | 'isDropDisabled'

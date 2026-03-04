@@ -13,8 +13,10 @@ import useModal from '../hooks/useModal';
 
 import cn from 'utils/cn';
 
-export interface ModalContentProps
-  extends Omit<DialogContentProps, 'asChild' | 'aria-describedby'> {}
+export interface ModalContentProps extends Omit<
+  DialogContentProps,
+  'asChild' | 'aria-describedby'
+> {}
 
 const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
   ({ className, children, onAnimationEnd, ...props }, ref) => {

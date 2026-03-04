@@ -8,8 +8,10 @@ import ToolbarButton, {
 
 import useCodeInputStore from 'components/ui/CodeInput/hooks/useCodeInputStore';
 
-export interface ToolbarVariablesButtonProps
-  extends Omit<ToolbarButtonProps, 'children'> {}
+export interface ToolbarVariablesButtonProps extends Omit<
+  ToolbarButtonProps,
+  'children'
+> {}
 
 const ToolbarVariablesButton = forwardRef<
   HTMLButtonElement,

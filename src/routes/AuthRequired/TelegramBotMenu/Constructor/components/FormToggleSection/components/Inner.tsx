@@ -6,8 +6,7 @@ import Collapsible, { CollapsibleProps } from 'components/ui/Collapsible';
 import useFormToggleSectionStore from '../hooks/useTelegramBotContentStore';
 
 export interface InnerProps
-  extends FastFieldProps,
-    Omit<CollapsibleProps, 'open' | 'onOpenChange'> {
+  extends FastFieldProps, Omit<CollapsibleProps, 'open' | 'onOpenChange'> {
   advanced?: boolean;
   onOpenChange?: (form: FormikProps<any>, open: boolean) => void;
 }

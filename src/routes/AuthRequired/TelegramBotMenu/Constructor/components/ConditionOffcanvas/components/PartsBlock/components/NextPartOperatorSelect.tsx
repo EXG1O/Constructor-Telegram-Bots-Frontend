@@ -15,8 +15,10 @@ import { FormValues } from '../../..';
 
 export type NextPartOperator = '&&' | '||' | 'null';
 
-export interface NextPartOperatorSelectProps
-  extends Omit<SelectFeedbackProps, 'size' | 'value' | 'error' | 'children'> {
+export interface NextPartOperatorSelectProps extends Omit<
+  SelectFeedbackProps,
+  'size' | 'value' | 'error' | 'children'
+> {
   index: number;
 }
 

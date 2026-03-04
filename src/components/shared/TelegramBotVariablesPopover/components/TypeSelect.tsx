@@ -5,8 +5,10 @@ import Select, { SelectProps } from 'components/ui/Select';
 
 export type Type = 'system' | 'user' | 'database';
 
-export interface TypeSelectProps
-  extends Omit<SelectProps, 'size' | 'children' | 'onChange'> {
+export interface TypeSelectProps extends Omit<
+  SelectProps,
+  'size' | 'children' | 'onChange'
+> {
   type: Type;
   onChange?: (type: Type) => void;
 }

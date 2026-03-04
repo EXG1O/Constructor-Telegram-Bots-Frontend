@@ -8,8 +8,10 @@ import useCarousel from '../hooks/useCarousel';
 
 import cn from 'utils/cn';
 
-export interface CarouselDirectionButtonProps
-  extends Omit<IconButtonProps, 'size' | 'onScroll'> {
+export interface CarouselDirectionButtonProps extends Omit<
+  IconButtonProps,
+  'size' | 'onScroll'
+> {
   onCanScroll: (api: EmblaAPI) => boolean;
   onScroll: (api: EmblaAPI) => void;
 }

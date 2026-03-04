@@ -11,8 +11,10 @@ import { KeyboardRow } from './Keyboard';
 
 import { FormValues } from '../../..';
 
-export interface AddKeyboardRowButtonProps
-  extends Omit<ButtonProps, 'size' | 'variant' | 'children'> {}
+export interface AddKeyboardRowButtonProps extends Omit<
+  ButtonProps,
+  'size' | 'variant' | 'children'
+> {}
 
 function AddKeyboardRowButton({
   onClick,

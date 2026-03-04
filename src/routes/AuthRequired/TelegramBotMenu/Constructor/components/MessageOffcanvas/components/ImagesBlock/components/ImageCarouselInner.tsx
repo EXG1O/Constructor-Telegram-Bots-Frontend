@@ -9,8 +9,10 @@ import ImageCarouselImage from './ImageCarouselImage';
 
 import { useMessageOffcanvasStore } from '../../../store';
 
-export interface ImageCarouselInnerProps
-  extends Omit<CarouselProps, 'height' | 'children'> {
+export interface ImageCarouselInnerProps extends Omit<
+  CarouselProps,
+  'height' | 'children'
+> {
   images: Images;
 }
 

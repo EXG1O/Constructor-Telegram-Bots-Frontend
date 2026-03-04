@@ -20,7 +20,8 @@ export interface KeyboardButton {
 }
 
 export interface DraggableKeyboardButtonProps
-  extends Omit<LiHTMLAttributes<HTMLLIElement>, 'children'>,
+  extends
+    Omit<LiHTMLAttributes<HTMLLIElement>, 'children'>,
     Pick<
       DraggableProps,
       'isDragDisabled' | 'disableInteractiveElementBlocking' | 'shouldRespectForcePress'

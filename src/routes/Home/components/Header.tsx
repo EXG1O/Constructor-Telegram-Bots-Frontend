@@ -5,8 +5,10 @@ import { RouteID } from 'routes';
 
 import Block, { BlockProps } from 'components/ui/Block';
 
-export interface HeaderProps
-  extends Omit<BlockProps, 'variant' | 'gradient' | 'children'> {}
+export interface HeaderProps extends Omit<
+  BlockProps,
+  'variant' | 'gradient' | 'children'
+> {}
 
 function Header(props: HeaderProps): ReactElement {
   const { t } = useTranslation(RouteID.Home, { keyPrefix: 'header' });

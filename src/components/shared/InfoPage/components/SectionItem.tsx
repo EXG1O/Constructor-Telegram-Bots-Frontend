@@ -6,8 +6,10 @@ import Markdown from 'components/ui/Markdown';
 
 import cn from 'utils/cn';
 
-export interface SectionItemProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface SectionItemProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
   section: Section;
 }
 

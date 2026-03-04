@@ -11,8 +11,10 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useMessageOffcanvasStore } from '../../../store';
 
-export interface AddImagesButtonProps
-  extends Omit<ButtonProps, 'size' | 'variant' | 'htmlFor'> {}
+export interface AddImagesButtonProps extends Omit<
+  ButtonProps,
+  'size' | 'variant' | 'htmlFor'
+> {}
 
 function AddImagesButton(props: AddImagesButtonProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {

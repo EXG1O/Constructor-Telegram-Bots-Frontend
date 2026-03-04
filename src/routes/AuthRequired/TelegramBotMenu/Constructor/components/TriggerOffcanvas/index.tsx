@@ -34,7 +34,8 @@ import { Data, Trigger } from 'api/telegram-bots/trigger/types';
 import { useTriggerOffcanvasStore } from './store';
 
 export interface FormValues
-  extends NameBlockFormValues,
+  extends
+    NameBlockFormValues,
     TypeBlockFormValues,
     StartCommandBlockFormValues,
     CommandBlockFormValues,

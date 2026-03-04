@@ -14,8 +14,10 @@ import UserDropdown from './components/UserDropdown';
 
 import cn from 'utils/cn';
 
-export interface HeaderButtonsProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+export interface HeaderButtonsProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {}
 
 function HeaderButtons({ className, ...props }: HeaderButtonsProps): ReactElement {
   const login = useLoginLoaderData() as

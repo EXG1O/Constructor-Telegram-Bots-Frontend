@@ -33,7 +33,8 @@ import { Data, Invoice } from 'api/telegram-bots/invoice/types';
 import { useInvoiceOffcanvasStore } from './store';
 
 export interface FormValues
-  extends NameBlockFormValues,
+  extends
+    NameBlockFormValues,
     TitleBlockFormValues,
     ImageBlockFormValues,
     DescriptionBlockFormValues,

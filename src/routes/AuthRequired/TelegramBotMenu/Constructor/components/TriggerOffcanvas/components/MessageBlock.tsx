@@ -12,9 +12,7 @@ import cn from 'utils/cn';
 
 const ToolbarVariablesButton = lazy(
   () =>
-    import(
-      'components/shared/TelegramSimpleInputLayout/components/ToolbarVariablesButton'
-    ),
+    import('components/shared/TelegramSimpleInputLayout/components/ToolbarVariablesButton'),
 );
 
 export interface Message {

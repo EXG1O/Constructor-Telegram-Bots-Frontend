@@ -12,8 +12,10 @@ import useDatabaseRecordsStore from '../hooks/useDatabaseRecordsStore';
 
 import cn from 'utils/cn';
 
-export interface RecordListProps
-  extends Omit<HTMLAttributes<HTMLUListElement>, 'children'> {}
+export interface RecordListProps extends Omit<
+  HTMLAttributes<HTMLUListElement>,
+  'children'
+> {}
 
 function RecordList({ className, ...props }: RecordListProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {

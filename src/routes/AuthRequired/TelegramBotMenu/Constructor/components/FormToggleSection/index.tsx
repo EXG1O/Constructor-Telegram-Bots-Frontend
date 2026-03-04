@@ -8,8 +8,7 @@ import TriggerButton from './components/TriggerButton';
 import StoreProvider, { StoreProviderProps } from './providers/StoreProvider';
 
 export interface FormToggleSectionProps
-  extends Omit<StoreProviderProps, 'children'>,
-    Omit<InnerProps, keyof FastFieldProps> {
+  extends Omit<StoreProviderProps, 'children'>, Omit<InnerProps, keyof FastFieldProps> {
   name: string;
 }
 

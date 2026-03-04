@@ -41,10 +41,9 @@ export interface EdgeHandle<ObjectType extends string> {
   nestedObjectID: number;
 }
 
-export interface EdgeSourceHandle
-  extends EdgeHandle<
-    Exclude<SourceObjectType, 'message_keyboard_button'> | 'message'
-  > {}
+export interface EdgeSourceHandle extends EdgeHandle<
+  Exclude<SourceObjectType, 'message_keyboard_button'> | 'message'
+> {}
 
 export interface EdgeTargetHandle extends EdgeHandle<TargetObjectType> {}
 

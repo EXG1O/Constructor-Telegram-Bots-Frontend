@@ -21,7 +21,8 @@ export const tabsVariants = cva(['flex', 'w-full', 'bg-gray-200'], {
 });
 
 export interface TabsProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>,
+  extends
+    Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>,
     Partial<Pick<TabsContextProps, 'size'>>,
     Omit<TabsContextProps, 'size'> {
   asChild?: boolean;

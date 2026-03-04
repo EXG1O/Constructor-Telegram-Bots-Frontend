@@ -17,7 +17,8 @@ const UserVariables = lazy(() => import('./components/UserVariables'));
 const DatabaseRecords = lazy(() => import('./components/DatabaseRecords'));
 
 export interface TelegramBotVariablesPopoverProps
-  extends Pick<PopoverProps, 'defaultOpen' | 'open' | 'onOpenChange'>,
+  extends
+    Pick<PopoverProps, 'defaultOpen' | 'open' | 'onOpenChange'>,
     Omit<PopoverBodyProps, 'size' | 'onSelect'>,
     TelegramBotVariablesPopoverContextProps {}
 

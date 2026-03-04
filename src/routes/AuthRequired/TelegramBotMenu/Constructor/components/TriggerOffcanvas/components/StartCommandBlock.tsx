@@ -22,8 +22,10 @@ export interface StartCommandBlockFormValues {
   show_start_command_description: boolean;
 }
 
-export interface StartCommandBlockProps
-  extends Omit<BlockProps, 'variant' | 'children'> {}
+export interface StartCommandBlockProps extends Omit<
+  BlockProps,
+  'variant' | 'children'
+> {}
 
 export const defaultStartCommand: StartCommand = { payload: '', description: '' };
 export const defaultStartCommandBlockFormValues: StartCommandBlockFormValues = {

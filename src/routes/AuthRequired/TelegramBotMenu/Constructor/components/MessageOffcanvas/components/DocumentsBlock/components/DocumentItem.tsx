@@ -11,8 +11,10 @@ import cn from 'utils/cn';
 
 import { useMessageOffcanvasStore } from '../../../store';
 
-export interface DocumentItemProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface DocumentItemProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
   index: number;
 }
 

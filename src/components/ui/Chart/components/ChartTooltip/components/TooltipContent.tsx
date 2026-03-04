@@ -32,7 +32,8 @@ export const tooltipContentVariants = cva(
 type TooltipData = Pick<TooltipContentProps, 'label' | 'payload'>;
 
 export interface TooltipContentProps
-  extends Partial<PrimitiveTooltipContentProps<ValueType, NameType>>,
+  extends
+    Partial<PrimitiveTooltipContentProps<ValueType, NameType>>,
     Omit<VariantProps<typeof tooltipContentVariants>, 'active'> {
   title?: ((data: TooltipData) => ReactNode) | ReactNode;
   value?: ((data: TooltipData) => ReactNode) | ReactNode;

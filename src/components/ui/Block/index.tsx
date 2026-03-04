@@ -41,8 +41,7 @@ export const blockVariants = cva(['w-full'], {
 });
 
 export interface BlockProps
-  extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof blockVariants> {
+  extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof blockVariants> {
   asChild?: boolean;
 }
 

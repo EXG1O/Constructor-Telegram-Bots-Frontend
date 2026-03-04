@@ -6,8 +6,9 @@ export interface TemporaryVariable {
   value: string;
 }
 
-export interface DiagramTemporaryVariable
-  extends DiagramBlock<TemporaryVariable['id']> {}
+export interface DiagramTemporaryVariable extends DiagramBlock<
+  TemporaryVariable['id']
+> {}
 
 export namespace Data {
   export namespace TemporaryVariablesAPI {

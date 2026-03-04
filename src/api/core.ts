@@ -2,8 +2,10 @@ import { JWTStorage } from './storage';
 import { UserAPI } from './users';
 
 export namespace APIResponse {
-  export interface Base<Ok extends boolean, Json extends Record<string, any>>
-    extends Omit<Response, 'ok' | 'json'> {
+  export interface Base<
+    Ok extends boolean,
+    Json extends Record<string, any>,
+  > extends Omit<Response, 'ok' | 'json'> {
     ok: Ok;
     json: Json;
   }

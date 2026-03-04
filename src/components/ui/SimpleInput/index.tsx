@@ -9,8 +9,10 @@ import SimpleInputStoreProvider, {
 
 export type Size = 'sm' | 'md' | 'lg';
 
-export interface SimpleInputProps
-  extends Omit<SimpleInputStoreProviderProps, 'children'> {
+export interface SimpleInputProps extends Omit<
+  SimpleInputStoreProviderProps,
+  'children'
+> {
   children?: ReactNode;
 }
 

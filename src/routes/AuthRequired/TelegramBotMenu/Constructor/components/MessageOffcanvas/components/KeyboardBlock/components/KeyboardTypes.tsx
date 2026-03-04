@@ -8,8 +8,10 @@ import Tabs from 'components/ui/Tabs';
 
 export type Type = 'default' | 'inline' | 'payment';
 
-export interface KeyboardTypeButtonGroupProps
-  extends Omit<FormTabsProps, 'name' | 'size' | 'children'> {}
+export interface KeyboardTypeButtonGroupProps extends Omit<
+  FormTabsProps,
+  'name' | 'size' | 'children'
+> {}
 
 // const types: Type[] = ['default', 'inline', 'payment'];
 const types: Type[] = ['default', 'inline'];

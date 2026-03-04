@@ -11,8 +11,10 @@ import useHomeRouteLoaderData from '../hooks/useHomeRouteLoaderData';
 
 import cn from 'utils/cn';
 
-export interface DonationsProps
-  extends Omit<BlockProps, 'variant' | 'gradient' | 'children'> {}
+export interface DonationsProps extends Omit<
+  BlockProps,
+  'variant' | 'gradient' | 'children'
+> {}
 
 function Donations({ className, ...props }: DonationsProps): ReactElement {
   const { t } = useTranslation(RouteID.Home, { keyPrefix: 'donations' });

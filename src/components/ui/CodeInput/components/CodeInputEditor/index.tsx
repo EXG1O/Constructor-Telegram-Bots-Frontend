@@ -36,8 +36,10 @@ export const codeInputEditorVariants = cva(['w-full'], {
   },
 });
 
-export interface CodeInputEditorProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface CodeInputEditorProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
   asChild?: boolean;
 }
 

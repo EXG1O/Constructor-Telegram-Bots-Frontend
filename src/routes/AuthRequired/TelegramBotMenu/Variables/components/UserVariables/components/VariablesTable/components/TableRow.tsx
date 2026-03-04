@@ -20,8 +20,10 @@ import { Variable } from 'api/telegram-bots/variable/types';
 
 import cn from 'utils/cn';
 
-export interface TableRowProps
-  extends Omit<HTMLAttributes<HTMLTableRowElement>, 'children'> {
+export interface TableRowProps extends Omit<
+  HTMLAttributes<HTMLTableRowElement>,
+  'children'
+> {
   variable: Variable;
 }
 

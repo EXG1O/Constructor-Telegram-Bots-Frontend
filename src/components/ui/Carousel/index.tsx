@@ -11,8 +11,10 @@ import cn from 'utils/cn';
 
 export type EmblaAPI = NonNullable<UseEmblaCarouselType[1]>;
 
-export interface CarouselProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'> {
+export interface CarouselProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'onSelect'
+> {
   height: string;
   onMount?: (api: EmblaAPI) => void;
   onSelect?: (api: EmblaAPI) => void;

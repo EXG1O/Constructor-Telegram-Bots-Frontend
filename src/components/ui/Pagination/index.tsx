@@ -4,8 +4,10 @@ import PaginationItem, { paginationItemVariants } from './components/PaginationI
 
 import cn from 'utils/cn';
 
-export interface PaginationProps
-  extends Omit<HTMLAttributes<HTMLUListElement>, 'children'> {
+export interface PaginationProps extends Omit<
+  HTMLAttributes<HTMLUListElement>,
+  'children'
+> {
   size?: NonNullable<Parameters<typeof paginationItemVariants>[0]>['size'];
   itemCount: number;
   itemLimit: number;

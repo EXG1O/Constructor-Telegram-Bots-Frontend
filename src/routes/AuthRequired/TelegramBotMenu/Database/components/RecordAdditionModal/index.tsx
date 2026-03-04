@@ -19,7 +19,8 @@ interface FormValues {
 }
 
 export interface RecordAdditionModalProps
-  extends Omit<ModalProps, 'show' | 'loading' | 'children' | 'onHide' | 'onHidden'>,
+  extends
+    Omit<ModalProps, 'show' | 'loading' | 'children' | 'onHide' | 'onHidden'>,
     Required<Pick<ModalProps, 'show' | 'onHide'>> {}
 
 const defaultFormValues: FormValues = {

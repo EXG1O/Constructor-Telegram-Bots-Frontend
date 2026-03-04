@@ -4,7 +4,8 @@ import Inner from './components/Inner';
 import StoreProvider, { StoreProviderProps } from './providers/StoreProvider';
 
 export interface TelegramBotContentProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'onChange'>,
+  extends
+    Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'onChange'>,
     Omit<StoreProviderProps, 'children'> {}
 
 const TelegramBotContent = forwardRef<HTMLDivElement, TelegramBotContentProps>(

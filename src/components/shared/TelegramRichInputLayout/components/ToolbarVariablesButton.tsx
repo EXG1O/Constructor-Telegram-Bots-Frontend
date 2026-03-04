@@ -8,8 +8,10 @@ import ToolbarButton, {
 
 import useRichInputStore from 'components/ui/RichInput/hooks/useRichInputStore';
 
-export interface ToolbarVariablesButtonProps
-  extends Omit<ToolbarButtonProps, 'format'> {}
+export interface ToolbarVariablesButtonProps extends Omit<
+  ToolbarButtonProps,
+  'format'
+> {}
 
 const ToolbarVariablesButton = forwardRef<
   HTMLButtonElement,

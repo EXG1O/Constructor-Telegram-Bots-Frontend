@@ -5,8 +5,10 @@ import SimpleInputFeedback, {
   SimpleInputFeedbackProps,
 } from 'components/shared/SimpleInputFeedback';
 
-export interface FormSimpleInputFeedbackProps
-  extends Omit<SimpleInputFeedbackProps, 'value' | 'error'> {
+export interface FormSimpleInputFeedbackProps extends Omit<
+  SimpleInputFeedbackProps,
+  'value' | 'error'
+> {
   name: string;
 }
 

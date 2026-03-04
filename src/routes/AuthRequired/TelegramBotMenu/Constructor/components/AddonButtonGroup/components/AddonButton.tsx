@@ -3,8 +3,10 @@ import { FastField, FastFieldProps, FieldInputProps, FormikProps } from 'formik'
 
 import Button, { ButtonProps } from 'components/ui/Button';
 
-export interface AddonButtonProps
-  extends Omit<ButtonProps, 'size' | 'variant' | 'children'> {
+export interface AddonButtonProps extends Omit<
+  ButtonProps,
+  'size' | 'variant' | 'children'
+> {
   name: string;
   children: NonNullable<ButtonProps['children']>;
 }

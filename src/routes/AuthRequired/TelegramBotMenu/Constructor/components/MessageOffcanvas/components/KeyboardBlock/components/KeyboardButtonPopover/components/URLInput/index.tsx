@@ -14,11 +14,10 @@ import { useKeyboardButtonPopoverStore } from '../../store';
 
 export type URL = string;
 
-export interface URLInputProps
-  extends Omit<
-    SimpleInputFeedbackProps,
-    'size' | 'value' | 'error' | 'placeholder' | 'children' | 'onChange'
-  > {}
+export interface URLInputProps extends Omit<
+  SimpleInputFeedbackProps,
+  'size' | 'value' | 'error' | 'placeholder' | 'children' | 'onChange'
+> {}
 
 export const defaultURL: URL = '';
 

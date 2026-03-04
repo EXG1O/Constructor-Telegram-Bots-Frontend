@@ -7,8 +7,10 @@ import CarouselDirectionButton, {
   CarouselDirectionButtonProps,
 } from './CarouselDirectionButton';
 
-export interface CarouselPrevButtonProps
-  extends Omit<CarouselDirectionButtonProps, 'onCanScroll' | 'onScroll'> {}
+export interface CarouselPrevButtonProps extends Omit<
+  CarouselDirectionButtonProps,
+  'onCanScroll' | 'onScroll'
+> {}
 
 const CarouselPrevButton = forwardRef<HTMLButtonElement, CarouselPrevButtonProps>(
   (props, ref) => {

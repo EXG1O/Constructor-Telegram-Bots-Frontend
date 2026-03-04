@@ -18,7 +18,8 @@ import OffcanvasContext, { OffcanvasContextProps } from './contexts/OffcanvasCon
 import cn from 'utils/cn';
 
 export interface OffcanvasProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'aria-describedby'>,
+  extends
+    Omit<HTMLAttributes<HTMLDivElement>, 'aria-describedby'>,
     Partial<OffcanvasContextProps> {
   show?: boolean;
   onShow?: () => void;

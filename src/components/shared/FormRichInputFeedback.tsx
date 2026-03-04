@@ -5,8 +5,10 @@ import RichInputFeedback, {
   RichInputFeedbackProps,
 } from 'components/shared/RichInputFeedback';
 
-export interface FormRichInputFeedbackProps
-  extends Omit<RichInputFeedbackProps, 'value' | 'error'> {
+export interface FormRichInputFeedbackProps extends Omit<
+  RichInputFeedbackProps,
+  'value' | 'error'
+> {
   name: string;
 }
 

@@ -19,8 +19,10 @@ const inputWrapperProps: SimpleInputFeedbackProps['wrapperProps'] = {
   className: 'flex-auto',
 };
 
-export interface APITokenEditingProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+export interface APITokenEditingProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {}
 
 function APITokenEditing({ className, ...props }: APITokenEditingProps): ReactElement {
   const { t } = useTranslation('components', {

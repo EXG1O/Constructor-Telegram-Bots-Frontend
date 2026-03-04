@@ -10,8 +10,10 @@ import AddonButton from './components/AddonButton';
 
 import cn from 'utils/cn';
 
-export interface AddonButtonGroupProps
-  extends Omit<CollapsibleProps, 'open' | 'onOpenChange'> {}
+export interface AddonButtonGroupProps extends Omit<
+  CollapsibleProps,
+  'open' | 'onOpenChange'
+> {}
 
 function AddonButtonGroup({
   children,

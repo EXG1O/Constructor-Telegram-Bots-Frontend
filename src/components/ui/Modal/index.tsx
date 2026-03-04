@@ -11,8 +11,7 @@ import ModalTrigger from './components/ModalTrigger';
 import ModalContext, { ModalContextProps } from './contexts/ModalContext';
 
 export interface ModalProps
-  extends Pick<DialogProps, 'modal' | 'children'>,
-    Partial<ModalContextProps> {
+  extends Pick<DialogProps, 'modal' | 'children'>, Partial<ModalContextProps> {
   show?: boolean;
 }
 
