@@ -22,6 +22,9 @@
     "getDiagramDatabaseOperation": {
       "error": "Failed to get database operation data for the diagram."
     },
+    "getDiagramInvoice": {
+      "error": "Failed to get invoice data for the diagram."
+    },
     "getDiagramTemporaryVariable": {
       "error": "Failed to get temporary variable data for the diagram."
     },
