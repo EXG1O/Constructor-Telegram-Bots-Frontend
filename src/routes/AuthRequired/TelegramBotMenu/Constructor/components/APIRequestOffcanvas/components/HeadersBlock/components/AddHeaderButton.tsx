@@ -13,7 +13,7 @@ import Button, { type ButtonProps } from 'components/ui/Button';
 
 import cn from 'utils/cn';
 
-import type { Headers } from '..';
+import type { Headers } from '../types';
 
 export interface AddHeaderButtonProps extends Omit<
   ButtonProps,

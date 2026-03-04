@@ -12,7 +12,7 @@ import { RouteID } from 'routes';
 
 import Button, { type ButtonProps } from 'components/ui/Button';
 
-import type { KeyboardRow } from './Keyboard';
+import type { KeyboardRow } from './DraggableKeyboard';
 
 import type { FormValues } from '../../..';
 

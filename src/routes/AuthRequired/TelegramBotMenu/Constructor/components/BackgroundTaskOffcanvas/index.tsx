@@ -7,13 +7,12 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import {
-  defaultIntervalBlockFormValues,
-  type IntervalBlockFormValues,
-} from './components/IntervalBlock';
+import { defaultIntervalBlockFormValues } from './components/IntervalBlock/defaults';
+import type { IntervalBlockFormValues } from './components/IntervalBlock/types';
 import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
 
-import { defaultNameBlockFormValues, type NameBlockFormValues } from '../NameBlock';
+import { defaultNameBlockFormValues } from '../NameBlock/defaults';
+import type { NameBlockFormValues } from '../NameBlock/types';
 
 import {
   BackgroundTaskAPI,

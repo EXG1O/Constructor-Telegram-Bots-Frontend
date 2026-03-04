@@ -1,0 +1,35 @@
+import React, { type ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { RouteID } from 'routes';
+
+import FormCodeInputFeedback from 'components/shared/FormCodeInputFeedback';
+import TelegramCodeInputLayout from 'components/shared/TelegramCodeInputLayout';
+import Block, { type BlockProps } from 'components/ui/Block';
+
+import cn from 'utils/cn';
+
+export interface CreateBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
+
+function CreateBlock({ className, ...props }: CreateBlockProps): ReactElement {
+  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+    keyPrefix: 'databaseOperationOffcanvas.createBlock',
+  });
+
+  return (
+    <Block
+      {...props}
+      variant='light'
+      className={cn('flex', 'flex-col', 'gap-2', className)}
+    >
+      <Block.Title>
+        <h3 className='text-lg font-medium'>{t('title')}</h3>
+      </Block.Title>
+      <FormCodeInputFeedback name='create_operation.data' language='json'>
+        <TelegramCodeInputLayout toolbarVariables />
+      </FormCodeInputFeedback>
+    </Block>
+  );
+}
+
+export default CreateBlock;

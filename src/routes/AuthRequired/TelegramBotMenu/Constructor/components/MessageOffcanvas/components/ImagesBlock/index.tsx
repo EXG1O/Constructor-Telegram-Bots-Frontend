@@ -11,26 +11,7 @@ import ImageList from './components/ImageList';
 
 import cn from 'utils/cn';
 
-export interface Image {
-  id?: number;
-  key: string;
-  file: File | null;
-  file_url: string | null;
-  from_url: string | null;
-}
-
-export type Images = Image[];
-
-export interface ImagesBlockFormValues {
-  images: Images;
-}
-
 export interface ImagesBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
-
-export const defaultImages: Images = [];
-export const defaultImagesBlockFormValues: ImagesBlockFormValues = {
-  images: defaultImages,
-};
 
 function ImagesBlock({ className, ...props }: ImagesBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {

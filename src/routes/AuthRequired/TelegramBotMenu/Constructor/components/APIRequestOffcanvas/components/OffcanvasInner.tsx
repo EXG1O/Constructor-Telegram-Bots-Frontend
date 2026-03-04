@@ -8,8 +8,8 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import Offcanvas, { type OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { defaultBody } from './BodyBlock';
-import { defaultHeaders } from './HeadersBlock';
+import { defaultBody } from './BodyBlock/defaults';
+import { defaultHeaders } from './HeadersBlock/defaults';
 import OffcanvasContent from './OffcanvasContent';
 
 import { APIRequestAPI } from 'api/telegram-bots/api-request';

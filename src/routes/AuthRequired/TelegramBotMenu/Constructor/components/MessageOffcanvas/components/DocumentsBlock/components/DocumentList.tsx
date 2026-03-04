@@ -13,7 +13,7 @@ import DocumentItem from './DocumentItem';
 import cn from 'utils/cn';
 
 import type { FormValues } from '../../..';
-import type { Documents } from '..';
+import type { Documents } from '../types';
 
 export interface DocumentsListProps extends Omit<
   HTMLAttributes<HTMLDivElement>,

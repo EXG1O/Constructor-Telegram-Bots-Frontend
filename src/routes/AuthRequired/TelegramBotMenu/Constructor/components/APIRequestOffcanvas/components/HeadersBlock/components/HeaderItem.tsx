@@ -17,7 +17,7 @@ import SimpleInput from 'components/ui/SimpleInput';
 
 import cn from 'utils/cn';
 
-import type { Headers } from '..';
+import type { Headers } from '../types';
 
 export interface HeaderItemProps extends Omit<
   HTMLAttributes<HTMLDivElement>,

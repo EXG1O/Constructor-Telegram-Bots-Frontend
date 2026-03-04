@@ -1,4 +1,4 @@
-import type { Headers } from './components/HeadersBlock';
+import type { Headers } from './components/HeadersBlock/types';
 
 import type { Method } from 'api/telegram-bots/api-request/types';
 

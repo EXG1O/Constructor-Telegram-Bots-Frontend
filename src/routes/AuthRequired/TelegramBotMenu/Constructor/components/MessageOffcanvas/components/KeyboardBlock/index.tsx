@@ -7,26 +7,12 @@ import Block, { type BlockProps } from 'components/ui/Block';
 
 import AddKeyboardButtonButton from './components/AddKeyboardButtonButton';
 import AddKeyboardRowButton from './components/AddKeyboardRowButton';
-import Keyboard, { type KeyboardRow } from './components/Keyboard';
-import KeyboardTypes, { defaultType, type Type } from './components/KeyboardTypes';
+import DraggableKeyboard from './components/DraggableKeyboard';
+import KeyboardTypeTabs from './components/KeyboardTypeTabs';
 
 import cn from 'utils/cn';
 
-export interface Keyboard {
-  type: Type;
-  rows: KeyboardRow[];
-}
-
-export interface KeyboardBlockFormValues {
-  keyboard: Keyboard;
-}
-
 export interface KeyboardBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
-
-export const defaultKeyboard: Keyboard = { type: defaultType, rows: [] };
-export const defaultKeyboardBlockFormValues: KeyboardBlockFormValues = {
-  keyboard: defaultKeyboard,
-};
 
 function KeyboardBlock({ className, ...props }: KeyboardBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
@@ -42,8 +28,8 @@ function KeyboardBlock({ className, ...props }: KeyboardBlockProps): ReactElemen
       <Block.Title>
         <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
-      <KeyboardTypes />
-      <Keyboard />
+      <KeyboardTypeTabs />
+      <DraggableKeyboard />
       <div className='flex w-full gap-2'>
         <AddKeyboardButtonButton className='w-full' />
         <AddKeyboardRowButton className='w-full' />

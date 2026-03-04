@@ -13,9 +13,9 @@ import StyleSelect, { type Style } from './components/StyleSelect';
 import TextInput, { type Text } from './components/TextInput';
 import URLInput, { type URL as URLValue } from './components/URLInput';
 
-import type { KeyboardButton } from '../Keyboard/components/DraggableKeyboardButton';
-import type { KeyboardRow } from '../Keyboard/components/DraggableKeyboardRow';
-import type { Type } from '../KeyboardTypes';
+import type { KeyboardButton } from '../DraggableKeyboard/components/DraggableKeyboardButton';
+import type { KeyboardRow } from '../DraggableKeyboard/components/DraggableKeyboardRow';
+import type { Type } from '../KeyboardTypeTabs/types';
 
 import cn from 'utils/cn';
 

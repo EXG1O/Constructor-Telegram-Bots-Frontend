@@ -7,25 +7,18 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import {
-  type BodyBlockFormValues,
-  defaultBodyBlockFormValues,
-} from './components/BodyBlock';
-import {
-  defaultHeadersBlockFormValues,
-  type HeadersBlockFormValues,
-} from './components/HeadersBlock';
-import {
-  defaultMethodBlockFormValues,
-  type MethodBlockFormValues,
-} from './components/MethodBlock';
+import { defaultBodyBlockFormValues } from './components/BodyBlock/defaults';
+import type { BodyBlockFormValues } from './components/BodyBlock/types';
+import { defaultHeadersBlockFormValues } from './components/HeadersBlock/defaults';
+import type { HeadersBlockFormValues } from './components/HeadersBlock/types';
+import { defaultMethodBlockFormValues } from './components/MethodBlock/defaults';
+import type { MethodBlockFormValues } from './components/MethodBlock/types';
 import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
-import {
-  defaultURLBlockFormValues,
-  type URLBlockFormValues,
-} from './components/URLBlock';
+import { defaultURLBlockFormValues } from './components/URLBlock/defaults';
+import type { URLBlockFormValues } from './components/URLBlock/types';
 
-import { defaultNameBlockFormValues, type NameBlockFormValues } from '../NameBlock';
+import { defaultNameBlockFormValues } from '../NameBlock/defaults';
+import type { NameBlockFormValues } from '../NameBlock/types';
 
 import { APIRequestAPI, APIRequestsAPI } from 'api/telegram-bots/api-request';
 import type { APIRequest, Data } from 'api/telegram-bots/api-request/types';

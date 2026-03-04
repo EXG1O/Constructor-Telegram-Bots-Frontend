@@ -8,12 +8,11 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
-import {
-  defaultValueBlockFormValues,
-  type ValueBlockFormValues,
-} from './components/ValueBlock';
+import { defaultValueBlockFormValues } from './components/ValueBlock/defaults';
+import type { ValueBlockFormValues } from './components/ValueBlock/types';
 
-import { defaultNameBlockFormValues, type NameBlockFormValues } from '../NameBlock';
+import { defaultNameBlockFormValues } from '../NameBlock/defaults';
+import type { NameBlockFormValues } from '../NameBlock/types';
 
 import {
   TemporaryVariableAPI,

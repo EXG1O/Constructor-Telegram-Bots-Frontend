@@ -8,7 +8,7 @@ import Button, { type ButtonProps } from 'components/ui/Button';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useMessageOffcanvasStore } from '../../../store';
-import type { Document, Documents } from '..';
+import type { Document, Documents } from '../types';
 
 export interface AddDocumentsButtonProps extends Omit<
   ButtonProps,

@@ -7,21 +7,16 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import {
-  type CreateBlockFormValues,
-  defaultCreateBlockFormValues,
-} from './components/CreateBlock';
+import { defaultCreateBlockFormValues } from './components/CreateBlock/defaults';
+import type { CreateBlockFormValues } from './components/CreateBlock/types';
 import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
-import {
-  defaultTypeBlockFormValues,
-  type TypeBlockFormValues,
-} from './components/TypeBlock';
-import {
-  defaultUpdateBlockFormValues,
-  type UpdateBlockFormValues,
-} from './components/UpdateBlock';
+import { defaultTypeBlockFormValues } from './components/TypeBlock/defaults';
+import type { TypeBlockFormValues } from './components/TypeBlock/types';
+import { defaultUpdateBlockFormValues } from './components/UpdateBlock/defaults';
+import type { UpdateBlockFormValues } from './components/UpdateBlock/types';
 
-import { defaultNameBlockFormValues, type NameBlockFormValues } from '../NameBlock';
+import { defaultNameBlockFormValues } from '../NameBlock/defaults';
+import type { NameBlockFormValues } from '../NameBlock/types';
 
 import {
   DatabaseOperationAPI,

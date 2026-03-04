@@ -8,12 +8,14 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import Offcanvas, { type OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { defaultDocuments, type Document } from './DocumentsBlock';
-import { defaultImages, type Image } from './ImagesBlock';
-import { defaultKeyboard } from './KeyboardBlock';
-import type { KeyboardRow } from './KeyboardBlock/components/Keyboard';
+import { defaultDocuments } from './DocumentsBlock/defaults';
+import type { Document } from './DocumentsBlock/types';
+import { defaultImages } from './ImagesBlock/defaults';
+import type { Image } from './ImagesBlock/types';
+import type { KeyboardRow } from './KeyboardBlock/components/DraggableKeyboard';
+import { defaultKeyboard } from './KeyboardBlock/defaults';
 import OffcanvasContent from './OffcanvasContent';
-import { defaultText } from './TextBlock';
+import { defaultText } from './TextBlock/defaults';
 
 import { MessageAPI } from 'api/telegram-bots/message';
 import fetchFile from 'api/utils/fetchFile';

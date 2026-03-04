@@ -11,10 +11,10 @@ import Collapsible from 'components/ui/Collapsible';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import type { Body } from './BodyBlock';
-import type { Headers } from './HeadersBlock';
-import type { Method } from './MethodBlock';
-import type { URL } from './URLBlock';
+import type { Body } from './BodyBlock/types';
+import type { Headers } from './HeadersBlock/types';
+import type { Method } from './MethodBlock/types';
+import type { URL } from './URLBlock/types';
 
 import cn from 'utils/cn';
 

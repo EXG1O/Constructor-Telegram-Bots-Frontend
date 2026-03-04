@@ -12,7 +12,7 @@ import cn from 'utils/cn';
 
 import type { FormValues } from '../../..';
 import { useMessageOffcanvasStore } from '../../../store';
-import type { Images } from '..';
+import type { Images } from '../types';
 
 export interface ImageListInnerProps extends Omit<
   HTMLAttributes<HTMLDivElement>,

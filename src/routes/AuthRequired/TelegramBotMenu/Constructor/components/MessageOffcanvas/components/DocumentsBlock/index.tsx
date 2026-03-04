@@ -10,25 +10,7 @@ import DocumentList from './components/DocumentList';
 
 import cn from 'utils/cn';
 
-export interface Document {
-  id?: number;
-  key: string;
-  file: File | null;
-  from_url: string | null;
-}
-
-export type Documents = Document[];
-
-export interface DocumentsBlockFormValues {
-  documents: Documents;
-}
-
 export interface DocumentsBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
-
-export const defaultDocuments: Documents = [];
-export const defaultDocumentsBlockFormValues: DocumentsBlockFormValues = {
-  documents: defaultDocuments,
-};
 
 function DocumentsBlock({ className, ...props }: DocumentsBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {

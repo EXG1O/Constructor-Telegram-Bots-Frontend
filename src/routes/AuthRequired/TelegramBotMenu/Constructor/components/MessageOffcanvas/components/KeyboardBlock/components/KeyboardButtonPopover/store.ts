@@ -4,7 +4,7 @@ import { defaultStyle, type Style } from './components/StyleSelect';
 import { defaultText, type Text } from './components/TextInput';
 import { defaultURL, type URL } from './components/URLInput';
 
-import type { KeyboardButton } from '../Keyboard/components/DraggableKeyboardButton';
+import type { KeyboardButton } from '../DraggableKeyboard/components/DraggableKeyboardButton';
 
 import type { FormData } from '.';
 

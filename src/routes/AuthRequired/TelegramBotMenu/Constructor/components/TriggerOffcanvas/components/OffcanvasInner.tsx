@@ -8,11 +8,12 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import Offcanvas, { type OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { defaultCommand } from './CommandBlock';
-import { defaultMessage } from './MessageBlock';
+import { defaultCommand } from './CommandBlock/defaults';
+import { defaultMessage } from './MessageBlock/defaults';
 import OffcanvasContent from './OffcanvasContent';
-import { defaultStartCommand } from './StartCommandBlock';
-import { defaultType, Type } from './TypeBlock';
+import { defaultStartCommand } from './StartCommandBlock/defaults';
+import { defaultType } from './TypeBlock/defaults';
+import { Type } from './TypeBlock/types';
 
 import { TriggerAPI } from 'api/telegram-bots/trigger';
 

@@ -6,7 +6,7 @@ import Spinner from 'components/ui/Spinner';
 import ImageCarouselImage from './ImageCarouselImage';
 
 import { useMessageOffcanvasStore } from '../../../store';
-import type { Images } from '..';
+import type { Images } from '../types';
 
 export interface ImageCarouselInnerProps extends Omit<
   CarouselProps,
