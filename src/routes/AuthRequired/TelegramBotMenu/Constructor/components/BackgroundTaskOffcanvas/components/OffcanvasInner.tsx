@@ -16,8 +16,10 @@ import { BackgroundTaskAPI } from 'api/telegram-bots/background-task';
 
 import { useBackgroundTaskOffcanvasStore } from '../store';
 
-export interface OffcanvasInnerProps
-  extends Omit<OffcanvasProps, 'show' | 'loading' | 'children'> {}
+export interface OffcanvasInnerProps extends Omit<
+  OffcanvasProps,
+  'show' | 'loading' | 'children'
+> {}
 
 function OffcanvasInner({
   onHide,

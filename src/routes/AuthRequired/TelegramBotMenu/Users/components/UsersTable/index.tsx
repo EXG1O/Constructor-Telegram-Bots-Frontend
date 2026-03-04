@@ -12,8 +12,10 @@ import useUsersStore from '../../hooks/useUsersStore';
 
 import cn from 'utils/cn';
 
-export interface UsersTableProps
-  extends Omit<TableProps, 'size' | 'striped' | 'children'> {}
+export interface UsersTableProps extends Omit<
+  TableProps,
+  'size' | 'striped' | 'children'
+> {}
 
 function UsersTable({
   className,

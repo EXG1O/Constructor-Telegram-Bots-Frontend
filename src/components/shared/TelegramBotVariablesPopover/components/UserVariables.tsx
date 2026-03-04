@@ -14,8 +14,10 @@ import { Variable } from 'api/telegram-bots/variable/types';
 
 import cn from 'utils/cn';
 
-export interface UserVariablesProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+export interface UserVariablesProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {}
 
 interface PaginationData {
   count: number;

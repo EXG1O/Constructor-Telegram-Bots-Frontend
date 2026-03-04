@@ -37,7 +37,8 @@ import { Data, Message } from 'api/telegram-bots/message/types';
 import { useMessageOffcanvasStore } from './store';
 
 export interface FormValues
-  extends NameBlockFormValues,
+  extends
+    NameBlockFormValues,
     SettingsBlockFormValues,
     ImagesBlockFormValues,
     DocumentsBlockFormValues,

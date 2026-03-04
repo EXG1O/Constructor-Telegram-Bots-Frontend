@@ -49,7 +49,8 @@ export const messageToastVariants = cva(
 );
 
 export interface MessageToastProps
-  extends Omit<LiHTMLAttributes<HTMLLIElement>, 'id' | 'children' | 'onPause'>,
+  extends
+    Omit<LiHTMLAttributes<HTMLLIElement>, 'id' | 'children' | 'onPause'>,
     VariantProps<typeof messageToastVariants> {
   id: string;
   timeout?: number;

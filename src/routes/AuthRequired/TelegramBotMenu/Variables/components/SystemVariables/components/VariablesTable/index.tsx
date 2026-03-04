@@ -12,8 +12,10 @@ import TableRow from './components/TableRow';
 
 import cn from 'utils/cn';
 
-export interface VariablesTableProps
-  extends Omit<TableProps, 'size' | 'striped' | 'children'> {
+export interface VariablesTableProps extends Omit<
+  TableProps,
+  'size' | 'striped' | 'children'
+> {
   type: TelegramBotSystemVariablesType;
 }
 

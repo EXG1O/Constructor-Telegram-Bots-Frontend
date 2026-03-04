@@ -16,8 +16,10 @@ import { TemporaryVariableAPI } from 'api/telegram-bots/temporary-variable';
 
 import { useTemporaryVariableOffcanvasStore } from '../store';
 
-export interface OffcanvasInnerProps
-  extends Omit<OffcanvasProps, 'show' | 'loading' | 'children'> {}
+export interface OffcanvasInnerProps extends Omit<
+  OffcanvasProps,
+  'show' | 'loading' | 'children'
+> {}
 
 function OffcanvasInner({
   onHide,

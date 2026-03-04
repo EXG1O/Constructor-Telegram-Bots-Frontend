@@ -24,7 +24,8 @@ export const telegramBotStorageVariants = cva(
 );
 
 export interface TelegramBotStorageProps
-  extends Omit<ProgressBarProps, 'now' | 'min' | 'max'>,
+  extends
+    Omit<ProgressBarProps, 'now' | 'min' | 'max'>,
     VariantProps<typeof telegramBotStorageVariants> {
   telegramBot: TelegramBot;
   usedStorageSize?: number;

@@ -7,8 +7,10 @@ import Button, { ButtonProps } from 'components/ui/Button';
 
 import KeyboardButtonPopover from './KeyboardButtonPopover';
 
-export interface AddKeyboardButtonButtonProps
-  extends Omit<ButtonProps, 'size' | 'variant' | 'children'> {}
+export interface AddKeyboardButtonButtonProps extends Omit<
+  ButtonProps,
+  'size' | 'variant' | 'children'
+> {}
 
 function AddKeyboardButtonButton(props: AddKeyboardButtonButtonProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {

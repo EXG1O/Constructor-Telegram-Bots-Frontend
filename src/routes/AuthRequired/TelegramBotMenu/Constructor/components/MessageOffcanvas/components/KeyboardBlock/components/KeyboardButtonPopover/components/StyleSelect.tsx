@@ -11,8 +11,10 @@ import { useKeyboardButtonPopoverStore } from '../store';
 
 export type Style = MessageKeyboardButtonStyle;
 
-export interface StyleSelectProps
-  extends Omit<SelectProps, 'size' | 'value' | 'error' | 'children' | 'onChange'> {}
+export interface StyleSelectProps extends Omit<
+  SelectProps,
+  'size' | 'value' | 'error' | 'children' | 'onChange'
+> {}
 
 const styles: Style[] = ['default', 'primary', 'success', 'danger'];
 export const defaultStyle: Style = 'default';

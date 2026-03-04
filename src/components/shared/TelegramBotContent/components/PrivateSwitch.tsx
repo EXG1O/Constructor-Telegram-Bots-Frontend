@@ -9,8 +9,10 @@ import useTelegramBotContentStore from '../hooks/useTelegramBotContentStore';
 
 import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
 
-export interface PrivateSwitchProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+export interface PrivateSwitchProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {}
 
 function PrivateSwitch(props: PrivateSwitchProps): ReactElement {
   const { t } = useTranslation('components', {

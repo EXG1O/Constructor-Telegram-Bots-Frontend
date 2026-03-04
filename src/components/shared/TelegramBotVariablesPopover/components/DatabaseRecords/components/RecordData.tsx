@@ -8,7 +8,8 @@ import cn from 'utils/cn';
 import getJSONPathLines, { JSONPath } from 'utils/getJSONPathLines';
 
 export interface RecordDataProps
-  extends Pick<DatabaseRecord, 'data'>,
+  extends
+    Pick<DatabaseRecord, 'data'>,
     Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   appliedSearch: string | null;
 }

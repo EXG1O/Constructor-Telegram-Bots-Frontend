@@ -19,8 +19,9 @@ export interface DatabaseOperation {
   update_operation: DatabaseUpdateOperation | null;
 }
 
-export interface DiagramDatabaseOperation
-  extends DiagramBlock<DatabaseOperation['id']> {}
+export interface DiagramDatabaseOperation extends DiagramBlock<
+  DatabaseOperation['id']
+> {}
 
 export namespace Data {
   export namespace DatabaseOperationsAPI {
@@ -30,8 +31,9 @@ export namespace Data {
   export namespace DatabaseOperationAPI {
     export type Update = DatabaseOperationsAPI.Create;
 
-    export interface PartialUpdate
-      extends Partial<Omit<Update, 'create_operation' | 'update_operation'>> {
+    export interface PartialUpdate extends Partial<
+      Omit<Update, 'create_operation' | 'update_operation'>
+    > {
       create_operation?: Partial<Update['create_operation']>;
       update_operation?: Partial<Update['update_operation']>;
     }

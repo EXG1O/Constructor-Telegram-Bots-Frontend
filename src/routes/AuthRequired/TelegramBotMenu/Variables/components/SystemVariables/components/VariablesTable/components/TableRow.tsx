@@ -8,8 +8,10 @@ import Table from 'components/ui/Table';
 
 import ClipboardButtonSlot from '../../../../ClipboardButtonSlot';
 
-export interface TableRowProps
-  extends Omit<HTMLAttributes<HTMLTableRowElement>, 'children'> {
+export interface TableRowProps extends Omit<
+  HTMLAttributes<HTMLTableRowElement>,
+  'children'
+> {
   variable: Variable;
 }
 

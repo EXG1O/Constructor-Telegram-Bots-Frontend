@@ -32,7 +32,8 @@ import { useAPIRequestOffcanvasStore } from './store';
 import { convertHeadersToRecord, getBodyBlockOpen } from './utils';
 
 export interface FormValues
-  extends NameBlockFormValues,
+  extends
+    NameBlockFormValues,
     URLBlockFormValues,
     MethodBlockFormValues,
     HeadersBlockFormValues,

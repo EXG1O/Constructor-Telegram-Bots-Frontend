@@ -21,8 +21,7 @@ export const pageVariants = cva(['my-2', 'lg:my-3'], {
 });
 
 export interface PageProps
-  extends HTMLAttributes<HTMLElement>,
-    VariantProps<typeof pageVariants> {
+  extends HTMLAttributes<HTMLElement>, VariantProps<typeof pageVariants> {
   asChild?: boolean;
   title: string;
 }

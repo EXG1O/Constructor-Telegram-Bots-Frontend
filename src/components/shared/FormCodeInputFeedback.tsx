@@ -6,8 +6,10 @@ import CodeInputFeedback, {
 } from 'components/shared/CodeInputFeedback';
 import { Editor } from 'components/ui/CodeInput';
 
-export interface FormCodeInputFeedbackProps
-  extends Omit<CodeInputFeedbackProps, 'value' | 'error'> {
+export interface FormCodeInputFeedbackProps extends Omit<
+  CodeInputFeedbackProps,
+  'value' | 'error'
+> {
   name: string;
 }
 

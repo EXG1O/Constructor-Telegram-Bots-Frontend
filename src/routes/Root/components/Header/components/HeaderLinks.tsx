@@ -8,8 +8,10 @@ import HeaderLink from './HeaderLink';
 import cn from 'utils/cn';
 import reverse from 'utils/reverse';
 
-export interface HeaderLinksProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+export interface HeaderLinksProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {}
 
 function HeaderLinks({ className, ...props }: HeaderLinksProps): ReactElement {
   const { t } = useTranslation(RouteID.Root, { keyPrefix: 'header.links' });

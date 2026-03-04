@@ -14,7 +14,8 @@ import cn from 'utils/cn';
 import reverse from 'utils/reverse';
 
 export interface TelegramBotItemProps
-  extends Omit<BlockProps, 'variant' | 'children'>,
+  extends
+    Omit<BlockProps, 'variant' | 'children'>,
     Pick<TelegramBotContentProps, 'telegramBot'> {}
 
 function TelegramBotItem({

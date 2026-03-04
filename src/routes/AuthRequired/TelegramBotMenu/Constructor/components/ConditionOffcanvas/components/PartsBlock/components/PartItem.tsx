@@ -21,8 +21,10 @@ export interface Part {
   next_part_operator: NextPartOperator;
 }
 
-export interface PartItemProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface PartItemProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
   index: number;
 }
 

@@ -56,7 +56,8 @@ const iconVariants = cva(
 );
 
 export interface SelectProps
-  extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size'>,
+  extends
+    Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size'>,
     VariantProps<typeof selectVariants> {
   asChild?: boolean;
   containerProps?: HTMLAttributes<HTMLDivElement>;

@@ -10,8 +10,10 @@ import Logo from 'assets/logo/logo.svg';
 import cn from 'utils/cn';
 import reverse from 'utils/reverse';
 
-export interface HeaderLogoProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+export interface HeaderLogoProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {}
 
 function HeaderLogo({ className, ...props }: HeaderLogoProps): ReactElement {
   return (

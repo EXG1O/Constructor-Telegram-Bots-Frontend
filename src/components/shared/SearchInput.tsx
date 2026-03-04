@@ -89,7 +89,8 @@ const visibilityButtonVariants = cva(
 );
 
 export interface SearchInputProps
-  extends Omit<SimpleInputProps, 'invalid' | 'children'>,
+  extends
+    Omit<SimpleInputProps, 'invalid' | 'children'>,
     Omit<SimpleInputEditorProps, keyof SimpleInputProps> {
   containerProps?: HTMLAttributes<HTMLDivElement>;
   onSearch?: (value: string) => void;

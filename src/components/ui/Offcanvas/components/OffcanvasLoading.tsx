@@ -4,8 +4,10 @@ import Spinner from 'components/ui/Spinner';
 
 import cn from 'utils/cn';
 
-export interface OffcanvasLoadingProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+export interface OffcanvasLoadingProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {}
 
 const OffcanvasLoading = forwardRef<HTMLDivElement, OffcanvasLoadingProps>(
   ({ className, ...props }, ref) => {

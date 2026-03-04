@@ -64,7 +64,8 @@ const wrapperVariants = cva(['w-full', 'min-h-4'], {
 });
 
 export interface CheckProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>,
+  extends
+    Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>,
     VariantProps<typeof checkVariants> {
   asChild?: boolean;
   label?: string | number;

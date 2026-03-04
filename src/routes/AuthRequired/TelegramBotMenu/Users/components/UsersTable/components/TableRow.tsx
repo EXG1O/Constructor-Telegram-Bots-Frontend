@@ -19,8 +19,10 @@ import { User } from 'api/telegram-bots/user/types';
 
 import cn from 'utils/cn';
 
-export interface TableRowProps
-  extends Omit<HTMLAttributes<HTMLTableRowElement>, 'children'> {
+export interface TableRowProps extends Omit<
+  HTMLAttributes<HTMLTableRowElement>,
+  'children'
+> {
   user: User;
 }
 

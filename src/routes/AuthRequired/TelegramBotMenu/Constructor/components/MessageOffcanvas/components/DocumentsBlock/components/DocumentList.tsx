@@ -11,8 +11,10 @@ import cn from 'utils/cn';
 
 import { FormValues } from '../../..';
 
-export interface DocumentsListProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+export interface DocumentsListProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {}
 
 function DocumentsList({ className, ...props }: DocumentsListProps): ReactElement {
   function handleDragEnd(

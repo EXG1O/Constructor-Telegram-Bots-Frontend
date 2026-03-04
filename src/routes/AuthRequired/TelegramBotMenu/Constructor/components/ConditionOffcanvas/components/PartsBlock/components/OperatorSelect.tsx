@@ -11,8 +11,10 @@ import cn from 'utils/cn';
 
 export type Operator = '==' | '!=' | '>' | '>=' | '<' | '<=';
 
-export interface OperatorSelectProps
-  extends Omit<FormSelectFeedbackProps, 'size' | 'name' | 'children'> {
+export interface OperatorSelectProps extends Omit<
+  FormSelectFeedbackProps,
+  'size' | 'name' | 'children'
+> {
   index: number;
 }
 

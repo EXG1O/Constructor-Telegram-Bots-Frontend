@@ -11,11 +11,10 @@ import { useKeyboardButtonPopoverStore } from '../store';
 
 export type Text = string;
 
-export interface TextInputProps
-  extends Omit<
-    SimpleInputFeedbackProps,
-    'size' | 'value' | 'error' | 'placeholder' | 'children' | 'onChange'
-  > {}
+export interface TextInputProps extends Omit<
+  SimpleInputFeedbackProps,
+  'size' | 'value' | 'error' | 'placeholder' | 'children' | 'onChange'
+> {}
 
 export const defaultText: Text = '';
 

@@ -6,8 +6,10 @@ import telegramBotSystemVariables, {
 
 import Tabs, { TabsProps } from 'components/ui/Tabs';
 
-export interface TelegramBotSystemVariablesTypeTabsProps
-  extends Omit<TabsProps, 'value' | 'children' | 'onChange'> {
+export interface TelegramBotSystemVariablesTypeTabsProps extends Omit<
+  TabsProps,
+  'value' | 'children' | 'onChange'
+> {
   type: TelegramBotSystemVariablesType;
   onChange?: (type: TelegramBotSystemVariablesType) => void;
 }

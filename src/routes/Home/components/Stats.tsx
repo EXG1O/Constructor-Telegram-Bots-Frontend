@@ -8,8 +8,10 @@ import PrettyNumber from 'components/ui/PrettyNumber';
 
 import useHomeRouteLoaderData from '../hooks/useHomeRouteLoaderData';
 
-export interface StatsProps
-  extends Omit<BlockProps, 'variant' | 'gradient' | 'children'> {}
+export interface StatsProps extends Omit<
+  BlockProps,
+  'variant' | 'gradient' | 'children'
+> {}
 
 const Stats = forwardRef<HTMLDivElement, StatsProps>(({ className, ...props }, ref) => {
   const { t } = useTranslation(RouteID.Home, { keyPrefix: 'stats' });

@@ -12,8 +12,10 @@ import cn from 'utils/cn';
 const PrimitiveNodeToolbar: FC<FRToolbarProps> = FRNodeToolbar;
 PrimitiveNodeToolbar.displayName = 'PrimitiveNodeToolbar';
 
-export interface NodeToolbarProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface NodeToolbarProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
   title: string;
   onEdit: React.MouseEventHandler<HTMLButtonElement>;
   onDelete: React.MouseEventHandler<HTMLButtonElement>;

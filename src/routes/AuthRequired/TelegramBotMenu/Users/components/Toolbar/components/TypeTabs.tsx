@@ -10,8 +10,10 @@ import useUsersStore from '../../../hooks/useUsersStore';
 
 import { StateParams } from '../../../store';
 
-export interface TypeTabsProps
-  extends Omit<TabsProps, 'size' | 'value' | 'children' | 'onChange'> {}
+export interface TypeTabsProps extends Omit<
+  TabsProps,
+  'size' | 'value' | 'children' | 'onChange'
+> {}
 
 function TypeTabs(props: TypeTabsProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuUsers, {

@@ -19,8 +19,10 @@ import { DatabaseOperationAPI } from 'api/telegram-bots/database-operation';
 
 import { useDatabaseOperationOffcanvasStore } from '../store';
 
-export interface OffcanvasInnerProps
-  extends Omit<OffcanvasProps, 'show' | 'loading' | 'children'> {}
+export interface OffcanvasInnerProps extends Omit<
+  OffcanvasProps,
+  'show' | 'loading' | 'children'
+> {}
 
 function OffcanvasInner({
   onHide,

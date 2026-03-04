@@ -3,8 +3,10 @@ import { FastField, FastFieldProps, FormikProps } from 'formik';
 
 import Tabs, { TabsProps } from 'components/ui/Tabs';
 
-export interface FormTabsProps
-  extends Omit<TabsProps, 'value' | 'defaultValue' | 'defaultChecked'> {
+export interface FormTabsProps extends Omit<
+  TabsProps,
+  'value' | 'defaultValue' | 'defaultChecked'
+> {
   name: string;
 }
 

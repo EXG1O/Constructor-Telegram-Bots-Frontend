@@ -15,8 +15,7 @@ export type Size = 'sm' | 'md';
 export const DEFAULT_SIZE: Size = 'md';
 
 export interface TableProps
-  extends TableHTMLAttributes<HTMLTableElement>,
-    Partial<TableContextProps> {}
+  extends TableHTMLAttributes<HTMLTableElement>, Partial<TableContextProps> {}
 
 const Table = forwardRef<HTMLTableElement, TableProps>(
   ({ size = DEFAULT_SIZE, striped = false, className, children, ...props }, ref) => {

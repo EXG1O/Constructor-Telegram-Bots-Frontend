@@ -4,11 +4,10 @@ import { Slot } from '@radix-ui/react-slot';
 
 import cn from 'utils/cn';
 
-export interface ProgressBarProps
-  extends Omit<
-    HTMLAttributes<HTMLDivElement>,
-    'aria-valuenow' | 'aria-valuemin' | 'aria-valuemax'
-  > {
+export interface ProgressBarProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'aria-valuenow' | 'aria-valuemin' | 'aria-valuemax'
+> {
   asChild?: boolean;
   now: number;
   min?: number;

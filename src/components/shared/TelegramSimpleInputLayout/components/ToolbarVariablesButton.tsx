@@ -7,8 +7,10 @@ import ToolbarButton, {
 
 import useSimpleInputStore from 'components/ui/SimpleInput/hooks/useSimpleInputStore';
 
-export interface ToolbarVariablesButtonProps
-  extends Omit<ToolbarButtonProps, 'children'> {}
+export interface ToolbarVariablesButtonProps extends Omit<
+  ToolbarButtonProps,
+  'children'
+> {}
 
 const ToolbarVariablesButton = forwardRef<
   HTMLButtonElement,

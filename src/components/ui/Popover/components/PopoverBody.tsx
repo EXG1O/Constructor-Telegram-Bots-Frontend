@@ -49,8 +49,7 @@ export const popoverBodyVariants = cva(
 );
 
 export interface PopoverBodyProps
-  extends PopoverContentProps,
-    VariantProps<typeof popoverBodyVariants> {}
+  extends PopoverContentProps, VariantProps<typeof popoverBodyVariants> {}
 
 const PopoverBody = React.forwardRef<HTMLDivElement, PopoverBodyProps>(
   (

@@ -15,8 +15,10 @@ export interface DescriptionBlockFormValues {
   description: Description;
 }
 
-export interface DescriptionBlockProps
-  extends Omit<BlockProps, 'variant' | 'children'> {}
+export interface DescriptionBlockProps extends Omit<
+  BlockProps,
+  'variant' | 'children'
+> {}
 
 export const defaultDescription: Description = '';
 export const defaultDescriptionBlockFormValues: DescriptionBlockFormValues = {

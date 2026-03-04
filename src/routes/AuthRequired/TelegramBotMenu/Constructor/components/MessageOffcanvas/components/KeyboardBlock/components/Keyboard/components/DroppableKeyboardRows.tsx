@@ -5,7 +5,8 @@ import { FastField, FastFieldProps } from 'formik';
 import DraggableKeyboardRow, { KeyboardRow } from './DraggableKeyboardRow';
 
 export interface DroppableKeyboardRowsProps
-  extends Omit<OlHTMLAttributes<HTMLOListElement>, 'children'>,
+  extends
+    Omit<OlHTMLAttributes<HTMLOListElement>, 'children'>,
     Pick<
       DroppableProps,
       | 'isDropDisabled'

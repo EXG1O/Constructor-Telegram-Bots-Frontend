@@ -14,8 +14,7 @@ export const feedbackVariants = cva(['w-full', 'text-sm', 'mt-1'], {
 });
 
 export interface FeedbackProps
-  extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof feedbackVariants> {
+  extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof feedbackVariants> {
   asChild?: boolean;
 }
 

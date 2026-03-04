@@ -3,11 +3,10 @@ import { create } from 'zustand';
 
 import { DEFAULT_SIZE, Size } from '.';
 
-export interface StateParams
-  extends Pick<
-    InputHTMLAttributes<HTMLInputElement>,
-    'autoFocus' | 'inputMode' | 'placeholder'
-  > {
+export interface StateParams extends Pick<
+  InputHTMLAttributes<HTMLInputElement>,
+  'autoFocus' | 'inputMode' | 'placeholder'
+> {
   size: Size;
   invalid: boolean;
   value: string;

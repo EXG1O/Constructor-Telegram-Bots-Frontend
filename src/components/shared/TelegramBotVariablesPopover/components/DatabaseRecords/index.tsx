@@ -16,8 +16,10 @@ import { DatabaseRecord } from 'api/telegram-bots/database-record/types';
 
 import cn from 'utils/cn';
 
-export interface DatabaseRecordsProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+export interface DatabaseRecordsProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {}
 
 interface PaginationData {
   count: number;

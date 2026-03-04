@@ -30,8 +30,7 @@ export const spinnerVariants = cva(
 );
 
 export interface SpinnerProps
-  extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof spinnerVariants> {}
+  extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof spinnerVariants> {}
 
 const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
   ({ size, className, ...props }, ref) => {

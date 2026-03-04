@@ -50,15 +50,16 @@ export interface DiagramMessageKeyboard extends Pick<MessageKeyboard, 'type'> {
 }
 
 export interface DiagramMessage
-  extends DiagramBlock<Message['id']>,
-    Pick<Message, 'text'> {
+  extends DiagramBlock<Message['id']>, Pick<Message, 'text'> {
   keyboard: DiagramMessageKeyboard | null;
 }
 
 export namespace Data {
   export namespace MessagesAPI {
-    export interface CreateMessageMedia
-      extends Omit<MessageMedia, 'id' | 'name' | 'size' | 'url'> {
+    export interface CreateMessageMedia extends Omit<
+      MessageMedia,
+      'id' | 'name' | 'size' | 'url'
+    > {
       file: File | null;
     }
 
@@ -68,8 +69,10 @@ export namespace Data {
       buttons: CreateMessageKeyboardButton[];
     }
 
-    export interface Create
-      extends Omit<Message, 'id' | 'images' | 'documents' | 'keyboard'> {
+    export interface Create extends Omit<
+      Message,
+      'id' | 'images' | 'documents' | 'keyboard'
+    > {
       images: CreateMessageMedia[] | null;
       documents: CreateMessageMedia[] | null;
       keyboard: CreateMessageKeyboard | null;
@@ -90,15 +93,18 @@ export namespace Data {
       buttons: UpdateMessageKeyboardButton[];
     }
 
-    export interface Update
-      extends Omit<Message, 'id' | 'images' | 'documents' | 'keyboard'> {
+    export interface Update extends Omit<
+      Message,
+      'id' | 'images' | 'documents' | 'keyboard'
+    > {
       images: UpdateMessageMedia[] | null;
       documents: UpdateMessageMedia[] | null;
       keyboard: UpdateMessageKeyboard | null;
     }
 
-    export interface PartialUpdateMessageKeyboard
-      extends Partial<Omit<UpdateMessageKeyboard, 'buttons'>> {
+    export interface PartialUpdateMessageKeyboard extends Partial<
+      Omit<UpdateMessageKeyboard, 'buttons'>
+    > {
       buttons?: Partial<UpdateMessageKeyboard['buttons']>;
     }
 

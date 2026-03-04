@@ -8,7 +8,8 @@ import NodeToolbar, { NodeToolbarProps } from './components/NodeToolbar';
 import cn from 'utils/cn';
 
 export interface NodeProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>,
+  extends
+    Omit<HTMLAttributes<HTMLDivElement>, 'title'>,
     Pick<NodeToolbarProps, 'title' | 'onEdit' | 'onDelete'> {}
 
 const Node = forwardRef<HTMLDivElement, NodeProps>(

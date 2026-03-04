@@ -1,13 +1,15 @@
+import React from 'react';
+import { ReactElement } from 'react';
 import * as Primitive from '@radix-ui/react-dropdown-menu';
 
 import DropdownMenu from './components/DropdownMenu';
 import DropdownTrigger from './components/DropdownTrigger';
 
-export type DropdownProps = Primitive.DropdownMenuProps;
+export interface DropdownProps extends Primitive.DropdownMenuProps {}
 
-const Dropdown = Primitive.DropdownMenu;
-Dropdown.defaultProps = { modal: false };
-Dropdown.displayName = 'Dropdown';
+function Dropdown({ modal, ...props }: DropdownProps): ReactElement {
+  return <Primitive.DropdownMenu {...props} modal={modal} />;
+}
 
 export default Object.assign(Dropdown, {
   Trigger: DropdownTrigger,

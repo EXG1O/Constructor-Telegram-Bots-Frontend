@@ -8,11 +8,10 @@ import CheckFeedback, {
 
 export { checkFeedbackVariants as formCheckFeedbackVariants };
 
-export interface FormCheckFeedbackProps
-  extends Omit<
-    CheckFeedbackProps,
-    'value' | 'defaultValue' | 'checked' | 'defaultChecked' | 'error'
-  > {
+export interface FormCheckFeedbackProps extends Omit<
+  CheckFeedbackProps,
+  'value' | 'defaultValue' | 'checked' | 'defaultChecked' | 'error'
+> {
   name: string;
 }
 

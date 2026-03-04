@@ -17,7 +17,8 @@ import { Data } from 'api/telegram-bots/telegram-bot/types';
 type FormValues = Data.TelegramBotsAPI.Create;
 
 export interface TelegramBotAdditionModalProps
-  extends Omit<ModalProps, 'show' | 'loading' | 'children' | 'onHide' | 'onHidden'>,
+  extends
+    Omit<ModalProps, 'show' | 'loading' | 'children' | 'onHide' | 'onHidden'>,
     Required<Pick<ModalProps, 'show' | 'onHide'>> {}
 
 const defaultFormValues: FormValues = { api_token: '', is_private: false };

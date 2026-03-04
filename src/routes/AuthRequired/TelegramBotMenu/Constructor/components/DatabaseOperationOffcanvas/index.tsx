@@ -34,7 +34,8 @@ import { useDatabaseOperationOffcanvasStore } from './store';
 import { getCreateBlockOpen, getUpdateBlockOpen } from './utils';
 
 export interface FormValues
-  extends NameBlockFormValues,
+  extends
+    NameBlockFormValues,
     TypeBlockFormValues,
     CreateBlockFormValues,
     UpdateBlockFormValues {}

@@ -11,8 +11,10 @@ import { FormValues } from '../../../..';
 export type { KeyboardButton } from './components/DraggableKeyboardButton';
 export type { KeyboardRow } from './components/DraggableKeyboardRow';
 
-export interface KeyboardProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
+export interface KeyboardProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {}
 
 function Keyboard(props: KeyboardProps): ReactElement {
   function handleDragEnd(

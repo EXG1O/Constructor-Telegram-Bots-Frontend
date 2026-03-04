@@ -28,8 +28,7 @@ export interface FormData {
 }
 
 export interface KeyboardButtonPopoverProps
-  extends Pick<PopoverProps, 'children'>,
-    Omit<PopoverBodyProps, 'size' | 'children'> {
+  extends Pick<PopoverProps, 'children'>, Omit<PopoverBodyProps, 'size' | 'children'> {
   rowIndex?: number;
   buttonIndex?: number;
   button?: KeyboardButton;

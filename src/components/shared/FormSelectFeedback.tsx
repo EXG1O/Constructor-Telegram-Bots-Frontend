@@ -8,11 +8,10 @@ import SelectFeedback, {
 
 export { selectFeedbackVariants as formSelectFeedbackVariants };
 
-export interface FormSelectFeedbackProps
-  extends Omit<
-    SelectFeedbackProps,
-    'value' | 'defaultValue' | 'checked' | 'defaultChecked' | 'error'
-  > {
+export interface FormSelectFeedbackProps extends Omit<
+  SelectFeedbackProps,
+  'value' | 'defaultValue' | 'checked' | 'defaultChecked' | 'error'
+> {
   name: string;
 }
 

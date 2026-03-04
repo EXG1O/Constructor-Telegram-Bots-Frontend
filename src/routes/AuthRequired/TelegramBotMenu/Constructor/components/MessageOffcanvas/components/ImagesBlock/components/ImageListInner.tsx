@@ -15,8 +15,10 @@ import cn from 'utils/cn';
 import { FormValues } from '../../..';
 import { useMessageOffcanvasStore } from '../../../store';
 
-export interface ImageListInnerProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface ImageListInnerProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
   form: FormikProps<FormValues>;
   images: Images;
 }

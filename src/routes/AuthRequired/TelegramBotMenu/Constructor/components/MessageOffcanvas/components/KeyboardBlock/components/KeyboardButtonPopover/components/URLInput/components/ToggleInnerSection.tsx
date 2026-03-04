@@ -10,8 +10,10 @@ import cn from 'utils/cn';
 
 import { useKeyboardButtonPopoverStore } from '../../../store';
 
-export interface ToggleSectionProps
-  extends Omit<CollapsibleProps, 'open' | 'onOpenChange'> {}
+export interface ToggleSectionProps extends Omit<
+  CollapsibleProps,
+  'open' | 'onOpenChange'
+> {}
 
 function ToggleSection({
   className,

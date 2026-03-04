@@ -18,8 +18,7 @@ export const nodeBlockVariants = cva(
 );
 
 export interface NodeBlockProps
-  extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof nodeBlockVariants> {}
+  extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof nodeBlockVariants> {}
 
 const NodeBlock = forwardRef<HTMLDivElement, NodeBlockProps>(
   ({ variant, className, ...props }, ref) => {

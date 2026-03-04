@@ -12,8 +12,10 @@ import useUserVariablesStore from '../../hooks/useUserVariablesStore';
 
 import cn from 'utils/cn';
 
-export interface VariablesTableProps
-  extends Omit<TableProps, 'size' | 'striped' | 'children'> {}
+export interface VariablesTableProps extends Omit<
+  TableProps,
+  'size' | 'striped' | 'children'
+> {}
 
 function VariablesTable({ className, ...props }: VariablesTableProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {

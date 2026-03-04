@@ -17,8 +17,10 @@ import fetchFile from 'api/utils/fetchFile';
 
 import { useInvoiceOffcanvasStore } from '../store';
 
-export interface OffcanvasInnerProps
-  extends Omit<OffcanvasProps, 'show' | 'loading' | 'children'> {}
+export interface OffcanvasInnerProps extends Omit<
+  OffcanvasProps,
+  'show' | 'loading' | 'children'
+> {}
 
 function OffcanvasInner({
   onHide,
