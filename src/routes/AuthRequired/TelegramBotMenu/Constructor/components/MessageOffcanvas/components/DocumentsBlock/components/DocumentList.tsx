@@ -1,15 +1,19 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import { FastField, FastFieldProps, FieldInputProps, FormikProps } from 'formik';
+import React, { type HTMLAttributes, type ReactElement } from 'react';
+import { DragDropContext, Droppable, type DropResult } from 'react-beautiful-dnd';
+import {
+  FastField,
+  type FastFieldProps,
+  type FieldInputProps,
+  type FormikProps,
+} from 'formik';
 import { produce } from 'immer';
-
-import { Documents } from '..';
 
 import DocumentItem from './DocumentItem';
 
 import cn from 'utils/cn';
 
-import { FormValues } from '../../..';
+import type { FormValues } from '../../..';
+import type { Documents } from '..';
 
 export interface DocumentsListProps extends Omit<
   HTMLAttributes<HTMLDivElement>,

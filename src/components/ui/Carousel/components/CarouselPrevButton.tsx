@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
 import { ArrowLeft } from 'lucide-react';
 
-import { EmblaAPI } from '..';
-
 import CarouselDirectionButton, {
-  CarouselDirectionButtonProps,
+  type CarouselDirectionButtonProps,
 } from './CarouselDirectionButton';
+
+import type { EmblaAPI } from '..';
 
 export interface CarouselPrevButtonProps extends Omit<
   CarouselDirectionButtonProps,

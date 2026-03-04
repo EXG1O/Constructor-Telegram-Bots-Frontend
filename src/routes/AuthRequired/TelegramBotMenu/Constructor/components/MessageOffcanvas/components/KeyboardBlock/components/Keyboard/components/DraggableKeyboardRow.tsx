@@ -1,11 +1,11 @@
-import React, { LiHTMLAttributes, memo, ReactElement } from 'react';
-import { Draggable, DraggableProps } from 'react-beautiful-dnd';
-import { FastField, FastFieldProps, FieldArray } from 'formik';
+import React, { type LiHTMLAttributes, memo, type ReactElement } from 'react';
+import { Draggable, type DraggableProps } from 'react-beautiful-dnd';
+import { FastField, type FastFieldProps, FieldArray } from 'formik';
 import { LayoutGrid, Trash2 } from 'lucide-react';
 
 import IconButton from 'components/ui/IconButton';
 
-import { KeyboardButton } from './DraggableKeyboardButton';
+import type { KeyboardButton } from './DraggableKeyboardButton';
 import DroppableKeyboardButtons from './DroppableKeyboardButtons';
 
 import cn from 'utils/cn';

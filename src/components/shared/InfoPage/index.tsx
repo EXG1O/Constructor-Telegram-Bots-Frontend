@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import i18n from 'i18n';
 
-import Page, { PageProps } from 'components/ui/Page';
+import Page, { type PageProps } from 'components/ui/Page';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 

@@ -1,17 +1,18 @@
-import React, { ChangeEvent, ReactElement } from 'react';
+import React, { type ChangeEvent, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FastField, FastFieldProps, FormikProps } from 'formik';
+import { FastField, type FastFieldProps, type FormikProps } from 'formik';
 import { produce } from 'immer';
 
 import { RouteID } from 'routes';
 
-import { Parts } from '..';
+import SelectFeedback, {
+  type SelectFeedbackProps,
+} from 'components/shared/SelectFeedback';
 
-import SelectFeedback, { SelectFeedbackProps } from 'components/shared/SelectFeedback';
+import { defaultPart, type Part } from './PartItem';
 
-import { defaultPart, Part } from './PartItem';
-
-import { FormValues } from '../../..';
+import type { FormValues } from '../../..';
+import type { Parts } from '..';
 
 export type NextPartOperator = '&&' | '||' | 'null';
 

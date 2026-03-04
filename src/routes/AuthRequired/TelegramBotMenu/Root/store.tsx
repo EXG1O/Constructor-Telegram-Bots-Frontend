@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
+import type { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 
 export interface StateData {
   telegramBot: TelegramBot | null;

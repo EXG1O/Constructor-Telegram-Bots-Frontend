@@ -1,14 +1,19 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FastField, FastFieldProps, FieldInputProps, FormikProps } from 'formik';
+import {
+  FastField,
+  type FastFieldProps,
+  type FieldInputProps,
+  type FormikProps,
+} from 'formik';
 
 import { RouteID } from 'routes';
 
-import { Headers } from '..';
-
-import Button, { ButtonProps } from 'components/ui/Button';
+import Button, { type ButtonProps } from 'components/ui/Button';
 
 import cn from 'utils/cn';
+
+import type { Headers } from '..';
 
 export interface AddHeaderButtonProps extends Omit<
   ButtonProps,

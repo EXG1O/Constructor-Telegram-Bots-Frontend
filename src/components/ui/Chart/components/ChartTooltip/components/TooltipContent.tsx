@@ -1,8 +1,11 @@
-import React, { forwardRef, ReactNode } from 'react';
-import { cva, VariantProps } from 'class-variance-authority';
-import { TooltipContentProps as PrimitiveTooltipContentProps } from 'recharts';
+import React, { forwardRef, type ReactNode } from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import type { TooltipContentProps as PrimitiveTooltipContentProps } from 'recharts';
 
-import { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
+import type {
+  NameType,
+  ValueType,
+} from 'recharts/types/component/DefaultTooltipContent';
 
 import cn from 'utils/cn';
 

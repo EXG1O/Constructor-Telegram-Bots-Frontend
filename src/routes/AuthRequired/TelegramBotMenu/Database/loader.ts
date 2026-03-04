@@ -1,7 +1,7 @@
-import { Params } from 'react-router-dom';
+import type { Params } from 'react-router-dom';
 
 import { DatabaseRecordsAPI } from 'api/telegram-bots/database-record';
-import { APIResponse } from 'api/telegram-bots/database-record/types';
+import type { APIResponse } from 'api/telegram-bots/database-record/types';
 
 export interface PaginationData extends APIResponse.DatabaseRecordsAPI.Get.Pagination {
   limit: number;

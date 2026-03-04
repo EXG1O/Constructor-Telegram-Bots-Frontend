@@ -1,6 +1,8 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
+import React, { forwardRef, type HTMLAttributes } from 'react';
 
-import PaginationItem, { paginationItemVariants } from './components/PaginationItem';
+import PaginationItem, {
+  type paginationItemVariants,
+} from './components/PaginationItem';
 
 import cn from 'utils/cn';
 

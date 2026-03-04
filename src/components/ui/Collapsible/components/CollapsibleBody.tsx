@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import {
   CollapsibleContent,
-  CollapsibleContentProps,
+  type CollapsibleContentProps,
 } from '@radix-ui/react-collapsible';
 
 import cn from 'utils/cn';

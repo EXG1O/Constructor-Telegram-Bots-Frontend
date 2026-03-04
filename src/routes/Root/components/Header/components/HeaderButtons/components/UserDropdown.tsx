@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -6,12 +6,12 @@ import { RouteID } from 'routes';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import Button from 'components/ui/Button';
-import Dropdown, { DropdownProps } from 'components/ui/Dropdown';
+import Dropdown, { type DropdownProps } from 'components/ui/Dropdown';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { JWTStorage } from 'api/storage';
 import { UserAPI } from 'api/users';
-import { User } from 'api/users/types';
+import type { User } from 'api/users/types';
 
 import reverse from 'utils/reverse';
 

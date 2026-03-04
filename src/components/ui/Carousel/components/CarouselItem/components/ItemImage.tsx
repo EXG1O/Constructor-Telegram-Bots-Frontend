@@ -1,4 +1,4 @@
-import React, { forwardRef, ImgHTMLAttributes } from 'react';
+import React, { forwardRef, type ImgHTMLAttributes } from 'react';
 
 import cn from 'utils/cn';
 

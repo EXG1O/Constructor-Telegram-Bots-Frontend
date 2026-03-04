@@ -1,11 +1,11 @@
-import React, { LiHTMLAttributes, memo, ReactElement } from 'react';
-import { Draggable, DraggableProps } from 'react-beautiful-dnd';
-import { FastField, FastFieldProps } from 'formik';
+import React, { type LiHTMLAttributes, memo, type ReactElement } from 'react';
+import { Draggable, type DraggableProps } from 'react-beautiful-dnd';
+import { FastField, type FastFieldProps } from 'formik';
 
 import KeyboardButtonPopover from '../../KeyboardButtonPopover';
-import { Style } from '../../KeyboardButtonPopover/components/StyleSelect';
-import { Text } from '../../KeyboardButtonPopover/components/TextInput';
-import { URL } from '../../KeyboardButtonPopover/components/URLInput';
+import type { Style } from '../../KeyboardButtonPopover/components/StyleSelect';
+import type { Text } from '../../KeyboardButtonPopover/components/TextInput';
+import type { URL } from '../../KeyboardButtonPopover/components/URLInput';
 
 import cn from 'utils/cn';
 

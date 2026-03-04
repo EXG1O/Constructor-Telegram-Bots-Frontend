@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import formatDate from 'i18n/formatDate';
 
-import Block, { BlockProps } from 'components/ui/Block';
+import Block, { type BlockProps } from 'components/ui/Block';
 import Chart from 'components/ui/Chart';
 import Spinner from 'components/ui/Spinner';
 

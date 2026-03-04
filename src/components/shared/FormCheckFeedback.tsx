@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
-import { FastField, FastFieldProps, FormikProps } from 'formik';
+import { FastField, type FastFieldProps, type FormikProps } from 'formik';
 
 import CheckFeedback, {
-  CheckFeedbackProps,
+  type CheckFeedbackProps,
   checkFeedbackVariants,
 } from 'components/shared/CheckFeedback';
 

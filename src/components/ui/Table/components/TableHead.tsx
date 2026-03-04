@@ -1,4 +1,4 @@
-import React, { forwardRef, ThHTMLAttributes } from 'react';
+import React, { forwardRef, type ThHTMLAttributes } from 'react';
 
 import TableCell from './TableCell';
 

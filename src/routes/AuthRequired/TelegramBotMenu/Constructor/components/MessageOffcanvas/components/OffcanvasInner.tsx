@@ -1,19 +1,17 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { type ReactElement, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormikContext } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
-import { FormValues } from '..';
-
-import Offcanvas, { OffcanvasProps } from 'components/ui/Offcanvas';
+import Offcanvas, { type OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { defaultDocuments, Document } from './DocumentsBlock';
-import { defaultImages, Image } from './ImagesBlock';
+import { defaultDocuments, type Document } from './DocumentsBlock';
+import { defaultImages, type Image } from './ImagesBlock';
 import { defaultKeyboard } from './KeyboardBlock';
-import { KeyboardRow } from './KeyboardBlock/components/Keyboard';
+import type { KeyboardRow } from './KeyboardBlock/components/Keyboard';
 import OffcanvasContent from './OffcanvasContent';
 import { defaultText } from './TextBlock';
 
@@ -21,6 +19,7 @@ import { MessageAPI } from 'api/telegram-bots/message';
 import fetchFile from 'api/utils/fetchFile';
 
 import calcMediaSize from '../../../utils/calcMediaSize';
+import type { FormValues } from '..';
 import { useMessageOffcanvasStore } from '../store';
 
 export interface OffcanvasInnerProps extends Omit<

@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 import { Slot } from '@radix-ui/react-slot';
-import { cva, VariantProps } from 'class-variance-authority';
+import { cva, type VariantProps } from 'class-variance-authority';
 
-import ProgressBar, { ProgressBarProps } from 'components/ui/ProgressBar';
+import ProgressBar, { type ProgressBarProps } from 'components/ui/ProgressBar';
 
 import cn from 'utils/cn';
 

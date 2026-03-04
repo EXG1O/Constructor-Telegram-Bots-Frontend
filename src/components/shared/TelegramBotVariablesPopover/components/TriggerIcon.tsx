@@ -1,4 +1,4 @@
-import { LucideProps, Variable } from 'lucide-react';
+import { type LucideProps, Variable } from 'lucide-react';
 
 const TriggerIcon = Variable;
 TriggerIcon.displayName = 'TriggerIcon';

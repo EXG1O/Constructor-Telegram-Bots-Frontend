@@ -2,8 +2,8 @@ import { makeRequest } from 'api/core';
 
 import appendMedia from '../../utils/appendMedia';
 import { TelegramBotAPI } from '../telegram-bot';
-import { TelegramBot } from '../telegram-bot/types';
-import { APIResponse, Data, Invoice } from './types';
+import type { TelegramBot } from '../telegram-bot/types';
+import type { APIResponse, Data, Invoice } from './types';
 
 export class InvoicesAPI {
   static url(telegramBotID: TelegramBot['id']): string {

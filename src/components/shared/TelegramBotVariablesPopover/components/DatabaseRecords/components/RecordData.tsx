@@ -1,11 +1,11 @@
-import React, { HTMLAttributes, ReactElement, useMemo } from 'react';
+import React, { type HTMLAttributes, type ReactElement, useMemo } from 'react';
 
 import SelectButton from '../../SelectButton';
 
-import { DatabaseRecord } from 'api/telegram-bots/database-record/types';
+import type { DatabaseRecord } from 'api/telegram-bots/database-record/types';
 
 import cn from 'utils/cn';
-import getJSONPathLines, { JSONPath } from 'utils/getJSONPathLines';
+import getJSONPathLines, { type JSONPath } from 'utils/getJSONPathLines';
 
 export interface RecordDataProps
   extends

@@ -1,6 +1,6 @@
-import React, { memo, ReactElement } from 'react';
+import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, FormikHelpers } from 'formik';
+import { Formik, type FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
@@ -8,28 +8,28 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import {
-  CommandBlockFormValues,
+  type CommandBlockFormValues,
   defaultCommandBlockFormValues,
 } from './components/CommandBlock';
 import {
   defaultMessageBlockFormValues,
-  MessageBlockFormValues,
+  type MessageBlockFormValues,
 } from './components/MessageBlock';
-import OffcanvasInner, { OffcanvasInnerProps } from './components/OffcanvasInner';
+import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
 import {
   defaultStartCommandBlockFormValues,
-  StartCommandBlockFormValues,
+  type StartCommandBlockFormValues,
 } from './components/StartCommandBlock';
 import {
   defaultTypeBlockFormValues,
   Type,
-  TypeBlockFormValues,
+  type TypeBlockFormValues,
 } from './components/TypeBlock';
 
-import { defaultNameBlockFormValues, NameBlockFormValues } from '../NameBlock';
+import { defaultNameBlockFormValues, type NameBlockFormValues } from '../NameBlock';
 
 import { TriggerAPI, TriggersAPI } from 'api/telegram-bots/trigger';
-import { Data, Trigger } from 'api/telegram-bots/trigger/types';
+import type { Data, Trigger } from 'api/telegram-bots/trigger/types';
 
 import { useTriggerOffcanvasStore } from './store';
 

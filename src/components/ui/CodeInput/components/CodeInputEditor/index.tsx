@@ -1,5 +1,5 @@
-import React, { forwardRef, HTMLAttributes, useCallback, useMemo } from 'react';
-import MonacoEditor, { OnChange, OnMount } from '@monaco-editor/react';
+import React, { forwardRef, type HTMLAttributes, useCallback, useMemo } from 'react';
+import MonacoEditor, { type OnChange, type OnMount } from '@monaco-editor/react';
 import { loader } from '@monaco-editor/react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
@@ -13,8 +13,8 @@ import useCodeInputStore from '../../hooks/useCodeInputStore';
 
 import cn from 'utils/cn';
 
-import { DEFAULT_SIZE, Size } from '../..';
-import { Editor } from '../..';
+import type { Editor } from '../..';
+import { DEFAULT_SIZE, type Size } from '../..';
 
 const PrimitiveEditor = MonacoEditor;
 PrimitiveEditor.displayName = 'PrimitiveEditor';

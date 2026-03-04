@@ -1,4 +1,4 @@
-import { Params, redirect } from 'react-router-dom';
+import { type Params, redirect } from 'react-router-dom';
 
 import { RouteID } from 'routes';
 

@@ -1,5 +1,5 @@
 import { TelegramBotsAPI } from 'api/telegram-bots/telegram-bot';
-import { APIResponse } from 'api/telegram-bots/telegram-bot/types';
+import type { APIResponse } from 'api/telegram-bots/telegram-bot/types';
 
 export interface LoaderData {
   telegramBots: APIResponse.TelegramBotsAPI.Get;

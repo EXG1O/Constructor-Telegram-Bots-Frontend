@@ -4,7 +4,7 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 
 import {
   createImagesBlockSlice,
-  ImagesBlockSlice,
+  type ImagesBlockSlice,
 } from './components/ImagesBlock/store';
 
 export interface StateParams {

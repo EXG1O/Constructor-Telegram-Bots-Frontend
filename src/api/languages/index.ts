@@ -1,6 +1,6 @@
 import { makeRequest } from 'api/core';
 
-import { APIResponse, Data } from './types';
+import type { APIResponse, Data } from './types';
 
 const rootURL: string = '/api/languages/';
 

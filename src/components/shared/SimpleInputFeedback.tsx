@@ -1,7 +1,7 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
+import React, { type HTMLAttributes, type ReactElement } from 'react';
 
 import Feedback from 'components/ui/Feedback';
-import SimpleInput, { SimpleInputProps } from 'components/ui/SimpleInput';
+import SimpleInput, { type SimpleInputProps } from 'components/ui/SimpleInput';
 
 import cn from 'utils/cn';
 

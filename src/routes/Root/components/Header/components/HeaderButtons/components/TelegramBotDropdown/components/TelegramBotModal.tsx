@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import TelegramBotContent from 'components/shared/TelegramBotContent';
 import Button from 'components/ui/Button';
-import Modal, { ModalProps } from 'components/ui/Modal';
+import Modal, { type ModalProps } from 'components/ui/Modal';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 

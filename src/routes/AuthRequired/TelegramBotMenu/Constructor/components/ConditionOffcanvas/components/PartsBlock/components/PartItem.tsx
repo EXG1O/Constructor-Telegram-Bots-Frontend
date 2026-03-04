@@ -1,14 +1,14 @@
-import React, { HTMLAttributes, memo, ReactElement } from 'react';
+import React, { type HTMLAttributes, memo, type ReactElement } from 'react';
 
 import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import TelegramSimpleInputLayout from 'components/shared/TelegramSimpleInputLayout';
-import { SelectProps } from 'components/ui/Select';
+import type { SelectProps } from 'components/ui/Select';
 
 import NextPartOperatorSelect, {
   defaultNextPartOperator,
-  NextPartOperator,
+  type NextPartOperator,
 } from './NextPartOperatorSelect';
-import OperatorSelect, { defaultOperator, Operator } from './OperatorSelect';
+import OperatorSelect, { defaultOperator, type Operator } from './OperatorSelect';
 
 import cn from 'utils/cn';
 

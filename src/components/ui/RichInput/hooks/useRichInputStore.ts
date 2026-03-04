@@ -2,10 +2,10 @@ import { useContext } from 'react';
 import { useStore } from 'zustand';
 
 import RichInputStoreContext, {
-  RichInputStoreContextValue,
+  type RichInputStoreContextValue,
 } from '../contexts/RichInputStoreContext';
 
-import { State } from '../store';
+import type { State } from '../store';
 
 type Store = RichInputStoreContextValue;
 

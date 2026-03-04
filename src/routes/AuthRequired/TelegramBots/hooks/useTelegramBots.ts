@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 import TelegramBotsContext, {
-  TelegramBotsContextProps,
+  type TelegramBotsContextProps,
 } from '../contexts/TelegramBotsContext';
 
 function useTelegramBots(): TelegramBotsContextProps {

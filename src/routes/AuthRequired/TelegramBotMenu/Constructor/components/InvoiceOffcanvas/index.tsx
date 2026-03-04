@@ -1,6 +1,6 @@
-import React, { memo, ReactElement } from 'react';
+import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, FormikHelpers } from 'formik';
+import { Formik, type FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
@@ -9,26 +9,26 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import {
   defaultDescriptionBlockFormValues,
-  DescriptionBlockFormValues,
+  type DescriptionBlockFormValues,
 } from './components/DescriptionBlock';
 import {
   defaultImageBlockFormValues,
-  ImageBlockFormValues,
+  type ImageBlockFormValues,
 } from './components/ImageBlock';
-import OffcanvasInner, { OffcanvasInnerProps } from './components/OffcanvasInner';
+import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
 import {
   defaultPriceBlockFormValues,
-  PriceBlockFormValues,
+  type PriceBlockFormValues,
 } from './components/PriceBlock';
 import {
   defaultTitleBlockFormValues,
-  TitleBlockFormValues,
+  type TitleBlockFormValues,
 } from './components/TitleBlock';
 
-import { defaultNameBlockFormValues, NameBlockFormValues } from '../NameBlock';
+import { defaultNameBlockFormValues, type NameBlockFormValues } from '../NameBlock';
 
 import { InvoiceAPI, InvoicesAPI } from 'api/telegram-bots/invoice';
-import { Data, Invoice } from 'api/telegram-bots/invoice/types';
+import type { Data, Invoice } from 'api/telegram-bots/invoice/types';
 
 import { useInvoiceOffcanvasStore } from './store';
 

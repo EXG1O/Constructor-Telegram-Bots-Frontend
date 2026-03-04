@@ -1,4 +1,4 @@
-import { FieldInputProps, FormikProps } from 'formik';
+import type { FieldInputProps, FormikProps } from 'formik';
 import { createStore as createZustandStore } from 'zustand';
 
 export interface StateData {

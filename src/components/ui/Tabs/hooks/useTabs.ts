@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import TabsContext, { TabsContextProps } from '../contexts/TabsContext';
+import TabsContext, { type TabsContextProps } from '../contexts/TabsContext';
 
 function useTabs(): TabsContextProps {
   const context = useContext(TabsContext);

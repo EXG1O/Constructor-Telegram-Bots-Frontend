@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Node as RFNode,
-  NodeProps as RFNodeProps,
+  type Node as RFNode,
+  type NodeProps as RFNodeProps,
   Position,
   useReactFlow,
 } from '@xyflow/react';
@@ -17,12 +17,12 @@ import Node from './Node';
 import { useTemporaryVariableOffcanvasStore } from './TemporaryVariableOffcanvas/store';
 
 import { TemporaryVariableAPI } from 'api/telegram-bots/temporary-variable';
-import { DiagramTemporaryVariable } from 'api/telegram-bots/temporary-variable/types';
+import type { DiagramTemporaryVariable } from 'api/telegram-bots/temporary-variable/types';
 
 import {
   buildEdgeSourceHandle,
   buildEdgeTargetHandle,
-  EdgeHandle,
+  type EdgeHandle,
 } from '../utils/edges';
 
 type Data = Omit<DiagramTemporaryVariable, 'x' | 'y' | 'source_connections'>;

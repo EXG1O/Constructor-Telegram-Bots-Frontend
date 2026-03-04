@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 
-import OffcanvasContext, { OffcanvasContextProps } from '../contexts/OffcanvasContext';
+import OffcanvasContext, {
+  type OffcanvasContextProps,
+} from '../contexts/OffcanvasContext';
 
 function useOffcanvas(): OffcanvasContextProps {
   const context = useContext<OffcanvasContextProps | undefined>(OffcanvasContext);

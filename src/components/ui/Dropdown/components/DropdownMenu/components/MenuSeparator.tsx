@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import {
   DropdownMenuSeparator,
-  DropdownMenuSeparatorProps,
+  type DropdownMenuSeparatorProps,
 } from '@radix-ui/react-dropdown-menu';
 
 import cn from 'utils/cn';

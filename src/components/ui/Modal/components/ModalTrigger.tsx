@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DialogTrigger, DialogTriggerProps } from '@radix-ui/react-dialog';
+import { DialogTrigger, type DialogTriggerProps } from '@radix-ui/react-dialog';
 
 export interface ModalTriggerProps extends DialogTriggerProps {}
 

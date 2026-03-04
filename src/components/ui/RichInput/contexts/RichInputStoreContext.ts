@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { createStore } from '../store';
+import type { createStore } from '../store';
 
 export type RichInputStoreContextValue = ReturnType<typeof createStore>;
 

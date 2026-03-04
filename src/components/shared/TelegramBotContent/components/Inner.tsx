@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactElement, useEffect } from 'react';
+import React, { type HTMLAttributes, type ReactElement, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Slot } from '@radix-ui/react-slot';
 import formatDate from 'i18n/formatDate';

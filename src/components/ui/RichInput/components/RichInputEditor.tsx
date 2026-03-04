@@ -1,4 +1,4 @@
-import React, { forwardRef, HTMLAttributes, useEffect } from 'react';
+import React, { forwardRef, type HTMLAttributes, useEffect } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
 

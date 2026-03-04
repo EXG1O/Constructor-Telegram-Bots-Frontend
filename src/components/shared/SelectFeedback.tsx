@@ -1,7 +1,7 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
+import React, { forwardRef, type HTMLAttributes } from 'react';
 
 import Feedback from 'components/ui/Feedback';
-import Select, { SelectProps, selectVariants } from 'components/ui/Select';
+import Select, { type SelectProps, selectVariants } from 'components/ui/Select';
 
 import cn from 'utils/cn';
 

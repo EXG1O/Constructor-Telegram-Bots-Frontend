@@ -1,13 +1,13 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { RouteID } from 'routes';
 
 import TelegramBotContent, {
-  TelegramBotContentProps,
+  type TelegramBotContentProps,
 } from 'components/shared/TelegramBotContent';
-import Block, { BlockProps } from 'components/ui/Block';
+import Block, { type BlockProps } from 'components/ui/Block';
 import Button from 'components/ui/Button';
 
 import cn from 'utils/cn';

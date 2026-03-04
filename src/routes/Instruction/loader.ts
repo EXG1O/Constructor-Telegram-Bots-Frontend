@@ -1,5 +1,5 @@
 import { SectionsAPI } from 'api/instruction';
-import { APIResponse } from 'api/instruction/types';
+import type { APIResponse } from 'api/instruction/types';
 
 export interface LoaderData {
   sections: APIResponse.SectionsAPI.Get;

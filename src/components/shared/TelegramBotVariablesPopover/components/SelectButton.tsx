@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { ArrowRight } from 'lucide-react';
 
-import { ButtonProps } from 'components/ui/Button';
+import type { ButtonProps } from 'components/ui/Button';
 import IconButton from 'components/ui/IconButton';
 import Popover from 'components/ui/Popover';
 

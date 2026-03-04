@@ -1,7 +1,7 @@
-import React, { HTMLAttributes } from 'react';
-import { forwardRef, InputHTMLAttributes } from 'react';
+import React, { type HTMLAttributes } from 'react';
+import { forwardRef, type InputHTMLAttributes } from 'react';
 import { Slot } from '@radix-ui/react-slot';
-import { cva, VariantProps } from 'class-variance-authority';
+import { cva, type VariantProps } from 'class-variance-authority';
 
 import cn from 'utils/cn';
 

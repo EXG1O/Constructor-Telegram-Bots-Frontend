@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { EmblaAPI } from '..';
+import type { EmblaAPI } from '..';
 
 export interface CarouselContextProps {
   api: EmblaAPI | undefined;

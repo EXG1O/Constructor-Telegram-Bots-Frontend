@@ -1,11 +1,11 @@
-import React, { ReactElement } from 'react';
-import { FastField, FastFieldProps } from 'formik';
+import React, { type ReactElement } from 'react';
+import { FastField, type FastFieldProps } from 'formik';
 
 import Collapsible from 'components/ui/Collapsible';
 
-import Inner, { InnerProps } from './components/Inner';
+import Inner, { type InnerProps } from './components/Inner';
 import TriggerButton from './components/TriggerButton';
-import StoreProvider, { StoreProviderProps } from './providers/StoreProvider';
+import StoreProvider, { type StoreProviderProps } from './providers/StoreProvider';
 
 export interface FormToggleSectionProps
   extends Omit<StoreProviderProps, 'children'>, Omit<InnerProps, keyof FastFieldProps> {

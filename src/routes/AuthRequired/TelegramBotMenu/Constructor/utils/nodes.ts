@@ -1,8 +1,8 @@
-import { Node } from '@xyflow/react';
+import type { Node } from '@xyflow/react';
 
-import { nodeTypes } from '..';
+import type { DiagramBlock } from 'api/telegram-bots/base/types';
 
-import { DiagramBlock } from 'api/telegram-bots/base/types';
+import type { nodeTypes } from '..';
 
 export type NodeType = keyof typeof nodeTypes;
 

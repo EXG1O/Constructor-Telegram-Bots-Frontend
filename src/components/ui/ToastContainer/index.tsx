@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { ToastProvider, ToastViewport } from '@radix-ui/react-toast';
 import Z_INDEX from 'tokens/z-index';
 

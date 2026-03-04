@@ -1,6 +1,6 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
+import React, { forwardRef, type HTMLAttributes } from 'react';
 
-import Check, { CheckProps, checkVariants } from 'components/ui/Check';
+import Check, { type CheckProps, checkVariants } from 'components/ui/Check';
 import Feedback from 'components/ui/Feedback';
 
 import cn from 'utils/cn';

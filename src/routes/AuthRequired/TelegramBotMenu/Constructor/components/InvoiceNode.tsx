@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Node as RFNode,
-  NodeProps as RFNodeProps,
+  type Node as RFNode,
+  type NodeProps as RFNodeProps,
   Position,
   useReactFlow,
 } from '@xyflow/react';
@@ -17,12 +17,12 @@ import { useInvoiceOffcanvasStore } from './InvoiceOffcanvas/store';
 import Node from './Node';
 
 import { InvoiceAPI } from 'api/telegram-bots/invoice';
-import { DiagramInvoice } from 'api/telegram-bots/invoice/types';
+import type { DiagramInvoice } from 'api/telegram-bots/invoice/types';
 
 import {
   buildEdgeSourceHandle,
   buildEdgeTargetHandle,
-  EdgeHandle,
+  type EdgeHandle,
 } from '../utils/edges';
 
 type Data = Omit<DiagramInvoice, 'x' | 'y' | 'source_connections'>;

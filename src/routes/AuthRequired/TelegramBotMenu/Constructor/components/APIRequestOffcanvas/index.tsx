@@ -1,6 +1,6 @@
-import React, { memo, ReactElement } from 'react';
+import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, FormikHelpers } from 'formik';
+import { Formik, type FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
@@ -8,24 +8,27 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import {
-  BodyBlockFormValues,
+  type BodyBlockFormValues,
   defaultBodyBlockFormValues,
 } from './components/BodyBlock';
 import {
   defaultHeadersBlockFormValues,
-  HeadersBlockFormValues,
+  type HeadersBlockFormValues,
 } from './components/HeadersBlock';
 import {
   defaultMethodBlockFormValues,
-  MethodBlockFormValues,
+  type MethodBlockFormValues,
 } from './components/MethodBlock';
-import OffcanvasInner, { OffcanvasInnerProps } from './components/OffcanvasInner';
-import { defaultURLBlockFormValues, URLBlockFormValues } from './components/URLBlock';
+import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
+import {
+  defaultURLBlockFormValues,
+  type URLBlockFormValues,
+} from './components/URLBlock';
 
-import { defaultNameBlockFormValues, NameBlockFormValues } from '../NameBlock';
+import { defaultNameBlockFormValues, type NameBlockFormValues } from '../NameBlock';
 
 import { APIRequestAPI, APIRequestsAPI } from 'api/telegram-bots/api-request';
-import { APIRequest, Data } from 'api/telegram-bots/api-request/types';
+import type { APIRequest, Data } from 'api/telegram-bots/api-request/types';
 
 import parseJsonField from '../../utils/parseJsonField';
 import { useAPIRequestOffcanvasStore } from './store';

@@ -1,13 +1,12 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 
-import { Images } from '..';
-
-import Carousel, { CarouselProps } from 'components/ui/Carousel';
+import Carousel, { type CarouselProps } from 'components/ui/Carousel';
 import Spinner from 'components/ui/Spinner';
 
 import ImageCarouselImage from './ImageCarouselImage';
 
 import { useMessageOffcanvasStore } from '../../../store';
+import type { Images } from '..';
 
 export interface ImageCarouselInnerProps extends Omit<
   CarouselProps,

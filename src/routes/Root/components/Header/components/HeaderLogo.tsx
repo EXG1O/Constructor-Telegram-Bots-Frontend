@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
+import React, { type HTMLAttributes, type ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 
 import { RouteID } from 'routes';

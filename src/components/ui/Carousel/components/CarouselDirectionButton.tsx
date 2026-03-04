@@ -1,12 +1,12 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 
-import { EmblaAPI } from '..';
-
-import IconButton, { IconButtonProps } from 'components/ui/IconButton';
+import IconButton, { type IconButtonProps } from 'components/ui/IconButton';
 
 import useCarousel from '../hooks/useCarousel';
 
 import cn from 'utils/cn';
+
+import type { EmblaAPI } from '..';
 
 export interface CarouselDirectionButtonProps extends Omit<
   IconButtonProps,

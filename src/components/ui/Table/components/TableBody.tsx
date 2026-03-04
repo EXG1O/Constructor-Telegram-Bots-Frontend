@@ -1,4 +1,4 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
+import React, { forwardRef, type HTMLAttributes } from 'react';
 
 export interface TableBodyProps extends HTMLAttributes<HTMLTableSectionElement> {}
 

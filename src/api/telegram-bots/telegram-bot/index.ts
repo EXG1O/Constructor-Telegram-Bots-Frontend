@@ -2,7 +2,7 @@ import { ROOT_URL } from '..';
 
 import { makeRequest } from 'api/core';
 
-import { APIResponse, Data, TelegramBot } from './types';
+import type { APIResponse, Data, TelegramBot } from './types';
 
 export class TelegramBotsAPI {
   static url: string = ROOT_URL;

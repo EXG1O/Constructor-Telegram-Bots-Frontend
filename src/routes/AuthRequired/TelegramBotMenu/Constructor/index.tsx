@@ -1,23 +1,23 @@
-import React, { CSSProperties, ReactElement, useCallback } from 'react';
+import React, { type CSSProperties, type ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   addEdge as RFAddEdge,
   Background,
   BackgroundVariant,
-  Connection,
+  type Connection,
   Controls,
-  DefaultEdgeOptions,
-  Edge,
-  FinalConnectionState,
-  HandleType,
-  IsValidConnection,
+  type DefaultEdgeOptions,
+  type Edge,
+  type FinalConnectionState,
+  type HandleType,
+  type IsValidConnection,
   MarkerType,
   MiniMap,
-  Node,
-  OnConnect,
-  OnNodeDrag,
-  OnNodesDelete,
-  OnReconnect,
+  type Node,
+  type OnConnect,
+  type OnNodeDrag,
+  type OnNodesDelete,
+  type OnReconnect,
   ReactFlow,
   useEdgesState,
   useNodesState,
@@ -50,37 +50,37 @@ import TriggerOffcanvas from './components/TriggerOffcanvas';
 
 import useTelegramBotMenuConstructorRouteLoaderData from './hooks/useTelegramBotMenuConstructorRouteLoaderData';
 
-import { APIResponse } from 'api/core';
+import type { APIResponse } from 'api/core';
 import { DiagramAPIRequestAPI } from 'api/telegram-bots/api-request';
-import { APIRequest } from 'api/telegram-bots/api-request/types';
+import type { APIRequest } from 'api/telegram-bots/api-request/types';
 import { DiagramBackgroundTaskAPI } from 'api/telegram-bots/background-task';
-import { BackgroundTask } from 'api/telegram-bots/background-task/types';
-import { DiagramBlock } from 'api/telegram-bots/base/types';
+import type { BackgroundTask } from 'api/telegram-bots/background-task/types';
+import type { DiagramBlock } from 'api/telegram-bots/base/types';
 import { DiagramConditionAPI } from 'api/telegram-bots/condition';
-import { Condition } from 'api/telegram-bots/condition/types';
+import type { Condition } from 'api/telegram-bots/condition/types';
 import { ConnectionAPI, ConnectionsAPI } from 'api/telegram-bots/connection';
 import { DiagramDatabaseOperationAPI } from 'api/telegram-bots/database-operation';
-import { DatabaseOperation } from 'api/telegram-bots/database-operation/types';
+import type { DatabaseOperation } from 'api/telegram-bots/database-operation/types';
 import { DiagramInvoiceAPI } from 'api/telegram-bots/invoice';
-import { Invoice } from 'api/telegram-bots/invoice/types';
+import type { Invoice } from 'api/telegram-bots/invoice/types';
 import { DiagramMessageAPI } from 'api/telegram-bots/message';
-import { Message } from 'api/telegram-bots/message/types';
-import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
+import type { Message } from 'api/telegram-bots/message/types';
+import type { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 import { DiagramTemporaryVariableAPI } from 'api/telegram-bots/temporary-variable';
-import { TemporaryVariable } from 'api/telegram-bots/temporary-variable/types';
+import type { TemporaryVariable } from 'api/telegram-bots/temporary-variable/types';
 import { DiagramTriggerAPI } from 'api/telegram-bots/trigger';
-import { Trigger } from 'api/telegram-bots/trigger/types';
+import type { Trigger } from 'api/telegram-bots/trigger/types';
 
 import cn from 'utils/cn';
 
 import {
   convertDiagramBlocksToEdges,
-  EdgeSourceHandle,
-  EdgeTargetHandle,
+  type EdgeSourceHandle,
+  type EdgeTargetHandle,
   parseEdgeSourceHandle,
   parseEdgeTargetHandle,
 } from './utils/edges';
-import { convertDiagramBlockToNode, NodeID, NodeType } from './utils/nodes';
+import { convertDiagramBlockToNode, type NodeID, type NodeType } from './utils/nodes';
 import { parseNodeID } from './utils/nodes';
 
 import('@xyflow/react/dist/base.css');

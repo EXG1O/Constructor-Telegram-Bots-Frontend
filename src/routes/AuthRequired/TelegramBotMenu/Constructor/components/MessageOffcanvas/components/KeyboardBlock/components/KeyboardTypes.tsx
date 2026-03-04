@@ -1,9 +1,9 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import FormTabs, { FormTabsProps } from 'components/shared/FormTabs';
+import FormTabs, { type FormTabsProps } from 'components/shared/FormTabs';
 import Tabs from 'components/ui/Tabs';
 
 export type Type = 'default' | 'inline' | 'payment';

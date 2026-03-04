@@ -1,6 +1,12 @@
-import React, { FC, LiHTMLAttributes, ReactElement, SVGProps, useState } from 'react';
+import React, {
+  type FC,
+  type LiHTMLAttributes,
+  type ReactElement,
+  type SVGProps,
+  useState,
+} from 'react';
 import { Toast, ToastClose, ToastDescription } from '@radix-ui/react-toast';
-import { cva, VariantProps } from 'class-variance-authority';
+import { cva, type VariantProps } from 'class-variance-authority';
 
 import CloseButton from 'components/shared/CloseButton';
 

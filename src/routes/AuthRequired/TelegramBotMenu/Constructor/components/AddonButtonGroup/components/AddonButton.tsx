@@ -1,7 +1,12 @@
-import React, { ReactElement } from 'react';
-import { FastField, FastFieldProps, FieldInputProps, FormikProps } from 'formik';
+import React, { type ReactElement } from 'react';
+import {
+  FastField,
+  type FastFieldProps,
+  type FieldInputProps,
+  type FormikProps,
+} from 'formik';
 
-import Button, { ButtonProps } from 'components/ui/Button';
+import Button, { type ButtonProps } from 'components/ui/Button';
 
 export interface AddonButtonProps extends Omit<
   ButtonProps,

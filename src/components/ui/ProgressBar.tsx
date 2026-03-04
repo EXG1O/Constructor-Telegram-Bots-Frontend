@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import React, { type HTMLAttributes } from 'react';
 import { forwardRef } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 

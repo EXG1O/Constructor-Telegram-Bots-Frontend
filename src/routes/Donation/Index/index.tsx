@@ -1,9 +1,9 @@
-import React, { ReactElement, useMemo } from 'react';
+import React, { type ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import InfoPage, { InfoPageOptions } from 'components/shared/InfoPage';
+import InfoPage, { type InfoPageOptions } from 'components/shared/InfoPage';
 
 import MethodTable from './components/MethodTable';
 

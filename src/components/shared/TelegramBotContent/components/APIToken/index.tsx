@@ -1,7 +1,11 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 
-import APITokenDisplay, { APITokenDisplayProps } from './components/APITokenDisplay';
-import APITokenEditing, { APITokenEditingProps } from './components/APITokenEditing';
+import APITokenDisplay, {
+  type APITokenDisplayProps,
+} from './components/APITokenDisplay';
+import APITokenEditing, {
+  type APITokenEditingProps,
+} from './components/APITokenEditing';
 
 import useTelegramBotContentStore from '../../hooks/useTelegramBotContentStore';
 

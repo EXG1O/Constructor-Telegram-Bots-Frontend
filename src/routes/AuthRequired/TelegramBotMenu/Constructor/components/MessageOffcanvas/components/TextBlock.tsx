@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
@@ -7,7 +7,7 @@ import FormRichInputFeedback from 'components/shared/FormRichInputFeedback';
 import TelegramRichInputLayout, {
   FORMATS,
 } from 'components/shared/TelegramRichInputLayout';
-import Block, { BlockProps } from 'components/ui/Block';
+import Block, { type BlockProps } from 'components/ui/Block';
 
 import cn from 'utils/cn';
 

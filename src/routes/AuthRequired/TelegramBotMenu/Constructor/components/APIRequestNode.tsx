@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Node as RFNode,
-  NodeProps as RFNodeProps,
+  type Node as RFNode,
+  type NodeProps as RFNodeProps,
   Position,
   useReactFlow,
 } from '@xyflow/react';
@@ -17,12 +17,12 @@ import { useAPIRequestOffcanvasStore } from './APIRequestOffcanvas/store';
 import Node from './Node';
 
 import { APIRequestAPI } from 'api/telegram-bots/api-request';
-import { DiagramAPIRequest } from 'api/telegram-bots/api-request/types';
+import type { DiagramAPIRequest } from 'api/telegram-bots/api-request/types';
 
 import {
   buildEdgeSourceHandle,
   buildEdgeTargetHandle,
-  EdgeHandle,
+  type EdgeHandle,
 } from '../utils/edges';
 
 type Data = Omit<DiagramAPIRequest, 'x' | 'y' | 'source_connections'>;

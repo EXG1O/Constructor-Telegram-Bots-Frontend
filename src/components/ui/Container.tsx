@@ -1,5 +1,5 @@
 import React from 'react';
-import { forwardRef, HTMLAttributes } from 'react';
+import { forwardRef, type HTMLAttributes } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 
 import cn from 'utils/cn';

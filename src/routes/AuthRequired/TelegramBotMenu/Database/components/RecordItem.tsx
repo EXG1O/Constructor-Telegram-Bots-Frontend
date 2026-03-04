@@ -1,4 +1,4 @@
-import React, { ReactElement, useMemo, useRef, useState } from 'react';
+import React, { type ReactElement, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Check, Trash2, X } from 'lucide-react';
 
@@ -6,17 +6,17 @@ import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
-import CodeInput, { Editor } from 'components/ui/CodeInput';
+import CodeInput, { type Editor } from 'components/ui/CodeInput';
 import IconButton from 'components/ui/IconButton';
 import List from 'components/ui/List';
-import { ListItemProps } from 'components/ui/List/components/ListItem';
+import type { ListItemProps } from 'components/ui/List/components/ListItem';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useDatabaseRecordsStore from '../hooks/useDatabaseRecordsStore';
 
 import { DatabaseRecordAPI } from 'api/telegram-bots/database-record';
-import { DatabaseRecord } from 'api/telegram-bots/database-record/types';
+import type { DatabaseRecord } from 'api/telegram-bots/database-record/types';
 
 import cn from 'utils/cn';
 

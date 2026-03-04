@@ -1,6 +1,6 @@
-import React, { ComponentProps, forwardRef, useMemo } from 'react';
+import React, { type ComponentProps, forwardRef, useMemo } from 'react';
 import { LineChart } from 'recharts';
-import { Margin } from 'recharts/types/util/types';
+import type { Margin } from 'recharts/types/util/types';
 
 import LineCartesian from './components/LineCartesian';
 

@@ -1,4 +1,4 @@
-import React, { forwardRef, HTMLAttributes, useEffect, useState } from 'react';
+import React, { forwardRef, type HTMLAttributes, useEffect, useState } from 'react';
 
 import ItemImage from './components/ItemImage';
 

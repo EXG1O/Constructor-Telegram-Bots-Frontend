@@ -5,19 +5,19 @@ import {
   CodeXml,
   Eraser,
   Italic,
-  LucideIcon,
+  type LucideIcon,
   Quote,
   Strikethrough,
   Underline,
 } from 'lucide-react';
 
-import IconButton, { IconButtonProps } from 'components/ui/IconButton';
+import IconButton, { type IconButtonProps } from 'components/ui/IconButton';
 
 import useRichInputStore from '../../../hooks/useRichInputStore';
 
 import cn from 'utils/cn';
 
-import { StateProps } from '../../../store';
+import type { StateProps } from '../../../store';
 
 const SIZE_MAP: Record<
   NonNullable<StateProps['size']>,

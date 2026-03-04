@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useMemo } from 'react';
+import React, { type ReactElement, type ReactNode, useMemo } from 'react';
 
 import StoreContext from '../contexts/StoreContext';
 

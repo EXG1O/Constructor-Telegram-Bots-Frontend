@@ -1,6 +1,6 @@
 import {
   CollapsibleTrigger,
-  CollapsibleTriggerProps,
+  type CollapsibleTriggerProps,
 } from '@radix-ui/react-collapsible';
 
 export type { CollapsibleTriggerProps };

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useField } from 'formik';
 import { produce } from 'immer';
@@ -6,16 +6,16 @@ import { produce } from 'immer';
 import { RouteID } from 'routes';
 
 import Button from 'components/ui/Button';
-import Popover, { PopoverProps } from 'components/ui/Popover';
-import { PopoverBodyProps } from 'components/ui/Popover/components/PopoverBody';
+import Popover, { type PopoverProps } from 'components/ui/Popover';
+import type { PopoverBodyProps } from 'components/ui/Popover/components/PopoverBody';
 
-import StyleSelect, { Style } from './components/StyleSelect';
-import TextInput, { Text } from './components/TextInput';
-import URLInput, { URL as URLValue } from './components/URLInput';
+import StyleSelect, { type Style } from './components/StyleSelect';
+import TextInput, { type Text } from './components/TextInput';
+import URLInput, { type URL as URLValue } from './components/URLInput';
 
-import { KeyboardButton } from '../Keyboard/components/DraggableKeyboardButton';
-import { KeyboardRow } from '../Keyboard/components/DraggableKeyboardRow';
-import { Type } from '../KeyboardTypes';
+import type { KeyboardButton } from '../Keyboard/components/DraggableKeyboardButton';
+import type { KeyboardRow } from '../Keyboard/components/DraggableKeyboardRow';
+import type { Type } from '../KeyboardTypes';
 
 import cn from 'utils/cn';
 

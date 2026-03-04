@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, FormikHelpers } from 'formik';
+import { Formik, type FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 
-import Modal, { ModalProps } from 'components/ui/Modal';
+import Modal, { type ModalProps } from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import ModalContent from './components/ModalContent';
@@ -12,7 +12,7 @@ import ModalContent from './components/ModalContent';
 import useTelegramBots from '../../hooks/useTelegramBots';
 
 import { TelegramBotsAPI } from 'api/telegram-bots/telegram-bot';
-import { Data } from 'api/telegram-bots/telegram-bot/types';
+import type { Data } from 'api/telegram-bots/telegram-bot/types';
 
 type FormValues = Data.TelegramBotsAPI.Create;
 

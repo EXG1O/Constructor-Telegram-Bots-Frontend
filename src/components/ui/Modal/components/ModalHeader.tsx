@@ -1,4 +1,4 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
+import React, { forwardRef, type HTMLAttributes } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 
 import CloseButton from 'components/shared/CloseButton';

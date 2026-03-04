@@ -1,12 +1,12 @@
 import React from 'react';
-import { forwardRef, TableHTMLAttributes } from 'react';
+import { forwardRef, type TableHTMLAttributes } from 'react';
 
 import TableBody from './components/TableBody';
 import TableCell from './components/TableCell';
 import TableHead from './components/TableHead';
 import TableHeader from './components/TableHeader';
 import TableRow from './components/TableRow';
-import TableContext, { TableContextProps } from './contexts/TableContext';
+import TableContext, { type TableContextProps } from './contexts/TableContext';
 
 import cn from 'utils/cn';
 

@@ -2,10 +2,10 @@ import React from 'react';
 import {
   PopoverArrow,
   PopoverContent,
-  PopoverContentProps,
+  type PopoverContentProps,
   PopoverPortal,
 } from '@radix-ui/react-popover';
-import { cva, VariantProps } from 'class-variance-authority';
+import { cva, type VariantProps } from 'class-variance-authority';
 import Z_INDEX from 'tokens/z-index';
 
 import cn from 'utils/cn';

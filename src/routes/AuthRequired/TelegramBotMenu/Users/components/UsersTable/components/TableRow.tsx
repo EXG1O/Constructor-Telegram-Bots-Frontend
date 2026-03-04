@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
+import React, { type HTMLAttributes, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import formatDate from 'i18n/formatDate';
 import { Shield, ShieldBan, Trash2, UserCheck, UserX } from 'lucide-react';
@@ -13,9 +13,9 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useUsersStore from '../../../hooks/useUsersStore';
 
-import { makeRequest } from 'api/core';
+import type { makeRequest } from 'api/core';
 import { UserAPI } from 'api/telegram-bots/user';
-import { User } from 'api/telegram-bots/user/types';
+import type { User } from 'api/telegram-bots/user/types';
 
 import cn from 'utils/cn';
 

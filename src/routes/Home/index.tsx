@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { type ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';

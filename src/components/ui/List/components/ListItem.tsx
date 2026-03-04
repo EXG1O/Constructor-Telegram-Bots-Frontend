@@ -1,4 +1,4 @@
-import React, { forwardRef, LiHTMLAttributes } from 'react';
+import React, { forwardRef, type LiHTMLAttributes } from 'react';
 import { cva } from 'class-variance-authority';
 
 import { DEFAULT_SIZE } from '..';

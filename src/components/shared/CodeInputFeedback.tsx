@@ -1,6 +1,6 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
+import React, { type HTMLAttributes, type ReactElement } from 'react';
 
-import CodeInput, { CodeInputProps } from 'components/ui/CodeInput';
+import CodeInput, { type CodeInputProps } from 'components/ui/CodeInput';
 import Feedback from 'components/ui/Feedback';
 
 import cn from 'utils/cn';

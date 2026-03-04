@@ -1,4 +1,4 @@
-import { FormikHelpers } from 'formik';
+import type { FormikHelpers } from 'formik';
 import i18next from 'i18next';
 
 import { RouteID } from 'routes';

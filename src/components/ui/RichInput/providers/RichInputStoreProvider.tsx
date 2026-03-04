@@ -1,7 +1,7 @@
 import React, {
   memo,
-  ReactElement,
-  ReactNode,
+  type ReactElement,
+  type ReactNode,
   useEffect,
   useMemo,
   useRef,
@@ -10,7 +10,7 @@ import { useStore } from 'zustand';
 
 import StoreContext from '../contexts/RichInputStoreContext';
 
-import { createStore, StateProps } from '../store';
+import { createStore, type StateProps } from '../store';
 
 export interface RichInputStoreProviderProps extends StateProps {
   children: ReactNode;

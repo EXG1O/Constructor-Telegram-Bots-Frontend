@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Block, { BlockProps } from 'components/ui/Block';
+import Block, { type BlockProps } from 'components/ui/Block';
 import PrettyNumber from 'components/ui/PrettyNumber';
 
 import useHomeRouteLoaderData from '../hooks/useHomeRouteLoaderData';

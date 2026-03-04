@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import {
   DialogContent,
-  DialogContentProps,
+  type DialogContentProps,
   DialogOverlay,
   DialogPortal,
 } from '@radix-ui/react-dialog';

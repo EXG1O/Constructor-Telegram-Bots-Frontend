@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
-import { FastField, FastFieldProps, FormikProps } from 'formik';
+import React, { type ReactElement } from 'react';
+import { FastField, type FastFieldProps, type FormikProps } from 'formik';
 
 import SimpleInputFeedback, {
-  SimpleInputFeedbackProps,
+  type SimpleInputFeedbackProps,
 } from 'components/shared/SimpleInputFeedback';
 
 export interface FormSimpleInputFeedbackProps extends Omit<

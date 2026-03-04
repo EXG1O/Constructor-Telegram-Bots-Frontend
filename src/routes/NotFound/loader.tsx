@@ -1,6 +1,6 @@
 import { redirect } from 'react-router-dom';
 import i18n from 'i18n';
-import { TOptions } from 'i18next';
+import type { TOptions } from 'i18next';
 
 import { RouteID } from 'routes';
 

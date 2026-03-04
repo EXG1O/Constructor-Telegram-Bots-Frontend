@@ -1,11 +1,11 @@
-import React, { ReactElement, ReactNode } from 'react';
-import { editor } from 'monaco-editor';
+import React, { type ReactElement, type ReactNode } from 'react';
+import type { editor } from 'monaco-editor';
 
 import CodeInputContainer from './components/CodeInputContainer';
 import CodeInputEditor from './components/CodeInputEditor';
 import CodeInputToolbar from './components/CodeInputToolbar';
 import CodeInputStoreProvider, {
-  CodeInputStoreProviderProps,
+  type CodeInputStoreProviderProps,
 } from './providers/CodeInputStoreProvider';
 
 export type Size = 'sm' | 'md' | 'lg';

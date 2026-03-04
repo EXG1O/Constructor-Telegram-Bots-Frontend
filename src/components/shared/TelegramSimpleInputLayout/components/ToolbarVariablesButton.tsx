@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import TelegramBotVariablesPopover from 'components/shared/TelegramBotVariablesPopover';
 import ToolbarButton, {
-  ToolbarButtonProps,
+  type ToolbarButtonProps,
 } from 'components/ui/SimpleInput/components/SimpleInputToolbar/components/ToolbarButton';
 
 import useSimpleInputStore from 'components/ui/SimpleInput/hooks/useSimpleInputStore';

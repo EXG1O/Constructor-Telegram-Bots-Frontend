@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { Size } from '..';
+import type { Size } from '..';
 
 export interface ListContextProps {
   size: Size;

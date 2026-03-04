@@ -1,11 +1,9 @@
-import React, { memo, ReactElement, useId } from 'react';
+import React, { memo, type ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, FormikProps } from 'formik';
+import { Form, type FormikProps } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
-
-import { FormValues } from '..';
 
 import StorageProgressBar from 'components/shared/StorageProgressBar';
 import Button from 'components/ui/Button';
@@ -20,6 +18,7 @@ import AddonButtonGroup from '../../AddonButtonGroup';
 import FormToggleSection from '../../FormToggleSection';
 import NameBlock from '../../NameBlock';
 
+import type { FormValues } from '..';
 import { useInvoiceOffcanvasStore } from '../store';
 
 function OffcanvasContent(): ReactElement {

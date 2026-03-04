@@ -1,7 +1,7 @@
-import React, { ReactElement, useEffect } from 'react';
-import { FastFieldProps, FormikProps } from 'formik';
+import React, { type ReactElement, useEffect } from 'react';
+import type { FastFieldProps, FormikProps } from 'formik';
 
-import Collapsible, { CollapsibleProps } from 'components/ui/Collapsible';
+import Collapsible, { type CollapsibleProps } from 'components/ui/Collapsible';
 
 import useFormToggleSectionStore from '../hooks/useTelegramBotContentStore';
 

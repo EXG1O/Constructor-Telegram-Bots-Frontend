@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
+import React, { type HTMLAttributes, type ReactElement } from 'react';
 
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 import useLoginLoaderData from 'routes/Login/hooks/useLoginRouteLoaderData';

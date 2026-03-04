@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { Outlet, useNavigation } from 'react-router-dom';
 
 import ConfirmModal from 'components/shared/ConfirmModal';

@@ -1,7 +1,7 @@
-import { InputHTMLAttributes } from 'react';
+import type { InputHTMLAttributes } from 'react';
 import { create } from 'zustand';
 
-import { DEFAULT_SIZE, Size } from '.';
+import { DEFAULT_SIZE, type Size } from '.';
 
 export interface StateParams extends Pick<
   InputHTMLAttributes<HTMLInputElement>,

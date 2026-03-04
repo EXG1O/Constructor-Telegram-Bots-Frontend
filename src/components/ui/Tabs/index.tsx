@@ -1,9 +1,9 @@
-import React, { forwardRef, HTMLAttributes, useMemo } from 'react';
+import React, { forwardRef, type HTMLAttributes, useMemo } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
 
 import TabsButton from './components/TabsButton';
-import TabsContext, { TabsContextProps } from './contexts/TabsContext';
+import TabsContext, { type TabsContextProps } from './contexts/TabsContext';
 
 import cn from 'utils/cn';
 

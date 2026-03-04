@@ -1,10 +1,10 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { type ReactElement, type ReactNode } from 'react';
 
 import SimpleInputContainer from './components/SimpleInputContainer';
 import SimpleInputEditor from './components/SimpleInputEditor';
 import SimpleInputToolbar from './components/SimpleInputToolbar';
 import SimpleInputStoreProvider, {
-  SimpleInputStoreProviderProps,
+  type SimpleInputStoreProviderProps,
 } from './providers/SimpleInputStoreProvider';
 
 export type Size = 'sm' | 'md' | 'lg';

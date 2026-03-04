@@ -1,12 +1,12 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FastField, FastFieldProps } from 'formik';
+import { FastField, type FastFieldProps } from 'formik';
 
 import { RouteID } from 'routes';
 
-import Block, { BlockProps } from 'components/ui/Block';
+import Block, { type BlockProps } from 'components/ui/Block';
 
-import PartItem, { defaultPart, Part } from './components/PartItem';
+import PartItem, { defaultPart, type Part } from './components/PartItem';
 
 import cn from 'utils/cn';
 

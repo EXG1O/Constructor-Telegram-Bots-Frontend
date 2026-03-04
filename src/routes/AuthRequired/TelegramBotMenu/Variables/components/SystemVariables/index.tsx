@@ -1,6 +1,6 @@
-import React, { ReactElement, useState } from 'react';
+import React, { type ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TelegramBotSystemVariablesType } from 'constants/telegramBotSystemVariables';
+import type { TelegramBotSystemVariablesType } from 'constants/telegramBotSystemVariables';
 
 import { RouteID } from 'routes';
 

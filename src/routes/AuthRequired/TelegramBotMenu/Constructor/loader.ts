@@ -1,21 +1,21 @@
-import { Params } from 'react-router-dom';
+import type { Params } from 'react-router-dom';
 
 import { DiagramAPIRequestsAPI } from 'api/telegram-bots/api-request';
-import { APIResponse as APIRequestAPIResponse } from 'api/telegram-bots/api-request/types';
+import type { APIResponse as APIRequestAPIResponse } from 'api/telegram-bots/api-request/types';
 import { DiagramBackgroundTasksAPI } from 'api/telegram-bots/background-task';
-import { APIResponse as BackgroundTaskAPIResponse } from 'api/telegram-bots/background-task/types';
+import type { APIResponse as BackgroundTaskAPIResponse } from 'api/telegram-bots/background-task/types';
 import { DiagramConditionsAPI } from 'api/telegram-bots/condition';
-import { APIResponse as ConditionAPIResponse } from 'api/telegram-bots/condition/types';
+import type { APIResponse as ConditionAPIResponse } from 'api/telegram-bots/condition/types';
 import { DiagramDatabaseOperationsAPI } from 'api/telegram-bots/database-operation';
-import { APIResponse as DatabaseOperationAPIResponse } from 'api/telegram-bots/database-operation/types';
+import type { APIResponse as DatabaseOperationAPIResponse } from 'api/telegram-bots/database-operation/types';
 import { DiagramInvoicesAPI } from 'api/telegram-bots/invoice';
-import { APIResponse as InvoiceAPIResponse } from 'api/telegram-bots/invoice/types';
+import type { APIResponse as InvoiceAPIResponse } from 'api/telegram-bots/invoice/types';
 import { DiagramMessagesAPI } from 'api/telegram-bots/message';
-import { APIResponse as MessageAPIResponse } from 'api/telegram-bots/message/types';
+import type { APIResponse as MessageAPIResponse } from 'api/telegram-bots/message/types';
 import { DiagramTemporaryVariablesAPI } from 'api/telegram-bots/temporary-variable';
-import { APIResponse as TemporaryVariableAPIResponse } from 'api/telegram-bots/temporary-variable/types';
+import type { APIResponse as TemporaryVariableAPIResponse } from 'api/telegram-bots/temporary-variable/types';
 import { DiagramTriggersAPI } from 'api/telegram-bots/trigger';
-import { APIResponse as TriggerAPIResponse } from 'api/telegram-bots/trigger/types';
+import type { APIResponse as TriggerAPIResponse } from 'api/telegram-bots/trigger/types';
 
 export interface LoaderData {
   diagramTriggers: TriggerAPIResponse.DiagramTriggersAPI.Get;

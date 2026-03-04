@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Node as RFNode,
-  NodeProps as RFNodeProps,
+  type Node as RFNode,
+  type NodeProps as RFNodeProps,
   Position,
   useReactFlow,
 } from '@xyflow/react';
@@ -17,12 +17,12 @@ import { useDatabaseOperationOffcanvasStore } from './DatabaseOperationOffcanvas
 import Node from './Node';
 
 import { DatabaseOperationAPI } from 'api/telegram-bots/database-operation';
-import { DiagramDatabaseOperation } from 'api/telegram-bots/database-operation/types';
+import type { DiagramDatabaseOperation } from 'api/telegram-bots/database-operation/types';
 
 import {
   buildEdgeSourceHandle,
   buildEdgeTargetHandle,
-  EdgeHandle,
+  type EdgeHandle,
 } from '../utils/edges';
 
 type Data = Omit<DiagramDatabaseOperation, 'x' | 'y' | 'source_connections'>;

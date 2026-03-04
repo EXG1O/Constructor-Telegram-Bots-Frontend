@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
-import { YAxis, YAxisProps } from 'recharts';
-import { AxisDomain } from 'recharts/types/util/types';
+import { YAxis, type YAxisProps } from 'recharts';
+import type { AxisDomain } from 'recharts/types/util/types';
 
 export interface ChartYAxisProps extends Omit<YAxisProps, 'stroke'> {}
 

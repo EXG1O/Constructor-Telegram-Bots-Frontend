@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 import TelegramBotVariablesPopoverContext, {
-  TelegramBotVariablesPopoverContextProps,
+  type TelegramBotVariablesPopoverContextProps,
 } from '../contexts/TelegramBotVariablesPopoverContext';
 
 function useTelegramBotVariablesPopover(): TelegramBotVariablesPopoverContextProps {

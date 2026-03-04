@@ -1,8 +1,8 @@
 import { makeRequest } from 'api/core';
 
 import { TelegramBotAPI } from '../telegram-bot';
-import { TelegramBot } from '../telegram-bot/types';
-import { APIResponse, Data, Variable } from './types';
+import type { TelegramBot } from '../telegram-bot/types';
+import type { APIResponse, Data, Variable } from './types';
 
 export class VariablesAPI {
   static url(telegramBotID: TelegramBot['id']): string {

@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react';
-import { FastField, FastFieldProps } from 'formik';
+import React, { type ReactElement } from 'react';
+import { FastField, type FastFieldProps } from 'formik';
 
-import ImageCarouselInner, { ImageCarouselInnerProps } from './ImageCarouselInner';
+import ImageCarouselInner, { type ImageCarouselInnerProps } from './ImageCarouselInner';
 
 export interface ImageCarouselProps extends Omit<ImageCarouselInnerProps, 'images'> {}
 

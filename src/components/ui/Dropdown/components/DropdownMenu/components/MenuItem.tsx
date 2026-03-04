@@ -1,5 +1,8 @@
 import React, { forwardRef } from 'react';
-import { DropdownMenuItem, DropdownMenuItemProps } from '@radix-ui/react-dropdown-menu';
+import {
+  DropdownMenuItem,
+  type DropdownMenuItemProps,
+} from '@radix-ui/react-dropdown-menu';
 
 import cn from 'utils/cn';
 

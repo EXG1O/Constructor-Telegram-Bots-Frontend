@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { type ReactElement, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { useTelegramBotStore } from './store';

@@ -1,4 +1,4 @@
-import { DialogClose, DialogCloseProps } from '@radix-ui/react-dialog';
+import { DialogClose, type DialogCloseProps } from '@radix-ui/react-dialog';
 
 export type ModalCloseProps = DialogCloseProps;
 

@@ -2,10 +2,10 @@ import { useContext } from 'react';
 import { useStore } from 'zustand';
 
 import CodeInputStoreContext, {
-  CodeInputStoreContextValue,
+  type CodeInputStoreContextValue,
 } from '../contexts/CodeInputStoreContext';
 
-import { State } from '../store';
+import type { State } from '../store';
 
 type Store = CodeInputStoreContextValue;
 

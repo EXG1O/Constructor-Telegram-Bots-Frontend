@@ -1,4 +1,9 @@
-import React, { HTMLAttributes, ReactElement, useEffect, useState } from 'react';
+import React, {
+  type HTMLAttributes,
+  type ReactElement,
+  useEffect,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
@@ -12,7 +17,7 @@ import RecordData from './components/RecordData';
 import Loading from '../Loading';
 
 import { DatabaseRecordsAPI } from 'api/telegram-bots/database-record';
-import { DatabaseRecord } from 'api/telegram-bots/database-record/types';
+import type { DatabaseRecord } from 'api/telegram-bots/database-record/types';
 
 import cn from 'utils/cn';
 

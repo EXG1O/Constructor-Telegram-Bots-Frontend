@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Select, { SelectProps } from 'components/ui/Select';
+import Select, { type SelectProps } from 'components/ui/Select';
 
 export type Type = 'system' | 'user' | 'database';
 

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 import Page from 'components/ui/Page';
