@@ -3,9 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { Form, FormikProps } from 'formik';
 
 import { RouteID } from 'routes';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { FormValues } from '..';
 
+import StorageProgressBar from 'components/shared/StorageProgressBar';
 import Button from 'components/ui/Button';
 import Offcanvas from 'components/ui/Offcanvas';
 
@@ -13,7 +15,6 @@ import DocumentsBlock from './DocumentsBlock';
 import ImagesBlock from './ImagesBlock';
 import KeyboardBlock from './KeyboardBlock';
 import SettingsBlock from './SettingsBlock';
-import TelegramBotStorage from './TelegramBotStorage';
 import TextBlock from './TextBlock';
 
 import AddonButtonGroup from '../../AddonButtonGroup';
@@ -28,7 +29,10 @@ function OffcanvasContent(): ReactElement {
     keyPrefix: 'messageOffcanvas',
   });
 
+  const storageSize = useTelegramBotStore((state) => state.telegramBot!.storage_size);
+
   const action = useMessageOffcanvasStore((state) => state.action);
+  const usedStorageSize = useMessageOffcanvasStore((state) => state.usedStorageSize);
   const setUsedStorageSize = useMessageOffcanvasStore(
     (state) => state.setUsedStorageSize,
   );
@@ -78,7 +82,11 @@ function OffcanvasContent(): ReactElement {
         </Form>
       </Offcanvas.Body>
       <Offcanvas.Footer className='flex flex-col gap-2'>
-        <TelegramBotStorage />
+        <StorageProgressBar
+          size='sm'
+          storageSize={storageSize}
+          usedStorageSize={usedStorageSize}
+        />
         <AddonButtonGroup>
           <AddonButtonGroup.Button name='show_images_block'>
             {t('imagesBlock.title')}

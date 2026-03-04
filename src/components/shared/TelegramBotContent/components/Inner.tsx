@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Slot } from '@radix-ui/react-slot';
 import formatDate from 'i18n/formatDate';
 
-import TelegramBotStorage from 'components/shared/TelegramBotStorage';
+import StorageProgressBar from 'components/shared/StorageProgressBar';
 import Table from 'components/ui/Table';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
@@ -93,7 +93,10 @@ function Inner({ className, ...props }: InnerProps): ReactElement {
         <Table.Row>
           <Table.Head scope='row'>{t('table.storage.header')}:</Table.Head>
           <Table.Cell>
-            <TelegramBotStorage telegramBot={telegramBot} />
+            <StorageProgressBar
+              storageSize={telegramBot.storage_size}
+              usedStorageSize={telegramBot.used_storage_size}
+            />
           </Table.Cell>
         </Table.Row>
         <Table.Row>
