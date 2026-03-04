@@ -1,4 +1,4 @@
-import React, { type ReactElement, useEffect } from 'react';
+import React, { lazy, type ReactElement, Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormikContext } from 'formik';
 
@@ -14,7 +14,6 @@ import { defaultImages } from './ImagesBlock/defaults';
 import type { Image } from './ImagesBlock/types';
 import type { KeyboardRow } from './KeyboardBlock/components/DraggableKeyboard';
 import { defaultKeyboard } from './KeyboardBlock/defaults';
-import OffcanvasContent from './OffcanvasContent';
 import { defaultText } from './TextBlock/defaults';
 
 import { MessageAPI } from 'api/telegram-bots/message';
@@ -23,6 +22,8 @@ import fetchFile from 'api/utils/fetchFile';
 import calcMediaSize from '../../../utils/calcMediaSize';
 import type { FormValues } from '..';
 import { useMessageOffcanvasStore } from '../store';
+
+const OffcanvasContent = lazy(() => import('./OffcanvasContent'));
 
 export interface OffcanvasInnerProps extends Omit<
   OffcanvasProps,
@@ -164,7 +165,9 @@ function OffcanvasInner({
       onHide={handleHide}
       onHidden={handleHidden}
     >
-      <OffcanvasContent />
+      <Suspense fallback={<Offcanvas.Loading />}>
+        <OffcanvasContent />
+      </Suspense>
     </Offcanvas>
   );
 }

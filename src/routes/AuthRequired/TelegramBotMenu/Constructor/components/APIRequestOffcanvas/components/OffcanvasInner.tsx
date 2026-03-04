@@ -1,4 +1,4 @@
-import React, { type ReactElement, useEffect } from 'react';
+import React, { lazy, type ReactElement, Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormikContext } from 'formik';
 
@@ -10,12 +10,13 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { defaultBody } from './BodyBlock/defaults';
 import { defaultHeaders } from './HeadersBlock/defaults';
-import OffcanvasContent from './OffcanvasContent';
 
 import { APIRequestAPI } from 'api/telegram-bots/api-request';
 
 import type { FormValues } from '..';
 import { useAPIRequestOffcanvasStore } from '../store';
+
+const OffcanvasContent = lazy(() => import('./OffcanvasContent'));
 
 export interface OffcanvasInnerProps extends Omit<
   OffcanvasProps,
@@ -86,7 +87,9 @@ function OffcanvasInner({
       onHide={handleHide}
       onHidden={handleHidden}
     >
-      <OffcanvasContent />
+      <Suspense fallback={<Offcanvas.Loading />}>
+        <OffcanvasContent />
+      </Suspense>
     </Offcanvas>
   );
 }
