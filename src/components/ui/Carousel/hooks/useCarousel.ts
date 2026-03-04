@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 
-import CarouselContext, { CarouselContextProps } from '../contexts/CarouselContext';
+import CarouselContext, {
+  type CarouselContextProps,
+} from '../contexts/CarouselContext';
 
 function useCarousel(): CarouselContextProps {
   const context = useContext<CarouselContextProps | undefined>(CarouselContext);

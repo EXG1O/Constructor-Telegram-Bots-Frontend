@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Button from 'components/ui/Button';

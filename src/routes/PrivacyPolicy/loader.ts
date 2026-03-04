@@ -1,5 +1,5 @@
 import { SectionsAPI } from 'api/privacy-policy';
-import { APIResponse } from 'api/privacy-policy/types';
+import type { APIResponse } from 'api/privacy-policy/types';
 
 export interface LoaderData {
   sections: APIResponse.SectionsAPI.Get;

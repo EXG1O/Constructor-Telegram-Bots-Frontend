@@ -1,6 +1,6 @@
-import React, { lazy, ReactElement, Suspense } from 'react';
+import React, { lazy, type ReactElement, Suspense } from 'react';
 import { cva } from 'class-variance-authority';
-import Quill, { Parchment } from 'quill';
+import Quill, { type Parchment } from 'quill';
 
 import RichInput, { DEFAULT_FORMATS } from 'components/ui/RichInput';
 import Spinner from 'components/ui/Spinner';

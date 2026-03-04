@@ -1,18 +1,23 @@
-import React, { HTMLAttributes, memo, ReactElement } from 'react';
+import React, { type HTMLAttributes, memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FastField, FastFieldProps, FieldInputProps, FormikProps } from 'formik';
+import {
+  FastField,
+  type FastFieldProps,
+  type FieldInputProps,
+  type FormikProps,
+} from 'formik';
 import { produce } from 'immer';
 import { Trash2 } from 'lucide-react';
 
 import { RouteID } from 'routes';
-
-import { Headers } from '..';
 
 import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import IconButton from 'components/ui/IconButton';
 import SimpleInput from 'components/ui/SimpleInput';
 
 import cn from 'utils/cn';
+
+import type { Headers } from '..';
 
 export interface HeaderItemProps extends Omit<
   HTMLAttributes<HTMLDivElement>,

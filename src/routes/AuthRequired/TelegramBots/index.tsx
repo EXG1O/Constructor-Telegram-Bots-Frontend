@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { type ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
@@ -11,7 +11,7 @@ import TelegramBotsContext from './contexts/TelegramBotsContext';
 
 import useTelegramBotsRouteLoaderData from './hooks/useTelegramBotsRouteLoaderData';
 
-import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
+import type { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 
 function TelegramBots(): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBots);

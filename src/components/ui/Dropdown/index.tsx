@@ -1,5 +1,5 @@
+import type { ReactElement } from 'react';
 import React from 'react';
-import { ReactElement } from 'react';
 import * as Primitive from '@radix-ui/react-dropdown-menu';
 
 import DropdownMenu from './components/DropdownMenu';

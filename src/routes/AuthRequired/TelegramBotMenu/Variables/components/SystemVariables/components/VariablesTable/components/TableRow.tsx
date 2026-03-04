@@ -1,12 +1,12 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
+import React, { type HTMLAttributes, type ReactElement } from 'react';
 import { Clipboard } from 'lucide-react';
-
-import { Variable } from '..';
 
 import IconButton from 'components/ui/IconButton';
 import Table from 'components/ui/Table';
 
 import ClipboardButtonSlot from '../../../../ClipboardButtonSlot';
+
+import type { Variable } from '..';
 
 export interface TableRowProps extends Omit<
   HTMLAttributes<HTMLTableRowElement>,

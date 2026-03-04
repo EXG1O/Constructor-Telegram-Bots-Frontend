@@ -1,8 +1,8 @@
-import React, { ReactElement, useMemo } from 'react';
+import React, { type ReactElement, useMemo } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 
 import ListItem from './components/ListItem';
-import ListContext, { ListContextProps } from './contexts/ListContext';
+import ListContext, { type ListContextProps } from './contexts/ListContext';
 
 export type Size = 'sm' | 'md';
 

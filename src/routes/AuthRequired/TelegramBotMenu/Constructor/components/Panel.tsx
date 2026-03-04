@@ -1,6 +1,6 @@
-import React, { memo, ReactElement } from 'react';
+import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Panel as RFPanel, PanelProps as RFPanelProps } from '@xyflow/react';
+import { Panel as RFPanel, type PanelProps as RFPanelProps } from '@xyflow/react';
 
 import { RouteID } from 'routes';
 

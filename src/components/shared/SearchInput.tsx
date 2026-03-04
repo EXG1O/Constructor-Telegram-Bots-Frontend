@@ -1,16 +1,16 @@
-import React, { forwardRef, HTMLAttributes, useEffect, useState } from 'react';
+import React, { forwardRef, type HTMLAttributes, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cva } from 'class-variance-authority';
 import { Search, X } from 'lucide-react';
 
 import Button from 'components/ui/Button';
-import IconButton, { IconButtonProps } from 'components/ui/IconButton';
+import IconButton, { type IconButtonProps } from 'components/ui/IconButton';
 import SimpleInput, {
   DEFAULT_SIZE,
-  SimpleInputProps,
-  Size,
+  type SimpleInputProps,
+  type Size,
 } from 'components/ui/SimpleInput';
-import { SimpleInputEditorProps } from 'components/ui/SimpleInput/components/SimpleInputEditor';
+import type { SimpleInputEditorProps } from 'components/ui/SimpleInput/components/SimpleInputEditor';
 
 import cn from 'utils/cn';
 

@@ -1,4 +1,9 @@
-import React, { HTMLAttributes, ReactElement, useMemo, useState } from 'react';
+import React, {
+  type HTMLAttributes,
+  type ReactElement,
+  useMemo,
+  useState,
+} from 'react';
 import { Eye, EyeOff, SquarePen } from 'lucide-react';
 
 import IconButton from 'components/ui/IconButton';

@@ -1,7 +1,7 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
+import React, { type HTMLAttributes, type ReactElement } from 'react';
 
 import Feedback from 'components/ui/Feedback';
-import RichInput, { RichInputProps } from 'components/ui/RichInput';
+import RichInput, { type RichInputProps } from 'components/ui/RichInput';
 
 import cn from 'utils/cn';
 

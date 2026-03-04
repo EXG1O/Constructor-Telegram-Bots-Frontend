@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 
-import Table, { TableProps } from 'components/ui/Table';
+import Table, { type TableProps } from 'components/ui/Table';
 
 import useDonationRouteLoaderData from '../hooks/useDonationRouteLoaderData';
 

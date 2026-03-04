@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react';
-import { Line, LineProps } from 'recharts';
-import { ActiveDotType } from 'recharts/types/util/types';
+import React, { type ReactElement } from 'react';
+import { Line, type LineProps } from 'recharts';
+import type { ActiveDotType } from 'recharts/types/util/types';
 
 export interface LineCartesianProps extends Omit<LineProps, 'dot' | 'activeDot'> {}
 

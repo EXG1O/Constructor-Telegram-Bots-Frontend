@@ -1,16 +1,16 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, FormikHelpers } from 'formik';
+import { Formik, type FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import ModalInner, { ModalInnerProps } from './components/ModalInner';
+import ModalInner, { type ModalInnerProps } from './components/ModalInner';
 
 import { VariableAPI, VariablesAPI } from 'api/telegram-bots/variable';
-import { Variable } from 'api/telegram-bots/variable/types';
+import type { Variable } from 'api/telegram-bots/variable/types';
 
 import { useVariableModalStore } from './store';
 

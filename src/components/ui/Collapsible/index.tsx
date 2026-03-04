@@ -1,6 +1,6 @@
 import {
   Collapsible,
-  CollapsibleProps,
+  type CollapsibleProps,
   CollapsibleTrigger,
 } from '@radix-ui/react-collapsible';
 

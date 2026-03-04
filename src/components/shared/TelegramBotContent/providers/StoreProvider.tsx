@@ -1,9 +1,9 @@
-import React, { ReactElement, ReactNode, useEffect, useMemo } from 'react';
+import React, { type ReactElement, type ReactNode, useEffect, useMemo } from 'react';
 import isEqual from 'lodash/isEqual';
 
 import StoreContext from '../contexts/StoreContext';
 
-import { createStore, InitialStoreProps, StoreState } from '../store';
+import { createStore, type InitialStoreProps, type StoreState } from '../store';
 
 export interface StoreProviderProps extends InitialStoreProps {
   children: ReactNode;

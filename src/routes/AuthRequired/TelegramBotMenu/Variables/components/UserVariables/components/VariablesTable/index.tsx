@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
 import Spinner from 'components/ui/Spinner';
-import Table, { TableProps } from 'components/ui/Table';
+import Table, { type TableProps } from 'components/ui/Table';
 
 import TableRow from './components/TableRow';
 

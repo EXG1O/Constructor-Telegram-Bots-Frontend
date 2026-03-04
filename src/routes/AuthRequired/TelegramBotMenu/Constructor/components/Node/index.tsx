@@ -1,9 +1,9 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
+import React, { forwardRef, type HTMLAttributes } from 'react';
 
 import NodeBlock from './components/NodeBlock';
 import NodeHandle from './components/NodeHandle';
 import NodeTitle from './components/NodeTitle';
-import NodeToolbar, { NodeToolbarProps } from './components/NodeToolbar';
+import NodeToolbar, { type NodeToolbarProps } from './components/NodeToolbar';
 
 import cn from 'utils/cn';
 

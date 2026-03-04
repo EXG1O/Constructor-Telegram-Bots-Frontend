@@ -1,15 +1,14 @@
-import React, { ReactElement, useId } from 'react';
+import React, { type ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useField } from 'formik';
 
 import { RouteID } from 'routes';
 
-import { Image, Images } from '..';
-
-import Button, { ButtonProps } from 'components/ui/Button';
+import Button, { type ButtonProps } from 'components/ui/Button';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useMessageOffcanvasStore } from '../../../store';
+import type { Image, Images } from '..';
 
 export interface AddImagesButtonProps extends Omit<
   ButtonProps,

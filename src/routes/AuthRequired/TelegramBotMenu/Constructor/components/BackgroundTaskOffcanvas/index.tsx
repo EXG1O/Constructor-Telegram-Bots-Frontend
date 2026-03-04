@@ -1,6 +1,6 @@
-import React, { memo, ReactElement } from 'react';
+import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, FormikHelpers } from 'formik';
+import { Formik, type FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
@@ -9,17 +9,17 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import {
   defaultIntervalBlockFormValues,
-  IntervalBlockFormValues,
+  type IntervalBlockFormValues,
 } from './components/IntervalBlock';
-import OffcanvasInner, { OffcanvasInnerProps } from './components/OffcanvasInner';
+import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
 
-import { defaultNameBlockFormValues, NameBlockFormValues } from '../NameBlock';
+import { defaultNameBlockFormValues, type NameBlockFormValues } from '../NameBlock';
 
 import {
   BackgroundTaskAPI,
   BackgroundTasksAPI,
 } from 'api/telegram-bots/background-task';
-import { BackgroundTask } from 'api/telegram-bots/background-task/types';
+import type { BackgroundTask } from 'api/telegram-bots/background-task/types';
 
 import { useBackgroundTaskOffcanvasStore } from './store';
 

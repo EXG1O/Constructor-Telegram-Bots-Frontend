@@ -1,22 +1,22 @@
-import React, { memo, ReactElement } from 'react';
+import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, FormikHelpers } from 'formik';
+import { Formik, type FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import OffcanvasInner, { OffcanvasInnerProps } from './components/OffcanvasInner';
+import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
 import {
   defaultPartsBlockFormValues,
-  PartsBlockFormValues,
+  type PartsBlockFormValues,
 } from './components/PartsBlock';
 
-import { defaultNameBlockFormValues, NameBlockFormValues } from '../NameBlock';
+import { defaultNameBlockFormValues, type NameBlockFormValues } from '../NameBlock';
 
 import { ConditionAPI, ConditionsAPI } from 'api/telegram-bots/condition';
-import { Condition, Data } from 'api/telegram-bots/condition/types';
+import type { Condition, Data } from 'api/telegram-bots/condition/types';
 
 import { useConditionOffcanvasStore } from './store';
 

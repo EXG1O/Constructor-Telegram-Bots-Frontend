@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react';
-import { Range } from 'quill';
+import type { Range } from 'quill';
 
 import TelegramBotVariablesPopover from 'components/shared/TelegramBotVariablesPopover';
 import ToolbarButton, {
-  ToolbarButtonProps,
+  type ToolbarButtonProps,
 } from 'components/ui/RichInput/components/RichInputToolbar/components/ToolbarButton';
 
 import useRichInputStore from 'components/ui/RichInput/hooks/useRichInputStore';

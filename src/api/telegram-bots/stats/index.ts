@@ -2,7 +2,7 @@ import { ROOT_URL } from '..';
 
 import { makeRequest } from 'api/core';
 
-import { APIResponse } from './types';
+import type { APIResponse } from './types';
 
 export class StatsAPI {
   static url: string = ROOT_URL + 'stats/';

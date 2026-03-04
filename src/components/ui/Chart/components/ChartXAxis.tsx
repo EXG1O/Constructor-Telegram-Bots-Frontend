@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { XAxis, XAxisProps } from 'recharts';
+import { XAxis, type XAxisProps } from 'recharts';
 
 export interface ChartXAxisProps extends Omit<XAxisProps, 'stoke'> {}
 

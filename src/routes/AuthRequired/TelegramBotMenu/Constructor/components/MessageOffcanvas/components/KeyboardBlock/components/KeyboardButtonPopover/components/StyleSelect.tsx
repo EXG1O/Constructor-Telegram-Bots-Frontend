@@ -1,11 +1,11 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Select, { SelectProps } from 'components/ui/Select';
+import Select, { type SelectProps } from 'components/ui/Select';
 
-import { MessageKeyboardButtonStyle } from 'api/telegram-bots/message/types';
+import type { MessageKeyboardButtonStyle } from 'api/telegram-bots/message/types';
 
 import { useKeyboardButtonPopoverStore } from '../store';
 

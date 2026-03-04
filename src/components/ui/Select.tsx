@@ -1,7 +1,7 @@
-import React, { HTMLAttributes, SelectHTMLAttributes } from 'react';
+import React, { type HTMLAttributes, type SelectHTMLAttributes } from 'react';
 import { forwardRef } from 'react';
 import { Slot } from '@radix-ui/react-slot';
-import { cva, VariantProps } from 'class-variance-authority';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { ChevronDown } from 'lucide-react';
 
 import cn from 'utils/cn';

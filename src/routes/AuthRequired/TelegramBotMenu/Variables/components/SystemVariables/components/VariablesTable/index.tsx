@@ -1,12 +1,12 @@
-import React, { ReactElement, useMemo } from 'react';
+import React, { type ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import telegramBotSystemVariables, {
-  TelegramBotSystemVariablesType,
+  type TelegramBotSystemVariablesType,
 } from 'constants/telegramBotSystemVariables';
 
 import { RouteID } from 'routes';
 
-import Table, { TableProps } from 'components/ui/Table';
+import Table, { type TableProps } from 'components/ui/Table';
 
 import TableRow from './components/TableRow';
 

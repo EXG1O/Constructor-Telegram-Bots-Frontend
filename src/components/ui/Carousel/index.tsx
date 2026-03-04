@@ -1,5 +1,5 @@
-import React, { forwardRef, HTMLAttributes, useEffect } from 'react';
-import useEmblaCarousel, { UseEmblaCarouselType } from 'embla-carousel-react';
+import React, { forwardRef, type HTMLAttributes, useEffect } from 'react';
+import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react';
 
 import CarouselIndicators from './components/CarouselIndicators';
 import CarouselItem from './components/CarouselItem';

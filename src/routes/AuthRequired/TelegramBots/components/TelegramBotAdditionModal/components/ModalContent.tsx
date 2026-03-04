@@ -1,4 +1,4 @@
-import React, { memo, ReactElement, useId } from 'react';
+import React, { memo, type ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'formik';
 

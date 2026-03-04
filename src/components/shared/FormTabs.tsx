@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
-import { FastField, FastFieldProps, FormikProps } from 'formik';
+import { FastField, type FastFieldProps, type FormikProps } from 'formik';
 
-import Tabs, { TabsProps } from 'components/ui/Tabs';
+import Tabs, { type TabsProps } from 'components/ui/Tabs';
 
 export interface FormTabsProps extends Omit<
   TabsProps,

@@ -1,9 +1,12 @@
 import React, { forwardRef } from 'react';
-import { Tooltip, TooltipProps } from 'recharts';
+import { Tooltip, type TooltipProps } from 'recharts';
 
-import { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
+import type {
+  NameType,
+  ValueType,
+} from 'recharts/types/component/DefaultTooltipContent';
 
-import TooltipContent, { TooltipContentProps } from './components/TooltipContent';
+import TooltipContent, { type TooltipContentProps } from './components/TooltipContent';
 
 export interface ChartTooltipProps
   extends

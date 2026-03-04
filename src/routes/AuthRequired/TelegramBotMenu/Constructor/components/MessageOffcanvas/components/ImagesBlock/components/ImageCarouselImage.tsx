@@ -1,10 +1,10 @@
-import React, { ReactElement, useEffect } from 'react';
-
-import { Image } from '..';
+import React, { type ReactElement, useEffect } from 'react';
 
 import ItemImage, {
-  ItemImageProps,
+  type ItemImageProps,
 } from 'components/ui/Carousel/components/CarouselItem/components/ItemImage';
+
+import type { Image } from '..';
 
 export interface ImageCarouselImageProps extends Omit<ItemImageProps, 'src'> {
   image: Image;

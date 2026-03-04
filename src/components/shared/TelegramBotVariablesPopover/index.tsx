@@ -1,13 +1,13 @@
 import React, { forwardRef, lazy, Suspense, useMemo, useState } from 'react';
 
-import Popover, { PopoverProps } from 'components/ui/Popover';
-import { PopoverBodyProps } from 'components/ui/Popover/components/PopoverBody';
+import Popover, { type PopoverProps } from 'components/ui/Popover';
+import type { PopoverBodyProps } from 'components/ui/Popover/components/PopoverBody';
 
 import Loading from './components/Loading';
 import TriggerIcon from './components/TriggerIcon';
-import TypeSelect, { Type } from './components/TypeSelect';
+import TypeSelect, { type Type } from './components/TypeSelect';
 import TelegramBotVariablesPopoverContext, {
-  TelegramBotVariablesPopoverContextProps,
+  type TelegramBotVariablesPopoverContextProps,
 } from './contexts/TelegramBotVariablesPopoverContext';
 
 import cn from 'utils/cn';

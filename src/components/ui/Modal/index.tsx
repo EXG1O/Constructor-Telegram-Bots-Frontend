@@ -1,5 +1,5 @@
-import React, { ReactElement, useMemo } from 'react';
-import { Dialog, DialogProps } from '@radix-ui/react-dialog';
+import React, { type ReactElement, useMemo } from 'react';
+import { Dialog, type DialogProps } from '@radix-ui/react-dialog';
 
 import ModalBody from './components/ModalBody';
 import ModalClose from './components/ModalClose';
@@ -8,7 +8,7 @@ import ModalFooter from './components/ModalFooter';
 import ModalHeader from './components/ModalHeader';
 import ModalTitle from './components/ModalTitle';
 import ModalTrigger from './components/ModalTrigger';
-import ModalContext, { ModalContextProps } from './contexts/ModalContext';
+import ModalContext, { type ModalContextProps } from './contexts/ModalContext';
 
 export interface ModalProps
   extends Pick<DialogProps, 'modal' | 'children'>, Partial<ModalContextProps> {

@@ -1,25 +1,24 @@
-import React, { ReactElement, useId, useState } from 'react';
+import React, { type ReactElement, useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Slot } from '@radix-ui/react-slot';
-import { FastField, FastFieldProps, FormikProps } from 'formik';
+import { FastField, type FastFieldProps, type FormikProps } from 'formik';
 
 import { RouteID } from 'routes';
 
-import { FormValues } from '..';
-
-import Block, { BlockProps } from 'components/ui/Block';
+import Block, { type BlockProps } from 'components/ui/Block';
 import Button from 'components/ui/Button';
 import Collapsible from 'components/ui/Collapsible';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { Body } from './BodyBlock';
-import { Headers } from './HeadersBlock';
-import { Method } from './MethodBlock';
+import type { Body } from './BodyBlock';
+import type { Headers } from './HeadersBlock';
+import type { Method } from './MethodBlock';
 import type { URL } from './URLBlock';
 
 import cn from 'utils/cn';
 
+import type { FormValues } from '..';
 import { convertHeadersToRecord, getBodyBlockOpen } from '../utils';
 
 export interface TestBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}

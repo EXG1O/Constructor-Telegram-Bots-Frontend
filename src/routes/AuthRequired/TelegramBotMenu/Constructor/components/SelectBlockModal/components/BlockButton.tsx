@@ -1,9 +1,9 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Button, { ButtonProps } from 'components/ui/Button';
+import Button, { type ButtonProps } from 'components/ui/Button';
 import ModalClose from 'components/ui/Modal/components/ModalClose';
 
 import cn from 'utils/cn';

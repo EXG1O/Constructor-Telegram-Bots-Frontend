@@ -1,7 +1,7 @@
-import React, { FC, forwardRef, HTMLAttributes } from 'react';
+import React, { type FC, forwardRef, type HTMLAttributes } from 'react';
 import {
   NodeToolbar as FRNodeToolbar,
-  NodeToolbarProps as FRToolbarProps,
+  type NodeToolbarProps as FRToolbarProps,
 } from '@xyflow/react';
 import { SquarePen, Trash2 } from 'lucide-react';
 

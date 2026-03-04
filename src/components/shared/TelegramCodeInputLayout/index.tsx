@@ -1,4 +1,4 @@
-import React, { lazy, ReactElement, Suspense } from 'react';
+import React, { lazy, type ReactElement, Suspense } from 'react';
 
 import CodeInput from 'components/ui/CodeInput';
 import Spinner from 'components/ui/Spinner';

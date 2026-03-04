@@ -1,10 +1,10 @@
-import React, { lazy, ReactElement, Suspense } from 'react';
+import React, { lazy, type ReactElement, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
 import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
-import Block, { BlockProps } from 'components/ui/Block';
+import Block, { type BlockProps } from 'components/ui/Block';
 import SimpleInput from 'components/ui/SimpleInput';
 import Spinner from 'components/ui/Spinner';
 

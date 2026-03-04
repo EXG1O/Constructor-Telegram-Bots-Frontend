@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import ListContext, { ListContextProps } from '../contexts/ListContext';
+import ListContext, { type ListContextProps } from '../contexts/ListContext';
 
 function useList(): ListContextProps {
   const context = useContext<ListContextProps | undefined>(ListContext);

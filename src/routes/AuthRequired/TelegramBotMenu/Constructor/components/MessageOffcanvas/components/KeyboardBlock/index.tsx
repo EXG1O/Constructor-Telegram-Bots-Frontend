@@ -1,14 +1,14 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
-import Block, { BlockProps } from 'components/ui/Block';
+import Block, { type BlockProps } from 'components/ui/Block';
 
 import AddKeyboardButtonButton from './components/AddKeyboardButtonButton';
 import AddKeyboardRowButton from './components/AddKeyboardRowButton';
-import Keyboard, { KeyboardRow } from './components/Keyboard';
-import KeyboardTypes, { defaultType, Type } from './components/KeyboardTypes';
+import Keyboard, { type KeyboardRow } from './components/Keyboard';
+import KeyboardTypes, { defaultType, type Type } from './components/KeyboardTypes';
 
 import cn from 'utils/cn';
 

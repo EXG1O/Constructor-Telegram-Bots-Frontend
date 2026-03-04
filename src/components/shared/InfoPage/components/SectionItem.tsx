@@ -1,10 +1,10 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
-
-import { Section } from '..';
+import React, { type HTMLAttributes, type ReactElement } from 'react';
 
 import Markdown from 'components/ui/Markdown';
 
 import cn from 'utils/cn';
+
+import type { Section } from '..';
 
 export interface SectionItemProps extends Omit<
   HTMLAttributes<HTMLDivElement>,

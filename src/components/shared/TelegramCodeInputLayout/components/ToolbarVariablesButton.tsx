@@ -3,7 +3,7 @@ import type { Selection } from 'monaco-editor';
 
 import TelegramBotVariablesPopover from 'components/shared/TelegramBotVariablesPopover';
 import ToolbarButton, {
-  ToolbarButtonProps,
+  type ToolbarButtonProps,
 } from 'components/ui/CodeInput/components/CodeInputToolbar/components/ToolbarButton';
 
 import useCodeInputStore from 'components/ui/CodeInput/hooks/useCodeInputStore';

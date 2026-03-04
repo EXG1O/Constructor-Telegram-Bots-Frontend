@@ -1,15 +1,20 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FastField, FastFieldProps, FieldInputProps, FormikProps } from 'formik';
+import {
+  FastField,
+  type FastFieldProps,
+  type FieldInputProps,
+  type FormikProps,
+} from 'formik';
 import { produce } from 'immer';
 
 import { RouteID } from 'routes';
 
-import Button, { ButtonProps } from 'components/ui/Button';
+import Button, { type ButtonProps } from 'components/ui/Button';
 
-import { KeyboardRow } from './Keyboard';
+import type { KeyboardRow } from './Keyboard';
 
-import { FormValues } from '../../..';
+import type { FormValues } from '../../..';
 
 export interface AddKeyboardRowButtonProps extends Omit<
   ButtonProps,

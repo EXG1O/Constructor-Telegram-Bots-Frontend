@@ -1,4 +1,4 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
+import React, { forwardRef, type HTMLAttributes } from 'react';
 import { Close } from '@radix-ui/react-dialog';
 import { Slot } from '@radix-ui/react-slot';
 

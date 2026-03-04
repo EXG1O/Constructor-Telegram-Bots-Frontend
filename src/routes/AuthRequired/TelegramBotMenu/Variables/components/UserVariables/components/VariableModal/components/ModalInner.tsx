@@ -1,19 +1,18 @@
-import React, { ReactElement, useCallback, useEffect } from 'react';
+import React, { type ReactElement, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormikContext } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
-import { FormValues } from '..';
-
-import Modal, { ModalProps } from 'components/ui/Modal';
+import Modal, { type ModalProps } from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import ModalContent from './ModalContent';
 
 import { VariableAPI } from 'api/telegram-bots/variable';
 
+import type { FormValues } from '..';
 import { useVariableModalStore } from '../store';
 
 export interface ModalInnerProps extends Omit<ModalProps, 'show' | 'loading'> {}

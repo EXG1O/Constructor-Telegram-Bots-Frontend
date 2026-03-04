@@ -1,6 +1,6 @@
-import React, { memo, ReactElement } from 'react';
+import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, FormikHelpers } from 'formik';
+import { Formik, type FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
@@ -8,26 +8,29 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import {
-  CreateBlockFormValues,
+  type CreateBlockFormValues,
   defaultCreateBlockFormValues,
 } from './components/CreateBlock';
-import OffcanvasInner, { OffcanvasInnerProps } from './components/OffcanvasInner';
+import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
 import {
   defaultTypeBlockFormValues,
-  TypeBlockFormValues,
+  type TypeBlockFormValues,
 } from './components/TypeBlock';
 import {
   defaultUpdateBlockFormValues,
-  UpdateBlockFormValues,
+  type UpdateBlockFormValues,
 } from './components/UpdateBlock';
 
-import { defaultNameBlockFormValues, NameBlockFormValues } from '../NameBlock';
+import { defaultNameBlockFormValues, type NameBlockFormValues } from '../NameBlock';
 
 import {
   DatabaseOperationAPI,
   DatabaseOperationsAPI,
 } from 'api/telegram-bots/database-operation';
-import { Data, DatabaseOperation } from 'api/telegram-bots/database-operation/types';
+import type {
+  Data,
+  DatabaseOperation,
+} from 'api/telegram-bots/database-operation/types';
 
 import parseJsonField from '../../utils/parseJsonField';
 import { useDatabaseOperationOffcanvasStore } from './store';

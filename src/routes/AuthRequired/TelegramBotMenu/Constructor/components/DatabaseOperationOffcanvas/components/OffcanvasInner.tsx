@@ -1,13 +1,11 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { type ReactElement, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormikContext } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
-import { FormValues } from '..';
-
-import Offcanvas, { OffcanvasProps } from 'components/ui/Offcanvas';
+import Offcanvas, { type OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { defaultCreateOperation } from './CreateBlock';
@@ -17,6 +15,7 @@ import { defaultUpdateOperation } from './UpdateBlock';
 
 import { DatabaseOperationAPI } from 'api/telegram-bots/database-operation';
 
+import type { FormValues } from '..';
 import { useDatabaseOperationOffcanvasStore } from '../store';
 
 export interface OffcanvasInnerProps extends Omit<

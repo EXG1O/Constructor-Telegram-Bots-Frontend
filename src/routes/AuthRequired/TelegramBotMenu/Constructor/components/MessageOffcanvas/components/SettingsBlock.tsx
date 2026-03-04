@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
 import FormCheckFeedback from 'components/shared/FormCheckFeedback';
-import Block, { BlockProps } from 'components/ui/Block';
+import Block, { type BlockProps } from 'components/ui/Block';
 
 import cn from 'utils/cn';
 

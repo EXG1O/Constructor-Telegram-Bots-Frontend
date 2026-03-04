@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 

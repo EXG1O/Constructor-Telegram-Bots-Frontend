@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, useMemo } from 'react';
+import React, { type HTMLAttributes, useMemo } from 'react';
 import { forwardRef } from 'react';
 import {
   Dialog,
@@ -13,7 +13,9 @@ import OffcanvasFooter from './components/OffcanvasFooter';
 import OffcanvasHeader from './components/OffcanvasHeader';
 import OffcanvasLoading from './components/OffcanvasLoading';
 import OffcanvasTitle from './components/OffcanvasTitle';
-import OffcanvasContext, { OffcanvasContextProps } from './contexts/OffcanvasContext';
+import OffcanvasContext, {
+  type OffcanvasContextProps,
+} from './contexts/OffcanvasContext';
 
 import cn from 'utils/cn';
 

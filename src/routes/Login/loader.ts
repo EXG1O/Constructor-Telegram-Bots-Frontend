@@ -1,6 +1,6 @@
 import { JWTStorage } from 'api/storage';
 import { UsersAPI } from 'api/users';
-import { Data } from 'api/users/types';
+import type { Data } from 'api/users/types';
 
 export interface LoaderData {
   success: boolean;

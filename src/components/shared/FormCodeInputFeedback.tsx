@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
-import { FastField, FastFieldProps, FormikProps } from 'formik';
+import React, { type ReactElement } from 'react';
+import { FastField, type FastFieldProps, type FormikProps } from 'formik';
 
 import CodeInputFeedback, {
-  CodeInputFeedbackProps,
+  type CodeInputFeedbackProps,
 } from 'components/shared/CodeInputFeedback';
-import { Editor } from 'components/ui/CodeInput';
+import type { Editor } from 'components/ui/CodeInput';
 
 export interface FormCodeInputFeedbackProps extends Omit<
   CodeInputFeedbackProps,

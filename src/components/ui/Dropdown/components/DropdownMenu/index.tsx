@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import {
   DropdownMenuArrow,
   DropdownMenuContent,
-  DropdownMenuContentProps,
+  type DropdownMenuContentProps,
   DropdownMenuPortal,
 } from '@radix-ui/react-dropdown-menu';
 import Z_INDEX from 'tokens/z-index';

@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Node as RFNode,
-  NodeProps as RFNodeProps,
+  type Node as RFNode,
+  type NodeProps as RFNodeProps,
   Position,
   useReactFlow,
 } from '@xyflow/react';
@@ -20,7 +20,7 @@ import { useMessageOffcanvasStore } from './MessageOffcanvas/store';
 import Node from './Node';
 
 import { MessageAPI } from 'api/telegram-bots/message';
-import { DiagramMessage } from 'api/telegram-bots/message/types';
+import type { DiagramMessage } from 'api/telegram-bots/message/types';
 
 import cn from 'utils/cn';
 
@@ -28,7 +28,7 @@ import { messageKeyboardButtonStyleVariants } from '../styles/messageKeyboardBut
 import {
   buildEdgeSourceHandle,
   buildEdgeTargetHandle,
-  EdgeHandle,
+  type EdgeHandle,
 } from '../utils/edges';
 
 type Data = Omit<DiagramMessage, 'x' | 'y' | 'source_connections'>;

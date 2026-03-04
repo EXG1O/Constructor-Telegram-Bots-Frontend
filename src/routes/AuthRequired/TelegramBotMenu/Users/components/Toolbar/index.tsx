@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
+import React, { type HTMLAttributes, type ReactElement } from 'react';
 
 import SearchInput from 'components/shared/SearchInput';
 import Pagination from 'components/ui/Pagination';

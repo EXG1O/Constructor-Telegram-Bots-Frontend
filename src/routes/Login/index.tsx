@@ -1,6 +1,6 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { type ReactElement, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavigateOptions, useNavigate } from 'react-router-dom';
+import { type NavigateOptions, useNavigate } from 'react-router-dom';
 
 import { RouteID } from 'routes';
 

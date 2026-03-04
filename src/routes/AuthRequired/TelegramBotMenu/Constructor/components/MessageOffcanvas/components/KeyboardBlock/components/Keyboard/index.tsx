@@ -1,12 +1,17 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { FastField, FastFieldProps, FieldInputProps, FormikProps } from 'formik';
+import React, { type HTMLAttributes, type ReactElement } from 'react';
+import { DragDropContext, type DropResult } from 'react-beautiful-dnd';
+import {
+  FastField,
+  type FastFieldProps,
+  type FieldInputProps,
+  type FormikProps,
+} from 'formik';
 import { produce } from 'immer';
 
-import { KeyboardRow } from './components/DraggableKeyboardRow';
+import type { KeyboardRow } from './components/DraggableKeyboardRow';
 import DroppableKeyboardRows from './components/DroppableKeyboardRows';
 
-import { FormValues } from '../../../..';
+import type { FormValues } from '../../../..';
 
 export type { KeyboardButton } from './components/DraggableKeyboardButton';
 export type { KeyboardRow } from './components/DraggableKeyboardRow';

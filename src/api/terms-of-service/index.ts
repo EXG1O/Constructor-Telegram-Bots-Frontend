@@ -1,6 +1,6 @@
 import { makeRequest } from 'api/core';
 
-import { APIResponse } from './types';
+import type { APIResponse } from './types';
 
 const rootUrl: string = '/api/terms-of-service/';
 

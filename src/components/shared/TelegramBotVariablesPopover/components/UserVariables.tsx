@@ -1,4 +1,9 @@
-import React, { HTMLAttributes, ReactElement, useEffect, useState } from 'react';
+import React, {
+  type HTMLAttributes,
+  type ReactElement,
+  useEffect,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
@@ -10,7 +15,7 @@ import Loading from './Loading';
 import SelectButton from './SelectButton';
 
 import { VariablesAPI } from 'api/telegram-bots/variable';
-import { Variable } from 'api/telegram-bots/variable/types';
+import type { Variable } from 'api/telegram-bots/variable/types';
 
 import cn from 'utils/cn';
 

@@ -2,8 +2,9 @@ import type { Monaco } from '@monaco-editor/react';
 import type { editor } from 'monaco-editor';
 import { create } from 'zustand';
 
-import { DEFAULT_SIZE, Size } from '.';
-import { Editor } from '.';
+import { DEFAULT_SIZE, type Size } from '.';
+
+import type { Editor } from '.';
 
 export interface StateParams {
   editor: Editor | null;

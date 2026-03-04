@@ -1,4 +1,4 @@
-import React, { forwardRef, TdHTMLAttributes } from 'react';
+import React, { forwardRef, type TdHTMLAttributes } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
 

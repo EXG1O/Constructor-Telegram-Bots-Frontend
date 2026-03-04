@@ -1,11 +1,11 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, FormikHelpers } from 'formik';
+import { Formik, type FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
-import Modal, { ModalProps } from 'components/ui/Modal';
+import Modal, { type ModalProps } from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import ModalContent from './components/ModalContent';

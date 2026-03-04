@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Node as RFNode,
-  NodeProps as RFNodeProps,
+  type Node as RFNode,
+  type NodeProps as RFNodeProps,
   Position,
   useReactFlow,
 } from '@xyflow/react';
@@ -17,12 +17,12 @@ import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
 import Node from './Node';
 
 import { ConditionAPI } from 'api/telegram-bots/condition';
-import { DiagramCondition } from 'api/telegram-bots/condition/types';
+import type { DiagramCondition } from 'api/telegram-bots/condition/types';
 
 import {
   buildEdgeSourceHandle,
   buildEdgeTargetHandle,
-  EdgeHandle,
+  type EdgeHandle,
 } from '../utils/edges';
 
 type Data = Omit<DiagramCondition, 'x' | 'y' | 'source_connections'>;

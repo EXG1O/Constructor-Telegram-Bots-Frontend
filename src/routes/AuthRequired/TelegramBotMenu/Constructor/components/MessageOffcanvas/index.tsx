@@ -1,6 +1,6 @@
-import React, { memo, ReactElement } from 'react';
+import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, FormikHelpers } from 'formik';
+import { Formik, type FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
@@ -9,30 +9,30 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import {
   defaultDocumentsBlockFormValues,
-  DocumentsBlockFormValues,
+  type DocumentsBlockFormValues,
 } from './components/DocumentsBlock';
 import {
   defaultImagesBlockFormValues,
-  ImagesBlockFormValues,
+  type ImagesBlockFormValues,
 } from './components/ImagesBlock';
 import {
   defaultKeyboardBlockFormValues,
-  KeyboardBlockFormValues,
+  type KeyboardBlockFormValues,
 } from './components/KeyboardBlock';
-import OffcanvasInner, { OffcanvasInnerProps } from './components/OffcanvasInner';
+import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
 import {
   defaultSettingsBlockFormValues,
-  SettingsBlockFormValues,
+  type SettingsBlockFormValues,
 } from './components/SettingsBlock';
 import {
   defaultTextBlockFormValues,
-  TextBlockFormValues,
+  type TextBlockFormValues,
 } from './components/TextBlock';
 
-import { defaultNameBlockFormValues, NameBlockFormValues } from '../NameBlock';
+import { defaultNameBlockFormValues, type NameBlockFormValues } from '../NameBlock';
 
 import { MessageAPI, MessagesAPI } from 'api/telegram-bots/message';
-import { Data, Message } from 'api/telegram-bots/message/types';
+import type { Data, Message } from 'api/telegram-bots/message/types';
 
 import { useMessageOffcanvasStore } from './store';
 

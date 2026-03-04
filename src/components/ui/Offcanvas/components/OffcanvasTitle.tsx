@@ -1,6 +1,6 @@
 import React from 'react';
 import { forwardRef } from 'react';
-import { DialogTitle, DialogTitleProps } from '@radix-ui/react-dialog';
+import { DialogTitle, type DialogTitleProps } from '@radix-ui/react-dialog';
 import { Slot } from '@radix-ui/react-slot';
 
 import cn from 'utils/cn';

@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { ResponsiveContainer, ResponsiveContainerProps } from 'recharts';
+import { ResponsiveContainer, type ResponsiveContainerProps } from 'recharts';
 
 import ChartBrush from './components/ChartBrush';
 import ChartLine from './components/ChartLine';

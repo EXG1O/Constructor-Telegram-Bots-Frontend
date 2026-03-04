@@ -1,15 +1,19 @@
-import React, { HTMLAttributes, memo, ReactElement } from 'react';
+import React, { type HTMLAttributes, memo, type ReactElement } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { FastField, FastFieldProps, FieldArray, FieldArrayRenderProps } from 'formik';
+import {
+  FastField,
+  type FastFieldProps,
+  FieldArray,
+  type FieldArrayRenderProps,
+} from 'formik';
 import { Trash2 } from 'lucide-react';
-
-import { Image } from '..';
 
 import IconButton from 'components/ui/IconButton';
 
 import cn from 'utils/cn';
 
 import { useMessageOffcanvasStore } from '../../../store';
+import type { Image } from '..';
 
 export interface ImageItemProps extends Omit<
   HTMLAttributes<HTMLDivElement>,

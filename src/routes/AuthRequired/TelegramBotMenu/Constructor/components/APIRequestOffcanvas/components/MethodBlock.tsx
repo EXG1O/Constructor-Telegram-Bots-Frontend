@@ -1,13 +1,13 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
 import FormTabs from 'components/shared/FormTabs';
-import Block, { BlockProps } from 'components/ui/Block';
+import Block, { type BlockProps } from 'components/ui/Block';
 import Tabs from 'components/ui/Tabs';
 
-import { Method } from 'api/telegram-bots/api-request/types';
+import type { Method } from 'api/telegram-bots/api-request/types';
 
 import cn from 'utils/cn';
 

@@ -1,4 +1,4 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
+import React, { forwardRef, type HTMLAttributes } from 'react';
 import { cva } from 'class-variance-authority';
 
 import useTable from '../hooks/useTable';

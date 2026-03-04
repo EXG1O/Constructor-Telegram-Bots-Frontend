@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
+import React, { type HTMLAttributes, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Clipboard, SquarePen, Trash2 } from 'lucide-react';
 
@@ -16,7 +16,7 @@ import { useVariableModalStore } from '../../VariableModal/store';
 import useUserVariablesStore from '../../../hooks/useUserVariablesStore';
 
 import { VariableAPI } from 'api/telegram-bots/variable';
-import { Variable } from 'api/telegram-bots/variable/types';
+import type { Variable } from 'api/telegram-bots/variable/types';
 
 import cn from 'utils/cn';
 

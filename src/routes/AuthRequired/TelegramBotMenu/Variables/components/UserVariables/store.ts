@@ -1,5 +1,5 @@
 import i18n from 'i18n';
-import { TOptions } from 'i18next';
+import type { TOptions } from 'i18next';
 import { create } from 'zustand';
 
 import { RouteID } from 'routes';
@@ -8,7 +8,7 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { VariablesAPI } from 'api/telegram-bots/variable';
-import { Variable } from 'api/telegram-bots/variable/types';
+import type { Variable } from 'api/telegram-bots/variable/types';
 
 export interface StateParams {
   loading: boolean;

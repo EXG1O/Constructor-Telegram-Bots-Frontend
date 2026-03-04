@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { X } from 'lucide-react';
 
-import IconButton, { IconButtonProps } from 'components/ui/IconButton';
+import IconButton, { type IconButtonProps } from 'components/ui/IconButton';
 
 import cn from 'utils/cn';
 

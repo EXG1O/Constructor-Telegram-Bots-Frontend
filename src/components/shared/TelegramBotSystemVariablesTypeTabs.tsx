@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import telegramBotSystemVariables, {
-  TelegramBotSystemVariablesType,
+  type TelegramBotSystemVariablesType,
 } from 'constants/telegramBotSystemVariables';
 
-import Tabs, { TabsProps } from 'components/ui/Tabs';
+import Tabs, { type TabsProps } from 'components/ui/Tabs';
 
 export interface TelegramBotSystemVariablesTypeTabsProps extends Omit<
   TabsProps,

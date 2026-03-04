@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
-import { Brush, BrushProps } from 'recharts';
+import React, { type ReactElement } from 'react';
+import { Brush, type BrushProps } from 'recharts';
 
 export interface ChartBrushProps
   extends Omit<BrushProps, 'height'>, Partial<Pick<BrushProps, 'height'>> {}

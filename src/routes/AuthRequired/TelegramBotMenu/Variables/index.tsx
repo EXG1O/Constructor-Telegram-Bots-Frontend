@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { type ReactElement, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import ClipboardJS from 'clipboard';
 

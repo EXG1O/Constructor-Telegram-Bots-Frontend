@@ -1,9 +1,14 @@
-import React, { HTMLAttributes, ReactElement, useEffect, useState } from 'react';
+import React, {
+  type HTMLAttributes,
+  type ReactElement,
+  useEffect,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { Check, X } from 'lucide-react';
 
 import SimpleInputFeedback, {
-  SimpleInputFeedbackProps,
+  type SimpleInputFeedbackProps,
 } from 'components/shared/SimpleInputFeedback';
 import IconButton from 'components/ui/IconButton';
 import Spinner from 'components/ui/Spinner';

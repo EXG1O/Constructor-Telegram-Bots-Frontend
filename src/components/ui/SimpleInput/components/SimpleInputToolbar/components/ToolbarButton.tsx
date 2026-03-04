@@ -1,12 +1,12 @@
 import React, { forwardRef } from 'react';
 
-import IconButton, { IconButtonProps } from 'components/ui/IconButton';
+import IconButton, { type IconButtonProps } from 'components/ui/IconButton';
 
 import useSimpleInputStore from '../../../hooks/useSimpleInputStore';
 
 import cn from 'utils/cn';
 
-import { Size } from '../../..';
+import type { Size } from '../../..';
 
 export interface ToolbarButtonProps extends Omit<IconButtonProps, 'size'> {}
 

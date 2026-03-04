@@ -1,25 +1,25 @@
-import React, { memo, ReactElement } from 'react';
+import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, FormikHelpers } from 'formik';
+import { Formik, type FormikHelpers } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import OffcanvasInner, { OffcanvasInnerProps } from './components/OffcanvasInner';
+import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
 import {
   defaultValueBlockFormValues,
-  ValueBlockFormValues,
+  type ValueBlockFormValues,
 } from './components/ValueBlock';
 
-import { defaultNameBlockFormValues, NameBlockFormValues } from '../NameBlock';
+import { defaultNameBlockFormValues, type NameBlockFormValues } from '../NameBlock';
 
 import {
   TemporaryVariableAPI,
   TemporaryVariablesAPI,
 } from 'api/telegram-bots/temporary-variable';
-import { TemporaryVariable } from 'api/telegram-bots/temporary-variable/types';
+import type { TemporaryVariable } from 'api/telegram-bots/temporary-variable/types';
 
 import { useTemporaryVariableOffcanvasStore } from './store';
 

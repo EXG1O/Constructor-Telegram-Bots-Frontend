@@ -1,10 +1,10 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { type ReactElement, type ReactNode } from 'react';
 
 import RichInputContainer from './components/RichInputContainer';
 import RichInputEditor from './components/RichInputEditor';
 import RichInputToolbar from './components/RichInputToolbar';
 import RichInputStoreProvider, {
-  RichInputStoreProviderProps,
+  type RichInputStoreProviderProps,
 } from './providers/RichInputStoreProvider';
 
 export const DEFAULT_FORMATS: string[] = [

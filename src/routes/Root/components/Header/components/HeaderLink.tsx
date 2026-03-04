@@ -1,6 +1,6 @@
+import type { ReactElement } from 'react';
 import React from 'react';
-import { ReactElement } from 'react';
-import { Link, LinkProps } from 'react-router-dom';
+import { Link, type LinkProps } from 'react-router-dom';
 
 import cn from 'utils/cn';
 

@@ -1,4 +1,9 @@
-import React, { ChangeEvent, HTMLAttributes, ReactElement, useState } from 'react';
+import React, {
+  type ChangeEvent,
+  type HTMLAttributes,
+  type ReactElement,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Check from 'components/ui/Check';

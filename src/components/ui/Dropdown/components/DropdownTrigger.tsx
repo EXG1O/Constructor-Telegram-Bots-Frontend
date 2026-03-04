@@ -1,6 +1,6 @@
 import {
   DropdownMenuTrigger,
-  DropdownMenuTriggerProps,
+  type DropdownMenuTriggerProps,
 } from '@radix-ui/react-dropdown-menu';
 
 export type DropdownTriggerProps = DropdownMenuTriggerProps;

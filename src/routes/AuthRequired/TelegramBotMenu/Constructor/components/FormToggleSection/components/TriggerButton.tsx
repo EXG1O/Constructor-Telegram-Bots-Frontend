@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import Button, { ButtonProps } from 'components/ui/Button';
+import Button, { type ButtonProps } from 'components/ui/Button';
 import Collapsible from 'components/ui/Collapsible';
 
 import useFormToggleSectionStore from '../hooks/useTelegramBotContentStore';

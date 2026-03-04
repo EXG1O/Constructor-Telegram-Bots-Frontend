@@ -1,11 +1,11 @@
-import React, { ReactElement, ReactNode, useEffect, useMemo } from 'react';
+import React, { type ReactElement, type ReactNode, useEffect, useMemo } from 'react';
 import isEqual from 'lodash/isEqual';
 
 import { DEFAULT_SIZE } from '..';
 
 import StoreContext from '../contexts/CodeInputStoreContext';
 
-import { createStore, State, StateProps } from '../store';
+import { createStore, type State, type StateProps } from '../store';
 
 export interface CodeInputStoreProviderProps extends StateProps {
   children: ReactNode;

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import * as Primitive from '@radix-ui/react-popover';
 
 import PopoverAnchor from './components/PopoverAnchor';

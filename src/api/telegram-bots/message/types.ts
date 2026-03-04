@@ -1,5 +1,5 @@
-import { DiagramBlock, Media } from '../base/types';
-import { Connection } from '../connection/types';
+import type { DiagramBlock, Media } from '../base/types';
+import type { Connection } from '../connection/types';
 
 export interface MessageSettings {
   reply_to_user_message: boolean;

@@ -1,4 +1,4 @@
-import { DiagramBlock, Media } from '../base/types';
+import type { DiagramBlock, Media } from '../base/types';
 
 export interface InvoiceImage extends Media {}
 

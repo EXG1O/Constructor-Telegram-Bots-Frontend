@@ -1,7 +1,7 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
+import React, { forwardRef, type HTMLAttributes } from 'react';
 
 import Inner from './components/Inner';
-import StoreProvider, { StoreProviderProps } from './providers/StoreProvider';
+import StoreProvider, { type StoreProviderProps } from './providers/StoreProvider';
 
 export interface TelegramBotContentProps
   extends

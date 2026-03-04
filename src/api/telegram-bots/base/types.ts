@@ -1,4 +1,4 @@
-import { Connection } from '../connection/types';
+import type { Connection } from '../connection/types';
 
 export interface Media {
   name: string | null;

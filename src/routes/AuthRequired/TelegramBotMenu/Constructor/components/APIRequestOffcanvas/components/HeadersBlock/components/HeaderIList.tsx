@@ -1,11 +1,11 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
-import { FastField, FastFieldProps } from 'formik';
-
-import { Headers } from '..';
+import React, { type HTMLAttributes, type ReactElement } from 'react';
+import { FastField, type FastFieldProps } from 'formik';
 
 import HeaderItem from './HeaderItem';
 
 import cn from 'utils/cn';
+
+import type { Headers } from '..';
 
 export interface HeaderListProps extends Omit<
   HTMLAttributes<HTMLDivElement>,

@@ -1,10 +1,8 @@
-import React, { HTMLAttributes, ReactElement } from 'react';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import React, { type HTMLAttributes, type ReactElement } from 'react';
+import { DragDropContext, Droppable, type DropResult } from 'react-beautiful-dnd';
 import { Slot } from '@radix-ui/react-slot';
-import { FormikProps } from 'formik';
+import type { FormikProps } from 'formik';
 import { produce } from 'immer';
-
-import { Images } from '..';
 
 import Spinner from 'components/ui/Spinner';
 
@@ -12,8 +10,9 @@ import ImageItem from './ImageItem';
 
 import cn from 'utils/cn';
 
-import { FormValues } from '../../..';
+import type { FormValues } from '../../..';
 import { useMessageOffcanvasStore } from '../../../store';
+import type { Images } from '..';
 
 export interface ImageListInnerProps extends Omit<
   HTMLAttributes<HTMLDivElement>,

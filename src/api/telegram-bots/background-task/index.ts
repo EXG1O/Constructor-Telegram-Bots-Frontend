@@ -1,8 +1,8 @@
 import { makeRequest } from 'api/core';
 
 import { TelegramBotAPI } from '../telegram-bot';
-import { TelegramBot } from '../telegram-bot/types';
-import { APIResponse, BackgroundTask, Data } from './types';
+import type { TelegramBot } from '../telegram-bot/types';
+import type { APIResponse, BackgroundTask, Data } from './types';
 
 export class BackgroundTasksAPI {
   static url(telegramBotID: TelegramBot['id']): string {

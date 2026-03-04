@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Node as RFNode,
-  NodeProps as RFNodeProps,
+  type Node as RFNode,
+  type NodeProps as RFNodeProps,
   Position,
   useReactFlow,
 } from '@xyflow/react';
@@ -17,9 +17,9 @@ import { useBackgroundTaskOffcanvasStore } from './BackgroundTaskOffcanvas/store
 import Node from './Node';
 
 import { BackgroundTaskAPI } from 'api/telegram-bots/background-task';
-import { DiagramBackgroundTask } from 'api/telegram-bots/background-task/types';
+import type { DiagramBackgroundTask } from 'api/telegram-bots/background-task/types';
 
-import { buildEdgeSourceHandle, EdgeHandle } from '../utils/edges';
+import { buildEdgeSourceHandle, type EdgeHandle } from '../utils/edges';
 
 type Data = Omit<DiagramBackgroundTask, 'x' | 'y' | 'source_connections'>;
 

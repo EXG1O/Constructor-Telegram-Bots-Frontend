@@ -1,6 +1,6 @@
-import React, { HTMLAttributes, ReactElement, useState } from 'react';
+import React, { type HTMLAttributes, type ReactElement, useState } from 'react';
 import telegramBotSystemVariables, {
-  TelegramBotSystemVariablesType,
+  type TelegramBotSystemVariablesType,
 } from 'constants/telegramBotSystemVariables';
 
 import TelegramBotSystemVariablesTypeTabs from 'components/shared/TelegramBotSystemVariablesTypeTabs';

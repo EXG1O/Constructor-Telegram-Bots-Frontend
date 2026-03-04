@@ -1,11 +1,11 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
 import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import TelegramSimpleInputLayout from 'components/shared/TelegramSimpleInputLayout';
-import Block, { BlockProps } from 'components/ui/Block';
+import Block, { type BlockProps } from 'components/ui/Block';
 
 import cn from 'utils/cn';
 

@@ -1,11 +1,11 @@
-import React, { ReactElement, useEffect, useId, useState } from 'react';
+import React, { type ReactElement, useEffect, useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Slot } from '@radix-ui/react-slot';
 import { useField } from 'formik';
 
 import { RouteID } from 'routes';
 
-import Block, { BlockProps } from 'components/ui/Block';
+import Block, { type BlockProps } from 'components/ui/Block';
 import Button from 'components/ui/Button';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';

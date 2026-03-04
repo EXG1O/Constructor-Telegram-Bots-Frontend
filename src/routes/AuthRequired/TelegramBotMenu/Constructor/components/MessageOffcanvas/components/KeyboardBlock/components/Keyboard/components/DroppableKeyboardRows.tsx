@@ -1,8 +1,8 @@
-import React, { memo, OlHTMLAttributes, ReactElement } from 'react';
-import { Droppable, DroppableProps } from 'react-beautiful-dnd';
-import { FastField, FastFieldProps } from 'formik';
+import React, { memo, type OlHTMLAttributes, type ReactElement } from 'react';
+import { Droppable, type DroppableProps } from 'react-beautiful-dnd';
+import { FastField, type FastFieldProps } from 'formik';
 
-import DraggableKeyboardRow, { KeyboardRow } from './DraggableKeyboardRow';
+import DraggableKeyboardRow, { type KeyboardRow } from './DraggableKeyboardRow';
 
 export interface DroppableKeyboardRowsProps
   extends

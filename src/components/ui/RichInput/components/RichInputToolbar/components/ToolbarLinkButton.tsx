@@ -7,7 +7,7 @@ import IconButton from 'components/ui/IconButton';
 import Popover from 'components/ui/Popover';
 import SimpleInput from 'components/ui/SimpleInput';
 
-import ToolbarButton, { ToolbarButtonProps } from './ToolbarButton';
+import ToolbarButton, { type ToolbarButtonProps } from './ToolbarButton';
 
 import useRichInputStore from 'components/ui/RichInput/hooks/useRichInputStore';
 

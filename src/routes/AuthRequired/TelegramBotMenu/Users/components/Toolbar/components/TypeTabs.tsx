@@ -1,14 +1,14 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
-import Tabs, { TabsProps } from 'components/ui/Tabs';
+import Tabs, { type TabsProps } from 'components/ui/Tabs';
 
 import useUsersStore from '../../../hooks/useUsersStore';
 
-import { StateParams } from '../../../store';
+import type { StateParams } from '../../../store';
 
 export interface TypeTabsProps extends Omit<
   TabsProps,

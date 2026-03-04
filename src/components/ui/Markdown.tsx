@@ -1,6 +1,6 @@
+import type { ReactElement } from 'react';
 import React from 'react';
-import { ReactElement } from 'react';
-import BaseMarkdown, { Options } from 'react-markdown';
+import BaseMarkdown, { type Options } from 'react-markdown';
 
 import cn from 'utils/cn';
 

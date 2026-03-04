@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { useStore } from 'zustand';
 
-import StoreContext, { StoreContextValue } from '../contexts/StoreContext';
+import StoreContext, { type StoreContextValue } from '../contexts/StoreContext';
 
-import { StoreState } from '../store';
+import type { StoreState } from '../store';
 
 type Store = StoreContextValue;
 

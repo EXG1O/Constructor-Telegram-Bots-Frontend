@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
 import FormSelectFeedback, {
-  FormSelectFeedbackProps,
+  type FormSelectFeedbackProps,
 } from 'components/shared/FormSelectFeedback';
 
 import cn from 'utils/cn';

@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 
-import { FormData } from '.';
+import { defaultStyle, type Style } from './components/StyleSelect';
+import { defaultText, type Text } from './components/TextInput';
+import { defaultURL, type URL } from './components/URLInput';
 
-import { defaultStyle, Style } from './components/StyleSelect';
-import { defaultText, Text } from './components/TextInput';
-import { defaultURL, URL } from './components/URLInput';
+import type { KeyboardButton } from '../Keyboard/components/DraggableKeyboardButton';
 
-import { KeyboardButton } from '../Keyboard/components/DraggableKeyboardButton';
+import type { FormData } from '.';
 
 export interface StateData extends FormData {
   showURLInput: boolean;

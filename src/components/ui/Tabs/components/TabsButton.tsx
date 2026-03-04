@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { cva } from 'class-variance-authority';
 
-import Button, { ButtonProps } from 'components/ui/Button';
+import Button, { type ButtonProps } from 'components/ui/Button';
 
 import useTabs from '../hooks/useTabs';
 

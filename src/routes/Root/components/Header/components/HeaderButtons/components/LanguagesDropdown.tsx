@@ -1,10 +1,10 @@
-import React, { memo, ReactElement, useEffect, useState } from 'react';
+import React, { memo, type ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
 import Button from 'components/ui/Button';
-import Dropdown, { DropdownProps } from 'components/ui/Dropdown';
+import Dropdown, { type DropdownProps } from 'components/ui/Dropdown';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 

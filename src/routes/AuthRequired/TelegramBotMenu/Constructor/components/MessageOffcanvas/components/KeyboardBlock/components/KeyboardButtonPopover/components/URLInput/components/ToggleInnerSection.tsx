@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
 import Button from 'components/ui/Button';
-import Collapsible, { CollapsibleProps } from 'components/ui/Collapsible';
+import Collapsible, { type CollapsibleProps } from 'components/ui/Collapsible';
 
 import cn from 'utils/cn';
 
