@@ -22,6 +22,9 @@
     "getDiagramDatabaseOperation": {
       "error": "Не вдалося отримати дані операцій бази даних для діаграми."
     },
+    "getDiagramInvoice": {
+      "error": "Не вдалося отримати дані рахунків для діаграми."
+    },
     "getDiagramTemporaryVariable": {
       "error": "Не вдалося отримати дані тимчасових змінних для діаграми."
     },
