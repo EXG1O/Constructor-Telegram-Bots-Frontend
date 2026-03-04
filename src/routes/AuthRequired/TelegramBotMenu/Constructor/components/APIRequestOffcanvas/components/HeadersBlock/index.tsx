@@ -10,22 +10,7 @@ import HeaderList from './components/HeaderIList';
 
 import cn from 'utils/cn';
 
-export interface Header {
-  key: string;
-  value: string;
-}
-export type Headers = Header[];
-
-export interface HeadersBlockFormValues {
-  headers: Headers;
-}
-
 export interface HeadersBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
-
-export const defaultHeaders: Headers = [];
-export const defaultHeadersBlockFormValues: HeadersBlockFormValues = {
-  headers: defaultHeaders,
-};
 
 function HeadersBlock({ className, ...props }: HeadersBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {

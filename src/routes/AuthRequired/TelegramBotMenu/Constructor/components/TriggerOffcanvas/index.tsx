@@ -7,26 +7,18 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import {
-  type CommandBlockFormValues,
-  defaultCommandBlockFormValues,
-} from './components/CommandBlock';
-import {
-  defaultMessageBlockFormValues,
-  type MessageBlockFormValues,
-} from './components/MessageBlock';
+import { defaultCommandBlockFormValues } from './components/CommandBlock/defaults';
+import type { CommandBlockFormValues } from './components/CommandBlock/types';
+import { defaultMessageBlockFormValues } from './components/MessageBlock/defaults';
+import type { MessageBlockFormValues } from './components/MessageBlock/types';
 import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
-import {
-  defaultStartCommandBlockFormValues,
-  type StartCommandBlockFormValues,
-} from './components/StartCommandBlock';
-import {
-  defaultTypeBlockFormValues,
-  Type,
-  type TypeBlockFormValues,
-} from './components/TypeBlock';
+import { defaultStartCommandBlockFormValues } from './components/StartCommandBlock/defaults';
+import type { StartCommandBlockFormValues } from './components/StartCommandBlock/types';
+import { defaultTypeBlockFormValues } from './components/TypeBlock/defaults';
+import { Type, type TypeBlockFormValues } from './components/TypeBlock/types';
 
-import { defaultNameBlockFormValues, type NameBlockFormValues } from '../NameBlock';
+import { defaultNameBlockFormValues } from '../NameBlock/defaults';
+import type { NameBlockFormValues } from '../NameBlock/types';
 
 import { TriggerAPI, TriggersAPI } from 'api/telegram-bots/trigger';
 import type { Data, Trigger } from 'api/telegram-bots/trigger/types';

@@ -4,7 +4,7 @@ import ItemImage, {
   type ItemImageProps,
 } from 'components/ui/Carousel/components/CarouselItem/components/ItemImage';
 
-import type { Image } from '..';
+import type { Image } from '../types';
 
 export interface ImageCarouselImageProps extends Omit<ItemImageProps, 'src'> {
   image: Image;

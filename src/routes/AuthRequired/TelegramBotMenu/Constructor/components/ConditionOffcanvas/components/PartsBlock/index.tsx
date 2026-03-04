@@ -6,22 +6,13 @@ import { RouteID } from 'routes';
 
 import Block, { type BlockProps } from 'components/ui/Block';
 
-import PartItem, { defaultPart, type Part } from './components/PartItem';
+import PartItem from './components/PartItem';
 
 import cn from 'utils/cn';
 
-export type Parts = Part[];
-
-export interface PartsBlockFormValues {
-  parts: Parts;
-}
+import type { Parts } from './types';
 
 export interface PartsBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
-
-export const defaultParts: Parts = [defaultPart];
-export const defaultPartsBlockFormValues: PartsBlockFormValues = {
-  parts: defaultParts,
-};
 
 function PartsBlock({ className, ...props }: PartsBlockProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {

@@ -5,7 +5,7 @@ import HeaderItem from './HeaderItem';
 
 import cn from 'utils/cn';
 
-import type { Headers } from '..';
+import type { Headers } from '../types';
 
 export interface HeaderListProps extends Omit<
   HTMLAttributes<HTMLDivElement>,

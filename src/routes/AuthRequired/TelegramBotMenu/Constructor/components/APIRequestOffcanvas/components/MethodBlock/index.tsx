@@ -1,0 +1,43 @@
+import React, { type ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { RouteID } from 'routes';
+
+import FormTabs from 'components/shared/FormTabs';
+import Block, { type BlockProps } from 'components/ui/Block';
+import Tabs from 'components/ui/Tabs';
+
+import type { Method } from 'api/telegram-bots/api-request/types';
+
+import cn from 'utils/cn';
+
+export interface MethodBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
+
+const methods: Method[] = ['get', 'post', 'put', 'patch', 'delete'];
+
+function MethodBlock({ className, ...props }: MethodBlockProps): ReactElement {
+  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+    keyPrefix: 'apiRequestOffcanvas.methodBlock',
+  });
+
+  return (
+    <Block
+      {...props}
+      variant='light'
+      className={cn('flex', 'flex-col', 'gap-2', className)}
+    >
+      <Block.Title>
+        <h3 className='text-lg font-medium'>{t('title')}</h3>
+      </Block.Title>
+      <FormTabs name='method' size='sm'>
+        {methods.map((method, index) => (
+          <Tabs.Button key={index} value={method}>
+            {method.toUpperCase()}
+          </Tabs.Button>
+        ))}
+      </FormTabs>
+    </Block>
+  );
+}
+
+export default MethodBlock;

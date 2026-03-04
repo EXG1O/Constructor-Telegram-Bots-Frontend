@@ -7,29 +7,20 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import {
-  defaultDocumentsBlockFormValues,
-  type DocumentsBlockFormValues,
-} from './components/DocumentsBlock';
-import {
-  defaultImagesBlockFormValues,
-  type ImagesBlockFormValues,
-} from './components/ImagesBlock';
-import {
-  defaultKeyboardBlockFormValues,
-  type KeyboardBlockFormValues,
-} from './components/KeyboardBlock';
+import { defaultDocumentsBlockFormValues } from './components/DocumentsBlock/defaults';
+import type { DocumentsBlockFormValues } from './components/DocumentsBlock/types';
+import { defaultImagesBlockFormValues } from './components/ImagesBlock/defaults';
+import type { ImagesBlockFormValues } from './components/ImagesBlock/types';
+import { defaultKeyboardBlockFormValues } from './components/KeyboardBlock/defaults';
+import type { KeyboardBlockFormValues } from './components/KeyboardBlock/types';
 import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
-import {
-  defaultSettingsBlockFormValues,
-  type SettingsBlockFormValues,
-} from './components/SettingsBlock';
-import {
-  defaultTextBlockFormValues,
-  type TextBlockFormValues,
-} from './components/TextBlock';
+import { defaultSettingsBlockFormValues } from './components/SettingsBlock/defaults';
+import type { SettingsBlockFormValues } from './components/SettingsBlock/types';
+import { defaultTextBlockFormValues } from './components/TextBlock/defaults';
+import type { TextBlockFormValues } from './components/TextBlock/types';
 
-import { defaultNameBlockFormValues, type NameBlockFormValues } from '../NameBlock';
+import { defaultNameBlockFormValues } from '../NameBlock/defaults';
+import type { NameBlockFormValues } from '../NameBlock/types';
 
 import { MessageAPI, MessagesAPI } from 'api/telegram-bots/message';
 import type { Data, Message } from 'api/telegram-bots/message/types';

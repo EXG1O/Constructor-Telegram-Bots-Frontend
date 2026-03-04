@@ -1,4 +1,4 @@
-import { Type } from './components/TypeBlock';
+import { Type } from './components/TypeBlock/types';
 
 export function getStartCommandBlockOpen(type: Type): boolean {
   return type === Type.StartCommand;

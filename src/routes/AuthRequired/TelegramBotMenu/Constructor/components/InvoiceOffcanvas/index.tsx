@@ -7,25 +7,18 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import {
-  defaultDescriptionBlockFormValues,
-  type DescriptionBlockFormValues,
-} from './components/DescriptionBlock';
-import {
-  defaultImageBlockFormValues,
-  type ImageBlockFormValues,
-} from './components/ImageBlock';
+import { defaultDescriptionBlockFormValues } from './components/DescriptionBlock/defaults';
+import type { DescriptionBlockFormValues } from './components/DescriptionBlock/types';
+import { defaultImageBlockFormValues } from './components/ImageBlock/defaults';
+import type { ImageBlockFormValues } from './components/ImageBlock/types';
 import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
-import {
-  defaultPriceBlockFormValues,
-  type PriceBlockFormValues,
-} from './components/PriceBlock';
-import {
-  defaultTitleBlockFormValues,
-  type TitleBlockFormValues,
-} from './components/TitleBlock';
+import { defaultPriceBlockFormValues } from './components/PriceBlock/defaults';
+import type { PriceBlockFormValues } from './components/PriceBlock/types';
+import { defaultTitleBlockFormValues } from './components/TitleBlock/defaults';
+import type { TitleBlockFormValues } from './components/TitleBlock/types';
 
-import { defaultNameBlockFormValues, type NameBlockFormValues } from '../NameBlock';
+import { defaultNameBlockFormValues } from '../NameBlock/defaults';
+import type { NameBlockFormValues } from '../NameBlock/types';
 
 import { InvoiceAPI, InvoicesAPI } from 'api/telegram-bots/invoice';
 import type { Data, Invoice } from 'api/telegram-bots/invoice/types';

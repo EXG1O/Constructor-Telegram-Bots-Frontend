@@ -1,4 +1,4 @@
-import { Type } from './components/TypeBlock';
+import { Type } from './components/TypeBlock/types';
 
 export function getCreateBlockOpen(type: Type): boolean {
   return type === Type.Create;

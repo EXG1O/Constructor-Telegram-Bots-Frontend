@@ -13,7 +13,7 @@ import IconButton from 'components/ui/IconButton';
 import cn from 'utils/cn';
 
 import { useMessageOffcanvasStore } from '../../../store';
-import type { Document } from '..';
+import type { Document } from '../types';
 
 export interface DocumentItemProps extends Omit<
   HTMLAttributes<HTMLDivElement>,

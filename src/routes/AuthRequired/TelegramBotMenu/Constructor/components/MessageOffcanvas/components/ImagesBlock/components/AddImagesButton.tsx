@@ -8,7 +8,7 @@ import Button, { type ButtonProps } from 'components/ui/Button';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useMessageOffcanvasStore } from '../../../store';
-import type { Image, Images } from '..';
+import type { Image, Images } from '../types';
 
 export interface AddImagesButtonProps extends Omit<
   ButtonProps,
