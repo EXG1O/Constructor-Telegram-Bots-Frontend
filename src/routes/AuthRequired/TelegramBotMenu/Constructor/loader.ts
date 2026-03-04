@@ -12,6 +12,8 @@ import { DiagramInvoicesAPI } from 'api/telegram-bots/invoice';
 import { APIResponse as InvoiceAPIResponse } from 'api/telegram-bots/invoice/types';
 import { DiagramMessagesAPI } from 'api/telegram-bots/message';
 import { APIResponse as MessageAPIResponse } from 'api/telegram-bots/message/types';
+import { DiagramTemporaryVariablesAPI } from 'api/telegram-bots/temporary-variable';
+import { APIResponse as TemporaryVariableAPIResponse } from 'api/telegram-bots/temporary-variable/types';
 import { DiagramTriggersAPI } from 'api/telegram-bots/trigger';
 import { APIResponse as TriggerAPIResponse } from 'api/telegram-bots/trigger/types';
 
@@ -23,6 +25,7 @@ export interface LoaderData {
   diagramAPIRequests: APIRequestAPIResponse.DiagramAPIRequestsAPI.Get;
   diagramDatabaseOperations: DatabaseOperationAPIResponse.DiagramDatabaseOperationsAPI.Get;
   diagramInvoices: InvoiceAPIResponse.DiagramInvoicesAPI.Get;
+  diagramTemporaryVariables: TemporaryVariableAPIResponse.DiagramTemporaryVariablesAPI.Get;
 }
 
 async function loader({
@@ -41,6 +44,7 @@ async function loader({
     diagramAPIRequestsResponse,
     diagramDatabaseOperationsResponse,
     diagramInvoicesResponse,
+    diagramTemporaryVariablesResponse,
   ] = await Promise.all([
     DiagramTriggersAPI.get(telegramBotID),
     DiagramMessagesAPI.get(telegramBotID),
@@ -49,6 +53,7 @@ async function loader({
     DiagramAPIRequestsAPI.get(telegramBotID),
     DiagramDatabaseOperationsAPI.get(telegramBotID),
     DiagramInvoicesAPI.get(telegramBotID),
+    DiagramTemporaryVariablesAPI.get(telegramBotID),
   ]);
 
   if (
@@ -58,7 +63,8 @@ async function loader({
     !diagramBackgroundTasksResponse.ok ||
     !diagramAPIRequestsResponse.ok ||
     !diagramDatabaseOperationsResponse.ok ||
-    !diagramInvoicesResponse.ok
+    !diagramInvoicesResponse.ok ||
+    !diagramTemporaryVariablesResponse.ok
   )
     return null;
 
@@ -70,6 +76,7 @@ async function loader({
     diagramAPIRequests: diagramAPIRequestsResponse.json,
     diagramDatabaseOperations: diagramDatabaseOperationsResponse.json,
     diagramInvoices: diagramInvoicesResponse.json,
+    diagramTemporaryVariables: diagramTemporaryVariablesResponse.json,
   };
 }
 

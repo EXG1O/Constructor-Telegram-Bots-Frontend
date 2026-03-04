@@ -43,6 +43,8 @@ import InvoiceOffcanvas from './components/InvoiceOffcanvas';
 import MessageNode from './components/MessageNode';
 import MessageOffcanvas from './components/MessageOffcanvas';
 import Panel from './components/Panel';
+import TemporaryVariableNode from './components/TemporaryVariableNode';
+import TemporaryVariableOffcanvas from './components/TemporaryVariableOffcanvas';
 import TriggerNode from './components/TriggerNode';
 import TriggerOffcanvas from './components/TriggerOffcanvas';
 
@@ -64,6 +66,8 @@ import { Invoice } from 'api/telegram-bots/invoice/types';
 import { DiagramMessageAPI } from 'api/telegram-bots/message';
 import { Message } from 'api/telegram-bots/message/types';
 import { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
+import { DiagramTemporaryVariableAPI } from 'api/telegram-bots/temporary-variable';
+import { TemporaryVariable } from 'api/telegram-bots/temporary-variable/types';
 import { DiagramTriggerAPI } from 'api/telegram-bots/trigger';
 import { Trigger } from 'api/telegram-bots/trigger/types';
 
@@ -89,6 +93,7 @@ export const nodeTypes = {
   api_request: APIRequestNode,
   database_operation: DatabaseOperationNode,
   invoice: InvoiceNode,
+  temporary_variable: TemporaryVariableNode,
 };
 const defaultEdgeOptions: DefaultEdgeOptions = {
   markerEnd: {
@@ -127,6 +132,7 @@ const diagramBlockAPIMap: Record<
   api_request: DiagramAPIRequestAPI,
   database_operation: DiagramDatabaseOperationAPI,
   invoice: DiagramInvoiceAPI,
+  temporary_variable: DiagramTemporaryVariableAPI,
 };
 
 interface UpdateDiagramBlockOptions {
@@ -150,6 +156,7 @@ function Constructor(): ReactElement {
     diagramAPIRequests,
     diagramDatabaseOperations,
     diagramInvoices,
+    diagramTemporaryVariables,
   } = useTelegramBotMenuConstructorRouteLoaderData();
 
   const [nodes, setNodes, onNodesChange] = useNodesState(
@@ -161,6 +168,7 @@ function Constructor(): ReactElement {
       api_request: diagramAPIRequests,
       database_operation: diagramDatabaseOperations,
       invoice: diagramInvoices,
+      temporary_variable: diagramTemporaryVariables,
     } as Record<NodeType, DiagramBlock[]>).flatMap(([type, diagramBlocks]) =>
       diagramBlocks.map((diagramBlock) =>
         convertDiagramBlockToNode(type as NodeType, diagramBlock),
@@ -177,6 +185,7 @@ function Constructor(): ReactElement {
         ...diagramAPIRequests,
         ...diagramDatabaseOperations,
         ...diagramInvoices,
+        ...diagramTemporaryVariables,
       ],
     }),
   );
@@ -454,6 +463,17 @@ function Constructor(): ReactElement {
     [updateDiagramBlock],
   );
 
+  const handleTemporaryVariableChange = useCallback(
+    async (variable: TemporaryVariable) => {
+      await updateDiagramBlock('temporary_variable', variable.id, {
+        messages: {
+          getDiagramBlock: { error: t('messages.getDiagramTemporaryVariable.error') },
+        },
+      });
+    },
+    [updateDiagramBlock],
+  );
+
   return (
     <Page title={t('title')} className='flex-auto'>
       <TriggerOffcanvas onAdd={handleTriggerChange} onSave={handleTriggerChange} />
@@ -475,6 +495,10 @@ function Constructor(): ReactElement {
         onSave={handleDatabaseOperationChange}
       />
       <InvoiceOffcanvas onAdd={handleInvoiceChange} onSave={handleInvoiceChange} />
+      <TemporaryVariableOffcanvas
+        onAdd={handleTemporaryVariableChange}
+        onSave={handleTemporaryVariableChange}
+      />
       <div ref={handleRef} className='size-full overflow-hidden rounded-lg bg-light'>
         <ReactFlow
           fitView
