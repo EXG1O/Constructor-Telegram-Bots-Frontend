@@ -1,4 +1,4 @@
-import React, { type HTMLAttributes, memo, type ReactElement } from 'react';
+import React, { type LiHTMLAttributes, memo, type ReactElement } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import {
   FastField,
@@ -16,7 +16,7 @@ import { useMessageOffcanvasStore } from '../../../store';
 import type { Image } from '../types';
 
 export interface ImageItemProps extends Omit<
-  HTMLAttributes<HTMLDivElement>,
+  LiHTMLAttributes<HTMLLIElement>,
   'children'
 > {
   index: number;
@@ -45,7 +45,7 @@ function ImageItem({ index, className, ...props }: ImageItemProps): ReactElement
         return (
           <Draggable index={index} draggableId={`message-offcanvas-image-${image.key}`}>
             {({ innerRef, draggableProps, dragHandleProps }) => (
-              <div
+              <li
                 {...props}
                 {...draggableProps}
                 {...dragHandleProps}
@@ -66,7 +66,7 @@ function ImageItem({ index, className, ...props }: ImageItemProps): ReactElement
                     </IconButton>
                   )}
                 </FieldArray>
-              </div>
+              </li>
             )}
           </Draggable>
         );

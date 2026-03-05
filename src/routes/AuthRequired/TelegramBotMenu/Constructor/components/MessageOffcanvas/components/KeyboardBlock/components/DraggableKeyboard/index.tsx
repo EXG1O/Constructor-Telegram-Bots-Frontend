@@ -11,6 +11,8 @@ import { produce } from 'immer';
 import type { KeyboardRow } from './components/DraggableKeyboardRow';
 import DroppableKeyboardRows from './components/DroppableKeyboardRows';
 
+import cn from 'utils/cn';
+
 import type { FormValues } from '../../../..';
 
 export type { KeyboardButton } from './components/DraggableKeyboardButton';
@@ -21,7 +23,10 @@ export interface DraggableKeyboardProps extends Omit<
   'children'
 > {}
 
-function DraggableKeyboard(props: DraggableKeyboardProps): ReactElement {
+function DraggableKeyboard({
+  className,
+  ...props
+}: DraggableKeyboardProps): ReactElement {
   function handleDragEnd(
     form: FormikProps<FormValues>,
     field: FieldInputProps<KeyboardRow[]>,
@@ -75,7 +80,7 @@ function DraggableKeyboard(props: DraggableKeyboardProps): ReactElement {
         const rows: KeyboardRow[] = field.value;
 
         return rows.length ? (
-          <div {...props}>
+          <div {...props} className={cn('w-full', className)}>
             <DragDropContext onDragEnd={(result) => handleDragEnd(form, field, result)}>
               <DroppableKeyboardRows />
             </DragDropContext>
