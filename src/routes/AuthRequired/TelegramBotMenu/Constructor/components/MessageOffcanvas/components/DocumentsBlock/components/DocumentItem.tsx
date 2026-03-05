@@ -1,4 +1,4 @@
-import React, { type HTMLAttributes, memo, type ReactElement } from 'react';
+import React, { type LiHTMLAttributes, memo, type ReactElement } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import {
   FastField,
@@ -16,7 +16,7 @@ import { useMessageOffcanvasStore } from '../../../store';
 import type { Document } from '../types';
 
 export interface DocumentItemProps extends Omit<
-  HTMLAttributes<HTMLDivElement>,
+  LiHTMLAttributes<HTMLLIElement>,
   'children'
 > {
   index: number;
@@ -51,7 +51,7 @@ function DocumentItem({ index, className, ...props }: DocumentItemProps): ReactE
             draggableId={`message-offcanvas-document-${document.key}`}
           >
             {({ innerRef, draggableProps, dragHandleProps }) => (
-              <div
+              <li
                 {...props}
                 {...draggableProps}
                 {...dragHandleProps}
@@ -72,7 +72,7 @@ function DocumentItem({ index, className, ...props }: DocumentItemProps): ReactE
                     </IconButton>
                   )}
                 </FieldArray>
-              </div>
+              </li>
             )}
           </Draggable>
         );

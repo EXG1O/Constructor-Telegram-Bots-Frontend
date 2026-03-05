@@ -4,6 +4,8 @@ import { FastField, type FastFieldProps } from 'formik';
 
 import DraggableKeyboardRow, { type KeyboardRow } from './DraggableKeyboardRow';
 
+import cn from 'utils/cn';
+
 export interface DroppableKeyboardRowsProps
   extends
     Omit<OlHTMLAttributes<HTMLOListElement>, 'children'>,
@@ -22,6 +24,7 @@ function DroppableKeyboardRows({
   ignoreContainerClipping,
   renderClone,
   getContainerForClone,
+  className,
   ...props
 }: DroppableKeyboardRowsProps): ReactElement {
   return (
@@ -38,7 +41,12 @@ function DroppableKeyboardRows({
       {({ innerRef, droppableProps, placeholder }) => (
         <FastField name='keyboard.rows'>
           {({ field }: FastFieldProps<KeyboardRow[]>) => (
-            <ol {...props} {...droppableProps} ref={innerRef}>
+            <ol
+              {...props}
+              {...droppableProps}
+              ref={innerRef}
+              className={cn('w-full', '-mb-1', className)}
+            >
               {field.value.map((row, index) => (
                 <DraggableKeyboardRow
                   key={row.draggableId}

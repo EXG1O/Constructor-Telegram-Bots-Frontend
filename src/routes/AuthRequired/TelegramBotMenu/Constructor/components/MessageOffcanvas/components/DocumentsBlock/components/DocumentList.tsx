@@ -58,16 +58,20 @@ function DocumentsList({ className, ...props }: DocumentsListProps): ReactElemen
               >
                 <Droppable droppableId='message-offcanvas-documents'>
                   {(provided) => (
-                    <div
+                    <ol
                       {...provided.droppableProps}
                       ref={provided.innerRef}
-                      className='flex w-full flex-col gap-1'
+                      className='-mb-1 w-full'
                     >
                       {documents.map((document, index) => (
-                        <DocumentItem key={document.key} index={index} />
+                        <DocumentItem
+                          key={document.key}
+                          index={index}
+                          className='mb-1'
+                        />
                       ))}
                       {provided.placeholder}
-                    </div>
+                    </ol>
                   )}
                 </Droppable>
               </DragDropContext>

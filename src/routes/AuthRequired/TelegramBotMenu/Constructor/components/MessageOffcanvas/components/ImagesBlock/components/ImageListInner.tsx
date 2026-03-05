@@ -58,16 +58,16 @@ function ImageListInner({
             <DragDropContext onDragEnd={handleDragEnd}>
               <Droppable droppableId='message-offcanvas-images'>
                 {(provided) => (
-                  <div
+                  <ol
                     {...provided.droppableProps}
                     ref={provided.innerRef}
-                    className='flex w-full flex-col gap-1'
+                    className='-mb-1 w-full'
                   >
                     {images.map((image, index) => (
-                      <ImageItem key={image.key} index={index} />
+                      <ImageItem key={image.key} index={index} className='mb-1' />
                     ))}
                     {provided.placeholder}
-                  </div>
+                  </ol>
                 )}
               </Droppable>
             </DragDropContext>
