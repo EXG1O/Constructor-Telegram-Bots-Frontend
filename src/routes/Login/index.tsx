@@ -24,7 +24,7 @@ function Login(): ReactElement {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!login) {
+    if (!login.success) {
       createMessageToast({
         message: t('messages.userLogin.error'),
         level: 'error',
@@ -38,7 +38,7 @@ function Login(): ReactElement {
       level: 'success',
     });
     navigate(reverse(RouteID.TelegramBots), navigateOptions);
-  }, [login]);
+  }, [login.success]);
 
   return (
     <Page title={t('title')} flex className='flex-auto items-center justify-center'>
