@@ -1,7 +1,7 @@
 import type { InputHTMLAttributes } from 'react';
 import { create } from 'zustand';
 
-import { DEFAULT_SIZE, type Size } from '.';
+import type { Size } from '.';
 
 export interface StateParams extends Pick<
   InputHTMLAttributes<HTMLInputElement>,
@@ -19,25 +19,25 @@ export interface StateActions {
 }
 
 export type State = StateParams & StateActions;
-export type StateProps = Partial<Pick<StateParams, 'size' | 'invalid' | 'value'>> &
-  Pick<StateParams, 'autoFocus' | 'inputMode' | 'placeholder' | 'onChange'>;
+export type StateProps = Partial<Pick<StateParams, 'value'>> &
+  Pick<
+    StateParams,
+    'size' | 'invalid' | 'autoFocus' | 'inputMode' | 'placeholder' | 'onChange'
+  >;
 
-export function createStore({
-  size = DEFAULT_SIZE,
-  invalid = false,
-  value = '',
-  ...props
-}: StateProps) {
+export function createStore({ value = '', ...props }: StateProps) {
   return create<State>((set, get) => ({
     ...props,
 
-    size,
-    invalid,
     value,
 
-    setValue: (value) => {
-      set({ value });
-      get().onChange?.(value);
+    setValue: (nextValue) => {
+      const { value, onChange } = get();
+
+      if (nextValue !== value) {
+        set({ value: nextValue });
+        onChange?.(nextValue);
+      }
     },
   }));
 }
