@@ -1,4 +1,4 @@
-import React, { type ReactElement, useId } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useField } from 'formik';
 
@@ -6,6 +6,9 @@ import { RouteID } from 'routes';
 
 import Button, { type ButtonProps } from 'components/ui/Button';
 import { createMessageToast } from 'components/ui/ToastContainer';
+
+import MediaPopover from '../../../../MediaPopover';
+import type { ResultData } from '../../../../MediaPopover/types';
 
 import { useMessageOffcanvasStore } from '../../../store';
 import type { Image, Images } from '../types';
@@ -31,75 +34,72 @@ function AddImagesButton(props: AddImagesButtonProps): ReactElement {
   const [{ value: images }, _meta, { setValue: setImages }] =
     useField<Images>('images');
 
-  const id = useId();
-
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (!event.target.files) return;
-
+  function handleAdd({ files, url }: ResultData): void {
     setImagesLoading(true);
 
-    const newImages: File[] = Object.values(event.target.files);
-    event.target.value = '';
+    if (files && files.length) {
+      const newImages: File[] = files;
 
-    let availableStorageSize: number = getRemainingStorageSize();
-    let newImagesTotalSize: number = 0;
+      let availableStorageSize: number = getRemainingStorageSize();
+      let newImagesTotalSize: number = 0;
 
-    setImages([
-      ...images,
-      ...newImages
-        .filter((newImage) => {
-          if (newImage.size > 2621440) {
-            createMessageToast({
-              message: t('messages.addImages.error', {
-                context: 'tooLarge',
-                name: newImage.name,
-              }),
-              level: 'error',
-            });
-            return false;
-          }
+      setImages([
+        ...images,
+        ...newImages
+          .filter((newImage) => {
+            if (newImage.size > 2621440) {
+              createMessageToast({
+                message: t('messages.addImages.error', {
+                  context: 'tooLarge',
+                  name: newImage.name,
+                }),
+                level: 'error',
+              });
+              return false;
+            }
 
-          if (availableStorageSize - newImage.size < 0) {
-            createMessageToast({
-              message: t('messages.addImages.error', {
-                context: 'notEnoughStorage',
-                name: newImage.name,
-              }),
-              level: 'error',
-            });
-            return false;
-          }
+            if (availableStorageSize - newImage.size < 0) {
+              createMessageToast({
+                message: t('messages.addImages.error', {
+                  context: 'notEnoughStorage',
+                  name: newImage.name,
+                }),
+                level: 'error',
+              });
+              return false;
+            }
 
-          availableStorageSize -= newImage.size;
-          newImagesTotalSize += newImage.size;
+            availableStorageSize -= newImage.size;
+            newImagesTotalSize += newImage.size;
 
-          return true;
-        })
-        .map<Image>((file) => ({
-          key: crypto.randomUUID(),
-          file: file,
-          file_url: URL.createObjectURL(file),
-          from_url: null,
-        })),
-    ]);
-    setUsedStorageSize((prev) => prev + newImagesTotalSize);
+            return true;
+          })
+          .map<Image>((file) => ({
+            key: crypto.randomUUID(),
+            file: file,
+            file_url: URL.createObjectURL(file),
+            from_url: null,
+          })),
+      ]);
+      setUsedStorageSize((prev) => prev + newImagesTotalSize);
+    } else if (url) {
+      setImages([
+        ...images,
+        { key: crypto.randomUUID(), file: null, file_url: null, from_url: url },
+      ]);
+    }
+
     setImagesLoading(false);
   }
 
   return (
-    <>
-      <input
-        id={id}
-        type='file'
-        accept='image/*'
-        multiple
-        hidden
-        onChange={handleChange}
-      />
-      <Button {...props} asChild size='sm' variant='dark'>
-        <label htmlFor={id}>{t('text')}</label>
-      </Button>
-    </>
+    <MediaPopover accept='image/*' multiple onAdd={handleAdd}>
+      <MediaPopover.Trigger asChild>
+        <Button {...props} size='sm' variant='dark'>
+          {t('text')}
+        </Button>
+      </MediaPopover.Trigger>
+    </MediaPopover>
   );
 }
 

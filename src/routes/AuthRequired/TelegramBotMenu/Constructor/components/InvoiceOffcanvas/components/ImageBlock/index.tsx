@@ -1,4 +1,4 @@
-import React, { type ReactElement, useEffect, useId, useState } from 'react';
+import React, { type ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Slot } from '@radix-ui/react-slot';
 import { useField } from 'formik';
@@ -9,6 +9,9 @@ import Block, { type BlockProps } from 'components/ui/Block';
 import Button from 'components/ui/Button';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
+
+import MediaPopover from '../../../MediaPopover';
+import type { ResultData } from '../../../MediaPopover/types';
 
 import cn from 'utils/cn';
 
@@ -34,8 +37,6 @@ function ImageBlock({ className, ...props }: ImageBlockProps): ReactElement {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const inputID = useId();
-
   useEffect(() => {
     return () => {
       if (!image?.file_url) return;
@@ -43,44 +44,46 @@ function ImageBlock({ className, ...props }: ImageBlockProps): ReactElement {
     };
   }, [image?.file_url]);
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (!event.target.files) return;
-
+  function handleAdd({ files, url }: ResultData): void {
     setLoading(true);
 
-    const newImage: File = event.target.files[0];
-    event.target.value = '';
+    if (files && files.length) {
+      const newImage: File = files[0];
 
-    if (newImage.size > 2621440) {
-      createMessageToast({
-        message: t('messages.addImage.error', {
-          context: 'tooLarge',
-          name: newImage.name,
-        }),
-        level: 'error',
+      if (newImage.size > 2621440) {
+        createMessageToast({
+          message: t('messages.addImage.error', {
+            context: 'tooLarge',
+            name: newImage.name,
+          }),
+          level: 'error',
+        });
+        setLoading(false);
+        return;
+      }
+
+      if (getRemainingStorageSize() - newImage.size < 0) {
+        createMessageToast({
+          message: t('messages.addImage.error', {
+            context: 'notEnoughStorage',
+            name: newImage.name,
+          }),
+          level: 'error',
+        });
+        setLoading(false);
+        return;
+      }
+
+      setImage({
+        file: newImage,
+        file_url: URL.createObjectURL(newImage),
+        from_url: null,
       });
-      setLoading(false);
-      return;
+      setUsedStorageSize((prev) => prev - (image?.file?.size ?? 0) + newImage.size);
+    } else if (url) {
+      setImage({ file: null, file_url: null, from_url: url });
     }
 
-    if (getRemainingStorageSize() - newImage.size < 0) {
-      createMessageToast({
-        message: t('messages.addImage.error', {
-          context: 'notEnoughStorage',
-          name: newImage.name,
-        }),
-        level: 'error',
-      });
-      setLoading(false);
-      return;
-    }
-
-    setImage({
-      file: newImage,
-      file_url: URL.createObjectURL(newImage),
-      from_url: null,
-    });
-    setUsedStorageSize((prev) => prev - (image?.file?.size ?? 0) + newImage.size);
     setLoading(false);
   }
 
@@ -111,10 +114,13 @@ function ImageBlock({ className, ...props }: ImageBlockProps): ReactElement {
           )}
         </Slot>
       )}
-      <input id={inputID} hidden type='file' accept='image/*' onChange={handleChange} />
-      <Button asChild size='sm' variant='dark'>
-        <label htmlFor={inputID}>{t('addButton')}</label>
-      </Button>
+      <MediaPopover accept='image/*' onAdd={handleAdd}>
+        <MediaPopover.Trigger asChild>
+          <Button size='sm' variant='dark'>
+            {t('addButton')}
+          </Button>
+        </MediaPopover.Trigger>
+      </MediaPopover>
     </Block>
   );
 }

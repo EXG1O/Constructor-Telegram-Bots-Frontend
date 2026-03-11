@@ -39,6 +39,33 @@
     "title": "Name",
     "inputPlaceholder": "Come up with a name"
   },
+  "mediaPopover": {
+    "selectPopoverBody": {
+      "selectFileButton": {
+        "text": "Select file",
+        "text_multiple": "Select files"
+      },
+      "specifyURLButton": {
+        "text": "Specify URL"
+      }
+    },
+    "filePopoverBody": {
+      "table": {
+        "name": "Name:",
+        "size": "Size:"
+      }
+    },
+    "urlPopoverBody": {
+      "messages": {
+        "invalidURLError": "Invalid URL."
+      },
+      "urlInput": {
+        "placeholder": "Enter URL"
+      },
+      "saveButton": "Save",
+      "deleteButton": "Delete"
+    }
+  },
   "variablesInfoText": {
     "text": "You can use variables."
   },

@@ -39,6 +39,33 @@
     "title": "Назва",
     "inputPlaceholder": "Придумайте назву"
   },
+  "mediaPopover": {
+    "selectPopoverBody": {
+      "selectFileButton": {
+        "text": "Вибрати файл",
+        "text_multiple": "Вибрати файли"
+      },
+      "specifyURLButton": {
+        "text": "Вказати URL-адресу"
+      }
+    },
+    "filePopoverBody": {
+      "table": {
+        "name": "Назва:",
+        "size": "Розмір:"
+      }
+    },
+    "urlPopoverBody": {
+      "messages": {
+        "invalidURLError": "Невірна URL-адреса."
+      },
+      "urlInput": {
+        "placeholder": "Введіть URL-адресу"
+      },
+      "saveButton": "Зберегти",
+      "deleteButton": "Видалити"
+    }
+  },
   "variablesInfoText": {
     "text": "Ви можете використовувати змінні."
   },

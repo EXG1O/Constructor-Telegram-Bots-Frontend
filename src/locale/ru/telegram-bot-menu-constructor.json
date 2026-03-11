@@ -39,6 +39,33 @@
     "title": "Название",
     "inputPlaceholder": "Придумайте название"
   },
+  "mediaPopover": {
+    "selectPopoverBody": {
+      "selectFileButton": {
+        "text": "Выбрать файл",
+        "text_multiple": "Выбрать файлы"
+      },
+      "specifyURLButton": {
+        "text": "Указать URL-адрес"
+      }
+    },
+    "filePopoverBody": {
+      "table": {
+        "name": "Название:",
+        "size": "Размер:"
+      }
+    },
+    "urlPopoverBody": {
+      "messages": {
+        "invalidURLError": "Неверный URL-адрес."
+      },
+      "urlInput": {
+        "placeholder": "Введите URL-адрес"
+      },
+      "saveButton": "Сохранить",
+      "deleteButton": "Удалить"
+    }
+  },
   "variablesInfoText": {
     "text": "Вы можете использовать переменные."
   },

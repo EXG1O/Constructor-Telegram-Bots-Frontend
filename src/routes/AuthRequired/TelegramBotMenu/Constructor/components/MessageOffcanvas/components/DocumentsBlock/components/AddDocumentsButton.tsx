@@ -1,4 +1,4 @@
-import React, { type ReactElement, useId } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useField } from 'formik';
 
@@ -6,6 +6,9 @@ import { RouteID } from 'routes';
 
 import Button, { type ButtonProps } from 'components/ui/Button';
 import { createMessageToast } from 'components/ui/ToastContainer';
+
+import MediaPopover from '../../../../MediaPopover';
+import type { ResultData } from '../../../../MediaPopover/types';
 
 import { useMessageOffcanvasStore } from '../../../store';
 import type { Document, Documents } from '../types';
@@ -30,64 +33,67 @@ function AddDocumentsButton(props: AddDocumentsButtonProps): ReactElement {
   const [{ value: documents }, _meta, { setValue: setDocuments }] =
     useField<Documents>('documents');
 
-  const id = useId();
+  function handleAdd({ files, url }: ResultData): void {
+    if (files && files.length) {
+      const newDocuments: File[] = files;
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (!event.target.files) return;
+      let availableStorageSize: number = getRemainingStorageSize();
+      let newDocumentsTotalSize: number = 0;
 
-    const newDocuments: File[] = Object.values(event.target.files);
-    event.target.value = '';
+      setDocuments([
+        ...documents,
+        ...newDocuments
+          .filter((newDocument) => {
+            if (newDocument.size > 2621440) {
+              createMessageToast({
+                message: t('messages.addDocuments.error', {
+                  context: 'tooLarge',
+                  name: newDocument.name,
+                }),
+                level: 'error',
+              });
+              return false;
+            }
 
-    let availableStorageSize: number = getRemainingStorageSize();
-    let newDocumentsTotalSize: number = 0;
+            if (availableStorageSize - newDocument.size < 0) {
+              createMessageToast({
+                message: t('messages.addDocuments.error', {
+                  context: 'notEnoughStorage',
+                  name: newDocument.name,
+                }),
+                level: 'error',
+              });
+              return false;
+            }
 
-    setDocuments([
-      ...documents,
-      ...newDocuments
-        .filter((newDocument) => {
-          if (newDocument.size > 2621440) {
-            createMessageToast({
-              message: t('messages.addDocuments.error', {
-                context: 'tooLarge',
-                name: newDocument.name,
-              }),
-              level: 'error',
-            });
-            return false;
-          }
+            availableStorageSize -= newDocument.size;
+            newDocumentsTotalSize += newDocument.size;
 
-          if (availableStorageSize - newDocument.size < 0) {
-            createMessageToast({
-              message: t('messages.addDocuments.error', {
-                context: 'notEnoughStorage',
-                name: newDocument.name,
-              }),
-              level: 'error',
-            });
-            return false;
-          }
-
-          availableStorageSize -= newDocument.size;
-          newDocumentsTotalSize += newDocument.size;
-
-          return true;
-        })
-        .map<Document>((file) => ({
-          key: crypto.randomUUID(),
-          file,
-          from_url: null,
-        })),
-    ]);
-    setUsedStorageSize((prev) => prev + newDocumentsTotalSize);
+            return true;
+          })
+          .map<Document>((file) => ({
+            key: crypto.randomUUID(),
+            file,
+            from_url: null,
+          })),
+      ]);
+      setUsedStorageSize((prev) => prev + newDocumentsTotalSize);
+    } else if (url) {
+      setDocuments([
+        ...documents,
+        { key: crypto.randomUUID(), file: null, from_url: url },
+      ]);
+    }
   }
 
   return (
-    <>
-      <input id={id} type='file' multiple hidden onChange={handleChange} />
-      <Button {...props} asChild size='sm' variant='dark'>
-        <label htmlFor={id}>{t('text')}</label>
-      </Button>
-    </>
+    <MediaPopover onAdd={handleAdd}>
+      <MediaPopover.Trigger asChild>
+        <Button {...props} size='sm' variant='dark'>
+          {t('text')}
+        </Button>
+      </MediaPopover.Trigger>
+    </MediaPopover>
   );
 }
 
