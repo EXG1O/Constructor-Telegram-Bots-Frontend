@@ -19,7 +19,7 @@ function SystemVariables({ className, ...props }: SystemVariablesProps): ReactEl
   const [type, setType] = useState<TelegramBotSystemVariablesType>('personal');
 
   return (
-    <div {...props} className={cn('flex', 'flex-col', 'w-full', 'gap-1.5', className)}>
+    <div {...props} className={cn('flex', 'flex-col', 'w-full', 'gap-1', className)}>
       <TelegramBotSystemVariablesTypeTabs size='sm' type={type} onChange={setType} />
       <List size='sm' striped>
         <ul className='w-full overflow-hidden rounded-sm text-sm'>

@@ -70,7 +70,7 @@ function UserVariables({ className, ...props }: UserVariablesProps): ReactElemen
   }
 
   return (
-    <div {...props} className={cn('flex', 'flex-col', 'w-full', 'gap-1.5', className)}>
+    <div {...props} className={cn('flex', 'flex-col', 'w-full', 'gap-1', className)}>
       {!loading ? (
         <List size='sm' striped>
           <ul className='w-full overflow-hidden rounded-sm text-sm'>
