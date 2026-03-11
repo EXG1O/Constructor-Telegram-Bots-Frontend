@@ -11,14 +11,19 @@ export interface RichInputFeedbackProps extends RichInputProps {
 }
 
 function RichInputFeedback({
+  size,
   error,
   wrapperProps,
   ...props
 }: RichInputFeedbackProps): ReactElement {
   return (
     <div {...wrapperProps} className={cn('w-full', wrapperProps?.className)}>
-      <RichInput {...props} invalid={Boolean(error)} />
-      {error && <Feedback type='invalid'>{error}</Feedback>}
+      <RichInput {...props} size={size} invalid={Boolean(error)} />
+      {error && (
+        <Feedback size={size} type='invalid'>
+          {error}
+        </Feedback>
+      )}
     </div>
   );
 }

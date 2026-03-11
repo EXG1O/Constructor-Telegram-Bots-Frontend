@@ -11,14 +11,19 @@ export interface CodeInputFeedbackProps extends CodeInputProps {
 }
 
 function CodeInputFeedback({
+  size,
   error,
   wrapperProps,
   ...props
 }: CodeInputFeedbackProps): ReactElement {
   return (
     <div {...wrapperProps} className={cn('w-full', wrapperProps?.className)}>
-      <CodeInput {...props} invalid={Boolean(error)} />
-      {error && <Feedback type='invalid'>{error}</Feedback>}
+      <CodeInput {...props} size={size} invalid={Boolean(error)} />
+      {error && (
+        <Feedback size={size} type='invalid'>
+          {error}
+        </Feedback>
+      )}
     </div>
   );
 }
