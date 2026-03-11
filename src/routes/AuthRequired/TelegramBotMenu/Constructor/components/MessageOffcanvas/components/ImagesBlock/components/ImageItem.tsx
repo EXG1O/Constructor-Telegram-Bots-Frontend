@@ -5,13 +5,21 @@ import {
   type FastFieldProps,
   FieldArray,
   type FieldArrayRenderProps,
+  type FieldInputProps,
+  type FormikProps,
 } from 'formik';
+import { produce } from 'immer';
 import { Trash2 } from 'lucide-react';
 
+import Button from 'components/ui/Button';
 import IconButton from 'components/ui/IconButton';
+
+import MediaPopover from '../../../../MediaPopover';
+import type { ResultData } from '../../../../MediaPopover/types';
 
 import cn from 'utils/cn';
 
+import type { FormValues } from '../../..';
 import { useMessageOffcanvasStore } from '../../../store';
 import type { Image } from '../types';
 
@@ -27,6 +35,19 @@ function ImageItem({ index, className, ...props }: ImageItemProps): ReactElement
     (state) => state.setUsedStorageSize,
   );
 
+  function handleEdit(
+    form: FormikProps<FormValues>,
+    field: FieldInputProps<Image>,
+    data: ResultData,
+  ): void {
+    form.setFieldValue(
+      field.name,
+      produce(field.value, (draft) => {
+        draft.from_url = data.url;
+      }),
+    );
+  }
+
   function handleDeleteClick(image: Image, arrayField: FieldArrayRenderProps): void {
     const file: File | null = image.file;
 
@@ -39,36 +60,51 @@ function ImageItem({ index, className, ...props }: ImageItemProps): ReactElement
 
   return (
     <FastField name={`images[${index}]`}>
-      {({ field }: FastFieldProps) => {
+      {({ field, form }: FastFieldProps) => {
         const image: Image = field.value;
 
         return (
-          <Draggable index={index} draggableId={`message-offcanvas-image-${image.key}`}>
-            {({ innerRef, draggableProps, dragHandleProps }) => (
-              <li
-                {...props}
-                {...draggableProps}
-                {...dragHandleProps}
-                ref={innerRef}
-                className={cn('flex', 'items-center', 'w-full', 'gap-1', className)}
-              >
-                <span className='flex-auto rounded-sm bg-dark px-2 py-1 text-sm text-dark-foreground'>
-                  {image.file?.name ?? image.from_url ?? 'UNKNOWN'}
-                </span>
-                <FieldArray name='images'>
-                  {(arrayField) => (
-                    <IconButton
+          <MediaPopover
+            media={{ file: image.file, url: image.from_url }}
+            onEdit={(data) => handleEdit(form, field, data)}
+          >
+            <Draggable
+              index={index}
+              draggableId={`message-offcanvas-image-${image.key}`}
+            >
+              {({ innerRef, draggableProps, dragHandleProps }) => (
+                <li
+                  {...props}
+                  {...draggableProps}
+                  {...dragHandleProps}
+                  ref={innerRef}
+                  className={cn('flex', 'items-center', 'w-full', 'gap-1', className)}
+                >
+                  <MediaPopover.Trigger asChild>
+                    <Button
+                      asChild
                       size='sm'
-                      className='text-danger'
-                      onClick={() => handleDeleteClick(image, arrayField)}
+                      variant='dark'
+                      className='flex-auto justify-start wrap-anywhere'
                     >
-                      <Trash2 />
-                    </IconButton>
-                  )}
-                </FieldArray>
-              </li>
-            )}
-          </Draggable>
+                      <span>{image.file?.name ?? image.from_url ?? 'UNKNOWN'}</span>
+                    </Button>
+                  </MediaPopover.Trigger>
+                  <FieldArray name='images'>
+                    {(arrayField) => (
+                      <IconButton
+                        size='sm'
+                        className='text-danger'
+                        onClick={() => handleDeleteClick(image, arrayField)}
+                      >
+                        <Trash2 />
+                      </IconButton>
+                    )}
+                  </FieldArray>
+                </li>
+              )}
+            </Draggable>
+          </MediaPopover>
         );
       }}
     </FastField>
