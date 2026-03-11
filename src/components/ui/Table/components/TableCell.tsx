@@ -11,6 +11,7 @@ import cn from 'utils/cn';
 export const tableCellVariants = cva([], {
   variants: {
     size: {
+      xs: ['p-0.75'],
       sm: ['p-1'],
       md: ['p-2'],
     },

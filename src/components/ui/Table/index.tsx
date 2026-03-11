@@ -10,7 +10,7 @@ import TableContext, { type TableContextProps } from './contexts/TableContext';
 
 import cn from 'utils/cn';
 
-export type Size = 'sm' | 'md';
+export type Size = 'xs' | 'sm' | 'md';
 
 export const DEFAULT_SIZE: Size = 'md';
 
