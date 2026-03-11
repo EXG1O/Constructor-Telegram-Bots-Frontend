@@ -8,15 +8,19 @@ import React, {
 } from 'react';
 import { useStore } from 'zustand';
 
+import { DEFAULT_SIZE } from '..';
+
 import StoreContext from '../contexts/SimpleInputStoreContext';
 
 import { createStore, type StateProps } from '../store';
 
-export interface SimpleInputStoreProviderProps extends StateProps {
+export interface SimpleInputStoreProviderProps extends Partial<StateProps> {
   children: ReactNode;
 }
 
 function SimpleInputStoreProvider({
+  size = DEFAULT_SIZE,
+  invalid = false,
   value,
   children,
   ...props
@@ -25,19 +29,18 @@ function SimpleInputStoreProvider({
 
   const store = useMemo(() => {
     storeJustCreated.current = false;
-    return createStore(props);
+    return createStore({ ...props, size, invalid });
   }, []);
 
   const setValue = useStore(store, (state) => state.setValue);
 
   useEffect(() => {
-    if (storeJustCreated) return;
-    store.setState(props);
-  }, [props]);
+    if (storeJustCreated.current) return;
+    store.setState({ ...props, size, invalid });
+  }, [size, invalid, props]);
   useEffect(() => {
-    const state = store.getState();
-    if (value === state.value) return;
-    setValue(value as string);
+    if (value === undefined) return;
+    setValue(value);
   }, [value]);
 
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
