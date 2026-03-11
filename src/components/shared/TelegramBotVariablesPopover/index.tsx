@@ -42,7 +42,7 @@ const TelegramBotVariablesPopover = forwardRef<
         {children}
         <Popover.Body {...props} ref={ref} size='sm' className={cn('w-70', className)}>
           <TelegramBotVariablesPopoverContext.Provider value={contextValue}>
-            <TypeSelect type={type} className='mb-1.5' onChange={setType} />
+            <TypeSelect type={type} className='mb-1' onChange={setType} />
             <Suspense fallback={<Loading />}>
               {type === 'system' ? (
                 <SystemVariables />

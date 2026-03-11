@@ -89,7 +89,7 @@ function DatabaseRecords({ className, ...props }: DatabaseRecordsProps): ReactEl
   }
 
   return (
-    <div {...props} className={cn('flex', 'flex-col', 'w-full', 'gap-1.5', className)}>
+    <div {...props} className={cn('flex', 'flex-col', 'w-full', 'gap-1', className)}>
       <SearchInput size='sm' onSearch={handleSearch} onCancel={handleCancel} />
       {!loading ? (
         <List size='sm' striped>

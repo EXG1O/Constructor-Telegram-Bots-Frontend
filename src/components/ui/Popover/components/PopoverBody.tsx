@@ -37,7 +37,7 @@ export const popoverBodyVariants = cva(
   {
     variants: {
       size: {
-        sm: ['rounded-md', 'p-1.5'],
+        sm: ['rounded-md', 'p-1'],
         md: ['rounded-md', 'p-2'],
         lg: ['rounded-lg', 'p-3'],
       },
