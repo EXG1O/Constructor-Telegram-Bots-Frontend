@@ -5,6 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import ProgressBar, { type ProgressBarProps } from 'components/ui/ProgressBar';
 
 import cn from 'utils/cn';
+import formatMB from 'utils/formatMB';
 
 export const storageProgressBarVariants = cva(
   ['flex', 'w-full', 'items-center', 'gap-2', 'text-nowrap'],
@@ -39,9 +40,9 @@ const StorageProgressBar = forwardRef<HTMLDivElement, StorageProgressBarProps>(
         ref={ref}
         className={cn(storageProgressBarVariants({ size, className }))}
       >
-        <span>{`${(usedStorageSize / 1024 ** 2).toFixed(2)} MB`}</span>
+        <span>{formatMB(usedStorageSize)}</span>
         <ProgressBar now={usedStorageSize} max={storageSize} className='flex-auto' />
-        <span>{`${(storageSize / 1024 ** 2).toFixed(2)} MB`}</span>
+        <span>{formatMB(storageSize)}</span>
       </Component>
     );
   },
