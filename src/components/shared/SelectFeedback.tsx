@@ -13,11 +13,15 @@ export interface SelectFeedbackProps extends Omit<SelectProps, 'invalid'> {
 }
 
 const SelectFeedback = forwardRef<HTMLSelectElement, SelectFeedbackProps>(
-  ({ error, wrapperProps, ...props }, ref) => {
+  ({ size, error, wrapperProps, ...props }, ref) => {
     return (
       <div {...wrapperProps} className={cn('w-full', wrapperProps?.className)}>
-        <Select {...props} ref={ref} invalid={Boolean(error)} />
-        {error && <Feedback type='invalid'>{error}</Feedback>}
+        <Select {...props} ref={ref} size={size} invalid={Boolean(error)} />
+        {error && (
+          <Feedback size={size} type='invalid'>
+            {error}
+          </Feedback>
+        )}
       </div>
     );
   },

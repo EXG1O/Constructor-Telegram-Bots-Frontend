@@ -5,11 +5,19 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import cn from 'utils/cn';
 
-export const feedbackVariants = cva(['w-full', 'text-sm', 'mt-1'], {
+export const feedbackVariants = cva(['w-full'], {
   variants: {
+    size: {
+      sm: ['text-xs', 'mt-0.5'],
+      md: ['text-sm', 'mt-1'],
+      lg: ['text-base', 'mt-2'],
+    },
     type: {
       invalid: ['text-danger'],
     },
+  },
+  defaultVariants: {
+    size: 'md',
   },
 });
 
@@ -19,14 +27,14 @@ export interface FeedbackProps
 }
 
 const Feedback = forwardRef<HTMLDivElement, FeedbackProps>(
-  ({ asChild, type, className, ...props }, ref) => {
+  ({ asChild, size, type, className, ...props }, ref) => {
     const Component = asChild ? Slot : 'div';
 
     return (
       <Component
         {...props}
         ref={ref}
-        className={cn(feedbackVariants({ type, className }))}
+        className={cn(feedbackVariants({ size, type, className }))}
       />
     );
   },

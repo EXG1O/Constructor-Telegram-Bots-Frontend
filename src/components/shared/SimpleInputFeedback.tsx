@@ -11,14 +11,19 @@ export interface SimpleInputFeedbackProps extends Omit<SimpleInputProps, 'invali
 }
 
 function SimpleInputFeedback({
+  size,
   error,
   wrapperProps,
   ...props
 }: SimpleInputFeedbackProps): ReactElement {
   return (
     <div {...wrapperProps} className={cn('w-full', wrapperProps?.className)}>
-      <SimpleInput {...props} invalid={Boolean(error)} />
-      {error && <Feedback type='invalid'>{error}</Feedback>}
+      <SimpleInput {...props} size={size} invalid={Boolean(error)} />
+      {error && (
+        <Feedback size={size} type='invalid'>
+          {error}
+        </Feedback>
+      )}
     </div>
   );
 }
