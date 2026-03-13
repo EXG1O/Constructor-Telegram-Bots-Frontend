@@ -2,11 +2,10 @@ import React, { forwardRef } from 'react';
 
 import IconButton, { type IconButtonProps } from 'components/ui/IconButton';
 
-import useCodeInputStore from '../../../hooks/useCodeInputStore';
-
 import cn from 'utils/cn';
 
 import type { Size } from '../../..';
+import { useCodeInputStore } from '../../../store';
 
 const SIZE_MAP: Record<Size, NonNullable<IconButtonProps['size']>> = {
   sm: 'xs',

@@ -9,12 +9,11 @@ import Loading from './components/Loading';
 
 import settings from 'settings';
 
-import useCodeInputStore from '../../hooks/useCodeInputStore';
-
 import cn from 'utils/cn';
 
 import type { Editor } from '../..';
 import { DEFAULT_SIZE, type Size } from '../..';
+import { useCodeInputStore } from '../../store';
 
 const PrimitiveEditor = MonacoEditor;
 PrimitiveEditor.displayName = 'PrimitiveEditor';

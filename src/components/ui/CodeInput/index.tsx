@@ -4,9 +4,8 @@ import type { editor } from 'monaco-editor';
 import CodeInputContainer from './components/CodeInputContainer';
 import CodeInputEditor from './components/CodeInputEditor';
 import CodeInputToolbar from './components/CodeInputToolbar';
-import CodeInputStoreProvider, {
-  type CodeInputStoreProviderProps,
-} from './providers/CodeInputStoreProvider';
+
+import { CodeInputStoreProvider, type StoreProps } from './store';
 
 export type Size = 'sm' | 'md' | 'lg';
 
@@ -14,15 +13,15 @@ export interface Editor extends editor.IStandaloneCodeEditor {
   updateLayout: (shouldResetWidth?: boolean) => void;
 }
 
-export interface CodeInputProps extends Omit<CodeInputStoreProviderProps, 'children'> {
+export interface CodeInputProps extends StoreProps {
   children?: ReactNode;
 }
 
 export const DEFAULT_SIZE: Size = 'md';
 
-function CodeInput({ children, ...props }: CodeInputProps): ReactElement {
+function CodeInput({ children, ...storeProps }: CodeInputProps): ReactElement {
   return (
-    <CodeInputStoreProvider {...props}>
+    <CodeInputStoreProvider storeProps={storeProps}>
       {children || (
         <CodeInputContainer>
           <CodeInputEditor />

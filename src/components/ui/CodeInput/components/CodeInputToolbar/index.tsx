@@ -4,11 +4,10 @@ import { cva } from 'class-variance-authority';
 
 import ToolbarButton from './components/ToolbarButton';
 
-import useCodeInputStore from '../../hooks/useCodeInputStore';
-
 import cn from 'utils/cn';
 
 import { DEFAULT_SIZE } from '../..';
+import { useCodeInputStore } from '../../store';
 
 export const codeInputToolbarVariants = cva(
   ['flex', 'w-full', 'border-b', 'border-b-outline'],
