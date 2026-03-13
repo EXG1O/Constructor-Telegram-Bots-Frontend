@@ -4,9 +4,9 @@ import { cva } from 'class-variance-authority';
 
 import { DEFAULT_SIZE } from '..';
 
-import useSimpleInputStore from '../hooks/useSimpleInputStore';
-
 import cn from 'utils/cn';
+
+import { useSimpleInputStore } from '../store';
 
 export const simpleInputEditorVariants = cva(
   [

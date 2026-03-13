@@ -4,8 +4,7 @@ import TelegramBotVariablesPopover from 'components/shared/TelegramBotVariablesP
 import ToolbarButton, {
   type ToolbarButtonProps,
 } from 'components/ui/SimpleInput/components/SimpleInputToolbar/components/ToolbarButton';
-
-import useSimpleInputStore from 'components/ui/SimpleInput/hooks/useSimpleInputStore';
+import { useSimpleInputStore } from 'components/ui/SimpleInput/store';
 
 export interface ToolbarVariablesButtonProps extends Omit<
   ToolbarButtonProps,

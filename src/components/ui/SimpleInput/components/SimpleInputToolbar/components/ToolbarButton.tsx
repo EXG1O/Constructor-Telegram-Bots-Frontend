@@ -1,8 +1,7 @@
 import React, { forwardRef } from 'react';
 
 import IconButton, { type IconButtonProps } from 'components/ui/IconButton';
-
-import useSimpleInputStore from '../../../hooks/useSimpleInputStore';
+import { useSimpleInputStore } from 'components/ui/SimpleInput/store';
 
 import cn from 'utils/cn';
 
