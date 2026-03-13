@@ -2,9 +2,11 @@ import React, { forwardRef, type HTMLAttributes, useEffect } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
 
-import useRichInputStore from '../hooks/useRichInputStore';
+import { DEFAULT_SIZE } from '..';
 
 import cn from 'utils/cn';
+
+import { useRichInputStore } from '../store';
 
 export const richInputEditorInnerContentVariants = cva(
   [
@@ -72,7 +74,7 @@ export const richInputEditorInnerContentVariants = cva(
       },
     },
     defaultVariants: {
-      size: 'md',
+      size: DEFAULT_SIZE,
     },
   },
 );
@@ -96,7 +98,7 @@ export const richInputEditorContentVariants = cva(
       },
     },
     defaultVariants: {
-      size: 'md',
+      size: DEFAULT_SIZE,
     },
   },
 );
@@ -110,13 +112,12 @@ const RichInputEditor = forwardRef<HTMLDivElement, RichInputEditorProps>(
   ({ asChild, className, contentClassName, ...props }, ref) => {
     const Component = asChild ? Slot : 'div';
 
-    const setEditorElement = useRichInputStore((state) => state.setEditorElement);
-
     const height = useRichInputStore((state) => state.height);
     const size = useRichInputStore((state) => state.size);
 
     const quill = useRichInputStore((state) => state.quill);
-    const value = useRichInputStore((state) => state.value);
+
+    const setEditorElement = useRichInputStore((state) => state.setEditorElement);
 
     useEffect(() => {
       if (!quill) return;
@@ -147,9 +148,7 @@ const RichInputEditor = forwardRef<HTMLDivElement, RichInputEditorProps>(
         {...props}
         ref={mergeRefs}
         className={cn('relative', 'w-full', className)}
-      >
-        {!quill && value}
-      </Component>
+      />
     );
   },
 );

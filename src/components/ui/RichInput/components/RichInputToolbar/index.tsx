@@ -6,9 +6,10 @@ import ToolbarButton from './components/ToolbarButton';
 import ToolbarGroup from './components/ToolbarGroup';
 import ToolbarLinkButton from './components/ToolbarLinkButton';
 
-import useRichInputStore from '../../hooks/useRichInputStore';
-
 import cn from 'utils/cn';
+
+import { DEFAULT_SIZE } from '../..';
+import { useRichInputStore } from '../../store';
 
 export const richInputToolbarVariants = cva(
   ['flex', 'w-full', 'border-b', 'border-b-outline'],
@@ -21,7 +22,7 @@ export const richInputToolbarVariants = cva(
       },
     },
     defaultVariants: {
-      size: 'md',
+      size: DEFAULT_SIZE,
     },
   },
 );
@@ -34,9 +35,9 @@ const RichInputToolbar = forwardRef<HTMLDivElement, RichInputToolbarProps>(
   ({ asChild, className, ...props }, ref) => {
     const Component = asChild ? Slot : 'div';
 
-    const setToolbarElement = useRichInputStore((store) => store.setToolbarElement);
-
     const size = useRichInputStore((store) => store.size);
+
+    const setToolbarElement = useRichInputStore((store) => store.setToolbarElement);
 
     function mergeRefs(element: HTMLDivElement | null): void {
       setToolbarElement(element);

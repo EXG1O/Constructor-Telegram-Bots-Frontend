@@ -13,16 +13,12 @@ import {
 
 import IconButton, { type IconButtonProps } from 'components/ui/IconButton';
 
-import useRichInputStore from '../../../hooks/useRichInputStore';
-
 import cn from 'utils/cn';
 
-import type { StateProps } from '../../../store';
+import type { Size } from '../../..';
+import { useRichInputStore } from '../../../store';
 
-const SIZE_MAP: Record<
-  NonNullable<StateProps['size']>,
-  NonNullable<IconButtonProps['size']>
-> = {
+const SIZE_MAP: Record<Size, NonNullable<IconButtonProps['size']>> = {
   sm: 'xs',
   md: 'sm',
   lg: 'md',

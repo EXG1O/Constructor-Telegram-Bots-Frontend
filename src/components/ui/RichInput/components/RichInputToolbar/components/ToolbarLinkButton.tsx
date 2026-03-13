@@ -5,11 +5,10 @@ import Quill from 'quill';
 
 import IconButton from 'components/ui/IconButton';
 import Popover from 'components/ui/Popover';
+import { useRichInputStore } from 'components/ui/RichInput/store';
 import SimpleInput from 'components/ui/SimpleInput';
 
 import ToolbarButton, { type ToolbarButtonProps } from './ToolbarButton';
-
-import useRichInputStore from 'components/ui/RichInput/hooks/useRichInputStore';
 
 export interface ToolbarLinkButtonProps extends Omit<ToolbarButtonProps, 'format'> {}
 
