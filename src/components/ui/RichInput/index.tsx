@@ -5,11 +5,11 @@ import RichInputEditor from './components/RichInputEditor';
 import RichInputInner from './components/RichInputInner';
 import RichInputToolbar from './components/RichInputToolbar';
 
-import { RichInputStoreProvider, type StateProps } from './store';
+import { RichInputStoreProvider, type StoreProps } from './store';
 
 export type Size = 'sm' | 'md' | 'lg';
 
-export interface RichInputProps extends StateProps {
+export interface RichInputProps extends StoreProps {
   children?: ReactNode;
 }
 
@@ -25,9 +25,9 @@ export const DEFAULT_FORMATS: string[] = [
   'blockquote',
 ];
 
-function RichInput({ children, ...stateProps }: RichInputProps): ReactElement {
+function RichInput({ children, ...storeProps }: RichInputProps): ReactElement {
   return (
-    <RichInputStoreProvider stateProps={stateProps}>
+    <RichInputStoreProvider storeProps={storeProps}>
       <RichInputInner>
         {children || (
           <RichInputContainer>

@@ -21,7 +21,8 @@ export interface StateActions {
 }
 
 export type State = BaseState<StoreProps> & StateData & StateActions;
-export type StoreProps = Partial<StateData>;
+
+export interface StoreProps extends Partial<StateData> {}
 
 function getData({
   size = DEFAULT_SIZE,

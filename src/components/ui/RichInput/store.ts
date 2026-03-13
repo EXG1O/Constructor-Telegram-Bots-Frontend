@@ -32,22 +32,23 @@ export interface StateActions {
   setPlaceholder: (placeholder: NonNullable<StateData['placeholder']>) => void;
 }
 
-export type State = BaseState<StateProps> & StateData & StateActions;
-export type StateProps = Partial<
+export type State = BaseState<StoreProps> & StateData & StateActions;
+
+export interface StoreProps extends Partial<
   Omit<StateData, 'toolbarElement' | 'editorElement' | 'quill'>
->;
+> {}
 
 function getData({
   size = DEFAULT_SIZE,
   invalid = false,
   formats = DEFAULT_FORMATS,
   ...rest
-}: StateProps): Omit<StateData, 'toolbarElement' | 'editorElement' | 'quill'> {
+}: StoreProps): Omit<StateData, 'toolbarElement' | 'editorElement' | 'quill'> {
   return { ...rest, size, invalid, formats };
 }
 
 export const [RichInputStoreProvider, useRichInputStore] = createZustandContext(
-  (props: StateProps) =>
+  (props: StoreProps) =>
     create<State>((set, get) => ({
       ...getData(props),
 

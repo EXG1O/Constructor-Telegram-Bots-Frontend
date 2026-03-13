@@ -14,9 +14,9 @@ export interface SimpleInputProps extends StoreProps {
 
 export const DEFAULT_SIZE: Size = 'md';
 
-function SimpleInput({ children, ...stateProps }: SimpleInputProps): ReactElement {
+function SimpleInput({ children, ...storeProps }: SimpleInputProps): ReactElement {
   return (
-    <SimpleInputStoreProvider stateProps={stateProps}>
+    <SimpleInputStoreProvider storeProps={storeProps}>
       {children || (
         <SimpleInputContainer>
           <SimpleInputEditor />

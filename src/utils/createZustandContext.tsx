@@ -2,26 +2,26 @@ import React, { type ReactNode, useContext, useEffect, useRef, useState } from '
 import { createContext, type ReactElement } from 'react';
 import { type ExtractState, type StoreApi, useStore } from 'zustand';
 
-interface ZustandStoreProviderProps<StateProps> {
-  stateProps: StateProps;
+interface ZustandStoreProviderProps<StoreProps> {
+  storeProps: StoreProps;
   children: ReactNode;
 }
 
-export interface BaseState<StateProps> {
-  syncFromProps: (props: StateProps) => void;
+export interface BaseState<StoreProps> {
+  syncFromProps: (props: StoreProps) => void;
 }
 
 function createZustandContext<
-  StateProps,
-  Store extends StoreApi<BaseState<StateProps>>,
->(getStore: (stateProps: StateProps) => Store) {
+  StoreProps,
+  Store extends StoreApi<BaseState<StoreProps>>,
+>(getStore: (storeProps: StoreProps) => Store) {
   const StoreContext = createContext<Store | null>(null);
 
   function ZustandStoreProvider({
-    stateProps,
+    storeProps,
     children,
-  }: ZustandStoreProviderProps<StateProps>): ReactElement {
-    const [store] = useState<Store>(() => getStore(stateProps));
+  }: ZustandStoreProviderProps<StoreProps>): ReactElement {
+    const [store] = useState<Store>(() => getStore(storeProps));
     const firstRender = useRef<boolean>(true);
 
     useEffect(() => {
@@ -29,8 +29,8 @@ function createZustandContext<
         firstRender.current = false;
         return;
       }
-      store.getState().syncFromProps(stateProps);
-    }, [stateProps]);
+      store.getState().syncFromProps(storeProps);
+    }, [storeProps]);
 
     return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
   }
