@@ -110,6 +110,7 @@ function TemporaryVariableNode({
           position={Position.Right}
         />
       </Node.Block>
+      <Node.Block className='text-center'>{variable.value}</Node.Block>
     </Node>
   );
 }
