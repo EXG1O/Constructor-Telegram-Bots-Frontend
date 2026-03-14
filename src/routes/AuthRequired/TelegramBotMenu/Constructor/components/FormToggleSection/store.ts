@@ -1,8 +1,9 @@
 import type { FieldInputProps, FormikProps } from 'formik';
-import { createStore as createZustandStore } from 'zustand';
+import { createStore } from 'zustand';
+
+import createZustandContext, { type BaseState } from 'utils/createZustandContext';
 
 export interface StateData {
-  initialProps: InitialStoreProps;
   open: boolean;
   getOpen?: (field: FieldInputProps<any>, form: FormikProps<any>) => boolean;
 }
@@ -11,16 +12,19 @@ export interface StateActions {
   setOpen: (open: StateData['open']) => void;
 }
 
-export type State = StateData & StateActions;
-export type InitialStoreProps = Pick<StateData, 'getOpen'>;
+export type State = BaseState<StoreProps> & StateData & StateActions;
 
-export function createStore(initialProps: InitialStoreProps) {
-  return createZustandStore<State>((set) => ({
-    ...initialProps,
+export interface StoreProps extends Omit<StateData, 'open'> {}
 
-    initialProps,
-    open: false,
+export const [FormToggleSectionStoreProvider, useFormToggleSectionStore] =
+  createZustandContext((props: StoreProps) =>
+    createStore<State>((set) => ({
+      ...props,
 
-    setOpen: (open) => set({ open }),
-  }));
-}
+      open: false,
+
+      syncFromProps: (props) => set(props),
+
+      setOpen: (open) => set({ open }),
+    })),
+  );

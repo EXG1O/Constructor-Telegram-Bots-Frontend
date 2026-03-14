@@ -3,9 +3,9 @@ import React, { forwardRef } from 'react';
 import Button, { type ButtonProps } from 'components/ui/Button';
 import Collapsible from 'components/ui/Collapsible';
 
-import useFormToggleSectionStore from '../hooks/useTelegramBotContentStore';
-
 import cn from 'utils/cn';
+
+import { useFormToggleSectionStore } from '../store';
 
 export interface TriggerButtonProps extends ButtonProps {
   openProps?: ButtonProps;

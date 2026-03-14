@@ -5,10 +5,11 @@ import Collapsible from 'components/ui/Collapsible';
 
 import Inner, { type InnerProps } from './components/Inner';
 import TriggerButton from './components/TriggerButton';
-import StoreProvider, { type StoreProviderProps } from './providers/StoreProvider';
+
+import { FormToggleSectionStoreProvider, type StoreProps } from './store';
 
 export interface FormToggleSectionProps
-  extends Omit<StoreProviderProps, 'children'>, Omit<InnerProps, keyof FastFieldProps> {
+  extends StoreProps, Omit<InnerProps, keyof FastFieldProps> {
   name: string;
 }
 
@@ -20,9 +21,9 @@ function FormToggleSection({
   return (
     <FastField name={name}>
       {(fieldProps: FastFieldProps) => (
-        <StoreProvider getOpen={getOpen}>
+        <FormToggleSectionStoreProvider storeProps={{ getOpen }}>
           <Inner {...props} {...fieldProps} />
-        </StoreProvider>
+        </FormToggleSectionStoreProvider>
       )}
     </FastField>
   );

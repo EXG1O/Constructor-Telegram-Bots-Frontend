@@ -3,7 +3,7 @@ import type { FastFieldProps, FormikProps } from 'formik';
 
 import Collapsible, { type CollapsibleProps } from 'components/ui/Collapsible';
 
-import useFormToggleSectionStore from '../hooks/useTelegramBotContentStore';
+import { useFormToggleSectionStore } from '../store';
 
 export interface InnerProps
   extends FastFieldProps, Omit<CollapsibleProps, 'open' | 'onOpenChange'> {
