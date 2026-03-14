@@ -3,11 +3,10 @@ import { cva } from 'class-variance-authority';
 import Quill, { type Parchment } from 'quill';
 
 import RichInput, { DEFAULT_FORMATS } from 'components/ui/RichInput';
+import { useRichInputStore } from 'components/ui/RichInput/store';
 import Spinner from 'components/ui/Spinner';
 
 import ToolbarSpoilerButton from './components/ToolbarSpoilerButton';
-
-import useRichInputStore from 'components/ui/RichInput/hooks/useRichInputStore';
 
 import cn from 'utils/cn';
 

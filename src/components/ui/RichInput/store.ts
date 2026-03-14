@@ -1,12 +1,16 @@
 import Quill from 'quill';
-import { create } from 'zustand';
+import { createStore } from 'zustand';
 
-export interface StateParams {
+import { DEFAULT_FORMATS, DEFAULT_SIZE, type Size } from '.';
+
+import createZustandContext, { type BaseState } from 'utils/createZustandContext';
+
+export interface StateData {
   toolbarElement: HTMLDivElement | null;
   editorElement: HTMLDivElement | null;
 
   height?: string;
-  size: 'sm' | 'md' | 'lg';
+  size: Size;
   invalid: boolean;
 
   quill: Quill | null;
@@ -19,98 +23,123 @@ export interface StateParams {
 }
 
 export interface StateActions {
-  setToolbarElement: (element: HTMLDivElement | null) => void;
-  setEditorElement: (element: HTMLDivElement | null) => void;
+  setToolbarElement: (toolbarElement: StateData['toolbarElement']) => void;
+  setEditorElement: (editorElement: StateData['editorElement']) => void;
 
   initQuill: () => void;
-  setReadOnly: (readOnly: boolean) => void;
-  setValue: (value: string) => void;
-  setPlaceholder: (placeholder: string) => void;
+  setReadOnly: (readOnly: NonNullable<StateData['readOnly']>) => void;
+  setValue: (value: NonNullable<StateData['value']>) => void;
+  setPlaceholder: (placeholder: NonNullable<StateData['placeholder']>) => void;
 }
 
-export type State = StateParams & StateActions;
-export type StateProps = Partial<Pick<StateParams, 'size' | 'invalid'>> &
-  Pick<
-    StateParams,
-    'height' | 'readOnly' | 'formats' | 'value' | 'placeholder' | 'onMount' | 'onChange'
-  >;
-export type DefaultState = Omit<StateParams, keyof StateProps>;
+export type State = BaseState<StoreProps> & StateData & StateActions;
 
-export const defaultState: DefaultState = {
-  toolbarElement: null,
-  editorElement: null,
-  quill: null,
-};
+export interface StoreProps extends Partial<
+  Omit<StateData, 'toolbarElement' | 'editorElement' | 'quill'>
+> {}
 
-export function createStore({
-  size = 'md',
+function getData({
+  size = DEFAULT_SIZE,
   invalid = false,
-  ...initialProps
-}: StateProps) {
-  return create<State>((set, get) => ({
-    ...defaultState,
-    ...initialProps,
+  formats = DEFAULT_FORMATS,
+  ...rest
+}: StoreProps): Omit<StateData, 'toolbarElement' | 'editorElement' | 'quill'> {
+  return { ...rest, size, invalid, formats };
+}
 
-    size,
-    invalid,
+export const [RichInputStoreProvider, useRichInputStore] = createZustandContext(
+  (props: StoreProps) =>
+    createStore<State>((set, get) => ({
+      ...getData(props),
 
-    setToolbarElement: (element) => set({ toolbarElement: element }),
-    setEditorElement: (element) => set({ editorElement: element }),
+      toolbarElement: null,
+      editorElement: null,
+      quill: null,
 
-    initQuill: () => {
-      const { toolbarElement, editorElement, readOnly, formats, placeholder, onMount } =
-        get();
-      if (!toolbarElement || !editorElement) return;
+      syncFromProps: ({ readOnly, value, placeholder, ...props }) => {
+        set(getData(props));
 
-      const quill = new Quill(editorElement, {
-        modules: {
-          toolbar: {
-            container: toolbarElement,
-            handlers: {
-              link: () => {},
+        const { quill, setReadOnly, setValue, setPlaceholder } = get();
+
+        if (readOnly !== undefined) {
+          setReadOnly(readOnly);
+        }
+        if (value !== undefined && value !== quill?.getSemanticHTML()) {
+          setValue(value);
+        }
+        if (placeholder !== undefined) {
+          setPlaceholder(placeholder);
+        }
+      },
+
+      setToolbarElement: (toolbarElement) => set({ toolbarElement }),
+      setEditorElement: (editorElement) => set({ editorElement }),
+
+      initQuill: () => {
+        const {
+          toolbarElement,
+          editorElement,
+          readOnly,
+          formats,
+          value,
+          placeholder,
+          onMount,
+          setValue,
+        } = get();
+        if (!toolbarElement || !editorElement) return;
+
+        const quill = new Quill(editorElement, {
+          modules: {
+            toolbar: {
+              container: toolbarElement,
+              handlers: {
+                link: () => {},
+              },
             },
           },
-        },
-        readOnly,
-        formats,
-        placeholder,
-      });
-      quill.on(Quill.events.TEXT_CHANGE, () => {
-        const { value, onChange } = get();
+          readOnly,
+          formats,
+          placeholder,
+        });
+        quill.on(Quill.events.TEXT_CHANGE, () => {
+          const { value, onChange } = get();
 
-        const nextValue: string = quill.getSemanticHTML();
-        if (nextValue === value) return;
+          const nextValue: string = quill.getSemanticHTML();
+          if (nextValue === value) return;
 
-        set({ value: nextValue });
-        onChange?.(nextValue);
-      });
-      set({ quill });
-      onMount?.(quill);
-    },
-    setReadOnly: (readOnly) => {
-      set({ readOnly });
+          set({ value: nextValue });
+          onChange?.(nextValue);
+        });
+        set({ quill });
 
-      const { quill } = get();
+        if (value) {
+          setValue(value);
+        }
 
-      quill?.[readOnly ? 'disable' : 'enable']();
-    },
-    setValue: (value) => {
-      set({ value });
+        onMount?.(quill);
+      },
+      setReadOnly: (readOnly) => {
+        set({ readOnly });
 
-      const { quill } = get();
-      if (!quill) return;
+        const { quill } = get();
+        quill?.[readOnly ? 'disable' : 'enable']();
+      },
+      setValue: (value) => {
+        set({ value });
 
-      const selectionRange = quill.getSelection();
+        const { quill } = get();
+        if (!quill) return;
 
-      quill.setContents(quill.clipboard.convert({ html: value }));
-      quill.setSelection(selectionRange);
-    },
-    setPlaceholder: (placeholder) => {
-      set({ placeholder });
+        const selectionRange = quill.getSelection();
 
-      const { quill } = get();
+        quill.setContents(quill.clipboard.convert({ html: value }));
+        quill.setSelection(selectionRange);
+      },
+      setPlaceholder: (placeholder) => {
+        set({ placeholder });
 
-      quill?.root.setAttribute('data-placeholder', placeholder);
-    },
-  }));
-}
+        const { quill } = get();
+        quill?.root.setAttribute('data-placeholder', placeholder);
+      },
+    })),
+);

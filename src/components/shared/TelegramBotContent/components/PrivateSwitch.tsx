@@ -10,9 +10,9 @@ import Check from 'components/ui/Check';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import useTelegramBotContentStore from '../hooks/useTelegramBotContentStore';
-
 import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
+
+import { useTelegramBotContentStore } from '../store';
 
 export interface PrivateSwitchProps extends Omit<
   HTMLAttributes<HTMLDivElement>,

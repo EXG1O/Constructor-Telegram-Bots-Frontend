@@ -1,9 +1,11 @@
 import type { InputHTMLAttributes } from 'react';
-import { create } from 'zustand';
+import { createStore } from 'zustand';
 
-import type { Size } from '.';
+import { DEFAULT_SIZE, type Size } from '.';
 
-export interface StateParams extends Pick<
+import createZustandContext, { type BaseState } from 'utils/createZustandContext';
+
+export interface StateData extends Pick<
   InputHTMLAttributes<HTMLInputElement>,
   'autoFocus' | 'inputMode' | 'placeholder'
 > {
@@ -11,33 +13,47 @@ export interface StateParams extends Pick<
   invalid: boolean;
   value: string;
 
-  onChange?: (value: string) => void;
+  onChange?: (value: StateData['value']) => void;
 }
 
 export interface StateActions {
-  setValue: (value: string) => void;
+  setValue: (value: StateData['value']) => void;
 }
 
-export type State = StateParams & StateActions;
-export type StateProps = Partial<Pick<StateParams, 'value'>> &
-  Pick<
-    StateParams,
-    'size' | 'invalid' | 'autoFocus' | 'inputMode' | 'placeholder' | 'onChange'
-  >;
+export type State = BaseState<StoreProps> & StateData & StateActions;
 
-export function createStore({ value = '', ...props }: StateProps) {
-  return create<State>((set, get) => ({
-    ...props,
+export interface StoreProps extends Partial<StateData> {}
 
-    value,
-
-    setValue: (nextValue) => {
-      const { value, onChange } = get();
-
-      if (nextValue !== value) {
-        set({ value: nextValue });
-        onChange?.(nextValue);
-      }
-    },
-  }));
+function getData({
+  size = DEFAULT_SIZE,
+  invalid = false,
+  value = '',
+  ...rest
+}: StoreProps): StateData {
+  return { ...rest, size, invalid, value };
 }
+
+export const [SimpleInputStoreProvider, useSimpleInputStore] = createZustandContext(
+  (props: StoreProps) =>
+    createStore<State>((set, get) => ({
+      ...getData(props),
+
+      syncFromProps: ({ value: nextValue, ...props }) => {
+        set(getData(props));
+
+        if (nextValue !== undefined) {
+          const { value, onChange } = get();
+
+          if (nextValue !== value) {
+            set({ value: nextValue });
+            onChange?.(nextValue);
+          }
+        }
+      },
+
+      setValue: (value) => {
+        set({ value });
+        get().onChange?.(value);
+      },
+    })),
+);

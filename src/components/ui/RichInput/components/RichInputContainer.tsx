@@ -2,9 +2,11 @@ import React, { forwardRef, type HTMLAttributes } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
 
-import useRichInputStore from '../hooks/useRichInputStore';
+import { DEFAULT_SIZE } from '..';
 
 import cn from 'utils/cn';
+
+import { useRichInputStore } from '../store';
 
 const richInputContainerVariants = cva(
   [
@@ -33,7 +35,7 @@ const richInputContainerVariants = cva(
       },
     },
     defaultVariants: {
-      size: 'md',
+      size: DEFAULT_SIZE,
       invalid: false,
     },
   },

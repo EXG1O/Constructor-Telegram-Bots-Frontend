@@ -10,15 +10,15 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import APIToken from './APIToken';
 import PrivateSwitch from './PrivateSwitch';
 
-import useTelegramBotContentStore from '../hooks/useTelegramBotContentStore';
-
 import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
 
 import cn from 'utils/cn';
 
-export interface InnerProps extends Omit<HTMLAttributes<HTMLElement>, 'children'> {}
+import { useTelegramBotContentStore } from '../store';
 
-function Inner({ className, ...props }: InnerProps): ReactElement {
+export interface ContentProps extends Omit<HTMLAttributes<HTMLElement>, 'children'> {}
+
+function Content({ className, ...props }: ContentProps): ReactElement {
   const { t } = useTranslation('components', { keyPrefix: 'telegramBotContent' });
 
   const telegramBot = useTelegramBotContentStore((state) => state.telegramBot);
@@ -108,4 +108,4 @@ function Inner({ className, ...props }: InnerProps): ReactElement {
   );
 }
 
-export default Inner;
+export default Content;

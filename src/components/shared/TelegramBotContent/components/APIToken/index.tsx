@@ -7,7 +7,7 @@ import APITokenEditing, {
   type APITokenEditingProps,
 } from './components/APITokenEditing';
 
-import useTelegramBotContentStore from '../../hooks/useTelegramBotContentStore';
+import { useTelegramBotContentStore } from '../../store';
 
 export interface APITokenProps extends APITokenDisplayProps, APITokenEditingProps {}
 

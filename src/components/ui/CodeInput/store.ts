@@ -1,12 +1,14 @@
 import type { Monaco } from '@monaco-editor/react';
 import type { editor } from 'monaco-editor';
-import { create } from 'zustand';
+import { createStore } from 'zustand';
 
 import { DEFAULT_SIZE, type Size } from '.';
 
+import createZustandContext, { type BaseState } from 'utils/createZustandContext';
+
 import type { Editor } from '.';
 
-export interface StateParams {
+export interface StateData {
   editor: Editor | null;
 
   size: Size;
@@ -27,33 +29,27 @@ export interface StateActions {
   setEditor: (editor: Editor) => void;
 }
 
-export type State = StateParams & StateActions;
-export type StateProps = Partial<Pick<StateParams, 'size' | 'invalid' | 'options'>> &
-  Pick<
-    StateParams,
-    | 'value'
-    | 'language'
-    | 'saveViewState'
-    | 'keepCurrentModel'
-    | 'beforeMount'
-    | 'onMount'
-    | 'onChange'
-    | 'onValidate'
-  >;
+export type State = BaseState<StoreProps> & StateData & StateActions;
 
-export function createStore({
+export interface StoreProps extends Partial<Omit<StateData, 'editor'>> {}
+
+function getData({
   size = DEFAULT_SIZE,
   invalid = false,
-  ...props
-}: StateProps) {
-  return create<State>((set) => ({
-    ...props,
-
-    editor: null,
-
-    size,
-    invalid,
-
-    setEditor: (editor) => set({ editor }),
-  }));
+  ...rest
+}: StoreProps): Omit<StateData, 'editor'> {
+  return { ...rest, size, invalid };
 }
+
+export const [CodeInputStoreProvider, useCodeInputStore] = createZustandContext(
+  (props: StoreProps) =>
+    createStore<State>((set) => ({
+      ...getData(props),
+
+      editor: null,
+
+      syncFromProps: (props) => set(getData(props)),
+
+      setEditor: (editor) => set({ editor }),
+    })),
+);

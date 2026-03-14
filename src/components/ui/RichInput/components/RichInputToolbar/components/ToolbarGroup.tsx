@@ -2,9 +2,10 @@ import React, { forwardRef, type HTMLAttributes } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
 
-import useRichInputStore from '../../../hooks/useRichInputStore';
-
 import cn from 'utils/cn';
+
+import { DEFAULT_SIZE } from '../../..';
+import { useRichInputStore } from '../../../store';
 
 export const toolbarGroupVariants = cva(['inline-flex'], {
   variants: {
@@ -15,7 +16,7 @@ export const toolbarGroupVariants = cva(['inline-flex'], {
     },
   },
   defaultVariants: {
-    size: 'md',
+    size: DEFAULT_SIZE,
   },
 });
 

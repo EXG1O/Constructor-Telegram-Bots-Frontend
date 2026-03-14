@@ -3,24 +3,20 @@ import React, { type ReactElement, type ReactNode } from 'react';
 import SimpleInputContainer from './components/SimpleInputContainer';
 import SimpleInputEditor from './components/SimpleInputEditor';
 import SimpleInputToolbar from './components/SimpleInputToolbar';
-import SimpleInputStoreProvider, {
-  type SimpleInputStoreProviderProps,
-} from './providers/SimpleInputStoreProvider';
+
+import { SimpleInputStoreProvider, type StoreProps } from './store';
 
 export type Size = 'sm' | 'md' | 'lg';
 
-export interface SimpleInputProps extends Omit<
-  SimpleInputStoreProviderProps,
-  'children'
-> {
+export interface SimpleInputProps extends StoreProps {
   children?: ReactNode;
 }
 
 export const DEFAULT_SIZE: Size = 'md';
 
-function SimpleInput({ children, ...props }: SimpleInputProps): ReactElement {
+function SimpleInput({ children, ...storeProps }: SimpleInputProps): ReactElement {
   return (
-    <SimpleInputStoreProvider {...props}>
+    <SimpleInputStoreProvider storeProps={storeProps}>
       {children || (
         <SimpleInputContainer>
           <SimpleInputEditor />

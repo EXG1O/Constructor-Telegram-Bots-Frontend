@@ -2,9 +2,8 @@ import React, { type ReactElement } from 'react';
 
 import Spinner, { type SpinnerProps } from 'components/ui/Spinner';
 
-import useCodeInputStore from 'components/ui/CodeInput/hooks/useCodeInputStore';
-
 import type { Size } from '../../..';
+import { useCodeInputStore } from '../../../store';
 
 const SIZE_MAP: Record<Size, NonNullable<SpinnerProps['size']>> = {
   sm: 'xs',

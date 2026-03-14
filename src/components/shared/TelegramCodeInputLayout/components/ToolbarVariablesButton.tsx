@@ -5,8 +5,7 @@ import TelegramBotVariablesPopover from 'components/shared/TelegramBotVariablesP
 import ToolbarButton, {
   type ToolbarButtonProps,
 } from 'components/ui/CodeInput/components/CodeInputToolbar/components/ToolbarButton';
-
-import useCodeInputStore from 'components/ui/CodeInput/hooks/useCodeInputStore';
+import { useCodeInputStore } from 'components/ui/CodeInput/store';
 
 export interface ToolbarVariablesButtonProps extends Omit<
   ToolbarButtonProps,

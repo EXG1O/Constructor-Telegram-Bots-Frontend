@@ -4,9 +4,9 @@ import { cva } from 'class-variance-authority';
 
 import { DEFAULT_SIZE } from '..';
 
-import useCodeInputStore from '../hooks/useCodeInputStore';
-
 import cn from 'utils/cn';
+
+import { useCodeInputStore } from '../store';
 
 export const codeInputContainerVariants = cva(
   [

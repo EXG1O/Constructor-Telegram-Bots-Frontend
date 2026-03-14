@@ -5,8 +5,7 @@ import TelegramBotVariablesPopover from 'components/shared/TelegramBotVariablesP
 import ToolbarButton, {
   type ToolbarButtonProps,
 } from 'components/ui/RichInput/components/RichInputToolbar/components/ToolbarButton';
-
-import useRichInputStore from 'components/ui/RichInput/hooks/useRichInputStore';
+import { useRichInputStore } from 'components/ui/RichInput/store';
 
 export interface ToolbarVariablesButtonProps extends Omit<
   ToolbarButtonProps,
