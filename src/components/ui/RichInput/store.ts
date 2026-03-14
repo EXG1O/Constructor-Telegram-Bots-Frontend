@@ -1,5 +1,5 @@
 import Quill from 'quill';
-import { create } from 'zustand';
+import { createStore } from 'zustand';
 
 import { DEFAULT_FORMATS, DEFAULT_SIZE, type Size } from '.';
 
@@ -49,7 +49,7 @@ function getData({
 
 export const [RichInputStoreProvider, useRichInputStore] = createZustandContext(
   (props: StoreProps) =>
-    create<State>((set, get) => ({
+    createStore<State>((set, get) => ({
       ...getData(props),
 
       toolbarElement: null,

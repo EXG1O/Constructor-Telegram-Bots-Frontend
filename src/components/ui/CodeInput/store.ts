@@ -1,6 +1,6 @@
 import type { Monaco } from '@monaco-editor/react';
 import type { editor } from 'monaco-editor';
-import { create } from 'zustand';
+import { createStore } from 'zustand';
 
 import { DEFAULT_SIZE, type Size } from '.';
 
@@ -43,7 +43,7 @@ function getData({
 
 export const [CodeInputStoreProvider, useCodeInputStore] = createZustandContext(
   (props: StoreProps) =>
-    create<State>((set) => ({
+    createStore<State>((set) => ({
       ...getData(props),
 
       editor: null,
