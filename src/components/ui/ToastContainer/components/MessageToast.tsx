@@ -15,6 +15,7 @@ import ErrorCircleFill from 'assets/icons/exclamation-triangle-fill.svg';
 import InfoCircleFill from 'assets/icons/info-circle-fill.svg';
 
 import cn from 'utils/cn';
+import composeHandlers from 'utils/composeHandlers';
 
 import { useToastContainerStore } from '../store';
 
@@ -95,8 +96,6 @@ function MessageToast({
   }
 
   function handleAnimationEnd(event: React.AnimationEvent<HTMLLIElement>): void {
-    onAnimationEnd?.(event);
-
     const state = event.currentTarget.dataset.state as 'open' | 'closed' | undefined;
 
     if (state === 'closed') {
@@ -115,7 +114,7 @@ function MessageToast({
       duration={timeout}
       className={cn(messageToastVariants({ level, className }))}
       onOpenChange={handleOpenChange}
-      onAnimationEnd={handleAnimationEnd}
+      onAnimationEnd={composeHandlers(onAnimationEnd, handleAnimationEnd)}
     >
       <Icon className='size-4' />
       <ToastDescription asChild>

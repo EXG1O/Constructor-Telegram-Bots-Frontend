@@ -12,6 +12,7 @@ import Spinner from 'components/ui/Spinner';
 import useModal from '../hooks/useModal';
 
 import cn from 'utils/cn';
+import composeHandlers from 'utils/composeHandlers';
 
 export interface ModalContentProps extends Omit<
   DialogContentProps,
@@ -23,8 +24,6 @@ const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
     const { loading, onShowed, onHidden } = useModal();
 
     function handleAnimationEnd(event: React.AnimationEvent<HTMLDivElement>): void {
-      onAnimationEnd?.(event);
-
       const state = event.currentTarget.dataset.state as 'open' | 'closed' | undefined;
 
       if (state) {
@@ -73,7 +72,7 @@ const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
               'data-[state=closed]:slide-out-to-top-5',
               className,
             )}
-            onAnimationEnd={handleAnimationEnd}
+            onAnimationEnd={composeHandlers(onAnimationEnd, handleAnimationEnd)}
           >
             {children}
             {loading && <Spinner className='self-center' />}

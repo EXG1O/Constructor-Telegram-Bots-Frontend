@@ -1,10 +1,12 @@
 import React, { forwardRef } from 'react';
-import { FastField, type FastFieldProps, type FormikProps } from 'formik';
+import { FastField, type FastFieldProps } from 'formik';
 
 import CheckFeedback, {
   type CheckFeedbackProps,
   checkFeedbackVariants,
 } from 'components/shared/CheckFeedback';
+
+import composeHandlers from 'utils/composeHandlers';
 
 export { checkFeedbackVariants as formCheckFeedbackVariants };
 
@@ -17,14 +19,6 @@ export interface FormCheckFeedbackProps extends Omit<
 
 const FormCheckFeedback = forwardRef<HTMLInputElement, FormCheckFeedbackProps>(
   ({ name, onChange, ...props }, ref) => {
-    function handleChange(
-      form: FormikProps<any>,
-      event: React.ChangeEvent<HTMLInputElement>,
-    ): void {
-      form.setFieldValue(name, event.target.checked);
-      onChange?.(event);
-    }
-
     return (
       <FastField name={name} type='checkbox'>
         {({ field, meta, form }: FastFieldProps) => (
@@ -33,7 +27,10 @@ const FormCheckFeedback = forwardRef<HTMLInputElement, FormCheckFeedbackProps>(
             ref={ref}
             checked={field.checked}
             error={meta.error}
-            onChange={(event) => handleChange(form, event)}
+            onChange={composeHandlers(
+              (event) => form.setFieldValue(name, event.target.checked),
+              onChange,
+            )}
           />
         )}
       </FastField>

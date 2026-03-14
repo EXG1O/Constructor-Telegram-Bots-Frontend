@@ -1,12 +1,9 @@
 import React, { type ReactElement } from 'react';
-import {
-  FastField,
-  type FastFieldProps,
-  type FieldInputProps,
-  type FormikProps,
-} from 'formik';
+import { FastField, type FastFieldProps } from 'formik';
 
 import Button, { type ButtonProps } from 'components/ui/Button';
+
+import composeHandlers from 'utils/composeHandlers';
 
 export interface AddonButtonProps extends Omit<
   ButtonProps,
@@ -17,15 +14,6 @@ export interface AddonButtonProps extends Omit<
 }
 
 function AddonButton({ name, onClick, ...props }: AddonButtonProps): ReactElement {
-  function handleClick(
-    form: FormikProps<any>,
-    field: FieldInputProps<boolean>,
-    event: React.MouseEvent<HTMLButtonElement>,
-  ): void {
-    form.setFieldValue(name, !field.value);
-    onClick?.(event);
-  }
-
   return (
     <FastField name={name}>
       {({ field, form }: FastFieldProps) => (
@@ -33,7 +21,10 @@ function AddonButton({ name, onClick, ...props }: AddonButtonProps): ReactElemen
           {...props}
           size='sm'
           variant={field.value ? 'secondary' : 'dark'}
-          onClick={(event) => handleClick(form, field, event)}
+          onClick={composeHandlers(
+            (_event) => form.setFieldValue(name, !field.value),
+            onClick,
+          )}
         />
       )}
     </FastField>

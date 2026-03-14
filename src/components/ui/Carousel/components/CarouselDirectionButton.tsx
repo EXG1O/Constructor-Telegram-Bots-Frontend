@@ -5,6 +5,7 @@ import IconButton, { type IconButtonProps } from 'components/ui/IconButton';
 import useCarousel from '../hooks/useCarousel';
 
 import cn from 'utils/cn';
+import composeHandlers from 'utils/composeHandlers';
 
 import type { EmblaAPI } from '..';
 
@@ -40,11 +41,9 @@ const CarouselDirectionButton = forwardRef<
     };
   }, [api]);
 
-  function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
-    if (api) {
-      onScroll(api);
-    }
-    onClick?.(event);
+  function handleClick(_event: React.MouseEvent<HTMLButtonElement>): void {
+    if (!api) return;
+    onScroll(api);
   }
 
   return (
@@ -67,7 +66,7 @@ const CarouselDirectionButton = forwardRef<
         'hover:bg-gray-100',
         className,
       )}
-      onClick={handleClick}
+      onClick={composeHandlers(handleClick, onClick)}
     />
   );
 });

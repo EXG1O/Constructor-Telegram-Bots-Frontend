@@ -1,7 +1,9 @@
 import React, { forwardRef } from 'react';
-import { FastField, type FastFieldProps, type FormikProps } from 'formik';
+import { FastField, type FastFieldProps } from 'formik';
 
 import Tabs, { type TabsProps } from 'components/ui/Tabs';
+
+import composeHandlers from 'utils/composeHandlers';
 
 export interface FormTabsProps extends Omit<
   TabsProps,
@@ -12,11 +14,6 @@ export interface FormTabsProps extends Omit<
 
 const FormTabs = forwardRef<HTMLDivElement, FormTabsProps>(
   ({ name, onChange, ...props }, ref) => {
-    function handleChange(form: FormikProps<any>, value: string): void {
-      form.setFieldValue(name, value);
-      onChange?.(value);
-    }
-
     return (
       <FastField name={name}>
         {({ field, form }: FastFieldProps) => (
@@ -24,7 +21,10 @@ const FormTabs = forwardRef<HTMLDivElement, FormTabsProps>(
             {...props}
             ref={ref}
             value={field.value}
-            onChange={(value) => handleChange(form, value)}
+            onChange={composeHandlers(
+              (value) => form.setFieldValue(name, value),
+              onChange,
+            )}
           />
         )}
       </FastField>

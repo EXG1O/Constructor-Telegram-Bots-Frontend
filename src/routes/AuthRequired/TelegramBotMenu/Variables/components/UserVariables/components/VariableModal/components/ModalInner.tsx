@@ -1,4 +1,4 @@
-import React, { type ReactElement, useCallback, useEffect } from 'react';
+import React, { type ReactElement, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormikContext } from 'formik';
 
@@ -11,6 +11,8 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import ModalContent from './ModalContent';
 
 import { VariableAPI } from 'api/telegram-bots/variable';
+
+import composeHandlers from 'utils/composeHandlers';
 
 import type { FormValues } from '..';
 import { useVariableModalStore } from '../store';
@@ -54,23 +56,13 @@ function ModalInner({ onHide, onHidden, ...props }: ModalInnerProps): ReactEleme
     }
   }, [telegramBotID, variableID]);
 
-  const handleHide = useCallback(() => {
-    hideModal();
-    onHide?.();
-  }, [hideModal, onHide]);
-
-  const handleHidden = useCallback(() => {
-    resetForm();
-    onHidden?.();
-  }, [resetForm, onHidden]);
-
   return (
     <Modal
       {...props}
       show={show}
       loading={isSubmitting || loading}
-      onHide={handleHide}
-      onHidden={handleHidden}
+      onHide={composeHandlers(hideModal, onHide)}
+      onHidden={composeHandlers(resetForm, onHidden)}
     >
       <ModalContent />
     </Modal>
