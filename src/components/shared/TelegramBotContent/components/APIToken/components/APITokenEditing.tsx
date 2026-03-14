@@ -14,11 +14,11 @@ import IconButton from 'components/ui/IconButton';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import useTelegramBotContentStore from '../../../hooks/useTelegramBotContentStore';
-
 import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
 
 import cn from 'utils/cn';
+
+import { useTelegramBotContentStore } from '../../../store';
 
 const inputWrapperProps: SimpleInputFeedbackProps['wrapperProps'] = {
   className: 'flex-auto',

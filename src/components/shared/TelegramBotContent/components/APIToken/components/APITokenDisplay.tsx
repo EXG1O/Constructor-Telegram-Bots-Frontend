@@ -8,9 +8,9 @@ import { Eye, EyeOff, SquarePen } from 'lucide-react';
 
 import IconButton from 'components/ui/IconButton';
 
-import useTelegramBotContentStore from '../../../hooks/useTelegramBotContentStore';
-
 import cn from 'utils/cn';
+
+import { useTelegramBotContentStore } from '../../../store';
 
 export interface APITokenDisplayProps extends Omit<
   HTMLAttributes<HTMLDivElement>,

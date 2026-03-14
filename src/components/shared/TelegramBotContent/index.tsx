@@ -1,20 +1,19 @@
-import React, { forwardRef, type HTMLAttributes } from 'react';
+import React, { forwardRef } from 'react';
 
-import Inner from './components/Inner';
-import StoreProvider, { type StoreProviderProps } from './providers/StoreProvider';
+import Content, { type ContentProps } from './components/Content';
+
+import { type StoreProps, TelegramBotContentStoreProvider } from './store';
 
 export interface TelegramBotContentProps
-  extends
-    Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'onChange'>,
-    Omit<StoreProviderProps, 'children'> {}
+  extends StoreProps, Omit<ContentProps, 'onChange'> {}
 
 const TelegramBotContent = forwardRef<HTMLDivElement, TelegramBotContentProps>(
   ({ telegramBot, onChange, ...props }, ref) => {
     return (
       <div {...props} ref={ref}>
-        <StoreProvider telegramBot={telegramBot} onChange={onChange}>
-          <Inner />
-        </StoreProvider>
+        <TelegramBotContentStoreProvider storeProps={{ telegramBot, onChange }}>
+          <Content {...props} />
+        </TelegramBotContentStoreProvider>
       </div>
     );
   },

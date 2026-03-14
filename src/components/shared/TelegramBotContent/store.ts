@@ -1,34 +1,37 @@
-import { create } from 'zustand';
+import { createStore } from 'zustand';
 
 import type { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 
-export interface StoreParams {
+import createZustandContext, { type BaseState } from 'utils/createZustandContext';
+
+export interface StateData {
   telegramBot: TelegramBot;
   isEditingAPIToken: boolean;
-  onChange?: (telegramBot: TelegramBot) => void;
+  onChange?: (telegramBot: StateData['telegramBot']) => void;
 }
 
-export interface StoreActions {
-  setTelegramBot: (telegramBot: StoreParams['telegramBot']) => void;
+export interface StateActions {
+  setTelegramBot: (telegramBot: StateData['telegramBot']) => void;
   toggleAPITokenState: () => void;
 }
 
-export type StoreState = StoreParams & StoreActions;
+export type State = BaseState<StoreProps> & StateData & StateActions;
 
-export type InitialStoreProps = Pick<StoreParams, 'telegramBot' | 'onChange'>;
-export type InitialStoreState = Omit<StoreParams, keyof InitialStoreProps>;
+export interface StoreProps extends Omit<StateData, 'isEditingAPIToken'> {}
 
-export function createStore(initialProps: InitialStoreProps) {
-  const initialState: InitialStoreState = { isEditingAPIToken: false };
+export const [TelegramBotContentStoreProvider, useTelegramBotContentStore] =
+  createZustandContext((props: StoreProps) =>
+    createStore<State>((set, get) => ({
+      ...props,
 
-  return create<StoreState>((set, get) => ({
-    ...initialProps,
-    ...initialState,
+      isEditingAPIToken: false,
 
-    setTelegramBot: (telegramBot) => {
-      set({ telegramBot });
-      get().onChange?.(telegramBot);
-    },
-    toggleAPITokenState: () => set({ isEditingAPIToken: !get().isEditingAPIToken }),
-  }));
-}
+      syncFromProps: (props) => set(props),
+
+      setTelegramBot: (telegramBot) => {
+        set({ telegramBot });
+        get().onChange?.(telegramBot);
+      },
+      toggleAPITokenState: () => set({ isEditingAPIToken: !get().isEditingAPIToken }),
+    })),
+  );
