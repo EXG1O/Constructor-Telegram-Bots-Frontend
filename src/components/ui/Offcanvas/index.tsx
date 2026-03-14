@@ -18,6 +18,7 @@ import OffcanvasContext, {
 } from './contexts/OffcanvasContext';
 
 import cn from 'utils/cn';
+import composeHandlers from 'utils/composeHandlers';
 
 export interface OffcanvasProps
   extends
@@ -56,8 +57,6 @@ const Offcanvas = forwardRef<HTMLDivElement, OffcanvasProps>(
     }
 
     function handleAnimationEnd(event: React.AnimationEvent<HTMLDivElement>): void {
-      onAnimationEnd?.(event);
-
       const state = event.currentTarget.dataset.state as 'open' | 'closed' | undefined;
 
       if (state) {
@@ -103,7 +102,7 @@ const Offcanvas = forwardRef<HTMLDivElement, OffcanvasProps>(
               'data-[state=closed]:slide-out-to-left',
               className,
             )}
-            onAnimationEnd={handleAnimationEnd}
+            onAnimationEnd={composeHandlers(onAnimationEnd, handleAnimationEnd)}
           >
             <OffcanvasContext.Provider value={contextValue}>
               {children}

@@ -1,10 +1,11 @@
 import React, { type ReactElement } from 'react';
-import { FastField, type FastFieldProps, type FormikProps } from 'formik';
+import { FastField, type FastFieldProps } from 'formik';
 
 import CodeInputFeedback, {
   type CodeInputFeedbackProps,
 } from 'components/shared/CodeInputFeedback';
-import type { Editor } from 'components/ui/CodeInput';
+
+import composeHandlers from 'utils/composeHandlers';
 
 export interface FormCodeInputFeedbackProps extends Omit<
   CodeInputFeedbackProps,
@@ -18,11 +19,6 @@ function FormCodeInputFeedback({
   onChange,
   ...props
 }: FormCodeInputFeedbackProps): ReactElement {
-  function handleChange(form: FormikProps<any>, editor: Editor, value: string): void {
-    form.setFieldValue(name, value);
-    onChange?.(editor, value);
-  }
-
   return (
     <FastField name={name}>
       {({ field, meta, form }: FastFieldProps) => (
@@ -30,7 +26,10 @@ function FormCodeInputFeedback({
           {...props}
           value={field.value}
           error={meta.error}
-          onChange={(editor, value) => handleChange(form, editor, value)}
+          onChange={composeHandlers(
+            (_editor, value) => form.setFieldValue(name, value),
+            onChange,
+          )}
         />
       )}
     </FastField>

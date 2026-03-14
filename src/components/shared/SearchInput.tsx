@@ -13,6 +13,7 @@ import SimpleInput, {
 import type { SimpleInputEditorProps } from 'components/ui/SimpleInput/components/SimpleInputEditor';
 
 import cn from 'utils/cn';
+import composeHandlers from 'utils/composeHandlers';
 
 const containerVariants = cva(['group', 'inline-flex'], {
   variants: {
@@ -138,11 +139,6 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       }
     }, [active]);
 
-    function handleChange(nextValue: string): void {
-      setValue(nextValue);
-      onChange?.(nextValue);
-    }
-
     function handleSearch(): void {
       onSearch?.(value);
       setSearchDone(true);
@@ -173,7 +169,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
             inputMode='search'
             value={value}
             placeholder={t('inputPlaceholder')}
-            onChange={handleChange}
+            onChange={composeHandlers(setValue, onChange)}
           >
             <SimpleInput.Container className='-ms-px rounded-l-none'>
               <SimpleInput.Editor

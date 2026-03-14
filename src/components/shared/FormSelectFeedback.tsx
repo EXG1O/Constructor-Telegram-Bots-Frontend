@@ -1,10 +1,12 @@
 import React, { forwardRef } from 'react';
-import { FastField, type FastFieldProps, type FormikProps } from 'formik';
+import { FastField, type FastFieldProps } from 'formik';
 
 import SelectFeedback, {
   type SelectFeedbackProps,
   selectFeedbackVariants,
 } from 'components/shared/SelectFeedback';
+
+import composeHandlers from 'utils/composeHandlers';
 
 export { selectFeedbackVariants as formSelectFeedbackVariants };
 
@@ -17,14 +19,6 @@ export interface FormSelectFeedbackProps extends Omit<
 
 const FormSelectFeedback = forwardRef<HTMLSelectElement, FormSelectFeedbackProps>(
   ({ name, onChange, ...props }, ref) => {
-    function handleChange(
-      form: FormikProps<any>,
-      event: React.ChangeEvent<HTMLSelectElement>,
-    ): void {
-      form.setFieldValue(name, event.target.value);
-      onChange?.(event);
-    }
-
     return (
       <FastField name={name}>
         {({ field, meta, form }: FastFieldProps) => (
@@ -33,7 +27,10 @@ const FormSelectFeedback = forwardRef<HTMLSelectElement, FormSelectFeedbackProps
             ref={ref}
             value={field.value}
             error={meta.error}
-            onChange={(event) => handleChange(form, event)}
+            onChange={composeHandlers(
+              (event) => form.setFieldValue(name, event.target.value),
+              onChange,
+            )}
           />
         )}
       </FastField>

@@ -1,9 +1,11 @@
 import React, { type ReactElement } from 'react';
-import { FastField, type FastFieldProps, type FormikProps } from 'formik';
+import { FastField, type FastFieldProps } from 'formik';
 
 import SimpleInputFeedback, {
   type SimpleInputFeedbackProps,
 } from 'components/shared/SimpleInputFeedback';
+
+import composeHandlers from 'utils/composeHandlers';
 
 export interface FormSimpleInputFeedbackProps extends Omit<
   SimpleInputFeedbackProps,
@@ -17,11 +19,6 @@ function FormSimpleInputFeedback({
   onChange,
   ...props
 }: FormSimpleInputFeedbackProps): ReactElement {
-  function handleChange(form: FormikProps<any>, value: string): void {
-    form.setFieldValue(name, value);
-    onChange?.(value);
-  }
-
   return (
     <FastField name={name}>
       {({ field, meta, form }: FastFieldProps) => (
@@ -29,7 +26,10 @@ function FormSimpleInputFeedback({
           {...props}
           value={field.value}
           error={meta.error}
-          onChange={(value) => handleChange(form, value)}
+          onChange={composeHandlers(
+            (value) => form.setFieldValue(name, value),
+            onChange,
+          )}
         />
       )}
     </FastField>
