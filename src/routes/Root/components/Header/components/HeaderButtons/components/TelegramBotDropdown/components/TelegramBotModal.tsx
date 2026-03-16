@@ -97,11 +97,7 @@ function TelegramBotModal(props: TelegramBotModalProps): ReactElement {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body asChild>
-          <TelegramBotContent
-            telegramBot={telegramBot}
-            className='-m-1'
-            onChange={setTelegramBot}
-          />
+          <TelegramBotContent telegramBot={telegramBot} onChange={setTelegramBot} />
         </Modal.Body>
         <Modal.Footer className='flex gap-4 max-sm:flex-wrap'>
           {telegramBot.is_loading ? (
