@@ -40,7 +40,7 @@ function Content({ className, ...props }: ContentProps): ReactElement {
           });
         }
 
-        timeoutID = setTimeout(checkStatus, 3000);
+        timeoutID = setTimeout(checkStatus, 750);
         return;
       }
 
