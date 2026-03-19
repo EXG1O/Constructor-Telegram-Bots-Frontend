@@ -10,8 +10,6 @@ import TelegramBotVariablesPopoverContext, {
   type TelegramBotVariablesPopoverContextProps,
 } from './contexts/TelegramBotVariablesPopoverContext';
 
-import cn from 'utils/cn';
-
 const SystemVariables = lazy(() => import('./components/SystemVariables'));
 const UserVariables = lazy(() => import('./components/UserVariables'));
 const TemporaryVariables = lazy(() => import('./components/TemporaryVariables'));
@@ -26,41 +24,36 @@ export interface TelegramBotVariablesPopoverProps
 const TelegramBotVariablesPopover = forwardRef<
   HTMLDivElement,
   TelegramBotVariablesPopoverProps
->(
-  (
-    { defaultOpen, open, className, children, onOpenChange, onSelect, ...props },
-    ref,
-  ) => {
-    const [type, setType] = useState<Type>('system');
+>(({ defaultOpen, open, children, onOpenChange, onSelect, ...props }, ref) => {
+  const [type, setType] = useState<Type>('system');
 
-    const contextValue = useMemo<TelegramBotVariablesPopoverContextProps>(
-      () => ({ onSelect }),
-      [onSelect],
-    );
+  const contextValue = useMemo<TelegramBotVariablesPopoverContextProps>(
+    () => ({ onSelect }),
+    [onSelect],
+  );
 
-    return (
-      <Popover defaultOpen={defaultOpen} open={open} onOpenChange={onOpenChange}>
-        {children}
-        <Popover.Body {...props} ref={ref} size='sm' className={cn('w-70', className)}>
-          <TelegramBotVariablesPopoverContext.Provider value={contextValue}>
-            <TypeSelect type={type} className='mb-1' onChange={setType} />
-            <Suspense fallback={<Loading />}>
-              {type === 'system' ? (
-                <SystemVariables />
-              ) : type === 'user' ? (
-                <UserVariables />
-              ) : type === 'temporary' ? (
-                <TemporaryVariables />
-              ) : type == 'database' ? (
-                <DatabaseRecords />
-              ) : null}
-            </Suspense>
-          </TelegramBotVariablesPopoverContext.Provider>
-        </Popover.Body>
-      </Popover>
-    );
-  },
-);
+  return (
+    <Popover defaultOpen={defaultOpen} open={open} onOpenChange={onOpenChange}>
+      {children}
+      <Popover.Body {...props} ref={ref} size='sm'>
+        <TelegramBotVariablesPopoverContext.Provider value={contextValue}>
+          <TypeSelect type={type} className='mb-1' onChange={setType} />
+          <Suspense fallback={<Loading />}>
+            {type === 'system' ? (
+              <SystemVariables />
+            ) : type === 'user' ? (
+              <UserVariables />
+            ) : type === 'temporary' ? (
+              <TemporaryVariables />
+            ) : type == 'database' ? (
+              <DatabaseRecords />
+            ) : null}
+          </Suspense>
+        </TelegramBotVariablesPopoverContext.Provider>
+      </Popover.Body>
+    </Popover>
+  );
+});
 TelegramBotVariablesPopover.displayName = 'TelegramBotVariablesPopover';
 
 export default Object.assign(TelegramBotVariablesPopover, {

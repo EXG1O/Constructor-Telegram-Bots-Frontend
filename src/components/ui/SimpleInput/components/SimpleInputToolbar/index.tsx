@@ -9,7 +9,7 @@ import cn from 'utils/cn';
 import { DEFAULT_SIZE } from '../..';
 import { useSimpleInputStore } from '../../store';
 
-export const codeInputToolbarVariants = cva(
+export const simpleInputToolbarVariants = cva(
   ['flex', 'w-full', 'border-b', 'border-b-outline'],
   {
     variants: {
@@ -39,7 +39,7 @@ const SimpleInputToolbar = forwardRef<HTMLDivElement, SimpleInputToolbarProps>(
       <Component
         {...props}
         ref={ref}
-        className={cn(codeInputToolbarVariants({ size, className }))}
+        className={cn(simpleInputToolbarVariants({ size, className }))}
       />
     );
   },

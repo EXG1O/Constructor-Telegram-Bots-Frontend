@@ -56,7 +56,7 @@ const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
               'flex',
               'flex-col',
               'w-auto',
-              'sm:max-w-[500px]',
+              'sm:max-w-130',
               'bg-background',
               'rounded-lg',
               'gap-4',

@@ -13,6 +13,7 @@ import cn from 'utils/cn';
 export const popoverBodyVariants = cva(
   [
     Z_INDEX.POPOVER,
+    'w-70',
     'max-h-(--radix-popover-content-available-height)',
     'bg-background',
     'text-foreground',

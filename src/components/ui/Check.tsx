@@ -24,7 +24,7 @@ export const checkVariants = cva(
     'focus:outline-none',
     'focus:ring-4',
     'checked:bg-primary',
-    'checked:!border-primary',
+    'checked:border-primary!',
     'disabled:pointer-events-none',
     'disabled:opacity-50',
   ],

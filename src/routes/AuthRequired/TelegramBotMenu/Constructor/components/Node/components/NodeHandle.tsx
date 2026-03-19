@@ -13,7 +13,7 @@ const NodeHandle = forwardRef<HTMLDivElement, NodeHandleProps>(
         ref={ref}
         className={cn(
           'size-2.5',
-          '!bg-white',
+          'bg-white!',
           'border',
           'border-outline',
           'rounded-full',

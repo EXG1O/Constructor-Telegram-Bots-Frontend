@@ -194,7 +194,7 @@ function Constructor(): ReactElement {
     if (!element) return;
 
     element.querySelectorAll('.react-flow__panel').forEach((panel) => {
-      panel.className = cn(panel.className, '!m-3');
+      panel.className = cn(panel.className, 'm-3!');
     });
     element.querySelectorAll('.react-flow__controls-button').forEach((button) => {
       button.className = cn(
@@ -214,7 +214,7 @@ function Constructor(): ReactElement {
     );
 
     if (attrElement) {
-      attrElement.className = cn(attrElement.className, '!text-[8px]', '!p-0', '!mb-0');
+      attrElement.className = cn(attrElement.className, 'text-[8px]!', 'p-0!', 'mb-0!');
     }
   }
 
