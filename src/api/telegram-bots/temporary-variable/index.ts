@@ -9,13 +9,25 @@ export class TemporaryVariablesAPI {
     return TelegramBotAPI.url(telegramBotID) + 'temporary-variables/';
   }
 
-  static async get(telegramBotID: TelegramBot['id']) {
-    return makeRequest<APIResponse.TemporaryVariablesAPI.Get>(
-      this.url(telegramBotID),
-      'GET',
-      undefined,
-      true,
-    );
+  static async get<Limit extends number | undefined>(
+    telegramBotID: TelegramBot['id'],
+    limit: Limit,
+    offset?: number,
+  ) {
+    let url: string = this.url(telegramBotID);
+
+    if (limit || offset) {
+      const params = new URLSearchParams();
+      limit && params.set('limit', limit.toString());
+      offset && params.set('offset', offset.toString());
+      url += `?${params.toString()}`;
+    }
+
+    return makeRequest<
+      Limit extends number
+        ? APIResponse.TemporaryVariablesAPI.Get.Pagination
+        : APIResponse.TemporaryVariablesAPI.Get.Default
+    >(url, 'GET', undefined, true);
   }
   static async create(
     telegramBotID: TelegramBot['id'],

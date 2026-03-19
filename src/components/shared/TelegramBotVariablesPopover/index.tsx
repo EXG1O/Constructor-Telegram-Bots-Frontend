@@ -14,6 +14,7 @@ import cn from 'utils/cn';
 
 const SystemVariables = lazy(() => import('./components/SystemVariables'));
 const UserVariables = lazy(() => import('./components/UserVariables'));
+const TemporaryVariables = lazy(() => import('./components/TemporaryVariables'));
 const DatabaseRecords = lazy(() => import('./components/DatabaseRecords'));
 
 export interface TelegramBotVariablesPopoverProps
@@ -48,6 +49,8 @@ const TelegramBotVariablesPopover = forwardRef<
                 <SystemVariables />
               ) : type === 'user' ? (
                 <UserVariables />
+              ) : type === 'temporary' ? (
+                <TemporaryVariables />
               ) : type == 'database' ? (
                 <DatabaseRecords />
               ) : null}

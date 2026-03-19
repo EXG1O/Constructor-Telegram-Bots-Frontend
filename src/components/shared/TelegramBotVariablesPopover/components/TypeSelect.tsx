@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import Select, { type SelectProps } from 'components/ui/Select';
 
-export type Type = 'system' | 'user' | 'database';
+export type Type = 'system' | 'user' | 'temporary' | 'database';
 
 export interface TypeSelectProps extends Omit<
   SelectProps,
@@ -13,7 +13,7 @@ export interface TypeSelectProps extends Omit<
   onChange?: (type: Type) => void;
 }
 
-const types: Type[] = ['system', 'user', 'database'];
+const types: Type[] = ['system', 'user', 'temporary', 'database'];
 
 function TypeSelect({ type, onChange, ...props }: TypeSelectProps): ReactElement {
   const { t } = useTranslation('components', {
