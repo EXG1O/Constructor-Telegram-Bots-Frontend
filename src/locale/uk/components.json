@@ -60,11 +60,17 @@
     "types": {
       "system": "Системні змінні",
       "user": "Користувацькі змінні",
+      "temporary": "Тимчасові змінні",
       "database": "База даних"
     },
     "userVariables": {
       "placeholders": {
         "empty": "Ви ще не додали змінні"
+      }
+    },
+    "temporaryVariables": {
+      "placeholders": {
+        "empty": "Ви ще не додали тимчасові змінні"
       }
     },
     "databaseRecords": {

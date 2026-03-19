@@ -27,7 +27,13 @@ export namespace Data {
 
 export namespace APIResponse {
   export namespace TemporaryVariablesAPI {
-    export type Get = TemporaryVariable[];
+    export namespace Get {
+      export type Default = TemporaryVariable[];
+      export interface Pagination {
+        count: number;
+        results: TemporaryVariable[];
+      }
+    }
     export type Create = TemporaryVariableAPI.Get;
   }
 

@@ -60,11 +60,17 @@
     "types": {
       "system": "System variables",
       "user": "User variables",
+      "temporary": "Temporary variables",
       "database": "Database"
     },
     "userVariables": {
       "placeholders": {
         "empty": "You haven't added any variables yet"
+      }
+    },
+    "temporaryVariables": {
+      "placeholders": {
+        "empty": "You haven't added any temporary variables yet"
       }
     },
     "databaseRecords": {

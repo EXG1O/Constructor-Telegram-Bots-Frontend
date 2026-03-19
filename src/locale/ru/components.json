@@ -60,11 +60,17 @@
     "types": {
       "system": "Системные переменные",
       "user": "Пользовательские переменные",
+      "temporary": "Временные переменные",
       "database": "База данных"
     },
     "userVariables": {
       "placeholders": {
         "empty": "Вы ещё не добавили переменные"
+      }
+    },
+    "temporaryVariables": {
+      "placeholders": {
+        "empty": "Вы ещё не добавили временные переменные"
       }
     },
     "databaseRecords": {
