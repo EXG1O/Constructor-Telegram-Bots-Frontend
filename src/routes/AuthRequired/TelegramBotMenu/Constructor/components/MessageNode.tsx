@@ -135,7 +135,7 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
                   'justify-center',
                   'gap-1',
                   'wrap-anywhere',
-                  messageKeyboardButtonStyleVariants(),
+                  messageKeyboardButtonStyleVariants({ style: button.style }),
                 )}
               >
                 {button.text}
