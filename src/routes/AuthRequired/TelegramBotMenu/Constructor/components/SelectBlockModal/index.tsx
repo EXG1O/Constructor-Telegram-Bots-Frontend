@@ -57,24 +57,24 @@ function SelectBlockModal({ children, ...props }: SelectBlockModalProps): ReactE
         </Modal.Header>
         <Modal.Body className='grid grid-cols-2 gap-2'>
           <BlockButton blockName='trigger' onClick={() => showAddTriggerOffcanvas()} />
-          <BlockButton blockName='message' onClick={() => showAddMessageOffcanvas()} />
           <BlockButton
             blockName='condition'
             onClick={() => showAddConditionOffcanvas()}
+          />
+          <BlockButton blockName='message' onClick={() => showAddMessageOffcanvas()} />
+          <BlockButton blockName='invoice' onClick={() => showAddInvoiceOffcanvas()} />
+          <BlockButton
+            blockName='apiRequest'
+            onClick={() => showAddAPIRequestOffcanvas()}
           />
           <BlockButton
             blockName='backgroundTask'
             onClick={() => showAddBackgroundTaskOffcanvas()}
           />
           <BlockButton
-            blockName='apiRequest'
-            onClick={() => showAddAPIRequestOffcanvas()}
-          />
-          <BlockButton
             blockName='databaseOperation'
             onClick={() => showAddDatabaseOperationOffcanvas()}
           />
-          <BlockButton blockName='invoice' onClick={() => showAddInvoiceOffcanvas()} />
           <BlockButton
             blockName='temporaryVariable'
             onClick={() => showAddTemporaryVariableOffcanvas()}

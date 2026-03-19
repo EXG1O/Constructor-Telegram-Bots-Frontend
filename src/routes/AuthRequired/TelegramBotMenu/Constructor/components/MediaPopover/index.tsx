@@ -1,5 +1,4 @@
 import React, { type ReactElement, useEffect, useState } from 'react';
-import { Slot } from '@radix-ui/react-slot';
 
 import Popover, { type PopoverProps } from 'components/ui/Popover';
 
@@ -55,15 +54,13 @@ function MediaPopover({
     <SetOpenContext.Provider value={setOpen}>
       <Popover {...props} open={open} onOpenChange={handleOpenChange}>
         {children}
-        <Slot className='min-w-70'>
-          {mode === 'file' ? (
-            <FilePopoverBody />
-          ) : mode === 'url' ? (
-            <URLPopoverBody />
-          ) : (
-            <SelectPopoverBody accept={accept} multiple={multiple} />
-          )}
-        </Slot>
+        {mode === 'file' ? (
+          <FilePopoverBody />
+        ) : mode === 'url' ? (
+          <URLPopoverBody />
+        ) : (
+          <SelectPopoverBody accept={accept} multiple={multiple} />
+        )}
       </Popover>
     </SetOpenContext.Provider>
   );

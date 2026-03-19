@@ -27,7 +27,15 @@ function BlockButton({
         {...props}
         size='sm'
         variant='light'
-        className={cn('flex', 'flex-col', 'p-1', 'gap-0', 'justify-start', className)}
+        className={cn(
+          'flex',
+          'flex-col',
+          'min-h-16',
+          'p-1',
+          'gap-0',
+          'justify-start',
+          className,
+        )}
       >
         <h3 className='text-base font-medium'>{t('name')}</h3>
         <p className='text-xs'>{t('description')}</p>

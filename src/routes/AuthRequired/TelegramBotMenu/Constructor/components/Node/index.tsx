@@ -20,7 +20,7 @@ const Node = forwardRef<HTMLDivElement, NodeProps>(
         <div
           {...props}
           ref={ref}
-          className={cn('flex', 'flex-col', 'w-[300px]', 'gap-1.5', className)}
+          className={cn('flex', 'flex-col', 'w-75', 'gap-1.5', className)}
         />
       </>
     );

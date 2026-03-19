@@ -86,7 +86,7 @@ const ToolbarLinkButton = forwardRef<HTMLButtonElement, ToolbarLinkButtonProps>(
             {children}
           </ToolbarButton>
         </Popover.Trigger>
-        <Popover.Body size='sm' className='w-[260px]'>
+        <Popover.Body size='sm'>
           <Slot className='flex gap-1.5'>
             {mode == 'edit' ? (
               <div>

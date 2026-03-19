@@ -92,7 +92,7 @@ const Offcanvas = forwardRef<HTMLDivElement, OffcanvasProps>(
               'flex',
               'flex-col',
               'size-full',
-              'max-w-[420px]',
+              'max-w-105',
               'bg-background',
               'outline-0',
               'duration-300',
