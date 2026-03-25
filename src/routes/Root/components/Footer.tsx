@@ -10,7 +10,7 @@ function Footer(): ReactElement {
   return (
     <Container asChild>
       <footer className='flex justify-between py-2 text-foreground'>
-        <span>&copy; 2025 exg1o</span>
+        <span>&copy; 2026 exg1o</span>
         <div className='flex gap-1'>
           <IconButton asChild size='sm'>
             <a href='https://t.me/exg1o_channel' target='_blank' rel='noreferrer'>
