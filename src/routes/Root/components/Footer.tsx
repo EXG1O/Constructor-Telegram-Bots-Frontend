@@ -5,6 +5,7 @@ import IconButton from 'components/ui/IconButton';
 
 import Github from 'assets/icons/github.svg';
 import Telegram from 'assets/icons/telegram.svg';
+import YouTube from 'assets/icons/youtube.svg';
 
 function Footer(): ReactElement {
   return (
@@ -12,6 +13,11 @@ function Footer(): ReactElement {
       <footer className='flex justify-between py-2 text-foreground'>
         <span>&copy; 2025 exg1o</span>
         <div className='flex gap-1'>
+          <IconButton asChild size='sm'>
+            <a href='https://www.youtube.com/@exg11o' target='_blank' rel='noreferrer'>
+              <YouTube />
+            </a>
+          </IconButton>
           <IconButton asChild size='sm'>
             <a href='https://t.me/exg1o_channel' target='_blank' rel='noreferrer'>
               <Telegram />
