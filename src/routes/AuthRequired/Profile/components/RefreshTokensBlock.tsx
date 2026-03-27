@@ -5,6 +5,8 @@ import formatDate from 'i18n/formatDate';
 import { RouteID } from 'routes';
 
 import Block, { type BlockProps } from 'components/ui/Block';
+import IconButton from 'components/ui/IconButton';
+import Popover from 'components/ui/Popover';
 import Table from 'components/ui/Table';
 
 import useProfileRouteLoaderData from '../hooks/useProfileRouteLoaderData';
@@ -30,9 +32,19 @@ function RefreshTokensBlock({
       variant='light'
       className={cn('flex', 'flex-col', 'gap-2', className)}
     >
-      <Block.Title>
+      <div className='flex items-center justify-center gap-1'>
         <h3 className='text-3xl font-semibold'>{t('title')}</h3>
-      </Block.Title>
+        <Popover>
+          <Popover.Trigger asChild>
+            <IconButton size='sm' className='mt-1'>
+              <Popover.Trigger.QuestionIcon />
+            </IconButton>
+          </Popover.Trigger>
+          <Popover.Body size='sm' content='text'>
+            {t('helpText')}
+          </Popover.Body>
+        </Popover>
+      </div>
       <div className='w-full overflow-hidden rounded-md'>
         <Table striped>
           <Table.Header>

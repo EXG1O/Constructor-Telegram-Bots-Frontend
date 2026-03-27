@@ -12,6 +12,7 @@
   },
   "refreshTokensBlock": {
     "title": "Refresh tokens",
+    "helpText": "Each time you log in, a refresh token is created, which is then used to generate short-lived access tokens.",
     "table": {
       "headers": {
         "blacklistedDate": "Blacklisted",
