@@ -1,0 +1,47 @@
+{
+  "title": "Профіль",
+  "userDataBlock": {
+    "title": "Дані акаунта",
+    "table": {
+      "headers": {
+        "firstName": "Ім’я:",
+        "lastName": "Прізвище:",
+        "joinedDate": "Приєднався:"
+      }
+    }
+  },
+  "refreshTokensBlock": {
+    "title": "Токени оновлення",
+    "table": {
+      "headers": {
+        "blacklistedDate": "Заблоковано",
+        "expiryDate": "Закінчиться",
+        "createdDate": "Створено"
+      }
+    }
+  },
+  "actionButtonGroup": {
+    "logoutAllModal": {
+      "messages": {
+        "logoutAll": {
+          "success": "Ви успішно вийшли з усіх пристроїв.",
+          "error": "Не вдалося вийти з усіх пристроїв."
+        }
+      },
+      "title": "Вихід з усіх пристроїв",
+      "text": "Ви точно хочете вийти з усіх пристроїв?"
+    },
+    "deleteModal": {
+      "messages": {
+        "delete": {
+          "success": "Ви успішно видалили акаунт.",
+          "error": "Не вдалося видалити акаунт."
+        }
+      },
+      "title": "Видалення акаунта",
+      "text": "Ви точно хочете видалити акаунт?"
+    },
+    "logoutAllButton": "Вийти з усіх пристроїв",
+    "deleteButton": "Видалити акаунт"
+  }
+}

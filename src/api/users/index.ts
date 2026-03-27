@@ -1,6 +1,6 @@
 import { makeRequest } from 'api/core';
 
-import type { APIResponse, Data } from './types';
+import type { APIResponse, Data, Token } from './types';
 
 const rootURL: string = '/api/users/';
 
@@ -44,5 +44,39 @@ export class UserAPI {
   }
   static async delete() {
     return makeRequest(this.url, 'DELETE', undefined, true);
+  }
+}
+
+export class TokensAPI {
+  static url: string = rootURL + 'tokens/';
+
+  static async get(type?: Token['type']) {
+    let url: string = this.url;
+
+    if (type) {
+      const params = new URLSearchParams();
+      params.append('type', type);
+      url += `?${params.toString()}`;
+    }
+
+    return makeRequest<APIResponse.TokensAPI.Get>(url, 'GET', undefined, true);
+  }
+}
+
+export class TokenAPI {
+  static url(jti: Token['jti']): string {
+    return TokensAPI.url + `${jti}/`;
+  }
+
+  static async get(jti: Token['jti'], type?: Token['type']) {
+    let url: string = this.url(jti);
+
+    if (type) {
+      const params = new URLSearchParams();
+      params.append('type', type);
+      url += `?${params.toString()}`;
+    }
+
+    return makeRequest<APIResponse.TokenAPI.Get>(url, 'GET', undefined, true);
   }
 }

@@ -45,6 +45,7 @@
         "text": "Are you sure you want to logout from account?"
       },
       "adminPanel": "Admin panel",
+      "profile": "Profile",
       "telegramBots": "Telegram bots",
       "exit": "Exit"
     },

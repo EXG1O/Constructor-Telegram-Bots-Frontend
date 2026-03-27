@@ -66,10 +66,16 @@ function UserDropdown({ user, ...props }: UserDropdownProps): ReactElement {
       </Dropdown.Trigger>
       <Dropdown.Menu>
         {user.is_staff && (
-          <Dropdown.Menu.Item asChild>
-            <a href='/admin/'>{t('adminPanel')}</a>
-          </Dropdown.Menu.Item>
+          <>
+            <Dropdown.Menu.Item asChild>
+              <a href='/admin/'>{t('adminPanel')}</a>
+            </Dropdown.Menu.Item>
+            <Dropdown.Menu.Separator />
+          </>
         )}
+        <Dropdown.Menu.Item asChild>
+          <Link to={reverse(RouteID.Profile)}>{t('profile')}</Link>
+        </Dropdown.Menu.Item>
         <Dropdown.Menu.Item asChild>
           <Link to={reverse(RouteID.TelegramBots)}>{t('telegramBots')}</Link>
         </Dropdown.Menu.Item>
