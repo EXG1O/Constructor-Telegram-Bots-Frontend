@@ -9,6 +9,14 @@ export interface User {
   joined_date: string;
 }
 
+export interface Token {
+  jti: string;
+  type: 'refresh' | 'access';
+  blacklisted_date: string | null;
+  expiry_date: string;
+  created_date: string;
+}
+
 export namespace Data {
   export namespace UsersAPI {
     export interface Login {
@@ -48,5 +56,13 @@ export namespace APIResponse {
     export interface TokenRefresh {
       access_token: string;
     }
+  }
+
+  export namespace TokensAPI {
+    export type Get = Token[];
+  }
+
+  export namespace TokenAPI {
+    export type Get = Token;
   }
 }

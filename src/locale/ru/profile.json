@@ -1,0 +1,47 @@
+{
+  "title": "Профиль",
+  "userDataBlock": {
+    "title": "Данные аккаунта",
+    "table": {
+      "headers": {
+        "firstName": "Имя:",
+        "lastName": "Фамилия:",
+        "joinedDate": "Присоединился:"
+      }
+    }
+  },
+  "refreshTokensBlock": {
+    "title": "Токены обновления",
+    "table": {
+      "headers": {
+        "blacklistedDate": "Заблокирован",
+        "expiryDate": "Истечёт",
+        "createdDate": "Создан"
+      }
+    }
+  },
+  "actionButtonGroup": {
+    "logoutAllModal": {
+      "messages": {
+        "logoutAll": {
+          "success": "Вы успешно вышли со всех устройств.",
+          "error": "Не удалось выйти со всех устройств."
+        }
+      },
+      "title": "Выход со всех устройств",
+      "text": "Вы точно хотите выйти со всех устройств?"
+    },
+    "deleteModal": {
+      "messages": {
+        "delete": {
+          "success": "Вы успешно удалили аккаунт.",
+          "error": "Не удалось удалить аккаунт."
+        }
+      },
+      "title": "Удаление аккаунта",
+      "text": "Вы точно хотите удалить аккаунт? "
+    },
+    "logoutAllButton": "Выйти со всех устройств",
+    "deleteButton": "Удалить аккаунт"
+  }
+}

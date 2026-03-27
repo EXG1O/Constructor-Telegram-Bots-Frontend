@@ -11,6 +11,7 @@ export enum RouteID {
   Instruction = 'instruction',
   PrivacyPolicy = 'privacy-policy',
   TermsOfService = 'terms-of-service',
+  Profile = 'profile',
   TelegramBots = 'telegram-bots',
   TelegramBotMenuRoot = 'telegram-bot-menu-root',
   TelegramBotMenuVariables = 'telegram-bot-menu-variables',
@@ -148,6 +149,21 @@ export const routes: RouteObject[] = [
           return { Component: module.default };
         },
         children: [
+          {
+            id: RouteID.Profile,
+            path: 'profile/',
+            async lazy() {
+              const [component, loader] = await Promise.all([
+                await import('./AuthRequired/Profile'),
+                await import('./AuthRequired/Profile/loader'),
+              ]);
+
+              return {
+                Component: component.default,
+                loader: loader.default,
+              };
+            },
+          },
           {
             id: RouteID.TelegramBots,
             path: 'telegram-bots/',

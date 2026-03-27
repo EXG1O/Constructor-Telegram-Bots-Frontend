@@ -1,0 +1,47 @@
+{
+  "title": "Profile",
+  "userDataBlock": {
+    "title": "Account data",
+    "table": {
+      "headers": {
+        "firstName": "First name:",
+        "lastName": "Last name:",
+        "joinedDate": "Joined:"
+      }
+    }
+  },
+  "refreshTokensBlock": {
+    "title": "Refresh tokens",
+    "table": {
+      "headers": {
+        "blacklistedDate": "Blacklisted",
+        "expiryDate": "Expires",
+        "createdDate": "Created"
+      }
+    }
+  },
+  "actionButtonGroup": {
+    "logoutAllModal": {
+      "messages": {
+        "logoutAll": {
+          "success": "You have successfully logged out from all devices.",
+          "error": "Failed to log out from all devices."
+        }
+      },
+      "title": "Logging out from all devices",
+      "text": "Are you sure you want to log out from all devices?"
+    },
+    "deleteModal": {
+      "messages": {
+        "delete": {
+          "success": "You have successfully deleted your account.",
+          "error": "Failed to delete your account."
+        }
+      },
+      "title": "Deleting the account",
+      "text": "Are you sure you want to delete your account?"
+    },
+    "logoutAllButton": "Log out from all devices",
+    "deleteButton": "Delete account"
+  }
+}
