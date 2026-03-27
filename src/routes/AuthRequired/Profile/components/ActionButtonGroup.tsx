@@ -87,7 +87,7 @@ function ActionButtonGroup({
   }
 
   return (
-    <div {...props} className={cn('flex', 'flex-col', 'gap-2', className)}>
+    <div {...props} className={cn('flex', 'flex-col', 'gap-1', className)}>
       <Button
         size='sm'
         variant='dark'
