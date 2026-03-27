@@ -53,7 +53,7 @@ function RefreshTokensBlock({
             <Table.Head>{t('table.headers.expiryDate')}</Table.Head>
             <Table.Head>{t('table.headers.createdDate')}</Table.Head>
           </Table.Header>
-          <Table.Body className='text-center'>
+          <Table.Body className='text-center text-nowrap'>
             {refreshTokens.map((token) => (
               <Table.Row key={token.jti}>
                 <Table.Cell>{token.jti}</Table.Cell>
