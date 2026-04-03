@@ -31,11 +31,26 @@ function UsersTable({
   return (
     <div className='overflow-hidden rounded-sm'>
       <Table {...props} striped className={cn('align-middle', className)}>
-        <Table.Body>
-          {!loading ? (
-            users.length ? (
-              users.map((user) => <TableRow key={user.id} user={user} />)
-            ) : (
+        {!loading ? (
+          users.length ? (
+            <>
+              <Table.Header className='text-nowrap'>
+                <Table.Head>{t('headers.activatedDate')}</Table.Head>
+                <Table.Head>Telegram ID</Table.Head>
+                <Table.Head>@username</Table.Head>
+                <Table.Head className='w-1/2'>{t('headers.firstName')}</Table.Head>
+                <Table.Head className='w-1/2'>{t('headers.lastName')}</Table.Head>
+                <Table.Head>{t('headers.bot')}</Table.Head>
+                <Table.Head>{t('headers.premium')}</Table.Head>
+              </Table.Header>
+              <Table.Body>
+                {users.map((user) => (
+                  <TableRow key={user.id} user={user} />
+                ))}
+              </Table.Body>
+            </>
+          ) : (
+            <Table.Body>
               <Table.Row>
                 <Table.Cell className='text-center'>
                   {search
@@ -47,8 +62,10 @@ function UsersTable({
                         : t('placeholders.notActivated')}
                 </Table.Cell>
               </Table.Row>
-            )
-          ) : (
+            </Table.Body>
+          )
+        ) : (
+          <Table.Body>
             <Table.Row>
               <Table.Cell>
                 <div className='flex w-full justify-center'>
@@ -56,8 +73,8 @@ function UsersTable({
                 </div>
               </Table.Cell>
             </Table.Row>
-          )}
-        </Table.Body>
+          </Table.Body>
+        )}
       </Table>
     </div>
   );

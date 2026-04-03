@@ -1,7 +1,11 @@
 export interface User {
   id: number;
   telegram_id: number;
-  full_name: string;
+  username: string | null;
+  first_name: string;
+  last_name: string | null;
+  is_bot: boolean;
+  is_premium: boolean;
   is_allowed: boolean;
   is_blocked: boolean;
   activated_date: string;

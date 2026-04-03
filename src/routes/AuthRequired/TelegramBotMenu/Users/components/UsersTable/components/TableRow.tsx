@@ -1,7 +1,7 @@
 import React, { type HTMLAttributes, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import formatDate from 'i18n/formatDate';
-import { Shield, ShieldBan, Trash2, UserCheck, UserX } from 'lucide-react';
+import { Check, Shield, ShieldBan, Trash2, UserCheck, UserX, X } from 'lucide-react';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
@@ -28,7 +28,7 @@ export interface TableRowProps extends Omit<
 
 function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuUsers, {
-    keyPrefix: 'table.row',
+    keyPrefix: 'table.body',
   });
 
   const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
@@ -140,12 +140,32 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
   }
 
   return (
-    <Table.Row {...props} className={cn('text-nowrap', className)}>
+    <Table.Row {...props} className={cn('text-center', 'text-nowrap', className)}>
       <Table.Cell className='text-success-emphasis'>{`[${formatDate(user.activated_date)}]`}</Table.Cell>
       <Table.Cell className='text-primary-emphasis'>{user.telegram_id}</Table.Cell>
-      <Table.Cell className='w-full'>{user.full_name}</Table.Cell>
+      <Table.Cell>{user.username || '-'}</Table.Cell>
+      <Table.Cell>{user.first_name}</Table.Cell>
+      <Table.Cell>{user.last_name || '-'}</Table.Cell>
       <Table.Cell>
-        <div className='flex gap-1'>
+        <div className='flex w-full justify-center [&_svg]:size-4.5'>
+          {user.is_bot ? (
+            <Check className='text-success' />
+          ) : (
+            <X className='text-danger' />
+          )}
+        </div>
+      </Table.Cell>
+      <Table.Cell>
+        <div className='flex w-full justify-center [&_svg]:size-4.5'>
+          {user.is_premium ? (
+            <Check className='text-success' />
+          ) : (
+            <X className='text-danger' />
+          )}
+        </div>
+      </Table.Cell>
+      <Table.Cell>
+        <div className='flex w-full gap-1'>
           {telegramBotIsPrivate &&
             (user.is_allowed ? (
               <IconButton

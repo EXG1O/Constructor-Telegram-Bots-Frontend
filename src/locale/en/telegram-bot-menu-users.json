@@ -13,13 +13,14 @@
     }
   },
   "table": {
-    "placeholders": {
-      "notFound": "No users found",
-      "notAllowed": "You have no allowed users",
-      "notBlocked": "You have no blocked users",
-      "notActivated": "No one has activated your Telegram bot yet"
+    "headers": {
+      "activatedDate": "Activation date",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "bot": "Bot",
+      "premium": "Premium"
     },
-    "row": {
+    "body": {
       "messages": {
         "allowUser": {
           "success": "You have successfully allowed the user.",
@@ -62,6 +63,12 @@
         "title": "Deleting the user",
         "text": "Are you sure you want to delete the user?"
       }
+    },
+    "placeholders": {
+      "notFound": "No users found",
+      "notAllowed": "You have no allowed users",
+      "notBlocked": "You have no blocked users",
+      "notActivated": "No one has activated your Telegram bot yet"
     }
   },
   "footer": {
