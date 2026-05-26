@@ -1,10 +1,7 @@
 import React, { type HTMLAttributes, type ReactElement } from 'react';
-import { Clipboard } from 'lucide-react';
 
-import IconButton from 'components/ui/IconButton';
+import Clipboard from 'components/ui/Clipboard';
 import Table from 'components/ui/Table';
-
-import ClipboardButtonSlot from '../../../../ClipboardButtonSlot';
 
 import type { Variable } from '..';
 
@@ -20,11 +17,10 @@ function TableRow({ variable, ...props }: TableRowProps): ReactElement {
     <Table.Row {...props}>
       <Table.Cell className='w-1/2'>
         <div className='flex items-center gap-1'>
-          <ClipboardButtonSlot variable={['SYSTEM', variable.name].join('.')}>
-            <IconButton size='sm'>
-              <Clipboard />
-            </IconButton>
-          </ClipboardButtonSlot>
+          <Clipboard.Button
+            size='sm'
+            value={`{{ ${['SYSTEM', variable.name].join('.')} }}`}
+          />
           <span className='flex-auto'>{variable.name}</span>
         </div>
       </Table.Cell>

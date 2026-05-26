@@ -6,6 +6,7 @@ import telegramBotSystemVariables, {
 
 import { RouteID } from 'routes';
 
+import Clipboard from 'components/ui/Clipboard';
 import Table, { type TableProps } from 'components/ui/Table';
 
 import TableRow from './components/TableRow';
@@ -50,13 +51,15 @@ function VariablesTable({
 
   return (
     <div className={cn('rounded-sm', 'overflow-hidden', className)}>
-      <Table {...props} striped className='text-nowrap'>
-        <Table.Body>
-          {variables[type].map((variable) => (
-            <TableRow key={variable.name} variable={variable} />
-          ))}
-        </Table.Body>
-      </Table>
+      <Clipboard>
+        <Table {...props} striped className='text-nowrap'>
+          <Table.Body>
+            {variables[type].map((variable) => (
+              <TableRow key={variable.name} variable={variable} />
+            ))}
+          </Table.Body>
+        </Table>
+      </Clipboard>
     </div>
   );
 }

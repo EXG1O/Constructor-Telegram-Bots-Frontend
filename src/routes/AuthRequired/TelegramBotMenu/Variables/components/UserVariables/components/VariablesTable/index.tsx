@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
+import Clipboard from 'components/ui/Clipboard';
 import Spinner from 'components/ui/Spinner';
 import Table, { type TableProps } from 'components/ui/Table';
 
@@ -28,31 +29,33 @@ function VariablesTable({ className, ...props }: VariablesTableProps): ReactElem
 
   return (
     <div className='overflow-hidden rounded-sm'>
-      <Table {...props} striped className={cn('align-middle', className)}>
-        <Table.Body>
-          {!loading ? (
-            variables.length ? (
-              variables.map((variable) => (
-                <TableRow key={variable.id} variable={variable} />
-              ))
+      <Clipboard>
+        <Table {...props} striped className={cn('align-middle', className)}>
+          <Table.Body>
+            {!loading ? (
+              variables.length ? (
+                variables.map((variable) => (
+                  <TableRow key={variable.id} variable={variable} />
+                ))
+              ) : (
+                <Table.Row>
+                  <Table.Cell className='text-center'>
+                    {search ? t('placeholders.notFound') : t('placeholders.notAdded')}
+                  </Table.Cell>
+                </Table.Row>
+              )
             ) : (
               <Table.Row>
-                <Table.Cell className='text-center'>
-                  {search ? t('placeholders.notFound') : t('placeholders.notAdded')}
+                <Table.Cell>
+                  <div className='flex w-full justify-center'>
+                    <Spinner size='sm' />
+                  </div>
                 </Table.Cell>
               </Table.Row>
-            )
-          ) : (
-            <Table.Row>
-              <Table.Cell>
-                <div className='flex w-full justify-center'>
-                  <Spinner size='sm' />
-                </div>
-              </Table.Cell>
-            </Table.Row>
-          )}
-        </Table.Body>
-      </Table>
+            )}
+          </Table.Body>
+        </Table>
+      </Clipboard>
     </div>
   );
 }

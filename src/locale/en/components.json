@@ -78,5 +78,13 @@
         "empty": "You haven't added any records yet"
       }
     }
+  },
+  "clipboard": {
+    "messages": {
+      "copy": {
+        "success": "The variable has been successfully copied to the clipboard.",
+        "error": "An error occurred while copying the variable to the clipboard."
+      }
+    }
   }
 }
