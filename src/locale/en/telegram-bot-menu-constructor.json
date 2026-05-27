@@ -346,17 +346,6 @@
     "bodyBlock": {
       "title": "Body"
     },
-    "testBlock": {
-      "title": "Testing",
-      "messages": {
-        "makeTest": {
-          "error": "An error occurred while sending the API request.",
-          "error_emptyURL": "Enter a URL.",
-          "error_validURL": "Enter a valid URL."
-        }
-      },
-      "testButton": "Test"
-    },
     "actionButton_add": "Add",
     "actionButton_edit": "Save"
   },

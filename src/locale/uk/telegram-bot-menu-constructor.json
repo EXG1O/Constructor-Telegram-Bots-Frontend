@@ -346,17 +346,6 @@
     "bodyBlock": {
       "title": "Дані"
     },
-    "testBlock": {
-      "title": "Тестування",
-      "messages": {
-        "makeTest": {
-          "error": "Сталася помилка під час надсилання API-запиту.",
-          "error_emptyURL": "Введіть URL-адресу.",
-          "error_validURL": "Введіть правильну URL-адресу."
-        }
-      },
-      "testButton": "Протестувати"
-    },
     "actionButton_add": "Додати",
     "actionButton_edit": "Зберегти"
   },

@@ -346,17 +346,6 @@
     "bodyBlock": {
       "title": "Данные"
     },
-    "testBlock": {
-      "title": "Тестирование",
-      "messages": {
-        "makeTest": {
-          "error": "Произошла ошибка во время отправки API-запроса.",
-          "error_emptyURL": "Введите URL-адрес.",
-          "error_validURL": "Введите правильный URL-адрес."
-        }
-      },
-      "testButton": "Протестировать"
-    },
     "actionButton_add": "Добавить",
     "actionButton_edit": "Сохранить"
   },
