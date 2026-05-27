@@ -10,7 +10,6 @@ import Offcanvas from 'components/ui/Offcanvas';
 import BodyBlock from './BodyBlock';
 import HeadersBlock from './HeadersBlock';
 import MethodBlock from './MethodBlock';
-import TestBlock from './TestBlock';
 import URLBlock from './URLBlock';
 
 import FormToggleSection from '../../FormToggleSection';
@@ -45,7 +44,6 @@ function OffcanvasContent(): ReactElement {
           >
             <BodyBlock className='mb-3' />
           </FormToggleSection>
-          <TestBlock />
         </Form>
       </Offcanvas.Body>
       <Offcanvas.Footer className='flex flex-col gap-2'>
