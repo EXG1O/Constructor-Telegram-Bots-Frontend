@@ -65,21 +65,21 @@ function DatabaseOperationNode({
 
         const response = await DatabaseOperationAPI.delete(telegramBotID, operation.id);
 
-        if (response.ok) {
-          reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
-          hideConfirmModal();
-          createMessageToast({
-            message: t('messages.deleteDatabaseOperation.success'),
-            level: 'success',
-          });
-        } else {
+        if (!response.ok) {
           createMessageToast({
             message: t('messages.deleteDatabaseOperation.error'),
             level: 'error',
           });
+          setLoadingConfirmModal(false);
+          return;
         }
 
-        setLoadingConfirmModal(false);
+        reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
+        hideConfirmModal();
+        createMessageToast({
+          message: t('messages.deleteDatabaseOperation.success'),
+          level: 'success',
+        });
       },
       onCancel: null,
     });

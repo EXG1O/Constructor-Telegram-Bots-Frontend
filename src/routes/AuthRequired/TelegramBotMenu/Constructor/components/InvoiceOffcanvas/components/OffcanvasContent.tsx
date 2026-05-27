@@ -47,9 +47,6 @@ function OffcanvasContent(): ReactElement {
 
   return (
     <>
-      <Offcanvas.Header closeButton>
-        <Offcanvas.Title>{t('title', { context: action })}</Offcanvas.Title>
-      </Offcanvas.Header>
       <Offcanvas.Body asChild>
         <Form id={formID}>
           <NameBlock className='mb-3' />
