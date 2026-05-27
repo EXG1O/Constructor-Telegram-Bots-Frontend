@@ -31,6 +31,7 @@ function TypeBlock({ className, ...props }: TypeBlockProps): ReactElement {
         <option value={Type.Command}>{t('types.command')}</option>
         <option value={Type.Message}>{t('types.message')}</option>
         <option value={Type.AnyMessage}>{t('types.anyMessage')}</option>
+        <option value={Type.Webhook}>{t('types.webhook')}</option>
       </FormSelectFeedback>
     </Block>
   );

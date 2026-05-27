@@ -11,3 +11,7 @@ export function getCommandBlockOpen(type: Type): boolean {
 export function getMessageBlockOpen(type: Type): boolean {
   return type === Type.Message;
 }
+
+export function getWebhookBlockOpen(type: Type): boolean {
+  return type === Type.Webhook;
+}

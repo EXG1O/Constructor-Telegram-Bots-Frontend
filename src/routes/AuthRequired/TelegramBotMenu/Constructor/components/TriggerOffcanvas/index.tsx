@@ -16,6 +16,8 @@ import { defaultStartCommandBlockFormValues } from './components/StartCommandBlo
 import type { StartCommandBlockFormValues } from './components/StartCommandBlock/types';
 import { defaultTypeBlockFormValues } from './components/TypeBlock/defaults';
 import { Type, type TypeBlockFormValues } from './components/TypeBlock/types';
+import { defaultWebhookBlockFormValues } from './components/WebhookBlock/defaults';
+import type { WebhookBlockFormValues } from './components/WebhookBlock/types';
 
 import { defaultNameBlockFormValues } from '../NameBlock/defaults';
 import type { NameBlockFormValues } from '../NameBlock/types';
@@ -31,7 +33,8 @@ export interface FormValues
     TypeBlockFormValues,
     StartCommandBlockFormValues,
     CommandBlockFormValues,
-    MessageBlockFormValues {}
+    MessageBlockFormValues,
+    WebhookBlockFormValues {}
 
 export const defaultFormValues: FormValues = {
   ...defaultNameBlockFormValues,
@@ -39,6 +42,7 @@ export const defaultFormValues: FormValues = {
   ...defaultStartCommandBlockFormValues,
   ...defaultCommandBlockFormValues,
   ...defaultMessageBlockFormValues,
+  ...defaultWebhookBlockFormValues,
 };
 
 export interface TriggerFormOffcanvasProps extends OffcanvasInnerProps {
@@ -59,6 +63,7 @@ function TriggerOffcanvas({
 
   const triggerID = useTriggerOffcanvasStore((state) => state.triggerID);
   const action = useTriggerOffcanvasStore((state) => state.action);
+  const showOffcanvas = useTriggerOffcanvasStore((state) => state.showOffcanvas);
   const hideOffcanvas = useTriggerOffcanvasStore((state) => state.hideOffcanvas);
 
   async function handleSubmit(
@@ -98,6 +103,7 @@ function TriggerOffcanvas({
           : type === Type.AnyMessage
             ? { text: null }
             : null,
+      webhook: type === Type.Webhook ? {} : null,
     };
 
     const response = await (triggerID
@@ -117,7 +123,13 @@ function TriggerOffcanvas({
     }
 
     (triggerID ? onSave : onAdd)?.(response.json);
-    hideOffcanvas();
+
+    if (type === Type.Webhook) {
+      showOffcanvas(response.json.id);
+    } else {
+      hideOffcanvas();
+    }
+
     createMessageToast({
       message: t(`messages.${action}Trigger.success`),
       level: 'success',

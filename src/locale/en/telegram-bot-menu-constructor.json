@@ -95,7 +95,8 @@
         "startCommand": "Start command",
         "command": "Command",
         "message": "Message",
-        "anyMessage": "Any message"
+        "anyMessage": "Any message",
+        "webhook": "Webhook"
       }
     },
     "startCommandBlock": {
@@ -123,6 +124,22 @@
     "messageBlock": {
       "title": "Message",
       "messageEditorPlaceholder": "Enter text"
+    },
+    "webhookBlock": {
+      "title": "Webhook",
+      "table": {
+        "url": {
+          "header": "URL:",
+          "placeholder": "Save this block to get the value."
+        },
+        "method": {
+          "header": "Method:"
+        },
+        "data": {
+          "header": "Data:",
+          "text": "Any format"
+        }
+      }
     },
     "actionButton_add": "Add",
     "actionButton_edit": "Save"

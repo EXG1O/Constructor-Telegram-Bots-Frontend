@@ -13,6 +13,7 @@ import { defaultMessage } from './MessageBlock/defaults';
 import { defaultStartCommand } from './StartCommandBlock/defaults';
 import { defaultType } from './TypeBlock/defaults';
 import { Type } from './TypeBlock/types';
+import { defaultWebhook } from './WebhookBlock/defaults';
 
 import { TriggerAPI } from 'api/telegram-bots/trigger';
 
@@ -59,7 +60,7 @@ function OffcanvasInner({
         return;
       }
 
-      const { id, command, message, ...trigger } = response.json;
+      const { id, command, message, webhook, ...trigger } = response.json;
 
       setValues({
         ...trigger,
@@ -72,7 +73,9 @@ function OffcanvasInner({
             ? message.text
               ? Type.Message
               : Type.AnyMessage
-            : defaultType,
+            : webhook
+              ? Type.Webhook
+              : defaultType,
         start_command:
           command && command.command === 'start'
             ? {
@@ -90,6 +93,7 @@ function OffcanvasInner({
         message: message
           ? { ...message, text: message.text ?? defaultMessage.text }
           : defaultMessage,
+        webhook: webhook || defaultWebhook,
 
         show_start_command_payload: Boolean(command?.payload),
         show_start_command_description: Boolean(command?.description),

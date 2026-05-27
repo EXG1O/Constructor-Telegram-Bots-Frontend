@@ -10,18 +10,25 @@ export interface TriggerMessage {
   text: string | null;
 }
 
+export interface TriggerWebhook {
+  url: string;
+}
+
 export interface Trigger {
   id: number;
   name: string;
   command: TriggerCommand | null;
   message: TriggerMessage | null;
+  webhook: TriggerWebhook | null;
 }
 
 export interface DiagramTrigger extends DiagramBlock<Trigger['id']> {}
 
 export namespace Data {
   export namespace TriggersAPI {
-    export type Create = Omit<Trigger, 'id'>;
+    export interface Create extends Omit<Trigger, 'id' | 'webhook'> {
+      webhook: Omit<TriggerWebhook, 'url'> | null;
+    }
   }
 
   export namespace TriggerAPI {
@@ -30,6 +37,7 @@ export namespace Data {
     export interface PartialUpdate extends Partial<Pick<Trigger, 'name'>> {
       command?: Partial<Update['command']>;
       message?: Partial<Update['message']>;
+      webhook?: Partial<Update['webhook']>;
     }
   }
 

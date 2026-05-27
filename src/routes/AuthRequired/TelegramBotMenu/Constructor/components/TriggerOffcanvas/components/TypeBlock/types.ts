@@ -3,6 +3,7 @@ export enum Type {
   Command = 'command',
   Message = 'message',
   AnyMessage = 'anyMessage',
+  Webhook = 'webhook',
 }
 
 export interface TypeBlockFormValues {
