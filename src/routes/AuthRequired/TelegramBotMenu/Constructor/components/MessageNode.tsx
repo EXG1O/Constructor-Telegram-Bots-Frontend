@@ -71,21 +71,21 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
 
         const response = await MessageAPI.delete(telegramBotID, message.id);
 
-        if (response.ok) {
-          reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
-          hideConfirmModal();
-          createMessageToast({
-            message: t('messages.deleteMessage.success'),
-            level: 'success',
-          });
-        } else {
+        if (!response.ok) {
           createMessageToast({
             message: t('messages.deleteMessage.error'),
             level: 'error',
           });
+          setLoadingConfirmModal(false);
+          return;
         }
 
-        setLoadingConfirmModal(false);
+        reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
+        hideConfirmModal();
+        createMessageToast({
+          message: t('messages.deleteMessage.success'),
+          level: 'success',
+        });
       },
       onCancel: null,
     });

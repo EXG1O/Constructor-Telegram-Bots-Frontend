@@ -65,21 +65,21 @@ function TriggerNode({ id, type, data: trigger }: TriggerNodeProps): ReactElemen
 
         const response = await TriggerAPI.delete(telegramBotID, trigger.id);
 
-        if (response.ok) {
-          reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
-          hideConfirmModal();
-          createMessageToast({
-            message: t('messages.deleteTrigger.success'),
-            level: 'success',
-          });
-        } else {
+        if (!response.ok) {
           createMessageToast({
             message: t('messages.deleteTrigger.error'),
             level: 'error',
           });
+          setLoadingConfirmModal(false);
+          return;
         }
 
-        setLoadingConfirmModal(false);
+        reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
+        hideConfirmModal();
+        createMessageToast({
+          message: t('messages.deleteTrigger.success'),
+          level: 'success',
+        });
       },
       onCancel: null,
     });

@@ -37,6 +37,7 @@ function OffcanvasInner({
   const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
 
   const requestID = useAPIRequestOffcanvasStore((state) => state.requestID);
+  const action = useAPIRequestOffcanvasStore((state) => state.action);
   const show = useAPIRequestOffcanvasStore((state) => state.show);
   const loading = useAPIRequestOffcanvasStore((state) => state.loading);
   const hideOffcanvas = useAPIRequestOffcanvasStore((state) => state.hideOffcanvas);
@@ -87,6 +88,9 @@ function OffcanvasInner({
       onHide={handleHide}
       onHidden={handleHidden}
     >
+      <Offcanvas.Header closeButton>
+        <Offcanvas.Title>{t('title', { context: action })}</Offcanvas.Title>
+      </Offcanvas.Header>
       <Suspense fallback={<Offcanvas.Loading />}>
         <OffcanvasContent />
       </Suspense>
