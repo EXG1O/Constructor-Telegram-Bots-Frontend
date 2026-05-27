@@ -11,6 +11,7 @@ import CommandBlock from './CommandBlock';
 import MessageBlock from './MessageBlock';
 import StartCommandBlock from './StartCommandBlock';
 import TypeBlock from './TypeBlock';
+import WebhookBlock from './WebhookBlock';
 
 import FormToggleSection from '../../FormToggleSection';
 import NameBlock from '../../NameBlock';
@@ -20,6 +21,7 @@ import {
   getCommandBlockOpen,
   getMessageBlockOpen,
   getStartCommandBlockOpen,
+  getWebhookBlockOpen,
 } from '../utils';
 
 function OffcanvasContent(): ReactElement {
@@ -60,6 +62,13 @@ function OffcanvasContent(): ReactElement {
             className='w-full'
           >
             <MessageBlock />
+          </FormToggleSection>
+          <FormToggleSection
+            name='type'
+            getOpen={(field) => getWebhookBlockOpen(field.value)}
+            className='w-full'
+          >
+            <WebhookBlock />
           </FormToggleSection>
         </Form>
       </Offcanvas.Body>

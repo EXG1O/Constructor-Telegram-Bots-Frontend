@@ -95,7 +95,8 @@
         "startCommand": "Стартовая команда",
         "command": "Команда",
         "message": "Сообщение",
-        "anyMessage": "Любое сообщение"
+        "anyMessage": "Любое сообщение",
+        "webhook": "Вебхук"
       }
     },
     "startCommandBlock": {
@@ -123,6 +124,22 @@
     "messageBlock": {
       "title": "Сообщение",
       "messageEditorPlaceholder": "Введите текст"
+    },
+    "webhookBlock": {
+      "title": "Вебхук",
+      "table": {
+        "url": {
+          "header": "URL-адрес:",
+          "placeholder": "Сохраните этот блок, чтобы получить значение."
+        },
+        "method": {
+          "header": "Метод:"
+        },
+        "data": {
+          "header": "Данные:",
+          "text": "Любой формат"
+        }
+      }
     },
     "actionButton_add": "Добавить",
     "actionButton_edit": "Сохранить"
