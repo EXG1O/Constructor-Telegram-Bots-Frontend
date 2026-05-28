@@ -61,7 +61,8 @@
       "system": "System variables",
       "user": "User variables",
       "temporary": "Temporary variables",
-      "database": "Database"
+      "database": "Database",
+      "other": "Other variables"
     },
     "userVariables": {
       "placeholders": {
