@@ -61,7 +61,8 @@
       "system": "Системні змінні",
       "user": "Користувацькі змінні",
       "temporary": "Тимчасові змінні",
-      "database": "База даних"
+      "database": "База даних",
+      "other": "Інші змінні"
     },
     "userVariables": {
       "placeholders": {
