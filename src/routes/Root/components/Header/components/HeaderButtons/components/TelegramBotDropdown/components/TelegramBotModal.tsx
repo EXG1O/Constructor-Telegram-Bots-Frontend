@@ -18,7 +18,7 @@ import reverse from 'utils/reverse';
 
 export interface TelegramBotModalProps extends Omit<ModalProps, 'children'> {}
 
-function TelegramBotModal(props: TelegramBotModalProps): ReactElement {
+function TelegramBotModal({ onHide, ...props }: TelegramBotModalProps): ReactElement {
   const { t } = useTranslation(RouteID.Root, {
     keyPrefix: 'header.telegramBotDropdown.telegramBotModal',
   });
@@ -62,28 +62,28 @@ function TelegramBotModal(props: TelegramBotModalProps): ReactElement {
 
         const response = await TelegramBotAPI.delete(telegramBot.id);
 
-        if (response.ok) {
-          hideConfirmModal();
-          navigate(reverse(RouteID.TelegramBots));
-          createMessageToast({
-            message: t('messages.deleteTelegramBot.success'),
-            level: 'success',
-          });
-        } else {
+        if (!response.ok) {
           createMessageToast({
             message: t('messages.deleteTelegramBot.error'),
             level: 'error',
           });
+          setLoadingConfirmModal(false);
         }
 
-        setLoadingConfirmModal(false);
+        hideConfirmModal();
+        onHide?.();
+        navigate(reverse(RouteID.TelegramBots));
+        createMessageToast({
+          message: t('messages.deleteTelegramBot.success'),
+          level: 'success',
+        });
       },
       onCancel: null,
     });
   }
 
   return (
-    <Modal {...props}>
+    <Modal {...props} onHide={onHide}>
       <Modal.Content>
         <Modal.Header closeButton>
           <Modal.Title>
