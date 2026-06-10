@@ -16,14 +16,22 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import { useBackgroundTaskOffcanvasStore } from './BackgroundTaskOffcanvas/store';
 import Node from './Node';
 
-import { BackgroundTaskAPI } from 'api/telegram-bots/background-task';
+import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
+
+import {
+  BackgroundTaskAPI,
+  BackgroundTasksAPI,
+  DiagramBackgroundTaskAPI,
+} from 'api/telegram-bots/background-task';
 import type { DiagramBackgroundTask } from 'api/telegram-bots/background-task/types';
 
 import { buildEdgeSourceHandle, type EdgeHandle } from '../utils/edges';
 
 type Data = Omit<DiagramBackgroundTask, 'x' | 'y' | 'source_connections'>;
 
-export interface BackgroundTaskNodeProps extends RFNodeProps<RFNode<Data>> {}
+export interface BackgroundTaskNodeProps extends RFNodeProps<
+  RFNode<Data, 'background_task'>
+> {}
 
 const NODE_PREFIX: string = 'nodes.backgroundTask';
 const OFFCANVAS_PREFIX: string = 'backgroundTaskOffcanvas';
@@ -33,7 +41,7 @@ function BackgroundTaskNode({
   type,
   data: task,
 }: BackgroundTaskNodeProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor);
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor);
 
   const reactFlow = useReactFlow();
 
@@ -47,7 +55,23 @@ function BackgroundTaskNode({
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<any>, 'position'> = {
+  const handleDuplicate = useNodeDuplicate(
+    () => ({
+      title: t(`${NODE_PREFIX}.duplicateModal.title`),
+      text: t(`${NODE_PREFIX}.duplicateModal.text`),
+      messages: {
+        success: t(`${NODE_PREFIX}.messages.duplicate.success`),
+        error: t(`${NODE_PREFIX}.messages.duplicate.error`),
+      },
+      type,
+      retrieveAPICall: () => BackgroundTaskAPI.get(telegramBotID, task.id),
+      createAPICall: (data) => BackgroundTasksAPI.create(telegramBotID, data),
+      diagramAPICall: (id) => DiagramBackgroundTaskAPI.get(telegramBotID, id),
+    }),
+    [task.id, i18n.language],
+  );
+
+  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
     objectType: type,
     objectID: task.id,
     nestedObjectID: 0,
@@ -64,7 +88,7 @@ function BackgroundTaskNode({
 
         if (!response.ok) {
           createMessageToast({
-            message: t(`${NODE_PREFIX}.messages.deleteBackgroundTask.error`),
+            message: t(`${NODE_PREFIX}.messages.delete.error`),
             level: 'error',
           });
           setLoadingConfirmModal(false);
@@ -74,7 +98,7 @@ function BackgroundTaskNode({
         reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
         hideConfirmModal();
         createMessageToast({
-          message: t(`${NODE_PREFIX}.messages.deleteBackgroundTask.success`),
+          message: t(`${NODE_PREFIX}.messages.delete.success`),
           level: 'success',
         });
       },
@@ -87,7 +111,12 @@ function BackgroundTaskNode({
   }
 
   return (
-    <Node title={t(`${NODE_PREFIX}.title`)} onEdit={handleEdit} onDelete={handleDelete}>
+    <Node
+      title={t(`${NODE_PREFIX}.title`)}
+      onEdit={handleEdit}
+      onDuplicate={handleDuplicate}
+      onDelete={handleDelete}
+    >
       <Node.Block className='relative'>
         <Node.Title>{task.name}</Node.Title>
         <Node.Handle

@@ -19,7 +19,9 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import { useMessageOffcanvasStore } from './MessageOffcanvas/store';
 import Node from './Node';
 
-import { MessageAPI } from 'api/telegram-bots/message';
+import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
+
+import { DiagramMessageAPI, MessageAPI, MessagesAPI } from 'api/telegram-bots/message';
 import type { DiagramMessage } from 'api/telegram-bots/message/types';
 
 import cn from 'utils/cn';
@@ -33,10 +35,10 @@ import {
 
 type Data = Omit<DiagramMessage, 'x' | 'y' | 'source_connections'>;
 
-export interface MessageNodeProps extends RFNodeProps<RFNode<Data>> {}
+export interface MessageNodeProps extends RFNodeProps<RFNode<Data, 'message'>> {}
 
 function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nodes.message',
   });
 
@@ -52,7 +54,23 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<any>, 'position'> = {
+  const handleDuplicate = useNodeDuplicate(
+    () => ({
+      title: t('duplicateModal.title'),
+      text: t('duplicateModal.text'),
+      messages: {
+        success: t('messages.duplicate.success'),
+        error: t('messages.duplicate.error'),
+      },
+      type,
+      retrieveAPICall: () => MessageAPI.get(telegramBotID, message.id),
+      createAPICall: (data) => MessagesAPI.create(telegramBotID, data),
+      diagramAPICall: (id) => DiagramMessageAPI.get(telegramBotID, id),
+    }),
+    [message.id, i18n.language],
+  );
+
+  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
     objectType: type,
     objectID: message.id,
     nestedObjectID: 0,
@@ -73,7 +91,7 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
 
         if (!response.ok) {
           createMessageToast({
-            message: t('messages.deleteMessage.error'),
+            message: t('messages.delete.error'),
             level: 'error',
           });
           setLoadingConfirmModal(false);
@@ -83,7 +101,7 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
         reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
         hideConfirmModal();
         createMessageToast({
-          message: t('messages.deleteMessage.success'),
+          message: t('messages.delete.success'),
           level: 'success',
         });
       },
@@ -92,7 +110,12 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
   }
 
   return (
-    <Node title={t('title')} onEdit={handleEdit} onDelete={handleDelete}>
+    <Node
+      title={t('title')}
+      onEdit={handleEdit}
+      onDuplicate={handleDuplicate}
+      onDelete={handleDelete}
+    >
       <Node.Block className='relative'>
         <Node.Title>{message.name}</Node.Title>
         <Node.Handle

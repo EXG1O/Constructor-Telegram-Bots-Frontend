@@ -16,7 +16,9 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import { useInvoiceOffcanvasStore } from './InvoiceOffcanvas/store';
 import Node from './Node';
 
-import { InvoiceAPI } from 'api/telegram-bots/invoice';
+import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
+
+import { DiagramInvoiceAPI, InvoiceAPI, InvoicesAPI } from 'api/telegram-bots/invoice';
 import type { DiagramInvoice } from 'api/telegram-bots/invoice/types';
 
 import {
@@ -27,10 +29,10 @@ import {
 
 type Data = Omit<DiagramInvoice, 'x' | 'y' | 'source_connections'>;
 
-export interface InvoiceNodeProps extends RFNodeProps<RFNode<Data>> {}
+export interface InvoiceNodeProps extends RFNodeProps<RFNode<Data, 'invoice'>> {}
 
 function InvoiceNode({ id, type, data: invoice }: InvoiceNodeProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nodes.invoice',
   });
 
@@ -46,7 +48,23 @@ function InvoiceNode({ id, type, data: invoice }: InvoiceNodeProps): ReactElemen
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<any>, 'position'> = {
+  const handleDuplicate = useNodeDuplicate(
+    () => ({
+      title: t('duplicateModal.title'),
+      text: t('duplicateModal.text'),
+      messages: {
+        success: t('messages.duplicate.success'),
+        error: t('messages.duplicate.error'),
+      },
+      type,
+      retrieveAPICall: () => InvoiceAPI.get(telegramBotID, invoice.id),
+      createAPICall: (data) => InvoicesAPI.create(telegramBotID, data),
+      diagramAPICall: (id) => DiagramInvoiceAPI.get(telegramBotID, id),
+    }),
+    [invoice.id, i18n.language],
+  );
+
+  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
     objectType: type,
     objectID: invoice.id,
     nestedObjectID: 0,
@@ -63,7 +81,7 @@ function InvoiceNode({ id, type, data: invoice }: InvoiceNodeProps): ReactElemen
 
         if (!response.ok) {
           createMessageToast({
-            message: t('messages.deleteInvoice.error'),
+            message: t('messages.delete.error'),
             level: 'error',
           });
           setLoadingConfirmModal(false);
@@ -73,7 +91,7 @@ function InvoiceNode({ id, type, data: invoice }: InvoiceNodeProps): ReactElemen
         reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
         hideConfirmModal();
         createMessageToast({
-          message: t('messages.deleteInvoice.success'),
+          message: t('messages.delete.success'),
           level: 'success',
         });
       },
@@ -86,7 +104,12 @@ function InvoiceNode({ id, type, data: invoice }: InvoiceNodeProps): ReactElemen
   }
 
   return (
-    <Node title={t('title')} onEdit={handleEdit} onDelete={handleDelete}>
+    <Node
+      title={t('title')}
+      onEdit={handleEdit}
+      onDuplicate={handleDuplicate}
+      onDelete={handleDelete}
+    >
       <Node.Block className='relative'>
         <Node.Title>{invoice.name}</Node.Title>
         <Node.Handle

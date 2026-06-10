@@ -16,7 +16,13 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import { useDatabaseOperationOffcanvasStore } from './DatabaseOperationOffcanvas/store';
 import Node from './Node';
 
-import { DatabaseOperationAPI } from 'api/telegram-bots/database-operation';
+import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
+
+import {
+  DatabaseOperationAPI,
+  DatabaseOperationsAPI,
+  DiagramDatabaseOperationAPI,
+} from 'api/telegram-bots/database-operation';
 import type { DiagramDatabaseOperation } from 'api/telegram-bots/database-operation/types';
 
 import {
@@ -27,14 +33,16 @@ import {
 
 type Data = Omit<DiagramDatabaseOperation, 'x' | 'y' | 'source_connections'>;
 
-export interface DatabaseOperationNodeProps extends RFNodeProps<RFNode<Data>> {}
+export interface DatabaseOperationNodeProps extends RFNodeProps<
+  RFNode<Data, 'database_operation'>
+> {}
 
 function DatabaseOperationNode({
   id,
   type,
   data: operation,
 }: DatabaseOperationNodeProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nodes.databaseOperation',
   });
 
@@ -50,7 +58,23 @@ function DatabaseOperationNode({
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<any>, 'position'> = {
+  const handleDuplicate = useNodeDuplicate(
+    () => ({
+      title: t('duplicateModal.title'),
+      text: t('duplicateModal.text'),
+      messages: {
+        success: t('messages.duplicate.success'),
+        error: t('messages.duplicate.error'),
+      },
+      type,
+      retrieveAPICall: () => DatabaseOperationAPI.get(telegramBotID, operation.id),
+      createAPICall: (data) => DatabaseOperationsAPI.create(telegramBotID, data),
+      diagramAPICall: (id) => DiagramDatabaseOperationAPI.get(telegramBotID, id),
+    }),
+    [operation.id, i18n.language],
+  );
+
+  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
     objectType: type,
     objectID: operation.id,
     nestedObjectID: 0,
@@ -67,7 +91,7 @@ function DatabaseOperationNode({
 
         if (!response.ok) {
           createMessageToast({
-            message: t('messages.deleteDatabaseOperation.error'),
+            message: t('messages.delete.error'),
             level: 'error',
           });
           setLoadingConfirmModal(false);
@@ -77,7 +101,7 @@ function DatabaseOperationNode({
         reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
         hideConfirmModal();
         createMessageToast({
-          message: t('messages.deleteDatabaseOperation.success'),
+          message: t('messages.delete.success'),
           level: 'success',
         });
       },
@@ -90,7 +114,12 @@ function DatabaseOperationNode({
   }
 
   return (
-    <Node title={t('title')} onEdit={handleEdit} onDelete={handleDelete}>
+    <Node
+      title={t('title')}
+      onEdit={handleEdit}
+      onDuplicate={handleDuplicate}
+      onDelete={handleDelete}
+    >
       <Node.Block className='relative'>
         <Node.Title>{operation.name}</Node.Title>
         <Node.Handle
