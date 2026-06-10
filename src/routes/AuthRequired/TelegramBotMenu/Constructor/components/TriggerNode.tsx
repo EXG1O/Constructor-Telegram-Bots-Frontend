@@ -16,7 +16,9 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import Node from './Node';
 import { useTriggerOffcanvasStore } from './TriggerOffcanvas/store';
 
-import { TriggerAPI } from 'api/telegram-bots/trigger';
+import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
+
+import { DiagramTriggerAPI, TriggerAPI, TriggersAPI } from 'api/telegram-bots/trigger';
 import type { DiagramTrigger } from 'api/telegram-bots/trigger/types';
 
 import {
@@ -27,10 +29,10 @@ import {
 
 type Data = Omit<DiagramTrigger, 'x' | 'y' | 'source_connections'>;
 
-export interface TriggerNodeProps extends RFNodeProps<RFNode<Data>> {}
+export interface TriggerNodeProps extends RFNodeProps<RFNode<Data, 'trigger'>> {}
 
 function TriggerNode({ id, type, data: trigger }: TriggerNodeProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nodes.trigger',
   });
 
@@ -46,7 +48,23 @@ function TriggerNode({ id, type, data: trigger }: TriggerNodeProps): ReactElemen
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<any>, 'position'> = {
+  const handleDuplicate = useNodeDuplicate(
+    () => ({
+      title: t('duplicateModal.title'),
+      text: t('duplicateModal.text'),
+      messages: {
+        success: t('messages.duplicate.success'),
+        error: t('messages.duplicate.error'),
+      },
+      type,
+      retrieveAPICall: () => TriggerAPI.get(telegramBotID, trigger.id),
+      createAPICall: (data) => TriggersAPI.create(telegramBotID, data),
+      diagramAPICall: (id) => DiagramTriggerAPI.get(telegramBotID, id),
+    }),
+    [trigger.id, i18n.language],
+  );
+
+  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
     objectType: type,
     objectID: trigger.id,
     nestedObjectID: 0,
@@ -67,7 +85,7 @@ function TriggerNode({ id, type, data: trigger }: TriggerNodeProps): ReactElemen
 
         if (!response.ok) {
           createMessageToast({
-            message: t('messages.deleteTrigger.error'),
+            message: t('messages.delete.error'),
             level: 'error',
           });
           setLoadingConfirmModal(false);
@@ -77,7 +95,7 @@ function TriggerNode({ id, type, data: trigger }: TriggerNodeProps): ReactElemen
         reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
         hideConfirmModal();
         createMessageToast({
-          message: t('messages.deleteTrigger.success'),
+          message: t('messages.delete.success'),
           level: 'success',
         });
       },
@@ -86,7 +104,12 @@ function TriggerNode({ id, type, data: trigger }: TriggerNodeProps): ReactElemen
   }
 
   return (
-    <Node title={t('title')} onEdit={handleEdit} onDelete={handleDelete}>
+    <Node
+      title={t('title')}
+      onEdit={handleEdit}
+      onDuplicate={handleDuplicate}
+      onDelete={handleDelete}
+    >
       <Node.Block className='relative'>
         <Node.Title>{trigger.name}</Node.Title>
         <Node.Handle

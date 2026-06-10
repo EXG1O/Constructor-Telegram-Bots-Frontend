@@ -3,7 +3,7 @@ import {
   NodeToolbar as FRNodeToolbar,
   type NodeToolbarProps as FRToolbarProps,
 } from '@xyflow/react';
-import { SquarePen, Trash2 } from 'lucide-react';
+import { Copy, SquarePen, Trash2 } from 'lucide-react';
 
 import IconButton from 'components/ui/IconButton';
 
@@ -14,31 +14,39 @@ PrimitiveNodeToolbar.displayName = 'PrimitiveNodeToolbar';
 
 export interface NodeToolbarProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
-  'children'
+  'children' | 'onDuplicate'
 > {
   title: string;
   onEdit: React.MouseEventHandler<HTMLButtonElement>;
+  onDuplicate?: React.MouseEventHandler<HTMLButtonElement>;
   onDelete: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const NodeToolbar = forwardRef<HTMLDivElement, NodeToolbarProps>(
-  ({ title, className, onEdit, onDelete, ...props }, ref) => {
+  ({ title, className, onEdit, onDuplicate, onDelete, ...props }, ref) => {
     return (
       <PrimitiveNodeToolbar isVisible offset={8}>
         <div
           {...props}
           ref={ref}
-          className={cn('flex', 'items-center', 'gap-2', className)}
+          className={cn('flex', 'flex-col', 'gap-1', className)}
         >
-          <IconButton className='text-foreground' onClick={onEdit}>
-            <SquarePen />
-          </IconButton>
           <span className='cursor-default rounded-sm bg-dark px-2 text-dark-foreground select-none'>
             {title}
           </span>
-          <IconButton className='-ms-0.25 text-danger' onClick={onDelete}>
-            <Trash2 />
-          </IconButton>
+          <div className='flex justify-center gap-1'>
+            <IconButton className='text-foreground' onClick={onEdit}>
+              <SquarePen />
+            </IconButton>
+            {onDuplicate && (
+              <IconButton className='text-foreground' onClick={onDuplicate}>
+                <Copy />
+              </IconButton>
+            )}
+            <IconButton className='-ms-0.25 text-danger' onClick={onDelete}>
+              <Trash2 />
+            </IconButton>
+          </div>
         </div>
       </PrimitiveNodeToolbar>
     );

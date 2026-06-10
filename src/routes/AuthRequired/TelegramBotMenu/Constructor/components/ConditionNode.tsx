@@ -16,7 +16,13 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
 import Node from './Node';
 
-import { ConditionAPI } from 'api/telegram-bots/condition';
+import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
+
+import {
+  ConditionAPI,
+  ConditionsAPI,
+  DiagramConditionAPI,
+} from 'api/telegram-bots/condition';
 import type { DiagramCondition } from 'api/telegram-bots/condition/types';
 
 import {
@@ -27,14 +33,14 @@ import {
 
 type Data = Omit<DiagramCondition, 'x' | 'y' | 'source_connections'>;
 
-export interface ConditionNodeProps extends RFNodeProps<RFNode<Data>> {}
+export interface ConditionNodeProps extends RFNodeProps<RFNode<Data, 'condition'>> {}
 
 function ConditionNode({
   id,
   type,
   data: condition,
 }: ConditionNodeProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nodes.condition',
   });
 
@@ -50,7 +56,23 @@ function ConditionNode({
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<any>, 'position'> = {
+  const handleDuplicate = useNodeDuplicate(
+    () => ({
+      title: t('duplicateModal.title'),
+      text: t('duplicateModal.text'),
+      messages: {
+        success: t('messages.duplicate.success'),
+        error: t('messages.duplicate.error'),
+      },
+      type,
+      retrieveAPICall: () => ConditionAPI.get(telegramBotID, condition.id),
+      createAPICall: (data) => ConditionsAPI.create(telegramBotID, data),
+      diagramAPICall: (id) => DiagramConditionAPI.get(telegramBotID, id),
+    }),
+    [condition.id, i18n.language],
+  );
+
+  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
     objectType: type,
     objectID: condition.id,
     nestedObjectID: 0,
@@ -67,7 +89,7 @@ function ConditionNode({
 
         if (!response.ok) {
           createMessageToast({
-            message: t('messages.deleteCondition.error'),
+            message: t('messages.delete.error'),
             level: 'error',
           });
           setLoadingConfirmModal(false);
@@ -77,7 +99,7 @@ function ConditionNode({
         reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
         hideConfirmModal();
         createMessageToast({
-          message: t('messages.deleteCondition.success'),
+          message: t('messages.delete.success'),
           level: 'success',
         });
       },
@@ -90,7 +112,12 @@ function ConditionNode({
   }
 
   return (
-    <Node title={t('title')} onEdit={handleEdit} onDelete={handleDelete}>
+    <Node
+      title={t('title')}
+      onEdit={handleEdit}
+      onDuplicate={handleDuplicate}
+      onDelete={handleDelete}
+    >
       <Node.Block className='relative'>
         <Node.Title>{condition.name}</Node.Title>
         <Node.Handle

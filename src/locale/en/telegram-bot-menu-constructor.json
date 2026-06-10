@@ -503,23 +503,39 @@
     "trigger": {
       "title": "Trigger",
       "messages": {
-        "deleteTrigger": {
+        "duplicate": {
+          "success": "You have successfully duplicated the trigger.",
+          "error": "Failed to duplicate the trigger."
+        },
+        "delete": {
           "success": "You have successfully deleted the trigger.",
           "error": "Failed to delete the trigger."
         }
       },
+      "duplicateModal": {
+        "title": "Duplicating the trigger",
+        "text": "Are you sure you want to duplicate the trigger?"
+      },
       "deleteModal": {
-        "title": "Deleting the Trigger",
+        "title": "Deleting the trigger",
         "text": "Are you sure you want to delete the trigger?"
       }
     },
     "message": {
       "title": "Message",
       "messages": {
-        "deleteMessage": {
+        "duplicate": {
+          "success": "You have successfully duplicated the message.",
+          "error": "Failed to duplicate the message."
+        },
+        "delete": {
           "success": "You have successfully deleted the message.",
           "error": "Failed to delete the message."
         }
+      },
+      "duplicateModal": {
+        "title": "Duplicating the message",
+        "text": "Are you sure you want to duplicate the message?"
       },
       "deleteModal": {
         "title": "Deleting the message",
@@ -529,10 +545,18 @@
     "condition": {
       "title": "Condition",
       "messages": {
-        "deleteCondition": {
+        "duplicate": {
+          "success": "You have successfully duplicated the condition.",
+          "error": "Failed to duplicate the condition."
+        },
+        "delete": {
           "success": "You have successfully deleted the condition.",
           "error": "Failed to delete the condition."
         }
+      },
+      "duplicateModal": {
+        "title": "Duplicating the condition",
+        "text": "Are you sure you want to duplicate the condition?"
       },
       "deleteModal": {
         "title": "Deleting the condition",
@@ -542,13 +566,21 @@
     "backgroundTask": {
       "title": "Background Task",
       "messages": {
-        "deleteBackgroundTask": {
+        "duplicate": {
+          "success": "You have successfully duplicated the background task.",
+          "error": "Failed to duplicate the background task."
+        },
+        "delete": {
           "success": "You have successfully deleted the background task.",
           "error": "Failed to delete the background task."
         }
       },
+      "duplicateModal": {
+        "title": "Duplicating the background task",
+        "text": "Are you sure you want to duplicate the background task?"
+      },
       "deleteModal": {
-        "title": "Deleting the condition",
+        "title": "Deleting the background task",
         "text": "Are you sure you want to delete the background task?"
       },
       "interval": "Interval"
@@ -556,10 +588,18 @@
     "apiRequest": {
       "title": "API Request",
       "messages": {
-        "deleteAPIRequest": {
+        "duplicate": {
+          "success": "You have successfully duplicated the API request.",
+          "error": "Failed to duplicate the API request."
+        },
+        "delete": {
           "success": "You have successfully deleted the API request.",
           "error": "Failed to delete the API request."
         }
+      },
+      "duplicateModal": {
+        "title": "Duplicating the API request",
+        "text": "Are you sure you want to duplicate the API request?"
       },
       "deleteModal": {
         "title": "Deleting the API request",
@@ -569,10 +609,18 @@
     "databaseOperation": {
       "title": "Database Operation",
       "messages": {
-        "deleteDatabaseOperation": {
+        "duplicate": {
+          "success": "You have successfully duplicated the database operation.",
+          "error": "Failed to duplicate the database operation."
+        },
+        "delete": {
           "success": "You have successfully deleted the database operation.",
           "error": "Failed to delete the database operation."
         }
+      },
+      "duplicateModal": {
+        "title": "Duplicating the database operation",
+        "text": "Are you sure you want to duplicate the database operation?"
       },
       "deleteModal": {
         "title": "Deleting the database operation",
@@ -582,10 +630,18 @@
     "invoice": {
       "title": "Invoice",
       "messages": {
-        "deleteInvoice": {
+        "duplicate": {
+          "success": "You have successfully duplicated the invoice.",
+          "error": "Failed to duplicate the invoice."
+        },
+        "delete": {
           "success": "You have successfully deleted the invoice.",
           "error": "Failed to delete the invoice."
         }
+      },
+      "duplicateModal": {
+        "title": "Duplicating the invoice",
+        "text": "Are you sure you want to duplicate the invoice?"
       },
       "deleteModal": {
         "title": "Deleting the invoice",
@@ -595,13 +651,21 @@
     "temporaryVariable": {
       "title": "Temporary variable",
       "messages": {
-        "deleteInvoice": {
+        "duplicate": {
+          "success": "You have successfully duplicated the temporary variable.",
+          "error": "Failed to duplicate the temporary variable."
+        },
+        "delete": {
           "success": "You have successfully deleted the temporary variable.",
           "error": "Failed to delete the temporary variable."
         }
       },
+      "duplicateModal": {
+        "title": "Duplicating the temporary variable",
+        "text": "Are you sure you want to duplicate the temporary variable?"
+      },
       "deleteModal": {
-        "title": "Delete temporary variable",
+        "title": "Deleting the temporary variable",
         "text": "Are you sure you want to delete the temporary variable?"
       }
     }

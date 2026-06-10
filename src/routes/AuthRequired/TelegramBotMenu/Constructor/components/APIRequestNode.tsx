@@ -16,7 +16,13 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import { useAPIRequestOffcanvasStore } from './APIRequestOffcanvas/store';
 import Node from './Node';
 
-import { APIRequestAPI } from 'api/telegram-bots/api-request';
+import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
+
+import {
+  APIRequestAPI,
+  APIRequestsAPI,
+  DiagramAPIRequestAPI,
+} from 'api/telegram-bots/api-request';
 import type { DiagramAPIRequest } from 'api/telegram-bots/api-request/types';
 
 import {
@@ -27,14 +33,14 @@ import {
 
 type Data = Omit<DiagramAPIRequest, 'x' | 'y' | 'source_connections'>;
 
-export interface APIRequestNodeProps extends RFNodeProps<RFNode<Data>> {}
+export interface APIRequestNodeProps extends RFNodeProps<RFNode<Data, 'api_request'>> {}
 
 function APIRequestNode({
   id,
   type,
   data: request,
 }: APIRequestNodeProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nodes.apiRequest',
   });
 
@@ -50,7 +56,23 @@ function APIRequestNode({
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<any>, 'position'> = {
+  const handleDuplicate = useNodeDuplicate(
+    () => ({
+      title: t('duplicateModal.title'),
+      text: t('duplicateModal.text'),
+      messages: {
+        success: t('messages.duplicate.success'),
+        error: t('messages.duplicate.error'),
+      },
+      type,
+      retrieveAPICall: () => APIRequestAPI.get(telegramBotID, request.id),
+      createAPICall: (data) => APIRequestsAPI.create(telegramBotID, data),
+      diagramAPICall: (id) => DiagramAPIRequestAPI.get(telegramBotID, id),
+    }),
+    [request.id, i18n.language],
+  );
+
+  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
     objectType: type,
     objectID: request.id,
     nestedObjectID: 0,
@@ -67,7 +89,7 @@ function APIRequestNode({
 
         if (!response.ok) {
           createMessageToast({
-            message: t('messages.deleteAPIRequest.error'),
+            message: t('messages.delete.error'),
             level: 'error',
           });
           setLoadingConfirmModal(false);
@@ -77,7 +99,7 @@ function APIRequestNode({
         reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
         hideConfirmModal();
         createMessageToast({
-          message: t('messages.deleteAPIRequest.success'),
+          message: t('messages.delete.success'),
           level: 'success',
         });
       },
@@ -90,7 +112,12 @@ function APIRequestNode({
   }
 
   return (
-    <Node title={t('title')} onEdit={handleEdit} onDelete={handleDelete}>
+    <Node
+      title={t('title')}
+      onEdit={handleEdit}
+      onDuplicate={handleDuplicate}
+      onDelete={handleDelete}
+    >
       <Node.Block className='relative'>
         <Node.Title>{request.name}</Node.Title>
         <Node.Handle

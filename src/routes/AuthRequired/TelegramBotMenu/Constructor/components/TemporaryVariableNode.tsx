@@ -16,7 +16,13 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import Node from './Node';
 import { useTemporaryVariableOffcanvasStore } from './TemporaryVariableOffcanvas/store';
 
-import { TemporaryVariableAPI } from 'api/telegram-bots/temporary-variable';
+import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
+
+import {
+  DiagramTemporaryVariableAPI,
+  TemporaryVariableAPI,
+  TemporaryVariablesAPI,
+} from 'api/telegram-bots/temporary-variable';
 import type { DiagramTemporaryVariable } from 'api/telegram-bots/temporary-variable/types';
 
 import {
@@ -27,14 +33,16 @@ import {
 
 type Data = Omit<DiagramTemporaryVariable, 'x' | 'y' | 'source_connections'>;
 
-export interface TemporaryVariableNodeProps extends RFNodeProps<RFNode<Data>> {}
+export interface TemporaryVariableNodeProps extends RFNodeProps<
+  RFNode<Data, 'temporary_variable'>
+> {}
 
 function TemporaryVariableNode({
   id,
   type,
   data: variable,
 }: TemporaryVariableNodeProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nodes.temporaryVariable',
   });
 
@@ -50,7 +58,24 @@ function TemporaryVariableNode({
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<any>, 'position'> = {
+  const handleDuplicate = useNodeDuplicate(
+    () => ({
+      title: t('duplicateModal.title'),
+      text: t('duplicateModal.text'),
+      messages: {
+        success: t('messages.duplicate.success'),
+        error: t('messages.duplicate.error'),
+      },
+      type,
+      suffix: '_DUPLICATE',
+      retrieveAPICall: () => TemporaryVariableAPI.get(telegramBotID, variable.id),
+      createAPICall: (data) => TemporaryVariablesAPI.create(telegramBotID, data),
+      diagramAPICall: (id) => DiagramTemporaryVariableAPI.get(telegramBotID, id),
+    }),
+    [variable.id, i18n.language],
+  );
+
+  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
     objectType: type,
     objectID: variable.id,
     nestedObjectID: 0,
@@ -67,7 +92,7 @@ function TemporaryVariableNode({
 
         if (!response.ok) {
           createMessageToast({
-            message: t('messages.deleteTemporaryVariable.error'),
+            message: t('messages.delete.error'),
             level: 'error',
           });
           setLoadingConfirmModal(false);
@@ -77,7 +102,7 @@ function TemporaryVariableNode({
         reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
         hideConfirmModal();
         createMessageToast({
-          message: t('messages.deleteTemporaryVariable.success'),
+          message: t('messages.delete.success'),
           level: 'success',
         });
       },
@@ -90,7 +115,12 @@ function TemporaryVariableNode({
   }
 
   return (
-    <Node title={t('title')} onEdit={handleEdit} onDelete={handleDelete}>
+    <Node
+      title={t('title')}
+      onEdit={handleEdit}
+      onDuplicate={handleDuplicate}
+      onDelete={handleDelete}
+    >
       <Node.Block className='relative'>
         <Node.Title>{variable.name}</Node.Title>
         <Node.Handle

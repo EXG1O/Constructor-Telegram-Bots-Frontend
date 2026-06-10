@@ -9,14 +9,19 @@ import cn from 'utils/cn';
 
 export interface NodeProps
   extends
-    Omit<HTMLAttributes<HTMLDivElement>, 'title'>,
-    Pick<NodeToolbarProps, 'title' | 'onEdit' | 'onDelete'> {}
+    Omit<HTMLAttributes<HTMLDivElement>, 'title' | 'onDuplicate'>,
+    Pick<NodeToolbarProps, 'title' | 'onEdit' | 'onDuplicate' | 'onDelete'> {}
 
 const Node = forwardRef<HTMLDivElement, NodeProps>(
-  ({ title, className, onEdit, onDelete, ...props }, ref) => {
+  ({ title, className, onEdit, onDuplicate, onDelete, ...props }, ref) => {
     return (
       <>
-        <NodeToolbar title={title} onEdit={onEdit} onDelete={onDelete} />
+        <NodeToolbar
+          title={title}
+          onEdit={onEdit}
+          onDuplicate={onDuplicate}
+          onDelete={onDelete}
+        />
         <div
           {...props}
           ref={ref}
