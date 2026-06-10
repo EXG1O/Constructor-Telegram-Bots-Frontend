@@ -1,5 +1,8 @@
-import React, { type ReactElement } from 'react';
-import { Outlet, useNavigation } from 'react-router-dom';
+import React, { type ReactElement, useEffect } from 'react';
+import { Outlet, useLocation, useNavigation } from 'react-router-dom';
+
+import { RouteID } from 'routes';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import ConfirmModal from 'components/shared/ConfirmModal';
 import Spinner from 'components/ui/Spinner';
@@ -11,10 +14,30 @@ import Header from './components/Header';
 
 import useRootRouteLoaderData from './hooks/useRootRouteLoaderData';
 
+import reverse from 'utils/reverse';
+
 function Root(): ReactElement {
   const { user } = useRootRouteLoaderData();
 
+  const telegramBot = useTelegramBotStore((state) => state.telegramBot);
+  const setTelegramBot = useTelegramBotStore((state) => state.setTelegramBot);
+
+  const location = useLocation();
   const navigation = useNavigation();
+
+  useEffect(() => {
+    if (!telegramBot) return;
+
+    const pathname: string = navigation.location?.pathname ?? location.pathname;
+    if (
+      pathname.startsWith(
+        reverse(RouteID.TelegramBotMenuRoot, { telegramBotID: telegramBot.id }),
+      )
+    )
+      return;
+
+    setTelegramBot(null);
+  }, [location.pathname, navigation.location, telegramBot]);
 
   return (
     <>
