@@ -1,41 +1,98 @@
 # Contributing
-Thank you for considering contributing!<br>
-We appreciate your help in making this project better.
 
-## Installing
-Deploy the project by following the "[Installing](README.md#installing)" section, but instead of building the frontend, use the command for run the frontend server to make live changes. You'll also need to deploy the backend by following the "[Installing](https://github.com/EXG1O/Constructor-Telegram-Bots/blob/master/CONTRIBUTING.md#installing)" section.
+Thank you for considering contributing!<br>
+We appreciate your help in making this [project](https://constructor.exg1o.org/) better.
+
+## Requirements
+
+- Linux
+- [Node.js](https://nodejs.org/) 24
+
+## Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/EXG1O/Constructor-Telegram-Bots-Frontend.git
+cd Constructor-Telegram-Bots-Frontend
+```
+
+### 2. Configure environment variables
+
+Copy the `.env.example` file to `.env` and configure it with your settings:
+
+```bash
+cp .env.example .env
+```
+
+### 3. Install dependencies
+
+```bash
+npm ci
+```
+
+## Usage
+
+To run the development server and make live changes:
+
+```bash
+npm run start
+```
+
+To build for production:
+
+```bash
+npm run build
+```
 
 ## Code Formatting and Linting
-To maintain a consistent code style, we use **Prettier** as a code formatter and **ESLint** as a linter.
+
+We use **Prettier** as a code formatter and **ESLint** as a linter.
 
 ### Prettier
-To check your code for formatting issues, run the following command:
+
+To check your code for formatting issues:
+
 ```bash
 npx prettier ./src --check
 ```
-This will list any issues that need to be addressed.
 
-To auto-fix these issues, run the following command:
+To auto-fix formatting issues:
+
 ```bash
 npx prettier ./src --write
 ```
 
 ### ESLint
-To check your code for linting issues, run the following command:
+
+To check your code for linting issues:
+
 ```bash
 npx eslint ./src
 ```
-This will list any issues that need to be addressed.
 
-To auto-fix these issues, run the following command:
+To auto-fix linting issues:
+
 ```bash
 npx eslint ./src --fix
 ```
 
+### Run all checks
+
+To run all code quality checks (formatting and linting) at once, you can use:
+
+```bash
+npx prettier ./src --check && npx eslint ./src
+```
+
 ## Translations
-If you'd like to contribute by improving translations, you can find all locale files in the `./src/locale` directory.
+
+To improve existing translations, you can find all locale files in the `src/locale` directory.
 
 ## Pull Requests
-When submitting a PR, please ensure that:
+
+When submitting a PR, ensure that:
+
 1. Your code follows the project's coding standards.
-2. Your changes are well-documented.
+2. Your changes are well-documented with clear commit messages.
+3. Each PR should address a single issue or feature.

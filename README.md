@@ -1,21 +1,15 @@
 # Constructor Telegram Bots Frontend
-**Constructor Telegram Bots Frontend** is a frontend of the [**Constructor Telegram Bots**](https://constructor.exg1o.org) project.
 
-## Requirements
-- Node.js 24
+Constructor Telegram Bots Frontend is a frontend of the [Constructor Telegram Bots](https://github.com/EXG1O/Constructor-Telegram-Bots) project.
 
-# Installing
-To install, execute the following commands:
-```bash
-git clone https://github.com/EXG1O/Constructor-Telegram-Bots-Frontend.git
-cd Constructor-Telegram-Bots-Frontend
-git checkout tags/v2.7.1
-npm ci
-npm run build
-```
+## Quick Start
+
+If you want to use the project, visit [Quick Start](https://github.com/EXG1O/Constructor-Telegram-Bots#quick-start) section in the main repository.
 
 ## Contributing
+
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for more information on this.
 
 ## License
+
 This repository is licensed under the [AGPL-3.0 License](LICENSE).
