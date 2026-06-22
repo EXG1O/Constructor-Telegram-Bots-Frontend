@@ -4,8 +4,8 @@ import { RouteID } from 'routes';
 
 import type { LoaderData } from '../loader';
 
-function useTelegramBotMenuUsersRouteLoaderData() {
+function useTelegramBotMenuChatsRouteLoaderData() {
   return useRouteLoaderData(RouteID.TelegramBotMenuUsers) as LoaderData;
 }
 
-export default useTelegramBotMenuUsersRouteLoaderData;
+export default useTelegramBotMenuChatsRouteLoaderData;

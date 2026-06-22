@@ -1,78 +1,170 @@
 {
   "title": "Users",
-  "messages": {
-    "getUsers": {
-      "error": "Failed to retrieve the list of users."
-    }
-  },
-  "toolbar": {
-    "typeTabs": {
-      "all": "All",
-      "allowed": "Allowed",
-      "blocked": "Blocked"
-    }
-  },
-  "table": {
-    "headers": {
-      "activatedDate": "Activation date",
-      "firstName": "First name",
-      "lastName": "Last name",
-      "bot": "Bot",
-      "premium": "Premium"
-    },
-    "body": {
-      "messages": {
-        "allowUser": {
-          "success": "You have successfully allowed the user.",
-          "error": "Failed to allow the user."
-        },
-        "disallowUser": {
-          "success": "You have successfully disallowed the user.",
-          "error": "Failed to disallow the user."
-        },
-        "blockUser": {
-          "success": "You have successfully blocked the user.",
-          "error": "Failed to block the user."
-        },
-        "unblockUser": {
-          "success": "You have successfully unblocked the user.",
-          "error": "Failed to unblock the user."
-        },
-        "deleteUser": {
-          "success": "You have successfully deleted the user.",
-          "error": "Failed to delete the user."
-        }
-      },
-      "allowModal": {
-        "title": "Allow the user",
-        "text": "Are you sure you want to allow the user?"
-      },
-      "disallowModal": {
-        "title": "Disallow the user",
-        "text": "Are you sure you want to disallow the user?"
-      },
-      "blockModal": {
-        "title": "Blocking the user",
-        "text": "Are you sure you want to block the user?"
-      },
-      "unblockModal": {
-        "title": "Unblocking the user",
-        "text": "Are you sure you want to unblock the user?"
-      },
-      "deleteModal": {
-        "title": "Deleting the user",
-        "text": "Are you sure you want to delete the user?"
+  "chatsBlock": {
+    "messages": {
+      "getChats": {
+        "error": "Failed to retrieve the list of chats."
       }
     },
-    "placeholders": {
-      "notFound": "No users found",
-      "notAllowed": "You have no allowed users",
-      "notBlocked": "You have no blocked users",
-      "notActivated": "No one has activated your Telegram bot yet"
+    "title": "Chats",
+    "toolbar": {
+      "modeTabs": {
+        "all": "All",
+        "allowed": "Allowed",
+        "blocked": "Blocked"
+      },
+      "typeTabs": {
+        "all": "All",
+        "private": "Private",
+        "group": "Group",
+        "supergroup": "Supergroup",
+        "channel": "Channel"
+      }
+    },
+    "table": {
+      "headers": {
+        "title": "Title",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "forum": "Forum",
+        "comments": "Comments"
+      },
+      "body": {
+        "messages": {
+          "allowChat": {
+            "success": "You have successfully allowed the chat.",
+            "error": "Failed to allow the chat."
+          },
+          "disallowChat": {
+            "success": "You have successfully disallowed the chat.",
+            "error": "Failed to disallow the chat."
+          },
+          "blockChat": {
+            "success": "You have successfully blocked the chat.",
+            "error": "Failed to block the chat."
+          },
+          "unblockChat": {
+            "success": "You have successfully unblocked the chat.",
+            "error": "Failed to unblock the chat."
+          },
+          "deleteChat": {
+            "success": "You have successfully deleted the chat.",
+            "error": "Failed to delete the chat."
+          }
+        },
+        "allowModal": {
+          "title": "Allowing the chat",
+          "text": "Are you sure you want to allow the chat?"
+        },
+        "disallowModal": {
+          "title": "Disallowing the chat",
+          "text": "Are you sure you want to disallow the chat?"
+        },
+        "blockModal": {
+          "title": "Blocking the chat",
+          "text": "Are you sure you want to block the chat?"
+        },
+        "unblockModal": {
+          "title": "Unblocking the chat",
+          "text": "Are you sure you want to unblock the chat?"
+        },
+        "deleteModal": {
+          "title": "Deleting the chat",
+          "text": "Are you sure you want to delete the chat?"
+        }
+      },
+      "placeholders": {
+        "notFound": "No chats found",
+        "notAllowed": "You have no allowed chats",
+        "notBlocked": "You have no blocked chats",
+        "notPrivate": "Your Telegram bot has no private chats",
+        "notGroups": "Your Telegram bot has no group chats",
+        "notSupergroups": "Your Telegram bot has no supergroup chats",
+        "notChannels": "Your Telegram bot has no channel chats",
+        "notChats": "Your Telegram bot has no chats yet"
+      }
+    },
+    "footer": {
+      "count_one": "{{count}} chat",
+      "count_other": "{{count}} chats"
     }
   },
-  "footer": {
-    "userCount_one": "{{count}} user",
-    "userCount_other": "{{count}} users"
+  "usersBlock": {
+    "messages": {
+      "getUsers": {
+        "error": "Failed to retrieve the list of users."
+      }
+    },
+    "title": "Users",
+    "toolbar": {
+      "modeTabs": {
+        "all": "All",
+        "allowed": "Allowed",
+        "blocked": "Blocked"
+      }
+    },
+    "table": {
+      "headers": {
+        "activatedDate": "Activation date",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "bot": "Bot",
+        "premium": "Premium"
+      },
+      "body": {
+        "messages": {
+          "allowUser": {
+            "success": "You have successfully allowed the user.",
+            "error": "Failed to allow the user."
+          },
+          "disallowUser": {
+            "success": "You have successfully disallowed the user.",
+            "error": "Failed to disallow the user."
+          },
+          "blockUser": {
+            "success": "You have successfully blocked the user.",
+            "error": "Failed to block the user."
+          },
+          "unblockUser": {
+            "success": "You have successfully unblocked the user.",
+            "error": "Failed to unblock the user."
+          },
+          "deleteUser": {
+            "success": "You have successfully deleted the user.",
+            "error": "Failed to delete the user."
+          }
+        },
+        "allowModal": {
+          "title": "Allowing the user",
+          "text": "Are you sure you want to allow the user?"
+        },
+        "disallowModal": {
+          "title": "Disallowing the user",
+          "text": "Are you sure you want to disallow the user?"
+        },
+        "blockModal": {
+          "title": "Blocking the user",
+          "text": "Are you sure you want to block the user?"
+        },
+        "unblockModal": {
+          "title": "Unblocking the user",
+          "text": "Are you sure you want to unblock the user?"
+        },
+        "deleteModal": {
+          "title": "Deleting the user",
+          "text": "Are you sure you want to delete the user?"
+        }
+      },
+      "placeholders": {
+        "notFound": "No users found",
+        "notAllowed": "You have no allowed users",
+        "notBlocked": "You have no blocked users",
+        "notChats": "Your Telegram bot has no chats yet"
+      }
+    },
+    "footer": {
+      "count_one": "{{count}} user",
+      "count_other": "{{count}} users"
+    }
   }
 }

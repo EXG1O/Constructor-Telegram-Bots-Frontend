@@ -1,19 +1,24 @@
 import type { Params } from 'react-router-dom';
 
+import { ChatsAPI } from 'api/telegram-bots/chat';
+import type { APIResponse as ChatAPIResponse } from 'api/telegram-bots/chat/types';
 import { UsersAPI } from 'api/telegram-bots/user';
-import type { APIResponse } from 'api/telegram-bots/user/types';
+import type { APIResponse as UserAPIResponse } from 'api/telegram-bots/user/types';
 
-export type Type = 'all' | 'allowed' | 'blocked';
-
-export interface PaginationData extends APIResponse.UsersAPI.Get.Pagination {
+export interface PaginationOptions {
   limit: number;
   offset: number;
-  search: string | null;
-  type: Type;
 }
 
+export interface ChatPagination
+  extends ChatAPIResponse.ChatsAPI.Get.Pagination, PaginationOptions {}
+
+export interface UserPagination
+  extends UserAPIResponse.UsersAPI.Get.Pagination, PaginationOptions {}
+
 export interface LoaderData {
-  pagination: PaginationData;
+  chatPagination: ChatPagination;
+  userPagination: UserPagination;
 }
 
 async function loader({
@@ -26,10 +31,18 @@ async function loader({
 
   const [limit, offset] = [20, 0];
 
-  const response = await UsersAPI.get(telegramBotID, limit, offset);
-  if (!response.ok) return null;
+  const [chatsResponse, usersResponse] = await Promise.all([
+    ChatsAPI.get(telegramBotID, limit, offset),
+    UsersAPI.get(telegramBotID, limit, offset),
+  ]);
+  if (!chatsResponse.ok || !usersResponse.ok) return null;
 
-  return { pagination: { ...response.json, limit, offset, search: null, type: 'all' } };
+  const pagination: PaginationOptions = { limit, offset };
+
+  return {
+    chatPagination: { ...chatsResponse.json, ...pagination },
+    userPagination: { ...usersResponse.json, ...pagination },
+  };
 }
 
 export default loader;
