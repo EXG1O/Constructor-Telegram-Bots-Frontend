@@ -7,7 +7,7 @@ import TabsContext, { type TabsContextProps } from './contexts/TabsContext';
 
 import cn from 'utils/cn';
 
-export const tabsVariants = cva(['flex', 'w-full', 'bg-gray-200'], {
+export const tabsVariants = cva(['flex', 'flex-wrap', 'w-full', 'bg-gray-200'], {
   variants: {
     size: {
       sm: ['rounded-sm', 'p-1'],
