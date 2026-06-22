@@ -53,11 +53,11 @@
           }
         },
         "allowModal": {
-          "title": "Allow the chat",
+          "title": "Allowing the chat",
           "text": "Are you sure you want to allow the chat?"
         },
         "disallowModal": {
-          "title": "Disallow the chat",
+          "title": "Disallowing the chat",
           "text": "Are you sure you want to disallow the chat?"
         },
         "blockModal": {
@@ -135,11 +135,11 @@
           }
         },
         "allowModal": {
-          "title": "Allow the user",
+          "title": "Allowing the user",
           "text": "Are you sure you want to allow the user?"
         },
         "disallowModal": {
-          "title": "Disallow the user",
+          "title": "Disallowing the user",
           "text": "Are you sure you want to disallow the user?"
         },
         "blockModal": {
