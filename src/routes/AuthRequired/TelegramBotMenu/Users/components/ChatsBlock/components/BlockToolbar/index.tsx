@@ -3,37 +3,39 @@ import React, { type HTMLAttributes, type ReactElement } from 'react';
 import SearchInput from 'components/shared/SearchInput';
 import Pagination from 'components/ui/Pagination';
 
+import ModeTabs from './components/ModeTabs';
 import TypeTabs from './components/TypeTabs';
-
-import useUsersStore from '../../hooks/useUsersStore';
 
 import cn from 'utils/cn';
 
-export interface ToolbarProps extends Omit<
+import { useChatsBlockStore } from '../../store';
+
+export interface BlockToolbarProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'children'
 > {}
 
-function Toolbar({ className, ...props }: ToolbarProps): ReactElement {
-  const itemCount = useUsersStore((state) => state.count);
-  const itemLimit = useUsersStore((state) => state.limit);
-  const itemOffset = useUsersStore((state) => state.offset);
-  const updateUsers = useUsersStore((state) => state.updateUsers);
+function BlockToolbar({ className, ...props }: BlockToolbarProps): ReactElement {
+  const count = useChatsBlockStore((state) => state.count);
+  const limit = useChatsBlockStore((state) => state.limit);
+  const offset = useChatsBlockStore((state) => state.offset);
+  const updateChats = useChatsBlockStore((state) => state.updateChats);
 
   function handleSearch(value: string): void {
-    updateUsers(undefined, undefined, value);
+    updateChats({ search: value });
   }
 
   function handleCancel(): void {
-    updateUsers(undefined, undefined, null);
+    updateChats({ search: null });
   }
 
   function handlePageChange(nextOffset: number): void {
-    updateUsers(undefined, nextOffset);
+    updateChats({ offset: nextOffset });
   }
 
   return (
     <div {...props} className={cn('flex', 'w-full', 'flex-wrap', 'gap-2', className)}>
+      <ModeTabs />
       <TypeTabs />
       <SearchInput
         size='sm'
@@ -41,13 +43,13 @@ function Toolbar({ className, ...props }: ToolbarProps): ReactElement {
         onSearch={handleSearch}
         onCancel={handleCancel}
       />
-      {itemCount > itemLimit && (
+      {count > limit && (
         <div className='inline-flex justify-center max-sm:w-full'>
           <Pagination
             size='sm'
-            itemCount={itemCount}
-            itemLimit={itemLimit}
-            itemOffset={itemOffset}
+            itemCount={count}
+            itemLimit={limit}
+            itemOffset={offset}
             onPageChange={handlePageChange}
           />
         </div>
@@ -56,4 +58,4 @@ function Toolbar({ className, ...props }: ToolbarProps): ReactElement {
   );
 }
 
-export default Toolbar;
+export default BlockToolbar;

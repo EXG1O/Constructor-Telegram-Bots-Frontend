@@ -1,6 +1,5 @@
-import React, { type HTMLAttributes, type ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import formatDate from 'i18n/formatDate';
 import { Check, Shield, ShieldBan, Trash2, UserCheck, UserX, X } from 'lucide-react';
 
 import { RouteID } from 'routes';
@@ -9,34 +8,30 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import IconButton from 'components/ui/IconButton';
 import Table from 'components/ui/Table';
+import type { TableRowProps } from 'components/ui/Table/components/TableRow';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import useUsersStore from '../../../hooks/useUsersStore';
-
 import type { makeRequest } from 'api/core';
-import { UserAPI } from 'api/telegram-bots/user';
-import type { User } from 'api/telegram-bots/user/types';
+import { ChatAPI } from 'api/telegram-bots/chat';
+import type { Chat } from 'api/telegram-bots/chat/types';
 
 import cn from 'utils/cn';
 
-export interface TableRowProps extends Omit<
-  HTMLAttributes<HTMLTableRowElement>,
-  'children'
-> {
-  user: User;
+import { useChatsBlockStore } from '../../../store';
+
+export interface ChatTableRowProps extends Omit<TableRowProps, 'children'> {
+  chat: Chat;
 }
 
-function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
+function ChatTableRow({ chat, className, ...props }: ChatTableRowProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuUsers, {
-    keyPrefix: 'table.body',
+    keyPrefix: 'chatsBlock.table.body',
   });
 
-  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
-  const telegramBotIsPrivate = useTelegramBotStore(
-    (state) => state.telegramBot!.is_private,
-  );
+  const botID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botIsPrivate = useTelegramBotStore((state) => state.telegramBot!.is_private);
 
-  const updateUsers = useUsersStore((state) => state.updateUsers);
+  const updateChats = useChatsBlockStore((state) => state.updateChats);
 
   const showBaseConfirmModal = useConfirmModalStore((state) => state.setShow);
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
@@ -57,21 +52,18 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
 
         const response = await apiCall();
 
-        if (response.ok) {
-          updateUsers();
-          hideConfirmModal();
-          createMessageToast({
-            message: successMessage,
-            level: 'success',
-          });
-        } else {
+        if (!response.ok) {
           createMessageToast({
             message: errorMessage,
             level: 'error',
           });
+          setLoadingConfirmModal(false);
+          return;
         }
 
-        setLoadingConfirmModal(false);
+        updateChats();
+        createMessageToast({ message: successMessage, level: 'success' });
+        hideConfirmModal();
       },
       onCancel: null,
     });
@@ -81,12 +73,9 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
     showConfirmModal(
       t('allowModal.title'),
       t('allowModal.text'),
-      () =>
-        UserAPI.partialUpdate(telegramBotID, user.id, {
-          is_allowed: true,
-        }),
-      t('messages.allowUser.success'),
-      t('messages.allowUser.error'),
+      () => ChatAPI.partialUpdate(botID, chat.id, { is_allowed: true }),
+      t('messages.allowChat.success'),
+      t('messages.allowChat.error'),
     );
   }
 
@@ -94,12 +83,9 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
     showConfirmModal(
       t('disallowModal.title'),
       t('disallowModal.text'),
-      () =>
-        UserAPI.partialUpdate(telegramBotID, user.id, {
-          is_allowed: false,
-        }),
-      t('messages.disallowUser.success'),
-      t('messages.disallowUser.error'),
+      () => ChatAPI.partialUpdate(botID, chat.id, { is_allowed: false }),
+      t('messages.disallowChat.success'),
+      t('messages.disallowChat.error'),
     );
   }
 
@@ -107,12 +93,9 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
     showConfirmModal(
       t('blockModal.title'),
       t('blockModal.text'),
-      () =>
-        UserAPI.partialUpdate(telegramBotID, user.id, {
-          is_blocked: true,
-        }),
-      t('messages.blockUser.success'),
-      t('messages.blockUser.error'),
+      () => ChatAPI.partialUpdate(botID, chat.id, { is_blocked: true }),
+      t('messages.blockChat.success'),
+      t('messages.blockChat.error'),
     );
   }
 
@@ -120,12 +103,9 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
     showConfirmModal(
       t('unblockModal.title'),
       t('unblockModal.text'),
-      () =>
-        UserAPI.partialUpdate(telegramBotID, user.id, {
-          is_blocked: false,
-        }),
-      t('messages.unblockUser.success'),
-      t('messages.unblockUser.error'),
+      () => ChatAPI.partialUpdate(botID, chat.id, { is_blocked: false }),
+      t('messages.unblockChat.success'),
+      t('messages.unblockChat.error'),
     );
   }
 
@@ -133,22 +113,22 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
     showConfirmModal(
       t('deleteModal.title'),
       t('deleteModal.text'),
-      () => UserAPI.delete(telegramBotID, user.id),
-      t('messages.deleteUser.success'),
-      t('messages.deleteUser.error'),
+      () => ChatAPI.delete(botID, chat.id),
+      t('messages.deleteChat.success'),
+      t('messages.deleteChat.error'),
     );
   }
 
   return (
     <Table.Row {...props} className={cn('text-center', 'text-nowrap', className)}>
-      <Table.Cell className='text-success-emphasis'>{`[${formatDate(user.activated_date)}]`}</Table.Cell>
-      <Table.Cell className='text-primary-emphasis'>{user.telegram_id}</Table.Cell>
-      <Table.Cell>{user.username || '-'}</Table.Cell>
-      <Table.Cell>{user.first_name}</Table.Cell>
-      <Table.Cell>{user.last_name || '-'}</Table.Cell>
+      <Table.Cell className='text-primary-emphasis'>{chat.telegram_id}</Table.Cell>
+      <Table.Cell>{chat.title || '-'}</Table.Cell>
+      <Table.Cell>{chat.username || '-'}</Table.Cell>
+      <Table.Cell>{chat.first_name || '-'}</Table.Cell>
+      <Table.Cell>{chat.last_name || '-'}</Table.Cell>
       <Table.Cell>
         <div className='flex w-full justify-center [&_svg]:size-4.5'>
-          {user.is_bot ? (
+          {chat.is_forum ? (
             <Check className='text-success' />
           ) : (
             <X className='text-danger' />
@@ -157,17 +137,17 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
       </Table.Cell>
       <Table.Cell>
         <div className='flex w-full justify-center [&_svg]:size-4.5'>
-          {user.is_premium ? (
+          {chat.is_direct_messages ? (
             <Check className='text-success' />
           ) : (
             <X className='text-danger' />
           )}
         </div>
       </Table.Cell>
-      <Table.Cell>
+      <Table.Cell className='w-px'>
         <div className='flex w-full gap-1'>
-          {telegramBotIsPrivate &&
-            (user.is_allowed ? (
+          {botIsPrivate &&
+            (chat.is_allowed ? (
               <IconButton
                 size='sm'
                 className='text-success'
@@ -180,7 +160,7 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
                 <UserX />
               </IconButton>
             ))}
-          {user.is_blocked ? (
+          {chat.is_blocked ? (
             <IconButton size='sm' className='text-danger' onClick={handleUnblockClick}>
               <ShieldBan />
             </IconButton>
@@ -198,4 +178,4 @@ function TableRow({ user, className, ...props }: TableRowProps): ReactElement {
   );
 }
 
-export default TableRow;
+export default ChatTableRow;

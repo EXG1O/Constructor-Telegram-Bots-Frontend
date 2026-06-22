@@ -1,17 +1,111 @@
 {
   "title": "Користувачі",
-  "messages": {
-    "getUsers": {
-      "error": "Не вдалося отримати список користувачів."
+  "chatsBlock": {
+    "messages": {
+      "getChats": {
+        "error": "Не вдалося отримати список чатів."
+      }
+    },
+    "title": "Чати",
+    "toolbar": {
+      "modeTabs": {
+        "all": "Всі",
+        "allowed": "Дозволені",
+        "blocked": "Заблоковані"
+      },
+      "typeTabs": {
+        "all": "Всі",
+        "private": "Приватні",
+        "group": "Групи",
+        "supergroup": "Супергрупи",
+        "channel": "Канали"
+      }
+    },
+    "table": {
+      "headers": {
+        "title": "Заголовок",
+        "firstName": "Ім'я",
+        "lastName": "Прізвище",
+        "forum": "Форум",
+        "comments": "Коментарі"
+      },
+      "body": {
+        "messages": {
+          "allowChat": {
+            "success": "Ви успішно дозволили чат.",
+            "error": "Не вдалося дозволити чат."
+          },
+          "disallowChat": {
+            "success": "Ви успішно заборонили чат.",
+            "error": "Не вдалося заборонити чат."
+          },
+          "blockChat": {
+            "success": "Ви успішно заблокували чат.",
+            "error": "Не вдалося заблокувати чат."
+          },
+          "unblockChat": {
+            "success": "Ви успішно розблокували чат.",
+            "error": "Не вдалося розблокувати чат."
+          },
+          "deleteChat": {
+            "success": "Ви успішно видалили чат.",
+            "error": "Не вдалося видалити чат."
+          }
+        },
+        "allowModal": {
+          "title": "Дозволення чату",
+          "text": "Ви точно хочете дозволити чат?"
+        },
+        "disallowModal": {
+          "title": "Заборона чату",
+          "text": "Ви точно хочете заборонити чат?"
+        },
+        "blockModal": {
+          "title": "Блокування чату",
+          "text": "Ви точно хочете заблокувати чат?"
+        },
+        "unblockModal": {
+          "title": "Розблокування чату",
+          "text": "Ви точно хочете розблокувати чат?"
+        },
+        "deleteModal": {
+          "title": "Видалення чату",
+          "text": "Ви точно хочете видалити чат?"
+        }
+      },
+      "placeholders": {
+        "notFound": "Пошук за чатами не дав результатів",
+        "notAllowed": "У вас немає дозволених чатів",
+        "notBlocked": "У вас немає заблокованих чатів",
+        "notPrivate": "У вашого Telegram бота немає приватних чатів",
+        "notGroups": "У вашого Telegram бота немає групових чатів",
+        "notSupergroups": "У вашого Telegram бота немає супергрупових чатів",
+        "notChannels": "У вашого Telegram бота немає канальних чатів",
+        "notChats": "У вашого Telegram бота поки немає чатів"
+      }
+    },
+    "footer": {
+      "count_one": "{{count}} чат",
+      "count_two": "{{count}} чати",
+      "count_few": "{{count}} чати",
+      "count_many": "{{count}} чатів",
+      "count_other": "{{count}} чатів"
     }
   },
-  "toolbar": {
-    "typeTabs": {
-      "all": "Всі",
-      "allowed": "Дозволені",
-      "blocked": "Заблоковані"
-    }
-  },
+  "usersBlock": {
+    "messages": {
+      "getUsers": {
+        "error": "Не вдалося отримати список користувачів."
+      }
+    },
+    "title": "Користувачі",
+    "toolbar": {
+      "modeTabs": {
+        "all": "Всі",
+        "allowed": "Дозволені",
+        "blocked": "Заблоковані"
+      }
+    },
   "table": {
     "headers": {
       "activatedDate": "Дата активації",

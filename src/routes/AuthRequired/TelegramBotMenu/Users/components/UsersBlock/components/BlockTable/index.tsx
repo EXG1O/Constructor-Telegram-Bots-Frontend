@@ -6,27 +6,26 @@ import { RouteID } from 'routes';
 import Spinner from 'components/ui/Spinner';
 import Table, { type TableProps } from 'components/ui/Table';
 
-import TableRow from './components/TableRow';
-
-import useUsersStore from '../../hooks/useUsersStore';
+import UserTableRow from './components/UserTableRow';
 
 import cn from 'utils/cn';
 
-export interface UsersTableProps extends Omit<
-  TableProps,
-  'size' | 'striped' | 'children'
-> {}
+import { useUsersBlockStore } from '../../store';
 
-function UsersTable({
+export interface BlockTableProps extends Omit<TableProps, 'striped' | 'children'> {}
+
+function BlockTable({
   className,
   ...props
-}: UsersTableProps): ReactElement<UsersTableProps> {
-  const { t } = useTranslation(RouteID.TelegramBotMenuUsers, { keyPrefix: 'table' });
+}: BlockTableProps): ReactElement<BlockTableProps> {
+  const { t } = useTranslation(RouteID.TelegramBotMenuUsers, {
+    keyPrefix: 'usersBlock.table',
+  });
 
-  const loading = useUsersStore((state) => state.loading);
-  const search = useUsersStore((state) => state.search);
-  const type = useUsersStore((state) => state.type);
-  const users = useUsersStore((state) => state.users);
+  const search = useUsersBlockStore((state) => state.search);
+  const mode = useUsersBlockStore((state) => state.mode);
+  const users = useUsersBlockStore((state) => state.users);
+  const loading = useUsersBlockStore((state) => state.loading);
 
   return (
     <div className='overflow-hidden rounded-sm'>
@@ -45,7 +44,7 @@ function UsersTable({
               </Table.Header>
               <Table.Body>
                 {users.map((user) => (
-                  <TableRow key={user.id} user={user} />
+                  <UserTableRow key={user.id} user={user} />
                 ))}
               </Table.Body>
             </>
@@ -55,11 +54,11 @@ function UsersTable({
                 <Table.Cell className='text-center'>
                   {search
                     ? t('placeholders.notFound')
-                    : type === 'allowed'
+                    : mode === 'allowed'
                       ? t('placeholders.notAllowed')
-                      : type === 'blocked'
+                      : mode === 'blocked'
                         ? t('placeholders.notBlocked')
-                        : t('placeholders.notActivated')}
+                        : t('placeholders.notChats')}
                 </Table.Cell>
               </Table.Row>
             </Table.Body>
@@ -80,4 +79,4 @@ function UsersTable({
   );
 }
 
-export default UsersTable;
+export default BlockTable;

@@ -205,7 +205,7 @@ export const routes: RouteObject[] = [
               },
               {
                 id: RouteID.TelegramBotMenuUsers,
-                path: 'users/',
+                path: 'chats/',
                 async lazy() {
                   const [component, loader] = await Promise.all([
                     await import('./AuthRequired/TelegramBotMenu/Users'),
