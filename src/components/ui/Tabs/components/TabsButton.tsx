@@ -5,7 +5,7 @@ import Button, { type ButtonProps } from 'components/ui/Button';
 
 import useTabs from '../hooks/useTabs';
 
-export const tabsButtonVariants = cva(['w-full'], {
+export const tabsButtonVariants = cva(['flex-1'], {
   variants: {
     active: {
       false: ['text-muted', 'focus-visible:ring-gray-400/50'],
