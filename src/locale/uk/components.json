@@ -8,6 +8,11 @@
     "button": "Знайти"
   },
   "loginButton": {
+    "messages": {
+      "loginInit": {
+        "error": "Не вдалося почати процес авторизації."
+      }
+    },
     "text": "Увійти через Telegram"
   },
   "telegramBotContent": {

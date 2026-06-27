@@ -20,13 +20,8 @@ export interface Token {
 export namespace Data {
   export namespace UsersAPI {
     export interface Login {
-      id: number;
-      first_name: string;
-      last_name?: string;
-      username?: string;
-      photo_url?: string;
-      auth_date: number;
-      hash: string;
+      code: string;
+      redirect_uri: string;
     }
   }
 
@@ -45,6 +40,9 @@ export namespace APIResponse {
   }
 
   export namespace UsersAPI {
+    export interface LoginInit {
+      code_challenge: string;
+    }
     export interface Login {
       refresh_token: string;
       access_token: string;
