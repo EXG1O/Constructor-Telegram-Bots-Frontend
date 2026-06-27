@@ -15,6 +15,12 @@ export class StatsAPI {
 export class UsersAPI {
   static url: string = rootURL;
 
+  static async loginInit() {
+    return makeRequest<APIResponse.UsersAPI.LoginInit>(
+      this.url + 'login-init/',
+      'POST',
+    );
+  }
   static async login(data: Data.UsersAPI.Login) {
     return makeRequest<APIResponse.UsersAPI.Login>(this.url + 'login/', 'POST', data);
   }

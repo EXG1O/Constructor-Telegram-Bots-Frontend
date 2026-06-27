@@ -8,6 +8,11 @@
     "button": "Find"
   },
   "loginButton": {
+    "messages": {
+      "loginInit": {
+        "error": "Failed to initialize login process."
+      }
+    },
     "text": "Login via Telegram"
   },
   "telegramBotContent": {
