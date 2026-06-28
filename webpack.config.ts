@@ -18,10 +18,10 @@ const config = (env: any, argv: any): Configuration => {
   const publicPath: string = isProduction ? '/static/frontend/' : '/';
   const parsedEnv: dotenv.DotenvParseOutput | undefined = dotenv.config().parsed;
 
-  process.env.APP_DEBUG = JSON.stringify(!isProduction);
-  process.env.APP_WEBPACK_SERVE = JSON.stringify(env.WEBPACK_SERVE);
-  process.env.APP_PUBLIC_PATH = publicPath;
-  process.env.APP_TELEGRAM_LOGIN_CLIENT_ID ||= parsedEnv?.TELEGRAM_LOGIN_CLIENT_ID;
+  process.env.DEBUG = JSON.stringify(!isProduction);
+  process.env.WEBPACK_SERVE ??= 'false';
+  process.env.PUBLIC_PATH = publicPath;
+  process.env.TELEGRAM_LOGIN_CLIENT_ID ||= parsedEnv?.TELEGRAM_LOGIN_CLIENT_ID;
 
   return {
     entry: './src/index.tsx',
@@ -123,10 +123,10 @@ const config = (env: any, argv: any): Configuration => {
     },
     plugins: [
       new EnvironmentPlugin([
-        'APP_DEBUG',
-        'APP_WEBPACK_SERVE',
-        'APP_PUBLIC_PATH',
-        'APP_TELEGRAM_LOGIN_CLIENT_ID',
+        'DEBUG',
+        'WEBPACK_SERVE',
+        'PUBLIC_PATH',
+        'TELEGRAM_LOGIN_CLIENT_ID',
       ]),
       new CopyPlugin({
         patterns: [{ from: './src/locale', to: 'locale' }],
