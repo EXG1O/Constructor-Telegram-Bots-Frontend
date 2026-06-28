@@ -1,13 +1,13 @@
-import { DefinePlugin, type Configuration as WebpackConfiguration } from 'webpack';
-import type { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import dotenv from 'dotenv';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
+import { type Configuration as WebpackConfiguration, EnvironmentPlugin } from 'webpack';
+import type { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
@@ -16,11 +16,12 @@ interface Configuration extends WebpackConfiguration {
 const config = (env: any, argv: any): Configuration => {
   const isProduction: boolean = argv.mode === 'production';
   const publicPath: string = isProduction ? '/static/frontend/' : '/';
-  const envVars: Record<string, string> = Object.assign(dotenv.config().parsed || {}, {
-    DEBUG: (!isProduction).toString(),
-    WEBPACK_SERVE: Boolean(env.WEBPACK_SERVE).toString(),
-    PUBLIC_PATH: publicPath,
-  });
+  const parsedEnv: dotenv.DotenvParseOutput | undefined = dotenv.config().parsed;
+
+  process.env.APP_DEBUG = JSON.stringify(!isProduction);
+  process.env.APP_WEBPACK_SERVE = JSON.stringify(env.WEBPACK_SERVE);
+  process.env.APP_PUBLIC_PATH = publicPath;
+  process.env.APP_TELEGRAM_LOGIN_CLIENT_ID ||= parsedEnv?.TELEGRAM_LOGIN_CLIENT_ID;
 
   return {
     entry: './src/index.tsx',
@@ -121,9 +122,12 @@ const config = (env: any, argv: any): Configuration => {
       minimizer: ['...', new JsonMinimizerPlugin(), new CssMinimizerPlugin()],
     },
     plugins: [
-      new DefinePlugin({
-        'process.env': JSON.stringify(envVars),
-      }),
+      new EnvironmentPlugin([
+        'APP_DEBUG',
+        'APP_WEBPACK_SERVE',
+        'APP_PUBLIC_PATH',
+        'APP_TELEGRAM_LOGIN_CLIENT_ID',
+      ]),
       new CopyPlugin({
         patterns: [{ from: './src/locale', to: 'locale' }],
       }),
