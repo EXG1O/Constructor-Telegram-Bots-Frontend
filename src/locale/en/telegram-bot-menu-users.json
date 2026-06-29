@@ -159,7 +159,7 @@
         "notFound": "No users found",
         "notAllowed": "You have no allowed users",
         "notBlocked": "You have no blocked users",
-        "notChats": "Your Telegram bot has no chats yet"
+        "notChats": "Your Telegram bot has no users yet"
       }
     },
     "footer": {
