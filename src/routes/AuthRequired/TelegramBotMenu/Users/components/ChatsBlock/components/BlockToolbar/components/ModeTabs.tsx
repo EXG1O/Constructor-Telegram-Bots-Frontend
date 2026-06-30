@@ -2,6 +2,7 @@ import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
+import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import Tabs, { type TabsProps } from 'components/ui/Tabs';
 
@@ -19,6 +20,8 @@ function ModeTabs(props: ModeTabsProps): ReactElement {
     keyPrefix: 'chatsBlock.toolbar.modeTabs',
   });
 
+  const botIsPrivate = useTelegramBotStore((state) => state.telegramBot!.is_private);
+
   const mode = useChatsBlockStore((state) => state.mode);
   const updateChats = useChatsBlockStore((state) => state.updateChats);
 
@@ -29,7 +32,7 @@ function ModeTabs(props: ModeTabsProps): ReactElement {
   return (
     <Tabs {...props} size='sm' value={mode} onChange={handleChange}>
       <Tabs.Button value='all'>{t('all')}</Tabs.Button>
-      <Tabs.Button value='allowed'>{t('allowed')}</Tabs.Button>
+      {botIsPrivate && <Tabs.Button value='allowed'>{t('allowed')}</Tabs.Button>}
       <Tabs.Button value='blocked'>{t('blocked')}</Tabs.Button>
     </Tabs>
   );
