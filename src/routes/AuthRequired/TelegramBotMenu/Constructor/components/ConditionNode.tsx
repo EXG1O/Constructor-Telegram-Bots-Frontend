@@ -31,9 +31,11 @@ import {
   type EdgeHandle,
 } from '../utils/edges';
 
-type Data = Omit<DiagramCondition, 'x' | 'y' | 'source_connections'>;
+export type NodeData = Omit<DiagramCondition, 'x' | 'y' | 'source_connections'>;
 
-export interface ConditionNodeProps extends RFNodeProps<RFNode<Data, 'condition'>> {}
+export interface ConditionNodeProps extends RFNodeProps<
+  RFNode<NodeData, 'condition'>
+> {}
 
 function ConditionNode({
   id,

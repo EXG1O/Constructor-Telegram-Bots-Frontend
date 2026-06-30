@@ -27,9 +27,9 @@ import {
   type EdgeHandle,
 } from '../utils/edges';
 
-type Data = Omit<DiagramTrigger, 'x' | 'y' | 'source_connections'>;
+export type NodeData = Omit<DiagramTrigger, 'x' | 'y' | 'source_connections'>;
 
-export interface TriggerNodeProps extends RFNodeProps<RFNode<Data, 'trigger'>> {}
+export interface TriggerNodeProps extends RFNodeProps<RFNode<NodeData, 'trigger'>> {}
 
 function TriggerNode({ id, type, data: trigger }: TriggerNodeProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {

@@ -31,9 +31,11 @@ import {
   type EdgeHandle,
 } from '../utils/edges';
 
-type Data = Omit<DiagramAPIRequest, 'x' | 'y' | 'source_connections'>;
+export type NodeData = Omit<DiagramAPIRequest, 'x' | 'y' | 'source_connections'>;
 
-export interface APIRequestNodeProps extends RFNodeProps<RFNode<Data, 'api_request'>> {}
+export interface APIRequestNodeProps extends RFNodeProps<
+  RFNode<NodeData, 'api_request'>
+> {}
 
 function APIRequestNode({
   id,

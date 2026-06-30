@@ -22,7 +22,13 @@ import Node from './Node';
 import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
 
 import { DiagramMessageAPI, MessageAPI, MessagesAPI } from 'api/telegram-bots/message';
-import type { DiagramMessage } from 'api/telegram-bots/message/types';
+import type {
+  Data,
+  DiagramMessage,
+  MessageDocument,
+  MessageImage,
+} from 'api/telegram-bots/message/types';
+import fetchFile from 'api/utils/fetchFile';
 
 import cn from 'utils/cn';
 
@@ -33,9 +39,9 @@ import {
   type EdgeHandle,
 } from '../utils/edges';
 
-type Data = Omit<DiagramMessage, 'x' | 'y' | 'source_connections'>;
+export type NodeData = Omit<DiagramMessage, 'x' | 'y' | 'source_connections'>;
 
-export interface MessageNodeProps extends RFNodeProps<RFNode<Data, 'message'>> {}
+export interface MessageNodeProps extends RFNodeProps<RFNode<NodeData, 'message'>> {}
 
 function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
@@ -64,7 +70,29 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
       },
       type,
       retrieveAPICall: () => MessageAPI.get(telegramBotID, message.id),
-      createAPICall: (data) => MessagesAPI.create(telegramBotID, data),
+      createAPICall: async ({ images, documents, ...data }) => {
+        const processMedia = (media: (MessageImage | MessageDocument)[]) =>
+          Promise.all(
+            media.map<Promise<Data.MessagesAPI.CreateMessageMedia>>(
+              async ({ name, url, from_url, position }) => ({
+                file: url && name ? await fetchFile(url, name) : null,
+                from_url,
+                position,
+              }),
+            ),
+          );
+
+        const [processedImages, processedDocuments] = await Promise.all([
+          processMedia(images),
+          processMedia(documents),
+        ]);
+
+        return MessagesAPI.create(telegramBotID, {
+          ...data,
+          images: processedImages,
+          documents: processedDocuments,
+        });
+      },
       diagramAPICall: (id) => DiagramMessageAPI.get(telegramBotID, id),
     }),
     [message.id, i18n.language],

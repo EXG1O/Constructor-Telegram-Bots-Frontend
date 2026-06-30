@@ -9,7 +9,7 @@ import type { DiagramBlock } from 'api/telegram-bots/base/types';
 
 import { convertDiagramBlockToNode, type NodeType } from '../../../utils/nodes';
 
-export interface NodeDuplicateOptions {
+export interface NodeDuplicateOptions<BlockType extends Record<string, any>> {
   title: string;
   text: string;
   messages: {
@@ -18,13 +18,15 @@ export interface NodeDuplicateOptions {
   };
   type: NodeType;
   suffix?: string;
-  retrieveAPICall: () => ReturnType<typeof makeRequest>;
-  createAPICall: (data: any) => ReturnType<typeof makeRequest>;
+  retrieveAPICall: () => ReturnType<typeof makeRequest<BlockType>>;
+  createAPICall: (
+    data: Omit<BlockType, 'id'>,
+  ) => ReturnType<typeof makeRequest<BlockType>>;
   diagramAPICall: (id: number) => ReturnType<typeof makeRequest<DiagramBlock>>;
 }
 
-function useNodeDuplicate(
-  factory: () => NodeDuplicateOptions,
+function useNodeDuplicate<BlockType extends Record<string, any>>(
+  factory: () => NodeDuplicateOptions<BlockType>,
   deps: React.DependencyList,
 ): () => void {
   const reactFlow = useReactFlow();
@@ -59,11 +61,11 @@ function useNodeDuplicate(
         const retrieveResponse = await retrieveAPICall();
         if (!retrieveResponse.ok) return handleError();
 
-        const { id, name, ...rest } = retrieveResponse.json;
+        const { id, ...data } = retrieveResponse.json;
 
         const createResponse = await createAPICall({
-          ...rest,
-          name: name + (suffix ?? ' (Duplicate)'),
+          ...data,
+          name: data.name + (suffix ?? ' (Duplicate)'),
         });
         if (!createResponse.ok) return handleError();
 
