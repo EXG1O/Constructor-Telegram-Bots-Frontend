@@ -31,10 +31,10 @@ import {
   type EdgeHandle,
 } from '../utils/edges';
 
-type Data = Omit<DiagramTemporaryVariable, 'x' | 'y' | 'source_connections'>;
+export type NodeData = Omit<DiagramTemporaryVariable, 'x' | 'y' | 'source_connections'>;
 
 export interface TemporaryVariableNodeProps extends RFNodeProps<
-  RFNode<Data, 'temporary_variable'>
+  RFNode<NodeData, 'temporary_variable'>
 > {}
 
 function TemporaryVariableNode({

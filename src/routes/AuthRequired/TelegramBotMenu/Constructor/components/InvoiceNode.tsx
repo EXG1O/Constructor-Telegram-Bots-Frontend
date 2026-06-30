@@ -20,6 +20,7 @@ import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
 
 import { DiagramInvoiceAPI, InvoiceAPI, InvoicesAPI } from 'api/telegram-bots/invoice';
 import type { DiagramInvoice } from 'api/telegram-bots/invoice/types';
+import fetchFile from 'api/utils/fetchFile';
 
 import {
   buildEdgeSourceHandle,
@@ -27,9 +28,9 @@ import {
   type EdgeHandle,
 } from '../utils/edges';
 
-type Data = Omit<DiagramInvoice, 'x' | 'y' | 'source_connections'>;
+export type NodeData = Omit<DiagramInvoice, 'x' | 'y' | 'source_connections'>;
 
-export interface InvoiceNodeProps extends RFNodeProps<RFNode<Data, 'invoice'>> {}
+export interface InvoiceNodeProps extends RFNodeProps<RFNode<NodeData, 'invoice'>> {}
 
 function InvoiceNode({ id, type, data: invoice }: InvoiceNodeProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
@@ -58,7 +59,19 @@ function InvoiceNode({ id, type, data: invoice }: InvoiceNodeProps): ReactElemen
       },
       type,
       retrieveAPICall: () => InvoiceAPI.get(telegramBotID, invoice.id),
-      createAPICall: (data) => InvoicesAPI.create(telegramBotID, data),
+      createAPICall: async ({ image, ...data }) =>
+        InvoicesAPI.create(telegramBotID, {
+          ...data,
+          image: image
+            ? {
+                file:
+                  image.url && image.name
+                    ? await fetchFile(image.url, image.name)
+                    : null,
+                from_url: image.from_url,
+              }
+            : null,
+        }),
       diagramAPICall: (id) => DiagramInvoiceAPI.get(telegramBotID, id),
     }),
     [invoice.id, i18n.language],

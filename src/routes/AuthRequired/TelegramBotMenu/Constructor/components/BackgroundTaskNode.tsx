@@ -27,10 +27,10 @@ import type { DiagramBackgroundTask } from 'api/telegram-bots/background-task/ty
 
 import { buildEdgeSourceHandle, type EdgeHandle } from '../utils/edges';
 
-type Data = Omit<DiagramBackgroundTask, 'x' | 'y' | 'source_connections'>;
+export type NodeData = Omit<DiagramBackgroundTask, 'x' | 'y' | 'source_connections'>;
 
 export interface BackgroundTaskNodeProps extends RFNodeProps<
-  RFNode<Data, 'background_task'>
+  RFNode<NodeData, 'background_task'>
 > {}
 
 const NODE_PREFIX: string = 'nodes.backgroundTask';

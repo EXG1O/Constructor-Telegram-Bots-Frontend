@@ -31,10 +31,10 @@ import {
   type EdgeHandle,
 } from '../utils/edges';
 
-type Data = Omit<DiagramDatabaseOperation, 'x' | 'y' | 'source_connections'>;
+export type NodeData = Omit<DiagramDatabaseOperation, 'x' | 'y' | 'source_connections'>;
 
 export interface DatabaseOperationNodeProps extends RFNodeProps<
-  RFNode<Data, 'database_operation'>
+  RFNode<NodeData, 'database_operation'>
 > {}
 
 function DatabaseOperationNode({
