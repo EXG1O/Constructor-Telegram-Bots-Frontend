@@ -21,8 +21,7 @@ export interface HeaderButtonsProps extends Omit<
 
 function HeaderButtons({ className, ...props }: HeaderButtonsProps): ReactElement {
   const login = useLoginLoaderData() as
-    | ReturnType<typeof useLoginLoaderData>
-    | undefined;
+    ReturnType<typeof useLoginLoaderData> | undefined;
   const { user } = useRootRouteLoaderData();
   const telegramBot = useTelegramBotStore((state) => state.telegramBot);
 
