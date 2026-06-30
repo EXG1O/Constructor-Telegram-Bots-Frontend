@@ -10,8 +10,7 @@ export interface StateData {
 export interface StateActions {
   setTelegramBot: (
     nextTelegramBot:
-      | ((telegramBot: StateData['telegramBot']) => void)
-      | StateData['telegramBot'],
+      ((telegramBot: StateData['telegramBot']) => void) | StateData['telegramBot'],
   ) => void;
 }
 
