@@ -31,7 +31,7 @@ const NodeToolbar = forwardRef<HTMLDivElement, NodeToolbarProps>(
           ref={ref}
           className={cn('flex', 'flex-col', 'gap-1', className)}
         >
-          <span className='cursor-default rounded-sm bg-dark px-2 text-dark-foreground select-none'>
+          <span className='cursor-default rounded-sm bg-dark px-2 text-center text-dark-foreground select-none'>
             {title}
           </span>
           <div className='flex justify-center gap-1'>
