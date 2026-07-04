@@ -5,6 +5,7 @@ import {
   Background,
   BackgroundVariant,
   type Connection,
+  ConnectionLineType,
   Controls,
   type DefaultEdgeOptions,
   type Edge,
@@ -96,6 +97,7 @@ export const nodeTypes = {
   temporary_variable: TemporaryVariableNode,
 };
 const defaultEdgeOptions: DefaultEdgeOptions = {
+  type: ConnectionLineType.SmoothStep,
   markerEnd: {
     type: MarkerType.Arrow,
     strokeWidth: 1.8,
@@ -507,6 +509,7 @@ function Constructor(): ReactElement {
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}
+          connectionLineType={ConnectionLineType.SmoothStep}
           defaultEdgeOptions={defaultEdgeOptions}
           elevateEdgesOnSelect
           deleteKeyCode={null}
