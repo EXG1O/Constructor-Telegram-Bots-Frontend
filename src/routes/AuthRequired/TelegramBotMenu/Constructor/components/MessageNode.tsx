@@ -174,56 +174,58 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
       )}
       {message.keyboard?.buttons && (
         <div className='flex flex-col gap-1'>
-          {message.keyboard.buttons.map((button) =>
-            button.url ? (
-              <Node.Block
-                key={button.id}
-                variant={null}
-                className={cn(
-                  'flex',
-                  'flex-wrap',
-                  'items-center',
-                  'justify-center',
-                  'gap-1',
-                  'wrap-anywhere',
-                  messageKeyboardButtonStyleVariants({ style: button.style }),
-                )}
-              >
-                {button.text}
-                <Link className='size-3' />
-              </Node.Block>
-            ) : (
-              <Node.Block
-                key={button.id}
-                variant={null}
-                className={cn(
-                  'relative',
-                  'text-center',
-                  messageKeyboardButtonStyleVariants({ style: button.style }),
-                )}
-              >
-                {button.text}
-                <Node.Handle
-                  id={buildEdgeSourceHandle({
-                    ...defaultEdgeHandleBuildParams,
-                    position: 'left',
-                    nestedObjectID: button.id,
-                  })}
-                  type='source'
-                  position={Position.Left}
-                />
-                <Node.Handle
-                  id={buildEdgeSourceHandle({
-                    ...defaultEdgeHandleBuildParams,
-                    position: 'right',
-                    nestedObjectID: button.id,
-                  })}
-                  type='source'
-                  position={Position.Right}
-                />
-              </Node.Block>
-            ),
-          )}
+          {message.keyboard.buttons
+            .sort((a, b) => (a.row !== b.row ? a.row - b.row : a.position - b.position))
+            .map((button) =>
+              button.url ? (
+                <Node.Block
+                  key={button.id}
+                  variant={null}
+                  className={cn(
+                    'flex',
+                    'flex-wrap',
+                    'items-center',
+                    'justify-center',
+                    'gap-1',
+                    'wrap-anywhere',
+                    messageKeyboardButtonStyleVariants({ style: button.style }),
+                  )}
+                >
+                  {button.text}
+                  <Link className='size-3' />
+                </Node.Block>
+              ) : (
+                <Node.Block
+                  key={button.id}
+                  variant={null}
+                  className={cn(
+                    'relative',
+                    'text-center',
+                    messageKeyboardButtonStyleVariants({ style: button.style }),
+                  )}
+                >
+                  {button.text}
+                  <Node.Handle
+                    id={buildEdgeSourceHandle({
+                      ...defaultEdgeHandleBuildParams,
+                      position: 'left',
+                      nestedObjectID: button.id,
+                    })}
+                    type='source'
+                    position={Position.Left}
+                  />
+                  <Node.Handle
+                    id={buildEdgeSourceHandle({
+                      ...defaultEdgeHandleBuildParams,
+                      position: 'right',
+                      nestedObjectID: button.id,
+                    })}
+                    type='source'
+                    position={Position.Right}
+                  />
+                </Node.Block>
+              ),
+            )}
         </div>
       )}
     </Node>
