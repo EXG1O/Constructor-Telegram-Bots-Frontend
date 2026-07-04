@@ -169,7 +169,9 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
             richInputEditorInnerContentVariants({ size: 'sm' }),
             telegramRichInputEditorInnerContentVariants({ size: 'sm' }),
           )}
-          dangerouslySetInnerHTML={{ __html: message.text }}
+          dangerouslySetInnerHTML={{
+            __html: message.text.replace(/<(\w+)[^>]*>\s*<\/\1>/g, '<$1><br></$1>'),
+          }}
         />
       )}
       {message.keyboard?.buttons && (
