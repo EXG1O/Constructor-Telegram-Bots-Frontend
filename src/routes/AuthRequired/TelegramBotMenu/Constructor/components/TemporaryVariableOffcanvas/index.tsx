@@ -1,11 +1,9 @@
 import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, type FormikHelpers } from 'formik';
+import { Formik } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
-
-import { createMessageToast } from 'components/ui/ToastContainer';
 
 import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
 import { defaultValueBlockFormValues } from './components/ValueBlock/defaults';
@@ -14,7 +12,10 @@ import type { ValueBlockFormValues } from './components/ValueBlock/types';
 import { defaultNameBlockFormValues } from '../NameBlock/defaults';
 import type { NameBlockFormValues } from '../NameBlock/types';
 
+import useFormikSubmit from '../../hooks/useFormikSubmit';
+
 import {
+  DiagramTemporaryVariableAPI,
   TemporaryVariableAPI,
   TemporaryVariablesAPI,
 } from 'api/telegram-bots/temporary-variable';
@@ -29,17 +30,12 @@ export const defaultFormValues: FormValues = {
   ...defaultValueBlockFormValues,
 };
 
-export interface TemporaryVariableFormOffcanvasProps extends OffcanvasInnerProps {
-  onAdd?: (variable: TemporaryVariable) => void;
-  onSave?: (variable: TemporaryVariable) => void;
-}
+export interface TemporaryVariableFormOffcanvasProps extends OffcanvasInnerProps {}
 
-function TemporaryVariableOffcanvas({
-  onAdd,
-  onSave,
-  ...props
-}: TemporaryVariableFormOffcanvasProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+function TemporaryVariableOffcanvas(
+  props: TemporaryVariableFormOffcanvasProps,
+): ReactElement {
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'temporaryVariableOffcanvas',
   });
 
@@ -51,33 +47,29 @@ function TemporaryVariableOffcanvas({
     (state) => state.hideOffcanvas,
   );
 
-  async function handleSubmit(
-    values: FormValues,
-    { setFieldError }: FormikHelpers<FormValues>,
-  ): Promise<void> {
-    const response = await (variableID
-      ? TemporaryVariableAPI.update(telegramBotID, variableID, values)
-      : TemporaryVariablesAPI.create(telegramBotID, values));
-
-    if (!response.ok) {
-      for (const error of response.json.errors) {
-        if (!error.attr) continue;
-        setFieldError(error.attr, error.detail);
-      }
-      createMessageToast({
-        message: t(`messages.${action}TemporaryVariable.error`),
-        level: 'error',
-      });
-      return;
-    }
-
-    (variableID ? onSave : onAdd)?.(response.json);
-    hideOffcanvas();
-    createMessageToast({
-      message: t(`messages.${action}TemporaryVariable.success`),
-      level: 'success',
-    });
-  }
+  const handleSubmit = useFormikSubmit<TemporaryVariable, FormValues>(
+    () => ({
+      messages: {
+        add: {
+          success: t('messages.addTemporaryVariable.success'),
+          error: t('messages.addTemporaryVariable.error'),
+        },
+        edit: {
+          success: t('messages.editTemporaryVariable.success'),
+          error: t('messages.editTemporaryVariable.error'),
+        },
+      },
+      type: 'temporary_variable',
+      action,
+      saveAPICall: (values) =>
+        action === 'edit' && variableID
+          ? TemporaryVariableAPI.update(telegramBotID, variableID, values)
+          : TemporaryVariablesAPI.create(telegramBotID, values),
+      diagramAPICall: (id) => DiagramTemporaryVariableAPI.get(telegramBotID, id),
+      onHide: () => hideOffcanvas(),
+    }),
+    [variableID, action, hideOffcanvas, i18n.language],
+  );
 
   return (
     <Formik

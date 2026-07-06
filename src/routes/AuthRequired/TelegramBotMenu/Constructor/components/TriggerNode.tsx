@@ -31,7 +31,13 @@ export type NodeData = Omit<DiagramTrigger, 'x' | 'y' | 'source_connections'>;
 
 export interface TriggerNodeProps extends RFNodeProps<RFNode<NodeData, 'trigger'>> {}
 
-function TriggerNode({ id, type, data: trigger }: TriggerNodeProps): ReactElement {
+function TriggerNode({
+  id,
+  type,
+  positionAbsoluteX,
+  positionAbsoluteY,
+  data: trigger,
+}: TriggerNodeProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nodes.trigger',
   });
@@ -56,12 +62,15 @@ function TriggerNode({ id, type, data: trigger }: TriggerNodeProps): ReactElemen
         success: t('messages.duplicate.success'),
         error: t('messages.duplicate.error'),
       },
+      nodeID: id,
       type,
+      x: positionAbsoluteX,
+      y: positionAbsoluteY,
       retrieveAPICall: () => TriggerAPI.get(telegramBotID, trigger.id),
       createAPICall: (data) => TriggersAPI.create(telegramBotID, data),
       diagramAPICall: (id) => DiagramTriggerAPI.get(telegramBotID, id),
     }),
-    [trigger.id, i18n.language],
+    [trigger.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
   const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {

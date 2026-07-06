@@ -1,4 +1,4 @@
-import type { DiagramBlock, Media } from '../base/types';
+import type { Block, CreateBlock, DiagramBlock, Media } from '../base/types';
 
 export interface InvoiceImage extends Media {}
 
@@ -8,9 +8,7 @@ export interface InvoicePrice {
   amount: number;
 }
 
-export interface Invoice {
-  id: number;
-  name: string;
+export interface Invoice extends Block<number> {
   title: string;
   description: string;
   image: InvoiceImage | null;
@@ -27,7 +25,8 @@ export namespace Data {
 
     export type CreateInvoicePrice = Omit<InvoicePrice, 'id'>;
 
-    export interface Create extends Omit<Invoice, 'id' | 'image' | 'prices'> {
+    export interface Create
+      extends CreateBlock, Omit<Invoice, 'id' | 'image' | 'prices'> {
       image: CreateImage | null;
       prices: CreateInvoicePrice[] | null;
     }

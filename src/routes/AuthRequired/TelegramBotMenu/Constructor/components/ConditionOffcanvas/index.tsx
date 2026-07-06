@@ -1,11 +1,9 @@
 import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, type FormikHelpers } from 'formik';
+import { Formik } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
-
-import { createMessageToast } from 'components/ui/ToastContainer';
 
 import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
 import { defaultPartsBlockFormValues } from './components/PartsBlock/defaults';
@@ -14,7 +12,13 @@ import type { PartsBlockFormValues } from './components/PartsBlock/types';
 import { defaultNameBlockFormValues } from '../NameBlock/defaults';
 import type { NameBlockFormValues } from '../NameBlock/types';
 
-import { ConditionAPI, ConditionsAPI } from 'api/telegram-bots/condition';
+import useFormikSubmit from '../../hooks/useFormikSubmit';
+
+import {
+  ConditionAPI,
+  ConditionsAPI,
+  DiagramConditionAPI,
+} from 'api/telegram-bots/condition';
 import type { Condition, Data } from 'api/telegram-bots/condition/types';
 
 import { useConditionOffcanvasStore } from './store';
@@ -26,17 +30,10 @@ export const defaultFormValues: FormValues = {
   ...defaultPartsBlockFormValues,
 };
 
-export interface ConditionFormOffcanvasProps extends OffcanvasInnerProps {
-  onAdd?: (condition: Condition) => void;
-  onSave?: (condition: Condition) => void;
-}
+export interface ConditionFormOffcanvasProps extends OffcanvasInnerProps {}
 
-function ConditionOffcanvas({
-  onAdd,
-  onSave,
-  ...props
-}: ConditionFormOffcanvasProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+function ConditionOffcanvas(props: ConditionFormOffcanvasProps): ReactElement {
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'conditionOffcanvas',
   });
 
@@ -46,41 +43,39 @@ function ConditionOffcanvas({
   const action = useConditionOffcanvasStore((state) => state.action);
   const hideOffcanvas = useConditionOffcanvasStore((state) => state.hideOffcanvas);
 
-  async function handleSubmit(
-    { parts, ...values }: FormValues,
-    { setFieldError }: FormikHelpers<FormValues>,
-  ): Promise<void> {
-    const data: Data.ConditionsAPI.Create | Data.ConditionAPI.Update = {
-      ...values,
-      parts: parts.map(({ next_part_operator, ...part }) => ({
-        ...part,
-        next_part_operator: next_part_operator !== 'null' ? next_part_operator : null,
-      })),
-    };
+  const handleSubmit = useFormikSubmit<Condition, FormValues>(
+    () => ({
+      messages: {
+        add: {
+          success: t('messages.addCondition.success'),
+          error: t('messages.addCondition.error'),
+        },
+        edit: {
+          success: t('messages.editCondition.success'),
+          error: t('messages.editCondition.error'),
+        },
+      },
+      type: 'condition',
+      action,
+      saveAPICall: ({ parts, ...values }) => {
+        const data: Data.ConditionsAPI.Create | Data.ConditionAPI.Update = {
+          ...values,
+          parts: parts.map(({ next_part_operator, ...part }) => ({
+            ...part,
+            next_part_operator:
+              next_part_operator !== 'null' ? next_part_operator : null,
+          })),
+        };
 
-    const response = await (conditionID
-      ? ConditionAPI.update(telegramBotID, conditionID, data)
-      : ConditionsAPI.create(telegramBotID, data));
-
-    if (!response.ok) {
-      for (const error of response.json.errors) {
-        if (!error.attr) continue;
-        setFieldError(error.attr, error.detail);
-      }
-      createMessageToast({
-        message: t(`messages.${action}Condition.error`),
-        level: 'error',
-      });
-      return;
-    }
-
-    (conditionID ? onSave : onAdd)?.(response.json);
-    hideOffcanvas();
-    createMessageToast({
-      message: t(`messages.${action}Condition.success`),
-      level: 'success',
-    });
-  }
+        return action === 'edit' && conditionID
+          ? ConditionAPI.update(telegramBotID, conditionID, data)
+          : ConditionsAPI.create(telegramBotID, data);
+      },
+      diagramAPICall: (id) => DiagramConditionAPI.get(telegramBotID, id),
+      onHide: () => hideOffcanvas(),
+    }),
+    [conditionID, action, hideOffcanvas, i18n.language],
+  );
 
   return (
     <Formik

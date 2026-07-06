@@ -1,6 +1,6 @@
 import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, type FormikHelpers } from 'formik';
+import { Formik } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
@@ -22,7 +22,9 @@ import type { TextBlockFormValues } from './components/TextBlock/types';
 import { defaultNameBlockFormValues } from '../NameBlock/defaults';
 import type { NameBlockFormValues } from '../NameBlock/types';
 
-import { MessageAPI, MessagesAPI } from 'api/telegram-bots/message';
+import useFormikSubmit from '../../hooks/useFormikSubmit';
+
+import { DiagramMessageAPI, MessageAPI, MessagesAPI } from 'api/telegram-bots/message';
 import type { Data, Message } from 'api/telegram-bots/message/types';
 
 import { useMessageOffcanvasStore } from './store';
@@ -55,13 +57,10 @@ export const defaultFormValues: FormValues = {
   show_keyboard_block: false,
 };
 
-export interface MessageOffcanvasProps extends OffcanvasInnerProps {
-  onAdd?: (message: Message) => void;
-  onSave?: (message: Message) => void;
-}
+export interface MessageOffcanvasProps extends OffcanvasInnerProps {}
 
-function MessageOffcanvas({ onAdd, onSave }: MessageOffcanvasProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'messageOffcanvas',
   });
 
@@ -72,117 +71,121 @@ function MessageOffcanvas({ onAdd, onSave }: MessageOffcanvasProps): ReactElemen
   const action = useMessageOffcanvasStore((state) => state.action);
   const hideOffcanvas = useMessageOffcanvasStore((state) => state.hideOffcanvas);
 
-  async function handleSubmit(
-    {
-      images,
-      documents,
-      text,
-      keyboard,
-      show_images_block,
-      show_documents_block,
-      show_text_block,
-      show_keyboard_block,
-      ...values
-    }: FormValues,
-    { setFieldError }: FormikHelpers<FormValues>,
-  ): Promise<void> {
-    if (
-      !show_images_block &&
-      !show_documents_block &&
-      !show_text_block &&
-      !show_keyboard_block
-    ) {
-      createMessageToast({
-        message: t(`messages.validation.error`, { context: 'noAddons' }),
-        level: 'error',
-      });
-      return;
-    }
+  const handleSubmit = useFormikSubmit<Message, FormValues>(
+    () => ({
+      messages: {
+        add: {
+          success: t('messages.addMessage.success'),
+          error: t('messages.addMessage.error'),
+        },
+        edit: {
+          success: t('messages.editMessage.success'),
+          error: t('messages.editMessage.error'),
+        },
+      },
+      type: 'message',
+      action,
+      saveAPICall: async ({
+        images,
+        documents,
+        text,
+        keyboard,
+        show_images_block,
+        show_documents_block,
+        show_text_block,
+        show_keyboard_block,
+        ...values
+      }) => {
+        if (
+          !show_images_block &&
+          !show_documents_block &&
+          !show_text_block &&
+          !show_keyboard_block
+        ) {
+          createMessageToast({
+            message: t('messages.validation.error', { context: 'noAddons' }),
+            level: 'error',
+          });
+          return null;
+        }
 
-    if (show_keyboard_block && !show_text_block) {
-      createMessageToast({
-        message: t(`messages.validation.error`, { context: 'keyboardRequiresText' }),
-        level: 'error',
-      });
-      return;
-    }
+        if (show_keyboard_block && !show_text_block) {
+          createMessageToast({
+            message: t('messages.validation.error', {
+              context: 'keyboardRequiresText',
+            }),
+            level: 'error',
+          });
+          return null;
+        }
 
-    const data: Data.MessagesAPI.Create | Data.MessageAPI.Update = {
-      ...values,
-      images:
-        show_images_block && images.length
-          ? images.map<Data.MessagesAPI.CreateMessageMedia>(
-              ({ id, file, from_url }, index) => ({
-                id,
-                position: index,
-                file,
-                from_url,
-              }),
-            )
-          : null,
-      documents:
-        show_documents_block && documents.length
-          ? documents.map<Data.MessagesAPI.CreateMessageMedia>(
-              ({ id, file, from_url }, index) => ({
-                id,
-                position: index,
-                file,
-                from_url,
-              }),
-            )
-          : null,
-      text: show_text_block ? text : null,
-      keyboard: show_keyboard_block
-        ? {
-            type: keyboard.type,
-            buttons: keyboard.rows.reduce<
-              Data.MessagesAPI.CreateMessageKeyboardButton[]
-            >((buttons, row, rowIndex) => {
-              buttons.push(
-                ...row.buttons.map(({ id, text, url, style }, buttonIndex) => ({
-                  id,
-                  row: rowIndex,
-                  position: buttonIndex,
-                  text,
-                  url,
-                  style,
-                })),
-              );
+        const data: Data.MessagesAPI.Create | Data.MessageAPI.Update = {
+          ...values,
+          images:
+            show_images_block && images.length
+              ? images.map<Data.MessagesAPI.CreateMessageMedia>(
+                  ({ id, file, from_url }, index) => ({
+                    id,
+                    position: index,
+                    file,
+                    from_url,
+                  }),
+                )
+              : null,
+          documents:
+            show_documents_block && documents.length
+              ? documents.map<Data.MessagesAPI.CreateMessageMedia>(
+                  ({ id, file, from_url }, index) => ({
+                    id,
+                    position: index,
+                    file,
+                    from_url,
+                  }),
+                )
+              : null,
+          text: show_text_block ? text : null,
+          keyboard: show_keyboard_block
+            ? {
+                type: keyboard.type,
+                buttons: keyboard.rows.reduce<
+                  Data.MessagesAPI.CreateMessageKeyboardButton[]
+                >((buttons, row, rowIndex) => {
+                  buttons.push(
+                    ...row.buttons.map(({ id, text, url, style }, buttonIndex) => ({
+                      id,
+                      row: rowIndex,
+                      position: buttonIndex,
+                      text,
+                      url,
+                      style,
+                    })),
+                  );
 
-              return buttons;
-            }, []),
-          }
-        : null,
-    };
+                  return buttons;
+                }, []),
+              }
+            : null,
+        };
 
-    const response = await (action === 'add'
-      ? MessagesAPI.create(telegramBotID, data)
-      : MessageAPI.update(telegramBotID, messageID!, data));
+        const response = await (action === 'edit' && messageID
+          ? MessageAPI.update(telegramBotID, messageID, data)
+          : MessagesAPI.create(telegramBotID, data));
 
-    if (!response.ok) {
-      for (const error of response.json.errors) {
-        if (!error.attr) continue;
-        setFieldError(error.attr, error.detail);
-      }
-      createMessageToast({
-        message: t(`messages.${action}Message.error`),
-        level: 'error',
-      });
-      return;
-    }
+        if (response.ok) {
+          const { usedStorageSize } = useMessageOffcanvasStore.getState();
 
-    const { usedStorageSize } = useMessageOffcanvasStore.getState();
+          setTelegramBot((telegramBot) => {
+            telegramBot!.used_storage_size = usedStorageSize;
+          });
+        }
 
-    (action === 'add' ? onAdd : onSave)?.(response.json);
-    setTelegramBot((telegramBot) => {
-      telegramBot!.used_storage_size = usedStorageSize;
-    });
-    hideOffcanvas();
-    createMessageToast({
-      message: t(`messages.${action}Message.success`),
-      level: 'success',
-    });
-  }
+        return response;
+      },
+      diagramAPICall: (id) => DiagramMessageAPI.get(telegramBotID, id),
+      onHide: () => hideOffcanvas(),
+    }),
+    [messageID, action, hideOffcanvas, i18n.language],
+  );
 
   return (
     <Formik
@@ -191,7 +194,7 @@ function MessageOffcanvas({ onAdd, onSave }: MessageOffcanvasProps): ReactElemen
       validateOnChange={false}
       onSubmit={handleSubmit}
     >
-      <OffcanvasInner />
+      <OffcanvasInner {...props} />
     </Formik>
   );
 }

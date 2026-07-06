@@ -1,4 +1,4 @@
-import type { DiagramBlock } from '../base/types';
+import type { Block, CreateBlock, DiagramBlock } from '../base/types';
 
 export interface DatabaseCreateOperation {
   data: any[] | Record<string, any>;
@@ -12,9 +12,7 @@ export interface DatabaseUpdateOperation {
   new_data: any[] | Record<string, any>;
 }
 
-export interface DatabaseOperation {
-  id: number;
-  name: string;
+export interface DatabaseOperation extends Block<number> {
   create_operation: DatabaseCreateOperation | null;
   update_operation: DatabaseUpdateOperation | null;
 }
@@ -25,7 +23,7 @@ export interface DiagramDatabaseOperation extends DiagramBlock<
 
 export namespace Data {
   export namespace DatabaseOperationsAPI {
-    export type Create = Omit<DatabaseOperation, 'id'>;
+    export type Create = CreateBlock & Omit<DatabaseOperation, 'id'>;
   }
 
   export namespace DatabaseOperationAPI {

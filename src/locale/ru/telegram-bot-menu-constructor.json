@@ -4,30 +4,6 @@
     "validation": {
       "invalidJSON": "Введите данные в формате JSON."
     },
-    "getDiagramTrigger": {
-      "error": "Не удалось получить данные триггеров для диаграммы."
-    },
-    "getDiagramMessage": {
-      "error": "Не удалось получить данные сообщений для диаграммы."
-    },
-    "getDiagramCondition": {
-      "error": "Не удалось получить данные условия для диаграммы."
-    },
-    "getDiagramBackgroundTask": {
-      "error": "Не удалось получить данные фоновой задачи для диаграммы."
-    },
-    "getDiagramAPIRequest": {
-      "error": "Не удалось получить данные API-запросов для диаграммы."
-    },
-    "getDiagramDatabaseOperation": {
-      "error": "Не удалось получить данные операций базы данных для диаграммы."
-    },
-    "getDiagramInvoice": {
-      "error": "Не удалось получить данные счетов для диаграммы."
-    },
-    "getDiagramTemporaryVariable": {
-      "error": "Не удалось получить данные временных переменных для диаграммы."
-    },
     "createConnection": {
       "error": "Не удалось подключить блок к другому блоку."
     },

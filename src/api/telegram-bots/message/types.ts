@@ -1,4 +1,4 @@
-import type { DiagramBlock, Media } from '../base/types';
+import type { Block, CreateBlock, DiagramBlock, Media } from '../base/types';
 import type { Connection } from '../connection/types';
 
 export interface MessageSettings {
@@ -31,9 +31,7 @@ export interface MessageKeyboard {
   buttons: MessageKeyboardButton[];
 }
 
-export interface Message {
-  id: number;
-  name: string;
+export interface Message extends Block<number> {
   text: string | null;
   settings: MessageSettings;
   images: MessageImage[];
@@ -69,10 +67,8 @@ export namespace Data {
       buttons: CreateMessageKeyboardButton[];
     }
 
-    export interface Create extends Omit<
-      Message,
-      'id' | 'images' | 'documents' | 'keyboard'
-    > {
+    export interface Create
+      extends CreateBlock, Omit<Message, 'id' | 'images' | 'documents' | 'keyboard'> {
       images: CreateMessageMedia[] | null;
       documents: CreateMessageMedia[] | null;
       keyboard: CreateMessageKeyboard | null;
@@ -89,13 +85,16 @@ export namespace Data {
       id?: MessageKeyboardButton['id'];
     }
 
-    export interface UpdateMessageKeyboard extends Omit<MessageKeyboard, 'buttons'> {
+    export interface UpdateMessageKeyboard extends Omit<
+      MessagesAPI.CreateMessageKeyboard,
+      'buttons'
+    > {
       buttons: UpdateMessageKeyboardButton[];
     }
 
     export interface Update extends Omit<
-      Message,
-      'id' | 'images' | 'documents' | 'keyboard'
+      MessagesAPI.Create,
+      'images' | 'documents' | 'keyboard'
     > {
       images: UpdateMessageMedia[] | null;
       documents: UpdateMessageMedia[] | null;
@@ -105,14 +104,16 @@ export namespace Data {
     export interface PartialUpdateMessageKeyboard extends Partial<
       Omit<UpdateMessageKeyboard, 'buttons'>
     > {
-      buttons?: Partial<UpdateMessageKeyboard['buttons']>;
+      buttons?: Partial<UpdateMessageKeyboardButton>[];
     }
 
-    export interface PartialUpdate extends Partial<Pick<Update, 'name' | 'text'>> {
+    export interface PartialUpdate extends Partial<
+      Omit<Update, 'settings' | 'images' | 'documents' | 'keyboard'>
+    > {
       settings?: Partial<Update['settings']>;
       images?: Partial<UpdateMessageMedia>[] | null;
       documents?: Partial<UpdateMessageMedia>[] | null;
-      keyboard?: PartialUpdateMessageKeyboard;
+      keyboard?: PartialUpdateMessageKeyboard | null;
     }
   }
 

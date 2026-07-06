@@ -4,30 +4,6 @@
     "validation": {
       "invalidJSON": "Please enter the data in JSON format."
     },
-    "getDiagramTrigger": {
-      "error": "Failed to get trigger data for the diagram."
-    },
-    "getDiagramMessage": {
-      "error": "Failed to get message data for the diagram."
-    },
-    "getDiagramCondition": {
-      "error": "Failed to get condition data for the diagram."
-    },
-    "getDiagramBackgroundTask": {
-      "error": "Failed to get background task data for the diagram."
-    },
-    "getDiagramAPIRequest": {
-      "error": "Failed to get API request data for the diagram."
-    },
-    "getDiagramDatabaseOperation": {
-      "error": "Failed to get database operation data for the diagram."
-    },
-    "getDiagramInvoice": {
-      "error": "Failed to get invoice data for the diagram."
-    },
-    "getDiagramTemporaryVariable": {
-      "error": "Failed to get temporary variable data for the diagram."
-    },
     "createConnection": {
       "error": "Failed to connect one block to another."
     },
