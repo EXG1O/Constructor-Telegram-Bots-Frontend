@@ -40,6 +40,8 @@ export interface TemporaryVariableNodeProps extends RFNodeProps<
 function TemporaryVariableNode({
   id,
   type,
+  positionAbsoluteX,
+  positionAbsoluteY,
   data: variable,
 }: TemporaryVariableNodeProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
@@ -66,13 +68,16 @@ function TemporaryVariableNode({
         success: t('messages.duplicate.success'),
         error: t('messages.duplicate.error'),
       },
+      nodeID: id,
       type,
       suffix: '_DUPLICATE',
+      x: positionAbsoluteX,
+      y: positionAbsoluteY,
       retrieveAPICall: () => TemporaryVariableAPI.get(telegramBotID, variable.id),
       createAPICall: (data) => TemporaryVariablesAPI.create(telegramBotID, data),
       diagramAPICall: (id) => DiagramTemporaryVariableAPI.get(telegramBotID, id),
     }),
-    [variable.id, i18n.language],
+    [variable.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
   const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {

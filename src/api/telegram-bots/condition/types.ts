@@ -1,4 +1,4 @@
-import type { DiagramBlock } from '../base/types';
+import type { Block, CreateBlock, DiagramBlock } from '../base/types';
 
 export interface ConditionPart {
   id: number;
@@ -9,9 +9,7 @@ export interface ConditionPart {
   next_part_operator: '&&' | '||' | null;
 }
 
-export interface Condition {
-  id: number;
-  name: string;
+export interface Condition extends Block<number> {
   parts: ConditionPart[];
 }
 
@@ -19,7 +17,7 @@ export interface DiagramCondition extends DiagramBlock<Condition['id']> {}
 
 export namespace Data {
   export namespace ConditionsAPI {
-    export interface Create extends Omit<Condition, 'id' | 'parts'> {
+    export interface Create extends CreateBlock, Omit<Condition, 'id' | 'parts'> {
       parts: Omit<ConditionPart, 'id'>[];
     }
   }
@@ -29,12 +27,12 @@ export namespace Data {
       id?: ConditionPart['id'];
     }
 
-    export interface Update extends Omit<Condition, 'id' | 'parts'> {
+    export interface Update extends Omit<ConditionsAPI.Create, 'parts'> {
       parts: UpdateConditionPart[];
     }
 
-    export interface PartialUpdate extends Partial<Omit<Condition, 'id' | 'parts'>> {
-      parts: Partial<ConditionPart>[];
+    export interface PartialUpdate extends Partial<Omit<Update, 'parts'>> {
+      parts: Partial<UpdateConditionPart>[];
     }
   }
 

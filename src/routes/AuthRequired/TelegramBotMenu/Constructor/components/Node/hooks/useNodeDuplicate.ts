@@ -1,31 +1,34 @@
 import { useCallback } from 'react';
-import { useReactFlow } from '@xyflow/react';
+import { type Node, useReactFlow } from '@xyflow/react';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import type { makeRequest } from 'api/core';
-import type { DiagramBlock } from 'api/telegram-bots/base/types';
+import type { Block, CreateBlock, DiagramBlock } from 'api/telegram-bots/base/types';
 
 import { convertDiagramBlockToNode, type NodeType } from '../../../utils/nodes';
 
-export interface NodeDuplicateOptions<BlockType extends Record<string, any>> {
+export interface NodeDuplicateOptions<BlockType extends Block> {
   title: string;
   text: string;
   messages: {
     success: string;
     error: string;
   };
+  nodeID: string;
   type: NodeType;
   suffix?: string;
+  x: number;
+  y: number;
   retrieveAPICall: () => ReturnType<typeof makeRequest<BlockType>>;
   createAPICall: (
-    data: Omit<BlockType, 'id'>,
+    data: Required<CreateBlock> & BlockType,
   ) => ReturnType<typeof makeRequest<BlockType>>;
   diagramAPICall: (id: number) => ReturnType<typeof makeRequest<DiagramBlock>>;
 }
 
-function useNodeDuplicate<BlockType extends Record<string, any>>(
+function useNodeDuplicate<BlockType extends Block>(
   factory: () => NodeDuplicateOptions<BlockType>,
   deps: React.DependencyList,
 ): () => void {
@@ -40,8 +43,11 @@ function useNodeDuplicate<BlockType extends Record<string, any>>(
       title,
       text,
       messages,
+      nodeID,
       type,
       suffix,
+      x,
+      y,
       retrieveAPICall,
       createAPICall,
       diagramAPICall,
@@ -61,24 +67,35 @@ function useNodeDuplicate<BlockType extends Record<string, any>>(
         const retrieveResponse = await retrieveAPICall();
         if (!retrieveResponse.ok) return handleError();
 
-        const { id, ...data } = retrieveResponse.json;
+        const { id, name, ...rest } = retrieveResponse.json;
+        const data: Required<CreateBlock> = {
+          ...rest,
+          name: name + (suffix ?? ' (Duplicate)'),
+          x: x + 50,
+          y: y + 50,
+        };
 
-        const createResponse = await createAPICall({
-          ...data,
-          name: data.name + (suffix ?? ' (Duplicate)'),
-        });
+        const createResponse = await createAPICall(data as any);
         if (!createResponse.ok) return handleError();
 
         const diagramResponse = await diagramAPICall(createResponse.json.id);
         if (!diagramResponse.ok) return handleError();
 
-        reactFlow.addNodes(convertDiagramBlockToNode(type, diagramResponse.json));
+        const newNode: Node = convertDiagramBlockToNode(type, diagramResponse.json);
+
+        reactFlow.addNodes(newNode);
+        reactFlow.fitView({
+          maxZoom: Math.max(1, reactFlow.getZoom()),
+          duration: 450,
+          nodes: [{ id: nodeID }, newNode],
+        });
+
         hideConfirmModal();
         createMessageToast({ message: messages.success, level: 'success' });
       },
       onCancel: null,
     });
-  }, [deps]);
+  }, deps);
 }
 
 export default useNodeDuplicate;

@@ -1,11 +1,9 @@
 import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, type FormikHelpers } from 'formik';
+import { Formik } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
-
-import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { defaultCommandBlockFormValues } from './components/CommandBlock/defaults';
 import type { CommandBlockFormValues } from './components/CommandBlock/types';
@@ -22,7 +20,9 @@ import type { WebhookBlockFormValues } from './components/WebhookBlock/types';
 import { defaultNameBlockFormValues } from '../NameBlock/defaults';
 import type { NameBlockFormValues } from '../NameBlock/types';
 
-import { TriggerAPI, TriggersAPI } from 'api/telegram-bots/trigger';
+import useFormikSubmit from '../../hooks/useFormikSubmit';
+
+import { DiagramTriggerAPI, TriggerAPI, TriggersAPI } from 'api/telegram-bots/trigger';
 import type { Data, Trigger } from 'api/telegram-bots/trigger/types';
 
 import { useTriggerOffcanvasStore } from './store';
@@ -45,17 +45,10 @@ export const defaultFormValues: FormValues = {
   ...defaultWebhookBlockFormValues,
 };
 
-export interface TriggerFormOffcanvasProps extends OffcanvasInnerProps {
-  onAdd?: (trigger: Trigger) => void;
-  onSave?: (trigger: Trigger) => void;
-}
+export interface TriggerFormOffcanvasProps extends OffcanvasInnerProps {}
 
-function TriggerOffcanvas({
-  onAdd,
-  onSave,
-  ...props
-}: TriggerFormOffcanvasProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+function TriggerOffcanvas(props: TriggerFormOffcanvasProps): ReactElement {
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'triggerOffcanvas',
   });
 
@@ -66,75 +59,72 @@ function TriggerOffcanvas({
   const showOffcanvas = useTriggerOffcanvasStore((state) => state.showOffcanvas);
   const hideOffcanvas = useTriggerOffcanvasStore((state) => state.hideOffcanvas);
 
-  async function handleSubmit(
-    {
-      type,
-      start_command,
-      command,
-      message,
-      show_start_command_payload,
-      show_start_command_description,
-      show_command_description,
-      ...values
-    }: FormValues,
-    { setFieldError }: FormikHelpers<FormValues>,
-  ): Promise<void> {
-    const data: Data.TriggersAPI.Create | Data.TriggerAPI.Update = {
-      ...values,
-      command:
-        type === Type.StartCommand
-          ? {
-              command: 'start',
-              payload: show_start_command_payload ? start_command.payload : null,
-              description: show_start_command_description
-                ? start_command.description
+  const handleSubmit = useFormikSubmit<Trigger, FormValues>(
+    () => ({
+      messages: {
+        add: {
+          success: t('messages.addTrigger.success'),
+          error: t('messages.addTrigger.error'),
+        },
+        edit: {
+          success: t('messages.editTrigger.success'),
+          error: t('messages.editTrigger.error'),
+        },
+      },
+      type: 'trigger',
+      action,
+      saveAPICall: ({
+        type,
+        start_command,
+        command,
+        message,
+        show_start_command_payload,
+        show_start_command_description,
+        show_command_description,
+        ...values
+      }) => {
+        const data: Data.TriggersAPI.Create | Data.TriggerAPI.Update = {
+          ...values,
+          command:
+            type === Type.StartCommand
+              ? {
+                  command: 'start',
+                  payload: show_start_command_payload ? start_command.payload : null,
+                  description: show_start_command_description
+                    ? start_command.description
+                    : null,
+                }
+              : type === Type.Command
+                ? {
+                    command: command.command,
+                    payload: null,
+                    description: show_command_description ? command.description : null,
+                  }
                 : null,
-            }
-          : type === Type.Command
-            ? {
-                command: command.command,
-                payload: null,
-                description: show_command_description ? command.description : null,
-              }
-            : null,
-      message:
-        type === Type.Message
-          ? message
-          : type === Type.AnyMessage
-            ? { text: null }
-            : null,
-      webhook: type === Type.Webhook ? {} : null,
-    };
+          message:
+            type === Type.Message
+              ? message
+              : type === Type.AnyMessage
+                ? { text: null }
+                : null,
+          webhook: type === Type.Webhook ? {} : null,
+        };
 
-    const response = await (triggerID
-      ? TriggerAPI.update(telegramBotID, triggerID, data)
-      : TriggersAPI.create(telegramBotID, data));
-
-    if (!response.ok) {
-      for (const error of response.json.errors) {
-        if (!error.attr) continue;
-        setFieldError(error.attr, error.detail);
-      }
-      createMessageToast({
-        message: t(`messages.${action}Trigger.error`),
-        level: 'error',
-      });
-      return;
-    }
-
-    (triggerID ? onSave : onAdd)?.(response.json);
-
-    if (type === Type.Webhook) {
-      showOffcanvas(response.json.id);
-    } else {
-      hideOffcanvas();
-    }
-
-    createMessageToast({
-      message: t(`messages.${action}Trigger.success`),
-      level: 'success',
-    });
-  }
+        return action === 'edit' && triggerID
+          ? TriggerAPI.update(telegramBotID, triggerID, data)
+          : TriggersAPI.create(telegramBotID, data);
+      },
+      diagramAPICall: (id) => DiagramTriggerAPI.get(telegramBotID, id),
+      onHide: (id, { type }) => {
+        if (type === Type.Webhook) {
+          showOffcanvas(id);
+        } else {
+          hideOffcanvas();
+        }
+      },
+    }),
+    [triggerID, action, showOffcanvas, hideOffcanvas, i18n.language],
+  );
 
   return (
     <Formik

@@ -1,8 +1,6 @@
-import type { DiagramBlock } from '../base/types';
+import type { Block, CreateBlock, DiagramBlock } from '../base/types';
 
-export interface TemporaryVariable {
-  id: number;
-  name: string;
+export interface TemporaryVariable extends Block<number> {
   value: string;
 }
 
@@ -11,7 +9,7 @@ export interface DiagramTemporaryVariable
 
 export namespace Data {
   export namespace TemporaryVariablesAPI {
-    export type Create = Omit<TemporaryVariable, 'id'>;
+    export type Create = CreateBlock & Omit<TemporaryVariable, 'id'>;
   }
 
   export namespace TemporaryVariableAPI {

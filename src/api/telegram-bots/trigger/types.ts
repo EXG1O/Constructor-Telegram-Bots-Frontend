@@ -1,4 +1,4 @@
-import type { DiagramBlock } from '../base/types';
+import type { Block, CreateBlock, DiagramBlock } from '../base/types';
 
 export interface TriggerCommand {
   command: string;
@@ -14,9 +14,7 @@ export interface TriggerWebhook {
   url: string;
 }
 
-export interface Trigger {
-  id: number;
-  name: string;
+export interface Trigger extends Block<number> {
   command: TriggerCommand | null;
   message: TriggerMessage | null;
   webhook: TriggerWebhook | null;
@@ -26,7 +24,7 @@ export interface DiagramTrigger extends DiagramBlock<Trigger['id']> {}
 
 export namespace Data {
   export namespace TriggersAPI {
-    export interface Create extends Omit<Trigger, 'id' | 'webhook'> {
+    export interface Create extends CreateBlock, Omit<Trigger, 'id' | 'webhook'> {
       webhook: Omit<TriggerWebhook, 'url'> | null;
     }
   }
@@ -34,7 +32,9 @@ export namespace Data {
   export namespace TriggerAPI {
     export type Update = TriggersAPI.Create;
 
-    export interface PartialUpdate extends Partial<Pick<Trigger, 'name'>> {
+    export interface PartialUpdate extends Partial<
+      Omit<Update, 'command' | 'message' | 'webhook'>
+    > {
       command?: Partial<Update['command']>;
       message?: Partial<Update['message']>;
       webhook?: Partial<Update['webhook']>;

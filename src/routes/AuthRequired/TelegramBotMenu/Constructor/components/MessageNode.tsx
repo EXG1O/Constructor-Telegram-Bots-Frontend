@@ -43,7 +43,13 @@ export type NodeData = Omit<DiagramMessage, 'x' | 'y' | 'source_connections'>;
 
 export interface MessageNodeProps extends RFNodeProps<RFNode<NodeData, 'message'>> {}
 
-function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElement {
+function MessageNode({
+  id,
+  type,
+  positionAbsoluteX,
+  positionAbsoluteY,
+  data: message,
+}: MessageNodeProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nodes.message',
   });
@@ -68,7 +74,10 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
         success: t('messages.duplicate.success'),
         error: t('messages.duplicate.error'),
       },
+      nodeID: id,
       type,
+      x: positionAbsoluteX,
+      y: positionAbsoluteY,
       retrieveAPICall: () => MessageAPI.get(telegramBotID, message.id),
       createAPICall: async ({ images, documents, ...data }) => {
         const processMedia = (media: (MessageImage | MessageDocument)[]) =>
@@ -95,7 +104,7 @@ function MessageNode({ id, type, data: message }: MessageNodeProps): ReactElemen
       },
       diagramAPICall: (id) => DiagramMessageAPI.get(telegramBotID, id),
     }),
-    [message.id, i18n.language],
+    [message.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
   const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {

@@ -1,11 +1,9 @@
 import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, type FormikHelpers } from 'formik';
+import { Formik } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
-
-import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { defaultBodyBlockFormValues } from './components/BodyBlock/defaults';
 import type { BodyBlockFormValues } from './components/BodyBlock/types';
@@ -20,7 +18,13 @@ import type { URLBlockFormValues } from './components/URLBlock/types';
 import { defaultNameBlockFormValues } from '../NameBlock/defaults';
 import type { NameBlockFormValues } from '../NameBlock/types';
 
-import { APIRequestAPI, APIRequestsAPI } from 'api/telegram-bots/api-request';
+import useFormikSubmit from '../../hooks/useFormikSubmit';
+
+import {
+  APIRequestAPI,
+  APIRequestsAPI,
+  DiagramAPIRequestAPI,
+} from 'api/telegram-bots/api-request';
 import type { APIRequest, Data } from 'api/telegram-bots/api-request/types';
 
 import parseJsonField from '../../utils/parseJsonField';
@@ -43,17 +47,10 @@ export const defaultFormValues: FormValues = {
   ...defaultBodyBlockFormValues,
 };
 
-export interface APIRequestOffcanvasProps extends OffcanvasInnerProps {
-  onAdd?: (request: APIRequest) => void;
-  onSave?: (request: APIRequest) => void;
-}
+export interface APIRequestOffcanvasProps extends OffcanvasInnerProps {}
 
-function APIRequestOffcanvas({
-  onAdd,
-  onSave,
-  ...props
-}: APIRequestOffcanvasProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+function APIRequestOffcanvas(props: APIRequestOffcanvasProps): ReactElement {
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'apiRequestOffcanvas',
   });
 
@@ -63,46 +60,43 @@ function APIRequestOffcanvas({
   const action = useAPIRequestOffcanvasStore((state) => state.action);
   const hideOffcanvas = useAPIRequestOffcanvasStore((state) => state.hideOffcanvas);
 
-  async function handleSubmit(
-    { headers, ...values }: FormValues,
-    { setFieldError }: FormikHelpers<FormValues>,
-  ): Promise<void> {
-    let body: Record<string, any> | null = null;
+  const handleSubmit = useFormikSubmit<APIRequest, FormValues>(
+    () => ({
+      messages: {
+        add: {
+          success: t('messages.addAPIRequest.success'),
+          error: t('messages.addAPIRequest.error'),
+        },
+        edit: {
+          success: t('messages.editAPIRequest.success'),
+          error: t('messages.editAPIRequest.error'),
+        },
+      },
+      type: 'api_request',
+      action,
+      saveAPICall: async ({ headers, ...values }, { setFieldError }) => {
+        let body: Record<string, any> | null = null;
 
-    if (getBodyBlockOpen(values.method)) {
-      body = parseJsonField(values.body, 'body', setFieldError);
-      if (!body) return;
-    }
+        if (getBodyBlockOpen(values.method)) {
+          body = parseJsonField(values.body, 'body', setFieldError);
+          if (!body) return null;
+        }
 
-    const data: Data.APIRequestsAPI.Create | Data.APIRequestAPI.Update = {
-      ...values,
-      headers: convertHeadersToRecord(headers),
-      body,
-    };
+        const data: Data.APIRequestsAPI.Create | Data.APIRequestAPI.Update = {
+          ...values,
+          headers: convertHeadersToRecord(headers),
+          body,
+        };
 
-    const response = await (requestID
-      ? APIRequestAPI.update(telegramBotID, requestID, data)
-      : APIRequestsAPI.create(telegramBotID, data));
-
-    if (!response.ok) {
-      for (const error of response.json.errors) {
-        if (!error.attr) continue;
-        setFieldError(error.attr, error.detail);
-      }
-      createMessageToast({
-        message: t(`messages.${action}APIRequest.error`),
-        level: 'error',
-      });
-      return;
-    }
-
-    (requestID ? onSave : onAdd)?.(response.json);
-    hideOffcanvas();
-    createMessageToast({
-      message: t(`messages.${action}APIRequest.success`),
-      level: 'success',
-    });
-  }
+        return action === 'edit' && requestID
+          ? APIRequestAPI.update(telegramBotID, requestID, data)
+          : APIRequestsAPI.create(telegramBotID, data);
+      },
+      diagramAPICall: (id) => DiagramAPIRequestAPI.get(telegramBotID, id),
+      onHide: () => hideOffcanvas(),
+    }),
+    [requestID, action, hideOffcanvas, i18n.language],
+  );
 
   return (
     <Formik

@@ -40,6 +40,8 @@ export interface DatabaseOperationNodeProps extends RFNodeProps<
 function DatabaseOperationNode({
   id,
   type,
+  positionAbsoluteX,
+  positionAbsoluteY,
   data: operation,
 }: DatabaseOperationNodeProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
@@ -66,12 +68,15 @@ function DatabaseOperationNode({
         success: t('messages.duplicate.success'),
         error: t('messages.duplicate.error'),
       },
+      nodeID: id,
       type,
+      x: positionAbsoluteX,
+      y: positionAbsoluteY,
       retrieveAPICall: () => DatabaseOperationAPI.get(telegramBotID, operation.id),
       createAPICall: (data) => DatabaseOperationsAPI.create(telegramBotID, data),
       diagramAPICall: (id) => DiagramDatabaseOperationAPI.get(telegramBotID, id),
     }),
-    [operation.id, i18n.language],
+    [operation.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
   const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {

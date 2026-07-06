@@ -32,7 +32,13 @@ export type NodeData = Omit<DiagramInvoice, 'x' | 'y' | 'source_connections'>;
 
 export interface InvoiceNodeProps extends RFNodeProps<RFNode<NodeData, 'invoice'>> {}
 
-function InvoiceNode({ id, type, data: invoice }: InvoiceNodeProps): ReactElement {
+function InvoiceNode({
+  id,
+  type,
+  positionAbsoluteX,
+  positionAbsoluteY,
+  data: invoice,
+}: InvoiceNodeProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nodes.invoice',
   });
@@ -57,7 +63,10 @@ function InvoiceNode({ id, type, data: invoice }: InvoiceNodeProps): ReactElemen
         success: t('messages.duplicate.success'),
         error: t('messages.duplicate.error'),
       },
+      nodeID: id,
       type,
+      x: positionAbsoluteX,
+      y: positionAbsoluteY,
       retrieveAPICall: () => InvoiceAPI.get(telegramBotID, invoice.id),
       createAPICall: async ({ image, ...data }) =>
         InvoicesAPI.create(telegramBotID, {
@@ -74,7 +83,7 @@ function InvoiceNode({ id, type, data: invoice }: InvoiceNodeProps): ReactElemen
         }),
       diagramAPICall: (id) => DiagramInvoiceAPI.get(telegramBotID, id),
     }),
-    [invoice.id, i18n.language],
+    [invoice.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
   const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {

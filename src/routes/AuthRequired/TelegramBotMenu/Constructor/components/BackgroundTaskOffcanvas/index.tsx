@@ -1,11 +1,9 @@
 import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Formik, type FormikHelpers } from 'formik';
+import { Formik } from 'formik';
 
 import { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
-
-import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { defaultIntervalBlockFormValues } from './components/IntervalBlock/defaults';
 import type { IntervalBlockFormValues } from './components/IntervalBlock/types';
@@ -14,9 +12,12 @@ import OffcanvasInner, { type OffcanvasInnerProps } from './components/Offcanvas
 import { defaultNameBlockFormValues } from '../NameBlock/defaults';
 import type { NameBlockFormValues } from '../NameBlock/types';
 
+import useFormikSubmit from '../../hooks/useFormikSubmit';
+
 import {
   BackgroundTaskAPI,
   BackgroundTasksAPI,
+  DiagramBackgroundTaskAPI,
 } from 'api/telegram-bots/background-task';
 import type { BackgroundTask } from 'api/telegram-bots/background-task/types';
 
@@ -29,17 +30,10 @@ export const defaultFormValues: FormValues = {
   ...defaultIntervalBlockFormValues,
 };
 
-export interface BackgroundTaskOffcanvasProps extends OffcanvasInnerProps {
-  onAdd?: (task: BackgroundTask) => void;
-  onSave?: (task: BackgroundTask) => void;
-}
+export interface BackgroundTaskOffcanvasProps extends OffcanvasInnerProps {}
 
-function BackgroundTaskOffcanvas({
-  onAdd,
-  onSave,
-  ...props
-}: BackgroundTaskOffcanvasProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
+function BackgroundTaskOffcanvas(props: BackgroundTaskOffcanvasProps): ReactElement {
+  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'backgroundTaskOffcanvas',
   });
 
@@ -49,33 +43,29 @@ function BackgroundTaskOffcanvas({
   const action = useBackgroundTaskOffcanvasStore((state) => state.action);
   const hideOffcanvas = useBackgroundTaskOffcanvasStore((state) => state.hideOffcanvas);
 
-  async function handleSubmit(
-    values: FormValues,
-    { setFieldError }: FormikHelpers<FormValues>,
-  ): Promise<void> {
-    const response = await (taskID
-      ? BackgroundTaskAPI.update(telegramBotID, taskID, values)
-      : BackgroundTasksAPI.create(telegramBotID, values));
-
-    if (!response.ok) {
-      for (const error of response.json.errors) {
-        if (!error.attr) continue;
-        setFieldError(error.attr, error.detail);
-      }
-      createMessageToast({
-        message: t(`messages.${action}BackgroundTask.error`),
-        level: 'error',
-      });
-      return;
-    }
-
-    (taskID ? onSave : onAdd)?.(response.json);
-    hideOffcanvas();
-    createMessageToast({
-      message: t(`messages.${action}BackgroundTask.success`),
-      level: 'success',
-    });
-  }
+  const handleSubmit = useFormikSubmit<BackgroundTask, FormValues>(
+    () => ({
+      messages: {
+        add: {
+          success: t('messages.addBackgroundTask.success'),
+          error: t('messages.addBackgroundTask.error'),
+        },
+        edit: {
+          success: t('messages.editBackgroundTask.success'),
+          error: t('messages.editBackgroundTask.error'),
+        },
+      },
+      type: 'background_task',
+      action,
+      saveAPICall: (values) =>
+        action === 'edit' && taskID
+          ? BackgroundTaskAPI.update(telegramBotID, taskID, values)
+          : BackgroundTasksAPI.create(telegramBotID, values),
+      diagramAPICall: (id) => DiagramBackgroundTaskAPI.get(telegramBotID, id),
+      onHide: () => hideOffcanvas(),
+    }),
+    [taskID, action, hideOffcanvas, i18n.language],
+  );
 
   return (
     <Formik

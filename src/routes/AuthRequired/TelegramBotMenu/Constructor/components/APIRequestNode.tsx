@@ -40,6 +40,8 @@ export interface APIRequestNodeProps extends RFNodeProps<
 function APIRequestNode({
   id,
   type,
+  positionAbsoluteX,
+  positionAbsoluteY,
   data: request,
 }: APIRequestNodeProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
@@ -66,12 +68,15 @@ function APIRequestNode({
         success: t('messages.duplicate.success'),
         error: t('messages.duplicate.error'),
       },
+      nodeID: id,
       type,
+      x: positionAbsoluteX,
+      y: positionAbsoluteY,
       retrieveAPICall: () => APIRequestAPI.get(telegramBotID, request.id),
       createAPICall: (data) => APIRequestsAPI.create(telegramBotID, data),
       diagramAPICall: (id) => DiagramAPIRequestAPI.get(telegramBotID, id),
     }),
-    [request.id, i18n.language],
+    [request.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
   const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {

@@ -1,19 +1,15 @@
-import type { DiagramBlock } from '../base/types';
+import type { Block, CreateBlock, DiagramBlock } from '../base/types';
 
-export interface BackgroundTask {
-  id: number;
-  name: string;
+export interface BackgroundTask extends Block<number> {
   interval: 1 | 3 | 7 | 14 | 28;
 }
 
 export interface DiagramBackgroundTask
-  extends
-    DiagramBlock<BackgroundTask['id']>,
-    Pick<BackgroundTask, 'name' | 'interval'> {}
+  extends DiagramBlock<BackgroundTask['id']>, Pick<BackgroundTask, 'interval'> {}
 
 export namespace Data {
   export namespace BackgroundTasksAPI {
-    export type Create = Omit<BackgroundTask, 'id'>;
+    export type Create = CreateBlock & Omit<BackgroundTask, 'id'>;
   }
 
   export namespace BackgroundTaskAPI {

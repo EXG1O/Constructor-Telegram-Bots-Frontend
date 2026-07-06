@@ -40,6 +40,8 @@ export interface ConditionNodeProps extends RFNodeProps<
 function ConditionNode({
   id,
   type,
+  positionAbsoluteX,
+  positionAbsoluteY,
   data: condition,
 }: ConditionNodeProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
@@ -66,12 +68,15 @@ function ConditionNode({
         success: t('messages.duplicate.success'),
         error: t('messages.duplicate.error'),
       },
+      nodeID: id,
       type,
+      x: positionAbsoluteX,
+      y: positionAbsoluteY,
       retrieveAPICall: () => ConditionAPI.get(telegramBotID, condition.id),
       createAPICall: (data) => ConditionsAPI.create(telegramBotID, data),
       diagramAPICall: (id) => DiagramConditionAPI.get(telegramBotID, id),
     }),
-    [condition.id, i18n.language],
+    [condition.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
   const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {

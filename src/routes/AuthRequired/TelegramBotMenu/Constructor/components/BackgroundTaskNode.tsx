@@ -39,6 +39,8 @@ const OFFCANVAS_PREFIX: string = 'backgroundTaskOffcanvas';
 function BackgroundTaskNode({
   id,
   type,
+  positionAbsoluteX,
+  positionAbsoluteY,
   data: task,
 }: BackgroundTaskNodeProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor);
@@ -63,12 +65,15 @@ function BackgroundTaskNode({
         success: t(`${NODE_PREFIX}.messages.duplicate.success`),
         error: t(`${NODE_PREFIX}.messages.duplicate.error`),
       },
+      nodeID: id,
       type,
+      x: positionAbsoluteX,
+      y: positionAbsoluteY,
       retrieveAPICall: () => BackgroundTaskAPI.get(telegramBotID, task.id),
       createAPICall: (data) => BackgroundTasksAPI.create(telegramBotID, data),
       diagramAPICall: (id) => DiagramBackgroundTaskAPI.get(telegramBotID, id),
     }),
-    [task.id, i18n.language],
+    [task.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
   const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {

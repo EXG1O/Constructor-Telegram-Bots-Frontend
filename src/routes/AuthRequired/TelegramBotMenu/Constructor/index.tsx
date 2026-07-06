@@ -14,12 +14,12 @@ import {
   type IsValidConnection,
   MarkerType,
   MiniMap,
-  type Node,
   type OnConnect,
   type OnNodeDrag,
   type OnNodesDelete,
   type OnReconnect,
   ReactFlow,
+  ReactFlowProvider,
   useEdgesState,
   useNodesState,
 } from '@xyflow/react';
@@ -53,24 +53,16 @@ import useTelegramBotMenuConstructorRouteLoaderData from './hooks/useTelegramBot
 
 import type { APIResponse } from 'api/core';
 import { DiagramAPIRequestAPI } from 'api/telegram-bots/api-request';
-import type { APIRequest } from 'api/telegram-bots/api-request/types';
 import { DiagramBackgroundTaskAPI } from 'api/telegram-bots/background-task';
-import type { BackgroundTask } from 'api/telegram-bots/background-task/types';
 import type { DiagramBlock } from 'api/telegram-bots/base/types';
 import { DiagramConditionAPI } from 'api/telegram-bots/condition';
-import type { Condition } from 'api/telegram-bots/condition/types';
 import { ConnectionAPI, ConnectionsAPI } from 'api/telegram-bots/connection';
 import { DiagramDatabaseOperationAPI } from 'api/telegram-bots/database-operation';
-import type { DatabaseOperation } from 'api/telegram-bots/database-operation/types';
 import { DiagramInvoiceAPI } from 'api/telegram-bots/invoice';
-import type { Invoice } from 'api/telegram-bots/invoice/types';
 import { DiagramMessageAPI } from 'api/telegram-bots/message';
-import type { Message } from 'api/telegram-bots/message/types';
 import type { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 import { DiagramTemporaryVariableAPI } from 'api/telegram-bots/temporary-variable';
-import type { TemporaryVariable } from 'api/telegram-bots/temporary-variable/types';
 import { DiagramTriggerAPI } from 'api/telegram-bots/trigger';
-import type { Trigger } from 'api/telegram-bots/trigger/types';
 
 import cn from 'utils/cn';
 
@@ -136,14 +128,6 @@ const diagramBlockAPIMap: Record<
   invoice: DiagramInvoiceAPI,
   temporary_variable: DiagramTemporaryVariableAPI,
 };
-
-interface UpdateDiagramBlockOptions {
-  messages: {
-    getDiagramBlock: {
-      error: string;
-    };
-  };
-}
 
 function Constructor(): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBotMenuConstructor);
@@ -356,187 +340,54 @@ function Constructor(): ReactElement {
     [deleteEdge],
   );
 
-  const updateDiagramBlock = useCallback(
-    async (type: NodeType, id: number, options: UpdateDiagramBlockOptions) => {
-      const response = await diagramBlockAPIMap[type].get(telegramBotID, id);
-
-      if (!response.ok) {
-        for (const error of response.json.errors) {
-          if (error.attr) continue;
-          createMessageToast({ message: error.detail, level: 'error' });
-        }
-        createMessageToast({
-          message: options.messages.getDiagramBlock.error,
-          level: 'error',
-        });
-        return;
-      }
-
-      const updatedNode: Node = convertDiagramBlockToNode(type, response.json);
-
-      setNodes((prevNodes) => {
-        const newNodes: Node[] = [...prevNodes];
-        const updatedNodeIndex = newNodes.findIndex(
-          (node) => node.id === updatedNode.id,
-        );
-
-        if (updatedNodeIndex !== -1) {
-          newNodes[updatedNodeIndex] = updatedNode;
-        } else {
-          newNodes.push(updatedNode);
-        }
-
-        return newNodes;
-      });
-    },
-    [telegramBotID],
-  );
-
-  const handleTriggerChange = useCallback(
-    async (trigger: Trigger) => {
-      await updateDiagramBlock('trigger', trigger.id, {
-        messages: { getDiagramBlock: { error: t('messages.getDiagramTrigger.error') } },
-      });
-    },
-    [updateDiagramBlock],
-  );
-
-  const handleMessageChange = useCallback(
-    async (message: Message) => {
-      await updateDiagramBlock('message', message.id, {
-        messages: { getDiagramBlock: { error: t('messages.getDiagramMessage.error') } },
-      });
-    },
-    [updateDiagramBlock],
-  );
-
-  const handleConditionChange = useCallback(
-    async (condition: Condition) => {
-      await updateDiagramBlock('condition', condition.id, {
-        messages: {
-          getDiagramBlock: { error: t('messages.getDiagramCondition.error') },
-        },
-      });
-    },
-    [updateDiagramBlock],
-  );
-
-  const handleBackgroundTaskChange = useCallback(
-    async (backgroundTask: BackgroundTask) => {
-      await updateDiagramBlock('background_task', backgroundTask.id, {
-        messages: {
-          getDiagramBlock: { error: t('messages.getDiagramBackgroundTask.error') },
-        },
-      });
-    },
-    [updateDiagramBlock],
-  );
-
-  const handleAPIRequestChange = useCallback(
-    async (backgroundTask: APIRequest) => {
-      await updateDiagramBlock('api_request', backgroundTask.id, {
-        messages: {
-          getDiagramBlock: { error: t('messages.getDiagramAPIRequest.error') },
-        },
-      });
-    },
-    [updateDiagramBlock],
-  );
-
-  const handleDatabaseOperationChange = useCallback(
-    async (operation: DatabaseOperation) => {
-      await updateDiagramBlock('database_operation', operation.id, {
-        messages: {
-          getDiagramBlock: { error: t('messages.getDiagramDatabaseOperation.error') },
-        },
-      });
-    },
-    [updateDiagramBlock],
-  );
-
-  const handleInvoiceChange = useCallback(
-    async (invoice: Invoice) => {
-      await updateDiagramBlock('invoice', invoice.id, {
-        messages: {
-          getDiagramBlock: { error: t('messages.getDiagramInvoice.error') },
-        },
-      });
-    },
-    [updateDiagramBlock],
-  );
-
-  const handleTemporaryVariableChange = useCallback(
-    async (variable: TemporaryVariable) => {
-      await updateDiagramBlock('temporary_variable', variable.id, {
-        messages: {
-          getDiagramBlock: { error: t('messages.getDiagramTemporaryVariable.error') },
-        },
-      });
-    },
-    [updateDiagramBlock],
-  );
-
   return (
     <Page title={t('title')} className='flex-auto'>
-      <TriggerOffcanvas onAdd={handleTriggerChange} onSave={handleTriggerChange} />
-      <MessageOffcanvas onAdd={handleMessageChange} onSave={handleMessageChange} />
-      <ConditionOffcanvas
-        onAdd={handleConditionChange}
-        onSave={handleConditionChange}
-      />
-      <BackgroundTaskOffcanvas
-        onAdd={handleBackgroundTaskChange}
-        onSave={handleBackgroundTaskChange}
-      />
-      <APIRequestOffcanvas
-        onAdd={handleAPIRequestChange}
-        onSave={handleAPIRequestChange}
-      />
-      <DatabaseOperationOffcanvas
-        onAdd={handleDatabaseOperationChange}
-        onSave={handleDatabaseOperationChange}
-      />
-      <InvoiceOffcanvas onAdd={handleInvoiceChange} onSave={handleInvoiceChange} />
-      <TemporaryVariableOffcanvas
-        onAdd={handleTemporaryVariableChange}
-        onSave={handleTemporaryVariableChange}
-      />
-      <div ref={handleRef} className='size-full overflow-hidden rounded-lg bg-light'>
-        <ReactFlow
-          fitView
-          minZoom={0.25}
-          maxZoom={4}
-          nodes={nodes}
-          edges={edges}
-          nodeTypes={nodeTypes}
-          connectionLineType={ConnectionLineType.SmoothStep}
-          defaultEdgeOptions={defaultEdgeOptions}
-          elevateEdgesOnSelect
-          deleteKeyCode={null}
-          style={reactFlowStyle}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onNodeDragStop={handleNodeDragStop}
-          onNodesDelete={handleNodesDelete}
-          isValidConnection={handleValidConnection}
-          onConnect={handleConnect}
-          onReconnect={handleReconnect}
-          onReconnectEnd={handleReconnectEnd}
-        >
-          <Panel />
-          <Controls
-            showInteractive={false}
-            className='overflow-hidden rounded-sm shadow-sm'
-          />
-          <MiniMap
-            bgColor='var(--color-light)'
-            nodeColor='var(--color-light-accent)'
-            maskColor='var(--color-white)'
-            className='overflow-hidden rounded-sm shadow-sm'
-          />
-          <Background variant={BackgroundVariant.Dots} size={1} gap={20} />
-        </ReactFlow>
-      </div>
+      <ReactFlowProvider>
+        <TriggerOffcanvas />
+        <MessageOffcanvas />
+        <ConditionOffcanvas />
+        <BackgroundTaskOffcanvas />
+        <APIRequestOffcanvas />
+        <DatabaseOperationOffcanvas />
+        <InvoiceOffcanvas />
+        <TemporaryVariableOffcanvas />
+        <div ref={handleRef} className='size-full overflow-hidden rounded-lg bg-light'>
+          <ReactFlow
+            fitView
+            minZoom={0.25}
+            maxZoom={4}
+            nodes={nodes}
+            edges={edges}
+            nodeTypes={nodeTypes}
+            connectionLineType={ConnectionLineType.SmoothStep}
+            defaultEdgeOptions={defaultEdgeOptions}
+            elevateEdgesOnSelect
+            deleteKeyCode={null}
+            style={reactFlowStyle}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onNodeDragStop={handleNodeDragStop}
+            onNodesDelete={handleNodesDelete}
+            isValidConnection={handleValidConnection}
+            onConnect={handleConnect}
+            onReconnect={handleReconnect}
+            onReconnectEnd={handleReconnectEnd}
+          >
+            <Panel />
+            <Controls
+              showInteractive={false}
+              className='overflow-hidden rounded-sm shadow-sm'
+            />
+            <MiniMap
+              bgColor='var(--color-light)'
+              nodeColor='var(--color-light-accent)'
+              maskColor='var(--color-white)'
+              className='overflow-hidden rounded-sm shadow-sm'
+            />
+            <Background variant={BackgroundVariant.Dots} size={1} gap={20} />
+          </ReactFlow>
+        </div>
+      </ReactFlowProvider>
     </Page>
   );
 }

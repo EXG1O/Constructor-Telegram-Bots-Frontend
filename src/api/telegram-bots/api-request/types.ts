@@ -1,10 +1,8 @@
-import type { DiagramBlock } from '../base/types';
+import type { Block, CreateBlock, DiagramBlock } from '../base/types';
 
 export type Method = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
-export interface APIRequest {
-  id: number;
-  name: string;
+export interface APIRequest extends Block<number> {
   url: string;
   method: Method;
   headers: Record<string, string> | null;
@@ -15,11 +13,11 @@ export interface DiagramAPIRequest extends DiagramBlock<APIRequest['id']> {}
 
 export namespace Data {
   export namespace APIRequestsAPI {
-    export type Create = Omit<APIRequest, 'id'>;
+    export type Create = CreateBlock & Omit<APIRequest, 'id'>;
   }
 
   export namespace APIRequestAPI {
-    export type Update = Omit<APIRequest, 'id'>;
+    export type Update = APIRequestsAPI.Create;
     export type PartialUpdate = Partial<Update>;
   }
 
