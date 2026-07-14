@@ -1,8 +1,16 @@
-import type { RouteObject } from 'react-router-dom';
+import type { Location, RouteObject } from 'react-router-dom';
+import { generatePath } from 'react-router-dom';
 
 import { routes } from 'routes';
 
-function reverse(id: string, params?: Record<string, string | number>): string {
+import getLocationLanguage from './getLocationLanguage';
+
+export interface ReverseOptions {
+  params?: Record<string, any>;
+  location?: Location;
+}
+
+function reverse(id: string, { params, location }: ReverseOptions = {}): string {
   const buildPath = (routes: RouteObject[], basePath: string = ''): string | null => {
     for (const route of routes) {
       let currentPath: string = basePath;
@@ -31,19 +39,16 @@ function reverse(id: string, params?: Record<string, string | number>): string {
     return null;
   };
 
-  let path: string | null = buildPath(routes);
+  const path: string | null = buildPath(routes);
 
   if (!path) {
     throw new Error(`Route with id="${id}" not found.`);
   }
 
-  if (params) {
-    for (const key in params) {
-      path = path.replace(`:${key}`, params[key].toString());
-    }
-  }
-
-  return path.replace(/\/:\w+\?/g, '');
+  return generatePath(path, { lang: getLocationLanguage(location), ...params }).replace(
+    /\/?$/,
+    '/',
+  );
 }
 
 export default reverse;

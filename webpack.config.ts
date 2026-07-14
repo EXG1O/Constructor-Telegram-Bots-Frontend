@@ -39,7 +39,7 @@ const config = (env: any, argv: any): Configuration => {
           historyApiFallback: true,
           proxy: [
             {
-              context: ['/api/', '/media/', '/admin/'],
+              context: (pathname) => /^\/(api|media|[a-z]{2}\/admin)\//.test(pathname),
               target: 'http://localhost:8000/',
             },
           ],
@@ -116,6 +116,7 @@ const config = (env: any, argv: any): Configuration => {
         utils: `${__dirname}/src/utils/`,
         tokens: `${__dirname}/src/tokens/`,
         constants: `${__dirname}/src/constants/`,
+        enums: `${__dirname}/src/enums/`,
       },
     },
     optimization: {

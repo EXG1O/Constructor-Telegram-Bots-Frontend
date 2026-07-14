@@ -2,8 +2,8 @@
   "title": "Authorization",
   "messages": {
     "userLogin": {
-      "success": "Successful authorization.",
-      "error": "Authorization failed for unknown reasons."
+      "success": "You have successfully logged in.",
+      "error": "Authorization failed. Please try again."
     }
   }
 }

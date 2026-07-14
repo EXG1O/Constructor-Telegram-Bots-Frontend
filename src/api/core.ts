@@ -1,3 +1,5 @@
+import i18n from 'i18n';
+
 import { JWTStorage } from './storage';
 import { UserAPI } from './users';
 
@@ -88,7 +90,7 @@ export async function makeRequest<
   APIResponse.Base<true, SuccessAPIResponse> | APIResponse.Base<false, ErrorAPIResponse>
 > {
   const init: RequestInit = { method };
-  const headers = new Headers();
+  const headers = new Headers({ 'Accept-Language': i18n.language });
 
   if (data !== undefined) {
     if (data instanceof FormData) {

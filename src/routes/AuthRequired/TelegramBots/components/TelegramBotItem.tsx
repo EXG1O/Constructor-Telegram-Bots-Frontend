@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { RouteID } from 'routes';
 
@@ -25,6 +25,8 @@ function TelegramBotItem({
 }: TelegramBotItemProps): ReactElement {
   const { t } = useTranslation(RouteID.TelegramBots);
 
+  const location = useLocation();
+
   return (
     <Block
       {...props}
@@ -46,7 +48,8 @@ function TelegramBotItem({
       <Button asChild variant='dark'>
         <Link
           to={reverse(RouteID.TelegramBotMenuConstructor, {
-            telegramBotID: telegramBot.id,
+            params: { telegramBotID: telegramBot.id },
+            location,
           })}
         >
           {t('telegramBotMenuLink')}

@@ -85,7 +85,7 @@ function AcceptTermsModal(): ReactElement {
               components={[
                 <Link
                   key={0}
-                  to={reverse(RouteID.TermsOfService)}
+                  to={reverse(RouteID.TermsOfService, { location })}
                   className='text-primary hover:text-primary-accent'
                   onClick={handleLink}
                 />,
@@ -99,7 +99,7 @@ function AcceptTermsModal(): ReactElement {
               components={[
                 <Link
                   key={0}
-                  to={reverse(RouteID.PrivacyPolicy)}
+                  to={reverse(RouteID.PrivacyPolicy, { location })}
                   className='text-primary-accent hover:text-primary-emphasis'
                   onClick={handleLink}
                 />,

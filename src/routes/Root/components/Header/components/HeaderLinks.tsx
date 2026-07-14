@@ -1,5 +1,6 @@
 import React, { type HTMLAttributes, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 import { RouteID } from 'routes';
 
@@ -16,6 +17,8 @@ export interface HeaderLinksProps extends Omit<
 function HeaderLinks({ className, ...props }: HeaderLinksProps): ReactElement {
   const { t } = useTranslation(RouteID.Root, { keyPrefix: 'header.links' });
 
+  const location = useLocation();
+
   return (
     <div
       {...props}
@@ -31,12 +34,18 @@ function HeaderLinks({ className, ...props }: HeaderLinksProps): ReactElement {
         className,
       )}
     >
-      <HeaderLink to={reverse(RouteID.Instruction)}>{t('instruction')}</HeaderLink>
-      <HeaderLink to={reverse(RouteID.PrivacyPolicy)}>{t('privacyPolicy')}</HeaderLink>
-      <HeaderLink to={reverse(RouteID.TermsOfService)}>
+      <HeaderLink to={reverse(RouteID.Instruction, { location })}>
+        {t('instruction')}
+      </HeaderLink>
+      <HeaderLink to={reverse(RouteID.PrivacyPolicy, { location })}>
+        {t('privacyPolicy')}
+      </HeaderLink>
+      <HeaderLink to={reverse(RouteID.TermsOfService, { location })}>
         {t('termsOfService')}
       </HeaderLink>
-      <HeaderLink to={reverse(RouteID.Donation)}>{t('donation')}</HeaderLink>
+      <HeaderLink to={reverse(RouteID.Donation, { location })}>
+        {t('donation')}
+      </HeaderLink>
     </div>
   );
 }
