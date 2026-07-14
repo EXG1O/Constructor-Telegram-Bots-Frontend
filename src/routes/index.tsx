@@ -23,7 +23,7 @@ export enum RouteID {
 export const routes: RouteObject[] = [
   {
     id: RouteID.Root,
-    path: '/',
+    path: '/:lang?/',
     ErrorBoundary,
     async lazy() {
       const [component, loader] = await Promise.all([

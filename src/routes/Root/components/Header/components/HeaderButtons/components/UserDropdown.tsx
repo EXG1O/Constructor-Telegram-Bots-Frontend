@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { RouteID } from 'routes';
 
@@ -20,8 +20,11 @@ export interface UserDropdownProps extends Omit<DropdownProps, 'children'> {
 }
 
 function UserDropdown({ user, ...props }: UserDropdownProps): ReactElement {
-  const { t } = useTranslation(RouteID.Root, { keyPrefix: 'header.userDropdown' });
+  const { t, i18n } = useTranslation(RouteID.Root, {
+    keyPrefix: 'header.userDropdown',
+  });
 
+  const location = useLocation();
   const navigate = useNavigate();
 
   const showConfirmModal = useConfirmModalStore((state) => state.setShow);
@@ -68,16 +71,18 @@ function UserDropdown({ user, ...props }: UserDropdownProps): ReactElement {
         {user.is_staff && (
           <>
             <Dropdown.Menu.Item asChild>
-              <a href='/admin/'>{t('adminPanel')}</a>
+              <a href={`/${i18n.language}/admin/`}>{t('adminPanel')}</a>
             </Dropdown.Menu.Item>
             <Dropdown.Menu.Separator />
           </>
         )}
         <Dropdown.Menu.Item asChild>
-          <Link to={reverse(RouteID.Profile)}>{t('profile')}</Link>
+          <Link to={reverse(RouteID.Profile, { location })}>{t('profile')}</Link>
         </Dropdown.Menu.Item>
         <Dropdown.Menu.Item asChild>
-          <Link to={reverse(RouteID.TelegramBots)}>{t('telegramBots')}</Link>
+          <Link to={reverse(RouteID.TelegramBots, { location })}>
+            {t('telegramBots')}
+          </Link>
         </Dropdown.Menu.Item>
         <Dropdown.Menu.Separator />
         <Dropdown.Menu.Item onSelect={handleLogoutClick}>

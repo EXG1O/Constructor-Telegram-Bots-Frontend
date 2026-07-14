@@ -1,6 +1,6 @@
 import React, { type ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { RouteID } from 'routes';
 
@@ -25,6 +25,8 @@ function TelegramBotDropdown({
   const { t } = useTranslation(RouteID.Root, {
     keyPrefix: 'header.telegramBotDropdown',
   });
+
+  const location = useLocation();
 
   const [showTelegramBotModal, setShowTelegramBotModal] = useState<boolean>(false);
   const [showStatsModal, setShowStatsModal] = useState<boolean>(false);
@@ -72,7 +74,12 @@ function TelegramBotDropdown({
             [RouteID.TelegramBotMenuConstructor]: t('constructor'),
           }).map(([routeID, text], index) => (
             <Dropdown.Menu.Item key={index} asChild>
-              <Link to={reverse(routeID, { telegramBotID: telegramBot.id })}>
+              <Link
+                to={reverse(routeID, {
+                  params: { telegramBotID: telegramBot.id },
+                  location,
+                })}
+              >
                 {text}
               </Link>
             </Dropdown.Menu.Item>

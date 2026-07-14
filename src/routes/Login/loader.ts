@@ -1,4 +1,4 @@
-import { TELEGRAM_LOGIN_REDIRECT_URI } from 'components/shared/LoginButton';
+import { LocalStorageKey } from 'enums/storage';
 
 import { JWTStorage } from 'api/storage';
 import { UsersAPI } from 'api/users';
@@ -8,16 +8,16 @@ export interface LoaderData {
 }
 
 async function loader(): Promise<LoaderData> {
-  const code: string | null = new URLSearchParams(location.search).get('code');
+  const code: string | null = new URLSearchParams(window.location.search).get('code');
+  const redirectURI: string | null = localStorage.getItem(
+    LocalStorageKey.TELEGRAM_LOGIN_REDIRECT_URI,
+  );
 
-  if (!code) {
+  if (!code || !redirectURI) {
     return { success: false };
   }
 
-  const response = await UsersAPI.login({
-    code,
-    redirect_uri: TELEGRAM_LOGIN_REDIRECT_URI,
-  });
+  const response = await UsersAPI.login({ code, redirect_uri: redirectURI });
 
   if (response.ok) {
     const { refresh_token, access_token } = response.json;

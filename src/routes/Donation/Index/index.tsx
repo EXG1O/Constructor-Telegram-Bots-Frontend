@@ -32,7 +32,12 @@ function Index(): ReactElement {
   );
 
   return (
-    <InfoPage title={t('title')} initialSections={initialSections} options={options}>
+    <InfoPage
+      public
+      title={t('title')}
+      initialSections={initialSections}
+      options={options}
+    >
       <MethodTable />
     </InfoPage>
   );

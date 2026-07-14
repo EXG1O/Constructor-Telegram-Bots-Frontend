@@ -25,13 +25,13 @@
     },
     "languagesDropdown": {
       "messages": {
-        "getLanguage": {
-          "error": "Не вдалося отримати список мов."
-        },
         "changeLanguage": {
           "error": "Не вдалося змінити мову."
         }
-      }
+      },
+      "en": "Англійська",
+      "uk": "Українська",
+      "ru": "Російська"
     },
     "userDropdown": {
       "messages": {

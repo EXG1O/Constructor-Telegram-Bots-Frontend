@@ -36,7 +36,7 @@
             "error": "Failed to update the Telegram bot API-token."
           }
         },
-        "inputPlaceholder": "Enter a API-token"
+        "inputPlaceholder": "Enter an API-token"
       },
       "private": {
         "header": "Private",

@@ -8,21 +8,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     {% with title="Constructor Telegram Bots" %}
-    <!-- prettier-ignore -->
-    {% translate "Сайт, с помощью которого вы можете легко, бесплатно и без каких-либо знаний в программирование, сделать своего многофункционального Telegram бота." as description %}
     <title>{{ title }}</title>
-    <meta name="description" content="{{ description }}" />
+    <meta name="description" content="{{ seo.description }}" data-react-helmet="true" />
 
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="{{ title }}" />
-    <meta property="og:description" content="{{ description }}" />
-    <meta property="og:url" content="https://constructor.exg1o.org" />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="{{ request.scheme }}://{{ request.get_host }}{{ path_without_lang }}"
+      data-react-helmet="true"
+    />
+    <link
+      rel="alternate"
+      hreflang="uk"
+      href="{{ request.scheme }}://{{ request.get_host }}/uk{{ path_without_lang }}"
+      data-react-helmet="true"
+    />
+    <link
+      rel="alternate"
+      hreflang="ru"
+      href="{{ request.scheme }}://{{ request.get_host }}/ru{{ path_without_lang }}"
+      data-react-helmet="true"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="{{ request.scheme }}://{{ request.get_host }}{{ path_without_lang }}"
+      data-react-helmet="true"
+    />
 
-    <meta name="twitter:title" content="{{ title }}" />
-    <meta name="twitter:description" content="{{ description }}" />
+    <meta property="og:type" content="website" data-react-helmet="true" />
+    <meta property="og:title" content="{{ title }}" data-react-helmet="true" />
+    <meta
+      property="og:description"
+      content="{{ seo.description }}"
+      data-react-helmet="true"
+    />
+    <meta
+      property="og:url"
+      content="{{ request.build_absolute_uri }}"
+      data-react-helmet="true"
+    />
+
+    <meta name="twitter:title" content="{{ title }}" data-react-helmet="true" />
+    <meta
+      name="twitter:description"
+      content="{{ seo.description }}"
+      data-react-helmet="true"
+    />
     {% endwith %}
 
-    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="{{ request.build_absolute_uri }}"
+      data-react-helmet="true"
+    />
+    <meta name="robots" content="index, follow" data-react-helmet="true" />
 
     <link rel="icon" href="assets/logo/logo.svg" type="image/svg+xml" />
     <link rel="icon" sizes="16x16" href="assets/logo/favicons/16x16.png" />

@@ -25,13 +25,13 @@
     },
     "languagesDropdown": {
       "messages": {
-        "getLanguage": {
-          "error": "Failed to get the list of languages."
-        },
         "changeLanguage": {
           "error": "Failed to change language."
         }
-      }
+      },
+      "en": "English",
+      "uk": "Ukrainian",
+      "ru": "Russian"
     },
     "userDropdown": {
       "messages": {

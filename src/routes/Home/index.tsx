@@ -16,7 +16,7 @@ function Home(): ReactElement {
 
   return (
     <main className='my-auto'>
-      <Page asChild title={t('title')} grid gutters>
+      <Page asChild public title={t('title')} grid gutters>
         <div className='grid-cols-1 lg:grid-cols-2'>
           <div className='lg:col-span-2'>
             <Header />

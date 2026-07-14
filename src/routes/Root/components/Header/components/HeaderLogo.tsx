@@ -1,5 +1,5 @@
 import React, { type HTMLAttributes, type ReactElement } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { RouteID } from 'routes';
 
@@ -16,13 +16,15 @@ export interface HeaderLogoProps extends Omit<
 > {}
 
 function HeaderLogo({ className, ...props }: HeaderLogoProps): ReactElement {
+  const location = useLocation();
+
   return (
     <div
       {...props}
       className={cn('flex', 'grow-0', 'items-center', 'xl:col-span-1', className)}
     >
       <IconButton asChild size={null}>
-        <Link to={reverse(RouteID.Home)} className='rounded-full'>
+        <Link to={reverse(RouteID.Home, { location })} className='rounded-full'>
           <Logo className='size-9.5' />
         </Link>
       </IconButton>

@@ -22,7 +22,8 @@
       "hooks/*": ["./src/hooks/*"],
       "utils/*": ["./src/utils/*"],
       "tokens/*": ["./src/tokens/*"],
-      "constants/*": ["./src/constants/*"]
+      "constants/*": ["./src/constants/*"],
+      "enums/*": ["./src/enums/*"]
     }
   },
   "include": ["./**/*.ts", "./**/*.tsx"],

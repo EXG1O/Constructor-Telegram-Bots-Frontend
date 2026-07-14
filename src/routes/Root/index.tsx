@@ -31,7 +31,9 @@ function Root(): ReactElement {
     const pathname: string = navigation.location?.pathname ?? location.pathname;
     if (
       pathname.startsWith(
-        reverse(RouteID.TelegramBotMenuRoot, { telegramBotID: telegramBot.id }),
+        reverse(RouteID.TelegramBotMenuRoot, {
+          params: { telegramBotID: telegramBot.id },
+        }),
       )
     )
       return;
