@@ -14,32 +14,34 @@ import Header from './components/Header';
 
 import useRootRouteLoaderData from './hooks/useRootRouteLoaderData';
 
+import getLocationLanguage from 'utils/getLocationLanguage';
 import reverse from 'utils/reverse';
 
 function Root(): ReactElement {
   const { user } = useRootRouteLoaderData();
 
-  const telegramBot = useTelegramBotStore((state) => state.telegramBot);
+  const telegramBotID = useTelegramBotStore(
+    (state) => state.telegramBot && state.telegramBot.id,
+  );
   const setTelegramBot = useTelegramBotStore((state) => state.setTelegramBot);
 
-  const location = useLocation();
-  const navigation = useNavigation();
+  const routeLocation = useLocation();
+  const routeNavigation = useNavigation();
+
+  const location = routeNavigation.location ?? routeLocation;
 
   useEffect(() => {
-    if (!telegramBot) return;
-
-    const pathname: string = navigation.location?.pathname ?? location.pathname;
     if (
-      pathname.startsWith(
+      !telegramBotID ||
+      location.pathname.startsWith(
         reverse(RouteID.TelegramBotMenuRoot, {
-          params: { telegramBotID: telegramBot.id },
+          params: { lang: getLocationLanguage(location), telegramBotID },
         }),
       )
     )
       return;
-
     setTelegramBot(null);
-  }, [location.pathname, navigation.location, telegramBot]);
+  }, [location, telegramBotID]);
 
   return (
     <>
@@ -47,7 +49,7 @@ function Root(): ReactElement {
       <ConfirmModal />
       <ToastContainer />
       <Header />
-      {navigation.state === 'idle' ? (
+      {routeNavigation.state === 'idle' ? (
         <Outlet />
       ) : (
         <main className='flex flex-auto items-center justify-center'>
