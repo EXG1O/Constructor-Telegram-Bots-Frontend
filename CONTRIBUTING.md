@@ -93,6 +93,7 @@ To improve existing translations, you can find all locale files in the `src/loca
 
 When submitting a PR, ensure that:
 
-1. Your code follows the project's coding standards.
-2. Your changes are well-documented with clear commit messages.
-3. Each PR should address a single issue or feature.
+1. You have read and agree to the [CLA](/CLA) by including the statement "I confirm that I have read and agree to the CLA." in your PR description.
+2. Your code follows the project's coding standards.
+3. Your changes are well-documented with clear commit messages.
+4. Each PR should address a single issue or feature.
