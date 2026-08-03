@@ -6,8 +6,6 @@ export enum RouteID {
   Root = 'root',
   Login = 'login',
   Home = 'home',
-  Donation = 'donation-index',
-  DonationCompleted = 'donation-completed',
   Instruction = 'instruction',
   PrivacyPolicy = 'privacy-policy',
   TermsOfService = 'terms-of-service',
@@ -67,35 +65,6 @@ export const routes: RouteObject[] = [
             loader: loader.default,
           };
         },
-      },
-      {
-        path: 'donation/',
-        children: [
-          {
-            id: RouteID.Donation,
-            index: true,
-            async lazy() {
-              const [component, loader] = await Promise.all([
-                await import('./Donation/Index'),
-                await import('./Donation/Index/loader'),
-              ]);
-
-              return {
-                Component: component.default,
-                loader: loader.default,
-              };
-            },
-          },
-          {
-            id: RouteID.DonationCompleted,
-            path: 'completed/',
-            async lazy() {
-              const module = await import('./Donation/Completed');
-
-              return { Component: module.default };
-            },
-          },
-        ],
       },
       {
         id: RouteID.Instruction,

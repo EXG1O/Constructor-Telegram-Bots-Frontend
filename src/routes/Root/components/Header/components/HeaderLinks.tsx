@@ -43,9 +43,6 @@ function HeaderLinks({ className, ...props }: HeaderLinksProps): ReactElement {
       <HeaderLink to={reverse(RouteID.TermsOfService, { location })}>
         {t('termsOfService')}
       </HeaderLink>
-      <HeaderLink to={reverse(RouteID.Donation, { location })}>
-        {t('donation')}
-      </HeaderLink>
     </div>
   );
 }

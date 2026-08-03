@@ -1,5 +1,3 @@
-import { DonationsAPI } from 'api/donations';
-import type { APIResponse as DonationsAPIResponse } from 'api/donations/types';
 import { StatsAPI as TelegramBotsStatsAPI } from 'api/telegram-bots/stats';
 import type { APIResponse as TelegramBotsStatsAPIResponse } from 'api/telegram-bots/stats/types';
 import { StatsAPI as UsersStatsAPI } from 'api/users';
@@ -12,18 +10,15 @@ interface Stats {
 
 export interface LoaderData {
   stats: Stats;
-  donations: DonationsAPIResponse.DonationsAPI.Get.Pagination;
 }
 
 async function loader(): Promise<LoaderData> {
-  const [usersStatsResponse, telegramBotsResponse, donationsResponse] =
-    await Promise.all([
-      UsersStatsAPI.get(),
-      TelegramBotsStatsAPI.get(),
-      DonationsAPI.get(20),
-    ]);
+  const [usersStatsResponse, telegramBotsResponse] = await Promise.all([
+    UsersStatsAPI.get(),
+    TelegramBotsStatsAPI.get(),
+  ]);
 
-  if (!usersStatsResponse.ok || !telegramBotsResponse.ok || !donationsResponse.ok) {
+  if (!usersStatsResponse.ok || !telegramBotsResponse.ok) {
     throw Error('Failed to fetch data.');
   }
 
@@ -32,7 +27,6 @@ async function loader(): Promise<LoaderData> {
       users: usersStatsResponse.json,
       telegramBots: telegramBotsResponse.json,
     },
-    donations: donationsResponse.json,
   };
 }
 

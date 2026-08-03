@@ -1,8 +1,0 @@
-{
-  "title": "Donation",
-  "messages": {
-    "getSections": {
-      "error": "Failed to retrieve the list of donation sections."
-    }
-  }
-}
