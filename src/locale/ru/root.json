@@ -20,8 +20,7 @@
     "links": {
       "instruction": "Инструкция",
       "privacyPolicy": "Конфиденциальность",
-      "termsOfService": "Условия использования",
-      "donation": "Пожертвование"
+      "termsOfService": "Условия использования"
     },
     "languagesDropdown": {
       "messages": {

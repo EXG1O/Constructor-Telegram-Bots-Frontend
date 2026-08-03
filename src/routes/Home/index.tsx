@@ -1,18 +1,15 @@
-import React, { type ReactElement, useState } from 'react';
+import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { RouteID } from 'routes';
 
 import Page from 'components/ui/Page';
 
-import Donations from './components/Donations';
 import Header from './components/Header';
 import Stats from './components/Stats';
 
 function Home(): ReactElement {
   const { t } = useTranslation(RouteID.Home);
-
-  const [statsRef, setStatsRef] = useState<HTMLDivElement | null>(null);
 
   return (
     <main className='my-auto'>
@@ -22,10 +19,7 @@ function Home(): ReactElement {
             <Header />
           </div>
           <div className='lg:col-span-1'>
-            <Stats ref={setStatsRef} />
-          </div>
-          <div className='lg:col-span-1'>
-            <Donations style={{ height: statsRef?.offsetHeight }} />
+            <Stats />
           </div>
         </div>
       </Page>
