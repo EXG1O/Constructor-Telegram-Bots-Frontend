@@ -20,7 +20,7 @@ export { buttonVariants as loginButtonVariants };
 export interface LoginButtonProps extends Omit<ButtonProps, 'variant' | 'children'> {}
 
 const LoginButton = forwardRef<HTMLButtonElement, LoginButtonProps>((props, ref) => {
-  const { t } = useTranslation('components', { keyPrefix: 'loginButton' });
+  const { t, i18n } = useTranslation('components', { keyPrefix: 'loginButton' });
 
   async function handleClick(): Promise<void> {
     const response = await UsersAPI.loginInit();
@@ -43,6 +43,7 @@ const LoginButton = forwardRef<HTMLButtonElement, LoginButtonProps>((props, ref)
       code_challenge,
       code_challenge_method: 'S256',
       redirect_uri: redirectURI,
+      lang: i18n.language,
     });
 
     localStorage.setItem(LocalStorageKey.TELEGRAM_LOGIN_REDIRECT_URI, redirectURI);
