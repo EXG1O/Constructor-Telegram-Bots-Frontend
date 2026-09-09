@@ -1,5 +1,10 @@
 {
   "seo": {
     "description": "A platform that lets you easily create your own multifunctional Telegram bot with no coding required."
+  },
+  "messages": {
+    "loader": {
+      "error": "Failed to get the necessary data from the server for an unknown reason."
+    }
   }
 }

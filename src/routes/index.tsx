@@ -7,8 +7,7 @@ export enum RouteID {
   Login = 'login',
   Home = 'home',
   Instruction = 'instruction',
-  PrivacyPolicy = 'privacy-policy',
-  TermsOfService = 'terms-of-service',
+  Legal = 'legal',
   Profile = 'profile',
   TelegramBots = 'telegram-bots',
   TelegramBotMenuRoot = 'telegram-bot-menu-root',
@@ -82,27 +81,12 @@ export const routes: RouteObject[] = [
         },
       },
       {
-        id: RouteID.PrivacyPolicy,
-        path: 'privacy-policy/',
+        id: RouteID.Legal,
+        path: 'legal/:type/',
         async lazy() {
           const [component, loader] = await Promise.all([
-            await import('./PrivacyPolicy'),
-            await import('./PrivacyPolicy/loader'),
-          ]);
-
-          return {
-            Component: component.default,
-            loader: loader.default,
-          };
-        },
-      },
-      {
-        id: RouteID.TermsOfService,
-        path: 'terms-of-service/',
-        async lazy() {
-          const [component, loader] = await Promise.all([
-            await import('./TermsOfService'),
-            await import('./TermsOfService/loader'),
+            await import('./Legal'),
+            await import('./Legal/loader'),
           ]);
 
           return {

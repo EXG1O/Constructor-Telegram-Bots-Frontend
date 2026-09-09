@@ -8,6 +8,7 @@ import Button from 'components/ui/Button';
 import Modal from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
+import { DocumentType } from 'api/legal/enums';
 import { UserAPI } from 'api/users';
 
 import reverse from 'utils/reverse';
@@ -24,8 +25,10 @@ function AcceptTermsModal(): ReactElement {
   useEffect(
     () =>
       setShow(
-        location.pathname !== reverse(RouteID.TermsOfService) &&
-          location.pathname !== reverse(RouteID.PrivacyPolicy),
+        location.pathname !==
+          reverse(RouteID.Legal, { params: { type: DocumentType.TermsOfService } }) &&
+          location.pathname !==
+            reverse(RouteID.Legal, { params: { type: DocumentType.PrivacyPolicy } }),
       ),
     [location.pathname],
   );
@@ -85,7 +88,10 @@ function AcceptTermsModal(): ReactElement {
               components={[
                 <Link
                   key={0}
-                  to={reverse(RouteID.TermsOfService, { location })}
+                  to={reverse(RouteID.Legal, {
+                    params: { type: DocumentType.TermsOfService },
+                    location,
+                  })}
                   className='text-primary hover:text-primary-accent'
                   onClick={handleLink}
                 />,
@@ -99,7 +105,10 @@ function AcceptTermsModal(): ReactElement {
               components={[
                 <Link
                   key={0}
-                  to={reverse(RouteID.PrivacyPolicy, { location })}
+                  to={reverse(RouteID.Legal, {
+                    params: { type: DocumentType.PrivacyPolicy },
+                    location,
+                  })}
                   className='text-primary-accent hover:text-primary-emphasis'
                   onClick={handleLink}
                 />,
