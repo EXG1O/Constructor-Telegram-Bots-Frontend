@@ -1,0 +1,9 @@
+{
+  "title_terms-of-service": "Умови використання сервісу",
+  "title_privacy-policy": "Політика приватності",
+  "messages": {
+    "getDocument": {
+      "error_notFound": "Не вдалося знайти юридичний документ такого типу."
+    }
+  }
+}

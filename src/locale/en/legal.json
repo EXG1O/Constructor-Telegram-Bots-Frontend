@@ -1,0 +1,9 @@
+{
+  "title_terms-of-service": "Terms of Service",
+  "title_privacy-policy": "Privacy Policy",
+  "messages": {
+    "getDocument": {
+      "error_notFound": "Failed to find a legal document of this type."
+    }
+  }
+}
