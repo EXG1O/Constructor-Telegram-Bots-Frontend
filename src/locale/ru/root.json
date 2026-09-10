@@ -18,9 +18,7 @@
   },
   "header": {
     "links": {
-      "instruction": "Инструкция",
-      "privacyPolicy": "Конфиденциальность",
-      "termsOfService": "Условия использования"
+      "instruction": "Инструкция"
     },
     "languagesDropdown": {
       "messages": {
@@ -100,6 +98,12 @@
       "users": "Пользователи",
       "database": "База данных",
       "constructor": "Конструктор"
+    }
+  },
+  "footer": {
+    "links": {
+      "termsOfService": "Условия использования",
+      "privacyPolicy": "Политика конфиденциальности"
     }
   }
 }

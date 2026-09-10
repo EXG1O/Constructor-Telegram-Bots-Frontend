@@ -18,9 +18,7 @@
   },
   "header": {
     "links": {
-      "instruction": "Інструкція",
-      "privacyPolicy": "Конфіденційність",
-      "termsOfService": "Умови використання"
+      "instruction": "Інструкція"
     },
     "languagesDropdown": {
       "messages": {
@@ -100,6 +98,12 @@
       "users": "Користувачі",
       "database": "База даних",
       "constructor": "Конструктор"
+    }
+  },
+  "footer": {
+    "links": {
+      "termsOfService": "Умови використання",
+      "privacyPolicy": "Політика конфіденційності"
     }
   }
 }

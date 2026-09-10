@@ -6,8 +6,6 @@ import { RouteID } from 'routes';
 
 import HeaderLink from './HeaderLink';
 
-import { DocumentType } from 'api/legal/enums';
-
 import cn from 'utils/cn';
 import reverse from 'utils/reverse';
 
@@ -38,22 +36,6 @@ function HeaderLinks({ className, ...props }: HeaderLinksProps): ReactElement {
     >
       <HeaderLink to={reverse(RouteID.Instruction, { location })}>
         {t('instruction')}
-      </HeaderLink>
-      <HeaderLink
-        to={reverse(RouteID.Legal, {
-          params: { type: DocumentType.PrivacyPolicy },
-          location,
-        })}
-      >
-        {t('privacyPolicy')}
-      </HeaderLink>
-      <HeaderLink
-        to={reverse(RouteID.Legal, {
-          params: { type: DocumentType.TermsOfService },
-          location,
-        })}
-      >
-        {t('termsOfService')}
       </HeaderLink>
     </div>
   );
