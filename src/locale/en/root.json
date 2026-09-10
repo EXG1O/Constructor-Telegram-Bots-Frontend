@@ -18,9 +18,7 @@
   },
   "header": {
     "links": {
-      "instruction": "Instruction",
-      "privacyPolicy": "Privacy policy",
-      "termsOfService": "Terms of Service"
+      "instruction": "Instruction"
     },
     "languagesDropdown": {
       "messages": {
@@ -100,6 +98,12 @@
       "users": "Users",
       "database": "Database",
       "constructor": "Constructor"
+    }
+  },
+  "footer": {
+    "links": {
+      "termsOfService": "Terms of Service",
+      "privacyPolicy": "Privacy Policy"
     }
   }
 }
