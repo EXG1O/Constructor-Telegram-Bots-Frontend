@@ -98,6 +98,7 @@ function InvoiceOffcanvas(props: InvoiceOffcanvasProps): ReactElement {
         return response;
       },
       diagramAPICall: (id) => DiagramInvoiceAPI.get(telegramBotID, id),
+      normalizeFieldName: (fieldName) => fieldName.replace(/^prices\.0/, 'price'),
       onHide: () => hideOffcanvas(),
     }),
     [invoiceID, action, hideOffcanvas, i18n.language],
