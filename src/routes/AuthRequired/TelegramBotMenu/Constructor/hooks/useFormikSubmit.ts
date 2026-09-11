@@ -38,6 +38,7 @@ export interface FormikSubmitOptions<
     values: FormikValues<FormikValuesType>,
     helpers: FormikHelpers<FormikValuesType>,
   ) => ReturnType<typeof makeRequest<DiagramBlock>>;
+  normalizeFieldName?: (fieldName: string) => string;
   onHide: (
     id: number,
     values: FormikValues<FormikValuesType>,
@@ -60,7 +61,15 @@ function useFormikSubmit<
       values: FormikValuesType,
       helpers: FormikHelpers<FormikValuesType>,
     ): Promise<void> => {
-      const { messages, type, action, saveAPICall, diagramAPICall, onHide } = factory();
+      const {
+        messages,
+        type,
+        action,
+        saveAPICall,
+        diagramAPICall,
+        normalizeFieldName,
+        onHide,
+      } = factory();
       const { setFieldError } = helpers;
 
       const handleError = () => {
@@ -78,7 +87,7 @@ function useFormikSubmit<
       if (!saveResponse.ok) {
         for (const error of saveResponse.json.errors) {
           if (!error.attr) continue;
-          setFieldError(error.attr, error.detail);
+          setFieldError(normalizeFieldName?.(error.attr) ?? error.attr, error.detail);
         }
         return handleError();
       }
