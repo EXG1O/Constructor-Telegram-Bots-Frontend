@@ -36,7 +36,7 @@ function RandomizerOffcanvas(props: RandomizerOffcanvasProps): ReactElement {
 
   const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const randomizerID = useRandomizerOffcanvasStore((state) => state.id);
+  const randomizerID = useRandomizerOffcanvasStore((state) => state.randomizerID);
   const action = useRandomizerOffcanvasStore((state) => state.action);
   const hideOffcanvas = useRandomizerOffcanvasStore((state) => state.hideOffcanvas);
 

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 export interface StateParams {
-  id: number | null;
+  randomizerID: number | null;
 
   action: 'add' | 'edit';
   show: boolean;
@@ -9,7 +9,7 @@ export interface StateParams {
 }
 
 export interface StateActions {
-  showOffcanvas: (taskID?: number) => void;
+  showOffcanvas: (randomizerID?: number) => void;
   hideOffcanvas: () => void;
 
   setLoading: (loading: boolean) => void;
@@ -18,20 +18,20 @@ export interface StateActions {
 export type State = StateParams & StateActions;
 
 export const useRandomizerOffcanvasStore = create<State>()((set) => ({
-  id: null,
+  randomizerID: null,
 
   action: 'add',
   show: false,
   loading: false,
 
-  showOffcanvas: (id) =>
+  showOffcanvas: (randomizerID) =>
     set({
-      id,
-      action: id ? 'edit' : 'add',
+      randomizerID,
+      action: randomizerID ? 'edit' : 'add',
       show: true,
-      loading: Boolean(id),
+      loading: Boolean(randomizerID),
     }),
-  hideOffcanvas: () => set({ id: null, show: false }),
+  hideOffcanvas: () => set({ randomizerID: null, show: false }),
 
   setLoading: (loading) => set({ loading }),
 }));

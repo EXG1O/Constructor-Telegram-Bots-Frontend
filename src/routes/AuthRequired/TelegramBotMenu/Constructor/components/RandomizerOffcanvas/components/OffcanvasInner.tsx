@@ -33,7 +33,7 @@ function OffcanvasInner({
 
   const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
 
-  const randomizerID = useRandomizerOffcanvasStore((state) => state.id);
+  const randomizerID = useRandomizerOffcanvasStore((state) => state.randomizerID);
   const action = useRandomizerOffcanvasStore((state) => state.action);
   const show = useRandomizerOffcanvasStore((state) => state.show);
   const loading = useRandomizerOffcanvasStore((state) => state.loading);
