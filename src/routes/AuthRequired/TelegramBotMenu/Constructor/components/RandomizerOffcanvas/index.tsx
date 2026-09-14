@@ -36,7 +36,7 @@ function RandomizerOffcanvas(props: RandomizerOffcanvasProps): ReactElement {
 
   const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const randomizerID = useRandomizerOffcanvasStore((state) => state.id);
+  const randomizerID = useRandomizerOffcanvasStore((state) => state.randomizerID);
   const action = useRandomizerOffcanvasStore((state) => state.action);
   const hideOffcanvas = useRandomizerOffcanvasStore((state) => state.hideOffcanvas);
 
@@ -61,7 +61,7 @@ function RandomizerOffcanvas(props: RandomizerOffcanvasProps): ReactElement {
       diagramAPICall: (id) => DiagramRandomizerAPI.get({ botID, id }),
       onHide: () => hideOffcanvas(),
     }),
-    [randomizerID, action, hideOffcanvas, i18n.language],
+    [i18n.language, botID, randomizerID, action, hideOffcanvas],
   );
 
   return (
