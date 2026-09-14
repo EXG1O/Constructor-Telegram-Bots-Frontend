@@ -454,6 +454,32 @@
     "actionButton_add": "Add",
     "actionButton_edit": "Save"
   },
+  "timerOffcanvas": {
+    "title_add": "Adding a timer",
+    "title_edit": "Editing the timer",
+    "messages": {
+      "getTimer": {
+        "error": "Failed to retrieve timer data."
+      },
+      "addTimer": {
+        "success": "You have successfully added the timer.",
+        "error": "Failed to add the timer."
+      },
+      "editTimer": {
+        "success": "You have successfully saved the timer.",
+        "error": "Failed to save the timer."
+      }
+    },
+    "durationBlock": {
+      "title": "Duration",
+      "input": {
+        "placeholder": "Enter duration",
+        "label": "sec"
+      }
+    },
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save"
+  },
   "panel": {
     "addBlockButton": "Add block"
   },
@@ -495,6 +521,10 @@
       "randomizer": {
         "name": "Randomizer",
         "description": "Randomly selects one of the following logic branches."
+      },
+      "timer": {
+        "name": "Timer",
+        "description": "Delays the execution of further logic."
       }
     }
   },
@@ -688,6 +718,28 @@
         "title": "Deleting the randomizer",
         "text": "Are you sure you want to delete the randomizer?"
       }
+    },
+    "timer": {
+      "title": "Timer",
+      "messages": {
+        "duplicate": {
+          "success": "You have successfully duplicated the timer.",
+          "error": "Failed to duplicate the timer."
+        },
+        "delete": {
+          "success": "You have successfully deleted the timer.",
+          "error": "Failed to delete the timer."
+        }
+      },
+      "duplicateModal": {
+        "title": "Duplicating the timer",
+        "text": "Are you sure you want to duplicate the timer?"
+      },
+      "deleteModal": {
+        "title": "Deleting the timer",
+        "text": "Are you sure you want to delete the timer?"
+      },
+      "duration": "<bold>Duration:</bold> {{value}} sec"
     }
   }
 }

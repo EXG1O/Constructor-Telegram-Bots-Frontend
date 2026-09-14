@@ -48,6 +48,8 @@ import RandomizerNode from './components/RandomizerNode';
 import RandomizerOffcanvas from './components/RandomizerOffcanvas';
 import TemporaryVariableNode from './components/TemporaryVariableNode';
 import TemporaryVariableOffcanvas from './components/TemporaryVariableOffcanvas';
+import TimerNode from './components/TimerNode';
+import TimerOffcanvas from './components/TimerOffcanvas';
 import TriggerNode from './components/TriggerNode';
 import TriggerOffcanvas from './components/TriggerOffcanvas';
 
@@ -65,6 +67,7 @@ import { DiagramMessageAPI } from 'api/telegram-bots/message';
 import { DiagramRandomizerAPI } from 'api/telegram-bots/randomizer';
 import type { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 import { DiagramTemporaryVariableAPI } from 'api/telegram-bots/temporary-variable';
+import { DiagramTimerAPI } from 'api/telegram-bots/timer';
 import { DiagramTriggerAPI } from 'api/telegram-bots/trigger';
 
 import cn from 'utils/cn';
@@ -91,6 +94,7 @@ export const nodeTypes = {
   invoice: InvoiceNode,
   temporary_variable: TemporaryVariableNode,
   randomizer: RandomizerNode,
+  timer: TimerNode,
 };
 const defaultEdgeOptions: DefaultEdgeOptions = {
   type: ConnectionLineType.SmoothStep,
@@ -127,6 +131,7 @@ const diagramBlockAPIUpdateCallMap: Record<
   temporary_variable: ({ botID, id, data }) =>
     DiagramTemporaryVariableAPI.update(botID, id, data),
   randomizer: (options) => DiagramRandomizerAPI.update(options),
+  timer: (options) => DiagramTimerAPI.update(options),
 };
 
 function Constructor(): ReactElement {
@@ -144,6 +149,7 @@ function Constructor(): ReactElement {
     diagramInvoices,
     diagramTemporaryVariables,
     diagramRandomizers,
+    diagramTimers,
   } = useTelegramBotMenuConstructorRouteLoaderData();
 
   const [nodes, setNodes, onNodesChange] = useNodesState(
@@ -157,6 +163,7 @@ function Constructor(): ReactElement {
       invoice: diagramInvoices,
       temporary_variable: diagramTemporaryVariables,
       randomizer: diagramRandomizers,
+      timer: diagramTimers,
     } as Record<NodeType, DiagramBlock[]>).flatMap(([type, diagramBlocks]) =>
       diagramBlocks.map((diagramBlock) =>
         convertDiagramBlockToNode(type as NodeType, diagramBlock),
@@ -174,6 +181,7 @@ function Constructor(): ReactElement {
         ...diagramDatabaseOperations,
         ...diagramInvoices,
         ...diagramTemporaryVariables,
+        ...diagramTimers,
       ],
     }),
   );
@@ -353,6 +361,7 @@ function Constructor(): ReactElement {
         <InvoiceOffcanvas />
         <TemporaryVariableOffcanvas />
         <RandomizerOffcanvas />
+        <TimerOffcanvas />
         <div ref={handleRef} className='size-full overflow-hidden rounded-lg bg-light'>
           <ReactFlow
             fitView
