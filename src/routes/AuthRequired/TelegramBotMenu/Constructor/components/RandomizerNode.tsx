@@ -38,7 +38,7 @@ function RandomizerNode({
   type,
   positionAbsoluteX,
   positionAbsoluteY,
-  data: task,
+  data: randomizer,
 }: RandomizerNodeProps): ReactElement {
   const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
     keyPrefix: 'nodes.randomizer',
@@ -68,16 +68,16 @@ function RandomizerNode({
       type,
       x: positionAbsoluteX,
       y: positionAbsoluteY,
-      retrieveAPICall: () => RandomizerAPI.get({ botID, id: task.id }),
+      retrieveAPICall: () => RandomizerAPI.get({ botID, id: randomizer.id }),
       createAPICall: (data) => RandomizersAPI.create({ botID, data }),
       diagramAPICall: (id) => DiagramRandomizerAPI.get({ botID, id }),
     }),
-    [task.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
+    [i18n.language, id, botID, randomizer.id, positionAbsoluteX, positionAbsoluteY],
   );
 
   const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
     objectType: type,
-    objectID: task.id,
+    objectID: randomizer.id,
     nestedObjectID: 0,
   };
 
@@ -88,7 +88,7 @@ function RandomizerNode({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await RandomizerAPI.delete({ botID, id: task.id });
+        const response = await RandomizerAPI.delete({ botID, id: randomizer.id });
 
         if (!response.ok) {
           createMessageToast({
@@ -111,7 +111,7 @@ function RandomizerNode({
   }
 
   function handleEdit(): void {
-    showEditRandomizerOffcanvas(task.id);
+    showEditRandomizerOffcanvas(randomizer.id);
   }
 
   return (
@@ -122,7 +122,7 @@ function RandomizerNode({
       onDelete={handleDelete}
     >
       <Node.Block className='relative'>
-        <Node.Title>{task.name}</Node.Title>
+        <Node.Title>{randomizer.name}</Node.Title>
         <Node.Handle
           id={buildEdgeSourceHandle({
             ...defaultEdgeHandleBuildParams,

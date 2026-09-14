@@ -61,7 +61,7 @@ function RandomizerOffcanvas(props: RandomizerOffcanvasProps): ReactElement {
       diagramAPICall: (id) => DiagramRandomizerAPI.get({ botID, id }),
       onHide: () => hideOffcanvas(),
     }),
-    [randomizerID, action, hideOffcanvas, i18n.language],
+    [i18n.language, botID, randomizerID, action, hideOffcanvas],
   );
 
   return (
