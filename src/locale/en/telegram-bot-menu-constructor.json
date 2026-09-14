@@ -435,6 +435,25 @@
     "actionButton_add": "Add",
     "actionButton_edit": "Save"
   },
+  "randomizerOffcanvas": {
+    "title_add": "Adding a randomizer",
+    "title_edit": "Editing the randomizer",
+    "messages": {
+      "getRandomizer": {
+        "error": "Failed to retrieve randomizer data."
+      },
+      "addRandomizer": {
+        "success": "You have successfully added the randomizer.",
+        "error": "Failed to add the randomizer."
+      },
+      "editRandomizer": {
+        "success": "You have successfully saved the randomizer.",
+        "error": "Failed to save the randomizer."
+      }
+    },
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save"
+  },
   "panel": {
     "addBlockButton": "Add block"
   },
@@ -472,6 +491,10 @@
       "temporaryVariable": {
         "name": "Temporary variable",
         "description": "Creates a temporary variable in the logic chain."
+      },
+      "randomizer": {
+        "name": "Randomizer",
+        "description": "Randomly selects one of the following logic branches."
       }
     }
   },
@@ -643,6 +666,27 @@
       "deleteModal": {
         "title": "Deleting the temporary variable",
         "text": "Are you sure you want to delete the temporary variable?"
+      }
+    },
+    "randomizer": {
+      "title": "Randomizer",
+      "messages": {
+        "duplicate": {
+          "success": "You have successfully duplicated the randomizer.",
+          "error": "Failed to duplicate the randomizer."
+        },
+        "delete": {
+          "success": "You have successfully deleted the randomizer.",
+          "error": "Failed to delete the randomizer."
+        }
+      },
+      "duplicateModal": {
+        "title": "Duplicating the randomizer",
+        "text": "Are you sure you want to duplicate the randomizer?"
+      },
+      "deleteModal": {
+        "title": "Deleting the randomizer",
+        "text": "Are you sure you want to delete the randomizer?"
       }
     }
   }

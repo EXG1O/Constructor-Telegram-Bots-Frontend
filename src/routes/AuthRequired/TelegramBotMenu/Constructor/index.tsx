@@ -44,6 +44,8 @@ import InvoiceOffcanvas from './components/InvoiceOffcanvas';
 import MessageNode from './components/MessageNode';
 import MessageOffcanvas from './components/MessageOffcanvas';
 import Panel from './components/Panel';
+import RandomizerNode from './components/RandomizerNode';
+import RandomizerOffcanvas from './components/RandomizerOffcanvas';
 import TemporaryVariableNode from './components/TemporaryVariableNode';
 import TemporaryVariableOffcanvas from './components/TemporaryVariableOffcanvas';
 import TriggerNode from './components/TriggerNode';
@@ -51,7 +53,7 @@ import TriggerOffcanvas from './components/TriggerOffcanvas';
 
 import useTelegramBotMenuConstructorRouteLoaderData from './hooks/useTelegramBotMenuConstructorRouteLoaderData';
 
-import type { APIResponse } from 'api/core';
+import type { makeRequest } from 'api/core';
 import { DiagramAPIRequestAPI } from 'api/telegram-bots/api-request';
 import { DiagramBackgroundTaskAPI } from 'api/telegram-bots/background-task';
 import type { DiagramBlock } from 'api/telegram-bots/base/types';
@@ -60,6 +62,7 @@ import { ConnectionAPI, ConnectionsAPI } from 'api/telegram-bots/connection';
 import { DiagramDatabaseOperationAPI } from 'api/telegram-bots/database-operation';
 import { DiagramInvoiceAPI } from 'api/telegram-bots/invoice';
 import { DiagramMessageAPI } from 'api/telegram-bots/message';
+import { DiagramRandomizerAPI } from 'api/telegram-bots/randomizer';
 import type { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 import { DiagramTemporaryVariableAPI } from 'api/telegram-bots/temporary-variable';
 import { DiagramTriggerAPI } from 'api/telegram-bots/trigger';
@@ -87,6 +90,7 @@ export const nodeTypes = {
   database_operation: DatabaseOperationNode,
   invoice: InvoiceNode,
   temporary_variable: TemporaryVariableNode,
+  randomizer: RandomizerNode,
 };
 const defaultEdgeOptions: DefaultEdgeOptions = {
   type: ConnectionLineType.SmoothStep,
@@ -99,34 +103,30 @@ const reactFlowStyle: CSSProperties = {
   '--xy-attribution-background-color-default': 'unset',
 } as any;
 
-const diagramBlockAPIMap: Record<
+interface DiagramBlockAPIUpdateCallOptions {
+  botID: TelegramBot['id'];
+  id: DiagramBlock['id'];
+  data: Pick<DiagramBlock, 'x' | 'y'>;
+}
+
+const diagramBlockAPIUpdateCallMap: Record<
   NodeType,
-  {
-    get: (
-      telegramBotID: TelegramBot['id'],
-      id: DiagramBlock['id'],
-    ) => Promise<
-      | APIResponse.Base<true, DiagramBlock>
-      | APIResponse.Base<false, APIResponse.ErrorList>
-    >;
-    update: (
-      telegramBotID: TelegramBot['id'],
-      id: DiagramBlock['id'],
-      data: Pick<DiagramBlock, 'x' | 'y'>,
-    ) => Promise<
-      | APIResponse.Base<true, DiagramBlock>
-      | APIResponse.Base<false, APIResponse.ErrorList>
-    >;
-  }
+  (
+    options: DiagramBlockAPIUpdateCallOptions,
+  ) => ReturnType<typeof makeRequest<DiagramBlock>>
 > = {
-  trigger: DiagramTriggerAPI,
-  message: DiagramMessageAPI,
-  condition: DiagramConditionAPI,
-  background_task: DiagramBackgroundTaskAPI,
-  api_request: DiagramAPIRequestAPI,
-  database_operation: DiagramDatabaseOperationAPI,
-  invoice: DiagramInvoiceAPI,
-  temporary_variable: DiagramTemporaryVariableAPI,
+  trigger: ({ botID, id, data }) => DiagramTriggerAPI.update(botID, id, data),
+  message: ({ botID, id, data }) => DiagramMessageAPI.update(botID, id, data),
+  condition: ({ botID, id, data }) => DiagramConditionAPI.update(botID, id, data),
+  background_task: ({ botID, id, data }) =>
+    DiagramBackgroundTaskAPI.update(botID, id, data),
+  api_request: ({ botID, id, data }) => DiagramAPIRequestAPI.update(botID, id, data),
+  database_operation: ({ botID, id, data }) =>
+    DiagramDatabaseOperationAPI.update(botID, id, data),
+  invoice: ({ botID, id, data }) => DiagramInvoiceAPI.update(botID, id, data),
+  temporary_variable: ({ botID, id, data }) =>
+    DiagramTemporaryVariableAPI.update(botID, id, data),
+  randomizer: (options) => DiagramRandomizerAPI.update(options),
 };
 
 function Constructor(): ReactElement {
@@ -143,6 +143,7 @@ function Constructor(): ReactElement {
     diagramDatabaseOperations,
     diagramInvoices,
     diagramTemporaryVariables,
+    diagramRandomizers,
   } = useTelegramBotMenuConstructorRouteLoaderData();
 
   const [nodes, setNodes, onNodesChange] = useNodesState(
@@ -155,6 +156,7 @@ function Constructor(): ReactElement {
       database_operation: diagramDatabaseOperations,
       invoice: diagramInvoices,
       temporary_variable: diagramTemporaryVariables,
+      randomizer: diagramRandomizers,
     } as Record<NodeType, DiagramBlock[]>).flatMap(([type, diagramBlocks]) =>
       diagramBlocks.map((diagramBlock) =>
         convertDiagramBlockToNode(type as NodeType, diagramBlock),
@@ -283,12 +285,11 @@ function Constructor(): ReactElement {
       await Promise.all(
         nodes.map((node) => {
           const nodeID: NodeID = parseNodeID(node.id);
-
-          return diagramBlockAPIMap[nodeID.type].update(
-            telegramBotID,
-            nodeID.id,
-            node.position,
-          );
+          return diagramBlockAPIUpdateCallMap[nodeID.type]({
+            botID: telegramBotID,
+            id: nodeID.id,
+            data: node.position,
+          });
         }),
       );
     },
@@ -351,6 +352,7 @@ function Constructor(): ReactElement {
         <DatabaseOperationOffcanvas />
         <InvoiceOffcanvas />
         <TemporaryVariableOffcanvas />
+        <RandomizerOffcanvas />
         <div ref={handleRef} className='size-full overflow-hidden rounded-lg bg-light'>
           <ReactFlow
             fitView
