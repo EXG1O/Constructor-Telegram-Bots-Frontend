@@ -64,7 +64,7 @@ function TimerOffcanvas(props: TimerOffcanvasProps): ReactElement {
       },
       diagramAPICall: (id) => DiagramTimerAPI.get({ botID, id }),
       normalizeFieldName: (fieldName) =>
-        fieldName.replace(/^duration_seconds/, 'duration'),
+        fieldName.replace('duration_seconds', 'duration'),
       onHide: () => hideOffcanvas(),
     }),
     [i18n.language, botID, timerID, action, hideOffcanvas],
