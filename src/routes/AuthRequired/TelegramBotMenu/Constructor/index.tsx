@@ -181,6 +181,7 @@ function Constructor(): ReactElement {
         ...diagramDatabaseOperations,
         ...diagramInvoices,
         ...diagramTemporaryVariables,
+        ...diagramRandomizers,
         ...diagramTimers,
       ],
     }),

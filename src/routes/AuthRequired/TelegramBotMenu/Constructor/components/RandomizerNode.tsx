@@ -25,7 +25,11 @@ import {
 } from 'api/telegram-bots/randomizer';
 import type { DiagramRandomizer } from 'api/telegram-bots/randomizer/types';
 
-import { buildEdgeSourceHandle, type EdgeHandle } from '../utils/edges';
+import {
+  buildEdgeSourceHandle,
+  buildEdgeTargetHandle,
+  type EdgeHandle,
+} from '../utils/edges';
 
 export type NodeData = Omit<DiagramRandomizer, 'x' | 'y' | 'source_connections'>;
 
@@ -124,11 +128,11 @@ function RandomizerNode({
       <Node.Block className='relative'>
         <Node.Title>{randomizer.name}</Node.Title>
         <Node.Handle
-          id={buildEdgeSourceHandle({
+          id={buildEdgeTargetHandle({
             ...defaultEdgeHandleBuildParams,
             position: 'left',
           })}
-          type='source'
+          type='target'
           position={Position.Left}
         />
         <Node.Handle
