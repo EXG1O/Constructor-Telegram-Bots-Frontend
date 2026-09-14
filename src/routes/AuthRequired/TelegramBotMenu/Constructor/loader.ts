@@ -16,6 +16,8 @@ import { DiagramRandomizersAPI } from 'api/telegram-bots/randomizer';
 import type { APIResponse as RandomizerAPIResponse } from 'api/telegram-bots/randomizer/types';
 import { DiagramTemporaryVariablesAPI } from 'api/telegram-bots/temporary-variable';
 import type { APIResponse as TemporaryVariableAPIResponse } from 'api/telegram-bots/temporary-variable/types';
+import { DiagramTimersAPI } from 'api/telegram-bots/timer';
+import type { APIResponse as TimerAPIResponse } from 'api/telegram-bots/timer/types';
 import { DiagramTriggersAPI } from 'api/telegram-bots/trigger';
 import type { APIResponse as TriggerAPIResponse } from 'api/telegram-bots/trigger/types';
 
@@ -29,6 +31,7 @@ export interface LoaderData {
   diagramInvoices: InvoiceAPIResponse.DiagramInvoicesAPI.Get;
   diagramTemporaryVariables: TemporaryVariableAPIResponse.DiagramTemporaryVariablesAPI.Get;
   diagramRandomizers: RandomizerAPIResponse.DiagramRandomizersAPI.Get;
+  diagramTimers: TimerAPIResponse.DiagramTimersAPI.Get;
 }
 
 async function loader({
@@ -49,6 +52,7 @@ async function loader({
     diagramInvoicesResponse,
     diagramTemporaryVariablesResponse,
     diagramRandomizersResponse,
+    diagramTimersResponse,
   ] = await Promise.all([
     DiagramTriggersAPI.get(telegramBotID),
     DiagramMessagesAPI.get(telegramBotID),
@@ -59,6 +63,7 @@ async function loader({
     DiagramInvoicesAPI.get(telegramBotID),
     DiagramTemporaryVariablesAPI.get(telegramBotID),
     DiagramRandomizersAPI.get({ botID: telegramBotID }),
+    DiagramTimersAPI.get({ botID: telegramBotID }),
   ]);
 
   if (
@@ -70,7 +75,8 @@ async function loader({
     !diagramDatabaseOperationsResponse.ok ||
     !diagramInvoicesResponse.ok ||
     !diagramTemporaryVariablesResponse.ok ||
-    !diagramRandomizersResponse.ok
+    !diagramRandomizersResponse.ok ||
+    !diagramTimersResponse.ok
   )
     return null;
 
@@ -84,6 +90,7 @@ async function loader({
     diagramInvoices: diagramInvoicesResponse.json,
     diagramTemporaryVariables: diagramTemporaryVariablesResponse.json,
     diagramRandomizers: diagramRandomizersResponse.json,
+    diagramTimers: diagramTimersResponse.json,
   };
 }
 

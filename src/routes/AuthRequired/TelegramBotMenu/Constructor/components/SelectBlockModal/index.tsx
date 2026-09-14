@@ -15,6 +15,7 @@ import { useInvoiceOffcanvasStore } from '../InvoiceOffcanvas/store';
 import { useMessageOffcanvasStore } from '../MessageOffcanvas/store';
 import { useRandomizerOffcanvasStore } from '../RandomizerOffcanvas/store';
 import { useTemporaryVariableOffcanvasStore } from '../TemporaryVariableOffcanvas/store';
+import { useTimerOffcanvasStore } from '../TimerOffcanvas/store';
 import { useTriggerOffcanvasStore } from '../TriggerOffcanvas/store';
 
 export interface SelectBlockModalProps extends ModalProps {}
@@ -51,6 +52,7 @@ function SelectBlockModal({ children, ...props }: SelectBlockModalProps): ReactE
   const showAddRandomizerOffcanvas = useRandomizerOffcanvasStore(
     (state) => state.showOffcanvas,
   );
+  const showAddTimerOffcanvas = useTimerOffcanvasStore((state) => state.showOffcanvas);
 
   return (
     <Modal {...props}>
@@ -83,6 +85,7 @@ function SelectBlockModal({ children, ...props }: SelectBlockModalProps): ReactE
             blockName='temporaryVariable'
             onClick={() => showAddTemporaryVariableOffcanvas()}
           />
+          <BlockButton blockName='timer' onClick={() => showAddTimerOffcanvas()} />
           <BlockButton
             blockName='randomizer'
             onClick={() => showAddRandomizerOffcanvas()}
