@@ -12,6 +12,8 @@ import { DiagramInvoicesAPI } from 'api/telegram-bots/invoice';
 import type { APIResponse as InvoiceAPIResponse } from 'api/telegram-bots/invoice/types';
 import { DiagramMessagesAPI } from 'api/telegram-bots/message';
 import type { APIResponse as MessageAPIResponse } from 'api/telegram-bots/message/types';
+import { DiagramRandomizersAPI } from 'api/telegram-bots/randomizer';
+import type { APIResponse as RandomizerAPIResponse } from 'api/telegram-bots/randomizer/types';
 import { DiagramTemporaryVariablesAPI } from 'api/telegram-bots/temporary-variable';
 import type { APIResponse as TemporaryVariableAPIResponse } from 'api/telegram-bots/temporary-variable/types';
 import { DiagramTriggersAPI } from 'api/telegram-bots/trigger';
@@ -26,6 +28,7 @@ export interface LoaderData {
   diagramDatabaseOperations: DatabaseOperationAPIResponse.DiagramDatabaseOperationsAPI.Get;
   diagramInvoices: InvoiceAPIResponse.DiagramInvoicesAPI.Get;
   diagramTemporaryVariables: TemporaryVariableAPIResponse.DiagramTemporaryVariablesAPI.Get;
+  diagramRandomizers: RandomizerAPIResponse.DiagramRandomizersAPI.Get;
 }
 
 async function loader({
@@ -45,6 +48,7 @@ async function loader({
     diagramDatabaseOperationsResponse,
     diagramInvoicesResponse,
     diagramTemporaryVariablesResponse,
+    diagramRandomizersResponse,
   ] = await Promise.all([
     DiagramTriggersAPI.get(telegramBotID),
     DiagramMessagesAPI.get(telegramBotID),
@@ -54,6 +58,7 @@ async function loader({
     DiagramDatabaseOperationsAPI.get(telegramBotID),
     DiagramInvoicesAPI.get(telegramBotID),
     DiagramTemporaryVariablesAPI.get(telegramBotID),
+    DiagramRandomizersAPI.get({ botID: telegramBotID }),
   ]);
 
   if (
@@ -64,7 +69,8 @@ async function loader({
     !diagramAPIRequestsResponse.ok ||
     !diagramDatabaseOperationsResponse.ok ||
     !diagramInvoicesResponse.ok ||
-    !diagramTemporaryVariablesResponse.ok
+    !diagramTemporaryVariablesResponse.ok ||
+    !diagramRandomizersResponse.ok
   )
     return null;
 
@@ -77,6 +83,7 @@ async function loader({
     diagramDatabaseOperations: diagramDatabaseOperationsResponse.json,
     diagramInvoices: diagramInvoicesResponse.json,
     diagramTemporaryVariables: diagramTemporaryVariablesResponse.json,
+    diagramRandomizers: diagramRandomizersResponse.json,
   };
 }
 

@@ -7,7 +7,8 @@ export type ObjectType =
   | 'api_request'
   | 'database_operation'
   | 'invoice'
-  | 'temporary_variable';
+  | 'temporary_variable'
+  | 'randomizer';
 export type SourceObjectType = Extract<
   ObjectType,
   | 'trigger'
@@ -19,6 +20,7 @@ export type SourceObjectType = Extract<
   | 'database_operation'
   | 'invoice'
   | 'temporary_variable'
+  | 'randomizer'
 >;
 export type TargetObjectType = Extract<
   ObjectType,
@@ -29,6 +31,7 @@ export type TargetObjectType = Extract<
   | 'database_operation'
   | 'invoice'
   | 'temporary_variable'
+  | 'randomizer'
 >;
 
 export type HandlePosition = 'left' | 'right';
