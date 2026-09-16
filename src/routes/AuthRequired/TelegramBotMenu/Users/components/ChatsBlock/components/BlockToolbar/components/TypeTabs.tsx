@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Tabs, { type TabsProps } from 'components/ui/Tabs';
 
@@ -15,9 +15,10 @@ export interface TypeTabsProps extends Omit<
 > {}
 
 function TypeTabs(props: TypeTabsProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuUsers, {
-    keyPrefix: 'chatsBlock.toolbar.typeTabs',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuUsers}`, any>(
+    'telegram-bot-menu-users',
+    { keyPrefix: 'chatsBlock.toolbar.typeTabs' },
+  );
 
   const type = useChatsBlockStore((state) => state.type);
   const updateChats = useChatsBlockStore((state) => state.updateChats);

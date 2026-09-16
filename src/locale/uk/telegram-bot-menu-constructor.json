@@ -1,21 +1,217 @@
 {
-  "title": "Конструктор",
-  "messages": {
-    "validation": {
-      "invalidJSON": "Введіть дані у форматі JSON."
+  "addonButtonGroup": {
+    "hideButton": "Приховати доповнення",
+    "showButton": "Показати доповнення"
+  },
+  "apiRequestOffcanvas": {
+    "actionButton": "",
+    "actionButton_add": "Додати",
+    "actionButton_edit": "Зберегти",
+    "bodyBlock": {
+      "title": "Дані"
     },
-    "createConnection": {
-      "error": "Не вдалося підключити блок до іншого блоку."
+    "headersBlock": {
+      "addHeaderButton": {
+        "text": "Додати заголовок"
+      },
+      "keyInput": {
+        "placeholder": "Ключ"
+      },
+      "title": "Заголовки",
+      "valueInput": {
+        "placeholder": "Значення"
+      }
     },
-    "deleteConnection": {
-      "error": "Не вдалося відключити блок від іншого блоку."
+    "messages": {
+      "addAPIRequest": {
+        "error": "Не вдалося додати API-запит.",
+        "success": "Ви успішно додали API-запит."
+      },
+      "editAPIRequest": {
+        "error": "Не вдалося зберегти API-запит.",
+        "success": "Ви успішно зберегли API-запит."
+      },
+      "getAPIRequest": {
+        "error": "Не вдалося отримати дані API-запиту."
+      }
+    },
+    "methodBlock": {
+      "title": "Метод"
+    },
+    "title": "",
+    "title_add": "Додавання API-запиту",
+    "title_edit": "Редагування API-запиту",
+    "urlBlock": {
+      "title": "URL-адреса",
+      "urlInput": {
+        "placeholder": "Введіть URL-адресу"
+      }
     }
   },
-  "nameBlock": {
-    "title": "Назва",
-    "inputPlaceholder": "Придумайте назву"
+  "backgroundTaskOffcanvas": {
+    "actionButton": "",
+    "actionButton_add": "Додати",
+    "actionButton_edit": "Зберегти",
+    "intervalBlock": {
+      "select": {
+        "1": "1 день",
+        "3": "3 дні",
+        "7": "7 днів",
+        "14": "14 днів",
+        "28": "28 днів"
+      },
+      "title": "Інтервал"
+    },
+    "messages": {
+      "addBackgroundTask": {
+        "error": "Не вдалося додати фонову задачу.",
+        "success": "Ви успішно додали фонову задачу."
+      },
+      "editBackgroundTask": {
+        "error": "Не вдалося зберегти фонову задачу.",
+        "success": "Ви успішно зберегли фонову задачу."
+      },
+      "getBackgroundTask": {
+        "error": "Не вдалося отримати дані фонової задачі."
+      }
+    },
+    "title": "",
+    "title_add": "Додавання фонової задачі",
+    "title_edit": "Редагування фонової задачі"
+  },
+  "conditionOffcanvas": {
+    "actionButton": "",
+    "actionButton_add": "Додати",
+    "actionButton_edit": "Зберегти",
+    "messages": {
+      "addCondition": {
+        "error": "Не вдалося додати умову.",
+        "success": "Ви успішно додали умову."
+      },
+      "editCondition": {
+        "error": "Не вдалося зберегти умову.",
+        "success": "Ви успішно зберегли умову."
+      },
+      "getCondition": {
+        "error": "Не вдалося отримати дані умови."
+      }
+    },
+    "partsBlock": {
+      "nextPartOperatorSelect": {
+        "&&": "І",
+        "||": "Або"
+      },
+      "operatorSelect": {
+        "!=": "Не дорівнює",
+        "<": "Менше",
+        "<=": "Менше або дорівнює",
+        "==": "Дорівнює",
+        ">": "Більше",
+        ">=": "Більше або дорівнює"
+      },
+      "title": "Частини умови"
+    },
+    "title": "",
+    "title_add": "Додавання умови",
+    "title_edit": "Редагування умови"
+  },
+  "databaseOperationOffcanvas": {
+    "actionButton": "",
+    "actionButton_add": "Додати",
+    "actionButton_edit": "Зберегти",
+    "createBlock": {
+      "title": "Створення запису"
+    },
+    "messages": {
+      "addDatabaseOperation": {
+        "error": "Не вдалося додати операцію бази даних.",
+        "success": "Ви успішно додали операцію бази даних."
+      },
+      "editDatabaseOperation": {
+        "error": "Не вдалося зберегти операцію бази даних.",
+        "success": "Ви успішно зберегли операцію бази даних."
+      },
+      "getDatabaseOperation": {
+        "error": "Не вдалося отримати дані операції бази даних."
+      }
+    },
+    "title": "",
+    "title_add": "Додавання операції бази даних",
+    "title_edit": "Редагування операції бази даних",
+    "typeBlock": {
+      "title": "Тип"
+    },
+    "updateBlock": {
+      "createIfNotFoundSwitch": {
+        "label": "Створити, якщо не знайдено"
+      },
+      "lookupFieldNameInput": {
+        "placeholder": "Введіть назву поля для пошуку"
+      },
+      "lookupFieldValueInput": {
+        "placeholder": "Введіть значення поля для пошуку"
+      },
+      "overwriteSwitch": {
+        "label": "Перезаписати"
+      },
+      "title": "Оновлення запису"
+    }
+  },
+  "invoiceOffcanvas": {
+    "actionButton": "",
+    "actionButton_add": "Додати",
+    "actionButton_edit": "Зберегти",
+    "descriptionBlock": {
+      "inputPlaceholder": "Введіть опис",
+      "title": "Опис"
+    },
+    "imageBlock": {
+      "addButton": "Додати зображення",
+      "messages": {
+        "addImage": {
+          "error_notEnoughStorage": "Неможливо додати зображення {{name}}, оскільки недостатньо місця в сховищі.",
+          "error_tooLarge": "Зображення {{name}} має розмір понад 2.5 МБ."
+        }
+      },
+      "title": "Зображення"
+    },
+    "messages": {
+      "addInvoice": {
+        "error": "Не вдалося додати рахунок.",
+        "success": "Ви успішно додали рахунок."
+      },
+      "editInvoice": {
+        "error": "Не вдалося зберегти рахунок.",
+        "success": "Ви успішно зберегли рахунок."
+      },
+      "getInvoice": {
+        "error": "Не вдалося отримати дані рахунку."
+      }
+    },
+    "priceBlock": {
+      "amount": {
+        "inputPlaceholder": "Введіть ціну в Telegram Stars"
+      },
+      "label": {
+        "inputPlaceholder": "Введіть підпис"
+      },
+      "title": "Ціна"
+    },
+    "title": "",
+    "title_add": "Додавання рахунку",
+    "title_edit": "Редагування рахунку",
+    "titleBlock": {
+      "inputPlaceholder": "Введіть заголовок",
+      "title": "Заголовок"
+    }
   },
   "mediaPopover": {
+    "filePopoverBody": {
+      "table": {
+        "name": "Назва:",
+        "size": "Розмір:"
+      }
+    },
     "selectPopoverBody": {
       "selectFileButton": {
         "text": "Вибрати файл",
@@ -25,721 +221,538 @@
         "text": "Вказати URL-адресу"
       }
     },
-    "filePopoverBody": {
-      "table": {
-        "name": "Назва:",
-        "size": "Розмір:"
-      }
-    },
     "urlPopoverBody": {
       "messages": {
         "invalidURLError": "Невірна URL-адреса."
       },
+      "saveButton": "Зберегти",
       "urlInput": {
         "placeholder": "Введіть URL-адресу"
-      },
-      "saveButton": "Зберегти",
-      "deleteButton": "Видалити"
+      }
     }
   },
-  "variablesInfoText": {
-    "text": "Ви можете використовувати змінні."
-  },
-  "addonButtonGroup": {
-    "showButton": "Показати доповнення",
-    "hideButton": "Приховати доповнення"
-  },
-  "triggerOffcanvas": {
-    "title_add": "Додавання тригер",
-    "title_edit": "Редагування тригер",
-    "messages": {
-      "getTrigger": {
-        "error": "Не вдалося отримати дані тригера."
-      },
-      "addTrigger": {
-        "success": "Ви успішно додали тригер.",
-        "error": "Не вдалося додати тригер."
-      },
-      "editTrigger": {
-        "success": "Ви успішно зберегли тригер.",
-        "error": "Не вдалося зберегти тригер."
-      }
-    },
-    "typeBlock": {
-      "title": "Тип",
-      "types": {
-        "startCommand": "Стартова команда",
-        "command": "Команда",
-        "message": "Повідомлення",
-        "anyMessage": "Будь-яке повідомлення",
-        "webhook": "Вебхук"
-      }
-    },
-    "startCommandBlock": {
-      "title": "Стартова команда",
-      "payload": {
-        "showButton": "Додати навантаження",
-        "hideButton": "Прибрати навантаження",
-        "inputPlaceholder": "Введіть дані"
-      },
-      "description": {
-        "showButton": "Показувати в меню",
-        "hideButton": "Прибрати з меню",
-        "inputPlaceholder": "Введіть опис"
-      }
-    },
-    "commandBlock": {
-      "title": "Команда",
-      "commandInputPlaceholder": "Введіть команду",
-      "description": {
-        "showButton": "Показувати в меню",
-        "hideButton": "Прибрати з меню",
-        "inputPlaceholder": "Введіть опис"
-      }
-    },
-    "messageBlock": {
-      "title": "Повідомлення",
-      "messageEditorPlaceholder": "Введіть текст"
-    },
-    "webhookBlock": {
-      "title": "Вебхук",
-      "table": {
-        "url": {
-          "header": "URL-адреса:",
-          "placeholder": "Збережіть цей блок, щоб отримати значення."
-        },
-        "method": {
-          "header": "Метод:"
-        },
-        "data": {
-          "header": "Дані:",
-          "text": "Будь-який формат"
-        }
-      }
-    },
-    "actionButton_add": "Додати",
-    "actionButton_edit": "Зберегти"
-  },
   "messageOffcanvas": {
-    "title_add": "Додавання повідомлення",
-    "title_edit": "Редагування повідомлення",
-    "messages": {
-      "getMessage": {
-        "error": "Не вдалося отримати дані повідомлення."
-      },
-      "addMessage": {
-        "success": "Ви успішно додали повідомлення.",
-        "error": "Не вдалося додати повідомлення."
-      },
-      "editMessage": {
-        "success": "Ви успішно зберегли повідомлення.",
-        "error": "Не вдалося зберегти повідомлення."
-      },
-      "validation": {
-        "error_noAddons": "Необхідно вказати щонайменше одне доповнення.",
-        "error_keyboardRequiresText": "Не можна використовувати доповнення «Клавіатура» без доповнення «Текст»."
-      }
-    },
-    "settingsBlock": {
-      "title": "Налаштування",
-      "replyToUserMessageSwitch": "Відповісти на повідомлення користувача",
-      "deleteUserMessageSwitch": "Видалити повідомлення користувача",
-      "sendAsNewMessageSwitch": "Відправити повідомлення як нове"
-    },
-    "imagesBlock": {
-      "title": "Зображення",
-      "addImagesButton": {
-        "messages": {
-          "addImages": {
-            "error_tooLarge": "Зображення {{name}} важить більше 2.5МБ.",
-            "error_notEnoughStorage": "Неможливо додати зображення {{name}}, тому що не вистачає місця в сховищі."
-          }
-        },
-        "text": "Додати зображення"
-      }
-    },
+    "actionButton": "",
+    "actionButton_add": "Додати",
+    "actionButton_edit": "Зберегти",
     "documentsBlock": {
-      "title": "Документи",
       "addDocumentsButton": {
         "messages": {
           "addDocuments": {
-            "error_tooLarge": "Файл {{name}} важить більше 2.5МБ.",
-            "error_notEnoughStorage": "Неможливо додати документ {{name}}, тому що не вистачає місця в сховищі."
+            "error_notEnoughStorage": "Неможливо додати документ {{name}}, тому що не вистачає місця в сховищі.",
+            "error_tooLarge": "Файл {{name}} важить більше 2.5МБ."
           }
         },
         "text": "Додати документи"
-      }
-    },
-    "textBlock": {
-      "title": "Текст",
-      "editorPlaceholder": "Введіть текст"
-    },
-    "keyboardBlock": {
-      "title": "Клавіатура",
-      "types": {
-        "default": "Звичайна",
-        "inline": "Вбудована",
-        "payment": "Платіжна"
       },
-      "keyboardButtonPopover": {
+      "title": "Документи"
+    },
+    "imagesBlock": {
+      "addImagesButton": {
         "messages": {
-          "emptyTextError": "Це поле не може бути порожнім.",
-          "invalidURLError": "Неправильна URL-адреса."
-        },
-        "textInput": {
-          "placeholder": "Введіть текст"
-        },
-        "urlInputCollapse": {
-          "showButton": "Додати URL-адресу",
-          "hideButton": "Видалити URL-адресу"
-        },
-        "urlInput": {
-          "placeholder": "Введіть URL-адресу"
-        },
-        "styleSelect": {
-          "label": "Стиль:",
-          "styles": {
-            "default": "За замовчуванням",
-            "primary": "Основний",
-            "success": "Успіх",
-            "danger": "Небезпека"
+          "addImages": {
+            "error_notEnoughStorage": "Неможливо додати зображення {{name}}, тому що не вистачає місця в сховищі.",
+            "error_tooLarge": "Зображення {{name}} важить більше 2.5МБ."
           }
         },
-        "actionButton_add": "Додати",
-        "actionButton_edit": "Зберегти",
-        "deleteButton": "Видалити"
+        "text": "Додати зображення"
       },
+      "title": "Зображення"
+    },
+    "keyboardBlock": {
       "addButtonButton": {
         "text": "Додати кнопку"
       },
       "addRowButton": {
         "text": "Додати ряд"
-      }
-    },
-    "actionButton_add": "Додати",
-    "actionButton_edit": "Зберегти"
-  },
-  "conditionOffcanvas": {
-    "title_add": "Додавання умови",
-    "title_edit": "Редагування умови",
-    "messages": {
-      "getCondition": {
-        "error": "Не вдалося отримати дані умови."
       },
-      "addCondition": {
-        "success": "Ви успішно додали умову.",
-        "error": "Не вдалося додати умову."
-      },
-      "editCondition": {
-        "success": "Ви успішно зберегли умову.",
-        "error": "Не вдалося зберегти умову."
-      }
-    },
-    "partsBlock": {
-      "title": "Частини умови",
-      "operatorSelect": {
-        "==": "Дорівнює",
-        "!=": "Не дорівнює",
-        ">": "Більше",
-        ">=": "Більше або дорівнює",
-        "<": "Менше",
-        "<=": "Менше або дорівнює"
-      },
-      "nextPartOperatorSelect": {
-        "&&": "І",
-        "||": "Або"
-      }
-    },
-    "actionButton_add": "Додати",
-    "actionButton_edit": "Зберегти"
-  },
-  "backgroundTaskOffcanvas": {
-    "title_add": "Додавання фонової задачі",
-    "title_edit": "Редагування фонової задачі",
-    "messages": {
-      "getBackgroundTask": {
-        "error": "Не вдалося отримати дані фонової задачі."
-      },
-      "addBackgroundTask": {
-        "success": "Ви успішно додали фонову задачу.",
-        "error": "Не вдалося додати фонову задачу."
-      },
-      "editBackgroundTask": {
-        "success": "Ви успішно зберегли фонову задачу.",
-        "error": "Не вдалося зберегти фонову задачу."
-      }
-    },
-    "intervalBlock": {
-      "title": "Інтервал",
-      "select": {
-        "1": "1 день",
-        "3": "3 дні",
-        "7": "7 днів",
-        "14": "14 днів",
-        "28": "28 днів"
-      }
-    },
-    "actionButton_add": "Додати",
-    "actionButton_edit": "Зберегти"
-  },
-  "apiRequestOffcanvas": {
-    "title_add": "Додавання API-запиту",
-    "title_edit": "Редагування API-запиту",
-    "messages": {
-      "getAPIRequest": {
-        "error": "Не вдалося отримати дані API-запиту."
-      },
-      "addAPIRequest": {
-        "success": "Ви успішно додали API-запит.",
-        "error": "Не вдалося додати API-запит."
-      },
-      "editAPIRequest": {
-        "success": "Ви успішно зберегли API-запит.",
-        "error": "Не вдалося зберегти API-запит."
-      }
-    },
-    "urlBlock": {
-      "title": "URL-адреса",
-      "urlInput": {
-        "placeholder": "Введіть URL-адресу"
-      }
-    },
-    "methodBlock": {
-      "title": "Метод"
-    },
-    "headersBlock": {
-      "title": "Заголовки",
-      "keyInput": {
-        "placeholder": "Ключ"
-      },
-      "valueInput": {
-        "placeholder": "Значення"
-      },
-      "addHeaderButton": {
-        "text": "Додати заголовок"
-      }
-    },
-    "bodyBlock": {
-      "title": "Дані"
-    },
-    "actionButton_add": "Додати",
-    "actionButton_edit": "Зберегти"
-  },
-  "databaseOperationOffcanvas": {
-    "title_add": "Додавання операції бази даних",
-    "title_edit": "Редагування операції бази даних",
-    "messages": {
-      "getDatabaseOperation": {
-        "error": "Не вдалося отримати дані операції бази даних."
-      },
-      "addDatabaseOperation": {
-        "success": "Ви успішно додали операцію бази даних.",
-        "error": "Не вдалося додати операцію бази даних."
-      },
-      "editDatabaseOperation": {
-        "success": "Ви успішно зберегли операцію бази даних.",
-        "error": "Не вдалося зберегти операцію бази даних."
-      }
-    },
-    "typeBlock": {
-      "title": "Тип"
-    },
-    "createBlock": {
-      "title": "Створення запису"
-    },
-    "updateBlock": {
-      "title": "Оновлення запису",
-      "overwriteSwitch": {
-        "label": "Перезаписати"
-      },
-      "lookupFieldNameInput": {
-        "placeholder": "Введіть назву поля для пошуку"
-      },
-      "lookupFieldValueInput": {
-        "placeholder": "Введіть значення поля для пошуку"
-      },
-      "createIfNotFoundSwitch": {
-        "label": "Створити, якщо не знайдено"
-      }
-    },
-    "actionButton_add": "Додати",
-    "actionButton_edit": "Зберегти"
-  },
-  "invoiceOffcanvas": {
-    "title_add": "Додавання рахунку",
-    "title_edit": "Редагування рахунку",
-    "messages": {
-      "getInvoice": {
-        "error": "Не вдалося отримати дані рахунку."
-      },
-      "addInvoice": {
-        "success": "Ви успішно додали рахунок.",
-        "error": "Не вдалося додати рахунок."
-      },
-      "editInvoice": {
-        "success": "Ви успішно зберегли рахунок.",
-        "error": "Не вдалося зберегти рахунок."
-      }
-    },
-    "titleBlock": {
-      "title": "Заголовок",
-      "inputPlaceholder": "Введіть заголовок"
-    },
-    "imageBlock": {
-      "title": "Зображення",
-      "messages": {
-        "addImage": {
-          "error": "Не вдалося додати зображення {{name}}.",
-          "error_tooLarge": "Зображення {{name}} має розмір понад 2.5 МБ.",
-          "error_notEnoughStorage": "Неможливо додати зображення {{name}}, оскільки недостатньо місця в сховищі."
+      "keyboardButtonPopover": {
+        "actionButton": "",
+        "actionButton_add": "Додати",
+        "actionButton_edit": "Зберегти",
+        "deleteButton": "Видалити",
+        "messages": {
+          "emptyTextError": "Це поле не може бути порожнім.",
+          "invalidURLError": "Неправильна URL-адреса."
+        },
+        "styleSelect": {
+          "label": "Стиль:",
+          "styles": {
+            "danger": "Небезпека",
+            "default": "За замовчуванням",
+            "primary": "Основний",
+            "success": "Успіх"
+          }
+        },
+        "textInput": {
+          "placeholder": "Введіть текст"
+        },
+        "urlInput": {
+          "placeholder": "Введіть URL-адресу"
+        },
+        "urlInputCollapse": {
+          "hideButton": "Видалити URL-адресу",
+          "showButton": "Додати URL-адресу"
         }
       },
-      "addButton": "Додати зображення"
-    },
-    "descriptionBlock": {
-      "title": "Опис",
-      "inputPlaceholder": "Введіть опис"
-    },
-    "priceBlock": {
-      "title": "Ціна",
-      "label": {
-        "inputPlaceholder": "Введіть підпис"
-      },
-      "amount": {
-        "inputPlaceholder": "Введіть ціну в Telegram Stars"
+      "title": "Клавіатура",
+      "types": {
+        "default": "Звичайна",
+        "inline": "Вбудована"
       }
     },
-    "actionButton_add": "Додати",
-    "actionButton_edit": "Зберегти"
-  },
-  "temporaryVariableOffcanvas": {
-    "title_add": "Додавання змінної",
-    "title_edit": "Редагування змінної",
     "messages": {
-      "getTemporaryVariable": {
-        "error": "Не вдалося отримати дані тимчасової змінної."
+      "addMessage": {
+        "error": "Не вдалося додати повідомлення.",
+        "success": "Ви успішно додали повідомлення."
       },
-      "addTemporaryVariable": {
-        "success": "Ви успішно додали тимчасову змінну.",
-        "error": "Не вдалося додати тимчасову змінну."
+      "editMessage": {
+        "error": "Не вдалося зберегти повідомлення.",
+        "success": "Ви успішно зберегли повідомлення."
       },
-      "editTemporaryVariable": {
-        "success": "Ви успішно зберегли тимчасову змінну.",
-        "error": "Не вдалося зберегти тимчасову змінну."
+      "getMessage": {
+        "error": "Не вдалося отримати дані повідомлення."
+      },
+      "validation": {
+        "error_keyboardRequiresText": "Не можна використовувати доповнення «Клавіатура» без доповнення «Текст».",
+        "error_noAddons": "Необхідно вказати щонайменше одне доповнення."
       }
     },
-    "valueBlock": {
-      "title": "Значення",
-      "inputPlaceholder": "Введіть значення"
+    "settingsBlock": {
+      "deleteUserMessageSwitch": "Видалити повідомлення користувача",
+      "replyToUserMessageSwitch": "Відповісти на повідомлення користувача",
+      "sendAsNewMessageSwitch": "Відправити повідомлення як нове",
+      "title": "Налаштування"
     },
-    "actionButton_add": "Додати",
-    "actionButton_edit": "Зберегти"
+    "textBlock": {
+      "editorPlaceholder": "Введіть текст",
+      "title": "Текст"
+    },
+    "title": "",
+    "title_add": "Додавання повідомлення",
+    "title_edit": "Редагування повідомлення"
   },
-  "randomizerOffcanvas": {
-    "title_add": "Додавання рандомайзера",
-    "title_edit": "Редагування рандомайзера",
-    "messages": {
-      "getRandomizer": {
-        "error": "Не вдалося отримати дані рандомайзера."
-      },
-      "addRandomizer": {
-        "success": "Ви успішно додали рандомайзер.",
-        "error": "Не вдалося додати рандомайзер."
-      },
-      "editRandomizer": {
-        "success": "Ви успішно зберегли рандомайзер.",
-        "error": "Не вдалося зберегти рандомайзер."
-      }
+  "messages": {
+    "createConnection": {
+      "error": "Не вдалося підключити блок до іншого блоку."
     },
-    "actionButton_add": "Додати",
-    "actionButton_edit": "Зберегти"
+    "deleteConnection": {
+      "error": "Не вдалося відключити блок від іншого блоку."
+    },
+    "validation": {
+      "invalidJSON": "Введіть дані у форматі JSON."
+    }
   },
-  "timerOffcanvas": {
-    "title_add": "Додавання таймера",
-    "title_edit": "Редагування таймера",
-    "messages": {
-      "getTimer": {
-        "error": "Не вдалося отримати дані таймера."
+  "nameBlock": {
+    "inputPlaceholder": "Придумайте назву",
+    "title": "Назва"
+  },
+  "nodes": {
+    "apiRequest": {
+      "deleteModal": {
+        "text": "Ви впевнені, що хочете видалити API-запит?",
+        "title": "Видалення API-запиту"
       },
-      "addTimer": {
-        "success": "Ви успішно додали таймер.",
-        "error": "Не вдалося додати таймер."
+      "duplicateModal": {
+        "text": "Ви впевнені, що хочете дублювати API-запит?",
+        "title": "Дублювання API-запиту"
       },
-      "editTimer": {
-        "success": "Ви успішно зберегли таймер.",
-        "error": "Не вдалося зберегти таймер."
-      }
+      "messages": {
+        "delete": {
+          "error": "Не вдалося видалити API-запит.",
+          "success": "Ви успішно видалили API-запит."
+        },
+        "duplicate": {
+          "error": "Не вдалося дублювати API-запит.",
+          "success": "Ви успішно дублювали API-запит."
+        }
+      },
+      "title": "API-запит"
     },
-    "durationBlock": {
-      "title": "Тривалість",
-      "input": {
-        "placeholder": "Введіть тривалість",
-        "label": "сек"
-      }
+    "backgroundTask": {
+      "deleteModal": {
+        "text": "Ви точно хочете видалити фонову задачу?",
+        "title": "Видалення фонової задачі"
+      },
+      "duplicateModal": {
+        "text": "Ви точно хочете дублювати фонову задачу?",
+        "title": "Дублювання фонової задачі"
+      },
+      "interval": "Інтервал",
+      "messages": {
+        "delete": {
+          "error": "Не вдалося видалити фонову задачу.",
+          "success": "Ви успішно видалили фонову задачу."
+        },
+        "duplicate": {
+          "error": "Не вдалося дублювати фонову задачу.",
+          "success": "Ви успішно дублювали фонову задачу."
+        }
+      },
+      "title": "Фонова задача"
     },
-    "actionButton_add": "Додати",
-    "actionButton_edit": "Зберегти"
+    "condition": {
+      "deleteModal": {
+        "text": "Ви точно хочете видалити умову?",
+        "title": "Видалення умови"
+      },
+      "duplicateModal": {
+        "text": "Ви точно хочете дублювати умову?",
+        "title": "Дублювання умови"
+      },
+      "messages": {
+        "delete": {
+          "error": "Не вдалося видалити умову.",
+          "success": "Ви успішно видалили умову."
+        },
+        "duplicate": {
+          "error": "Не вдалося дублювати умову.",
+          "success": "Ви успішно дублювали умову."
+        }
+      },
+      "title": "Умова"
+    },
+    "databaseOperation": {
+      "deleteModal": {
+        "text": "Ви впевнені, що хочете видалити операцію бази даних?",
+        "title": "Видалення операції бази даних"
+      },
+      "duplicateModal": {
+        "text": "Ви впевнені, що хочете дублювати операцію бази даних?",
+        "title": "Дублювання операції бази даних"
+      },
+      "messages": {
+        "delete": {
+          "error": "Не вдалося видалити операцію бази даних.",
+          "success": "Ви успішно видалили операцію бази даних."
+        },
+        "duplicate": {
+          "error": "Не вдалося дублювати операцію бази даних.",
+          "success": "Ви успішно дублювали операцію бази даних."
+        }
+      },
+      "title": "Операція бази даних"
+    },
+    "invoice": {
+      "deleteModal": {
+        "text": "Ви точно хочете видалити рахунок?",
+        "title": "Видалення рахунку"
+      },
+      "duplicateModal": {
+        "text": "Ви точно хочете дублювати рахунок?",
+        "title": "Дублювання рахунку"
+      },
+      "messages": {
+        "delete": {
+          "error": "Не вдалося видалити рахунок.",
+          "success": "Ви успішно видалили рахунок."
+        },
+        "duplicate": {
+          "error": "Не вдалося дублювати рахунок.",
+          "success": "Ви успішно дублювали рахунок."
+        }
+      },
+      "title": "Рахунок"
+    },
+    "message": {
+      "deleteModal": {
+        "text": "Ви точно хочете видалити повідомлення?",
+        "title": "Видалення повідомлення"
+      },
+      "duplicateModal": {
+        "text": "Ви точно хочете дублювати повідомлення?",
+        "title": "Дублювання повідомлення"
+      },
+      "messages": {
+        "delete": {
+          "error": "Не вдалося видалити повідомлення.",
+          "success": "Ви успішно видалили повідомлення."
+        },
+        "duplicate": {
+          "error": "Не вдалося дублювати повідомлення.",
+          "success": "Ви успішно дублювали повідомлення."
+        }
+      },
+      "title": "Повідомлення"
+    },
+    "randomizer": {
+      "deleteModal": {
+        "text": "Ви точно хочете видалити рандомайзер?",
+        "title": "Видалення рандомайзера"
+      },
+      "duplicateModal": {
+        "text": "Ви точно хочете дублювати рандомайзер?",
+        "title": "Дублювання рандомайзера"
+      },
+      "messages": {
+        "delete": {
+          "error": "Не вдалося видалити рандомайзер.",
+          "success": "Ви успішно видалили рандомайзер."
+        },
+        "duplicate": {
+          "error": "Не вдалося дублювати рандомайзер.",
+          "success": "Ви успішно дублювали рандомайзер."
+        }
+      },
+      "title": "Рандомайзер"
+    },
+    "temporaryVariable": {
+      "deleteModal": {
+        "text": "Ви точно хочете видалити тимчасову змінну?",
+        "title": "Видалення тимчасової змінної"
+      },
+      "duplicateModal": {
+        "text": "Ви точно хочете дублювати тимчасову змінну?",
+        "title": "Дублювання тимчасової змінної"
+      },
+      "messages": {
+        "delete": {
+          "error": "Не вдалося видалити тимчасову змінну.",
+          "success": "Ви успішно видалили тимчасову змінну."
+        },
+        "duplicate": {
+          "error": "Не вдалося дублювати тимчасову змінну.",
+          "success": "Ви успішно дублювали тимчасову змінну."
+        }
+      },
+      "title": "Тимчасова змінна"
+    },
+    "timer": {
+      "deleteModal": {
+        "text": "Ви точно хочете видалити таймер?",
+        "title": "Видалення таймера"
+      },
+      "duplicateModal": {
+        "text": "Ви точно хочете дублювати таймер?",
+        "title": "Дублювання таймера"
+      },
+      "duration": "<bold>Тривалість:</bold> {{value}} сек",
+      "messages": {
+        "delete": {
+          "error": "Не вдалося видалити таймер.",
+          "success": "Ви успішно видалили таймер."
+        },
+        "duplicate": {
+          "error": "Не вдалося дублювати таймер.",
+          "success": "Ви успішно дублювали таймер."
+        }
+      },
+      "title": "Таймер"
+    },
+    "trigger": {
+      "deleteModal": {
+        "text": "Ви точно хочете видалити тригер?",
+        "title": "Видалення тригера"
+      },
+      "duplicateModal": {
+        "text": "Ви точно хочете дублювати тригер?",
+        "title": "Дублювання тригера"
+      },
+      "messages": {
+        "delete": {
+          "error": "Не вдалося видалити тригер.",
+          "success": "Ви успішно видалили тригер."
+        },
+        "duplicate": {
+          "error": "Не вдалося дублювати тригер.",
+          "success": "Ви успішно дублювали тригер."
+        }
+      },
+      "title": "Тригер"
+    }
   },
   "panel": {
     "addBlockButton": "Додати блок"
   },
-  "selectBlockModal": {
-    "title": "Виберіть тип блоку",
-    "blocks": {
-      "trigger": {
-        "name": "Тригер",
-        "description": "Визначає подію, на яку слід реагувати."
+  "randomizerOffcanvas": {
+    "actionButton": "",
+    "actionButton_add": "Додати",
+    "actionButton_edit": "Зберегти",
+    "messages": {
+      "addRandomizer": {
+        "error": "Не вдалося додати рандомайзер.",
+        "success": "Ви успішно додали рандомайзер."
       },
-      "message": {
-        "name": "Повідомлення",
-        "description": "Надсилає повідомлення користувачу."
+      "editRandomizer": {
+        "error": "Не вдалося зберегти рандомайзер.",
+        "success": "Ви успішно зберегли рандомайзер."
       },
-      "condition": {
-        "name": "Умова",
-        "description": "Розгалужує логіку залежно від даних."
-      },
-      "backgroundTask": {
-        "name": "Фонова задача",
-        "description": "Автоматично запускає логику з заданим інтервалом."
-      },
-      "apiRequest": {
-        "name": "API-запит",
-        "description": "Виконує запит до зовнішнього API."
-      },
-      "databaseOperation": {
-        "name": "Операція бази даних",
-        "description": "Додає або оновлює дані в базі даних бота."
-      },
-      "invoice": {
-        "name": "Рахунок",
-        "description": "Надсилає рахунок на оплату."
-      },
-      "temporaryVariable": {
-        "name": "Тимчасова змінна",
-        "description": "Створює тимчасову змінну в ланцюжку логіки."
-      },
-      "randomizer": {
-        "name": "Рандомайзер",
-        "description": "Вивирає випадково одну з наступних гілок логіки."
-      },
-      "timer": {
-        "name": "Таймер",
-        "description": "Затримує виконання подальшої логіки."
+      "getRandomizer": {
+        "error": "Не вдалося отримати дані рандомайзера."
       }
-    }
+    },
+    "title": "",
+    "title_add": "Додавання рандомайзера",
+    "title_edit": "Редагування рандомайзера"
   },
-  "nodes": {
-    "trigger": {
-      "title": "Тригер",
-      "messages": {
-        "duplicate": {
-          "success": "Ви успішно дублювали тригер.",
-          "error": "Не вдалося дублювати тригер."
-        },
-        "delete": {
-          "success": "Ви успішно видалили тригер.",
-          "error": "Не вдалося видалити тригер."
-        }
-      },
-      "duplicateModal": {
-        "title": "Дублювання тригера",
-        "text": "Ви точно хочете дублювати тригер?"
-      },
-      "deleteModal": {
-        "title": "Видалення тригера",
-        "text": "Ви точно хочете видалити тригер?"
-      }
-    },
-    "message": {
-      "title": "Повідомлення",
-      "messages": {
-        "duplicate": {
-          "success": "Ви успішно дублювали повідомлення.",
-          "error": "Не вдалося дублювати повідомлення."
-        },
-        "delete": {
-          "success": "Ви успішно видалили повідомлення.",
-          "error": "Не вдалося видалити повідомлення."
-        }
-      },
-      "duplicateModal": {
-        "title": "Дублювання повідомлення",
-        "text": "Ви точно хочете дублювати повідомлення?"
-      },
-      "deleteModal": {
-        "title": "Видалення повідомлення",
-        "text": "Ви точно хочете видалити повідомлення?"
-      }
-    },
-    "condition": {
-      "title": "Умова",
-      "messages": {
-        "duplicate": {
-          "success": "Ви успішно дублювали умову.",
-          "error": "Не вдалося дублювати умову."
-        },
-        "delete": {
-          "success": "Ви успішно видалили умову.",
-          "error": "Не вдалося видалити умову."
-        }
-      },
-      "duplicateModal": {
-        "title": "Дублювання умови",
-        "text": "Ви точно хочете дублювати умову?"
-      },
-      "deleteModal": {
-        "title": "Видалення умови",
-        "text": "Ви точно хочете видалити умову?"
-      }
+  "selectBlockModal": {
+    "apiRequest": {
+      "description": "Виконує запит до зовнішнього API.",
+      "name": "API-запит"
     },
     "backgroundTask": {
-      "title": "Фонова задача",
-      "messages": {
-        "duplicate": {
-          "success": "Ви успішно дублювали фонову задачу.",
-          "error": "Не вдалося дублювати фонову задачу."
-        },
-        "delete": {
-          "success": "Ви успішно видалили фонову задачу.",
-          "error": "Не вдалося видалити фонову задачу."
-        }
-      },
-      "duplicateModal": {
-        "title": "Дублювання фонової задачі",
-        "text": "Ви точно хочете дублювати фонову задачу?"
-      },
-      "deleteModal": {
-        "title": "Видалення фонової задачі",
-        "text": "Ви точно хочете видалити фонову задачу?"
-      },
-      "interval": "Інтервал"
+      "description": "Автоматично запускає логику з заданим інтервалом.",
+      "name": "Фонова задача"
     },
-    "apiRequest": {
-      "title": "API-запит",
-      "messages": {
-        "duplicate": {
-          "success": "Ви успішно дублювали API-запит.",
-          "error": "Не вдалося дублювати API-запит."
-        },
-        "delete": {
-          "success": "Ви успішно видалили API-запит.",
-          "error": "Не вдалося видалити API-запит."
-        }
-      },
-      "duplicateModal": {
-        "title": "Дублювання API-запиту",
-        "text": "Ви впевнені, що хочете дублювати API-запит?"
-      },
-      "deleteModal": {
-        "title": "Видалення API-запиту",
-        "text": "Ви впевнені, що хочете видалити API-запит?"
-      }
+    "condition": {
+      "description": "Розгалужує логіку залежно від даних.",
+      "name": "Умова"
     },
     "databaseOperation": {
-      "title": "Операція бази даних",
-      "messages": {
-        "duplicate": {
-          "success": "Ви успішно дублювали операцію бази даних.",
-          "error": "Не вдалося дублювати операцію бази даних."
-        },
-        "delete": {
-          "success": "Ви успішно видалили операцію бази даних.",
-          "error": "Не вдалося видалити операцію бази даних."
-        }
-      },
-      "duplicateModal": {
-        "title": "Дублювання операції бази даних",
-        "text": "Ви впевнені, що хочете дублювати операцію бази даних?"
-      },
-      "deleteModal": {
-        "title": "Видалення операції бази даних",
-        "text": "Ви впевнені, що хочете видалити операцію бази даних?"
-      }
+      "description": "Додає або оновлює дані в базі даних бота.",
+      "name": "Операція бази даних"
     },
     "invoice": {
-      "title": "Рахунок",
-      "messages": {
-        "duplicate": {
-          "success": "Ви успішно дублювали рахунок.",
-          "error": "Не вдалося дублювати рахунок."
-        },
-        "delete": {
-          "success": "Ви успішно видалили рахунок.",
-          "error": "Не вдалося видалити рахунок."
-        }
-      },
-      "duplicateModal": {
-        "title": "Дублювання рахунку",
-        "text": "Ви точно хочете дублювати рахунок?"
-      },
-      "deleteModal": {
-        "title": "Видалення рахунку",
-        "text": "Ви точно хочете видалити рахунок?"
-      }
+      "description": "Надсилає рахунок на оплату.",
+      "name": "Рахунок"
     },
-    "temporaryVariable": {
-      "title": "Тимчасова змінна",
-      "messages": {
-        "duplicate": {
-          "success": "Ви успішно дублювали тимчасову змінну.",
-          "error": "Не вдалося дублювати тимчасову змінну."
-        },
-        "delete": {
-          "success": "Ви успішно видалили тимчасову змінну.",
-          "error": "Не вдалося видалити тимчасову змінну."
-        }
-      },
-      "duplicateModal": {
-        "title": "Дублювання тимчасової змінної",
-        "text": "Ви точно хочете дублювати тимчасову змінну?"
-      },
-      "deleteModal": {
-        "title": "Видалення тимчасової змінної",
-        "text": "Ви точно хочете видалити тимчасову змінну?"
-      }
+    "message": {
+      "description": "Надсилає повідомлення користувачу.",
+      "name": "Повідомлення"
     },
     "randomizer": {
-      "title": "Рандомайзер",
-      "messages": {
-        "duplicate": {
-          "success": "Ви успішно дублювали рандомайзер.",
-          "error": "Не вдалося дублювати рандомайзер."
-        },
-        "delete": {
-          "success": "Ви успішно видалили рандомайзер.",
-          "error": "Не вдалося видалити рандомайзер."
-        }
-      },
-      "duplicateModal": {
-        "title": "Дублювання рандомайзера",
-        "text": "Ви точно хочете дублювати рандомайзер?"
-      },
-      "deleteModal": {
-        "title": "Видалення рандомайзера",
-        "text": "Ви точно хочете видалити рандомайзер?"
-      }
+      "description": "Вивирає випадково одну з наступних гілок логіки.",
+      "name": "Рандомайзер"
+    },
+    "temporaryVariable": {
+      "description": "Створює тимчасову змінну в ланцюжку логіки.",
+      "name": "Тимчасова змінна"
     },
     "timer": {
-      "title": "Таймер",
-      "messages": {
-        "duplicate": {
-          "success": "Ви успішно дублювали таймер.",
-          "error": "Не вдалося дублювати таймер."
+      "description": "Затримує виконання подальшої логіки.",
+      "name": "Таймер"
+    },
+    "title": "Виберіть тип блоку",
+    "trigger": {
+      "description": "Визначає подію, на яку слід реагувати.",
+      "name": "Тригер"
+    }
+  },
+  "temporaryVariableOffcanvas": {
+    "actionButton": "",
+    "actionButton_add": "Додати",
+    "actionButton_edit": "Зберегти",
+    "messages": {
+      "addTemporaryVariable": {
+        "error": "Не вдалося додати тимчасову змінну.",
+        "success": "Ви успішно додали тимчасову змінну."
+      },
+      "editTemporaryVariable": {
+        "error": "Не вдалося зберегти тимчасову змінну.",
+        "success": "Ви успішно зберегли тимчасову змінну."
+      },
+      "getTemporaryVariable": {
+        "error": "Не вдалося отримати дані тимчасової змінної."
+      }
+    },
+    "title": "",
+    "title_add": "Додавання змінної",
+    "title_edit": "Редагування змінної",
+    "valueBlock": {
+      "inputPlaceholder": "Введіть значення",
+      "title": "Значення"
+    }
+  },
+  "timerOffcanvas": {
+    "actionButton": "",
+    "actionButton_add": "Додати",
+    "actionButton_edit": "Зберегти",
+    "durationBlock": {
+      "input": {
+        "label": "сек",
+        "placeholder": "Введіть тривалість"
+      },
+      "title": "Тривалість"
+    },
+    "messages": {
+      "addTimer": {
+        "error": "Не вдалося додати таймер.",
+        "success": "Ви успішно додали таймер."
+      },
+      "editTimer": {
+        "error": "Не вдалося зберегти таймер.",
+        "success": "Ви успішно зберегли таймер."
+      },
+      "getTimer": {
+        "error": "Не вдалося отримати дані таймера."
+      }
+    },
+    "title": "",
+    "title_add": "Додавання таймера",
+    "title_edit": "Редагування таймера"
+  },
+  "title": "Конструктор",
+  "triggerOffcanvas": {
+    "actionButton": "",
+    "actionButton_add": "Додати",
+    "actionButton_edit": "Зберегти",
+    "commandBlock": {
+      "commandInputPlaceholder": "Введіть команду",
+      "description": {
+        "hideButton": "Прибрати з меню",
+        "inputPlaceholder": "Введіть опис",
+        "showButton": "Показувати в меню"
+      },
+      "title": "Команда"
+    },
+    "messageBlock": {
+      "messageEditorPlaceholder": "Введіть текст",
+      "title": "Повідомлення"
+    },
+    "messages": {
+      "addTrigger": {
+        "error": "Не вдалося додати тригер.",
+        "success": "Ви успішно додали тригер."
+      },
+      "editTrigger": {
+        "error": "Не вдалося зберегти тригер.",
+        "success": "Ви успішно зберегли тригер."
+      },
+      "getTrigger": {
+        "error": "Не вдалося отримати дані тригера."
+      }
+    },
+    "startCommandBlock": {
+      "description": {
+        "hideButton": "Прибрати з меню",
+        "inputPlaceholder": "Введіть опис",
+        "showButton": "Показувати в меню"
+      },
+      "payload": {
+        "hideButton": "Прибрати навантаження",
+        "inputPlaceholder": "Введіть дані",
+        "showButton": "Додати навантаження"
+      },
+      "title": "Стартова команда"
+    },
+    "title": "",
+    "title_add": "Додавання тригер",
+    "title_edit": "Редагування тригер",
+    "typeBlock": {
+      "title": "Тип",
+      "types": {
+        "anyMessage": "Будь-яке повідомлення",
+        "command": "Команда",
+        "message": "Повідомлення",
+        "startCommand": "Стартова команда",
+        "webhook": "Вебхук"
+      }
+    },
+    "webhookBlock": {
+      "table": {
+        "data": {
+          "header": "Дані:",
+          "text": "Будь-який формат"
         },
-        "delete": {
-          "success": "Ви успішно видалили таймер.",
-          "error": "Не вдалося видалити таймер."
+        "method": {
+          "header": "Метод:"
+        },
+        "url": {
+          "header": "URL-адреса:",
+          "placeholder": "Збережіть цей блок, щоб отримати значення."
         }
       },
-      "duplicateModal": {
-        "title": "Дублювання таймера",
-        "text": "Ви точно хочете дублювати таймер?"
-      },
-      "deleteModal": {
-        "title": "Видалення таймера",
-        "text": "Ви точно хочете видалити таймер?"
-      },
-      "duration": "<bold>Тривалість:</bold> {{value}} сек"
+      "title": "Вебхук"
     }
   }
 }

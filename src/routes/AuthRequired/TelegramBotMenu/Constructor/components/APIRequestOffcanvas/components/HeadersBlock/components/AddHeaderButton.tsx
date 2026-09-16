@@ -7,7 +7,7 @@ import {
   type FormikProps,
 } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Button, { type ButtonProps } from 'components/ui/Button';
 
@@ -25,9 +25,10 @@ function AddHeaderButton({
   onClick,
   ...props
 }: AddHeaderButtonProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'apiRequestOffcanvas.headersBlock.addHeaderButton',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'apiRequestOffcanvas.headersBlock.addHeaderButton' },
+  );
 
   function handleClick(
     form: FormikProps<any>,

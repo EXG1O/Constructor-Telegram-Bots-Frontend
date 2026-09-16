@@ -7,7 +7,7 @@ import {
   useReactFlow,
 } from '@xyflow/react';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
@@ -43,7 +43,9 @@ function BackgroundTaskNode({
   positionAbsoluteY,
   data: task,
 }: BackgroundTaskNodeProps): ReactElement {
-  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor);
+  const { t, i18n } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+  );
 
   const reactFlow = useReactFlow();
 

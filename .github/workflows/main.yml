@@ -29,6 +29,9 @@ jobs:
 
       - name: Run Prettier
         run: npx prettier ./src --check
+
+      - name: Run i18next-cli
+        run: npx i18next-cli extract --ci
   build:
     name: Build
     needs: code-quality

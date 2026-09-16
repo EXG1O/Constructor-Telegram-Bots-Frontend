@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Popover from 'components/ui/Popover';
 import type { PopoverBodyProps } from 'components/ui/Popover/components/PopoverBody';
@@ -17,9 +17,10 @@ export interface FilePopoverBodyProps extends Omit<
 > {}
 
 function FilePopoverBody(props: FilePopoverBodyProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'mediaPopover.filePopoverBody',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'mediaPopover.filePopoverBody' },
+  );
 
   const file = useMediaPopoverStore((state) => state.file!);
 

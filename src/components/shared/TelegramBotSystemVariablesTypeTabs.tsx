@@ -1,8 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import telegramBotSystemVariables, {
-  type TelegramBotSystemVariablesType,
-} from 'constants/telegramBotSystemVariables';
+import type { TelegramBotSystemVariablesType } from 'constants/telegramBotSystemVariables';
 
 import Tabs, { type TabsProps } from 'components/ui/Tabs';
 
@@ -28,11 +26,8 @@ const TelegramBotSystemVariablesTypeTabs = forwardRef<
 
   return (
     <Tabs {...props} ref={ref} value={type} onChange={handleChange}>
-      {Object.keys(telegramBotSystemVariables).map((key) => (
-        <Tabs.Button key={key} value={key}>
-          {t(key)}
-        </Tabs.Button>
-      ))}
+      <Tabs.Button value='personal'>{t('personal')}</Tabs.Button>
+      <Tabs.Button value='global'>{t('global')}</Tabs.Button>
     </Tabs>
   );
 });

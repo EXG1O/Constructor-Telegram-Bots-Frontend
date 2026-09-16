@@ -24,7 +24,7 @@ import {
   useNodesState,
 } from '@xyflow/react';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { iconButtonVariants } from 'components/ui/IconButton';
@@ -135,7 +135,9 @@ const diagramBlockAPIUpdateCallMap: Record<
 };
 
 function Constructor(): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor);
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+  );
 
   const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 

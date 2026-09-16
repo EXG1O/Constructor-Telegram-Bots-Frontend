@@ -1,9 +1,9 @@
 {
-  "title": "Authorization",
   "messages": {
     "userLogin": {
-      "success": "You have successfully logged in.",
-      "error": "Authorization failed. Please try again."
+      "error": "Authorization failed. Please try again.",
+      "success": "You have successfully logged in."
     }
-  }
+  },
+  "title": "Authorization"
 }

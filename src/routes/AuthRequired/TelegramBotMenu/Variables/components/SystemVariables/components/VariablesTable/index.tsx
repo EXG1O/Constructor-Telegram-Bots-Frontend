@@ -4,7 +4,7 @@ import telegramBotSystemVariables, {
   type TelegramBotSystemVariablesType,
 } from 'constants/telegramBotSystemVariables';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Clipboard from 'components/ui/Clipboard';
 import Table, { type TableProps } from 'components/ui/Table';
@@ -32,18 +32,18 @@ function VariablesTable({
   className,
   ...props
 }: VariablesTableProps): ReactElement {
-  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuVariables, {
-    keyPrefix: 'system.variables',
-  });
+  const { i18n } = useTranslation<`${RouteID.TelegramBotMenuVariables}`, any>(
+    'telegram-bot-menu-variables',
+    { keyPrefix: 'system.variables' },
+  );
 
   const variables = useMemo<Variables>(
     () =>
       Object.keys(telegramBotSystemVariables).reduce<Variables>((acc, value) => {
         const type = value as TelegramBotSystemVariablesType;
-        acc[type] = telegramBotSystemVariables[type].map((variable) => ({
-          name: variable,
-          description: t(`${type}.${variable}`),
-        }));
+        acc[type] = telegramBotSystemVariables[type].map(
+          ({ name, getDescription }) => ({ name, description: getDescription() }),
+        );
         return acc;
       }, {} as Variables),
     [i18n.language],

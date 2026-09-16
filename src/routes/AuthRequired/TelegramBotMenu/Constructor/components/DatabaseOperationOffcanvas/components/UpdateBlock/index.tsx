@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import FormCheckFeedback from 'components/shared/FormCheckFeedback';
 import FormCodeInputFeedback from 'components/shared/FormCodeInputFeedback';
@@ -15,9 +15,10 @@ import cn from 'utils/cn';
 export interface UpdateBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function UpdateBlock({ className, ...props }: UpdateBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'databaseOperationOffcanvas.updateBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'databaseOperationOffcanvas.updateBlock' },
+  );
 
   return (
     <Block

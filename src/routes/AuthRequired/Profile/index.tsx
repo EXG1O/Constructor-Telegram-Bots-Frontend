@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Page from 'components/ui/Page';
 
@@ -10,7 +10,7 @@ import RefreshTokensBlock from './components/RefreshTokensBlock';
 import UserDataBlock from './components/UserDataBlock';
 
 function Profile(): ReactElement {
-  const { t } = useTranslation(RouteID.Profile);
+  const { t } = useTranslation<`${RouteID.Profile}`, any>('profile');
 
   return (
     <Page title={t('title')} flex gutters className='flex-auto'>

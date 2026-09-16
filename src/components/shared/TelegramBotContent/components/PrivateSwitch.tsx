@@ -40,14 +40,14 @@ function PrivateSwitch(props: PrivateSwitchProps): ReactElement {
       setTelegramBot(response.json);
       createMessageToast({
         message: t('messages.updateTelegramBotPrivate.success', {
-          context: String(response.json.is_private),
+          context: response.json.is_private ? 'true' : 'false',
         }),
         level: 'success',
       });
     } else {
       createMessageToast({
         message: t('messages.updateTelegramBotPrivate.error', {
-          context: String(event.target.checked),
+          context: event.target.checked ? 'true' : 'false',
         }),
         level: 'error',
       });

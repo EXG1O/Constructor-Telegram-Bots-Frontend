@@ -1,48 +1,48 @@
 {
-  "title": "Profile",
-  "userDataBlock": {
-    "title": "Account data",
-    "table": {
-      "headers": {
-        "firstName": "First name:",
-        "lastName": "Last name:",
-        "joinedDate": "Joined:"
-      }
+  "actionButtonGroup": {
+    "deleteButton": "Delete account",
+    "deleteModal": {
+      "messages": {
+        "delete": {
+          "error": "Failed to delete your account.",
+          "success": "You have successfully deleted your account."
+        }
+      },
+      "text": "Are you sure you want to delete your account?",
+      "title": "Deleting the account"
+    },
+    "logoutAllButton": "Log out from all devices",
+    "logoutAllModal": {
+      "messages": {
+        "logoutAll": {
+          "error": "Failed to log out from all devices.",
+          "success": "You have successfully logged out from all devices."
+        }
+      },
+      "text": "Are you sure you want to log out from all devices?",
+      "title": "Logging out from all devices"
     }
   },
   "refreshTokensBlock": {
-    "title": "Refresh tokens",
     "helpText": "Each time you log in, a refresh token is created, which is then used to generate short-lived access tokens.",
     "table": {
       "headers": {
         "blacklistedDate": "Blacklisted",
-        "expiryDate": "Expires",
-        "createdDate": "Created"
+        "createdDate": "Created",
+        "expiryDate": "Expires"
       }
-    }
+    },
+    "title": "Refresh tokens"
   },
-  "actionButtonGroup": {
-    "logoutAllModal": {
-      "messages": {
-        "logoutAll": {
-          "success": "You have successfully logged out from all devices.",
-          "error": "Failed to log out from all devices."
-        }
-      },
-      "title": "Logging out from all devices",
-      "text": "Are you sure you want to log out from all devices?"
+  "title": "Profile",
+  "userDataBlock": {
+    "table": {
+      "headers": {
+        "firstName": "First name:",
+        "joinedDate": "Joined:",
+        "lastName": "Last name:"
+      }
     },
-    "deleteModal": {
-      "messages": {
-        "delete": {
-          "success": "You have successfully deleted your account.",
-          "error": "Failed to delete your account."
-        }
-      },
-      "title": "Deleting the account",
-      "text": "Are you sure you want to delete your account?"
-    },
-    "logoutAllButton": "Log out from all devices",
-    "deleteButton": "Delete account"
+    "title": "Account data"
   }
 }

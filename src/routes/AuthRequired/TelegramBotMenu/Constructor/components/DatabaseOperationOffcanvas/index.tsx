@@ -2,7 +2,7 @@ import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { defaultCreateBlockFormValues } from './components/CreateBlock/defaults';
@@ -51,9 +51,10 @@ export interface DatabaseOperationOffcanvasProps extends OffcanvasInnerProps {}
 function DatabaseOperationOffcanvas(
   props: DatabaseOperationOffcanvasProps,
 ): ReactElement {
-  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'databaseOperationOffcanvas',
-  });
+  const { t, i18n } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'databaseOperationOffcanvas' },
+  );
 
   const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 

@@ -2,7 +2,7 @@ import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Formik, type FormikHelpers } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
@@ -28,9 +28,10 @@ export interface VariableModalProps extends ModalInnerProps {
 export const defaultFormValues: FormValues = { name: '', value: '', description: '' };
 
 function VariableModal({ onAdd, onSave, ...props }: VariableModalProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
-    keyPrefix: 'user.variableModal',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuVariables}`, any>(
+    'telegram-bot-menu-variables',
+    { keyPrefix: 'user.variableModal' },
+  );
 
   const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
@@ -52,7 +53,11 @@ function VariableModal({ onAdd, onSave, ...props }: VariableModalProps): ReactEl
         setFieldError(error.attr, error.detail);
       }
       createMessageToast({
-        message: t(`messages.${action}Variable.error`),
+        message: t(
+          action === 'edit'
+            ? 'messages.editVariable.error'
+            : 'messages.addVariable.error',
+        ),
         level: 'error',
       });
       return;
@@ -61,7 +66,11 @@ function VariableModal({ onAdd, onSave, ...props }: VariableModalProps): ReactEl
     (variableID ? onSave : onAdd)?.(response.json);
     hideModal();
     createMessageToast({
-      message: t(`messages.${action}Variable.success`),
+      message: t(
+        action === 'edit'
+          ? 'messages.editVariable.success'
+          : 'messages.addVariable.success',
+      ),
       level: 'success',
     });
   }

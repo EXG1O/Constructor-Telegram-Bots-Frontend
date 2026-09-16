@@ -23,10 +23,10 @@ function SystemVariables({ className, ...props }: SystemVariablesProps): ReactEl
       <TelegramBotSystemVariablesTypeTabs size='sm' type={type} onChange={setType} />
       <List size='sm' striped>
         <ul className='w-full overflow-hidden rounded-sm text-sm'>
-          {telegramBotSystemVariables[type].map((variable) => (
-            <List.Item key={variable} className='flex gap-1'>
-              <span className='flex-auto'>{variable}</span>
-              <SelectButton variable={['SYSTEM', variable].join('.')} />
+          {telegramBotSystemVariables[type].map(({ name }) => (
+            <List.Item key={name} className='flex gap-1'>
+              <span className='flex-auto'>{name}</span>
+              <SelectButton variable={['SYSTEM', name].join('.')} />
             </List.Item>
           ))}
         </ul>

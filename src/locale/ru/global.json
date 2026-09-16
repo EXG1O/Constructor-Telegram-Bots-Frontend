@@ -1,10 +1,41 @@
 {
-  "seo": {
-    "description": "Платформа, которая позволяет легко создать собственного многофункционального Telegram бота без программирования."
-  },
   "messages": {
     "loader": {
       "error": "Не удалось получить нужные данные от сервера по неизвестной причине."
+    }
+  },
+  "seo": {
+    "description": "Платформа, которая позволяет легко создать собственного многофункционального Telegram бота без программирования."
+  },
+  "telegramBotSystemVariables": {
+    "global": {
+      "BOT_FULL_NAME": "Полное название бота",
+      "BOT_ID": "ID бота",
+      "BOT_LINK": "Ссылка на бота",
+      "BOT_NAME": "Название бота",
+      "BOT_USERNAME": "@username бота"
+    },
+    "personal": {
+      "CHAT_FULL_NAME": "Полное название чата",
+      "CHAT_ID": "ID чата",
+      "CHAT_LINK": "Ссылка на чат",
+      "CHAT_NAME": "Название чата",
+      "CHAT_TYPE": "Тип чата",
+      "CHAT_USERNAME": "@username чата",
+      "USER_FIRST_NAME": "Имя пользователя",
+      "USER_FULL_NAME": "Имя и фамилия пользователя",
+      "USER_ID": "ID пользователя",
+      "USER_IS_BOT": "Является ли пользователь ботом",
+      "USER_IS_PREMIUM": "Есть ли у пользователя Telegram Premium",
+      "USER_LANGUAGE_CODE": "Языковой тег пользователя",
+      "USER_LAST_NAME": "Фамилия пользователя",
+      "USER_LINK": "Ссылка на пользователя",
+      "USER_MESSAGE_DATE": "Дата отправки сообщения пользователя",
+      "USER_MESSAGE_ID": "ID сообщения пользователя",
+      "USER_MESSAGE_LINK": "Ссылка на сообщение пользователя",
+      "USER_MESSAGE_TEXT": "Текст сообщения пользователя",
+      "USER_NAME": "Название пользователя",
+      "USER_USERNAME": "@username пользователя"
     }
   }
 }

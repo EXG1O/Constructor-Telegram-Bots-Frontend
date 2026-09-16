@@ -2,13 +2,17 @@ import i18n from 'i18n';
 import type { TOptions } from 'i18next';
 import { create } from 'zustand';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { VariablesAPI } from 'api/telegram-bots/variable';
 import type { Variable } from 'api/telegram-bots/variable/types';
+
+interface StrictTOptions extends TOptions {
+  ns: `${RouteID.TelegramBotMenuVariables}`;
+}
 
 export interface StateParams {
   loading: boolean;
@@ -38,8 +42,6 @@ export type InitialProps = Pick<
   'count' | 'limit' | 'offset' | 'variables'
 >;
 export type InitialState = Omit<StateParams, keyof InitialProps>;
-
-const langOptions: TOptions = { ns: RouteID.TelegramBotMenuVariables };
 
 export function createStore(initialProps: InitialProps) {
   const initialState: InitialState = {
@@ -74,7 +76,10 @@ export function createStore(initialProps: InitialProps) {
 
       if (!response.ok) {
         createMessageToast({
-          message: i18n.t('user.messages.getVariables.error', langOptions),
+          message: i18n.t<string, StrictTOptions, string, StrictTOptions>(
+            'user.messages.getVariables.error',
+            { ns: 'telegram-bot-menu-variables' },
+          ),
           level: 'error',
         });
         set({ loading: false });

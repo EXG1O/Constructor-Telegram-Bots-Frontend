@@ -2,16 +2,17 @@ import React, { memo, type ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import FormCodeInputFeedback from 'components/shared/FormCodeInputFeedback';
 import Button from 'components/ui/Button';
 import Modal from 'components/ui/Modal';
 
 function ModalContent(): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
-    keyPrefix: 'records.recordAdditionModal',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuDatabase}`, any>(
+    'telegram-bot-menu-database',
+    { keyPrefix: 'records.recordAdditionModal' },
+  );
 
   const formID = useId();
 

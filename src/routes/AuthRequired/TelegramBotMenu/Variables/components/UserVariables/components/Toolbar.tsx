@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import PlusButton from 'components/shared/PlusButton';
 import SearchInput from 'components/shared/SearchInput';
@@ -12,9 +12,10 @@ import { useVariableModalStore } from './VariableModal/store';
 import useUserVariablesStore from '../hooks/useUserVariablesStore';
 
 function Toolbar(): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
-    keyPrefix: 'user.toolbar',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuVariables}`, any>(
+    'telegram-bot-menu-variables',
+    { keyPrefix: 'user.toolbar' },
+  );
 
   const showVariableModal = useVariableModalStore((state) => state.showModal);
 

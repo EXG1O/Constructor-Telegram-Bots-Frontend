@@ -2,7 +2,7 @@ import React, { memo, type ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Button from 'components/ui/Button';
 import Offcanvas from 'components/ui/Offcanvas';
@@ -19,9 +19,10 @@ import { useAPIRequestOffcanvasStore } from '../store';
 import { getBodyBlockOpen } from '../utils';
 
 function OffcanvasContent(): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'apiRequestOffcanvas',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'apiRequestOffcanvas' },
+  );
 
   const action = useAPIRequestOffcanvasStore((state) => state.action);
 
@@ -45,7 +46,7 @@ function OffcanvasContent(): ReactElement {
       </Offcanvas.Body>
       <Offcanvas.Footer className='flex flex-col gap-2'>
         <Button form={formID} type='submit' variant='success' className='w-full'>
-          {t('actionButton', { context: action })}
+          {t('actionButton', { context: action === 'edit' ? 'edit' : 'add' })}
         </Button>
       </Offcanvas.Footer>
     </>

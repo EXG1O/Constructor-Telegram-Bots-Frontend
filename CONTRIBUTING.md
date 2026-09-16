@@ -87,7 +87,13 @@ npx prettier ./src --check && npx eslint ./src
 
 ## Translations
 
-To improve existing translations, you can find all locale files in the `src/locale` directory.
+We use **i18next-cli** for managing translations. To improve existing translations or add a new language:
+
+```bash
+npx i18next-cli extract --with-types
+```
+
+All locale files are located in the `src/locale` directory.
 
 ## Pull Requests
 

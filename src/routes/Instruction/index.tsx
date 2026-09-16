@@ -1,7 +1,7 @@
 import React, { type ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Page from 'components/ui/Page';
 import Spinner from 'components/ui/Spinner';
@@ -15,7 +15,7 @@ import { SectionsAPI } from 'api/instruction';
 import type { Section } from 'api/instruction/types';
 
 function Instruction(): ReactElement {
-  const { t, i18n } = useTranslation(RouteID.Instruction);
+  const { t, i18n } = useTranslation<`${RouteID.Instruction}`, any>('instruction');
 
   const { sections: initialSections } = useInstructionRouteLoaderData();
 

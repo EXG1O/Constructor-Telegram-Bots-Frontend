@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import Block, { type BlockProps } from 'components/ui/Block';
@@ -14,9 +14,10 @@ import cn from 'utils/cn';
 export interface CommandBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function CommandBlock({ className, ...props }: CommandBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'triggerOffcanvas.commandBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'triggerOffcanvas.commandBlock' },
+  );
 
   return (
     <Block

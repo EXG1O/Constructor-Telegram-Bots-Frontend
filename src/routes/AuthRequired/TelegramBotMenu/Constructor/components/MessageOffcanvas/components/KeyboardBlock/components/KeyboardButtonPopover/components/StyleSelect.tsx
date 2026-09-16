@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Select, { type SelectProps } from 'components/ui/Select';
 
@@ -20,9 +20,10 @@ const styles: Style[] = ['default', 'primary', 'success', 'danger'];
 export const defaultStyle: Style = 'default';
 
 function StyleSelect(props: StyleSelectProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas.keyboardBlock.keyboardButtonPopover.styleSelect',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'messageOffcanvas.keyboardBlock.keyboardButtonPopover.styleSelect' },
+  );
 
   const style = useKeyboardButtonPopoverStore((state) => state.style);
   const setStyle = useKeyboardButtonPopoverStore((state) => state.setStyle);

@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Button from 'components/ui/Button';
 import Collapsible, { type CollapsibleProps } from 'components/ui/Collapsible';
@@ -20,9 +20,13 @@ function ToggleSection({
   children,
   ...props
 }: ToggleSectionProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas.keyboardBlock.keyboardButtonPopover.urlInputCollapse',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    {
+      keyPrefix:
+        'messageOffcanvas.keyboardBlock.keyboardButtonPopover.urlInputCollapse',
+    },
+  );
 
   const show = useKeyboardButtonPopoverStore((state) => state.showURLInput);
   const setShow = useKeyboardButtonPopoverStore((state) => state.setShowURLInput);

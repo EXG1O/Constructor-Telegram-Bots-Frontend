@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useMatches, useNavigate } from 'react-router-dom';
 import Language from 'enums/language';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Button from 'components/ui/Button';
 import Dropdown, { type DropdownProps } from 'components/ui/Dropdown';
@@ -15,7 +15,7 @@ import reverse from 'utils/reverse';
 export interface LanguagesDropdownProps extends Omit<DropdownProps, 'children'> {}
 
 function LanguagesDropdown(props: LanguagesDropdownProps): ReactElement {
-  const { t, i18n } = useTranslation(RouteID.Root, {
+  const { t, i18n } = useTranslation<`${RouteID.Root}`, any>('root', {
     keyPrefix: 'header.languagesDropdown',
   });
 

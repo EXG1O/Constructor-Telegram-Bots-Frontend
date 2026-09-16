@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import TelegramSimpleInputLayout from 'components/shared/TelegramSimpleInputLayout';
@@ -12,9 +12,10 @@ import cn from 'utils/cn';
 export interface TitleBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function TitleBlock({ className, ...props }: TitleBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'invoiceOffcanvas.titleBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'invoiceOffcanvas.titleBlock' },
+  );
 
   return (
     <Block

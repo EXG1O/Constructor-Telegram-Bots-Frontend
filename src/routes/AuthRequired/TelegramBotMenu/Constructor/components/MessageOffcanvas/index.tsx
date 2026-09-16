@@ -2,7 +2,7 @@ import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
@@ -60,9 +60,10 @@ export const defaultFormValues: FormValues = {
 export interface MessageOffcanvasProps extends OffcanvasInnerProps {}
 
 function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
-  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas',
-  });
+  const { t, i18n } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'messageOffcanvas' },
+  );
 
   const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
   const setTelegramBot = useTelegramBotStore((state) => state.setTelegramBot);

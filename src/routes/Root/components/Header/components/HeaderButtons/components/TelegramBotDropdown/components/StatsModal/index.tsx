@@ -1,7 +1,7 @@
 import React, { lazy, type ReactElement, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import Modal, { type ModalProps } from 'components/ui/Modal';
@@ -16,7 +16,7 @@ const ChartBlock = lazy(() => import('./components/ChartBlock'));
 export interface StatsModalProps extends Omit<ModalProps, 'children'> {}
 
 function StatsModal(props: StatsModalProps): ReactElement {
-  const { t } = useTranslation(RouteID.Root, {
+  const { t } = useTranslation<`${RouteID.Root}`, any>('root', {
     keyPrefix: 'header.telegramBotDropdown.statsModal',
   });
 

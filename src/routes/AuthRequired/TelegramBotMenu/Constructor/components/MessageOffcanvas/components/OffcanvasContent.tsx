@@ -2,7 +2,7 @@ import React, { memo, type ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, type FormikProps } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import StorageProgressBar from 'components/shared/StorageProgressBar';
@@ -24,9 +24,10 @@ import type { FormValues } from '..';
 import { useMessageOffcanvasStore } from '../store';
 
 function OffcanvasContent(): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'messageOffcanvas' },
+  );
 
   const storageSize = useTelegramBotStore((state) => state.telegramBot!.storage_size);
 
@@ -98,7 +99,7 @@ function OffcanvasContent(): ReactElement {
           </AddonButtonGroup.Button>
         </AddonButtonGroup>
         <Button form={formID} type='submit' variant='success' className='w-full'>
-          {t('actionButton', { context: action })}
+          {t('actionButton', { context: action === 'edit' ? 'edit' : 'add' })}
         </Button>
       </Offcanvas.Footer>
     </>

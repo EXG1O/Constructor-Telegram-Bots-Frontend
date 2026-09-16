@@ -2,7 +2,7 @@ import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import formatDate from 'i18n/formatDate';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import useRootRouteLoaderData from 'routes/Root/hooks/useRootRouteLoaderData';
 
 import Block, { type BlockProps } from 'components/ui/Block';
@@ -16,7 +16,9 @@ export interface UserDataBlockProps extends Omit<
 > {}
 
 function UserDataBlock({ className, ...props }: UserDataBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.Profile, { keyPrefix: 'userDataBlock' });
+  const { t } = useTranslation<`${RouteID.Profile}`, any>('profile', {
+    keyPrefix: 'userDataBlock',
+  });
 
   const user = useRootRouteLoaderData().user!;
 

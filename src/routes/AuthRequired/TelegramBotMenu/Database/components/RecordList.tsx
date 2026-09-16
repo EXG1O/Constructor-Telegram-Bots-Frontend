@@ -1,7 +1,7 @@
 import React, { type HTMLAttributes, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import List from 'components/ui/List';
 import Spinner from 'components/ui/Spinner';
@@ -18,9 +18,10 @@ export interface RecordListProps extends Omit<
 > {}
 
 function RecordList({ className, ...props }: RecordListProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
-    keyPrefix: 'records.list',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuDatabase}`, any>(
+    'telegram-bot-menu-database',
+    { keyPrefix: 'records.list' },
+  );
 
   const loading = useDatabaseRecordsStore((state) => state.loading);
   const search = useDatabaseRecordsStore((state) => state.search);

@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Modal, { type ModalProps } from 'components/ui/Modal';
 
@@ -21,9 +21,10 @@ import { useTriggerOffcanvasStore } from '../TriggerOffcanvas/store';
 export interface SelectBlockModalProps extends ModalProps {}
 
 function SelectBlockModal({ children, ...props }: SelectBlockModalProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'selectBlockModal',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'selectBlockModal' },
+  );
 
   const showAddTriggerOffcanvas = useTriggerOffcanvasStore(
     (state) => state.showOffcanvas,
@@ -62,32 +63,54 @@ function SelectBlockModal({ children, ...props }: SelectBlockModalProps): ReactE
           <Modal.Title>{t('title')}</Modal.Title>
         </Modal.Header>
         <Modal.Body className='grid grid-cols-2 gap-2'>
-          <BlockButton blockName='trigger' onClick={() => showAddTriggerOffcanvas()} />
           <BlockButton
-            blockName='condition'
+            name={t('trigger.name')}
+            description={t('trigger.description')}
+            onClick={() => showAddTriggerOffcanvas()}
+          />
+          <BlockButton
+            name={t('condition.name')}
+            description={t('condition.description')}
             onClick={() => showAddConditionOffcanvas()}
           />
-          <BlockButton blockName='message' onClick={() => showAddMessageOffcanvas()} />
-          <BlockButton blockName='invoice' onClick={() => showAddInvoiceOffcanvas()} />
           <BlockButton
-            blockName='apiRequest'
+            name={t('message.name')}
+            description={t('message.description')}
+            onClick={() => showAddMessageOffcanvas()}
+          />
+          <BlockButton
+            name={t('invoice.name')}
+            description={t('invoice.description')}
+            onClick={() => showAddInvoiceOffcanvas()}
+          />
+          <BlockButton
+            name={t('apiRequest.name')}
+            description={t('apiRequest.description')}
             onClick={() => showAddAPIRequestOffcanvas()}
           />
           <BlockButton
-            blockName='backgroundTask'
+            name={t('backgroundTask.name')}
+            description={t('backgroundTask.description')}
             onClick={() => showAddBackgroundTaskOffcanvas()}
           />
           <BlockButton
-            blockName='databaseOperation'
+            name={t('databaseOperation.name')}
+            description={t('databaseOperation.description')}
             onClick={() => showAddDatabaseOperationOffcanvas()}
           />
           <BlockButton
-            blockName='temporaryVariable'
+            name={t('temporaryVariable.name')}
+            description={t('temporaryVariable.description')}
             onClick={() => showAddTemporaryVariableOffcanvas()}
           />
-          <BlockButton blockName='timer' onClick={() => showAddTimerOffcanvas()} />
           <BlockButton
-            blockName='randomizer'
+            name={t('timer.name')}
+            description={t('timer.description')}
+            onClick={() => showAddTimerOffcanvas()}
+          />
+          <BlockButton
+            name={t('randomizer.name')}
+            description={t('randomizer.description')}
             onClick={() => showAddRandomizerOffcanvas()}
           />
         </Modal.Body>

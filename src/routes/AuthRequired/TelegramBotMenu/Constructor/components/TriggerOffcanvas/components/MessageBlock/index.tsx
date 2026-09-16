@@ -1,7 +1,7 @@
 import React, { lazy, type ReactElement, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import Block, { type BlockProps } from 'components/ui/Block';
@@ -18,9 +18,10 @@ const ToolbarVariablesButton = lazy(
 export interface MessageBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function MessageBlock({ className, ...props }: MessageBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'triggerOffcanvas.messageBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'triggerOffcanvas.messageBlock' },
+  );
 
   return (
     <Block

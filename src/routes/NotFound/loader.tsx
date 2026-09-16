@@ -8,16 +8,19 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import reverse from 'utils/reverse';
 
+interface StrictTOptions extends TOptions {
+  ns: `${RouteID.NotFound}`;
+}
+
 export type LoaderData = Response;
 
-const langNamespace: string = 'not-found';
-const langOptions: TOptions = { ns: langNamespace };
-
 async function loader(): Promise<LoaderData> {
-  await i18n.loadNamespaces(langNamespace);
+  await i18n.loadNamespaces(RouteID.NotFound);
 
   createMessageToast({
-    message: i18n.t('text', langOptions),
+    message: i18n.t<string, StrictTOptions, string, StrictTOptions>('text', {
+      ns: 'not-found',
+    }),
     level: 'error',
   });
 

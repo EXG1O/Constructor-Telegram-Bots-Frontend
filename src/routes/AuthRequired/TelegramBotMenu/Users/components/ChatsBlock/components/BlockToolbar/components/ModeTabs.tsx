@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import Tabs, { type TabsProps } from 'components/ui/Tabs';
@@ -16,9 +16,10 @@ export interface ModeTabsProps extends Omit<
 > {}
 
 function ModeTabs(props: ModeTabsProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuUsers, {
-    keyPrefix: 'chatsBlock.toolbar.modeTabs',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuUsers}`, any>(
+    'telegram-bot-menu-users',
+    { keyPrefix: 'chatsBlock.toolbar.modeTabs' },
+  );
 
   const botIsPrivate = useTelegramBotStore((state) => state.telegramBot!.is_private);
 

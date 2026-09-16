@@ -1,98 +1,69 @@
 {
-  "title": "Variables",
   "system": {
-    "title": "System variables",
-    "variables": {
-      "personal": {
-        "CHAT_ID": "Chat ID",
-        "CHAT_TYPE": "Chat type",
-        "CHAT_NAME": "Chat name",
-        "CHAT_USERNAME": "Chat @username",
-        "CHAT_FULL_NAME": "Chat full name",
-        "CHAT_LINK": "Chat link",
-        "USER_ID": "User ID",
-        "USER_IS_BOT": "Is the user a bot",
-        "USER_IS_PREMIUM": "Does the user have Telegram Premium",
-        "USER_NAME": "User name",
-        "USER_USERNAME": "User @username",
-        "USER_FIRST_NAME": "User first name",
-        "USER_LAST_NAME": "User last name",
-        "USER_FULL_NAME": "User full name",
-        "USER_LANGUAGE_CODE": "User language tag",
-        "USER_LINK": "User link",
-        "USER_MESSAGE_ID": "User message ID",
-        "USER_MESSAGE_TEXT": "User message text",
-        "USER_MESSAGE_DATE": "User message sent date",
-        "USER_MESSAGE_LINK": "User message link"
-      },
-      "global": {
-        "BOT_ID": "Bot ID",
-        "BOT_NAME": "Bot name",
-        "BOT_USERNAME": "Bot @username",
-        "BOT_FULL_NAME": "Bot full name",
-        "BOT_LINK": "Bot link"
-      }
-    }
+    "title": "System variables"
   },
+  "title": "Variables",
   "user": {
-    "title": "User variables",
+    "footer": {
+      "variableCount_one": "{{count}} variable",
+      "variableCount_other": "{{count}} variables"
+    },
     "messages": {
       "getVariables": {
         "error": "Failed to retrieve the list of variables."
-      },
-      "getVariable": {
-        "error": "Failed to retrieve the variable data."
       }
     },
+    "table": {
+      "placeholders": {
+        "notAdded": "No variables have been added yet",
+        "notFound": "No variables found"
+      },
+      "row": {
+        "deleteModal": {
+          "text": "Are you sure you want to delete the variable?",
+          "title": "Deleting the variable"
+        },
+        "messages": {
+          "deleteVariable": {
+            "error": "Failed to delete the variable.",
+            "success": "You have successfully deleted the variable."
+          }
+        }
+      }
+    },
+    "title": "User variables",
+    "toolbar": {
+      "addVariableButton": "Add variable"
+    },
     "variableModal": {
-      "title_add": "Adding a variable",
-      "title_edit": "Editing the variable",
+      "actionButton": "actionButton",
+      "actionButton_add": "Add",
+      "actionButton_edit": "Save",
+      "descriptionInput": {
+        "placeholder": "Enter description"
+      },
       "messages": {
         "addVariable": {
-          "success": "You have successfully added the variable.",
-          "error": "Failed to add the variable."
+          "error": "Failed to add the variable.",
+          "success": "You have successfully added the variable."
         },
         "editVariable": {
-          "success": "You have successfully saved the variable.",
-          "error": "Failed to save the variable."
+          "error": "Failed to save the variable.",
+          "success": "You have successfully saved the variable."
+        },
+        "getVariable": {
+          "error": "Failed to retrieve the variable data."
         }
       },
       "nameInput": {
         "placeholder": "Come up with a name"
       },
+      "title": "title",
+      "title_add": "Adding a variable",
+      "title_edit": "Editing the variable",
       "valueInput": {
         "placeholder": "Enter value"
-      },
-      "descriptionInput": {
-        "placeholder": "Enter description"
-      },
-      "actionButton_add": "Add",
-      "actionButton_edit": "Save"
-    },
-    "toolbar": {
-      "addVariableButton": "Add variable"
-    },
-    "table": {
-      "placeholders": {
-        "notFound": "No variables found",
-        "notAdded": "No variables have been added yet"
-      },
-      "row": {
-        "messages": {
-          "deleteVariable": {
-            "success": "You have successfully deleted the variable.",
-            "error": "Failed to delete the variable."
-          }
-        },
-        "deleteModal": {
-          "title": "Deleting the variable",
-          "text": "Are you sure you want to delete the variable?"
-        }
       }
-    },
-    "footer": {
-      "variableCount_one": "{{count}} variable",
-      "variableCount_other": "{{count}} variables"
     }
   }
 }

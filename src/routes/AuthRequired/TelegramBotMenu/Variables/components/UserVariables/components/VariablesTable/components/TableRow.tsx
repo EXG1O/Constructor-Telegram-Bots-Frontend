@@ -2,7 +2,7 @@ import React, { type HTMLAttributes, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SquarePen, Trash2 } from 'lucide-react';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
@@ -28,9 +28,10 @@ export interface TableRowProps extends Omit<
 }
 
 function TableRow({ variable, className, ...props }: TableRowProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
-    keyPrefix: 'user.table.row',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuVariables}`, any>(
+    'telegram-bot-menu-variables',
+    { keyPrefix: 'user.table.row' },
+  );
 
   const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 

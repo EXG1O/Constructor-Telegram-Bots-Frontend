@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Spinner from 'components/ui/Spinner';
 import Table, { type TableProps } from 'components/ui/Table';
@@ -18,9 +18,10 @@ function BlockTable({
   className,
   ...props
 }: BlockTableProps): ReactElement<BlockTableProps> {
-  const { t } = useTranslation(RouteID.TelegramBotMenuUsers, {
-    keyPrefix: 'chatsBlock.table',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuUsers}`, any>(
+    'telegram-bot-menu-users',
+    { keyPrefix: 'chatsBlock.table' },
+  );
 
   const search = useChatsBlockStore((state) => state.search);
   const mode = useChatsBlockStore((state) => state.mode);

@@ -1,21 +1,217 @@
 {
-  "title": "Constructor",
-  "messages": {
-    "validation": {
-      "invalidJSON": "Please enter the data in JSON format."
+  "addonButtonGroup": {
+    "hideButton": "Hide addons",
+    "showButton": "Show addons"
+  },
+  "apiRequestOffcanvas": {
+    "actionButton": "actionButton",
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save",
+    "bodyBlock": {
+      "title": "Body"
     },
-    "createConnection": {
-      "error": "Failed to connect one block to another."
+    "headersBlock": {
+      "addHeaderButton": {
+        "text": "Add Header"
+      },
+      "keyInput": {
+        "placeholder": "Key"
+      },
+      "title": "Headers",
+      "valueInput": {
+        "placeholder": "Value"
+      }
     },
-    "deleteConnection": {
-      "error": "Failed to disconnect one block from another."
+    "messages": {
+      "addAPIRequest": {
+        "error": "Failed to add API request.",
+        "success": "You have successfully added an API request."
+      },
+      "editAPIRequest": {
+        "error": "Failed to save the API request.",
+        "success": "You have successfully saved the API request."
+      },
+      "getAPIRequest": {
+        "error": "Failed to get API request data."
+      }
+    },
+    "methodBlock": {
+      "title": "Method"
+    },
+    "title": "title",
+    "title_add": "Adding a API request",
+    "title_edit": "Editing the API request",
+    "urlBlock": {
+      "title": "URL",
+      "urlInput": {
+        "placeholder": "Enter URL"
+      }
     }
   },
-  "nameBlock": {
-    "title": "Name",
-    "inputPlaceholder": "Come up with a name"
+  "backgroundTaskOffcanvas": {
+    "actionButton": "actionButton",
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save",
+    "intervalBlock": {
+      "select": {
+        "1": "1 day",
+        "3": "3 days",
+        "7": "7 days",
+        "14": "14 days",
+        "28": "28 days"
+      },
+      "title": "Interval"
+    },
+    "messages": {
+      "addBackgroundTask": {
+        "error": "Failed to add background task.",
+        "success": "You have successfully added a background task."
+      },
+      "editBackgroundTask": {
+        "error": "Failed to save the background task.",
+        "success": "You have successfully saved the background task."
+      },
+      "getBackgroundTask": {
+        "error": "Failed to get background task data."
+      }
+    },
+    "title": "title",
+    "title_add": "Adding a background task",
+    "title_edit": "Editing the background task"
+  },
+  "conditionOffcanvas": {
+    "actionButton": "actionButton",
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save",
+    "messages": {
+      "addCondition": {
+        "error": "Failed to add the condition.",
+        "success": "You have successfully added a condition."
+      },
+      "editCondition": {
+        "error": "Failed to save the condition.",
+        "success": "You have successfully saved the condition."
+      },
+      "getCondition": {
+        "error": "Failed to get condition data."
+      }
+    },
+    "partsBlock": {
+      "nextPartOperatorSelect": {
+        "&&": "And",
+        "||": "Or"
+      },
+      "operatorSelect": {
+        "!=": "Not equal",
+        "<": "Less than",
+        "<=": "Less than or equal",
+        "==": "Equal",
+        ">": "Greater than",
+        ">=": "Greater than or equal"
+      },
+      "title": "Condition parts"
+    },
+    "title": "title",
+    "title_add": "Adding a condition",
+    "title_edit": "Editing the condition"
+  },
+  "databaseOperationOffcanvas": {
+    "actionButton": "actionButton",
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save",
+    "createBlock": {
+      "title": "Create record"
+    },
+    "messages": {
+      "addDatabaseOperation": {
+        "error": "Failed to add database operation.",
+        "success": "You have successfully added a database operation."
+      },
+      "editDatabaseOperation": {
+        "error": "Failed to save the database operation.",
+        "success": "You have successfully saved the database operation."
+      },
+      "getDatabaseOperation": {
+        "error": "Failed to get database operation data."
+      }
+    },
+    "title": "title",
+    "title_add": "Adding a database operation",
+    "title_edit": "Editing the database operation",
+    "typeBlock": {
+      "title": "Type"
+    },
+    "updateBlock": {
+      "createIfNotFoundSwitch": {
+        "label": "Create if not found"
+      },
+      "lookupFieldNameInput": {
+        "placeholder": "Enter field name for lookup"
+      },
+      "lookupFieldValueInput": {
+        "placeholder": "Enter field value for lookup"
+      },
+      "overwriteSwitch": {
+        "label": "Overwrite"
+      },
+      "title": "Update record"
+    }
+  },
+  "invoiceOffcanvas": {
+    "actionButton": "actionButton",
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save",
+    "descriptionBlock": {
+      "inputPlaceholder": "Enter description",
+      "title": "Description"
+    },
+    "imageBlock": {
+      "addButton": "Add image",
+      "messages": {
+        "addImage": {
+          "error_notEnoughStorage": "Unable to add image {{name}}, not enough storage space.",
+          "error_tooLarge": "Image {{name}} is larger than 2.5MB."
+        }
+      },
+      "title": "Image"
+    },
+    "messages": {
+      "addInvoice": {
+        "error": "Failed to add the invoice.",
+        "success": "You have successfully added the invoice."
+      },
+      "editInvoice": {
+        "error": "Failed to save the invoice.",
+        "success": "You have successfully saved the invoice."
+      },
+      "getInvoice": {
+        "error": "Failed to retrieve invoice data."
+      }
+    },
+    "priceBlock": {
+      "amount": {
+        "inputPlaceholder": "Enter price in Telegram Stars"
+      },
+      "label": {
+        "inputPlaceholder": "Enter label"
+      },
+      "title": "Price"
+    },
+    "title": "title",
+    "title_add": "Adding a invoice",
+    "title_edit": "Editing the invoice",
+    "titleBlock": {
+      "inputPlaceholder": "Enter title",
+      "title": "Title"
+    }
   },
   "mediaPopover": {
+    "filePopoverBody": {
+      "table": {
+        "name": "Name:",
+        "size": "Size:"
+      }
+    },
     "selectPopoverBody": {
       "selectFileButton": {
         "text": "Select file",
@@ -25,721 +221,538 @@
         "text": "Specify URL"
       }
     },
-    "filePopoverBody": {
-      "table": {
-        "name": "Name:",
-        "size": "Size:"
-      }
-    },
     "urlPopoverBody": {
       "messages": {
         "invalidURLError": "Invalid URL."
       },
+      "saveButton": "Save",
       "urlInput": {
         "placeholder": "Enter URL"
-      },
-      "saveButton": "Save",
-      "deleteButton": "Delete"
+      }
     }
   },
-  "variablesInfoText": {
-    "text": "You can use variables."
-  },
-  "addonButtonGroup": {
-    "showButton": "Show addons",
-    "hideButton": "Hide addons"
-  },
-  "triggerOffcanvas": {
-    "title_add": "Adding a trigger",
-    "title_edit": "Editing the trigger",
-    "messages": {
-      "getTrigger": {
-        "error": "Failed to get trigger data."
-      },
-      "addTrigger": {
-        "success": "You have successfully added the trigger.",
-        "error": "Failed to add the trigger."
-      },
-      "editTrigger": {
-        "success": "You have successfully saved the trigger.",
-        "error": "Failed to save the trigger."
-      }
-    },
-    "typeBlock": {
-      "title": "Type",
-      "types": {
-        "startCommand": "Start command",
-        "command": "Command",
-        "message": "Message",
-        "anyMessage": "Any message",
-        "webhook": "Webhook"
-      }
-    },
-    "startCommandBlock": {
-      "title": "Start Command",
-      "payload": {
-        "showButton": "Add payload",
-        "hideButton": "Remove payload",
-        "inputPlaceholder": "Enter data"
-      },
-      "description": {
-        "showButton": "Add to menu",
-        "hideButton": "Remove from menu",
-        "inputPlaceholder": "Enter description"
-      }
-    },
-    "commandBlock": {
-      "title": "Command",
-      "commandInputPlaceholder": "Enter command",
-      "description": {
-        "showButton": "Add to menu",
-        "hideButton": "Remove from menu",
-        "inputPlaceholder": "Enter description"
-      }
-    },
-    "messageBlock": {
-      "title": "Message",
-      "messageEditorPlaceholder": "Enter text"
-    },
-    "webhookBlock": {
-      "title": "Webhook",
-      "table": {
-        "url": {
-          "header": "URL:",
-          "placeholder": "Save this block to get the value."
-        },
-        "method": {
-          "header": "Method:"
-        },
-        "data": {
-          "header": "Data:",
-          "text": "Any format"
-        }
-      }
-    },
-    "actionButton_add": "Add",
-    "actionButton_edit": "Save"
-  },
   "messageOffcanvas": {
-    "title_add": "Adding a message",
-    "title_edit": "Editing the message",
-    "messages": {
-      "getMessage": {
-        "error": "Failed to get message data."
-      },
-      "addMessage": {
-        "success": "You have successfully added the message.",
-        "error": "Failed to add the message."
-      },
-      "editMessage": {
-        "success": "You have successfully saved the message.",
-        "error": "Failed to save the message."
-      },
-      "validation": {
-        "error_noAddons": "You must specify at least one addon.",
-        "error_keyboardRequiresText": "The «Keyboard» addon cannot be used without the «Text» addon."
-      }
-    },
-    "settingsBlock": {
-      "title": "Settings",
-      "replyToUserMessageSwitch": "Reply to user message",
-      "deleteUserMessageSwitch": "Delete user message",
-      "sendAsNewMessageSwitch": "Send message as new"
-    },
-    "imagesBlock": {
-      "title": "Images",
-      "addImagesButton": {
-        "messages": {
-          "addImages": {
-            "error_tooLarge": "Image {{name}} is larger than 2.5MB.",
-            "error_notEnoughStorage": "Unable to add image {{name}}, not enough storage space."
-          }
-        },
-        "text": "Add images"
-      }
-    },
+    "actionButton": "actionButton",
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save",
     "documentsBlock": {
-      "title": "Documents",
       "addDocumentsButton": {
         "messages": {
           "addDocuments": {
-            "error_tooLarge": "File {{name}} is larger than 2.5MB.",
-            "error_notEnoughStorage": "Unable to add document {{name}}, not enough storage space."
+            "error_notEnoughStorage": "Unable to add document {{name}}, not enough storage space.",
+            "error_tooLarge": "File {{name}} is larger than 2.5MB."
           }
         },
         "text": "Add documents"
-      }
-    },
-    "textBlock": {
-      "title": "Text",
-      "editorPlaceholder": "Enter text"
-    },
-    "keyboardBlock": {
-      "title": "Keyboard",
-      "types": {
-        "default": "Regular",
-        "inline": "Inline",
-        "payment": "Payment"
       },
-      "keyboardButtonPopover": {
+      "title": "Documents"
+    },
+    "imagesBlock": {
+      "addImagesButton": {
         "messages": {
-          "emptyTextError": "This field cannot be empty.",
-          "invalidURLError": "Invalid URL."
-        },
-        "textInput": {
-          "placeholder": "Enter text"
-        },
-        "urlInputCollapse": {
-          "showButton": "Add URL",
-          "hideButton": "Remove URL"
-        },
-        "urlInput": {
-          "placeholder": "Enter URL"
-        },
-        "styleSelect": {
-          "label": "Style:",
-          "styles": {
-            "default": "Default",
-            "primary": "Primary",
-            "success": "Success",
-            "danger": "Danger"
+          "addImages": {
+            "error_notEnoughStorage": "Unable to add image {{name}}, not enough storage space.",
+            "error_tooLarge": "Image {{name}} is larger than 2.5MB."
           }
         },
-        "actionButton_add": "Add",
-        "actionButton_edit": "Save",
-        "deleteButton": "Delete"
+        "text": "Add images"
       },
+      "title": "Images"
+    },
+    "keyboardBlock": {
       "addButtonButton": {
         "text": "Add button"
       },
       "addRowButton": {
         "text": "Add row"
-      }
-    },
-    "actionButton_add": "Add",
-    "actionButton_edit": "Save"
-  },
-  "conditionOffcanvas": {
-    "title_add": "Adding a condition",
-    "title_edit": "Editing the condition",
-    "messages": {
-      "getCondition": {
-        "error": "Failed to get condition data."
       },
-      "addCondition": {
-        "success": "You have successfully added a condition.",
-        "error": "Failed to add the condition."
-      },
-      "editCondition": {
-        "success": "You have successfully saved the condition.",
-        "error": "Failed to save the condition."
-      }
-    },
-    "partsBlock": {
-      "title": "Condition parts",
-      "operatorSelect": {
-        "==": "Equal",
-        "!=": "Not equal",
-        ">": "Greater than",
-        ">=": "Greater than or equal",
-        "<": "Less than",
-        "<=": "Less than or equal"
-      },
-      "nextPartOperatorSelect": {
-        "&&": "And",
-        "||": "Or"
-      }
-    },
-    "actionButton_add": "Add",
-    "actionButton_edit": "Save"
-  },
-  "backgroundTaskOffcanvas": {
-    "title_add": "Adding a background task",
-    "title_edit": "Editing the background task",
-    "messages": {
-      "getBackgroundTask": {
-        "error": "Failed to get background task data."
-      },
-      "addBackgroundTask": {
-        "success": "You have successfully added a background task.",
-        "error": "Failed to add background task."
-      },
-      "editBackgroundTask": {
-        "success": "You have successfully saved the background task.",
-        "error": "Failed to save the background task."
-      }
-    },
-    "intervalBlock": {
-      "title": "Interval",
-      "select": {
-        "1": "1 day",
-        "3": "3 days",
-        "7": "7 days",
-        "14": "14 days",
-        "28": "28 days"
-      }
-    },
-    "actionButton_add": "Add",
-    "actionButton_edit": "Save"
-  },
-  "apiRequestOffcanvas": {
-    "title_add": "Adding a API request",
-    "title_edit": "Editing the API request",
-    "messages": {
-      "getAPIRequest": {
-        "error": "Failed to get API request data."
-      },
-      "addAPIRequest": {
-        "success": "You have successfully added an API request.",
-        "error": "Failed to add API request."
-      },
-      "editAPIRequest": {
-        "success": "You have successfully saved the API request.",
-        "error": "Failed to save the API request."
-      }
-    },
-    "urlBlock": {
-      "title": "URL",
-      "urlInput": {
-        "placeholder": "Enter URL"
-      }
-    },
-    "methodBlock": {
-      "title": "Method"
-    },
-    "headersBlock": {
-      "title": "Headers",
-      "keyInput": {
-        "placeholder": "Key"
-      },
-      "valueInput": {
-        "placeholder": "Value"
-      },
-      "addHeaderButton": {
-        "text": "Add Header"
-      }
-    },
-    "bodyBlock": {
-      "title": "Body"
-    },
-    "actionButton_add": "Add",
-    "actionButton_edit": "Save"
-  },
-  "databaseOperationOffcanvas": {
-    "title_add": "Adding a database operation",
-    "title_edit": "Editing the database operation",
-    "messages": {
-      "getDatabaseOperation": {
-        "error": "Failed to get database operation data."
-      },
-      "addDatabaseOperation": {
-        "success": "You have successfully added a database operation.",
-        "error": "Failed to add database operation."
-      },
-      "editDatabaseOperation": {
-        "success": "You have successfully saved the database operation.",
-        "error": "Failed to save the database operation."
-      }
-    },
-    "typeBlock": {
-      "title": "Type"
-    },
-    "createBlock": {
-      "title": "Create record"
-    },
-    "updateBlock": {
-      "title": "Update record",
-      "overwriteSwitch": {
-        "label": "Overwrite"
-      },
-      "lookupFieldNameInput": {
-        "placeholder": "Enter field name for lookup"
-      },
-      "lookupFieldValueInput": {
-        "placeholder": "Enter field value for lookup"
-      },
-      "createIfNotFoundSwitch": {
-        "label": "Create if not found"
-      }
-    },
-    "actionButton_add": "Add",
-    "actionButton_edit": "Save"
-  },
-  "invoiceOffcanvas": {
-    "title_add": "Adding a invoice",
-    "title_edit": "Editing the invoice",
-    "messages": {
-      "getInvoice": {
-        "error": "Failed to retrieve invoice data."
-      },
-      "addInvoice": {
-        "success": "You have successfully added the invoice.",
-        "error": "Failed to add the invoice."
-      },
-      "editInvoice": {
-        "success": "You have successfully saved the invoice.",
-        "error": "Failed to save the invoice."
-      }
-    },
-    "titleBlock": {
-      "title": "Title",
-      "inputPlaceholder": "Enter title"
-    },
-    "imageBlock": {
-      "title": "Image",
-      "messages": {
-        "addImage": {
-          "error": "Failed to add the image {{name}}.",
-          "error_tooLarge": "Image {{name}} is larger than 2.5MB.",
-          "error_notEnoughStorage": "Unable to add image {{name}}, not enough storage space."
+      "keyboardButtonPopover": {
+        "actionButton": "actionButton",
+        "actionButton_add": "Add",
+        "actionButton_edit": "Save",
+        "deleteButton": "Delete",
+        "messages": {
+          "emptyTextError": "This field cannot be empty.",
+          "invalidURLError": "Invalid URL."
+        },
+        "styleSelect": {
+          "label": "Style:",
+          "styles": {
+            "danger": "Danger",
+            "default": "Default",
+            "primary": "Primary",
+            "success": "Success"
+          }
+        },
+        "textInput": {
+          "placeholder": "Enter text"
+        },
+        "urlInput": {
+          "placeholder": "Enter URL"
+        },
+        "urlInputCollapse": {
+          "hideButton": "Remove URL",
+          "showButton": "Add URL"
         }
       },
-      "addButton": "Add image"
-    },
-    "descriptionBlock": {
-      "title": "Description",
-      "inputPlaceholder": "Enter description"
-    },
-    "priceBlock": {
-      "title": "Price",
-      "label": {
-        "inputPlaceholder": "Enter label"
-      },
-      "amount": {
-        "inputPlaceholder": "Enter price in Telegram Stars"
+      "title": "Keyboard",
+      "types": {
+        "default": "Regular",
+        "inline": "Inline"
       }
     },
-    "actionButton_add": "Add",
-    "actionButton_edit": "Save"
-  },
-  "temporaryVariableOffcanvas": {
-    "title_add": "Adding a variable",
-    "title_edit": "Editing the variable",
     "messages": {
-      "getTemporaryVariable": {
-        "error": "Failed to retrieve temporary variable data."
+      "addMessage": {
+        "error": "Failed to add the message.",
+        "success": "You have successfully added the message."
       },
-      "addTemporaryVariable": {
-        "success": "You have successfully added the temporary variable.",
-        "error": "Failed to add the temporary variable."
+      "editMessage": {
+        "error": "Failed to save the message.",
+        "success": "You have successfully saved the message."
       },
-      "editTemporaryVariable": {
-        "success": "You have successfully saved the temporary variable.",
-        "error": "Failed to save the temporary variable."
+      "getMessage": {
+        "error": "Failed to get message data."
+      },
+      "validation": {
+        "error_keyboardRequiresText": "The «Keyboard» addon cannot be used without the «Text» addon.",
+        "error_noAddons": "You must specify at least one addon."
       }
     },
-    "valueBlock": {
-      "title": "Value",
-      "inputPlaceholder": "Enter value"
+    "settingsBlock": {
+      "deleteUserMessageSwitch": "Delete user message",
+      "replyToUserMessageSwitch": "Reply to user message",
+      "sendAsNewMessageSwitch": "Send message as new",
+      "title": "Settings"
     },
-    "actionButton_add": "Add",
-    "actionButton_edit": "Save"
+    "textBlock": {
+      "editorPlaceholder": "Enter text",
+      "title": "Text"
+    },
+    "title": "title",
+    "title_add": "Adding a message",
+    "title_edit": "Editing the message"
   },
-  "randomizerOffcanvas": {
-    "title_add": "Adding a randomizer",
-    "title_edit": "Editing the randomizer",
-    "messages": {
-      "getRandomizer": {
-        "error": "Failed to retrieve randomizer data."
-      },
-      "addRandomizer": {
-        "success": "You have successfully added the randomizer.",
-        "error": "Failed to add the randomizer."
-      },
-      "editRandomizer": {
-        "success": "You have successfully saved the randomizer.",
-        "error": "Failed to save the randomizer."
-      }
+  "messages": {
+    "createConnection": {
+      "error": "Failed to connect one block to another."
     },
-    "actionButton_add": "Add",
-    "actionButton_edit": "Save"
+    "deleteConnection": {
+      "error": "Failed to disconnect one block from another."
+    },
+    "validation": {
+      "invalidJSON": "Please enter the data in JSON format."
+    }
   },
-  "timerOffcanvas": {
-    "title_add": "Adding a timer",
-    "title_edit": "Editing the timer",
-    "messages": {
-      "getTimer": {
-        "error": "Failed to retrieve timer data."
+  "nameBlock": {
+    "inputPlaceholder": "Come up with a name",
+    "title": "Name"
+  },
+  "nodes": {
+    "apiRequest": {
+      "deleteModal": {
+        "text": "Are you sure you want to delete the API request?",
+        "title": "Deleting the API request"
       },
-      "addTimer": {
-        "success": "You have successfully added the timer.",
-        "error": "Failed to add the timer."
+      "duplicateModal": {
+        "text": "Are you sure you want to duplicate the API request?",
+        "title": "Duplicating the API request"
       },
-      "editTimer": {
-        "success": "You have successfully saved the timer.",
-        "error": "Failed to save the timer."
-      }
+      "messages": {
+        "delete": {
+          "error": "Failed to delete the API request.",
+          "success": "You have successfully deleted the API request."
+        },
+        "duplicate": {
+          "error": "Failed to duplicate the API request.",
+          "success": "You have successfully duplicated the API request."
+        }
+      },
+      "title": "API Request"
     },
-    "durationBlock": {
-      "title": "Duration",
-      "input": {
-        "placeholder": "Enter duration",
-        "label": "sec"
-      }
+    "backgroundTask": {
+      "deleteModal": {
+        "text": "Are you sure you want to delete the background task?",
+        "title": "Deleting the background task"
+      },
+      "duplicateModal": {
+        "text": "Are you sure you want to duplicate the background task?",
+        "title": "Duplicating the background task"
+      },
+      "interval": "Interval",
+      "messages": {
+        "delete": {
+          "error": "Failed to delete the background task.",
+          "success": "You have successfully deleted the background task."
+        },
+        "duplicate": {
+          "error": "Failed to duplicate the background task.",
+          "success": "You have successfully duplicated the background task."
+        }
+      },
+      "title": "Background Task"
     },
-    "actionButton_add": "Add",
-    "actionButton_edit": "Save"
+    "condition": {
+      "deleteModal": {
+        "text": "Are you sure you want to delete the condition?",
+        "title": "Deleting the condition"
+      },
+      "duplicateModal": {
+        "text": "Are you sure you want to duplicate the condition?",
+        "title": "Duplicating the condition"
+      },
+      "messages": {
+        "delete": {
+          "error": "Failed to delete the condition.",
+          "success": "You have successfully deleted the condition."
+        },
+        "duplicate": {
+          "error": "Failed to duplicate the condition.",
+          "success": "You have successfully duplicated the condition."
+        }
+      },
+      "title": "Condition"
+    },
+    "databaseOperation": {
+      "deleteModal": {
+        "text": "Are you sure you want to delete the database operation?",
+        "title": "Deleting the database operation"
+      },
+      "duplicateModal": {
+        "text": "Are you sure you want to duplicate the database operation?",
+        "title": "Duplicating the database operation"
+      },
+      "messages": {
+        "delete": {
+          "error": "Failed to delete the database operation.",
+          "success": "You have successfully deleted the database operation."
+        },
+        "duplicate": {
+          "error": "Failed to duplicate the database operation.",
+          "success": "You have successfully duplicated the database operation."
+        }
+      },
+      "title": "Database Operation"
+    },
+    "invoice": {
+      "deleteModal": {
+        "text": "Are you sure you want to delete the invoice?",
+        "title": "Deleting the invoice"
+      },
+      "duplicateModal": {
+        "text": "Are you sure you want to duplicate the invoice?",
+        "title": "Duplicating the invoice"
+      },
+      "messages": {
+        "delete": {
+          "error": "Failed to delete the invoice.",
+          "success": "You have successfully deleted the invoice."
+        },
+        "duplicate": {
+          "error": "Failed to duplicate the invoice.",
+          "success": "You have successfully duplicated the invoice."
+        }
+      },
+      "title": "Invoice"
+    },
+    "message": {
+      "deleteModal": {
+        "text": "Are you sure you want to delete the message?",
+        "title": "Deleting the message"
+      },
+      "duplicateModal": {
+        "text": "Are you sure you want to duplicate the message?",
+        "title": "Duplicating the message"
+      },
+      "messages": {
+        "delete": {
+          "error": "Failed to delete the message.",
+          "success": "You have successfully deleted the message."
+        },
+        "duplicate": {
+          "error": "Failed to duplicate the message.",
+          "success": "You have successfully duplicated the message."
+        }
+      },
+      "title": "Message"
+    },
+    "randomizer": {
+      "deleteModal": {
+        "text": "Are you sure you want to delete the randomizer?",
+        "title": "Deleting the randomizer"
+      },
+      "duplicateModal": {
+        "text": "Are you sure you want to duplicate the randomizer?",
+        "title": "Duplicating the randomizer"
+      },
+      "messages": {
+        "delete": {
+          "error": "Failed to delete the randomizer.",
+          "success": "You have successfully deleted the randomizer."
+        },
+        "duplicate": {
+          "error": "Failed to duplicate the randomizer.",
+          "success": "You have successfully duplicated the randomizer."
+        }
+      },
+      "title": "Randomizer"
+    },
+    "temporaryVariable": {
+      "deleteModal": {
+        "text": "Are you sure you want to delete the temporary variable?",
+        "title": "Deleting the temporary variable"
+      },
+      "duplicateModal": {
+        "text": "Are you sure you want to duplicate the temporary variable?",
+        "title": "Duplicating the temporary variable"
+      },
+      "messages": {
+        "delete": {
+          "error": "Failed to delete the temporary variable.",
+          "success": "You have successfully deleted the temporary variable."
+        },
+        "duplicate": {
+          "error": "Failed to duplicate the temporary variable.",
+          "success": "You have successfully duplicated the temporary variable."
+        }
+      },
+      "title": "Temporary variable"
+    },
+    "timer": {
+      "deleteModal": {
+        "text": "Are you sure you want to delete the timer?",
+        "title": "Deleting the timer"
+      },
+      "duplicateModal": {
+        "text": "Are you sure you want to duplicate the timer?",
+        "title": "Duplicating the timer"
+      },
+      "duration": "<bold>Duration:</bold> {{value}} sec",
+      "messages": {
+        "delete": {
+          "error": "Failed to delete the timer.",
+          "success": "You have successfully deleted the timer."
+        },
+        "duplicate": {
+          "error": "Failed to duplicate the timer.",
+          "success": "You have successfully duplicated the timer."
+        }
+      },
+      "title": "Timer"
+    },
+    "trigger": {
+      "deleteModal": {
+        "text": "Are you sure you want to delete the trigger?",
+        "title": "Deleting the trigger"
+      },
+      "duplicateModal": {
+        "text": "Are you sure you want to duplicate the trigger?",
+        "title": "Duplicating the trigger"
+      },
+      "messages": {
+        "delete": {
+          "error": "Failed to delete the trigger.",
+          "success": "You have successfully deleted the trigger."
+        },
+        "duplicate": {
+          "error": "Failed to duplicate the trigger.",
+          "success": "You have successfully duplicated the trigger."
+        }
+      },
+      "title": "Trigger"
+    }
   },
   "panel": {
     "addBlockButton": "Add block"
   },
-  "selectBlockModal": {
-    "title": "Select block type",
-    "blocks": {
-      "trigger": {
-        "name": "Trigger",
-        "description": "Defines the event to respond to."
+  "randomizerOffcanvas": {
+    "actionButton": "actionButton",
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save",
+    "messages": {
+      "addRandomizer": {
+        "error": "Failed to add the randomizer.",
+        "success": "You have successfully added the randomizer."
       },
-      "message": {
-        "name": "Message",
-        "description": "Sends a message to the user."
+      "editRandomizer": {
+        "error": "Failed to save the randomizer.",
+        "success": "You have successfully saved the randomizer."
       },
-      "condition": {
-        "name": "Condition",
-        "description": "Branches the logic depending on the data."
-      },
-      "backgroundTask": {
-        "name": "Background task",
-        "description": "Automatically runs logic at a specified interval."
-      },
-      "apiRequest": {
-        "name": "API request",
-        "description": "Sends a request to an external API."
-      },
-      "databaseOperation": {
-        "name": "Database operation",
-        "description": "Adds or updates data in the bot's database."
-      },
-      "invoice": {
-        "name": "Invoice",
-        "description": "Sends an invoice for payment."
-      },
-      "temporaryVariable": {
-        "name": "Temporary variable",
-        "description": "Creates a temporary variable in the logic chain."
-      },
-      "randomizer": {
-        "name": "Randomizer",
-        "description": "Randomly selects one of the following logic branches."
-      },
-      "timer": {
-        "name": "Timer",
-        "description": "Delays the execution of further logic."
+      "getRandomizer": {
+        "error": "Failed to retrieve randomizer data."
       }
-    }
+    },
+    "title": "title",
+    "title_add": "Adding a randomizer",
+    "title_edit": "Editing the randomizer"
   },
-  "nodes": {
-    "trigger": {
-      "title": "Trigger",
-      "messages": {
-        "duplicate": {
-          "success": "You have successfully duplicated the trigger.",
-          "error": "Failed to duplicate the trigger."
-        },
-        "delete": {
-          "success": "You have successfully deleted the trigger.",
-          "error": "Failed to delete the trigger."
-        }
-      },
-      "duplicateModal": {
-        "title": "Duplicating the trigger",
-        "text": "Are you sure you want to duplicate the trigger?"
-      },
-      "deleteModal": {
-        "title": "Deleting the trigger",
-        "text": "Are you sure you want to delete the trigger?"
-      }
-    },
-    "message": {
-      "title": "Message",
-      "messages": {
-        "duplicate": {
-          "success": "You have successfully duplicated the message.",
-          "error": "Failed to duplicate the message."
-        },
-        "delete": {
-          "success": "You have successfully deleted the message.",
-          "error": "Failed to delete the message."
-        }
-      },
-      "duplicateModal": {
-        "title": "Duplicating the message",
-        "text": "Are you sure you want to duplicate the message?"
-      },
-      "deleteModal": {
-        "title": "Deleting the message",
-        "text": "Are you sure you want to delete the message?"
-      }
-    },
-    "condition": {
-      "title": "Condition",
-      "messages": {
-        "duplicate": {
-          "success": "You have successfully duplicated the condition.",
-          "error": "Failed to duplicate the condition."
-        },
-        "delete": {
-          "success": "You have successfully deleted the condition.",
-          "error": "Failed to delete the condition."
-        }
-      },
-      "duplicateModal": {
-        "title": "Duplicating the condition",
-        "text": "Are you sure you want to duplicate the condition?"
-      },
-      "deleteModal": {
-        "title": "Deleting the condition",
-        "text": "Are you sure you want to delete the condition?"
-      }
+  "selectBlockModal": {
+    "apiRequest": {
+      "description": "Sends a request to an external API.",
+      "name": "API request"
     },
     "backgroundTask": {
-      "title": "Background Task",
-      "messages": {
-        "duplicate": {
-          "success": "You have successfully duplicated the background task.",
-          "error": "Failed to duplicate the background task."
-        },
-        "delete": {
-          "success": "You have successfully deleted the background task.",
-          "error": "Failed to delete the background task."
-        }
-      },
-      "duplicateModal": {
-        "title": "Duplicating the background task",
-        "text": "Are you sure you want to duplicate the background task?"
-      },
-      "deleteModal": {
-        "title": "Deleting the background task",
-        "text": "Are you sure you want to delete the background task?"
-      },
-      "interval": "Interval"
+      "description": "Automatically runs logic at a specified interval.",
+      "name": "Background task"
     },
-    "apiRequest": {
-      "title": "API Request",
-      "messages": {
-        "duplicate": {
-          "success": "You have successfully duplicated the API request.",
-          "error": "Failed to duplicate the API request."
-        },
-        "delete": {
-          "success": "You have successfully deleted the API request.",
-          "error": "Failed to delete the API request."
-        }
-      },
-      "duplicateModal": {
-        "title": "Duplicating the API request",
-        "text": "Are you sure you want to duplicate the API request?"
-      },
-      "deleteModal": {
-        "title": "Deleting the API request",
-        "text": "Are you sure you want to delete the API request?"
-      }
+    "condition": {
+      "description": "Branches the logic depending on the data.",
+      "name": "Condition"
     },
     "databaseOperation": {
-      "title": "Database Operation",
-      "messages": {
-        "duplicate": {
-          "success": "You have successfully duplicated the database operation.",
-          "error": "Failed to duplicate the database operation."
-        },
-        "delete": {
-          "success": "You have successfully deleted the database operation.",
-          "error": "Failed to delete the database operation."
-        }
-      },
-      "duplicateModal": {
-        "title": "Duplicating the database operation",
-        "text": "Are you sure you want to duplicate the database operation?"
-      },
-      "deleteModal": {
-        "title": "Deleting the database operation",
-        "text": "Are you sure you want to delete the database operation?"
-      }
+      "description": "Adds or updates data in the bot's database.",
+      "name": "Database operation"
     },
     "invoice": {
-      "title": "Invoice",
-      "messages": {
-        "duplicate": {
-          "success": "You have successfully duplicated the invoice.",
-          "error": "Failed to duplicate the invoice."
-        },
-        "delete": {
-          "success": "You have successfully deleted the invoice.",
-          "error": "Failed to delete the invoice."
-        }
-      },
-      "duplicateModal": {
-        "title": "Duplicating the invoice",
-        "text": "Are you sure you want to duplicate the invoice?"
-      },
-      "deleteModal": {
-        "title": "Deleting the invoice",
-        "text": "Are you sure you want to delete the invoice?"
-      }
+      "description": "Sends an invoice for payment.",
+      "name": "Invoice"
     },
-    "temporaryVariable": {
-      "title": "Temporary variable",
-      "messages": {
-        "duplicate": {
-          "success": "You have successfully duplicated the temporary variable.",
-          "error": "Failed to duplicate the temporary variable."
-        },
-        "delete": {
-          "success": "You have successfully deleted the temporary variable.",
-          "error": "Failed to delete the temporary variable."
-        }
-      },
-      "duplicateModal": {
-        "title": "Duplicating the temporary variable",
-        "text": "Are you sure you want to duplicate the temporary variable?"
-      },
-      "deleteModal": {
-        "title": "Deleting the temporary variable",
-        "text": "Are you sure you want to delete the temporary variable?"
-      }
+    "message": {
+      "description": "Sends a message to the user.",
+      "name": "Message"
     },
     "randomizer": {
-      "title": "Randomizer",
-      "messages": {
-        "duplicate": {
-          "success": "You have successfully duplicated the randomizer.",
-          "error": "Failed to duplicate the randomizer."
-        },
-        "delete": {
-          "success": "You have successfully deleted the randomizer.",
-          "error": "Failed to delete the randomizer."
-        }
-      },
-      "duplicateModal": {
-        "title": "Duplicating the randomizer",
-        "text": "Are you sure you want to duplicate the randomizer?"
-      },
-      "deleteModal": {
-        "title": "Deleting the randomizer",
-        "text": "Are you sure you want to delete the randomizer?"
-      }
+      "description": "Randomly selects one of the following logic branches.",
+      "name": "Randomizer"
+    },
+    "temporaryVariable": {
+      "description": "Creates a temporary variable in the logic chain.",
+      "name": "Temporary variable"
     },
     "timer": {
-      "title": "Timer",
-      "messages": {
-        "duplicate": {
-          "success": "You have successfully duplicated the timer.",
-          "error": "Failed to duplicate the timer."
+      "description": "Delays the execution of further logic.",
+      "name": "Timer"
+    },
+    "title": "Select block type",
+    "trigger": {
+      "description": "Defines the event to respond to.",
+      "name": "Trigger"
+    }
+  },
+  "temporaryVariableOffcanvas": {
+    "actionButton": "actionButton",
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save",
+    "messages": {
+      "addTemporaryVariable": {
+        "error": "Failed to add the temporary variable.",
+        "success": "You have successfully added the temporary variable."
+      },
+      "editTemporaryVariable": {
+        "error": "Failed to save the temporary variable.",
+        "success": "You have successfully saved the temporary variable."
+      },
+      "getTemporaryVariable": {
+        "error": "Failed to retrieve temporary variable data."
+      }
+    },
+    "title": "title",
+    "title_add": "Adding a variable",
+    "title_edit": "Editing the variable",
+    "valueBlock": {
+      "inputPlaceholder": "Enter value",
+      "title": "Value"
+    }
+  },
+  "timerOffcanvas": {
+    "actionButton": "actionButton",
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save",
+    "durationBlock": {
+      "input": {
+        "label": "sec",
+        "placeholder": "Enter duration"
+      },
+      "title": "Duration"
+    },
+    "messages": {
+      "addTimer": {
+        "error": "Failed to add the timer.",
+        "success": "You have successfully added the timer."
+      },
+      "editTimer": {
+        "error": "Failed to save the timer.",
+        "success": "You have successfully saved the timer."
+      },
+      "getTimer": {
+        "error": "Failed to retrieve timer data."
+      }
+    },
+    "title": "title",
+    "title_add": "Adding a timer",
+    "title_edit": "Editing the timer"
+  },
+  "title": "Constructor",
+  "triggerOffcanvas": {
+    "actionButton": "actionButton",
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save",
+    "commandBlock": {
+      "commandInputPlaceholder": "Enter command",
+      "description": {
+        "hideButton": "Remove from menu",
+        "inputPlaceholder": "Enter description",
+        "showButton": "Add to menu"
+      },
+      "title": "Command"
+    },
+    "messageBlock": {
+      "messageEditorPlaceholder": "Enter text",
+      "title": "Message"
+    },
+    "messages": {
+      "addTrigger": {
+        "error": "Failed to add the trigger.",
+        "success": "You have successfully added the trigger."
+      },
+      "editTrigger": {
+        "error": "Failed to save the trigger.",
+        "success": "You have successfully saved the trigger."
+      },
+      "getTrigger": {
+        "error": "Failed to get trigger data."
+      }
+    },
+    "startCommandBlock": {
+      "description": {
+        "hideButton": "Remove from menu",
+        "inputPlaceholder": "Enter description",
+        "showButton": "Add to menu"
+      },
+      "payload": {
+        "hideButton": "Remove payload",
+        "inputPlaceholder": "Enter data",
+        "showButton": "Add payload"
+      },
+      "title": "Start Command"
+    },
+    "title": "title",
+    "title_add": "Adding a trigger",
+    "title_edit": "Editing the trigger",
+    "typeBlock": {
+      "title": "Type",
+      "types": {
+        "anyMessage": "Any message",
+        "command": "Command",
+        "message": "Message",
+        "startCommand": "Start command",
+        "webhook": "Webhook"
+      }
+    },
+    "webhookBlock": {
+      "table": {
+        "data": {
+          "header": "Data:",
+          "text": "Any format"
         },
-        "delete": {
-          "success": "You have successfully deleted the timer.",
-          "error": "Failed to delete the timer."
+        "method": {
+          "header": "Method:"
+        },
+        "url": {
+          "header": "URL:",
+          "placeholder": "Save this block to get the value."
         }
       },
-      "duplicateModal": {
-        "title": "Duplicating the timer",
-        "text": "Are you sure you want to duplicate the timer?"
-      },
-      "deleteModal": {
-        "title": "Deleting the timer",
-        "text": "Are you sure you want to delete the timer?"
-      },
-      "duration": "<bold>Duration:</bold> {{value}} sec"
+      "title": "Webhook"
     }
   }
 }

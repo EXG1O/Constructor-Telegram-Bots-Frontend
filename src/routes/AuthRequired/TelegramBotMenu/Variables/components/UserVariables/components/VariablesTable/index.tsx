@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Clipboard from 'components/ui/Clipboard';
 import Spinner from 'components/ui/Spinner';
@@ -19,9 +19,10 @@ export interface VariablesTableProps extends Omit<
 > {}
 
 function VariablesTable({ className, ...props }: VariablesTableProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
-    keyPrefix: 'user.table',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuVariables}`, any>(
+    'telegram-bot-menu-variables',
+    { keyPrefix: 'user.table' },
+  );
 
   const loading = useUserVariablesStore((state) => state.loading);
   const search = useUserVariablesStore((state) => state.search);

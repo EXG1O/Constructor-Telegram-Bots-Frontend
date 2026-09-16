@@ -1,17 +1,13 @@
 {
-  "title": "Constructor Telegram Bots",
   "header": {
     "text": "A user-friendly platform that lets you easily create your own multifunctional Telegram bot with no coding required."
   },
   "stats": {
-    "title": "Statistics",
-    "usersTotal": "Users",
-    "telegramBotsTotal": "Added Telegram bots",
     "telegramBotsEnabled": "Enabled Telegram bots",
-    "telegramBotsUsers": "Users of Telegram bots"
+    "telegramBotsTotal": "Added Telegram bots",
+    "telegramBotsUsers": "Users of Telegram bots",
+    "title": "Statistics",
+    "usersTotal": "Users"
   },
-  "donations": {
-    "title": "Donations",
-    "noDonations": "No donations have been made yet"
-  }
+  "title": "Constructor Telegram Bots"
 }

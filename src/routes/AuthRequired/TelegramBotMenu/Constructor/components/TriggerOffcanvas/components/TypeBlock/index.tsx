@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import FormSelectFeedback from 'components/shared/FormSelectFeedback';
 import Block, { type BlockProps } from 'components/ui/Block';
@@ -13,9 +13,10 @@ import { Type } from './types';
 export interface TypeBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function TypeBlock({ className, ...props }: TypeBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'triggerOffcanvas.typeBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'triggerOffcanvas.typeBlock' },
+  );
 
   return (
     <Block

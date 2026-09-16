@@ -1,7 +1,4 @@
 import React, { type ReactElement } from 'react';
-import { useTranslation } from 'react-i18next';
-
-import { RouteID } from 'routes';
 
 import Button, { type ButtonProps } from 'components/ui/Button';
 import ModalClose from 'components/ui/Modal/components/ModalClose';
@@ -9,18 +6,16 @@ import ModalClose from 'components/ui/Modal/components/ModalClose';
 import cn from 'utils/cn';
 
 export interface BlockButtonProps extends Omit<ButtonProps, 'size' | 'variant'> {
-  blockName: string;
+  name: string;
+  description: string;
 }
 
 function BlockButton({
-  blockName,
+  name,
+  description,
   className,
   ...props
 }: BlockButtonProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: `selectBlockModal.blocks.${blockName}`,
-  });
-
   return (
     <ModalClose asChild>
       <Button
@@ -37,8 +32,8 @@ function BlockButton({
           className,
         )}
       >
-        <h3 className='text-base font-medium'>{t('name')}</h3>
-        <p className='text-xs'>{t('description')}</p>
+        <h3 className='text-base font-medium'>{name}</h3>
+        <p className='text-xs'>{description}</p>
       </Button>
     </ModalClose>
   );

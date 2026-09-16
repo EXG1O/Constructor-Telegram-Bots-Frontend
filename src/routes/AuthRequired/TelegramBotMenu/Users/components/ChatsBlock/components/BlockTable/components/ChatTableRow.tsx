@@ -2,7 +2,7 @@ import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Check, Shield, ShieldBan, Trash2, UserCheck, UserX, X } from 'lucide-react';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
@@ -24,9 +24,10 @@ export interface ChatTableRowProps extends Omit<TableRowProps, 'children'> {
 }
 
 function ChatTableRow({ chat, className, ...props }: ChatTableRowProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuUsers, {
-    keyPrefix: 'chatsBlock.table.body',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuUsers}`, any>(
+    'telegram-bot-menu-users',
+    { keyPrefix: 'chatsBlock.table.body' },
+  );
 
   const botID = useTelegramBotStore((state) => state.telegramBot!.id);
   const botIsPrivate = useTelegramBotStore((state) => state.telegramBot!.is_private);

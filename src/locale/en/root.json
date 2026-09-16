@@ -1,82 +1,46 @@
 {
   "acceptTermsModal": {
-    "title": "Terms of Service",
+    "acceptButton": "Accept",
+    "declineButton": "Decline",
+    "disclaimer": "If you decline the Terms of Service, we will promptly delete your personal data from the service database in accordance with our <0>Privacy Policy</0>.",
     "messages": {
       "acceptTerms": {
-        "success": "You have successfully accepted the Terms of Service and can continue using the service.",
-        "error": "Failed to record your acceptance of the Terms of Service."
+        "error": "Failed to record your acceptance of the Terms of Service.",
+        "success": "You have successfully accepted the Terms of Service and can continue using the service."
       },
       "declineTerms": {
-        "success": "You have successfully declined the Terms of Service and all your personal data has been removed from the service database.",
-        "error": "Failed to record your decline of the Terms of Service."
+        "error": "Failed to record your decline of the Terms of Service.",
+        "success": "You have successfully declined the Terms of Service and all your personal data has been removed from the service database."
       }
     },
     "text": "Please accept the <0>Terms of Service</0> to continue using the service.",
-    "disclaimer": "If you decline the Terms of Service, we will promptly delete your personal data from the service database in accordance with our <0>Privacy Policy</0>.",
-    "acceptButton": "Accept",
-    "declineButton": "Decline"
+    "title": "Terms of Service"
+  },
+  "footer": {
+    "links": {
+      "privacyPolicy": "Privacy Policy",
+      "termsOfService": "Terms of Service"
+    }
   },
   "header": {
-    "links": {
-      "instruction": "Instruction"
-    },
     "languagesDropdown": {
+      "en": "English",
       "messages": {
         "changeLanguage": {
           "error": "Failed to change language."
         }
       },
-      "en": "English",
-      "uk": "Ukrainian",
-      "ru": "Russian"
+      "ru": "Russian",
+      "uk": "Ukrainian"
     },
-    "userDropdown": {
-      "messages": {
-        "logout": {
-          "success": "You have successfully logout from account.",
-          "error": "Failed to logout from account."
-        }
-      },
-      "logoutConfirmModal": {
-        "title": "Logout",
-        "text": "Are you sure you want to logout from account?"
-      },
-      "adminPanel": "Admin panel",
-      "profile": "Profile",
-      "telegramBots": "Telegram bots",
-      "exit": "Exit"
+    "links": {
+      "instruction": "Instruction"
     },
     "telegramBotDropdown": {
-      "telegramBotModal": {
-        "messages": {
-          "startTelegramBot": {
-            "success": "Starting the Telegram bot.",
-            "error": "Failed to start the Telegram bot."
-          },
-          "restartTelegramBot": {
-            "success": "Restarting the Telegram bot.",
-            "error": "Failed to restart the Telegram bot."
-          },
-          "stopTelegramBot": {
-            "success": "Stopping the Telegram bot.",
-            "error": "Failed to stop the Telegram bot."
-          },
-          "deleteTelegramBot": {
-            "success": "You have successfully deleted the Telegram bot.",
-            "error": "Failed to delete the Telegram bot."
-          }
-        },
-        "deleteModal": {
-          "title": "Deleting the Telegram bot",
-          "text": "Are you sure you want to delete the Telegram bot?"
-        },
-        "startButton": "Start",
-        "restartButton": "Restart",
-        "stopButton": "Stop",
-        "deleteButton": "Delete"
-      },
+      "constructor": "Constructor",
+      "database": "Database",
+      "stats": "Statistics",
       "statsModal": {
-        "title": "Telegram bot statistics",
         "messages": {
           "getNewUsersStats": {
             "error": "Failed to get new users statistics."
@@ -88,22 +52,58 @@
         "newUsersChart": {
           "title": "New Users"
         },
+        "title": "Telegram bot statistics",
         "usersLastActivityChart": {
           "title": "Last Users Activity"
         }
       },
       "telegramBot": "Telegram bot",
-      "stats": "Statistics",
-      "variables": "Variables",
+      "telegramBotModal": {
+        "deleteButton": "Delete",
+        "deleteModal": {
+          "text": "Are you sure you want to delete the Telegram bot?",
+          "title": "Deleting the Telegram bot"
+        },
+        "messages": {
+          "deleteTelegramBot": {
+            "error": "Failed to delete the Telegram bot.",
+            "success": "You have successfully deleted the Telegram bot."
+          },
+          "restartTelegramBot": {
+            "error": "Failed to restart the Telegram bot.",
+            "success": "Restarting the Telegram bot."
+          },
+          "startTelegramBot": {
+            "error": "Failed to start the Telegram bot.",
+            "success": "Starting the Telegram bot."
+          },
+          "stopTelegramBot": {
+            "error": "Failed to stop the Telegram bot.",
+            "success": "Stopping the Telegram bot."
+          }
+        },
+        "restartButton": "Restart",
+        "startButton": "Start",
+        "stopButton": "Stop"
+      },
       "users": "Users",
-      "database": "Database",
-      "constructor": "Constructor"
-    }
-  },
-  "footer": {
-    "links": {
-      "termsOfService": "Terms of Service",
-      "privacyPolicy": "Privacy Policy"
+      "variables": "Variables"
+    },
+    "userDropdown": {
+      "adminPanel": "Admin panel",
+      "exit": "Exit",
+      "logoutConfirmModal": {
+        "text": "Are you sure you want to logout from account?",
+        "title": "Logout"
+      },
+      "messages": {
+        "logout": {
+          "error": "Failed to logout from account.",
+          "success": "You have successfully logout from account."
+        }
+      },
+      "profile": "Profile",
+      "telegramBots": "Telegram bots"
     }
   }
 }

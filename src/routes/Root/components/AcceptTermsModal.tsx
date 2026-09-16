@@ -14,7 +14,9 @@ import { UserAPI } from 'api/users';
 import reverse from 'utils/reverse';
 
 function AcceptTermsModal(): ReactElement {
-  const { t } = useTranslation(RouteID.Root, { keyPrefix: 'acceptTermsModal' });
+  const { t } = useTranslation<`${RouteID.Root}`, any>('root', {
+    keyPrefix: 'acceptTermsModal',
+  });
 
   const location = useLocation();
   const navigate = useNavigate();

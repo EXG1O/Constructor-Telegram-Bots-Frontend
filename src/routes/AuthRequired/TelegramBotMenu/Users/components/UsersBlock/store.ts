@@ -2,7 +2,7 @@ import i18n from 'i18n';
 import type { TOptions } from 'i18next';
 import { createStore } from 'zustand';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
@@ -13,6 +13,10 @@ import { UsersAPI } from 'api/telegram-bots/user';
 import type { User } from 'api/telegram-bots/user/types';
 
 import createZustandContext, { type BaseState } from 'utils/createZustandContext';
+
+interface StrictTOptions extends TOptions {
+  ns: `${RouteID.TelegramBotMenuUsers}`;
+}
 
 export interface StateData {
   count: number;
@@ -35,8 +39,6 @@ export interface StateActions {
 export type State = BaseState<StoreProps> & StateData & StateActions;
 
 export interface StoreProps extends StateData {}
-
-const langOptions: TOptions = { ns: RouteID.TelegramBotMenuUsers };
 
 export const [UsersBlockStoreProvider, useUsersBlockStore] = createZustandContext(
   (props: StoreProps) =>
@@ -74,7 +76,10 @@ export const [UsersBlockStoreProvider, useUsersBlockStore] = createZustandContex
 
         if (!response.ok) {
           createMessageToast({
-            message: i18n.t('messages.getUsers.error', langOptions),
+            message: i18n.t<string, StrictTOptions, string, StrictTOptions>(
+              'usersBlock.messages.getUsers.error',
+              { ns: 'telegram-bot-menu-users' },
+            ),
             level: 'error',
           });
           set({ loading: false });

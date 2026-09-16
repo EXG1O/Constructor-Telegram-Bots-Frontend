@@ -1,7 +1,7 @@
 import React, { type HTMLAttributes, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import cn from 'utils/cn';
 
@@ -13,9 +13,10 @@ export interface BlockFooterProps extends Omit<
 > {}
 
 function BlockFooter({ className, ...props }: BlockFooterProps): ReactElement | null {
-  const { t } = useTranslation(RouteID.TelegramBotMenuUsers, {
-    keyPrefix: 'usersBlock.footer',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuUsers}`, any>(
+    'telegram-bot-menu-users',
+    { keyPrefix: 'usersBlock.footer' },
+  );
 
   const count = useUsersBlockStore((state) => state.count);
 

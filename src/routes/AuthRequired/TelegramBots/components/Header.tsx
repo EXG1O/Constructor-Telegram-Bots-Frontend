@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import PlusButton from 'components/shared/PlusButton';
 
@@ -17,7 +17,9 @@ import cn from 'utils/cn';
 export interface HeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {}
 
 function Header({ className, ...props }: HeaderProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBots, { keyPrefix: 'header' });
+  const { t } = useTranslation<`${RouteID.TelegramBots}`, any>('telegram-bots', {
+    keyPrefix: 'header',
+  });
 
   const [showModal, setShowModal] = useState<boolean>(false);
 

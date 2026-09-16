@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import FormCodeInputFeedback from 'components/shared/FormCodeInputFeedback';
 import TelegramCodeInputLayout from 'components/shared/TelegramCodeInputLayout';
@@ -12,9 +12,10 @@ import cn from 'utils/cn';
 export interface CreateBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function CreateBlock({ className, ...props }: CreateBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'databaseOperationOffcanvas.createBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'databaseOperationOffcanvas.createBlock' },
+  );
 
   return (
     <Block

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { FastField, type FastFieldProps, type FormikProps } from 'formik';
 import { produce } from 'immer';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import SelectFeedback, {
   type SelectFeedbackProps,
@@ -29,9 +29,10 @@ function NextPartOperatorSelect({
   index,
   ...props
 }: NextPartOperatorSelectProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'conditionOffcanvas.partsBlock.nextPartOperatorSelect',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'conditionOffcanvas.partsBlock.nextPartOperatorSelect' },
+  );
 
   function handleChange(
     form: FormikProps<FormValues>,

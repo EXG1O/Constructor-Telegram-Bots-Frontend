@@ -17,6 +17,7 @@ function FooterCopyright({ className, ...props }: FooterCopyrightProps): ReactEl
       {...props}
       className={cn('w-full', 'text-foreground', 'text-nowrap', className)}
     >
+      {/* i18next-instrument-ignore */}
       &copy; 2026 exg1o
     </span>
   );

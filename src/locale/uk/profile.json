@@ -1,48 +1,48 @@
 {
-  "title": "Профіль",
-  "userDataBlock": {
-    "title": "Дані акаунта",
-    "table": {
-      "headers": {
-        "firstName": "Ім’я:",
-        "lastName": "Прізвище:",
-        "joinedDate": "Приєднався:"
-      }
+  "actionButtonGroup": {
+    "deleteButton": "Видалити акаунт",
+    "deleteModal": {
+      "messages": {
+        "delete": {
+          "error": "Не вдалося видалити акаунт.",
+          "success": "Ви успішно видалили акаунт."
+        }
+      },
+      "text": "Ви точно хочете видалити акаунт?",
+      "title": "Видалення акаунта"
+    },
+    "logoutAllButton": "Вийти з усіх пристроїв",
+    "logoutAllModal": {
+      "messages": {
+        "logoutAll": {
+          "error": "Не вдалося вийти з усіх пристроїв.",
+          "success": "Ви успішно вийшли з усіх пристроїв."
+        }
+      },
+      "text": "Ви точно хочете вийти з усіх пристроїв?",
+      "title": "Вихід з усіх пристроїв"
     }
   },
   "refreshTokensBlock": {
-    "title": "Токени оновлення",
     "helpText": "Під час кожної вашої авторизації створюється токен оновлення, який використовується для подальшого створення короткоживучих токенів доступу.",
     "table": {
       "headers": {
         "blacklistedDate": "Заблоковано",
-        "expiryDate": "Закінчиться",
-        "createdDate": "Створено"
+        "createdDate": "Створено",
+        "expiryDate": "Закінчиться"
       }
-    }
+    },
+    "title": "Токени оновлення"
   },
-  "actionButtonGroup": {
-    "logoutAllModal": {
-      "messages": {
-        "logoutAll": {
-          "success": "Ви успішно вийшли з усіх пристроїв.",
-          "error": "Не вдалося вийти з усіх пристроїв."
-        }
-      },
-      "title": "Вихід з усіх пристроїв",
-      "text": "Ви точно хочете вийти з усіх пристроїв?"
+  "title": "Профіль",
+  "userDataBlock": {
+    "table": {
+      "headers": {
+        "firstName": "Ім’я:",
+        "joinedDate": "Приєднався:",
+        "lastName": "Прізвище:"
+      }
     },
-    "deleteModal": {
-      "messages": {
-        "delete": {
-          "success": "Ви успішно видалили акаунт.",
-          "error": "Не вдалося видалити акаунт."
-        }
-      },
-      "title": "Видалення акаунта",
-      "text": "Ви точно хочете видалити акаунт?"
-    },
-    "logoutAllButton": "Вийти з усіх пристроїв",
-    "deleteButton": "Видалити акаунт"
+    "title": "Дані акаунта"
   }
 }

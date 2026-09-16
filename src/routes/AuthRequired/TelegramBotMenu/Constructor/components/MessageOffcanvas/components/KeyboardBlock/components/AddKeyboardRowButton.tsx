@@ -8,7 +8,7 @@ import {
 } from 'formik';
 import { produce } from 'immer';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Button, { type ButtonProps } from 'components/ui/Button';
 
@@ -25,9 +25,10 @@ function AddKeyboardRowButton({
   onClick,
   ...props
 }: AddKeyboardRowButtonProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas.keyboardBlock.addRowButton',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'messageOffcanvas.keyboardBlock.addRowButton' },
+  );
 
   function handleClick(
     form: FormikProps<FormValues>,

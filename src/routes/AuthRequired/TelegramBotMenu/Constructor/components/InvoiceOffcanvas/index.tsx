@@ -2,7 +2,7 @@ import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { defaultDescriptionBlockFormValues } from './components/DescriptionBlock/defaults';
@@ -48,9 +48,10 @@ export const defaultFormValues: FormValues = {
 export interface InvoiceOffcanvasProps extends OffcanvasInnerProps {}
 
 function InvoiceOffcanvas(props: InvoiceOffcanvasProps): ReactElement {
-  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'invoiceOffcanvas',
-  });
+  const { t, i18n } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'invoiceOffcanvas' },
+  );
 
   const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
   const setTelegramBot = useTelegramBotStore((state) => state.setTelegramBot);

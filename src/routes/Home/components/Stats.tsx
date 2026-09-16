@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Block, { type BlockProps } from 'components/ui/Block';
 import PrettyNumber from 'components/ui/PrettyNumber';
@@ -14,7 +14,7 @@ export interface StatsProps extends Omit<
 > {}
 
 const Stats = forwardRef<HTMLDivElement, StatsProps>(({ className, ...props }, ref) => {
-  const { t } = useTranslation(RouteID.Home, { keyPrefix: 'stats' });
+  const { t } = useTranslation<`${RouteID.Home}`, any>('home', { keyPrefix: 'stats' });
 
   const { stats } = useHomeRouteLoaderData();
 

@@ -1,101 +1,72 @@
 {
-  "title": "Змінні",
   "system": {
-    "title": "Системні змінні",
-    "variables": {
-      "personal": {
-        "CHAT_ID": "ID чату",
-        "CHAT_TYPE": "Тип чату",
-        "CHAT_NAME": "Назва чату",
-        "CHAT_USERNAME": "@username чату",
-        "CHAT_FULL_NAME": "Повна назва чату",
-        "CHAT_LINK": "Посилання на чат",
-        "USER_ID": "ID користувача",
-        "USER_IS_BOT": "Чи є користувач ботом",
-        "USER_IS_PREMIUM": "Чи має користувач Telegram Premium",
-        "USER_NAME": "Ім'я користувача",
-        "USER_USERNAME": "@username користувача",
-        "USER_FIRST_NAME": "Ім'я користувача",
-        "USER_LAST_NAME": "Прізвище користувача",
-        "USER_FULL_NAME": "Ім'я та прізвище користувача",
-        "USER_LANGUAGE_CODE": "Мовний тег користувача",
-        "USER_LINK": "Посилання на користувача",
-        "USER_MESSAGE_ID": "ID повідомлення користувача",
-        "USER_MESSAGE_TEXT": "Текст повідомлення користувача",
-        "USER_MESSAGE_DATE": "Дата відправлення повідомлення користувача",
-        "USER_MESSAGE_LINK": "Посилання на повідомлення користувача"
-      },
-      "global": {
-        "BOT_ID": "ID бота",
-        "BOT_NAME": "Назва бота",
-        "BOT_USERNAME": "@username бота",
-        "BOT_FULL_NAME": "Повна назва бота",
-        "BOT_LINK": "Посилання на бота"
-      }
-    }
+    "title": "Системні змінні"
   },
+  "title": "Змінні",
   "user": {
-    "title": "Користувацькі змінні",
-    "messages": {
-      "getVariables": {
-        "error": "Не вдалося отримати список змінних."
-      },
-      "getVariable": {
-        "error": "Не вдалося отримати дані змінної."
-      }
-    },
-    "variableModal": {
-      "title_add": "Додавання змінної",
-      "title_edit": "Редагування змінної",
-      "messages": {
-        "addVariable": {
-          "success": "Ви успішно додали змінну.",
-          "error": "Не вдалося додати змінну."
-        },
-        "editVariable": {
-          "success": "Ви успішно зберегли змінну.",
-          "error": "Не вдалося зберегти змінну."
-        }
-      },
-      "nameInput": {
-        "placeholder": "Придумайте назву"
-      },
-      "valueInput": {
-        "placeholder": "Введіть значення"
-      },
-      "descriptionInput": {
-        "placeholder": "Введіть опис"
-      },
-      "actionButton_add": "Додати",
-      "actionButton_edit": "Зберегти"
-    },
-    "toolbar": {
-      "addVariableButton": "Додати змінну"
-    },
-    "table": {
-      "placeholders": {
-        "notFound": "Пошук за змінними не дав результатів",
-        "notAdded": "Ви ще не додали змінні"
-      },
-      "row": {
-        "messages": {
-          "deleteVariable": {
-            "success": "Ви успішно видалили змінну.",
-            "error": "Не вдалося видалити змінну."
-          }
-        },
-        "deleteModal": {
-          "title": "Видалення змінної",
-          "text": "Ви точно хочете видалити змінну?"
-        }
-      }
-    },
     "footer": {
       "variableCount_one": "{{count}} змінна",
       "variableCount_two": "{{count}} змінних",
       "variableCount_few": "{{count}} змінних",
       "variableCount_many": "{{count}} змінних",
       "variableCount_other": "{{count}} змінних"
+    },
+    "messages": {
+      "getVariables": {
+        "error": "Не вдалося отримати список змінних."
+      }
+    },
+    "table": {
+      "placeholders": {
+        "notAdded": "Ви ще не додали змінні",
+        "notFound": "Пошук за змінними не дав результатів"
+      },
+      "row": {
+        "deleteModal": {
+          "text": "Ви точно хочете видалити змінну?",
+          "title": "Видалення змінної"
+        },
+        "messages": {
+          "deleteVariable": {
+            "error": "Не вдалося видалити змінну.",
+            "success": "Ви успішно видалили змінну."
+          }
+        }
+      }
+    },
+    "title": "Користувацькі змінні",
+    "toolbar": {
+      "addVariableButton": "Додати змінну"
+    },
+    "variableModal": {
+      "actionButton": "",
+      "actionButton_add": "Додати",
+      "actionButton_edit": "Зберегти",
+      "descriptionInput": {
+        "placeholder": "Введіть опис"
+      },
+      "messages": {
+        "addVariable": {
+          "error": "Не вдалося додати змінну.",
+          "success": "Ви успішно додали змінну."
+        },
+        "editVariable": {
+          "error": "Не вдалося зберегти змінну.",
+          "success": "Ви успішно зберегли змінну."
+        },
+        "getVariable": {
+          "error": "Не вдалося отримати дані змінної."
+        }
+      },
+      "nameInput": {
+        "placeholder": "Придумайте назву"
+      },
+      "title": "",
+      "title_add": "Додавання змінної",
+      "title_edit": "Редагування змінної",
+      "valueInput": {
+        "placeholder": "Введіть значення"
+      }
     }
   }
 }

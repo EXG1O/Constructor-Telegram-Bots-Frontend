@@ -2,7 +2,7 @@ import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Formik, type FormikHelpers } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import Modal, { type ModalProps } from 'components/ui/Modal';
@@ -31,9 +31,10 @@ function RecordAdditionModal({
   onHide,
   ...props
 }: RecordAdditionModalProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
-    keyPrefix: 'records.recordAdditionModal',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuDatabase}`, any>(
+    'telegram-bot-menu-database',
+    { keyPrefix: 'records.recordAdditionModal' },
+  );
 
   const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 

@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import SimpleInputFeedback, {
   type SimpleInputFeedbackProps,
@@ -22,9 +22,10 @@ export interface URLInputProps extends Omit<
 export const defaultURL: URL = '';
 
 function URLInput(props: URLInputProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas.keyboardBlock.keyboardButtonPopover.urlInput',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'messageOffcanvas.keyboardBlock.keyboardButtonPopover.urlInput' },
+  );
 
   const url = useKeyboardButtonPopoverStore((state) => state.url);
   const setURL = useKeyboardButtonPopoverStore((state) => state.setURL);

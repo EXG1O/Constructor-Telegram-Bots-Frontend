@@ -2,7 +2,7 @@ import i18n from 'i18n';
 import type { TOptions } from 'i18next';
 import { createStore } from 'zustand';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
@@ -15,6 +15,10 @@ import { ChatType } from 'api/telegram-bots/chat/enums';
 import type { Chat } from 'api/telegram-bots/chat/types';
 
 import createZustandContext, { type BaseState } from 'utils/createZustandContext';
+
+interface StrictTOptions extends TOptions {
+  ns: `${RouteID.TelegramBotMenuUsers}`;
+}
 
 export interface StateData {
   count: number;
@@ -39,7 +43,6 @@ export type State = BaseState<StoreProps> & StateData & StateActions;
 
 export interface StoreProps extends StateData {}
 
-const langOptions: TOptions = { ns: RouteID.TelegramBotMenuUsers };
 const typeMap: Record<Type, ChatType | undefined> = {
   all: undefined,
   private: ChatType.PRIVATE,
@@ -87,7 +90,10 @@ export const [ChatsBlockStoreProvider, useChatsBlockStore] = createZustandContex
 
         if (!response.ok) {
           createMessageToast({
-            message: i18n.t('messages.getChats.error', langOptions),
+            message: i18n.t<string, StrictTOptions, string, StrictTOptions>(
+              'chatsBlock.messages.getChats.error',
+              { ns: 'telegram-bot-menu-users' },
+            ),
             level: 'error',
           });
           set({ loading: false });

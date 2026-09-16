@@ -20,7 +20,7 @@ export interface UserDropdownProps extends Omit<DropdownProps, 'children'> {
 }
 
 function UserDropdown({ user, ...props }: UserDropdownProps): ReactElement {
-  const { t, i18n } = useTranslation(RouteID.Root, {
+  const { t, i18n } = useTranslation<`${RouteID.Root}`, any>('root', {
     keyPrefix: 'header.userDropdown',
   });
 

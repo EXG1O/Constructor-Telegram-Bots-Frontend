@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Block, { type BlockProps } from 'components/ui/Block';
 
@@ -14,9 +14,10 @@ import cn from 'utils/cn';
 export interface ImagesBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function ImagesBlock({ className, ...props }: ImagesBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas.imagesBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'messageOffcanvas.imagesBlock' },
+  );
 
   return (
     <Block

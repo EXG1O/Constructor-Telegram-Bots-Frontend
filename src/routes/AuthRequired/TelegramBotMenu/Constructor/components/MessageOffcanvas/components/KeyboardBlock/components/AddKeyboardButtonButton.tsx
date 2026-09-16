@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Button, { type ButtonProps } from 'components/ui/Button';
 
@@ -13,9 +13,10 @@ export interface AddKeyboardButtonButtonProps extends Omit<
 > {}
 
 function AddKeyboardButtonButton(props: AddKeyboardButtonButtonProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas.keyboardBlock.addButtonButton',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'messageOffcanvas.keyboardBlock.addButtonButton' },
+  );
 
   return (
     <KeyboardButtonPopover>

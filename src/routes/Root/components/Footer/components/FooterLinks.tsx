@@ -17,7 +17,9 @@ export interface FooterLinksProps extends Omit<
 > {}
 
 function FooterLinks({ className, ...props }: FooterLinksProps): ReactElement {
-  const { t } = useTranslation(RouteID.Root, { keyPrefix: 'footer.links' });
+  const { t } = useTranslation<`${RouteID.Root}`, any>('root', {
+    keyPrefix: 'footer.links',
+  });
 
   const location = useLocation();
 

@@ -2,7 +2,7 @@ import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FastField, type FastFieldProps } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Block, { type BlockProps } from 'components/ui/Block';
 import Clipboard from 'components/ui/Clipboard';
@@ -13,9 +13,10 @@ import cn from 'utils/cn';
 export interface WebhookBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function WebhookBlock({ className, ...props }: WebhookBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'triggerOffcanvas.webhookBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'triggerOffcanvas.webhookBlock' },
+  );
 
   return (
     <Block
