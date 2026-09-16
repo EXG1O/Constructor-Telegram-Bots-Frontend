@@ -2,7 +2,7 @@ import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { defaultIntervalBlockFormValues } from './components/IntervalBlock/defaults';
@@ -33,9 +33,10 @@ export const defaultFormValues: FormValues = {
 export interface BackgroundTaskOffcanvasProps extends OffcanvasInnerProps {}
 
 function BackgroundTaskOffcanvas(props: BackgroundTaskOffcanvasProps): ReactElement {
-  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'backgroundTaskOffcanvas',
-  });
+  const { t, i18n } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'backgroundTaskOffcanvas' },
+  );
 
   const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 

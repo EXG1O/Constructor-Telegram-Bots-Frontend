@@ -1,7 +1,7 @@
 import React, { type ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Button from 'components/ui/Button';
 import Collapsible, { type CollapsibleProps } from 'components/ui/Collapsible';
@@ -20,9 +20,10 @@ function AddonButtonGroup({
   className,
   ...props
 }: AddonButtonGroupProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'addonButtonGroup',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'addonButtonGroup' },
+  );
 
   const [open, setOpen] = useState<boolean>(false);
 

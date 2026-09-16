@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useField } from 'formik';
 import { produce } from 'immer';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Button from 'components/ui/Button';
 import Popover, { type PopoverProps } from 'components/ui/Popover';
@@ -42,9 +42,10 @@ function KeyboardButtonPopover({
   children,
   ...props
 }: KeyboardButtonPopoverProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas.keyboardBlock.keyboardButtonPopover',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'messageOffcanvas.keyboardBlock.keyboardButtonPopover' },
+  );
 
   const initialize = useKeyboardButtonPopoverStore((state) => state.initialize);
   const setErrors = useKeyboardButtonPopoverStore((state) => state.setErrors);
@@ -165,9 +166,9 @@ function KeyboardButtonPopover({
               size='sm'
               variant='success'
               className='w-full'
-              onClick={action === 'add' ? handleAddClick : handleSaveClick}
+              onClick={action === 'edit' ? handleSaveClick : handleAddClick}
             >
-              {t('actionButton', { context: action })}
+              {t('actionButton', { context: action === 'edit' ? 'edit' : 'add' })}
             </Button>
           </Popover.Close>
           {action === 'edit' && (

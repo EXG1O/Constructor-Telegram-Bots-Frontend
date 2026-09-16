@@ -1,17 +1,13 @@
 {
-  "title": "Конструктор Telegram ботів",
   "header": {
     "text": "Зручна платформа, яка дозволяє легко створити власного багатофункціонального Telegram бота без програмування."
   },
   "stats": {
-    "title": "Статистика",
-    "usersTotal": "Користувачів",
-    "telegramBotsTotal": "Доданих Telegram ботів",
     "telegramBotsEnabled": "Увімкнених Telegram ботів",
-    "telegramBotsUsers": "Користувачів Telegram ботів"
+    "telegramBotsTotal": "Доданих Telegram ботів",
+    "telegramBotsUsers": "Користувачів Telegram ботів",
+    "title": "Статистика",
+    "usersTotal": "Користувачів"
   },
-  "donations": {
-    "title": "Пожертви",
-    "noDonations": "Ще не було зроблено пожертв"
-  }
+  "title": "Конструктор Telegram ботів"
 }

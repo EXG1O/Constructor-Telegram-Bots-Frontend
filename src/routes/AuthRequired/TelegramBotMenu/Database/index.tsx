@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Block from 'components/ui/Block';
 import Page from 'components/ui/Page';
@@ -12,7 +12,9 @@ import Toolbar from './components/Toolbar';
 import StoreProvider from './providers/StoreProvider';
 
 function Database(): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuDatabase);
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuDatabase}`, any>(
+    'telegram-bot-menu-database',
+  );
 
   return (
     <Page title={t('title')} flex gutters className='flex-auto'>

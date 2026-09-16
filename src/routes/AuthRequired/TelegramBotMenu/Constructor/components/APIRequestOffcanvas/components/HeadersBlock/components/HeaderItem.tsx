@@ -9,7 +9,7 @@ import {
 import { produce } from 'immer';
 import { Trash2 } from 'lucide-react';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import IconButton from 'components/ui/IconButton';
@@ -27,9 +27,10 @@ export interface HeaderItemProps extends Omit<
 }
 
 function HeaderItem({ index, className, ...props }: HeaderItemProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'apiRequestOffcanvas.headersBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'apiRequestOffcanvas.headersBlock' },
+  );
 
   function handleDeleteClick(
     form: FormikProps<any>,

@@ -2,7 +2,7 @@ import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Panel as RFPanel, type PanelProps as RFPanelProps } from '@xyflow/react';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import PlusButton from 'components/shared/PlusButton';
 
@@ -14,9 +14,10 @@ PrimitivePanel.displayName = 'PrimitivePanel';
 export interface PanelProps extends Omit<RFPanelProps, 'position' | 'children'> {}
 
 function Panel({ className, ...props }: PanelProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'panel',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'panel' },
+  );
 
   return (
     <PrimitivePanel {...props} position='top-right'>

@@ -2,7 +2,7 @@ import React, { memo, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { defaultDurationBlockFormValues } from './components/DurationBlock/defaults';
@@ -29,9 +29,10 @@ export const defaultFormValues: FormValues = {
 export interface TimerOffcanvasProps extends OffcanvasInnerProps {}
 
 function TimerOffcanvas(props: TimerOffcanvasProps): ReactElement {
-  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'timerOffcanvas',
-  });
+  const { t, i18n } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'timerOffcanvas' },
+  );
 
   const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 

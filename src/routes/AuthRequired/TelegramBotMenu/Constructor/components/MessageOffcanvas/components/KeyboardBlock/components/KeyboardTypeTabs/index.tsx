@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import FormTabs, { type FormTabsProps } from 'components/shared/FormTabs';
 import Tabs from 'components/ui/Tabs';
@@ -20,9 +20,10 @@ function KeyboardTypeTabs({
   onChange,
   ...props
 }: KeyboardTypeTabsButtonGroupProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas.keyboardBlock.types',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'messageOffcanvas.keyboardBlock.types' },
+  );
 
   return (
     <FormTabs {...props} name='keyboard.type' size='sm'>

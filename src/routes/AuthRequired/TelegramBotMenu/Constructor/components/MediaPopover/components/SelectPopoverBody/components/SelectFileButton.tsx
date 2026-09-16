@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Button, { type ButtonProps } from 'components/ui/Button';
 
@@ -24,9 +24,10 @@ function SelectFileButton({
   multiple,
   ...props
 }: SelectFileButtonProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'mediaPopover.selectPopoverBody.selectFileButton',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'mediaPopover.selectPopoverBody.selectFileButton' },
+  );
 
   const onAdd = useMediaPopoverStore((state) => state.onAdd);
 
@@ -55,7 +56,7 @@ function SelectFileButton({
       />
       <Button {...props} asChild size='sm' variant='dark'>
         <label htmlFor={inputID}>
-          {t('text', { context: multiple && 'multiple' })}
+          {t('text', { context: multiple ? 'multiple' : undefined })}
         </label>
       </Button>
     </>

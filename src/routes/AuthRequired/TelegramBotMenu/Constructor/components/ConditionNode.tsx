@@ -7,7 +7,7 @@ import {
   useReactFlow,
 } from '@xyflow/react';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
@@ -44,9 +44,10 @@ function ConditionNode({
   positionAbsoluteY,
   data: condition,
 }: ConditionNodeProps): ReactElement {
-  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'nodes.condition',
-  });
+  const { t, i18n } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'nodes.condition' },
+  );
 
   const reactFlow = useReactFlow();
 

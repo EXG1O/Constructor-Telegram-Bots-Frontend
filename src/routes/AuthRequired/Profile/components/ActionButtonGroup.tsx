@@ -22,7 +22,9 @@ function ActionButtonGroup({
   className,
   ...props
 }: ActionButtonGroupProps): ReactElement {
-  const { t } = useTranslation(RouteID.Profile, { keyPrefix: 'actionButtonGroup' });
+  const { t } = useTranslation<`${RouteID.Profile}`, any>('profile', {
+    keyPrefix: 'actionButtonGroup',
+  });
 
   const navigate = useNavigate();
 

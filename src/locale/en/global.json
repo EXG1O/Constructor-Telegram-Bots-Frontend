@@ -1,10 +1,41 @@
 {
-  "seo": {
-    "description": "A platform that lets you easily create your own multifunctional Telegram bot with no coding required."
-  },
   "messages": {
     "loader": {
       "error": "Failed to get the necessary data from the server for an unknown reason."
+    }
+  },
+  "seo": {
+    "description": "A platform that lets you easily create your own multifunctional Telegram bot with no coding required."
+  },
+  "telegramBotSystemVariables": {
+    "global": {
+      "BOT_FULL_NAME": "Bot full name",
+      "BOT_ID": "Bot ID",
+      "BOT_LINK": "Bot link",
+      "BOT_NAME": "Bot name",
+      "BOT_USERNAME": "Bot @username"
+    },
+    "personal": {
+      "CHAT_FULL_NAME": "Chat full name",
+      "CHAT_ID": "Chat ID",
+      "CHAT_LINK": "Chat link",
+      "CHAT_NAME": "Chat name",
+      "CHAT_TYPE": "Chat type",
+      "CHAT_USERNAME": "Chat @username",
+      "USER_FIRST_NAME": "User first name",
+      "USER_FULL_NAME": "User full name",
+      "USER_ID": "User ID",
+      "USER_IS_BOT": "Is the user a bot",
+      "USER_IS_PREMIUM": "Does the user have Telegram Premium",
+      "USER_LANGUAGE_CODE": "User language tag",
+      "USER_LAST_NAME": "User last name",
+      "USER_LINK": "User link",
+      "USER_MESSAGE_DATE": "User message sent date",
+      "USER_MESSAGE_ID": "User message ID",
+      "USER_MESSAGE_LINK": "User message link",
+      "USER_MESSAGE_TEXT": "User message text",
+      "USER_NAME": "User name",
+      "USER_USERNAME": "User @username"
     }
   }
 }

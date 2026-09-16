@@ -1,7 +1,7 @@
 import React, { type HTMLAttributes, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import useUserVariablesStore from '../hooks/useUserVariablesStore';
 
@@ -10,9 +10,10 @@ import cn from 'utils/cn';
 export interface FooterProps extends Omit<HTMLAttributes<HTMLElement>, 'children'> {}
 
 function Footer({ className, ...props }: FooterProps): ReactElement | null {
-  const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
-    keyPrefix: 'user.footer',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuVariables}`, any>(
+    'telegram-bot-menu-variables',
+    { keyPrefix: 'user.footer' },
+  );
 
   const variableCount = useUserVariablesStore((state) => state.count);
 

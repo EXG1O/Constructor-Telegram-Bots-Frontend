@@ -2,7 +2,7 @@ import React, { lazy, type ReactElement, Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormikContext } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import Offcanvas, { type OffcanvasProps } from 'components/ui/Offcanvas';
@@ -32,9 +32,10 @@ function OffcanvasInner({
   onHidden,
   ...props
 }: OffcanvasInnerProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'triggerOffcanvas',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'triggerOffcanvas' },
+  );
 
   const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
@@ -124,7 +125,9 @@ function OffcanvasInner({
       onHidden={handleHidden}
     >
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title>{t('title', { context: action })}</Offcanvas.Title>
+        <Offcanvas.Title>
+          {t('title', { context: action === 'edit' ? 'edit' : 'add' })}
+        </Offcanvas.Title>
       </Offcanvas.Header>
       <Suspense fallback={<Offcanvas.Loading />}>
         <OffcanvasContent />

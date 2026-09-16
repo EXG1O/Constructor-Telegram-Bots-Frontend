@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Page from 'components/ui/Page';
 
@@ -9,7 +9,9 @@ import ChatsBlock from './components/ChatsBlock';
 import UsersBlock from './components/UsersBlock';
 
 function Users(): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuUsers);
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuUsers}`, any>(
+    'telegram-bot-menu-users',
+  );
 
   const title: string = t('title');
 

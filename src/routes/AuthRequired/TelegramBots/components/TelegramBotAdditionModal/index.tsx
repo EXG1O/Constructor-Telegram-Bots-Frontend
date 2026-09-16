@@ -2,7 +2,7 @@ import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Formik, type FormikHelpers } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Modal, { type ModalProps } from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
@@ -27,7 +27,7 @@ function TelegramBotAdditionModal({
   onHide,
   ...props
 }: TelegramBotAdditionModalProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBots, {
+  const { t } = useTranslation<`${RouteID.TelegramBots}`, any>('telegram-bots', {
     keyPrefix: 'telegramBotAdditionModal',
   });
 

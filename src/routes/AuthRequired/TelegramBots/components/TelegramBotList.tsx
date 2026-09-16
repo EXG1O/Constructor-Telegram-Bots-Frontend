@@ -1,7 +1,7 @@
 import React, { type HTMLAttributes, type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import TelegramBotItem from './TelegramBotItem';
 
@@ -15,7 +15,7 @@ export interface TelegramBotListProps extends Omit<
 > {}
 
 function TelegramBotList({ className, ...props }: TelegramBotListProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBots);
+  const { t } = useTranslation<`${RouteID.TelegramBots}`, any>('telegram-bots');
 
   const [telegramBots] = useTelegramBots();
 

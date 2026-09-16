@@ -19,7 +19,7 @@ import reverse from 'utils/reverse';
 export interface TelegramBotModalProps extends Omit<ModalProps, 'children'> {}
 
 function TelegramBotModal({ onHide, ...props }: TelegramBotModalProps): ReactElement {
-  const { t } = useTranslation(RouteID.Root, {
+  const { t } = useTranslation<`${RouteID.Root}`, any>('root', {
     keyPrefix: 'header.telegramBotDropdown.telegramBotModal',
   });
 

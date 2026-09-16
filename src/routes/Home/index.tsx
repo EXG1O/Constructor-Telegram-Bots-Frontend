@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Page from 'components/ui/Page';
 
@@ -9,7 +9,7 @@ import Header from './components/Header';
 import Stats from './components/Stats';
 
 function Home(): ReactElement {
-  const { t } = useTranslation(RouteID.Home);
+  const { t } = useTranslation<`${RouteID.Home}`, any>('home');
 
   return (
     <main className='my-auto'>

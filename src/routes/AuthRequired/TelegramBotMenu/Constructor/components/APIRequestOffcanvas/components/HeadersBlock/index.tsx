@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Block, { type BlockProps } from 'components/ui/Block';
 
@@ -13,9 +13,10 @@ import cn from 'utils/cn';
 export interface HeadersBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function HeadersBlock({ className, ...props }: HeadersBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'apiRequestOffcanvas.headersBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'apiRequestOffcanvas.headersBlock' },
+  );
 
   return (
     <Block

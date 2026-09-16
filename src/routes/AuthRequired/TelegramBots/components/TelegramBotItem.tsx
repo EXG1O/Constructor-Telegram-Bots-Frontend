@@ -23,7 +23,7 @@ function TelegramBotItem({
   className,
   ...props
 }: TelegramBotItemProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBots);
+  const { t } = useTranslation<`${RouteID.TelegramBots}`, any>('telegram-bots');
 
   const location = useLocation();
 

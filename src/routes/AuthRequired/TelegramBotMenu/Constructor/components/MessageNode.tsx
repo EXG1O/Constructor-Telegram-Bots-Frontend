@@ -8,7 +8,7 @@ import {
 } from '@xyflow/react';
 import { Link } from 'lucide-react';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
@@ -50,9 +50,10 @@ function MessageNode({
   positionAbsoluteY,
   data: message,
 }: MessageNodeProps): ReactElement {
-  const { t, i18n } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'nodes.message',
-  });
+  const { t, i18n } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'nodes.message' },
+  );
 
   const reactFlow = useReactFlow();
 

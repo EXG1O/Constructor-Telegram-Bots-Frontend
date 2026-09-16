@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Button from 'components/ui/Button';
 import Popover from 'components/ui/Popover';
@@ -23,9 +23,10 @@ export interface URLPopoverBodyProps extends Omit<
 export const defaultURL: URLValue = '';
 
 function URLPopoverBody({ className, ...props }: URLPopoverBodyProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'mediaPopover.urlPopoverBody',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'mediaPopover.urlPopoverBody' },
+  );
 
   const action = useMediaPopoverStore((state) => state.action);
   const onAdd = useMediaPopoverStore((state) => state.onAdd);
@@ -52,7 +53,7 @@ function URLPopoverBody({ className, ...props }: URLPopoverBodyProps): ReactElem
       return;
     }
 
-    (action === 'add' ? onAdd : onEdit)?.({ url, files: null });
+    (action === 'edit' ? onEdit : onAdd)?.({ url, files: null });
   }
 
   return (

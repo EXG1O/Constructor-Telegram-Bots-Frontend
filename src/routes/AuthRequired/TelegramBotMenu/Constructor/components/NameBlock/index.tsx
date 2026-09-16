@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import Block, { type BlockProps } from 'components/ui/Block';
@@ -11,9 +11,10 @@ import cn from 'utils/cn';
 export interface NameBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function NameBlock({ className, ...props }: NameBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'nameBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'nameBlock' },
+  );
 
   return (
     <Block

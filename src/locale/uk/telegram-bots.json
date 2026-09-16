@@ -1,21 +1,21 @@
 {
-  "title": "Telegram боти",
   "header": {
-    "title": "Додані Telegram боти",
-    "addTelegramBotButton": "Додати Telegram бота"
-  },
-  "telegramBotAdditionModal": {
-    "title": "Додавання Telegram бота",
-    "messages": {
-      "createTelegramBot": {
-        "success": "Ви успішно додали Telegram бота.",
-        "error": "Сталася непередбачувана помилка, через яку не вдалося додати Telegram бота."
-      }
-    },
-    "apiTokenInputPlaceholder": "Введіть API-токен",
-    "privateSwitchLabel": "Зробити приватним",
-    "addButton": "Додати"
+    "addTelegramBotButton": "Додати Telegram бота",
+    "title": "Додані Telegram боти"
   },
   "notTelegramBots": "Ви ще не додали Telegram ботів",
-  "telegramBotMenuLink": "Меню Telegram бота"
+  "telegramBotAdditionModal": {
+    "addButton": "Додати",
+    "apiTokenInputPlaceholder": "Введіть API-токен",
+    "messages": {
+      "createTelegramBot": {
+        "error": "Сталася непередбачувана помилка, через яку не вдалося додати Telegram бота.",
+        "success": "Ви успішно додали Telegram бота."
+      }
+    },
+    "privateSwitchLabel": "Зробити приватним",
+    "title": "Додавання Telegram бота"
+  },
+  "telegramBotMenuLink": "Меню Telegram бота",
+  "title": "Telegram боти"
 }

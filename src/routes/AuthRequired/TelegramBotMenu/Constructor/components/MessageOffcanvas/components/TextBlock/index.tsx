@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import FormRichInputFeedback from 'components/shared/FormRichInputFeedback';
 import TelegramRichInputLayout, {
@@ -14,9 +14,10 @@ import cn from 'utils/cn';
 export interface TextBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function TextBlock({ className, ...props }: TextBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas.textBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'messageOffcanvas.textBlock' },
+  );
 
   return (
     <Block

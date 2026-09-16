@@ -1,11 +1,15 @@
 {
-  "confirmModal": {
-    "yesButton": "Так",
-    "noButton": "Ні"
+  "clipboard": {
+    "messages": {
+      "copy": {
+        "error": "Під час спроби скопіювати змінну в буфер обміну сталася помилка.",
+        "success": "Ви успішно скопіювали змінну в буфер обміну."
+      }
+    }
   },
-  "search": {
-    "inputPlaceholder": "Пошук",
-    "button": "Знайти"
+  "confirmModal": {
+    "noButton": "Ні",
+    "yesButton": "Так"
   },
   "loginButton": {
     "messages": {
@@ -15,6 +19,10 @@
     },
     "text": "Увійти через Telegram"
   },
+  "search": {
+    "button": "Знайти",
+    "inputPlaceholder": "Пошук"
+  },
   "telegramBotContent": {
     "messages": {
       "getTelegramBot": {
@@ -22,56 +30,51 @@
       }
     },
     "table": {
-      "status": {
-        "header": "Статус",
-        "loading": "Завантаження",
-        "enabled": "Увімкнено",
-        "disabled": "Вимкнено"
+      "addedDate": {
+        "header": "Додано"
       },
       "apiToken": {
         "header": "API-токен",
+        "inputPlaceholder": "Введіть API-токен",
         "messages": {
           "updateTelegramBotAPIToken": {
-            "success": "Ви успішно оновили API-токен Telegram бота.",
-            "error": "Не вдалося оновити API-токен Telegram бота."
+            "error": "Не вдалося оновити API-токен Telegram бота.",
+            "success": "Ви успішно оновили API-токен Telegram бота."
           }
-        },
-        "inputPlaceholder": "Введіть API-токен"
+        }
       },
       "private": {
         "header": "Приватний",
         "messages": {
           "updateTelegramBotPrivate": {
-            "success_true": "Ви успішно зробили Telegram бота приватним.",
-            "success_false": "Ви успішно зробили Telegram бота не приватним.",
+            "error": "",
+            "error_false": "Не вдалося зробити Telegram бота не приватним.",
             "error_true": "Не вдалося зробити Telegram бота приватним.",
-            "error_false": "Не вдалося зробити Telegram бота не приватним."
+            "success": "",
+            "success_false": "Ви успішно зробили Telegram бота не приватним.",
+            "success_true": "Ви успішно зробили Telegram бота приватним."
           }
         }
       },
+      "status": {
+        "disabled": "Вимкнено",
+        "enabled": "Увімкнено",
+        "header": "Статус",
+        "loading": "Завантаження"
+      },
       "storage": {
         "header": "Сховище"
-      },
-      "addedDate": {
-        "header": "Додано"
       }
     }
   },
   "telegramBotSystemVariablesTypeTabs": {
-    "personal": "Персональні",
-    "global": "Глобальні"
+    "global": "Глобальні",
+    "personal": "Персональні"
   },
   "telegramBotVariablesPopover": {
-    "types": {
-      "system": "Системні змінні",
-      "user": "Користувацькі змінні",
-      "temporary": "Тимчасові змінні",
-      "database": "База даних",
-      "other": "Інші змінні"
-    },
-    "userVariables": {
+    "databaseRecords": {
       "placeholders": {
-        "empty": "Ви ще не додали змінні"
+        "empty": "Ви ще не додали записи"
       }
     },
     "temporaryVariables": {
@@ -79,17 +82,16 @@
         "empty": "Ви ще не додали тимчасові змінні"
       }
     },
-    "databaseRecords": {
+    "types": {
+      "database": "База даних",
+      "other": "Інші змінні",
+      "system": "Системні змінні",
+      "temporary": "Тимчасові змінні",
+      "user": "Користувацькі змінні"
+    },
+    "userVariables": {
       "placeholders": {
-        "empty": "Ви ще не додали записи"
-      }
-    }
-  },
-  "clipboard": {
-    "messages": {
-      "copy": {
-        "success": "Ви успішно скопіювали змінну в буфер обміну.",
-        "error": "Під час спроби скопіювати змінну в буфер обміну сталася помилка."
+        "empty": "Ви ще не додали змінні"
       }
     }
   }

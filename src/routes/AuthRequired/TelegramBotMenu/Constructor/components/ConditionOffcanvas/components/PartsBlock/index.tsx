@@ -2,7 +2,7 @@ import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FastField, type FastFieldProps } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Block, { type BlockProps } from 'components/ui/Block';
 
@@ -15,9 +15,10 @@ import type { Parts } from './types';
 export interface PartsBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function PartsBlock({ className, ...props }: PartsBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'conditionOffcanvas.partsBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'conditionOffcanvas.partsBlock' },
+  );
 
   return (
     <Block

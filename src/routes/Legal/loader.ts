@@ -1,5 +1,6 @@
 import { type LoaderFunctionArgs, redirect } from 'react-router-dom';
 import i18n from 'i18n';
+import type { TOptions } from 'i18next';
 
 import { RouteID } from 'routes';
 
@@ -12,6 +13,10 @@ import { isDocumentType } from 'api/legal/utils';
 
 import reverse from 'utils/reverse';
 
+interface StrictTOptions extends TOptions {
+  ns: `${RouteID.Legal}`;
+}
+
 export interface LoaderData {
   type: DocumentType;
   document: APIResponse.DocumentAPI.Get;
@@ -20,10 +25,10 @@ export interface LoaderData {
 async function loader({ params: { type } }: LoaderFunctionArgs): Promise<LoaderData> {
   if (!type || !isDocumentType(type)) {
     createMessageToast({
-      message: i18n.t('messages.getDocument.error', {
-        ns: RouteID.Legal,
-        context: 'notFound',
-      }),
+      message: i18n.t<string, StrictTOptions, string, StrictTOptions>(
+        'messages.getDocument.error',
+        { ns: 'legal', context: 'notFound' },
+      ),
       level: 'error',
     });
     throw redirect(reverse(RouteID.Home));

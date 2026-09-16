@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import FormCheckFeedback from 'components/shared/FormCheckFeedback';
 import Block, { type BlockProps } from 'components/ui/Block';
@@ -11,9 +11,10 @@ import cn from 'utils/cn';
 export interface SettingsBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function SettingsBlock({ className, ...props }: SettingsBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas.settingsBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'messageOffcanvas.settingsBlock' },
+  );
 
   return (
     <Block

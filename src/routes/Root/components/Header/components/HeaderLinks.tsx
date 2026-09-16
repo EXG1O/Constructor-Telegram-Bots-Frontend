@@ -15,7 +15,9 @@ export interface HeaderLinksProps extends Omit<
 > {}
 
 function HeaderLinks({ className, ...props }: HeaderLinksProps): ReactElement {
-  const { t } = useTranslation(RouteID.Root, { keyPrefix: 'header.links' });
+  const { t } = useTranslation<`${RouteID.Root}`, any>('root', {
+    keyPrefix: 'header.links',
+  });
 
   const location = useLocation();
 

@@ -1,11 +1,15 @@
 {
-  "confirmModal": {
-    "yesButton": "Да",
-    "noButton": "Нет"
+  "clipboard": {
+    "messages": {
+      "copy": {
+        "error": "При попытки скопировать переменную в буфер обмена произошла ошибка.",
+        "success": "Вы успешно скопировали переменную в буфер обмена."
+      }
+    }
   },
-  "search": {
-    "inputPlaceholder": "Поиск",
-    "button": "Найти"
+  "confirmModal": {
+    "noButton": "Нет",
+    "yesButton": "Да"
   },
   "loginButton": {
     "messages": {
@@ -15,6 +19,10 @@
     },
     "text": "Войти через Telegram"
   },
+  "search": {
+    "button": "Найти",
+    "inputPlaceholder": "Поиск"
+  },
   "telegramBotContent": {
     "messages": {
       "getTelegramBot": {
@@ -22,56 +30,51 @@
       }
     },
     "table": {
-      "status": {
-        "header": "Статус",
-        "loading": "Загрузка",
-        "enabled": "Включен",
-        "disabled": "Выключен"
+      "addedDate": {
+        "header": "Добавлен"
       },
       "apiToken": {
         "header": "API-токен",
+        "inputPlaceholder": "Введите API-токен",
         "messages": {
           "updateTelegramBotAPIToken": {
-            "success": "Вы успешно обновили API-токен Telegram бота.",
-            "error": "Не удалось обновить API-токен Telegram бота."
+            "error": "Не удалось обновить API-токен Telegram бота.",
+            "success": "Вы успешно обновили API-токен Telegram бота."
           }
-        },
-        "inputPlaceholder": "Введите API-токен"
+        }
       },
       "private": {
         "header": "Приватный",
         "messages": {
           "updateTelegramBotPrivate": {
-            "success_true": "Вы успешно сделали Telegram бота приватным.",
-            "success_false": "Вы успешно сделали Telegram бота не приватным.",
+            "error": "",
+            "error_false": "Не удалось сделать Telegram бота не приватным.",
             "error_true": "Не удалось сделать Telegram бота приватным.",
-            "error_false": "Не удалось сделать Telegram бота не приватным."
+            "success": "",
+            "success_false": "Вы успешно сделали Telegram бота не приватным.",
+            "success_true": "Вы успешно сделали Telegram бота приватным."
           }
         }
       },
+      "status": {
+        "disabled": "Выключен",
+        "enabled": "Включен",
+        "header": "Статус",
+        "loading": "Загрузка"
+      },
       "storage": {
         "header": "Хранилище"
-      },
-      "addedDate": {
-        "header": "Добавлен"
       }
     }
   },
   "telegramBotSystemVariablesTypeTabs": {
-    "personal": "Персональные",
-    "global": "Глобальные"
+    "global": "Глобальные",
+    "personal": "Персональные"
   },
   "telegramBotVariablesPopover": {
-    "types": {
-      "system": "Системные переменные",
-      "user": "Пользовательские переменные",
-      "temporary": "Временные переменные",
-      "database": "База данных",
-      "other": "Другие переменные"
-    },
-    "userVariables": {
+    "databaseRecords": {
       "placeholders": {
-        "empty": "Вы ещё не добавили переменные"
+        "empty": "Вы ещё не добавили записи"
       }
     },
     "temporaryVariables": {
@@ -79,17 +82,16 @@
         "empty": "Вы ещё не добавили временные переменные"
       }
     },
-    "databaseRecords": {
+    "types": {
+      "database": "База данных",
+      "other": "Другие переменные",
+      "system": "Системные переменные",
+      "temporary": "Временные переменные",
+      "user": "Пользовательские переменные"
+    },
+    "userVariables": {
       "placeholders": {
-        "empty": "Вы ещё не добавили записи"
-      }
-    }
-  },
-  "clipboard": {
-    "messages": {
-      "copy": {
-        "success": "Вы успешно скопировали переменную в буфер обмена.",
-        "error": "При попытки скопировать переменную в буфер обмена произошла ошибка."
+        "empty": "Вы ещё не добавили переменные"
       }
     }
   }

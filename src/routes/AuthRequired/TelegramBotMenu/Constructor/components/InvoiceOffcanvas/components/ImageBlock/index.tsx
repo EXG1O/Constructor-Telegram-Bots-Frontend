@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Slot } from '@radix-ui/react-slot';
 import { useField } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Block, { type BlockProps } from 'components/ui/Block';
 import Button from 'components/ui/Button';
@@ -21,9 +21,10 @@ import type { ImageBlockFormValues } from './types';
 export interface ImageBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function ImageBlock({ className, ...props }: ImageBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'invoiceOffcanvas.imageBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'invoiceOffcanvas.imageBlock' },
+  );
 
   const getRemainingStorageSize = useInvoiceOffcanvasStore(
     (state) => state.getRemainingStorageSize,

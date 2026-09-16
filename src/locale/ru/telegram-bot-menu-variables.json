@@ -1,101 +1,72 @@
 {
-  "title": "Переменные",
   "system": {
-    "title": "Системные переменные",
-    "variables": {
-      "personal": {
-        "CHAT_ID": "ID чата",
-        "CHAT_TYPE": "Тип чата",
-        "CHAT_NAME": "Название чата",
-        "CHAT_USERNAME": "@username чата",
-        "CHAT_FULL_NAME": "Полное название чата",
-        "CHAT_LINK": "Ссылка на чат",
-        "USER_ID": "ID пользователя",
-        "USER_IS_BOT": "Является ли пользователь ботом",
-        "USER_IS_PREMIUM": "Есть ли у пользователя Telegram Premium",
-        "USER_NAME": "Название пользователя",
-        "USER_USERNAME": "@username пользователя",
-        "USER_FIRST_NAME": "Имя пользователя",
-        "USER_LAST_NAME": "Фамилия пользователя",
-        "USER_FULL_NAME": "Имя и фамилия пользователя",
-        "USER_LANGUAGE_CODE": "Языковой тег пользователя",
-        "USER_LINK": "Ссылка на пользователя",
-        "USER_MESSAGE_ID": "ID сообщения пользователя",
-        "USER_MESSAGE_TEXT": "Текст сообщения пользователя",
-        "USER_MESSAGE_DATE": "Дата отправки сообщения пользователя",
-        "USER_MESSAGE_LINK": "Ссылка на сообщение пользователя"
-      },
-      "global": {
-        "BOT_ID": "ID бота",
-        "BOT_NAME": "Название бота",
-        "BOT_USERNAME": "@username бота",
-        "BOT_FULL_NAME": "Полное название бота",
-        "BOT_LINK": "Ссылка на бота"
-      }
-    }
+    "title": "Системные переменные"
   },
+  "title": "Переменные",
   "user": {
-    "title": "Пользовательские переменные",
-    "messages": {
-      "getVariables": {
-        "error": "Не удалось получить список переменных."
-      },
-      "getVariable": {
-        "error": "Не удалось получить данные переменной."
-      }
-    },
-    "variableModal": {
-      "title_add": "Добавление переменной",
-      "title_edit": "Редактирование переменной",
-      "messages": {
-        "addVariable": {
-          "success": "Вы успешно добавили переменную.",
-          "error": "Не удалось добавить переменную."
-        },
-        "editVariable": {
-          "success": "Вы успешно сохранили переменную.",
-          "error": "Не удалось сохранить переменную."
-        }
-      },
-      "nameInput": {
-        "placeholder": "Придумайте название"
-      },
-      "valueInput": {
-        "placeholder": "Введите значение"
-      },
-      "descriptionInput": {
-        "placeholder": "Введите описание"
-      },
-      "actionButton_add": "Добавить",
-      "actionButton_edit": "Сохранить"
-    },
-    "toolbar": {
-      "addVariableButton": "Добавить переменную"
-    },
-    "table": {
-      "placeholders": {
-        "notFound": "Поиск по переменным не дал результатов",
-        "notAdded": "Вы ещё не добавили переменные"
-      },
-      "row": {
-        "messages": {
-          "deleteVariable": {
-            "success": "Вы успешно удалили переменную.",
-            "error": "Не удалось удалить переменную."
-          }
-        },
-        "deleteModal": {
-          "title": "Удаление переменной",
-          "text": "Вы точно хотите удалить переменную?"
-        }
-      }
-    },
     "footer": {
       "variableCount_one": "{{count}} переменная",
       "variableCount_two": "{{count}} переменных",
       "variableCount_few": "{{count}} переменных",
       "variableCount_many": "{{count}} переменных",
       "variableCount_other": "{{count}} переменных"
+    },
+    "messages": {
+      "getVariables": {
+        "error": "Не удалось получить список переменных."
+      }
+    },
+    "table": {
+      "placeholders": {
+        "notAdded": "Вы ещё не добавили переменные",
+        "notFound": "Поиск по переменным не дал результатов"
+      },
+      "row": {
+        "deleteModal": {
+          "text": "Вы точно хотите удалить переменную?",
+          "title": "Удаление переменной"
+        },
+        "messages": {
+          "deleteVariable": {
+            "error": "Не удалось удалить переменную.",
+            "success": "Вы успешно удалили переменную."
+          }
+        }
+      }
+    },
+    "title": "Пользовательские переменные",
+    "toolbar": {
+      "addVariableButton": "Добавить переменную"
+    },
+    "variableModal": {
+      "actionButton": "",
+      "actionButton_add": "Добавить",
+      "actionButton_edit": "Сохранить",
+      "descriptionInput": {
+        "placeholder": "Введите описание"
+      },
+      "messages": {
+        "addVariable": {
+          "error": "Не удалось добавить переменную.",
+          "success": "Вы успешно добавили переменную."
+        },
+        "editVariable": {
+          "error": "Не удалось сохранить переменную.",
+          "success": "Вы успешно сохранили переменную."
+        },
+        "getVariable": {
+          "error": "Не удалось получить данные переменной."
+        }
+      },
+      "nameInput": {
+        "placeholder": "Придумайте название"
+      },
+      "title": "",
+      "title_add": "Добавление переменной",
+      "title_edit": "Редактирование переменной",
+      "valueInput": {
+        "placeholder": "Введите значение"
+      }
     }
   }
 }

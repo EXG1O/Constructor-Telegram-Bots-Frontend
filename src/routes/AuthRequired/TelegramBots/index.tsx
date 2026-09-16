@@ -1,7 +1,7 @@
 import React, { type ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Page from 'components/ui/Page';
 
@@ -14,7 +14,7 @@ import useTelegramBotsRouteLoaderData from './hooks/useTelegramBotsRouteLoaderDa
 import type { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
 
 function TelegramBots(): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBots);
+  const { t } = useTranslation<`${RouteID.TelegramBots}`, any>('telegram-bots');
 
   const { telegramBots: defaultTelegramBots } = useTelegramBotsRouteLoaderData();
 

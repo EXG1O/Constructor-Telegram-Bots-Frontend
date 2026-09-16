@@ -1,8 +1,8 @@
 {
-  "title": "Instruction",
   "messages": {
     "getSections": {
       "error": "Failed to retrieve the list of instruction sections."
     }
-  }
+  },
+  "title": "Instruction"
 }

@@ -1,7 +1,7 @@
 import React, { type HTMLAttributes, type ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import PlusButton from 'components/shared/PlusButton';
 import SearchInput from 'components/shared/SearchInput';
@@ -19,9 +19,10 @@ export interface ToolbarProps extends Omit<
 > {}
 
 function Toolbar({ className, ...props }: ToolbarProps): ReactElement<ToolbarProps> {
-  const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
-    keyPrefix: 'records.toolbar',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuDatabase}`, any>(
+    'telegram-bot-menu-database',
+    { keyPrefix: 'records.toolbar' },
+  );
 
   const itemCount = useDatabaseRecordsStore((state) => state.count);
   const itemLimit = useDatabaseRecordsStore((state) => state.limit);

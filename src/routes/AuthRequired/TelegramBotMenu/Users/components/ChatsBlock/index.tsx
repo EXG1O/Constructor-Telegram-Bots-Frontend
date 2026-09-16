@@ -1,7 +1,7 @@
 import React, { type ReactElement, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Block, { type BlockProps } from 'components/ui/Block';
 
@@ -18,9 +18,10 @@ import { ChatsBlockStoreProvider, type StoreProps } from './store';
 export interface ChatsBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function ChatsBlock({ className, ...props }: ChatsBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuUsers, {
-    keyPrefix: 'chatsBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuUsers}`, any>(
+    'telegram-bot-menu-users',
+    { keyPrefix: 'chatsBlock' },
+  );
 
   const { chatPagination } = useTelegramBotMenuChatsRouteLoaderData();
   const { count, limit, offset, results } = chatPagination;

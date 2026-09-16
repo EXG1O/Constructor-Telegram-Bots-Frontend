@@ -2,7 +2,7 @@ import React, { type ReactElement, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Check, Trash2, X } from 'lucide-react';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
@@ -25,9 +25,10 @@ export interface RecordItemProps extends Omit<ListItemProps, 'children'> {
 }
 
 function RecordItem({ record, className, ...props }: RecordItemProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuDatabase, {
-    keyPrefix: 'records',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuDatabase}`, any>(
+    'telegram-bot-menu-database',
+    { keyPrefix: 'records' },
+  );
 
   const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 

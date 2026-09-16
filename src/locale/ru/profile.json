@@ -1,48 +1,48 @@
 {
-  "title": "Профиль",
-  "userDataBlock": {
-    "title": "Данные аккаунта",
-    "table": {
-      "headers": {
-        "firstName": "Имя:",
-        "lastName": "Фамилия:",
-        "joinedDate": "Присоединился:"
-      }
+  "actionButtonGroup": {
+    "deleteButton": "Удалить аккаунт",
+    "deleteModal": {
+      "messages": {
+        "delete": {
+          "error": "Не удалось удалить аккаунт.",
+          "success": "Вы успешно удалили аккаунт."
+        }
+      },
+      "text": "Вы точно хотите удалить аккаунт? ",
+      "title": "Удаление аккаунта"
+    },
+    "logoutAllButton": "Выйти со всех устройств",
+    "logoutAllModal": {
+      "messages": {
+        "logoutAll": {
+          "error": "Не удалось выйти со всех устройств.",
+          "success": "Вы успешно вышли со всех устройств."
+        }
+      },
+      "text": "Вы точно хотите выйти со всех устройств?",
+      "title": "Выход со всех устройств"
     }
   },
   "refreshTokensBlock": {
-    "title": "Токены обновления",
     "helpText": "При каждой вашей авторизации создаётся токен обновления, который используется для последующего создания короткоживущих токенов доступа.",
     "table": {
       "headers": {
         "blacklistedDate": "Заблокирован",
-        "expiryDate": "Истечёт",
-        "createdDate": "Создан"
+        "createdDate": "Создан",
+        "expiryDate": "Истечёт"
       }
-    }
+    },
+    "title": "Токены обновления"
   },
-  "actionButtonGroup": {
-    "logoutAllModal": {
-      "messages": {
-        "logoutAll": {
-          "success": "Вы успешно вышли со всех устройств.",
-          "error": "Не удалось выйти со всех устройств."
-        }
-      },
-      "title": "Выход со всех устройств",
-      "text": "Вы точно хотите выйти со всех устройств?"
+  "title": "Профиль",
+  "userDataBlock": {
+    "table": {
+      "headers": {
+        "firstName": "Имя:",
+        "joinedDate": "Присоединился:",
+        "lastName": "Фамилия:"
+      }
     },
-    "deleteModal": {
-      "messages": {
-        "delete": {
-          "success": "Вы успешно удалили аккаунт.",
-          "error": "Не удалось удалить аккаунт."
-        }
-      },
-      "title": "Удаление аккаунта",
-      "text": "Вы точно хотите удалить аккаунт? "
-    },
-    "logoutAllButton": "Выйти со всех устройств",
-    "deleteButton": "Удалить аккаунт"
+    "title": "Данные аккаунта"
   }
 }

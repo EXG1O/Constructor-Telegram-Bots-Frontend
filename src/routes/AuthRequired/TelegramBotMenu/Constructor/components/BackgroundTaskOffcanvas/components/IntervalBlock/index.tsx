@@ -1,7 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import FormSelectFeedback from 'components/shared/FormSelectFeedback';
 import Block, { type BlockProps } from 'components/ui/Block';
@@ -15,9 +15,10 @@ export interface IntervalBlockProps extends Omit<BlockProps, 'variant' | 'childr
 const intervals: Interval[] = [1, 3, 7, 14, 28];
 
 function IntervalBlock(props: IntervalBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'backgroundTaskOffcanvas.intervalBlock',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'backgroundTaskOffcanvas.intervalBlock' },
+  );
 
   return (
     <Block {...props} variant='light' className={cn('flex', 'flex-col', 'gap-2')}>

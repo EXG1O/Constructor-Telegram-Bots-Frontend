@@ -17,7 +17,7 @@ const navigateOptions: NavigateOptions = {
 };
 
 function Login(): ReactElement {
-  const { t } = useTranslation(RouteID.Login);
+  const { t } = useTranslation<`${RouteID.Login}`, any>('login');
 
   const login = useLoginLoaderData();
 

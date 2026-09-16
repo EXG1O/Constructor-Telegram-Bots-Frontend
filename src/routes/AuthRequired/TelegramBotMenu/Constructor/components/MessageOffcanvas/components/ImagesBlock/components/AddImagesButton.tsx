@@ -2,7 +2,7 @@ import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useField } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Button, { type ButtonProps } from 'components/ui/Button';
 import { createMessageToast } from 'components/ui/ToastContainer';
@@ -19,9 +19,10 @@ export interface AddImagesButtonProps extends Omit<
 > {}
 
 function AddImagesButton(props: AddImagesButtonProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuConstructor, {
-    keyPrefix: 'messageOffcanvas.imagesBlock.addImagesButton',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'messageOffcanvas.imagesBlock.addImagesButton' },
+  );
 
   const getRemainingStorageSize = useMessageOffcanvasStore(
     (state) => state.getRemainingStorageSize,

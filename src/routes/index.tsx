@@ -15,6 +15,7 @@ export enum RouteID {
   TelegramBotMenuUsers = 'telegram-bot-menu-users',
   TelegramBotMenuDatabase = 'telegram-bot-menu-database',
   TelegramBotMenuConstructor = 'telegram-bot-menu-constructor',
+  NotFound = 'not-found',
 }
 
 export const routes: RouteObject[] = [
@@ -206,6 +207,7 @@ export const routes: RouteObject[] = [
         ],
       },
       {
+        id: RouteID.NotFound,
         path: '*',
         async lazy() {
           const loader = await import('./NotFound/loader');

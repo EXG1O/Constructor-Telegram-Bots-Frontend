@@ -2,7 +2,7 @@ import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import formatDate from 'i18n/formatDate';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import Block, { type BlockProps } from 'components/ui/Block';
 import IconButton from 'components/ui/IconButton';
@@ -22,7 +22,9 @@ function RefreshTokensBlock({
   className,
   ...props
 }: RefreshTokensBlockProps): ReactElement {
-  const { t } = useTranslation(RouteID.Profile, { keyPrefix: 'refreshTokensBlock' });
+  const { t } = useTranslation<`${RouteID.Profile}`, any>('profile', {
+    keyPrefix: 'refreshTokensBlock',
+  });
 
   const { refreshTokens } = useProfileRouteLoaderData();
 

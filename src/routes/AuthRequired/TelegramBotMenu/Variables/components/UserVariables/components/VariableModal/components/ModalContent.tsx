@@ -2,7 +2,7 @@ import React, { memo, type ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import FormRichInputFeedback from 'components/shared/FormRichInputFeedback';
 import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
@@ -15,9 +15,10 @@ import Modal from 'components/ui/Modal';
 import { useVariableModalStore } from '../store';
 
 function ModalContent(): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
-    keyPrefix: 'user.variableModal',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuVariables}`, any>(
+    'telegram-bot-menu-variables',
+    { keyPrefix: 'user.variableModal' },
+  );
 
   const action = useVariableModalStore((state) => state.action);
 
@@ -26,7 +27,9 @@ function ModalContent(): ReactElement {
   return (
     <Modal.Content>
       <Modal.Header closeButton>
-        <Modal.Title>{t('title', { context: action })}</Modal.Title>
+        <Modal.Title>
+          {t('title', { context: action === 'edit' ? 'edit' : 'add' })}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body asChild>
         <Form id={formID} className='flex flex-col gap-2'>
@@ -50,7 +53,7 @@ function ModalContent(): ReactElement {
       </Modal.Body>
       <Modal.Footer>
         <Button type='submit' form={formID} variant='success' className='w-full'>
-          {t('actionButton', { context: action })}
+          {t('actionButton', { context: action === 'edit' ? 'edit' : 'add' })}
         </Button>
       </Modal.Footer>
     </Modal.Content>

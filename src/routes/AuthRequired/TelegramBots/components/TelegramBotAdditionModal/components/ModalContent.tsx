@@ -2,7 +2,7 @@ import React, { memo, type ReactElement, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 
 import FormCheckFeedback from 'components/shared/FormCheckFeedback';
 import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
@@ -10,7 +10,7 @@ import Button from 'components/ui/Button';
 import Modal from 'components/ui/Modal';
 
 function ModalContent(): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBots, {
+  const { t } = useTranslation<`${RouteID.TelegramBots}`, any>('telegram-bots', {
     keyPrefix: 'telegramBotAdditionModal',
   });
 

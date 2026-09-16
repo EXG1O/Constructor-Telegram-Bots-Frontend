@@ -2,7 +2,7 @@ import React, { type ReactElement, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormikContext } from 'formik';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import Modal, { type ModalProps } from 'components/ui/Modal';
@@ -20,9 +20,10 @@ import { useVariableModalStore } from '../store';
 export interface ModalInnerProps extends Omit<ModalProps, 'show' | 'loading'> {}
 
 function ModalInner({ onHide, onHidden, ...props }: ModalInnerProps): ReactElement {
-  const { t } = useTranslation(RouteID.TelegramBotMenuVariables, {
-    keyPrefix: 'user.variableModal',
-  });
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuVariables}`, any>(
+    'telegram-bot-menu-variables',
+    { keyPrefix: 'user.variableModal' },
+  );
 
   const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 

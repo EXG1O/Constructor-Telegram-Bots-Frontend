@@ -2,13 +2,17 @@ import i18n from 'i18n';
 import type { TOptions } from 'i18next';
 import { create } from 'zustand';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { DatabaseRecordsAPI } from 'api/telegram-bots/database-record';
 import type { DatabaseRecord } from 'api/telegram-bots/database-record/types';
+
+interface StrictTOptions extends TOptions {
+  ns: `${RouteID.TelegramBotMenuDatabase}`;
+}
 
 export interface StateParams {
   loading: boolean;
@@ -38,8 +42,6 @@ export type InitialProps = Pick<
   'count' | 'limit' | 'offset' | 'search' | 'records'
 >;
 export type InitialState = Omit<StateParams, keyof InitialProps>;
-
-const langOptions: TOptions = { ns: RouteID.TelegramBotMenuDatabase };
 
 export function createStore(initialProps: InitialProps) {
   const initialState: InitialState = { loading: false };
@@ -71,7 +73,10 @@ export function createStore(initialProps: InitialProps) {
 
       if (!response.ok) {
         createMessageToast({
-          message: i18n.t('messages.getRecords.error', langOptions),
+          message: i18n.t<string, StrictTOptions, string, StrictTOptions>(
+            'messages.getRecords.error',
+            { ns: 'telegram-bot-menu-database' },
+          ),
           level: 'error',
         });
         set({ loading: false });

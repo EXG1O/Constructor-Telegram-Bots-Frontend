@@ -35,7 +35,7 @@ function Content({ className, ...props }: ContentProps): ReactElement {
       if (!response.ok || response.json.is_loading) {
         if (!response.ok) {
           createMessageToast({
-            message: t('messages..getTelegramBot.error'),
+            message: t('messages.getTelegramBot.error'),
             level: 'error',
           });
         }

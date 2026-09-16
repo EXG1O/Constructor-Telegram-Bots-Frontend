@@ -1,7 +1,11 @@
 import type { FormikHelpers } from 'formik';
-import i18next from 'i18next';
+import i18next, { type TOptions } from 'i18next';
 
-import { RouteID } from 'routes';
+import type { RouteID } from 'routes';
+
+interface StrictTOptions extends TOptions {
+  ns: `${RouteID.TelegramBotMenuConstructor}`;
+}
 
 function parseJsonField(
   rawValue: string,
@@ -14,9 +18,10 @@ function parseJsonField(
     if (error instanceof SyntaxError) {
       setFieldError(
         fieldPath,
-        i18next.t('messages.validation.invalidJSON', {
-          ns: RouteID.TelegramBotMenuConstructor,
-        }),
+        i18next.t<string, StrictTOptions, string, StrictTOptions>(
+          'messages.validation.invalidJSON',
+          { ns: 'telegram-bot-menu-constructor' },
+        ),
       );
     }
     return null;
