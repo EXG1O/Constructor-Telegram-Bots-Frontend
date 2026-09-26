@@ -82,6 +82,7 @@
     "eslint-plugin-react": "~7",
     "eslint-plugin-react-hooks": "~7",
     "eslint-plugin-simple-import-sort": "~12",
+    "eslint-plugin-unused-imports": "~4",
     "i18next-cli": "~1.74",
     "prettier": "~3",
     "prettier-plugin-tailwindcss": "~0"

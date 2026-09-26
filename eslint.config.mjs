@@ -7,6 +7,7 @@ import { defineConfig } from 'eslint/config';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -26,6 +27,7 @@ export default defineConfig([
       'react-hooks': fixupPluginRules(reactHooks),
       '@typescript-eslint': typescriptEslint,
       'simple-import-sort': simpleImportSort,
+      'unused-imports': unusedImports,
     },
     extends: compat.extends(
       'eslint:recommended',
@@ -63,7 +65,10 @@ export default defineConfig([
         },
       ],
       '@typescript-eslint/no-import-type-side-effects': 'error',
-      '@typescript-eslint/no-unused-vars': [
+
+      '@typescript-eslint/no-unused-vars': 'off',
+      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-vars': [
         'error',
         {
           vars: 'all',
