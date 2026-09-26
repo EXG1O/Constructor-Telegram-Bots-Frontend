@@ -1,29 +1,29 @@
 import type { Edge } from '@xyflow/react';
 
-import type { DiagramBlock } from 'api/telegram-bots/base/types';
-import type {
-  Connection,
-  ObjectType,
-  SourceObjectType,
-  TargetObjectType,
-} from 'api/telegram-bots/connection/types';
-import type { DiagramMessage } from 'api/telegram-bots/message/types';
+import {
+  type Connection,
+  type ConnectionHandlePosition,
+  type ConnectionObjectType,
+  ConnectionSourceObjectType,
+  type ConnectionTargetObjectType,
+  type DiagramBlock,
+  type DiagramMessage,
+} from 'api';
 
-export interface EdgePoint<OT extends ObjectType> {
-  objectType: OT;
+export interface EdgePoint<TObjectType extends ConnectionObjectType> {
+  objectType: TObjectType;
   objectID: number;
 }
 
-export interface EdgeSource extends EdgePoint<SourceObjectType> {}
+export interface EdgeSource extends EdgePoint<ConnectionSourceObjectType> {}
 
-export interface EdgeTarget extends EdgePoint<TargetObjectType> {}
+export interface EdgeTarget extends EdgePoint<ConnectionTargetObjectType> {}
 
-export function parseEdgePoint<OT extends ObjectType>(point: string): EdgePoint<OT> {
+export function parseEdgePoint<TObjectType extends ConnectionObjectType>(
+  point: string,
+): EdgePoint<TObjectType> {
   const [objectType, objectID] = point.split(':');
-  return {
-    objectType,
-    objectID: parseInt(objectID),
-  } as any;
+  return { objectType: objectType as TObjectType, objectID: Number(objectID) };
 }
 
 export function parseEdgeSource(point: string): EdgeSource {
@@ -34,29 +34,35 @@ export function parseEdgeTarget(point: string): EdgeTarget {
   return parseEdgePoint(point);
 }
 
-export interface EdgeHandle<ObjectType extends string> {
-  objectType: ObjectType;
+export function buildEdgePoint<TObjectType extends ConnectionObjectType>(
+  handle: EdgePoint<TObjectType>,
+): string {
+  return [handle.objectType, handle.objectID].join(':');
+}
+
+export interface EdgeHandle<TObjectType extends ConnectionObjectType> {
+  objectType: TObjectType;
   objectID: number;
-  position: 'left' | 'right';
+  position: ConnectionHandlePosition;
   nestedObjectID: number;
 }
 
 export interface EdgeSourceHandle extends EdgeHandle<
-  Exclude<SourceObjectType, 'message_keyboard_button'> | 'message'
+  Exclude<ConnectionSourceObjectType, ConnectionSourceObjectType.MessageKeyboardButton>
 > {}
 
-export interface EdgeTargetHandle extends EdgeHandle<TargetObjectType> {}
+export interface EdgeTargetHandle extends EdgeHandle<ConnectionTargetObjectType> {}
 
-export function parseEdgeHandle<ObjectType extends string>(
+export function parseEdgeHandle<TObjectType extends ConnectionObjectType>(
   handle: string,
-): EdgeHandle<ObjectType> {
+): EdgeHandle<TObjectType> {
   const [objectType, objectID, position, nestedObjectID] = handle.split(':');
   return {
-    objectType,
+    objectType: objectType as TObjectType,
     objectID: parseInt(objectID),
-    position,
+    position: position as ConnectionHandlePosition,
     nestedObjectID: parseInt(nestedObjectID),
-  } as any;
+  };
 }
 
 export function parseEdgeSourceHandle(handle: string): EdgeSourceHandle {
@@ -67,8 +73,8 @@ export function parseEdgeTargetHandle(handle: string): EdgeTargetHandle {
   return parseEdgeHandle(handle);
 }
 
-export function buildEdgeHandle<ObjectType extends string>(
-  handle: EdgeHandle<ObjectType>,
+export function buildEdgeHandle<TObjectType extends ConnectionObjectType>(
+  handle: EdgeHandle<TObjectType>,
 ): string {
   return [
     handle.objectType,
@@ -88,7 +94,7 @@ export function buildEdgeTargetHandle(handle: EdgeTargetHandle): string {
 
 export interface DiagramBlocks {
   messages?: DiagramMessage[];
-  other?: DiagramBlock[];
+  other?: Exclude<DiagramBlock, DiagramMessage>[];
 }
 
 export function convertDiagramBlocksToEdges(diagramBlocks: DiagramBlocks): Edge[] {
@@ -103,27 +109,40 @@ export function convertDiagramBlocksToEdges(diagramBlocks: DiagramBlocks): Edge[
 
   return connections.map((connection) => {
     const isKeyboardButtonConnection: boolean =
-      connection.source_object_type === 'message_keyboard_button';
+      connection.source_object_type ===
+      ConnectionSourceObjectType.MessageKeyboardButton;
 
-    const source: string = isKeyboardButtonConnection
-      ? `message:${
+    const sourceHandle: EdgeSourceHandle = {
+      objectType: isKeyboardButtonConnection
+        ? ConnectionSourceObjectType.Message
+        : (connection.source_object_type as Exclude<
+            ConnectionSourceObjectType,
+            ConnectionSourceObjectType.MessageKeyboardButton
+          >),
+      objectID:
+        (isKeyboardButtonConnection &&
           diagramBlocks.messages?.find((message) =>
             message.keyboard?.buttons.some(
               (button) => button.id === connection.source_object_id,
             ),
-          )?.id
-        }`
-      : `${connection.source_object_type}:${connection.source_object_id}`;
-    const target: string = `${connection.target_object_type}:${connection.target_object_id}`;
+          )?.id) ||
+        connection.source_object_id,
+      position: connection.source_handle_position,
+      nestedObjectID: isKeyboardButtonConnection ? connection.source_object_id : 0,
+    };
+    const targetHandle: EdgeTargetHandle = {
+      objectType: connection.target_object_type,
+      objectID: connection.target_object_id,
+      position: connection.target_handle_position,
+      nestedObjectID: 0,
+    };
 
     return {
       id: connection.id.toString(),
-      source,
-      sourceHandle:
-        `${source}:${connection.source_handle_position}:` +
-        (isKeyboardButtonConnection ? connection.source_object_id : 0).toString(),
-      target,
-      targetHandle: `${target}:${connection.target_handle_position}:0`,
+      source: buildEdgePoint(sourceHandle),
+      sourceHandle: buildEdgeHandle(sourceHandle),
+      target: buildEdgePoint(targetHandle),
+      targetHandle: buildEdgeTargetHandle(targetHandle),
     };
   });
 }

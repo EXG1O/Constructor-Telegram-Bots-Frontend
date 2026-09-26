@@ -10,7 +10,7 @@ import Dropdown, { type DropdownProps } from 'components/ui/Dropdown';
 import StatsModal from './components/StatsModal';
 import TelegramBotModal from './components/TelegramBotModal';
 
-import type { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
+import type { TelegramBot } from 'api';
 
 import reverse from 'utils/reverse';
 

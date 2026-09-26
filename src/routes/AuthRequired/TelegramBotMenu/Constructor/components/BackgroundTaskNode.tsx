@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import {
   type Node as RFNode,
   type NodeProps as RFNodeProps,
-  Position,
   useReactFlow,
 } from '@xyflow/react';
 
@@ -15,22 +14,24 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useBackgroundTaskOffcanvasStore } from './BackgroundTaskOffcanvas/store';
 import Node from './Node';
+import type { NodeHandleProps } from './Node/components/NodeHandle';
 
 import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
 
 import {
-  BackgroundTaskAPI,
-  BackgroundTasksAPI,
-  DiagramBackgroundTaskAPI,
-} from 'api/telegram-bots/background-task';
-import type { DiagramBackgroundTask } from 'api/telegram-bots/background-task/types';
+  type BackgroundTask,
+  ConnectionHandlePosition,
+  type DiagramBackgroundTask,
+  TelegramBotsService,
+} from 'api';
 
-import { buildEdgeSourceHandle, type EdgeHandle } from '../utils/edges';
-
-export type NodeData = Omit<DiagramBackgroundTask, 'x' | 'y' | 'source_connections'>;
+import type { NodeType } from '../enums';
 
 export interface BackgroundTaskNodeProps extends RFNodeProps<
-  RFNode<NodeData, 'background_task'>
+  RFNode<
+    Omit<DiagramBackgroundTask, 'x' | 'y' | 'source_connections'>,
+    typeof NodeType.BackgroundTask
+  >
 > {}
 
 const NODE_PREFIX: string = 'nodes.backgroundTask';
@@ -59,7 +60,7 @@ function BackgroundTaskNode({
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const handleDuplicate = useNodeDuplicate(
+  const handleDuplicate = useNodeDuplicate<BackgroundTask>(
     () => ({
       title: t(`${NODE_PREFIX}.duplicateModal.title`),
       text: t(`${NODE_PREFIX}.duplicateModal.text`),
@@ -71,14 +72,27 @@ function BackgroundTaskNode({
       type,
       x: positionAbsoluteX,
       y: positionAbsoluteY,
-      retrieveAPICall: () => BackgroundTaskAPI.get(telegramBotID, task.id),
-      createAPICall: (data) => BackgroundTasksAPI.create(telegramBotID, data),
-      diagramAPICall: (id) => DiagramBackgroundTaskAPI.get(telegramBotID, id),
+      retrieveAPICall: () =>
+        TelegramBotsService.getBackgroundTask({
+          path: { telegramBotId: telegramBotID, id: task.id },
+        }),
+      createAPICall: (data) =>
+        TelegramBotsService.createBackgroundTask({
+          path: { telegramBotId: telegramBotID },
+          body: data,
+        }),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramBackgroundTask({
+          path: { telegramBotId: telegramBotID, id },
+        }),
     }),
     [task.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
+  const nodeHandlerProps: Pick<
+    NodeHandleProps,
+    'objectType' | 'objectID' | 'nestedObjectID'
+  > = {
     objectType: type,
     objectID: task.id,
     nestedObjectID: 0,
@@ -91,9 +105,11 @@ function BackgroundTaskNode({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await BackgroundTaskAPI.delete(telegramBotID, task.id);
+        const { error } = await TelegramBotsService.deleteBackgroundTask({
+          path: { telegramBotId: telegramBotID, id: task.id },
+        });
 
-        if (!response.ok) {
+        if (error) {
           createMessageToast({
             message: t(`${NODE_PREFIX}.messages.delete.error`),
             level: 'error',
@@ -127,20 +143,14 @@ function BackgroundTaskNode({
       <Node.Block className='relative'>
         <Node.Title>{task.name}</Node.Title>
         <Node.Handle
-          id={buildEdgeSourceHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'left',
-          })}
+          {...nodeHandlerProps}
           type='source'
-          position={Position.Left}
+          position={ConnectionHandlePosition.Left}
         />
         <Node.Handle
-          id={buildEdgeSourceHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'right',
-          })}
+          {...nodeHandlerProps}
           type='source'
-          position={Position.Right}
+          position={ConnectionHandlePosition.Right}
         />
       </Node.Block>
       <Node.Block>

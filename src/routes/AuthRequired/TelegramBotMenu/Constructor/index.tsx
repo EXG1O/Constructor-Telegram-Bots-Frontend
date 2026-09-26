@@ -1,4 +1,9 @@
-import React, { type CSSProperties, type ReactElement, useCallback } from 'react';
+import React, {
+  type ComponentType,
+  type CSSProperties,
+  type ReactElement,
+  useCallback,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   addEdge as RFAddEdge,
@@ -55,23 +60,18 @@ import TriggerOffcanvas from './components/TriggerOffcanvas';
 
 import useTelegramBotMenuConstructorRouteLoaderData from './hooks/useTelegramBotMenuConstructorRouteLoaderData';
 
-import type { makeRequest } from 'api/core';
-import { DiagramAPIRequestAPI } from 'api/telegram-bots/api-request';
-import { DiagramBackgroundTaskAPI } from 'api/telegram-bots/background-task';
-import type { DiagramBlock } from 'api/telegram-bots/base/types';
-import { DiagramConditionAPI } from 'api/telegram-bots/condition';
-import { ConnectionAPI, ConnectionsAPI } from 'api/telegram-bots/connection';
-import { DiagramDatabaseOperationAPI } from 'api/telegram-bots/database-operation';
-import { DiagramInvoiceAPI } from 'api/telegram-bots/invoice';
-import { DiagramMessageAPI } from 'api/telegram-bots/message';
-import { DiagramRandomizerAPI } from 'api/telegram-bots/randomizer';
-import type { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
-import { DiagramTemporaryVariableAPI } from 'api/telegram-bots/temporary-variable';
-import { DiagramTimerAPI } from 'api/telegram-bots/timer';
-import { DiagramTriggerAPI } from 'api/telegram-bots/trigger';
+import type { DiagramBlock, TelegramBot } from 'api';
+import {
+  ConnectionSourceObjectType,
+  type DiagramMessage,
+  type Options,
+  TelegramBotsService,
+} from 'api';
+import type { RequestResult } from 'api/client/client';
 
 import cn from 'utils/cn';
 
+import { NodeType } from './enums';
 import {
   convertDiagramBlocksToEdges,
   type EdgeSourceHandle,
@@ -79,22 +79,22 @@ import {
   parseEdgeSourceHandle,
   parseEdgeTargetHandle,
 } from './utils/edges';
-import { convertDiagramBlockToNode, type NodeID, type NodeType } from './utils/nodes';
+import { convertDiagramBlockToNode, type NodeID } from './utils/nodes';
 import { parseNodeID } from './utils/nodes';
 
 import('@xyflow/react/dist/base.css');
 
-export const nodeTypes = {
-  trigger: TriggerNode,
-  message: MessageNode,
-  condition: ConditionNode,
-  background_task: BackgroundTaskNode,
-  api_request: APIRequestNode,
-  database_operation: DatabaseOperationNode,
-  invoice: InvoiceNode,
-  temporary_variable: TemporaryVariableNode,
-  randomizer: RandomizerNode,
-  timer: TimerNode,
+export const nodeTypes: Record<NodeType, ComponentType<any>> = {
+  [NodeType.Trigger]: TriggerNode,
+  [NodeType.Message]: MessageNode,
+  [NodeType.Condition]: ConditionNode,
+  [NodeType.BackgroundTask]: BackgroundTaskNode,
+  [NodeType.ApiRequest]: APIRequestNode,
+  [NodeType.DatabaseOperation]: DatabaseOperationNode,
+  [NodeType.Invoice]: InvoiceNode,
+  [NodeType.TemporaryVariable]: TemporaryVariableNode,
+  [NodeType.Randomizer]: RandomizerNode,
+  [NodeType.Timer]: TimerNode,
 };
 const defaultEdgeOptions: DefaultEdgeOptions = {
   type: ConnectionLineType.SmoothStep,
@@ -107,31 +107,35 @@ const reactFlowStyle: CSSProperties = {
   '--xy-attribution-background-color-default': 'unset',
 } as any;
 
-interface DiagramBlockAPIUpdateCallOptions {
-  botID: TelegramBot['id'];
-  id: DiagramBlock['id'];
-  data: Pick<DiagramBlock, 'x' | 'y'>;
-}
-
-const diagramBlockAPIUpdateCallMap: Record<
+const diagramBlockUpdateMap: Record<
   NodeType,
   (
-    options: DiagramBlockAPIUpdateCallOptions,
-  ) => ReturnType<typeof makeRequest<DiagramBlock>>
+    options: Options<
+      {
+        url: string;
+        path: { telegramBotId: TelegramBot['id']; id: DiagramBlock['id'] };
+        body: Pick<DiagramBlock, 'x' | 'y'>;
+      },
+      false
+    >,
+  ) => RequestResult<{ 200: DiagramBlock }, any, false>
 > = {
-  trigger: ({ botID, id, data }) => DiagramTriggerAPI.update(botID, id, data),
-  message: ({ botID, id, data }) => DiagramMessageAPI.update(botID, id, data),
-  condition: ({ botID, id, data }) => DiagramConditionAPI.update(botID, id, data),
-  background_task: ({ botID, id, data }) =>
-    DiagramBackgroundTaskAPI.update(botID, id, data),
-  api_request: ({ botID, id, data }) => DiagramAPIRequestAPI.update(botID, id, data),
-  database_operation: ({ botID, id, data }) =>
-    DiagramDatabaseOperationAPI.update(botID, id, data),
-  invoice: ({ botID, id, data }) => DiagramInvoiceAPI.update(botID, id, data),
-  temporary_variable: ({ botID, id, data }) =>
-    DiagramTemporaryVariableAPI.update(botID, id, data),
-  randomizer: (options) => DiagramRandomizerAPI.update(options),
-  timer: (options) => DiagramTimerAPI.update(options),
+  [NodeType.Trigger]: (options) => TelegramBotsService.updateDiagramTrigger(options),
+  [NodeType.Message]: (options) => TelegramBotsService.updateDiagramMessage(options),
+  [NodeType.Condition]: (options) =>
+    TelegramBotsService.updateDiagramCondition(options),
+  [NodeType.BackgroundTask]: (options) =>
+    TelegramBotsService.updateDiagramBackgroundTask(options),
+  [NodeType.ApiRequest]: (options) =>
+    TelegramBotsService.updateDiagramApiRequest(options),
+  [NodeType.DatabaseOperation]: (options) =>
+    TelegramBotsService.updateDiagramDatabaseOperation(options),
+  [NodeType.Invoice]: (options) => TelegramBotsService.updateDiagramInvoice(options),
+  [NodeType.TemporaryVariable]: (options) =>
+    TelegramBotsService.updateDiagramTemporaryVariable(options),
+  [NodeType.Randomizer]: (options) =>
+    TelegramBotsService.updateDiagramRandomizer(options),
+  [NodeType.Timer]: (options) => TelegramBotsService.updateDiagramTimer(options),
 };
 
 function Constructor(): ReactElement {
@@ -141,51 +145,19 @@ function Constructor(): ReactElement {
 
   const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const {
-    diagramTriggers,
-    diagramMessages,
-    diagramConditions,
-    diagramBackgroundTasks,
-    diagramAPIRequests,
-    diagramDatabaseOperations,
-    diagramInvoices,
-    diagramTemporaryVariables,
-    diagramRandomizers,
-    diagramTimers,
-  } = useTelegramBotMenuConstructorRouteLoaderData();
+  const diagramBlocks = useTelegramBotMenuConstructorRouteLoaderData();
 
   const [nodes, setNodes, onNodesChange] = useNodesState(
-    Object.entries({
-      trigger: diagramTriggers,
-      message: diagramMessages,
-      condition: diagramConditions,
-      background_task: diagramBackgroundTasks,
-      api_request: diagramAPIRequests,
-      database_operation: diagramDatabaseOperations,
-      invoice: diagramInvoices,
-      temporary_variable: diagramTemporaryVariables,
-      randomizer: diagramRandomizers,
-      timer: diagramTimers,
-    } as Record<NodeType, DiagramBlock[]>).flatMap(([type, diagramBlocks]) =>
-      diagramBlocks.map((diagramBlock) =>
-        convertDiagramBlockToNode(type as NodeType, diagramBlock),
-      ),
+    Object.entries(diagramBlocks).flatMap(([type, blocks]) =>
+      blocks.map((block) => convertDiagramBlockToNode(type as NodeType, block)),
     ),
   );
+
+  const { message: diagramMessages, ...otherDiagramBlocks } = diagramBlocks;
   const [edges, setEdges, onEdgesChange] = useEdgesState(
     convertDiagramBlocksToEdges({
-      messages: diagramMessages,
-      other: [
-        ...diagramTriggers,
-        ...diagramConditions,
-        ...diagramBackgroundTasks,
-        ...diagramAPIRequests,
-        ...diagramDatabaseOperations,
-        ...diagramInvoices,
-        ...diagramTemporaryVariables,
-        ...diagramRandomizers,
-        ...diagramTimers,
-      ],
+      messages: diagramMessages as DiagramMessage[],
+      other: Object.values(otherDiagramBlocks).flat(),
     }),
   );
 
@@ -224,26 +196,30 @@ function Constructor(): ReactElement {
       const sourceHandle: EdgeSourceHandle = parseEdgeSourceHandle(edge.sourceHandle);
       const targetHandle: EdgeTargetHandle = parseEdgeTargetHandle(edge.targetHandle);
 
-      const response = await ConnectionsAPI.create(telegramBotID, {
-        ...(sourceHandle.objectType === 'message' && sourceHandle.nestedObjectID
-          ? {
-              source_object_type: 'message_keyboard_button',
-              source_object_id: sourceHandle.nestedObjectID,
-            }
-          : {
-              source_object_type: sourceHandle.objectType,
-              source_object_id: sourceHandle.objectID,
-            }),
-        source_handle_position: sourceHandle.position,
-        target_object_type: targetHandle.objectType,
-        target_object_id: targetHandle.objectID,
-        target_handle_position: targetHandle.position,
+      const { data, error } = await TelegramBotsService.createConnection({
+        path: { telegramBotId: telegramBotID },
+        body: {
+          ...(sourceHandle.objectType === ConnectionSourceObjectType.Message &&
+          sourceHandle.nestedObjectID
+            ? {
+                source_object_type: ConnectionSourceObjectType.MessageKeyboardButton,
+                source_object_id: sourceHandle.nestedObjectID,
+              }
+            : {
+                source_object_type: sourceHandle.objectType,
+                source_object_id: sourceHandle.objectID,
+              }),
+          source_handle_position: sourceHandle.position,
+          target_object_type: targetHandle.objectType,
+          target_object_id: targetHandle.objectID,
+          target_handle_position: targetHandle.position,
+        },
       });
 
-      if (!response.ok) {
-        for (const error of response.json.errors) {
-          if (error.attr) continue;
-          createMessageToast({ message: error.detail, level: 'error' });
+      if (error || !data) {
+        for (const item of error.errors) {
+          if (item.attr) continue;
+          createMessageToast({ message: item.detail, level: 'error' });
         }
         createMessageToast({
           message: t('messages.createConnection.error'),
@@ -253,7 +229,7 @@ function Constructor(): ReactElement {
       }
 
       setEdges((prevEdges) =>
-        RFAddEdge({ ...edge, id: response.json.id.toString() }, prevEdges),
+        RFAddEdge({ ...edge, id: data.id.toString() }, prevEdges),
       );
     },
     [telegramBotID],
@@ -267,17 +243,19 @@ function Constructor(): ReactElement {
         ),
       );
 
-      const response = await ConnectionAPI.delete(telegramBotID, parseInt(edge.id));
+      const { error } = await TelegramBotsService.deleteConnection({
+        path: { telegramBotId: telegramBotID, id: Number(edge.id) },
+      });
 
-      if (!response.ok) {
+      if (error) {
         setEdges((prevEdges) =>
           prevEdges.map((prevEdge) =>
             prevEdge.id === edge.id ? { ...prevEdge, hidden: false } : prevEdge,
           ),
         );
-        for (const error of response.json.errors) {
-          if (error.attr) continue;
-          createMessageToast({ message: error.detail, level: 'error' });
+        for (const item of error.errors) {
+          if (item.attr) continue;
+          createMessageToast({ message: item.detail, level: 'error' });
         }
         createMessageToast({
           message: t('messages.deleteConnection.error'),
@@ -296,10 +274,12 @@ function Constructor(): ReactElement {
       await Promise.all(
         nodes.map((node) => {
           const nodeID: NodeID = parseNodeID(node.id);
-          return diagramBlockAPIUpdateCallMap[nodeID.type]({
-            botID: telegramBotID,
-            id: nodeID.id,
-            data: node.position,
+          return diagramBlockUpdateMap[nodeID.type]({
+            path: {
+              telegramBotId: telegramBotID,
+              id: nodeID.id,
+            },
+            body: node.position,
           });
         }),
       );

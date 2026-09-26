@@ -11,10 +11,10 @@ import ModalContent from './components/ModalContent';
 
 import useTelegramBots from '../../hooks/useTelegramBots';
 
-import { TelegramBotsAPI } from 'api/telegram-bots/telegram-bot';
-import type { Data } from 'api/telegram-bots/telegram-bot/types';
+import type { TelegramBotRequest } from 'api';
+import { TelegramBotsService } from 'api';
 
-type FormValues = Data.TelegramBotsAPI.Create;
+type FormValues = TelegramBotRequest;
 
 export interface TelegramBotAdditionModalProps
   extends
@@ -37,12 +37,14 @@ function TelegramBotAdditionModal({
     values: FormValues,
     { setFieldError }: FormikHelpers<FormValues>,
   ): Promise<void> {
-    const response = await TelegramBotsAPI.create(values);
+    const { data, error } = await TelegramBotsService.createTelegramBot({
+      body: values,
+    });
 
-    if (!response.ok) {
-      for (const error of response.json.errors) {
-        if (!error.attr) continue;
-        setFieldError(error.attr, error.detail);
+    if (error || !data) {
+      for (const item of error.errors) {
+        if (!item.attr) continue;
+        setFieldError(item.attr, item.detail);
       }
       createMessageToast({
         message: t('messages.createTelegramBot.error'),
@@ -51,7 +53,7 @@ function TelegramBotAdditionModal({
       return;
     }
 
-    setTelegramBots([...telegramBots, response.json]);
+    setTelegramBots([...telegramBots, data]);
     onHide();
     createMessageToast({
       message: t('messages.createTelegramBot.success'),

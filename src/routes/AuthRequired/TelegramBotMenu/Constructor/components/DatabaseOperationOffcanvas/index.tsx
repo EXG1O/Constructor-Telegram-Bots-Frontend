@@ -18,16 +18,10 @@ import type { NameBlockFormValues } from '../NameBlock/types';
 
 import useFormikSubmit from '../../hooks/useFormikSubmit';
 
-import {
-  DatabaseOperationAPI,
-  DatabaseOperationsAPI,
-  DiagramDatabaseOperationAPI,
-} from 'api/telegram-bots/database-operation';
-import type {
-  Data,
-  DatabaseOperation,
-} from 'api/telegram-bots/database-operation/types';
+import type { DatabaseOperation, DatabaseOperationRequestWritable } from 'api';
+import { TelegramBotsService } from 'api';
 
+import { NodeType } from '../../enums';
 import parseJsonField from '../../utils/parseJsonField';
 import { useDatabaseOperationOffcanvasStore } from './store';
 import { getCreateBlockOpen, getUpdateBlockOpen } from './utils';
@@ -76,7 +70,7 @@ function DatabaseOperationOffcanvas(
           error: t('messages.editDatabaseOperation.error'),
         },
       },
-      type: 'database_operation',
+      type: NodeType.DatabaseOperation,
       action,
       saveAPICall: (
         { type, create_operation, update_operation, ...values },
@@ -103,8 +97,7 @@ function DatabaseOperationOffcanvas(
           if (!updateOperationNewData) return Promise.reject();
         }
 
-        const data:
-          Data.DatabaseOperationsAPI.Create | Data.DatabaseOperationAPI.Update = {
+        const data: DatabaseOperationRequestWritable = {
           ...values,
           create_operation: createOperationData ? { data: createOperationData } : null,
           update_operation: updateOperationNewData
@@ -113,10 +106,19 @@ function DatabaseOperationOffcanvas(
         };
 
         return action === 'edit' && operationID
-          ? DatabaseOperationAPI.update(telegramBotID, operationID, data)
-          : DatabaseOperationsAPI.create(telegramBotID, data);
+          ? TelegramBotsService.updateDatabaseOperation({
+              path: { telegramBotId: telegramBotID, id: operationID },
+              body: data,
+            })
+          : TelegramBotsService.createDatabaseOperation({
+              path: { telegramBotId: telegramBotID },
+              body: data,
+            });
       },
-      diagramAPICall: (id) => DiagramDatabaseOperationAPI.get(telegramBotID, id),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramDatabaseOperation({
+          path: { telegramBotId: telegramBotID, id },
+        }),
       onHide: () => hideOffcanvas(),
     }),
     [operationID, action, hideOffcanvas, i18n.language],

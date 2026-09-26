@@ -10,8 +10,9 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { defaultBody } from './BodyBlock/defaults';
 import { defaultHeaders } from './HeadersBlock/defaults';
+import { defaultMethod } from './MethodBlock/defaults';
 
-import { APIRequestAPI } from 'api/telegram-bots/api-request';
+import { TelegramBotsService } from 'api';
 
 import type { FormValues } from '..';
 import { useAPIRequestOffcanvasStore } from '../store';
@@ -47,9 +48,11 @@ function OffcanvasInner({
   useEffect(() => {
     if (!requestID) return;
     (async () => {
-      const response = await APIRequestAPI.get(telegramBotID, requestID);
+      const { data, error } = await TelegramBotsService.getApiRequest({
+        path: { telegramBotId: telegramBotID, id: requestID },
+      });
 
-      if (!response.ok) {
+      if (error || !data) {
         hideOffcanvas();
         createMessageToast({
           message: t('messages.getAPIRequest.error'),
@@ -58,12 +61,16 @@ function OffcanvasInner({
         return;
       }
 
-      const { id, headers, body, ...request } = response.json;
+      const { id: _id, headers, body, ...request } = data;
 
       setValues({
         ...request,
+        method: request.method || defaultMethod,
         headers: headers
-          ? Object.entries(headers).map(([key, value]) => ({ key, value }))
+          ? Object.entries(headers).map(([key, value]) => ({
+              key,
+              value: value as string,
+            }))
           : defaultHeaders,
         body: body ? JSON.stringify(body, null, 2) : defaultBody,
       });

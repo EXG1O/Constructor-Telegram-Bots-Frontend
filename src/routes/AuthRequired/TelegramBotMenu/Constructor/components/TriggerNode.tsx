@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import {
   type Node as RFNode,
   type NodeProps as RFNodeProps,
-  Position,
   useReactFlow,
 } from '@xyflow/react';
 
@@ -14,22 +13,22 @@ import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import Node from './Node';
+import type { NodeHandleProps } from './Node/components/NodeHandle';
 import { useTriggerOffcanvasStore } from './TriggerOffcanvas/store';
 
 import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
 
-import { DiagramTriggerAPI, TriggerAPI, TriggersAPI } from 'api/telegram-bots/trigger';
-import type { DiagramTrigger } from 'api/telegram-bots/trigger/types';
+import type { DiagramTrigger } from 'api';
+import { ConnectionHandlePosition, TelegramBotsService, type Trigger } from 'api';
 
-import {
-  buildEdgeSourceHandle,
-  buildEdgeTargetHandle,
-  type EdgeHandle,
-} from '../utils/edges';
+import type { NodeType } from '../enums';
 
-export type NodeData = Omit<DiagramTrigger, 'x' | 'y' | 'source_connections'>;
-
-export interface TriggerNodeProps extends RFNodeProps<RFNode<NodeData, 'trigger'>> {}
+export interface TriggerNodeProps extends RFNodeProps<
+  RFNode<
+    Omit<DiagramTrigger, 'x' | 'y' | 'source_connections'>,
+    typeof NodeType.Trigger
+  >
+> {}
 
 function TriggerNode({
   id,
@@ -55,7 +54,7 @@ function TriggerNode({
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const handleDuplicate = useNodeDuplicate(
+  const handleDuplicate = useNodeDuplicate<Trigger>(
     () => ({
       title: t('duplicateModal.title'),
       text: t('duplicateModal.text'),
@@ -67,14 +66,27 @@ function TriggerNode({
       type,
       x: positionAbsoluteX,
       y: positionAbsoluteY,
-      retrieveAPICall: () => TriggerAPI.get(telegramBotID, trigger.id),
-      createAPICall: (data) => TriggersAPI.create(telegramBotID, data),
-      diagramAPICall: (id) => DiagramTriggerAPI.get(telegramBotID, id),
+      retrieveAPICall: () =>
+        TelegramBotsService.getTrigger({
+          path: { telegramBotId: telegramBotID, id: trigger.id },
+        }),
+      createAPICall: (data) =>
+        TelegramBotsService.createTrigger({
+          path: { telegramBotId: telegramBotID },
+          body: data,
+        }),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramTrigger({
+          path: { telegramBotId: telegramBotID, id },
+        }),
     }),
     [trigger.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
+  const nodeHandlerProps: Pick<
+    NodeHandleProps,
+    'objectType' | 'objectID' | 'nestedObjectID'
+  > = {
     objectType: type,
     objectID: trigger.id,
     nestedObjectID: 0,
@@ -91,9 +103,11 @@ function TriggerNode({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await TriggerAPI.delete(telegramBotID, trigger.id);
+        const { error } = await TelegramBotsService.deleteTrigger({
+          path: { telegramBotId: telegramBotID, id: trigger.id },
+        });
 
-        if (!response.ok) {
+        if (error) {
           createMessageToast({
             message: t('messages.delete.error'),
             level: 'error',
@@ -123,20 +137,14 @@ function TriggerNode({
       <Node.Block className='relative'>
         <Node.Title>{trigger.name}</Node.Title>
         <Node.Handle
-          id={buildEdgeTargetHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'left',
-          })}
+          {...nodeHandlerProps}
           type='target'
-          position={Position.Left}
+          position={ConnectionHandlePosition.Left}
         />
         <Node.Handle
-          id={buildEdgeSourceHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'right',
-          })}
+          {...nodeHandlerProps}
           type='source'
-          position={Position.Right}
+          position={ConnectionHandlePosition.Right}
         />
       </Node.Block>
     </Node>

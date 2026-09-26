@@ -10,6 +10,8 @@ import SimpleInput from 'components/ui/SimpleInput';
 
 import ToolbarButton, { type ToolbarButtonProps } from './ToolbarButton';
 
+import composeHandlers from 'utils/composeHandlers';
+
 export interface ToolbarLinkButtonProps extends Omit<ToolbarButtonProps, 'format'> {}
 
 const ToolbarLinkButton = forwardRef<HTMLButtonElement, ToolbarLinkButtonProps>(
@@ -28,7 +30,7 @@ const ToolbarLinkButton = forwardRef<HTMLButtonElement, ToolbarLinkButtonProps>(
       return quillInstance;
     }
 
-    function handleTriggerClick(): void {
+    function handleTriggerClick(_event: React.MouseEvent<HTMLButtonElement>): void {
       if (!show) {
         const quill = getQuill();
         const range = quill.selection.lastRange;
@@ -80,7 +82,7 @@ const ToolbarLinkButton = forwardRef<HTMLButtonElement, ToolbarLinkButtonProps>(
             {...props}
             ref={ref}
             format='link'
-            onClick={handleTriggerClick}
+            onClick={composeHandlers(handleTriggerClick, onClick)}
           >
             <Link />
             {children}

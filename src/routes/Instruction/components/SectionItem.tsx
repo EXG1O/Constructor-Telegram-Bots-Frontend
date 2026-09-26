@@ -2,7 +2,7 @@ import React, { type HTMLAttributes, type ReactElement } from 'react';
 
 import Markdown from 'components/ui/Markdown';
 
-import type { Section } from 'api/instruction/types';
+import type { Section } from 'api';
 
 import cn from 'utils/cn';
 

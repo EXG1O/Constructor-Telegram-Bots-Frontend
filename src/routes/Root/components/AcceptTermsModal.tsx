@@ -8,8 +8,7 @@ import Button from 'components/ui/Button';
 import Modal from 'components/ui/Modal';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { DocumentType } from 'api/legal/enums';
-import { UserAPI } from 'api/users';
+import { DocumentType, UsersService } from 'api';
 
 import reverse from 'utils/reverse';
 
@@ -42,10 +41,13 @@ function AcceptTermsModal(): ReactElement {
   async function handleAccept(): Promise<void> {
     setLoading(true);
 
-    const response = await UserAPI.acceptTerms();
+    const { error } = await UsersService.postUserAcceptTerms();
 
-    if (!response.ok) {
-      createMessageToast({ message: t('messages.acceptTerms.error'), level: 'error' });
+    if (error) {
+      createMessageToast({
+        message: t('messages.acceptTerms.error'),
+        level: 'error',
+      });
       setLoading(false);
       return;
     }
@@ -60,10 +62,13 @@ function AcceptTermsModal(): ReactElement {
   async function handleDecline(): Promise<void> {
     setLoading(true);
 
-    const response = await UserAPI.delete();
+    const { error } = await UsersService.deleteUser();
 
-    if (!response.ok) {
-      createMessageToast({ message: t('messages.declineTerms.error'), level: 'error' });
+    if (error) {
+      createMessageToast({
+        message: t('messages.declineTerms.error'),
+        level: 'error',
+      });
       setLoading(false);
       return;
     }

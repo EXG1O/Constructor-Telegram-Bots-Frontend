@@ -6,10 +6,9 @@ import { RouteID } from 'routes';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { DocumentAPI } from 'api/legal';
-import type { DocumentType } from 'api/legal/enums';
-import type { APIResponse } from 'api/legal/types';
-import { isDocumentType } from 'api/legal/utils';
+import type { Document, DocumentType } from 'api';
+import { LegalService } from 'api';
+import isDocumentType from 'api/utils/isDocumentType';
 
 import reverse from 'utils/reverse';
 
@@ -19,7 +18,7 @@ interface StrictTOptions extends TOptions {
 
 export interface LoaderData {
   type: DocumentType;
-  document: APIResponse.DocumentAPI.Get;
+  document: Document;
 }
 
 async function loader({ params: { type } }: LoaderFunctionArgs): Promise<LoaderData> {
@@ -34,9 +33,9 @@ async function loader({ params: { type } }: LoaderFunctionArgs): Promise<LoaderD
     throw redirect(reverse(RouteID.Home));
   }
 
-  const response = await DocumentAPI.get({ type });
+  const { data, error } = await LegalService.getDocument({ path: { type } });
 
-  if (!response.ok) {
+  if (error || !data) {
     createMessageToast({
       message: i18n.t('messages.loader.error'),
       level: 'error',
@@ -44,7 +43,7 @@ async function loader({ params: { type } }: LoaderFunctionArgs): Promise<LoaderD
     throw redirect(reverse(RouteID.Home));
   }
 
-  return { type, document: response.json };
+  return { type, document: data };
 }
 
 export default loader;

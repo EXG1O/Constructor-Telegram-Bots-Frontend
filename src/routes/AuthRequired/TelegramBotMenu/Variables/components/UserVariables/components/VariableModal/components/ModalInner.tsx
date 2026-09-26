@@ -10,7 +10,7 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import ModalContent from './ModalContent';
 
-import { VariableAPI } from 'api/telegram-bots/variable';
+import { TelegramBotsService } from 'api';
 
 import composeHandlers from 'utils/composeHandlers';
 
@@ -38,9 +38,11 @@ function ModalInner({ onHide, onHidden, ...props }: ModalInnerProps): ReactEleme
   useEffect(() => {
     if (variableID) {
       (async () => {
-        const response = await VariableAPI.get(telegramBotID, variableID);
+        const { data, error } = await TelegramBotsService.getVariable({
+          path: { telegramBotId: telegramBotID, id: variableID },
+        });
 
-        if (!response.ok) {
+        if (error || !data) {
           hideModal();
           createMessageToast({
             message: t('messages.getVariable.error'),
@@ -49,7 +51,7 @@ function ModalInner({ onHide, onHidden, ...props }: ModalInnerProps): ReactEleme
           return;
         }
 
-        const { id, ...variable } = response.json;
+        const { id: _id, ...variable } = data;
 
         setValues(variable);
         setLoading(false);
@@ -69,4 +71,5 @@ function ModalInner({ onHide, onHidden, ...props }: ModalInnerProps): ReactEleme
     </Modal>
   );
 }
+
 export default ModalInner;

@@ -20,9 +20,11 @@ import type { NameBlockFormValues } from '../NameBlock/types';
 
 import useFormikSubmit from '../../hooks/useFormikSubmit';
 
-import { DiagramInvoiceAPI, InvoiceAPI, InvoicesAPI } from 'api/telegram-bots/invoice';
-import type { Data, Invoice } from 'api/telegram-bots/invoice/types';
+import type { Invoice, InvoiceRequestWritable } from 'api';
+import { TelegramBotsService } from 'api';
+import formDataBodySerializer from 'api/utils/formDataBodySerializer';
 
+import { NodeType } from '../../enums';
 import { useInvoiceOffcanvasStore } from './store';
 
 export interface FormValues
@@ -72,10 +74,10 @@ function InvoiceOffcanvas(props: InvoiceOffcanvasProps): ReactElement {
           error: t('messages.editInvoice.error'),
         },
       },
-      type: 'invoice',
+      type: NodeType.Invoice,
       action,
       saveAPICall: async ({ image, price, show_image_block, ...values }) => {
-        const data: Data.InvoicesAPI.Create | Data.InvoiceAPI.Update = {
+        const data: InvoiceRequestWritable = {
           ...values,
           image:
             show_image_block && image
@@ -84,11 +86,19 @@ function InvoiceOffcanvas(props: InvoiceOffcanvasProps): ReactElement {
           prices: [{ label: price.label, amount: Number(price.amount) }],
         };
 
-        const response = await (action === 'edit' && invoiceID
-          ? InvoiceAPI.update(telegramBotID, invoiceID, data)
-          : InvoicesAPI.create(telegramBotID, data));
+        const result = await (action === 'edit' && invoiceID
+          ? TelegramBotsService.updateInvoice({
+              ...formDataBodySerializer,
+              path: { telegramBotId: telegramBotID, id: invoiceID },
+              body: data,
+            })
+          : TelegramBotsService.createInvoice({
+              ...formDataBodySerializer,
+              path: { telegramBotId: telegramBotID },
+              body: data,
+            }));
 
-        if (response.ok) {
+        if (result.data) {
           const { usedStorageSize } = useInvoiceOffcanvasStore.getState();
 
           setTelegramBot((telegramBot) => {
@@ -96,9 +106,12 @@ function InvoiceOffcanvas(props: InvoiceOffcanvasProps): ReactElement {
           });
         }
 
-        return response;
+        return result;
       },
-      diagramAPICall: (id) => DiagramInvoiceAPI.get(telegramBotID, id),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramInvoice({
+          path: { telegramBotId: telegramBotID, id },
+        }),
       normalizeFieldName: (fieldName) => fieldName.replace(/^prices\.0/, 'price'),
       onHide: () => hideOffcanvas(),
     }),

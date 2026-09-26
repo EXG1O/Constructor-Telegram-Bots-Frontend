@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import {
   type Node as RFNode,
   type NodeProps as RFNodeProps,
-  Position,
   useReactFlow,
 } from '@xyflow/react';
 
@@ -15,26 +14,24 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useAPIRequestOffcanvasStore } from './APIRequestOffcanvas/store';
 import Node from './Node';
+import type { NodeHandleProps } from './Node/components/NodeHandle';
 
 import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
 
 import {
-  APIRequestAPI,
-  APIRequestsAPI,
-  DiagramAPIRequestAPI,
-} from 'api/telegram-bots/api-request';
-import type { DiagramAPIRequest } from 'api/telegram-bots/api-request/types';
+  type ApiRequest,
+  ConnectionHandlePosition,
+  type DiagramApiRequest,
+  TelegramBotsService,
+} from 'api';
 
-import {
-  buildEdgeSourceHandle,
-  buildEdgeTargetHandle,
-  type EdgeHandle,
-} from '../utils/edges';
-
-export type NodeData = Omit<DiagramAPIRequest, 'x' | 'y' | 'source_connections'>;
+import type { NodeType } from '../enums';
 
 export interface APIRequestNodeProps extends RFNodeProps<
-  RFNode<NodeData, 'api_request'>
+  RFNode<
+    Omit<DiagramApiRequest, 'x' | 'y' | 'source_connections'>,
+    typeof NodeType.ApiRequest
+  >
 > {}
 
 function APIRequestNode({
@@ -42,7 +39,7 @@ function APIRequestNode({
   type,
   positionAbsoluteX,
   positionAbsoluteY,
-  data: request,
+  data: apiRequest,
 }: APIRequestNodeProps): ReactElement {
   const { t, i18n } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
     'telegram-bot-menu-constructor',
@@ -61,7 +58,7 @@ function APIRequestNode({
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const handleDuplicate = useNodeDuplicate(
+  const handleDuplicate = useNodeDuplicate<ApiRequest>(
     () => ({
       title: t('duplicateModal.title'),
       text: t('duplicateModal.text'),
@@ -73,16 +70,29 @@ function APIRequestNode({
       type,
       x: positionAbsoluteX,
       y: positionAbsoluteY,
-      retrieveAPICall: () => APIRequestAPI.get(telegramBotID, request.id),
-      createAPICall: (data) => APIRequestsAPI.create(telegramBotID, data),
-      diagramAPICall: (id) => DiagramAPIRequestAPI.get(telegramBotID, id),
+      retrieveAPICall: () =>
+        TelegramBotsService.getApiRequest({
+          path: { telegramBotId: telegramBotID, id: apiRequest.id },
+        }),
+      createAPICall: (data) =>
+        TelegramBotsService.createApiRequest({
+          path: { telegramBotId: telegramBotID },
+          body: data,
+        }),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramApiRequest({
+          path: { telegramBotId: telegramBotID, id },
+        }),
     }),
-    [request.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
+    [apiRequest.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
+  const nodeHandlerProps: Pick<
+    NodeHandleProps,
+    'objectType' | 'objectID' | 'nestedObjectID'
+  > = {
     objectType: type,
-    objectID: request.id,
+    objectID: apiRequest.id,
     nestedObjectID: 0,
   };
 
@@ -93,9 +103,11 @@ function APIRequestNode({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await APIRequestAPI.delete(telegramBotID, request.id);
+        const { error } = await TelegramBotsService.deleteApiRequest({
+          path: { telegramBotId: telegramBotID, id: apiRequest.id },
+        });
 
-        if (!response.ok) {
+        if (error) {
           createMessageToast({
             message: t('messages.delete.error'),
             level: 'error',
@@ -116,7 +128,7 @@ function APIRequestNode({
   }
 
   function handleEdit(): void {
-    showEditAPIRequestOffcanvas(request.id);
+    showEditAPIRequestOffcanvas(apiRequest.id);
   }
 
   return (
@@ -127,22 +139,16 @@ function APIRequestNode({
       onDelete={handleDelete}
     >
       <Node.Block className='relative'>
-        <Node.Title>{request.name}</Node.Title>
+        <Node.Title>{apiRequest.name}</Node.Title>
         <Node.Handle
-          id={buildEdgeTargetHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'left',
-          })}
+          {...nodeHandlerProps}
           type='target'
-          position={Position.Left}
+          position={ConnectionHandlePosition.Left}
         />
         <Node.Handle
-          id={buildEdgeSourceHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'right',
-          })}
+          {...nodeHandlerProps}
           type='source'
-          position={Position.Right}
+          position={ConnectionHandlePosition.Right}
         />
       </Node.Block>
     </Node>

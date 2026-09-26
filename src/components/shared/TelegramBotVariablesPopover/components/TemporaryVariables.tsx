@@ -14,8 +14,7 @@ import Pagination from 'components/ui/Pagination';
 import Loading from './Loading';
 import SelectButton from './SelectButton';
 
-import { TemporaryVariablesAPI } from 'api/telegram-bots/temporary-variable';
-import type { TemporaryVariable } from 'api/telegram-bots/temporary-variable/types';
+import { TelegramBotsService, type TemporaryVariable } from 'api';
 
 import cn from 'utils/cn';
 
@@ -57,10 +56,13 @@ function TemporaryVariables({
     const limit = params?.limit ?? pagination.limit;
     const offset = params?.offset ?? pagination.offset;
 
-    const response = await TemporaryVariablesAPI.get(telegramBotID, limit, offset);
-    if (!response.ok) return;
+    const { data, error } = await TelegramBotsService.getTemporaryVariableList({
+      path: { telegramBotId: telegramBotID },
+      query: { limit, offset },
+    });
+    if (error || !data) return;
 
-    setPagination({ ...response.json, limit, offset });
+    setPagination({ ...data, limit, offset });
     setLoading(false);
   }
 

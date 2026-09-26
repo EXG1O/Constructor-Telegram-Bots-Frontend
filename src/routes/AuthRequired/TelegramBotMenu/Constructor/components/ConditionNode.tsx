@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import {
   type Node as RFNode,
   type NodeProps as RFNodeProps,
-  Position,
   useReactFlow,
 } from '@xyflow/react';
 
@@ -15,26 +14,24 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useConditionOffcanvasStore } from './ConditionOffcanvas/store';
 import Node from './Node';
+import type { NodeHandleProps } from './Node/components/NodeHandle';
 
 import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
 
 import {
-  ConditionAPI,
-  ConditionsAPI,
-  DiagramConditionAPI,
-} from 'api/telegram-bots/condition';
-import type { DiagramCondition } from 'api/telegram-bots/condition/types';
+  type Condition,
+  ConnectionHandlePosition,
+  type DiagramCondition,
+  TelegramBotsService,
+} from 'api';
 
-import {
-  buildEdgeSourceHandle,
-  buildEdgeTargetHandle,
-  type EdgeHandle,
-} from '../utils/edges';
-
-export type NodeData = Omit<DiagramCondition, 'x' | 'y' | 'source_connections'>;
+import type { NodeType } from '../enums';
 
 export interface ConditionNodeProps extends RFNodeProps<
-  RFNode<NodeData, 'condition'>
+  RFNode<
+    Omit<DiagramCondition, 'x' | 'y' | 'source_connections'>,
+    typeof NodeType.Condition
+  >
 > {}
 
 function ConditionNode({
@@ -61,7 +58,7 @@ function ConditionNode({
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const handleDuplicate = useNodeDuplicate(
+  const handleDuplicate = useNodeDuplicate<Condition>(
     () => ({
       title: t('duplicateModal.title'),
       text: t('duplicateModal.text'),
@@ -73,14 +70,27 @@ function ConditionNode({
       type,
       x: positionAbsoluteX,
       y: positionAbsoluteY,
-      retrieveAPICall: () => ConditionAPI.get(telegramBotID, condition.id),
-      createAPICall: (data) => ConditionsAPI.create(telegramBotID, data),
-      diagramAPICall: (id) => DiagramConditionAPI.get(telegramBotID, id),
+      retrieveAPICall: () =>
+        TelegramBotsService.getCondition({
+          path: { telegramBotId: telegramBotID, id: condition.id },
+        }),
+      createAPICall: (data) =>
+        TelegramBotsService.createCondition({
+          path: { telegramBotId: telegramBotID },
+          body: data,
+        }),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramCondition({
+          path: { telegramBotId: telegramBotID, id },
+        }),
     }),
     [condition.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
+  const nodeHandlerProps: Pick<
+    NodeHandleProps,
+    'objectType' | 'objectID' | 'nestedObjectID'
+  > = {
     objectType: type,
     objectID: condition.id,
     nestedObjectID: 0,
@@ -93,9 +103,11 @@ function ConditionNode({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await ConditionAPI.delete(telegramBotID, condition.id);
+        const { error } = await TelegramBotsService.deleteCondition({
+          path: { telegramBotId: telegramBotID, id: condition.id },
+        });
 
-        if (!response.ok) {
+        if (error) {
           createMessageToast({
             message: t('messages.delete.error'),
             level: 'error',
@@ -129,20 +141,14 @@ function ConditionNode({
       <Node.Block className='relative'>
         <Node.Title>{condition.name}</Node.Title>
         <Node.Handle
-          id={buildEdgeTargetHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'left',
-          })}
+          {...nodeHandlerProps}
           type='target'
-          position={Position.Left}
+          position={ConnectionHandlePosition.Left}
         />
         <Node.Handle
-          id={buildEdgeSourceHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'right',
-          })}
+          {...nodeHandlerProps}
           type='source'
-          position={Position.Right}
+          position={ConnectionHandlePosition.Right}
         />
       </Node.Block>
     </Node>

@@ -8,7 +8,7 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import Offcanvas, { type OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { TemporaryVariableAPI } from 'api/telegram-bots/temporary-variable';
+import { TelegramBotsService } from 'api';
 
 import type { FormValues } from '..';
 import { useTemporaryVariableOffcanvasStore } from '../store';
@@ -46,9 +46,11 @@ function OffcanvasInner({
   useEffect(() => {
     if (!variableID) return;
     (async () => {
-      const response = await TemporaryVariableAPI.get(telegramBotID, variableID);
+      const { data, error } = await TelegramBotsService.getTemporaryVariable({
+        path: { telegramBotId: telegramBotID, id: variableID },
+      });
 
-      if (!response.ok) {
+      if (error || !data) {
         hideOffcanvas();
         createMessageToast({
           message: t('messages.getTemporaryVariable.error'),
@@ -57,7 +59,7 @@ function OffcanvasInner({
         return;
       }
 
-      const { id, ...variable } = response.json;
+      const { id: _id, ...variable } = data;
 
       setValues(variable);
       setLoading(false);

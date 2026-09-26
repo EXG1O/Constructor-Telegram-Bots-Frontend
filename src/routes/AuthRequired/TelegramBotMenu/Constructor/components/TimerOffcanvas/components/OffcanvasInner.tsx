@@ -8,7 +8,7 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import Offcanvas, { type OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { TimerAPI } from 'api/telegram-bots/timer';
+import { TelegramBotsService } from 'api';
 
 import type { FormValues } from '..';
 import { useTimerOffcanvasStore } from '../store';
@@ -44,9 +44,11 @@ function OffcanvasInner({
   useEffect(() => {
     if (!timerID) return;
     (async () => {
-      const response = await TimerAPI.get({ botID, id: timerID });
+      const { data, error } = await TelegramBotsService.getTimer({
+        path: { telegramBotId: botID, id: timerID },
+      });
 
-      if (!response.ok) {
+      if (error || !data) {
         hideOffcanvas();
         createMessageToast({
           message: t('messages.getTimer.error'),
@@ -55,7 +57,7 @@ function OffcanvasInner({
         return;
       }
 
-      const { id, duration_seconds, ...rest } = response.json;
+      const { id: _id, duration_seconds, ...rest } = data;
 
       setValues({ ...rest, duration: duration_seconds });
       setLoading(false);

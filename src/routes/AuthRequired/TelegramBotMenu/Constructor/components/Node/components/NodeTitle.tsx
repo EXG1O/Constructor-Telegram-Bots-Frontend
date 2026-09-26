@@ -7,7 +7,11 @@ export interface NodeTitleProps extends HTMLAttributes<HTMLHeadingElement> {}
 const NodeTitle = forwardRef<HTMLHeadingElement, NodeTitleProps>(
   ({ className, ...props }, ref) => {
     return (
-      <h5 {...props} ref={ref} className={cn('w-full', 'font-medium', 'text-center')} />
+      <h5
+        {...props}
+        ref={ref}
+        className={cn('w-full', 'font-medium', 'text-center', className)}
+      />
     );
   },
 );

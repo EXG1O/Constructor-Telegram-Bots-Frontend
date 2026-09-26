@@ -14,13 +14,10 @@ import type { NameBlockFormValues } from '../NameBlock/types';
 
 import useFormikSubmit from '../../hooks/useFormikSubmit';
 
-import {
-  DiagramTemporaryVariableAPI,
-  TemporaryVariableAPI,
-  TemporaryVariablesAPI,
-} from 'api/telegram-bots/temporary-variable';
-import type { TemporaryVariable } from 'api/telegram-bots/temporary-variable/types';
+import type { TemporaryVariable } from 'api';
+import { TelegramBotsService } from 'api';
 
+import { NodeType } from '../../enums';
 import { useTemporaryVariableOffcanvasStore } from './store';
 
 export interface FormValues extends NameBlockFormValues, ValueBlockFormValues {}
@@ -60,13 +57,22 @@ function TemporaryVariableOffcanvas(
           error: t('messages.editTemporaryVariable.error'),
         },
       },
-      type: 'temporary_variable',
+      type: NodeType.TemporaryVariable,
       action,
       saveAPICall: (values) =>
         action === 'edit' && variableID
-          ? TemporaryVariableAPI.update(telegramBotID, variableID, values)
-          : TemporaryVariablesAPI.create(telegramBotID, values),
-      diagramAPICall: (id) => DiagramTemporaryVariableAPI.get(telegramBotID, id),
+          ? TelegramBotsService.updateTemporaryVariable({
+              path: { telegramBotId: telegramBotID, id: variableID },
+              body: values,
+            })
+          : TelegramBotsService.createTemporaryVariable({
+              path: { telegramBotId: telegramBotID },
+              body: values,
+            }),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramTemporaryVariable({
+          path: { telegramBotId: telegramBotID, id },
+        }),
       onHide: () => hideOffcanvas(),
     }),
     [variableID, action, hideOffcanvas, i18n.language],

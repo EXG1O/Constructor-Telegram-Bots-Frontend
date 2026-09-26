@@ -30,7 +30,6 @@
     "messages": {
       "partialUpdateRecord": {
         "error": "Failed to update the record.",
-        "error_other": "An unexpected error occurred.",
         "error_validJSON": "Enter valid JSON data.",
         "success": "You have successfully updated the record."
       }

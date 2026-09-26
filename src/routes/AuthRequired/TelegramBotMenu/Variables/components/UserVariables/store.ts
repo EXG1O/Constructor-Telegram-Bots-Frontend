@@ -7,21 +7,18 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { VariablesAPI } from 'api/telegram-bots/variable';
-import type { Variable } from 'api/telegram-bots/variable/types';
+import type { Variable } from 'api';
+import { TelegramBotsService } from 'api';
+
+import type { VariablePagination } from '../../loader';
 
 interface StrictTOptions extends TOptions {
   ns: `${RouteID.TelegramBotMenuVariables}`;
 }
 
-export interface StateParams {
+export interface StateParams extends Omit<VariablePagination, 'results'> {
   loading: boolean;
-
-  count: number;
-  limit: number;
-  offset: number;
   search: string | null;
-
   variables: Variable[];
 }
 
@@ -67,14 +64,16 @@ export function createStore(initialProps: InitialProps) {
       const offset = newOffset ?? currentOffset;
       const search = newSearch === undefined ? currentSearch : newSearch;
 
-      const response = await VariablesAPI.get(
-        telegramBot.id,
-        limit,
-        offset,
-        search ?? undefined,
-      );
+      const { data, error } = await TelegramBotsService.getVariableList({
+        path: { telegramBotId: telegramBot.id },
+        query: {
+          limit,
+          offset,
+          ...(search && { search }),
+        },
+      });
 
-      if (!response.ok) {
+      if (error || !data) {
         createMessageToast({
           message: i18n.t<string, StrictTOptions, string, StrictTOptions>(
             'user.messages.getVariables.error',
@@ -89,12 +88,12 @@ export function createStore(initialProps: InitialProps) {
       set({
         loading: false,
 
-        count: response.json.count,
+        count: data.count,
         limit,
         offset,
         search,
 
-        variables: response.json.results,
+        variables: data.results,
       });
     },
 

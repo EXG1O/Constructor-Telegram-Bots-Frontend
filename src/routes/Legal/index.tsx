@@ -10,7 +10,7 @@ import Page from 'components/ui/Page';
 
 import useLegalRouteLoaderData from './hooks/useLegalRouteLoaderData';
 
-import { DocumentType } from 'api/legal/enums';
+import { DocumentType } from 'api';
 
 interface StrictTOptions extends TOptions {
   context: `${DocumentType.TermsOfService | DocumentType.PrivacyPolicy}`;

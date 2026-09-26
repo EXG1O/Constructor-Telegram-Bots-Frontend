@@ -13,7 +13,7 @@ PrimitivePanel.displayName = 'PrimitivePanel';
 
 export interface PanelProps extends Omit<RFPanelProps, 'position' | 'children'> {}
 
-function Panel({ className, ...props }: PanelProps): ReactElement {
+function Panel(props: PanelProps): ReactElement {
   const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
     'telegram-bot-menu-constructor',
     { keyPrefix: 'panel' },

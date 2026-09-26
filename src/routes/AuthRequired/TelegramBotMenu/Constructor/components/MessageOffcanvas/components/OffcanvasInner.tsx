@@ -13,10 +13,13 @@ import type { Document } from './DocumentsBlock/types';
 import { defaultImages } from './ImagesBlock/defaults';
 import type { Image } from './ImagesBlock/types';
 import type { KeyboardRow } from './KeyboardBlock/components/DraggableKeyboard';
+import { defaultStyle } from './KeyboardBlock/components/KeyboardButtonPopover/components/StyleSelect';
+import { defaultType } from './KeyboardBlock/components/KeyboardTypeTabs/defaults';
 import { defaultKeyboard } from './KeyboardBlock/defaults';
+import { defaultSettings } from './SettingsBlock/defaults';
 import { defaultText } from './TextBlock/defaults';
 
-import { MessageAPI } from 'api/telegram-bots/message';
+import { TelegramBotsService } from 'api';
 import fetchFile from 'api/utils/fetchFile';
 
 import calcMediaSize from '../../../utils/calcMediaSize';
@@ -57,9 +60,11 @@ function OffcanvasInner({
   useEffect(() => {
     if (!messageID) return;
     (async () => {
-      const response = await MessageAPI.get(telegramBotID, messageID);
+      const { data, error } = await TelegramBotsService.getMessage({
+        path: { telegramBotId: telegramBotID, id: messageID },
+      });
 
-      if (!response.ok) {
+      if (error || !data) {
         hideOffcanvas();
         createMessageToast({
           message: t('messages.getMessage.error'),
@@ -68,11 +73,11 @@ function OffcanvasInner({
         return;
       }
 
-      const { id, text, images, documents, keyboard, ...message } = response.json;
+      const { id: _id, settings, text, images, documents, keyboard, ...message } = data;
 
       const [loadedImages, loadedDocuments] = await Promise.all([
         Promise.all(
-          images
+          (images ?? [])
             .sort((a, b) => a.position - b.position)
             .map<Promise<Image>>(async ({ id, name, url, from_url }) => {
               const file: File | null = url && name ? await fetchFile(url, name) : null;
@@ -82,30 +87,38 @@ function OffcanvasInner({
                 key: crypto.randomUUID(),
                 file,
                 file_url: file && URL.createObjectURL(file),
-                from_url,
+                from_url: from_url ?? null,
               };
             }),
         ),
         Promise.all(
-          documents
+          (documents ?? [])
             .sort((a, b) => a.position - b.position)
             .map<Promise<Document>>(async ({ id, name, url, from_url }) => ({
               id,
               key: crypto.randomUUID(),
               file: url && name ? await fetchFile(url, name) : null,
-              from_url,
+              from_url: from_url ?? null,
             })),
         ),
       ]);
       const values: FormValues = {
         ...message,
 
+        settings: {
+          reply_to_user_message:
+            settings.reply_to_user_message ?? defaultSettings.reply_to_user_message,
+          delete_user_message:
+            settings.delete_user_message ?? defaultSettings.delete_user_message,
+          send_as_new_message:
+            settings.send_as_new_message ?? defaultSettings.send_as_new_message,
+        },
         images: loadedImages.length ? loadedImages : defaultImages,
         documents: loadedDocuments.length ? loadedDocuments : defaultDocuments,
         text: text ?? defaultText,
         keyboard: keyboard
           ? {
-              type: keyboard.type,
+              type: keyboard.type ?? defaultType,
               rows: keyboard.buttons.reduce<KeyboardRow[]>(
                 (
                   rows,
@@ -122,8 +135,8 @@ function OffcanvasInner({
                     id,
                     draggableId: crypto.randomUUID(),
                     text,
-                    url,
-                    style,
+                    url: url ?? null,
+                    style: style ?? defaultStyle,
                   };
 
                   return rows;
@@ -133,8 +146,8 @@ function OffcanvasInner({
             }
           : defaultKeyboard,
 
-        show_images_block: Boolean(images.length),
-        show_documents_block: Boolean(documents.length),
+        show_images_block: Boolean(images && images.length),
+        show_documents_block: Boolean(documents && documents.length),
         show_text_block: text !== null,
         show_keyboard_block: Boolean(keyboard),
       };

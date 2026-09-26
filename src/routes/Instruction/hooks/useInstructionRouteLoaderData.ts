@@ -2,10 +2,10 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 import { RouteID } from 'routes';
 
-import type { LoaderData } from '../loader';
+import type loader from '../loader';
 
 function useInstructionRouteLoaderData() {
-  return useRouteLoaderData(RouteID.Instruction) as LoaderData;
+  return useRouteLoaderData(RouteID.Instruction) as Awaited<ReturnType<typeof loader>>;
 }
 
 export default useInstructionRouteLoaderData;

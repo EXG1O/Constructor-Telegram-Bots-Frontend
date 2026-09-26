@@ -5,19 +5,19 @@ import { RouteID } from 'routes';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { SectionsAPI } from 'api/instruction';
-import type { APIResponse } from 'api/instruction/types';
+import type { Section } from 'api';
+import { InstructionService } from 'api';
 
 import reverse from 'utils/reverse';
 
 export interface LoaderData {
-  sections: APIResponse.SectionsAPI.Get;
+  sections: Section[];
 }
 
 async function loader(): Promise<LoaderData> {
-  const response = await SectionsAPI.get();
+  const { data, error } = await InstructionService.getSectionList();
 
-  if (!response.ok) {
+  if (error || !data) {
     createMessageToast({
       message: i18n.t('messages.loader.error'),
       level: 'error',
@@ -25,7 +25,7 @@ async function loader(): Promise<LoaderData> {
     throw redirect(reverse(RouteID.Home));
   }
 
-  return { sections: response.json };
+  return { sections: data };
 }
 
 export default loader;

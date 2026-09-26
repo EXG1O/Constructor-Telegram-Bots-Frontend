@@ -12,7 +12,7 @@ import ModalContent from './components/ModalContent';
 
 import useDatabaseRecordsStore from '../../hooks/useDatabaseRecordsStore';
 
-import { DatabaseRecordsAPI } from 'api/telegram-bots/database-record';
+import { TelegramBotsService } from 'api';
 
 interface FormValues {
   data: string;
@@ -60,12 +60,15 @@ function RecordAdditionModal({
       return;
     }
 
-    const response = await DatabaseRecordsAPI.create(telegramBotID, { data });
+    const { error } = await TelegramBotsService.createDatabaseRecord({
+      path: { telegramBotId: telegramBotID },
+      body: { data },
+    });
 
-    if (!response.ok) {
-      for (const error of response.json.errors) {
-        if (!error.attr) continue;
-        setFieldError(error.attr, error.detail);
+    if (error) {
+      for (const item of error.errors) {
+        if (!item.attr) continue;
+        setFieldError(item.attr, item.detail);
       }
       createMessageToast({
         message: t('messages.addRecord.error'),

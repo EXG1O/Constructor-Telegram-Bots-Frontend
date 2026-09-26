@@ -11,8 +11,8 @@ import SectionItem from './components/SectionItem';
 
 import useInstructionRouteLoaderData from './hooks/useInstructionRouteLoaderData';
 
-import { SectionsAPI } from 'api/instruction';
-import type { Section } from 'api/instruction/types';
+import type { Section } from 'api';
+import { InstructionService } from 'api';
 
 function Instruction(): ReactElement {
   const { t, i18n } = useTranslation<`${RouteID.Instruction}`, any>('instruction');
@@ -28,9 +28,9 @@ function Instruction(): ReactElement {
     const refreshSections = async () => {
       setLoading(true);
 
-      const response = await SectionsAPI.get();
+      const { data, error } = await InstructionService.getSectionList();
 
-      if (!response.ok) {
+      if (error || !data) {
         createMessageToast({
           message: t('messages.getSections.error'),
           level: 'error',
@@ -38,7 +38,7 @@ function Instruction(): ReactElement {
         return;
       }
 
-      setSections(response.json);
+      setSections(data);
       setLoading(false);
     };
 

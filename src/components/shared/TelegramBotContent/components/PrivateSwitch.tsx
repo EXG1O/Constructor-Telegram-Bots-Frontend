@@ -10,7 +10,7 @@ import Check from 'components/ui/Check';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
+import { TelegramBotsService } from 'api';
 
 import { useTelegramBotContentStore } from '../store';
 
@@ -32,24 +32,25 @@ function PrivateSwitch(props: PrivateSwitchProps): ReactElement {
   async function handleChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
     setLoading(true);
 
-    const response = await TelegramBotAPI.partialUpdate(telegramBot.id, {
-      is_private: event.target.checked,
+    const { data, error } = await TelegramBotsService.partialUpdateTelegramBot({
+      path: { id: telegramBot.id },
+      body: { is_private: event.target.checked },
     });
 
-    if (response.ok) {
-      setTelegramBot(response.json);
-      createMessageToast({
-        message: t('messages.updateTelegramBotPrivate.success', {
-          context: response.json.is_private ? 'true' : 'false',
-        }),
-        level: 'success',
-      });
-    } else {
+    if (error || !data) {
       createMessageToast({
         message: t('messages.updateTelegramBotPrivate.error', {
           context: event.target.checked ? 'true' : 'false',
         }),
         level: 'error',
+      });
+    } else {
+      setTelegramBot(data);
+      createMessageToast({
+        message: t('messages.updateTelegramBotPrivate.success', {
+          context: data.is_private ? 'true' : 'false',
+        }),
+        level: 'success',
       });
     }
 

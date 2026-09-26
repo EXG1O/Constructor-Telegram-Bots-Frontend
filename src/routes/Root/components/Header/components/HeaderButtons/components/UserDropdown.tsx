@@ -1,6 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { LocalStorageKey } from 'enums/storage';
 
 import { RouteID } from 'routes';
 
@@ -9,9 +10,7 @@ import Button from 'components/ui/Button';
 import Dropdown, { type DropdownProps } from 'components/ui/Dropdown';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { JWTStorage } from 'api/storage';
-import { UserAPI } from 'api/users';
-import type { User } from 'api/users/types';
+import { type User, UsersService } from 'api';
 
 import reverse from 'utils/reverse';
 
@@ -38,23 +37,26 @@ function UserDropdown({ user, ...props }: UserDropdownProps): ReactElement {
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await UserAPI.logout();
+        const { error } = await UsersService.postUserLogout();
 
-        if (response.ok) {
-          JWTStorage.clearTokens();
-          hideConfirmModal();
-          navigate(reverse(RouteID.Home));
-          createMessageToast({
-            message: t('messages.logout.success'),
-            level: 'success',
-          });
-        } else {
+        if (error) {
           setLoadingConfirmModal(false);
           createMessageToast({
             message: t('messages.logout.error'),
             level: 'error',
           });
+          return;
         }
+
+        window.localStorage.removeItem(LocalStorageKey.RefreshToken);
+        window.localStorage.removeItem(LocalStorageKey.AccessToken);
+
+        hideConfirmModal();
+        navigate(reverse(RouteID.Home));
+        createMessageToast({
+          message: t('messages.logout.success'),
+          level: 'success',
+        });
       },
       onCancel: null,
     });

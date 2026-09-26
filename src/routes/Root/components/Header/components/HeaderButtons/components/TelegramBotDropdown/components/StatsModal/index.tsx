@@ -8,8 +8,8 @@ import Modal, { type ModalProps } from 'components/ui/Modal';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import type { makeRequest } from 'api/core';
-import { UsersAPI } from 'api/telegram-bots/user';
+import { TelegramBotsService } from 'api';
+import type { RequestResult } from 'api/client/client';
 
 const ChartBlock = lazy(() => import('./components/ChartBlock'));
 
@@ -23,12 +23,12 @@ function StatsModal(props: StatsModalProps): ReactElement {
   const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   async function getData(
-    api: () => ReturnType<typeof makeRequest<any[]>>,
+    api: () => RequestResult<any[], any, false>,
     errorMessage: string,
   ): Promise<any[] | null> {
-    const response = await api();
+    const { data, error } = await api();
 
-    if (!response.ok) {
+    if (error || !data) {
       createMessageToast({
         message: errorMessage,
         level: 'error',
@@ -36,19 +36,27 @@ function StatsModal(props: StatsModalProps): ReactElement {
       return null;
     }
 
-    return response.json;
+    return data;
   }
 
   async function getNewUsersStatsData(): Promise<any[] | null> {
     return getData(
-      () => UsersAPI.timelineStats(telegramBotID, 'activated_date', 90),
+      () =>
+        TelegramBotsService.getUserTimelineStats({
+          path: { telegramBotId: telegramBotID },
+          query: { field: 'activated_date', days: 90 },
+        }),
       t('messages.getNewUsersStats.error'),
     );
   }
 
   async function getUsersLastActivityStatsData(): Promise<any[] | null> {
     return getData(
-      () => UsersAPI.timelineStats(telegramBotID, 'last_activity_date', 90),
+      () =>
+        TelegramBotsService.getUserTimelineStats({
+          path: { telegramBotId: telegramBotID },
+          query: { field: 'last_activity_date', days: 90 },
+        }),
       t('messages.getUsersLastActivityStats.error'),
     );
   }

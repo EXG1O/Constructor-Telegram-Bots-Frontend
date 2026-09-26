@@ -1,34 +1,38 @@
-import { type Params, redirect } from 'react-router-dom';
+import { type LoaderFunctionArgs, redirect } from 'react-router-dom';
+import i18n from 'i18n';
 
 import { RouteID } from 'routes';
 
-import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
+import { createMessageToast } from 'components/ui/ToastContainer';
+
+import { TelegramBotsService } from 'api';
 
 import reverse from 'utils/reverse';
 
 import { useTelegramBotStore } from './store';
 
-async function loader({
-  params,
-}: {
-  params: Params<'telegramBotID'>;
-}): Promise<Response | null> {
+async function loader({ params }: LoaderFunctionArgs): Promise<null> {
   const telegramBotID = Number(params.telegramBotID);
-  const redirectToTelegramBots = () => redirect(reverse(RouteID.TelegramBots));
 
   if (Number.isNaN(telegramBotID)) {
-    return redirectToTelegramBots();
+    throw redirect(reverse(RouteID.TelegramBots));
   }
 
-  const response = await TelegramBotAPI.get(telegramBotID);
+  const { data, error } = await TelegramBotsService.getTelegramBot({
+    path: { id: telegramBotID },
+  });
   const setTelegramBot = useTelegramBotStore.getState().setTelegramBot;
 
-  if (!response.ok) {
+  if (error || !data) {
     setTelegramBot(null);
-    return redirectToTelegramBots();
+    createMessageToast({
+      message: i18n.t('messages.loader.error'),
+      level: 'error',
+    });
+    throw redirect(reverse(RouteID.TelegramBots));
   }
 
-  setTelegramBot(response.json);
+  setTelegramBot(data);
   return null;
 }
 

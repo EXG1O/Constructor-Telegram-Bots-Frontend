@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import {
   type Node as RFNode,
   type NodeProps as RFNodeProps,
-  Position,
   useReactFlow,
 } from '@xyflow/react';
 
@@ -14,27 +13,25 @@ import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import Node from './Node';
+import type { NodeHandleProps } from './Node/components/NodeHandle';
 import { useRandomizerOffcanvasStore } from './RandomizerOffcanvas/store';
 
 import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
 
 import {
-  DiagramRandomizerAPI,
-  RandomizerAPI,
-  RandomizersAPI,
-} from 'api/telegram-bots/randomizer';
-import type { DiagramRandomizer } from 'api/telegram-bots/randomizer/types';
+  ConnectionHandlePosition,
+  type DiagramRandomizer,
+  type Randomizer,
+  TelegramBotsService,
+} from 'api';
 
-import {
-  buildEdgeSourceHandle,
-  buildEdgeTargetHandle,
-  type EdgeHandle,
-} from '../utils/edges';
-
-export type NodeData = Omit<DiagramRandomizer, 'x' | 'y' | 'source_connections'>;
+import type { NodeType } from '../enums';
 
 export interface RandomizerNodeProps extends RFNodeProps<
-  RFNode<NodeData, 'randomizer'>
+  RFNode<
+    Omit<DiagramRandomizer, 'x' | 'y' | 'source_connections'>,
+    typeof NodeType.Randomizer
+  >
 > {}
 
 function RandomizerNode({
@@ -61,7 +58,7 @@ function RandomizerNode({
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const handleDuplicate = useNodeDuplicate(
+  const handleDuplicate = useNodeDuplicate<Randomizer>(
     () => ({
       title: t('duplicateModal.title'),
       text: t('duplicateModal.text'),
@@ -73,14 +70,27 @@ function RandomizerNode({
       type,
       x: positionAbsoluteX,
       y: positionAbsoluteY,
-      retrieveAPICall: () => RandomizerAPI.get({ botID, id: randomizer.id }),
-      createAPICall: (data) => RandomizersAPI.create({ botID, data }),
-      diagramAPICall: (id) => DiagramRandomizerAPI.get({ botID, id }),
+      retrieveAPICall: () =>
+        TelegramBotsService.getRandomizer({
+          path: { telegramBotId: botID, id: randomizer.id },
+        }),
+      createAPICall: (data) =>
+        TelegramBotsService.createRandomizer({
+          path: { telegramBotId: botID },
+          body: data,
+        }),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramRandomizer({
+          path: { telegramBotId: botID, id },
+        }),
     }),
     [i18n.language, id, botID, randomizer.id, positionAbsoluteX, positionAbsoluteY],
   );
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
+  const nodeHandlerProps: Pick<
+    NodeHandleProps,
+    'objectType' | 'objectID' | 'nestedObjectID'
+  > = {
     objectType: type,
     objectID: randomizer.id,
     nestedObjectID: 0,
@@ -93,9 +103,11 @@ function RandomizerNode({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await RandomizerAPI.delete({ botID, id: randomizer.id });
+        const { error } = await TelegramBotsService.deleteRandomizer({
+          path: { telegramBotId: botID, id: randomizer.id },
+        });
 
-        if (!response.ok) {
+        if (error) {
           createMessageToast({
             message: t('messages.delete.error'),
             level: 'error',
@@ -129,20 +141,14 @@ function RandomizerNode({
       <Node.Block className='relative'>
         <Node.Title>{randomizer.name}</Node.Title>
         <Node.Handle
-          id={buildEdgeTargetHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'left',
-          })}
+          {...nodeHandlerProps}
           type='target'
-          position={Position.Left}
+          position={ConnectionHandlePosition.Left}
         />
         <Node.Handle
-          id={buildEdgeSourceHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'right',
-          })}
+          {...nodeHandlerProps}
           type='source'
-          position={Position.Right}
+          position={ConnectionHandlePosition.Right}
         />
       </Node.Block>
     </Node>

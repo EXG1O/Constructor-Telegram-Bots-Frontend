@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import {
   type Node as RFNode,
   type NodeProps as RFNodeProps,
-  Position,
   useReactFlow,
 } from '@xyflow/react';
 
@@ -15,22 +14,27 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useInvoiceOffcanvasStore } from './InvoiceOffcanvas/store';
 import Node from './Node';
+import type { NodeHandleProps } from './Node/components/NodeHandle';
 
 import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
 
-import { DiagramInvoiceAPI, InvoiceAPI, InvoicesAPI } from 'api/telegram-bots/invoice';
-import type { DiagramInvoice } from 'api/telegram-bots/invoice/types';
-import fetchFile from 'api/utils/fetchFile';
-
 import {
-  buildEdgeSourceHandle,
-  buildEdgeTargetHandle,
-  type EdgeHandle,
-} from '../utils/edges';
+  ConnectionHandlePosition,
+  type DiagramInvoice,
+  type Invoice,
+  TelegramBotsService,
+} from 'api';
+import fetchFile from 'api/utils/fetchFile';
+import formDataBodySerializer from 'api/utils/formDataBodySerializer';
 
-export type NodeData = Omit<DiagramInvoice, 'x' | 'y' | 'source_connections'>;
+import type { NodeType } from '../enums';
 
-export interface InvoiceNodeProps extends RFNodeProps<RFNode<NodeData, 'invoice'>> {}
+export interface InvoiceNodeProps extends RFNodeProps<
+  RFNode<
+    Omit<DiagramInvoice, 'x' | 'y' | 'source_connections'>,
+    typeof NodeType.Invoice
+  >
+> {}
 
 function InvoiceNode({
   id,
@@ -56,7 +60,7 @@ function InvoiceNode({
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const handleDuplicate = useNodeDuplicate(
+  const handleDuplicate = useNodeDuplicate<Invoice>(
     () => ({
       title: t('duplicateModal.title'),
       text: t('duplicateModal.text'),
@@ -68,26 +72,39 @@ function InvoiceNode({
       type,
       x: positionAbsoluteX,
       y: positionAbsoluteY,
-      retrieveAPICall: () => InvoiceAPI.get(telegramBotID, invoice.id),
-      createAPICall: async ({ image, ...data }) =>
-        InvoicesAPI.create(telegramBotID, {
-          ...data,
-          image: image
-            ? {
-                file:
-                  image.url && image.name
-                    ? await fetchFile(image.url, image.name)
-                    : null,
-                from_url: image.from_url,
-              }
-            : null,
+      retrieveAPICall: () =>
+        TelegramBotsService.getInvoice({
+          path: { telegramBotId: telegramBotID, id: invoice.id },
         }),
-      diagramAPICall: (id) => DiagramInvoiceAPI.get(telegramBotID, id),
+      createAPICall: async ({ image, ...data }) =>
+        TelegramBotsService.createInvoice({
+          ...formDataBodySerializer,
+          path: { telegramBotId: telegramBotID },
+          body: {
+            ...data,
+            image: image
+              ? {
+                  file:
+                    image.url && image.name
+                      ? await fetchFile(image.url, image.name)
+                      : null,
+                  from_url: image.from_url,
+                }
+              : null,
+          },
+        }),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramInvoice({
+          path: { telegramBotId: telegramBotID, id },
+        }),
     }),
     [invoice.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
+  const nodeHandlerProps: Pick<
+    NodeHandleProps,
+    'objectType' | 'objectID' | 'nestedObjectID'
+  > = {
     objectType: type,
     objectID: invoice.id,
     nestedObjectID: 0,
@@ -100,9 +117,11 @@ function InvoiceNode({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await InvoiceAPI.delete(telegramBotID, invoice.id);
+        const { error } = await TelegramBotsService.deleteInvoice({
+          path: { telegramBotId: telegramBotID, id: invoice.id },
+        });
 
-        if (!response.ok) {
+        if (error) {
           createMessageToast({
             message: t('messages.delete.error'),
             level: 'error',
@@ -136,20 +155,14 @@ function InvoiceNode({
       <Node.Block className='relative'>
         <Node.Title>{invoice.name}</Node.Title>
         <Node.Handle
-          id={buildEdgeTargetHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'left',
-          })}
+          {...nodeHandlerProps}
           type='target'
-          position={Position.Left}
+          position={ConnectionHandlePosition.Left}
         />
         <Node.Handle
-          id={buildEdgeSourceHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'right',
-          })}
+          {...nodeHandlerProps}
           type='source'
-          position={Position.Right}
+          position={ConnectionHandlePosition.Right}
         />
       </Node.Block>
     </Node>

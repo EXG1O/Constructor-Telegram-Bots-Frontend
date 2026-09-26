@@ -45,7 +45,13 @@ function DraggableKeyboardButton({
         const button: KeyboardButton = field.value;
 
         return (
-          <Draggable index={buttonIndex} draggableId={button.draggableId}>
+          <Draggable
+            index={buttonIndex}
+            draggableId={button.draggableId}
+            isDragDisabled={isDragDisabled}
+            disableInteractiveElementBlocking={disableInteractiveElementBlocking}
+            shouldRespectForcePress={shouldRespectForcePress}
+          >
             {({ innerRef, draggableProps, dragHandleProps }) => (
               <KeyboardButtonPopover
                 rowIndex={rowIndex}

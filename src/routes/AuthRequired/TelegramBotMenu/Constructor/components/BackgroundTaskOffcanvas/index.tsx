@@ -14,13 +14,10 @@ import type { NameBlockFormValues } from '../NameBlock/types';
 
 import useFormikSubmit from '../../hooks/useFormikSubmit';
 
-import {
-  BackgroundTaskAPI,
-  BackgroundTasksAPI,
-  DiagramBackgroundTaskAPI,
-} from 'api/telegram-bots/background-task';
-import type { BackgroundTask } from 'api/telegram-bots/background-task/types';
+import type { BackgroundTask } from 'api';
+import { TelegramBotsService } from 'api';
 
+import { NodeType } from '../../enums';
 import { useBackgroundTaskOffcanvasStore } from './store';
 
 export interface FormValues extends NameBlockFormValues, IntervalBlockFormValues {}
@@ -56,13 +53,22 @@ function BackgroundTaskOffcanvas(props: BackgroundTaskOffcanvasProps): ReactElem
           error: t('messages.editBackgroundTask.error'),
         },
       },
-      type: 'background_task',
+      type: NodeType.BackgroundTask,
       action,
       saveAPICall: (values) =>
         action === 'edit' && taskID
-          ? BackgroundTaskAPI.update(telegramBotID, taskID, values)
-          : BackgroundTasksAPI.create(telegramBotID, values),
-      diagramAPICall: (id) => DiagramBackgroundTaskAPI.get(telegramBotID, id),
+          ? TelegramBotsService.updateBackgroundTask({
+              path: { telegramBotId: telegramBotID, id: taskID },
+              body: values,
+            })
+          : TelegramBotsService.createBackgroundTask({
+              path: { telegramBotId: telegramBotID },
+              body: values,
+            }),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramBackgroundTask({
+          path: { telegramBotId: telegramBotID, id },
+        }),
       onHide: () => hideOffcanvas(),
     }),
     [taskID, action, hideOffcanvas, i18n.language],

@@ -15,8 +15,8 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import useDatabaseRecordsStore from '../hooks/useDatabaseRecordsStore';
 
-import { DatabaseRecordAPI } from 'api/telegram-bots/database-record';
-import type { DatabaseRecord } from 'api/telegram-bots/database-record/types';
+import type { DatabaseRecord } from 'api';
+import { TelegramBotsService } from 'api';
 
 import cn from 'utils/cn';
 
@@ -35,7 +35,7 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
   const updateRecords = useDatabaseRecordsStore((state) => state.updateRecords);
 
   const defaultValue = useMemo<string>(
-    () => JSON.stringify(record.data, undefined, 2),
+    () => JSON.stringify(record.data, null, 2),
     [record.data],
   );
 
@@ -63,41 +63,36 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
   async function handleConfirmClick(): Promise<void> {
     setLoading(true);
 
+    let data: Record<string, any>;
+
     try {
-      const data: Record<string, any> = JSON.parse(value);
-
-      const response = await DatabaseRecordAPI.partialUpdate(telegramBotID, record.id, {
-        data,
+      data = JSON.parse(value);
+    } catch {
+      createMessageToast({
+        message: t('messages.partialUpdateRecord.error', {
+          context: 'validJSON',
+        }),
+        level: 'error',
       });
+      return;
+    }
 
-      if (response.ok) {
-        updateRecords();
-        createMessageToast({
-          message: t('messages.partialUpdateRecord.success'),
-          level: 'success',
-        });
-      } else {
-        createMessageToast({
-          message: t('messages.partialUpdateRecord.error'),
-          level: 'error',
-        });
-      }
-    } catch (error) {
-      if (error instanceof SyntaxError) {
-        createMessageToast({
-          message: t('messages.partialUpdateRecord.error', {
-            context: 'validJSON',
-          }),
-          level: 'error',
-        });
-      } else {
-        createMessageToast({
-          message: t('messages.partialUpdateRecord.error', {
-            context: 'other',
-          }),
-          level: 'error',
-        });
-      }
+    const { error } = await TelegramBotsService.partialUpdateDatabaseRecord({
+      path: { telegramBotId: telegramBotID, id: record.id },
+      body: { data },
+    });
+
+    if (!error) {
+      updateRecords();
+      createMessageToast({
+        message: t('messages.partialUpdateRecord.success'),
+        level: 'success',
+      });
+    } else {
+      createMessageToast({
+        message: t('messages.partialUpdateRecord.error'),
+        level: 'error',
+      });
     }
 
     setLoading(false);
@@ -114,23 +109,24 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await DatabaseRecordAPI.delete(telegramBotID, record.id);
+        const { error } = await TelegramBotsService.deleteDatabaseRecord({
+          path: { telegramBotId: telegramBotID, id: record.id },
+        });
 
-        if (response.ok) {
-          updateRecords();
-          hideConfirmModal();
-          createMessageToast({
-            message: t('list.item.messages.deleteRecord.success'),
-            level: 'success',
-          });
-        } else {
+        if (!error) {
           createMessageToast({
             message: t('list.item.messages.deleteRecord.error'),
             level: 'error',
           });
+          setLoadingConfirmModal(false);
         }
 
-        setLoadingConfirmModal(false);
+        updateRecords();
+        hideConfirmModal();
+        createMessageToast({
+          message: t('list.item.messages.deleteRecord.success'),
+          level: 'success',
+        });
       },
       onCancel: null,
     });

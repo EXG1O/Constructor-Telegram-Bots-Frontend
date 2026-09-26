@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import {
   type Node as RFNode,
   type NodeProps as RFNodeProps,
-  Position,
   useReactFlow,
 } from '@xyflow/react';
 
@@ -14,27 +13,25 @@ import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import Node from './Node';
+import type { NodeHandleProps } from './Node/components/NodeHandle';
 import { useTemporaryVariableOffcanvasStore } from './TemporaryVariableOffcanvas/store';
 
 import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
 
 import {
-  DiagramTemporaryVariableAPI,
-  TemporaryVariableAPI,
-  TemporaryVariablesAPI,
-} from 'api/telegram-bots/temporary-variable';
-import type { DiagramTemporaryVariable } from 'api/telegram-bots/temporary-variable/types';
+  ConnectionHandlePosition,
+  type DiagramTemporaryVariable,
+  TelegramBotsService,
+  type TemporaryVariable,
+} from 'api';
 
-import {
-  buildEdgeSourceHandle,
-  buildEdgeTargetHandle,
-  type EdgeHandle,
-} from '../utils/edges';
-
-export type NodeData = Omit<DiagramTemporaryVariable, 'x' | 'y' | 'source_connections'>;
+import type { NodeType } from '../enums';
 
 export interface TemporaryVariableNodeProps extends RFNodeProps<
-  RFNode<NodeData, 'temporary_variable'>
+  RFNode<
+    Omit<DiagramTemporaryVariable, 'x' | 'y' | 'source_connections'>,
+    typeof NodeType.TemporaryVariable
+  >
 > {}
 
 function TemporaryVariableNode({
@@ -61,7 +58,7 @@ function TemporaryVariableNode({
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const handleDuplicate = useNodeDuplicate(
+  const handleDuplicate = useNodeDuplicate<TemporaryVariable>(
     () => ({
       title: t('duplicateModal.title'),
       text: t('duplicateModal.text'),
@@ -74,14 +71,27 @@ function TemporaryVariableNode({
       suffix: '_DUPLICATE',
       x: positionAbsoluteX,
       y: positionAbsoluteY,
-      retrieveAPICall: () => TemporaryVariableAPI.get(telegramBotID, variable.id),
-      createAPICall: (data) => TemporaryVariablesAPI.create(telegramBotID, data),
-      diagramAPICall: (id) => DiagramTemporaryVariableAPI.get(telegramBotID, id),
+      retrieveAPICall: () =>
+        TelegramBotsService.getTemporaryVariable({
+          path: { telegramBotId: telegramBotID, id: variable.id },
+        }),
+      createAPICall: (data) =>
+        TelegramBotsService.createTemporaryVariable({
+          path: { telegramBotId: telegramBotID },
+          body: data,
+        }),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramTemporaryVariable({
+          path: { telegramBotId: telegramBotID, id },
+        }),
     }),
     [variable.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
+  const nodeHandlerProps: Pick<
+    NodeHandleProps,
+    'objectType' | 'objectID' | 'nestedObjectID'
+  > = {
     objectType: type,
     objectID: variable.id,
     nestedObjectID: 0,
@@ -94,9 +104,11 @@ function TemporaryVariableNode({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await TemporaryVariableAPI.delete(telegramBotID, variable.id);
+        const { error } = await TelegramBotsService.deleteTemporaryVariable({
+          path: { telegramBotId: telegramBotID, id: variable.id },
+        });
 
-        if (!response.ok) {
+        if (error) {
           createMessageToast({
             message: t('messages.delete.error'),
             level: 'error',
@@ -130,20 +142,14 @@ function TemporaryVariableNode({
       <Node.Block className='relative'>
         <Node.Title>{variable.name}</Node.Title>
         <Node.Handle
-          id={buildEdgeTargetHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'left',
-          })}
+          {...nodeHandlerProps}
           type='target'
-          position={Position.Left}
+          position={ConnectionHandlePosition.Left}
         />
         <Node.Handle
-          id={buildEdgeSourceHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'right',
-          })}
+          {...nodeHandlerProps}
           type='source'
-          position={Position.Right}
+          position={ConnectionHandlePosition.Right}
         />
       </Node.Block>
       <Node.Block className='text-center'>{variable.value}</Node.Block>

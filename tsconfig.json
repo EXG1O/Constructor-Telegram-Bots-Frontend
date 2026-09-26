@@ -18,6 +18,7 @@
       "components/*": ["./src/components/*"],
       "routes": ["./src/routes"],
       "routes/*": ["./src/routes/*"],
+      "api": ["./src/api"],
       "api/*": ["./src/api/*"],
       "hooks/*": ["./src/hooks/*"],
       "utils/*": ["./src/utils/*"],
@@ -27,5 +28,5 @@
     }
   },
   "include": ["./**/*.ts", "./**/*.tsx"],
-  "exclude": ["./node_modules", "./i18next.config.ts"]
+  "exclude": ["./node_modules", "./i18next.config.ts", "./openapi-ts.config.ts"]
 }

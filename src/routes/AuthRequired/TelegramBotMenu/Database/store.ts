@@ -7,21 +7,17 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { DatabaseRecordsAPI } from 'api/telegram-bots/database-record';
-import type { DatabaseRecord } from 'api/telegram-bots/database-record/types';
+import type { DatabaseRecord } from 'api';
+import { TelegramBotsService } from 'api';
+
+import type { RecordPagination } from './loader';
 
 interface StrictTOptions extends TOptions {
   ns: `${RouteID.TelegramBotMenuDatabase}`;
 }
 
-export interface StateParams {
+export interface StateParams extends Omit<RecordPagination, 'results'> {
   loading: boolean;
-
-  count: number;
-  limit: number;
-  offset: number;
-  search: string | null;
-
   records: DatabaseRecord[];
 }
 
@@ -64,14 +60,16 @@ export function createStore(initialProps: InitialProps) {
       const offset = newOffset ?? currentOffset;
       const search = newSearch === undefined ? currentSearch : newSearch;
 
-      const response = await DatabaseRecordsAPI.get(
-        telegramBot.id,
-        limit,
-        offset,
-        search ?? undefined,
-      );
+      const { data, error } = await TelegramBotsService.getDatabaseRecordList({
+        path: { telegramBotId: telegramBot.id },
+        query: {
+          limit,
+          offset,
+          ...(search && { search }),
+        },
+      });
 
-      if (!response.ok) {
+      if (error || !data) {
         createMessageToast({
           message: i18n.t<string, StrictTOptions, string, StrictTOptions>(
             'messages.getRecords.error',
@@ -83,7 +81,7 @@ export function createStore(initialProps: InitialProps) {
         return;
       }
 
-      const { count, results } = response.json;
+      const { count, results } = data;
 
       set({ loading: false, count, limit, offset, search, records: results });
     },

@@ -1,10 +1,8 @@
 import type { Node } from '@xyflow/react';
 
-import type { DiagramBlock } from 'api/telegram-bots/base/types';
+import type { DiagramBlock } from 'api';
 
-import type { nodeTypes } from '..';
-
-export type NodeType = keyof typeof nodeTypes;
+import type { NodeType } from '../enums';
 
 export interface NodeID {
   type: NodeType;
@@ -13,7 +11,7 @@ export interface NodeID {
 
 export function parseNodeID(nodeID: string): NodeID {
   const [type, id] = nodeID.split(':');
-  return { type, id: parseInt(id) } as any;
+  return { type: type as NodeType, id: Number(id) };
 }
 
 export function buildNodeID(nodeID: NodeID): string {
@@ -22,7 +20,12 @@ export function buildNodeID(nodeID: NodeID): string {
 
 export function convertDiagramBlockToNode(
   type: NodeType,
-  { x, y, source_connections, ...diagramBlock }: DiagramBlock & Record<string, any>,
+  {
+    x = 0,
+    y = 0,
+    source_connections: _source_connections,
+    ...diagramBlock
+  }: DiagramBlock,
 ): Node {
   return {
     id: buildNodeID({ type, id: diagramBlock.id }),

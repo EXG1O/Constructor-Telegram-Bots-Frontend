@@ -1,31 +1,53 @@
-import type { Params } from 'react-router-dom';
+import { type LoaderFunctionArgs, redirect } from 'react-router-dom';
+import i18n from 'i18n';
 
-import { VariablesAPI } from 'api/telegram-bots/variable';
-import type { APIResponse } from 'api/telegram-bots/variable/types';
+import { RouteID } from 'routes';
 
-export interface PaginationData extends APIResponse.VariablesAPI.Get.Pagination {
+import { createMessageToast } from 'components/ui/ToastContainer';
+
+import type { PaginatedVariableList } from 'api';
+import { TelegramBotsService } from 'api';
+
+import reverse from 'utils/reverse';
+
+export interface PaginationOptions {
   limit: number;
   offset: number;
 }
 
+export type VariablePagination = PaginatedVariableList & PaginationOptions;
+
 export interface LoaderData {
-  pagination: PaginationData;
+  pagination: VariablePagination;
 }
 
-async function loader({
-  params,
-}: {
-  params: Params<'telegramBotID'>;
-}): Promise<LoaderData | null> {
+async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData> {
+  const fallback = () => {
+    createMessageToast({
+      message: i18n.t('messages.loader.error'),
+      level: 'error',
+    });
+    return redirect(reverse(RouteID.TelegramBots));
+  };
+
   const telegramBotID = Number(params.telegramBotID);
-  if (Number.isNaN(telegramBotID)) return null;
 
-  const [limit, offset] = [10, 0];
+  if (Number.isNaN(telegramBotID)) {
+    throw fallback();
+  }
 
-  const response = await VariablesAPI.get(telegramBotID, limit, offset);
-  if (!response.ok) return null;
+  const pagination: PaginationOptions = { limit: 10, offset: 0 };
 
-  return { pagination: { ...response.json, limit, offset } };
+  const { data, error } = await TelegramBotsService.getVariableList({
+    path: { telegramBotId: telegramBotID },
+    query: pagination,
+  });
+
+  if (error || !data) {
+    throw fallback();
+  }
+
+  return { pagination: { ...data, ...pagination } };
 }
 
 export default loader;

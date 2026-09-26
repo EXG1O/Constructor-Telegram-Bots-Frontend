@@ -3,7 +3,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import {
   type Node as RFNode,
   type NodeProps as RFNodeProps,
-  Position,
   useReactFlow,
 } from '@xyflow/react';
 
@@ -14,22 +13,23 @@ import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import Node from './Node';
+import type { NodeHandleProps } from './Node/components/NodeHandle';
 import { useTimerOffcanvasStore } from './TimerOffcanvas/store';
 
 import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
 
-import { DiagramTimerAPI, TimerAPI, TimersAPI } from 'api/telegram-bots/timer';
-import type { DiagramTimer } from 'api/telegram-bots/timer/types';
-
 import {
-  buildEdgeSourceHandle,
-  buildEdgeTargetHandle,
-  type EdgeHandle,
-} from '../utils/edges';
+  ConnectionHandlePosition,
+  type DiagramTimer,
+  TelegramBotsService,
+  type Timer,
+} from 'api';
 
-export type NodeData = Omit<DiagramTimer, 'x' | 'y' | 'source_connections'>;
+import type { NodeType } from '../enums';
 
-export interface TimerNodeProps extends RFNodeProps<RFNode<NodeData, 'timer'>> {}
+export interface TimerNodeProps extends RFNodeProps<
+  RFNode<Omit<DiagramTimer, 'x' | 'y' | 'source_connections'>, typeof NodeType.Timer>
+> {}
 
 function TimerNode({
   id,
@@ -53,7 +53,7 @@ function TimerNode({
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const handleDuplicate = useNodeDuplicate(
+  const handleDuplicate = useNodeDuplicate<Timer>(
     () => ({
       title: t('duplicateModal.title'),
       text: t('duplicateModal.text'),
@@ -65,14 +65,20 @@ function TimerNode({
       type,
       x: positionAbsoluteX,
       y: positionAbsoluteY,
-      retrieveAPICall: () => TimerAPI.get({ botID, id: timer.id }),
-      createAPICall: (data) => TimersAPI.create({ botID, data }),
-      diagramAPICall: (id) => DiagramTimerAPI.get({ botID, id }),
+      retrieveAPICall: () =>
+        TelegramBotsService.getTimer({ path: { telegramBotId: botID, id: timer.id } }),
+      createAPICall: (data) =>
+        TelegramBotsService.createTimer({ path: { telegramBotId: botID }, body: data }),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramTimer({ path: { telegramBotId: botID, id } }),
     }),
     [botID, timer.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
+  const nodeHandlerProps: Pick<
+    NodeHandleProps,
+    'objectType' | 'objectID' | 'nestedObjectID'
+  > = {
     objectType: type,
     objectID: timer.id,
     nestedObjectID: 0,
@@ -85,9 +91,11 @@ function TimerNode({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await TimerAPI.delete({ botID, id: timer.id });
+        const { error } = await TelegramBotsService.deleteTimer({
+          path: { telegramBotId: botID, id: timer.id },
+        });
 
-        if (!response.ok) {
+        if (error) {
           createMessageToast({
             message: t('messages.delete.error'),
             level: 'error',
@@ -121,20 +129,14 @@ function TimerNode({
       <Node.Block className='relative'>
         <Node.Title>{timer.name}</Node.Title>
         <Node.Handle
-          id={buildEdgeTargetHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'left',
-          })}
+          {...nodeHandlerProps}
           type='target'
-          position={Position.Left}
+          position={ConnectionHandlePosition.Left}
         />
         <Node.Handle
-          id={buildEdgeSourceHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'right',
-          })}
+          {...nodeHandlerProps}
           type='source'
-          position={Position.Right}
+          position={ConnectionHandlePosition.Right}
         />
       </Node.Block>
       <Node.Block>

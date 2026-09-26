@@ -5,19 +5,21 @@ import type { RouteID } from 'routes';
 
 import Select, { type SelectProps } from 'components/ui/Select';
 
-import type { MessageKeyboardButtonStyle } from 'api/telegram-bots/message/types';
+import {
+  MessageKeyboardButtonStyle,
+  MessageKeyboardButtonStyle as MessageKeyboardButtonStyleType,
+} from 'api';
 
 import { useKeyboardButtonPopoverStore } from '../store';
 
-export type Style = MessageKeyboardButtonStyle;
+export type Style = MessageKeyboardButtonStyleType;
 
 export interface StyleSelectProps extends Omit<
   SelectProps,
   'size' | 'value' | 'error' | 'children' | 'onChange'
 > {}
 
-const styles: Style[] = ['default', 'primary', 'success', 'danger'];
-export const defaultStyle: Style = 'default';
+export const defaultStyle: Style = MessageKeyboardButtonStyle.Default;
 
 function StyleSelect(props: StyleSelectProps): ReactElement {
   const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
@@ -36,7 +38,7 @@ function StyleSelect(props: StyleSelectProps): ReactElement {
     <div className='flex w-full items-center gap-1'>
       <span className='text-sm text-foreground'>{t('label')}</span>
       <Select {...props} size='sm' value={style} onChange={handleChange}>
-        {styles.map((style) => (
+        {Object.values(MessageKeyboardButtonStyleType).map((style) => (
           <option key={style} value={style}>
             {t(`styles.${style}`)}
           </option>
