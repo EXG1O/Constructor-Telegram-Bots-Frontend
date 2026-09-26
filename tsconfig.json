@@ -28,5 +28,5 @@
     }
   },
   "include": ["./**/*.ts", "./**/*.tsx"],
-  "exclude": ["./node_modules", "./i18next.config.ts"]
+  "exclude": ["./node_modules", "./i18next.config.ts", "./openapi-ts.config.ts"]
 }
