@@ -22,9 +22,10 @@ import type { NameBlockFormValues } from '../NameBlock/types';
 
 import useFormikSubmit from '../../hooks/useFormikSubmit';
 
-import { DiagramTriggerAPI, TriggerAPI, TriggersAPI } from 'api/telegram-bots/trigger';
-import type { Data, Trigger } from 'api/telegram-bots/trigger/types';
+import type { Trigger, TriggerRequestWritable } from 'api';
+import { TelegramBotsService } from 'api';
 
+import { NodeType } from '../../enums';
 import { useTriggerOffcanvasStore } from './store';
 
 export interface FormValues
@@ -72,7 +73,7 @@ function TriggerOffcanvas(props: TriggerFormOffcanvasProps): ReactElement {
           error: t('messages.editTrigger.error'),
         },
       },
-      type: 'trigger',
+      type: NodeType.Trigger,
       action,
       saveAPICall: ({
         type,
@@ -84,7 +85,7 @@ function TriggerOffcanvas(props: TriggerFormOffcanvasProps): ReactElement {
         show_command_description,
         ...values
       }) => {
-        const data: Data.TriggersAPI.Create | Data.TriggerAPI.Update = {
+        const data: TriggerRequestWritable = {
           ...values,
           command:
             type === Type.StartCommand
@@ -112,10 +113,19 @@ function TriggerOffcanvas(props: TriggerFormOffcanvasProps): ReactElement {
         };
 
         return action === 'edit' && triggerID
-          ? TriggerAPI.update(telegramBotID, triggerID, data)
-          : TriggersAPI.create(telegramBotID, data);
+          ? TelegramBotsService.updateTrigger({
+              path: { telegramBotId: telegramBotID, id: triggerID },
+              body: data,
+            })
+          : TelegramBotsService.createTrigger({
+              path: { telegramBotId: telegramBotID },
+              body: data,
+            });
       },
-      diagramAPICall: (id) => DiagramTriggerAPI.get(telegramBotID, id),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramTrigger({
+          path: { telegramBotId: telegramBotID, id },
+        }),
       onHide: (id, { type }) => {
         if (type === Type.Webhook) {
           showOffcanvas(id);

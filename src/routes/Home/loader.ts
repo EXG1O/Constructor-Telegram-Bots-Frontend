@@ -1,31 +1,27 @@
-import { StatsAPI as TelegramBotsStatsAPI } from 'api/telegram-bots/stats';
-import type { APIResponse as TelegramBotsStatsAPIResponse } from 'api/telegram-bots/stats/types';
-import { StatsAPI as UsersStatsAPI } from 'api/users';
-import type { APIResponse as UsersAPIResponse } from 'api/users/types';
-
-interface Stats {
-  users: UsersAPIResponse.StatsAPI.Get;
-  telegramBots: TelegramBotsStatsAPIResponse.StatsAPI.Get;
-}
+import {
+  type TelegramBotsGetStatsResponse,
+  TelegramBotsService,
+  type UsersGetStatsResponse,
+  UsersService,
+} from 'api';
 
 export interface LoaderData {
-  stats: Stats;
+  stats: {
+    users: UsersGetStatsResponse;
+    telegramBots: TelegramBotsGetStatsResponse;
+  };
 }
 
 async function loader(): Promise<LoaderData> {
-  const [usersStatsResponse, telegramBotsResponse] = await Promise.all([
-    UsersStatsAPI.get(),
-    TelegramBotsStatsAPI.get(),
+  const [{ data: userStats }, { data: telegramBotStats }] = await Promise.all([
+    UsersService.getStats({ throwOnError: true }),
+    TelegramBotsService.getStats({ throwOnError: true }),
   ]);
-
-  if (!usersStatsResponse.ok || !telegramBotsResponse.ok) {
-    throw Error('Failed to fetch data.');
-  }
 
   return {
     stats: {
-      users: usersStatsResponse.json,
-      telegramBots: telegramBotsResponse.json,
+      users: userStats,
+      telegramBots: telegramBotStats,
     },
   };
 }

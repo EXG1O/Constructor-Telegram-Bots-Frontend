@@ -7,13 +7,11 @@ import FormTabs from 'components/shared/FormTabs';
 import Block, { type BlockProps } from 'components/ui/Block';
 import Tabs from 'components/ui/Tabs';
 
-import type { Method } from 'api/telegram-bots/api-request/types';
-
 import cn from 'utils/cn';
 
-export interface MethodBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
+import { Method } from './enums';
 
-const methods: Method[] = ['get', 'post', 'put', 'patch', 'delete'];
+export interface MethodBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
 function MethodBlock({ className, ...props }: MethodBlockProps): ReactElement {
   const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
@@ -31,7 +29,7 @@ function MethodBlock({ className, ...props }: MethodBlockProps): ReactElement {
         <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
       <FormTabs name='method' size='sm'>
-        {methods.map((method, index) => (
+        {Object.values(Method).map((method, index) => (
           <Tabs.Button key={index} value={method}>
             {method.toUpperCase()}
           </Tabs.Button>

@@ -1,10 +1,14 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-import type { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
+import type { TelegramBot } from 'api';
+
+type Writable<T> = {
+  -readonly [P in keyof T]: T[P];
+};
 
 export interface StateData {
-  telegramBot: TelegramBot | null;
+  telegramBot: Writable<TelegramBot> | null;
 }
 
 export interface StateActions {

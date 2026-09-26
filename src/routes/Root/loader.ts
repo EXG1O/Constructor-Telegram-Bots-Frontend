@@ -1,14 +1,12 @@
-import { UserAPI } from 'api/users';
-import type { User } from 'api/users/types';
+import { type User, UsersService } from 'api';
 
 export interface LoaderData {
   user: User | null;
 }
 
 async function loader(): Promise<LoaderData> {
-  const response = await UserAPI.get();
-
-  return { user: response.ok ? response.json : null };
+  const { data } = await UsersService.getUser();
+  return { user: data ?? null };
 }
 
 export default loader;

@@ -10,20 +10,18 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import type { Mode } from './components/BlockToolbar/components/ModeTabs';
 import type { Type } from './components/BlockToolbar/components/TypeTabs';
 
-import { ChatsAPI } from 'api/telegram-bots/chat';
-import { ChatType } from 'api/telegram-bots/chat/enums';
-import type { Chat } from 'api/telegram-bots/chat/types';
+import type { Chat } from 'api';
+import { ChatType, TelegramBotsService } from 'api';
 
 import createZustandContext, { type BaseState } from 'utils/createZustandContext';
+
+import type { ChatPagination } from '../../loader';
 
 interface StrictTOptions extends TOptions {
   ns: `${RouteID.TelegramBotMenuUsers}`;
 }
 
-export interface StateData {
-  count: number;
-  limit: number;
-  offset: number;
+export interface StateData extends Omit<ChatPagination, 'results'> {
   search: string | null;
   mode: Mode;
   type: Type;
@@ -45,10 +43,10 @@ export interface StoreProps extends StateData {}
 
 const typeMap: Record<Type, ChatType | undefined> = {
   all: undefined,
-  private: ChatType.PRIVATE,
-  group: ChatType.GROUP,
-  supergroup: ChatType.SUPERGROUP,
-  channel: ChatType.CHANNEL,
+  private: ChatType.Private,
+  group: ChatType.Group,
+  supergroup: ChatType.Supergroup,
+  channel: ChatType.Channel,
 };
 
 export const [ChatsBlockStoreProvider, useChatsBlockStore] = createZustandContext(
@@ -75,20 +73,19 @@ export const [ChatsBlockStoreProvider, useChatsBlockStore] = createZustandContex
         const mode = params?.mode ?? currentMode;
         const type = params?.type ?? currentType;
 
-        const response = await ChatsAPI.get(
-          telegramBot.id,
-          limit,
-          offset,
-          search ?? undefined,
-          typeMap[type],
-          mode === 'allowed'
-            ? 'is_allowed'
-            : mode === 'blocked'
-              ? 'is_blocked'
-              : undefined,
-        );
+        const { data, error } = await TelegramBotsService.getChatList({
+          path: { telegramBotId: telegramBot.id },
+          query: {
+            limit,
+            offset,
+            ...(search && { search }),
+            ...(typeMap[type] && { chat_type: typeMap[type] }),
+            ...(mode === 'allowed' && { is_allowed: true }),
+            ...(mode === 'blocked' && { is_blocked: true }),
+          },
+        });
 
-        if (!response.ok) {
+        if (error || !data) {
           createMessageToast({
             message: i18n.t<string, StrictTOptions, string, StrictTOptions>(
               'chatsBlock.messages.getChats.error',
@@ -100,7 +97,7 @@ export const [ChatsBlockStoreProvider, useChatsBlockStore] = createZustandContex
           return;
         }
 
-        const { count, results } = response.json;
+        const { count, results } = data;
 
         set({ count, offset, search, mode, type, chats: results, loading: false });
       },

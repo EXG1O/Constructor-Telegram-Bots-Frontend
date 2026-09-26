@@ -1,8 +1,8 @@
 import type { Headers } from './components/HeadersBlock/types';
 
-import type { Method } from 'api/telegram-bots/api-request/types';
+import type { ApiRequestMethod } from 'api';
 
-export function getBodyBlockOpen(method: Method): boolean {
+export function getBodyBlockOpen(method: ApiRequestMethod): boolean {
   return ['post', 'put', 'patch'].includes(method);
 }
 

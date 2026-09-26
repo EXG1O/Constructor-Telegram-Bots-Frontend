@@ -14,8 +14,7 @@ import Pagination from 'components/ui/Pagination';
 import Loading from './Loading';
 import SelectButton from './SelectButton';
 
-import { VariablesAPI } from 'api/telegram-bots/variable';
-import type { Variable } from 'api/telegram-bots/variable/types';
+import { TelegramBotsService, type Variable } from 'api';
 
 import cn from 'utils/cn';
 
@@ -54,10 +53,13 @@ function UserVariables({ className, ...props }: UserVariablesProps): ReactElemen
     const limit = params?.limit ?? pagination.limit;
     const offset = params?.offset ?? pagination.offset;
 
-    const response = await VariablesAPI.get(telegramBotID, limit, offset);
-    if (!response.ok) return;
+    const { data, error } = await TelegramBotsService.getVariableList({
+      path: { telegramBotId: telegramBotID },
+      query: { limit, offset },
+    });
+    if (error || !data) return;
 
-    setPagination({ ...response.json, limit, offset });
+    setPagination({ ...data, limit, offset });
     setLoading(false);
   }
 

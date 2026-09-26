@@ -16,8 +16,7 @@ import RecordData from './components/RecordData';
 
 import Loading from '../Loading';
 
-import { DatabaseRecordsAPI } from 'api/telegram-bots/database-record';
-import type { DatabaseRecord } from 'api/telegram-bots/database-record/types';
+import { type DatabaseRecord, TelegramBotsService } from 'api';
 
 import cn from 'utils/cn';
 
@@ -60,15 +59,13 @@ function DatabaseRecords({ className, ...props }: DatabaseRecordsProps): ReactEl
     const search =
       params && params.search !== undefined ? params.search : pagination.search;
 
-    const response = await DatabaseRecordsAPI.get(
-      telegramBotID,
-      limit,
-      offset,
-      search ?? undefined,
-    );
-    if (!response.ok) return;
+    const { data, error } = await TelegramBotsService.getDatabaseRecordList({
+      path: { telegramBotId: telegramBotID },
+      query: { limit, offset, ...(search && { search }) },
+    });
+    if (error || !data) return;
 
-    setPagination({ ...response.json, limit, offset, search });
+    setPagination({ ...data, limit, offset, search });
     setLoading(false);
   }
 

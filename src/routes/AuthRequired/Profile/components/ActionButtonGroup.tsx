@@ -8,7 +8,7 @@ import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
 import Button from 'components/ui/Button';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { UserAPI } from 'api/users';
+import { UsersService } from 'api';
 
 import cn from 'utils/cn';
 import reverse from 'utils/reverse';
@@ -39,14 +39,15 @@ function ActionButtonGroup({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await UserAPI.logoutAll();
+        const { error } = await UsersService.postUserLogoutAll();
 
-        if (!response.ok) {
+        if (error) {
           createMessageToast({
             message: t('logoutAllModal.messages.logoutAll.error'),
             level: 'error',
           });
           setLoadingConfirmModal(false);
+          return;
         }
 
         hideConfirmModal();
@@ -67,14 +68,15 @@ function ActionButtonGroup({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await UserAPI.delete();
+        const { error } = await UsersService.deleteUser();
 
-        if (!response.ok) {
+        if (error) {
           createMessageToast({
             message: t('deleteModal.messages.delete.error'),
             level: 'error',
           });
           setLoadingConfirmModal(false);
+          return;
         }
 
         hideConfirmModal();

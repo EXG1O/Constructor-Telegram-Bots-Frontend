@@ -132,7 +132,11 @@ const config = (env: any, argv: any): Configuration => {
       new CopyPlugin({
         patterns: [{ from: './src/locale', to: 'locale' }],
       }),
-      new ForkTsCheckerWebpackPlugin(),
+      new ForkTsCheckerWebpackPlugin({
+        issue: {
+          exclude: [{ file: 'src/api/client/**' }],
+        },
+      }),
       new HtmlWebpackPlugin({
         template: `./src/${isProduction ? 'prod' : 'dev'}.html`,
         publicPath,

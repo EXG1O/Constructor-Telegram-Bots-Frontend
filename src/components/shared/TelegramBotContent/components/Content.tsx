@@ -10,7 +10,7 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import APIToken from './APIToken';
 import PrivateSwitch from './PrivateSwitch';
 
-import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
+import { TelegramBotsService } from 'api';
 
 import cn from 'utils/cn';
 
@@ -30,10 +30,12 @@ function Content({ className, ...props }: ContentProps): ReactElement {
     const checkStatus = async () => {
       if (!telegramBot.is_loading) return;
 
-      const response = await TelegramBotAPI.get(telegramBot.id);
+      const { data, error } = await TelegramBotsService.getTelegramBot({
+        path: { id: telegramBot.id },
+      });
 
-      if (!response.ok || response.json.is_loading) {
-        if (!response.ok) {
+      if (error || !data || data.is_loading) {
+        if (error) {
           createMessageToast({
             message: t('messages.getTelegramBot.error'),
             level: 'error',
@@ -44,7 +46,7 @@ function Content({ className, ...props }: ContentProps): ReactElement {
         return;
       }
 
-      setTelegramBot(response.json);
+      setTelegramBot(data);
     };
     checkStatus();
 

@@ -12,13 +12,10 @@ import type { NameBlockFormValues } from '../NameBlock/types';
 
 import useFormikSubmit from '../../hooks/useFormikSubmit';
 
-import {
-  DiagramRandomizerAPI,
-  RandomizerAPI,
-  RandomizersAPI,
-} from 'api/telegram-bots/randomizer';
-import type { Randomizer } from 'api/telegram-bots/randomizer/types';
+import type { Randomizer } from 'api';
+import { TelegramBotsService } from 'api';
 
+import { NodeType } from '../../enums';
 import { useRandomizerOffcanvasStore } from './store';
 
 export interface FormValues extends NameBlockFormValues {}
@@ -53,13 +50,22 @@ function RandomizerOffcanvas(props: RandomizerOffcanvasProps): ReactElement {
           error: t('messages.editRandomizer.error'),
         },
       },
-      type: 'randomizer',
+      type: NodeType.Randomizer,
       action,
       saveAPICall: (values) =>
         action === 'edit' && randomizerID
-          ? RandomizerAPI.update({ botID, id: randomizerID, data: values })
-          : RandomizersAPI.create({ botID, data: values }),
-      diagramAPICall: (id) => DiagramRandomizerAPI.get({ botID, id }),
+          ? TelegramBotsService.updateRandomizer({
+              path: { telegramBotId: botID, id: randomizerID },
+              body: values,
+            })
+          : TelegramBotsService.createRandomizer({
+              path: { telegramBotId: botID },
+              body: values,
+            }),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramRandomizer({
+          path: { telegramBotId: botID, id },
+        }),
       onHide: () => hideOffcanvas(),
     }),
     [i18n.language, botID, randomizerID, action, hideOffcanvas],

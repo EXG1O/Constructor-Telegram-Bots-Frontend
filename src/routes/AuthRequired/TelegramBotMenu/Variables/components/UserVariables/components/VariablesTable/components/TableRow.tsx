@@ -15,8 +15,8 @@ import { useVariableModalStore } from '../../VariableModal/store';
 
 import useUserVariablesStore from '../../../hooks/useUserVariablesStore';
 
-import { VariableAPI } from 'api/telegram-bots/variable';
-import type { Variable } from 'api/telegram-bots/variable/types';
+import type { Variable } from 'api';
+import { TelegramBotsService } from 'api';
 
 import cn from 'utils/cn';
 
@@ -54,23 +54,25 @@ function TableRow({ variable, className, ...props }: TableRowProps): ReactElemen
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await VariableAPI.delete(telegramBotID, variable.id);
+        const { error } = await TelegramBotsService.deleteVariable({
+          path: { telegramBotId: telegramBotID, id: variable.id },
+        });
 
-        if (response.ok) {
-          updateVariables();
-          hideConfirmModal();
-          createMessageToast({
-            message: t('messages.deleteVariable.success'),
-            level: 'success',
-          });
-        } else {
+        if (!error) {
           createMessageToast({
             message: t('messages.deleteVariable.error'),
             level: 'error',
           });
+          setLoadingConfirmModal(false);
+          return;
         }
 
-        setLoadingConfirmModal(false);
+        updateVariables();
+        hideConfirmModal();
+        createMessageToast({
+          message: t('messages.deleteVariable.success'),
+          level: 'success',
+        });
       },
       onCancel: null,
     });

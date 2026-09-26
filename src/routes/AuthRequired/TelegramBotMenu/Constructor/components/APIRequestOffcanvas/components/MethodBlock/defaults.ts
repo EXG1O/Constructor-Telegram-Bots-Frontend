@@ -1,6 +1,7 @@
-import type { Method, MethodBlockFormValues } from './types';
+import { Method } from './enums';
+import type { MethodBlockFormValues } from './types';
 
-export const defaultMethod: Method = 'get';
+export const defaultMethod: Method = Method.Get;
 export const defaultMethodBlockFormValues: MethodBlockFormValues = {
   method: defaultMethod,
 };

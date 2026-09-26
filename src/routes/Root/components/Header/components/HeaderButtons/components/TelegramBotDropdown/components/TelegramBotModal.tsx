@@ -12,7 +12,7 @@ import Modal, { type ModalProps } from 'components/ui/Modal';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
+import { TelegramBotsService } from 'api';
 
 import reverse from 'utils/reverse';
 
@@ -35,18 +35,21 @@ function TelegramBotModal({ onHide, ...props }: TelegramBotModalProps): ReactEle
   async function handleActionClick(
     action: 'start' | 'restart' | 'stop',
   ): Promise<void> {
-    const response = await TelegramBotAPI[action](telegramBot.id);
+    const { data, error } = await {
+      start: TelegramBotsService.postTelegramBotStart,
+      restart: TelegramBotsService.postTelegramBotRestart,
+      stop: TelegramBotsService.postTelegramBotStop,
+    }[action]({ path: { id: telegramBot.id } });
 
-    if (!response.ok) {
+    if (error || !data) {
       createMessageToast({
         message: t(`messages.${action}TelegramBot.error`),
         level: 'error',
       });
+      return;
     }
 
-    setTelegramBot((telegramBot) => {
-      telegramBot!.is_loading = true;
-    });
+    setTelegramBot(data);
     createMessageToast({
       message: t(`messages.${action}TelegramBot.success`),
       level: 'info',
@@ -60,14 +63,17 @@ function TelegramBotModal({ onHide, ...props }: TelegramBotModalProps): ReactEle
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await TelegramBotAPI.delete(telegramBot.id);
+        const { error } = await TelegramBotsService.deleteTelegramBot({
+          path: { id: telegramBot.id },
+        });
 
-        if (!response.ok) {
+        if (error) {
           createMessageToast({
             message: t('messages.deleteTelegramBot.error'),
             level: 'error',
           });
           setLoadingConfirmModal(false);
+          return;
         }
 
         hideConfirmModal();

@@ -9,8 +9,8 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import ModalInner, { type ModalInnerProps } from './components/ModalInner';
 
-import { VariableAPI, VariablesAPI } from 'api/telegram-bots/variable';
-import type { Variable } from 'api/telegram-bots/variable/types';
+import type { Variable } from 'api';
+import { TelegramBotsService } from 'api';
 
 import { useVariableModalStore } from './store';
 
@@ -43,14 +43,20 @@ function VariableModal({ onAdd, onSave, ...props }: VariableModalProps): ReactEl
     values: FormValues,
     { setFieldError }: FormikHelpers<FormValues>,
   ): Promise<void> {
-    const response = await (variableID
-      ? VariableAPI.update(telegramBotID, variableID, values)
-      : VariablesAPI.create(telegramBotID, values));
+    const { data, error } = await (variableID
+      ? TelegramBotsService.updateVariable({
+          path: { telegramBotId: telegramBotID, id: variableID },
+          body: values,
+        })
+      : TelegramBotsService.createVariable({
+          path: { telegramBotId: telegramBotID },
+          body: values,
+        }));
 
-    if (!response.ok) {
-      for (const error of response.json.errors) {
-        if (!error.attr) continue;
-        setFieldError(error.attr, error.detail);
+    if (error || !data) {
+      for (const item of error.errors) {
+        if (!item.attr) continue;
+        setFieldError(item.attr, item.detail);
       }
       createMessageToast({
         message: t(
@@ -63,7 +69,7 @@ function VariableModal({ onAdd, onSave, ...props }: VariableModalProps): ReactEl
       return;
     }
 
-    (variableID ? onSave : onAdd)?.(response.json);
+    (variableID ? onSave : onAdd)?.(data);
     hideModal();
     createMessageToast({
       message: t(

@@ -11,7 +11,7 @@ import TelegramBotsContext from './contexts/TelegramBotsContext';
 
 import useTelegramBotsRouteLoaderData from './hooks/useTelegramBotsRouteLoaderData';
 
-import type { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
+import type { TelegramBot } from 'api';
 
 function TelegramBots(): ReactElement {
   const { t } = useTranslation<`${RouteID.TelegramBots}`, any>('telegram-bots');

@@ -12,16 +12,15 @@ import Table from 'components/ui/Table';
 import type { TableRowProps } from 'components/ui/Table/components/TableRow';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import type { makeRequest } from 'api/core';
-import { UserAPI } from 'api/telegram-bots/user';
-import type { User } from 'api/telegram-bots/user/types';
+import type { RequestResult, TelegramBotUser } from 'api';
+import { TelegramBotsService } from 'api';
 
 import cn from 'utils/cn';
 
 import { useUsersBlockStore } from '../../../store';
 
 export interface UserTableRowProps extends Omit<TableRowProps, 'children'> {
-  user: User;
+  user: TelegramBotUser;
 }
 
 function UserTableRow({ user, className, ...props }: UserTableRowProps): ReactElement {
@@ -42,7 +41,7 @@ function UserTableRow({ user, className, ...props }: UserTableRowProps): ReactEl
   function showConfirmModal(
     title: string,
     text: string,
-    apiCall: () => ReturnType<typeof makeRequest>,
+    api: () => RequestResult<any, any, false>,
     successMessage: string,
     errorMessage: string,
   ): void {
@@ -52,9 +51,9 @@ function UserTableRow({ user, className, ...props }: UserTableRowProps): ReactEl
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await apiCall();
+        const { error } = await api();
 
-        if (!response.ok) {
+        if (error) {
           createMessageToast({
             message: errorMessage,
             level: 'error',
@@ -75,7 +74,11 @@ function UserTableRow({ user, className, ...props }: UserTableRowProps): ReactEl
     showConfirmModal(
       t('allowModal.title'),
       t('allowModal.text'),
-      () => UserAPI.partialUpdate(botID, user.id, { is_allowed: true }),
+      () =>
+        TelegramBotsService.partialUpdateUser({
+          path: { telegramBotId: botID, id: user.id },
+          body: { is_allowed: true },
+        }),
       t('messages.allowUser.success'),
       t('messages.allowUser.error'),
     );
@@ -85,7 +88,11 @@ function UserTableRow({ user, className, ...props }: UserTableRowProps): ReactEl
     showConfirmModal(
       t('disallowModal.title'),
       t('disallowModal.text'),
-      () => UserAPI.partialUpdate(botID, user.id, { is_allowed: false }),
+      () =>
+        TelegramBotsService.partialUpdateUser({
+          path: { telegramBotId: botID, id: user.id },
+          body: { is_allowed: false },
+        }),
       t('messages.disallowUser.success'),
       t('messages.disallowUser.error'),
     );
@@ -95,7 +102,11 @@ function UserTableRow({ user, className, ...props }: UserTableRowProps): ReactEl
     showConfirmModal(
       t('blockModal.title'),
       t('blockModal.text'),
-      () => UserAPI.partialUpdate(botID, user.id, { is_blocked: true }),
+      () =>
+        TelegramBotsService.partialUpdateUser({
+          path: { telegramBotId: botID, id: user.id },
+          body: { is_blocked: true },
+        }),
       t('messages.blockUser.success'),
       t('messages.blockUser.error'),
     );
@@ -105,7 +116,11 @@ function UserTableRow({ user, className, ...props }: UserTableRowProps): ReactEl
     showConfirmModal(
       t('unblockModal.title'),
       t('unblockModal.text'),
-      () => UserAPI.partialUpdate(botID, user.id, { is_blocked: false }),
+      () =>
+        TelegramBotsService.partialUpdateUser({
+          path: { telegramBotId: botID, id: user.id },
+          body: { is_blocked: false },
+        }),
       t('messages.unblockUser.success'),
       t('messages.unblockUser.error'),
     );
@@ -115,7 +130,10 @@ function UserTableRow({ user, className, ...props }: UserTableRowProps): ReactEl
     showConfirmModal(
       t('deleteModal.title'),
       t('deleteModal.text'),
-      () => UserAPI.delete(botID, user.id),
+      () =>
+        TelegramBotsService.deleteUser({
+          path: { telegramBotId: botID, id: user.id },
+        }),
       t('messages.deleteUser.success'),
       t('messages.deleteUser.error'),
     );

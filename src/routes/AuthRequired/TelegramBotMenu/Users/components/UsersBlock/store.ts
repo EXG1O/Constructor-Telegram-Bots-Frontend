@@ -9,22 +9,20 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import type { Mode } from './components/BlockToolbar/components/ModeTabs';
 
-import { UsersAPI } from 'api/telegram-bots/user';
-import type { User } from 'api/telegram-bots/user/types';
+import { TelegramBotsService, type TelegramBotUser } from 'api';
 
 import createZustandContext, { type BaseState } from 'utils/createZustandContext';
+
+import type { UserPagination } from '../../loader';
 
 interface StrictTOptions extends TOptions {
   ns: `${RouteID.TelegramBotMenuUsers}`;
 }
 
-export interface StateData {
-  count: number;
-  limit: number;
-  offset: number;
+export interface StateData extends Omit<UserPagination, 'results'> {
   search: string | null;
   mode: Mode;
-  users: User[];
+  users: TelegramBotUser[];
   loading: boolean;
 }
 
@@ -62,19 +60,18 @@ export const [UsersBlockStoreProvider, useUsersBlockStore] = createZustandContex
         const search = params?.search === undefined ? currentSearch : params?.search;
         const mode = params?.mode ?? currentMode;
 
-        const response = await UsersAPI.get(
-          telegramBot.id,
-          limit,
-          offset,
-          search ?? undefined,
-          mode === 'allowed'
-            ? 'is_allowed'
-            : mode === 'blocked'
-              ? 'is_blocked'
-              : undefined,
-        );
+        const { data, error } = await TelegramBotsService.getUserList({
+          path: { telegramBotId: telegramBot.id },
+          query: {
+            limit,
+            offset,
+            ...(search && { search }),
+            ...(mode === 'allowed' && { is_allowed: true }),
+            ...(mode === 'blocked' && { is_blocked: true }),
+          },
+        });
 
-        if (!response.ok) {
+        if (error || !data) {
           createMessageToast({
             message: i18n.t<string, StrictTOptions, string, StrictTOptions>(
               'usersBlock.messages.getUsers.error',
@@ -86,7 +83,7 @@ export const [UsersBlockStoreProvider, useUsersBlockStore] = createZustandContex
           return;
         }
 
-        const { count, results } = response.json;
+        const { count, results } = data;
 
         set({ count, offset, search, mode, users: results, loading: false });
       },

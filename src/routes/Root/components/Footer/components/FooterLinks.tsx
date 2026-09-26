@@ -6,7 +6,7 @@ import { RouteID } from 'routes';
 
 import FooterLink from './FooterLink';
 
-import { DocumentType } from 'api/legal/enums';
+import { DocumentType } from 'api';
 
 import cn from 'utils/cn';
 import reverse from 'utils/reverse';

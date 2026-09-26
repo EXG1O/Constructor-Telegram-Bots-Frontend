@@ -15,7 +15,7 @@ import { defaultType } from './TypeBlock/defaults';
 import { Type } from './TypeBlock/types';
 import { defaultWebhook } from './WebhookBlock/defaults';
 
-import { TriggerAPI } from 'api/telegram-bots/trigger';
+import { TelegramBotsService } from 'api';
 
 import type { FormValues } from '..';
 import { useTriggerOffcanvasStore } from '../store';
@@ -51,9 +51,11 @@ function OffcanvasInner({
   useEffect(() => {
     if (!triggerID) return;
     (async () => {
-      const response = await TriggerAPI.get(telegramBotID, triggerID);
+      const { data, error } = await TelegramBotsService.getTrigger({
+        path: { telegramBotId: telegramBotID, id: triggerID },
+      });
 
-      if (!response.ok) {
+      if (error || !data) {
         hideOffcanvas();
         createMessageToast({
           message: t('messages.getTrigger.error'),
@@ -62,7 +64,7 @@ function OffcanvasInner({
         return;
       }
 
-      const { id, command, message, webhook, ...trigger } = response.json;
+      const { id: _id, command, message, webhook, ...trigger } = data;
 
       setValues({
         ...trigger,

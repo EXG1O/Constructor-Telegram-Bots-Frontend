@@ -11,15 +11,14 @@ import Table from 'components/ui/Table';
 import type { TableRowProps } from 'components/ui/Table/components/TableRow';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import type { makeRequest } from 'api/core';
-import { ChatAPI } from 'api/telegram-bots/chat';
-import type { Chat } from 'api/telegram-bots/chat/types';
+import type { Chat, RequestResult } from 'api';
+import { TelegramBotsService } from 'api';
 
 import cn from 'utils/cn';
 
 import { useChatsBlockStore } from '../../../store';
 
-export interface ChatTableRowProps extends Omit<TableRowProps, 'children'> {
+interface ChatTableRowProps extends Omit<TableRowProps, 'children'> {
   chat: Chat;
 }
 
@@ -41,7 +40,7 @@ function ChatTableRow({ chat, className, ...props }: ChatTableRowProps): ReactEl
   function showConfirmModal(
     title: string,
     text: string,
-    apiCall: () => ReturnType<typeof makeRequest>,
+    api: () => RequestResult<any, any, false>,
     successMessage: string,
     errorMessage: string,
   ): void {
@@ -51,9 +50,9 @@ function ChatTableRow({ chat, className, ...props }: ChatTableRowProps): ReactEl
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await apiCall();
+        const { error } = await api();
 
-        if (!response.ok) {
+        if (error) {
           createMessageToast({
             message: errorMessage,
             level: 'error',
@@ -74,7 +73,11 @@ function ChatTableRow({ chat, className, ...props }: ChatTableRowProps): ReactEl
     showConfirmModal(
       t('allowModal.title'),
       t('allowModal.text'),
-      () => ChatAPI.partialUpdate(botID, chat.id, { is_allowed: true }),
+      () =>
+        TelegramBotsService.partialUpdateChat({
+          path: { telegramBotId: botID, id: chat.id },
+          body: { is_allowed: true },
+        }),
       t('messages.allowChat.success'),
       t('messages.allowChat.error'),
     );
@@ -84,7 +87,11 @@ function ChatTableRow({ chat, className, ...props }: ChatTableRowProps): ReactEl
     showConfirmModal(
       t('disallowModal.title'),
       t('disallowModal.text'),
-      () => ChatAPI.partialUpdate(botID, chat.id, { is_allowed: false }),
+      () =>
+        TelegramBotsService.partialUpdateChat({
+          path: { telegramBotId: botID, id: chat.id },
+          body: { is_allowed: false },
+        }),
       t('messages.disallowChat.success'),
       t('messages.disallowChat.error'),
     );
@@ -94,7 +101,11 @@ function ChatTableRow({ chat, className, ...props }: ChatTableRowProps): ReactEl
     showConfirmModal(
       t('blockModal.title'),
       t('blockModal.text'),
-      () => ChatAPI.partialUpdate(botID, chat.id, { is_blocked: true }),
+      () =>
+        TelegramBotsService.partialUpdateChat({
+          path: { telegramBotId: botID, id: chat.id },
+          body: { is_blocked: true },
+        }),
       t('messages.blockChat.success'),
       t('messages.blockChat.error'),
     );
@@ -104,7 +115,11 @@ function ChatTableRow({ chat, className, ...props }: ChatTableRowProps): ReactEl
     showConfirmModal(
       t('unblockModal.title'),
       t('unblockModal.text'),
-      () => ChatAPI.partialUpdate(botID, chat.id, { is_blocked: false }),
+      () =>
+        TelegramBotsService.partialUpdateChat({
+          path: { telegramBotId: botID, id: chat.id },
+          body: { is_blocked: false },
+        }),
       t('messages.unblockChat.success'),
       t('messages.unblockChat.error'),
     );
@@ -114,7 +129,10 @@ function ChatTableRow({ chat, className, ...props }: ChatTableRowProps): ReactEl
     showConfirmModal(
       t('deleteModal.title'),
       t('deleteModal.text'),
-      () => ChatAPI.delete(botID, chat.id),
+      () =>
+        TelegramBotsService.deleteChat({
+          path: { telegramBotId: botID, id: chat.id },
+        }),
       t('messages.deleteChat.success'),
       t('messages.deleteChat.error'),
     );

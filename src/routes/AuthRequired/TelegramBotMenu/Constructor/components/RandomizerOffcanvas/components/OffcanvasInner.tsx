@@ -8,7 +8,7 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import Offcanvas, { type OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { RandomizerAPI } from 'api/telegram-bots/randomizer';
+import { TelegramBotsService } from 'api';
 
 import type { FormValues } from '..';
 import { useRandomizerOffcanvasStore } from '../store';
@@ -44,9 +44,11 @@ function OffcanvasInner({
   useEffect(() => {
     if (!randomizerID) return;
     (async () => {
-      const response = await RandomizerAPI.get({ botID, id: randomizerID });
+      const { data, error } = await TelegramBotsService.getRandomizer({
+        path: { telegramBotId: botID, id: randomizerID },
+      });
 
-      if (!response.ok) {
+      if (error || !data) {
         hideOffcanvas();
         createMessageToast({
           message: t('messages.getRandomizer.error'),
@@ -55,7 +57,7 @@ function OffcanvasInner({
         return;
       }
 
-      const { id, ...randomizer } = response.json;
+      const { id: _id, ...randomizer } = data;
 
       setValues(randomizer);
       setLoading(false);

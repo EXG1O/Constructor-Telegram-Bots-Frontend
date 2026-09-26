@@ -18,6 +18,7 @@
       "components/*": ["./src/components/*"],
       "routes": ["./src/routes"],
       "routes/*": ["./src/routes/*"],
+      "api": ["./src/api"],
       "api/*": ["./src/api/*"],
       "hooks/*": ["./src/hooks/*"],
       "utils/*": ["./src/utils/*"],

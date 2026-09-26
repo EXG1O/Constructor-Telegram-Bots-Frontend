@@ -14,13 +14,15 @@ import type { NameBlockFormValues } from '../NameBlock/types';
 
 import useFormikSubmit from '../../hooks/useFormikSubmit';
 
-import {
-  ConditionAPI,
-  ConditionsAPI,
-  DiagramConditionAPI,
-} from 'api/telegram-bots/condition';
-import type { Condition, Data } from 'api/telegram-bots/condition/types';
+import type {
+  Condition,
+  ConditionPartNextPartOperator,
+  ConditionPartType,
+  ConditionRequestWritable,
+} from 'api';
+import { type ConditionPartOperatorType, TelegramBotsService } from 'api';
 
+import { NodeType } from '../../enums';
 import { useConditionOffcanvasStore } from './store';
 
 export interface FormValues extends NameBlockFormValues, PartsBlockFormValues {}
@@ -56,23 +58,36 @@ function ConditionOffcanvas(props: ConditionFormOffcanvasProps): ReactElement {
           error: t('messages.editCondition.error'),
         },
       },
-      type: 'condition',
+      type: NodeType.Condition,
       action,
       saveAPICall: ({ parts, ...values }) => {
-        const data: Data.ConditionsAPI.Create | Data.ConditionAPI.Update = {
+        const data: ConditionRequestWritable = {
           ...values,
-          parts: parts.map(({ next_part_operator, ...part }) => ({
+          parts: parts.map(({ type, operator, next_part_operator, ...part }) => ({
             ...part,
+            type: type as ConditionPartType,
+            operator: operator as ConditionPartOperatorType,
             next_part_operator:
-              next_part_operator !== 'null' ? next_part_operator : null,
+              next_part_operator !== 'null'
+                ? (next_part_operator as ConditionPartNextPartOperator)
+                : null,
           })),
         };
 
         return action === 'edit' && conditionID
-          ? ConditionAPI.update(telegramBotID, conditionID, data)
-          : ConditionsAPI.create(telegramBotID, data);
+          ? TelegramBotsService.updateCondition({
+              path: { telegramBotId: telegramBotID, id: conditionID },
+              body: data,
+            })
+          : TelegramBotsService.createCondition({
+              path: { telegramBotId: telegramBotID },
+              body: data,
+            });
       },
-      diagramAPICall: (id) => DiagramConditionAPI.get(telegramBotID, id),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramCondition({
+          path: { telegramBotId: telegramBotID, id },
+        }),
       onHide: () => hideOffcanvas(),
     }),
     [conditionID, action, hideOffcanvas, i18n.language],

@@ -8,7 +8,7 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import Offcanvas, { type OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { BackgroundTaskAPI } from 'api/telegram-bots/background-task';
+import { TelegramBotsService } from 'api';
 
 import type { FormValues } from '..';
 import { useBackgroundTaskOffcanvasStore } from '../store';
@@ -44,9 +44,11 @@ function OffcanvasInner({
   useEffect(() => {
     if (!taskID) return;
     (async () => {
-      const response = await BackgroundTaskAPI.get(telegramBotID, taskID);
+      const { data, error } = await TelegramBotsService.getBackgroundTask({
+        path: { telegramBotId: telegramBotID, id: taskID },
+      });
 
-      if (!response.ok) {
+      if (error || !data) {
         hideOffcanvas();
         createMessageToast({
           message: t('messages.getBackgroundTask.error'),
@@ -55,7 +57,7 @@ function OffcanvasInner({
         return;
       }
 
-      const { id, ...task } = response.json;
+      const { id: _id, ...task } = data;
 
       setValues(task);
       setLoading(false);

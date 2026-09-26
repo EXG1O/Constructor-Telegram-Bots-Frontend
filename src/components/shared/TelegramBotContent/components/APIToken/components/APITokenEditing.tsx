@@ -14,7 +14,7 @@ import IconButton from 'components/ui/IconButton';
 import Spinner from 'components/ui/Spinner';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { TelegramBotAPI } from 'api/telegram-bots/telegram-bot';
+import { TelegramBotsService } from 'api';
 
 import cn from 'utils/cn';
 
@@ -49,25 +49,25 @@ function APITokenEditing({ className, ...props }: APITokenEditingProps): ReactEl
   async function handleSaveClick(): Promise<void> {
     setLoading(true);
 
-    const response = await TelegramBotAPI.partialUpdate(telegramBot.id, {
-      api_token: value,
+    const { data, error } = await TelegramBotsService.partialUpdateTelegramBot({
+      path: { id: telegramBot.id },
+      body: { api_token: value },
     });
 
-    if (response.ok) {
-      setTelegramBot(response.json);
-      toggleAPITokenState();
-      createMessageToast({
-        message: t('messages.updateTelegramBotAPIToken.success'),
-        level: 'success',
-      });
-    } else {
+    if (error || !data) {
       setError(
-        response.json.errors.find((error) => error.attr === 'api_token')?.detail ??
-          null,
+        error.errors.find((error) => error.attr === 'api_token')?.detail ?? null,
       );
       createMessageToast({
         message: t('messages.updateTelegramBotAPIToken.error'),
         level: 'error',
+      });
+    } else {
+      setTelegramBot(data);
+      toggleAPITokenState();
+      createMessageToast({
+        message: t('messages.updateTelegramBotAPIToken.success'),
+        level: 'success',
       });
     }
 

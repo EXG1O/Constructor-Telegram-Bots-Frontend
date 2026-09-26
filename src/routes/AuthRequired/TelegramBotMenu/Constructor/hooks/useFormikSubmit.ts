@@ -4,18 +4,22 @@ import type { FormikHelpers } from 'formik';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import type { makeRequest } from 'api/core';
-import type { Block, CreateBlock, DiagramBlock } from 'api/telegram-bots/base/types';
+import type { Block, BlockRequestWritable, DiagramBlock } from 'api';
+import type { RequestResult } from 'api/client/client';
 
-import { convertDiagramBlockToNode, type NodeType } from '../utils/nodes';
+import type { NodeType } from '../enums';
+import { convertDiagramBlockToNode } from '../utils/nodes';
 import useReactFlowCentralPosition from './useReactFlowCentralPosition';
 
-type FormikValues<T extends Record<string, any>> = Pick<CreateBlock, keyof XYPosition> &
+type FormikValues<T extends Record<string, any>> = Pick<
+  BlockRequestWritable,
+  keyof XYPosition
+> &
   T;
 
 export interface FormikSubmitOptions<
-  BlockType extends Block,
-  FormikValuesType extends Record<string, any>,
+  TBlock extends Block,
+  TFormikValues extends Record<string, any>,
 > {
   messages: {
     add: {
@@ -28,29 +32,29 @@ export interface FormikSubmitOptions<
     };
   };
   type: NodeType;
-  action: keyof FormikSubmitOptions<BlockType, FormikValuesType>['messages'];
+  action: keyof FormikSubmitOptions<TBlock, TFormikValues>['messages'];
   saveAPICall: (
-    values: FormikValues<FormikValuesType>,
-    helpers: FormikHelpers<FormikValuesType>,
-  ) => Promise<Awaited<ReturnType<typeof makeRequest<BlockType>>> | null>;
+    values: FormikValues<TFormikValues>,
+    helpers: FormikHelpers<TFormikValues>,
+  ) => Promise<Awaited<RequestResult<{ 200: TBlock; 201: TBlock }, any, false>> | null>;
   diagramAPICall: (
     id: number,
-    values: FormikValues<FormikValuesType>,
-    helpers: FormikHelpers<FormikValuesType>,
-  ) => ReturnType<typeof makeRequest<DiagramBlock>>;
+    values: FormikValues<TFormikValues>,
+    helpers: FormikHelpers<TFormikValues>,
+  ) => RequestResult<{ 200: DiagramBlock }, any, false>;
   normalizeFieldName?: (fieldName: string) => string;
   onHide: (
     id: number,
-    values: FormikValues<FormikValuesType>,
-    helpers: FormikHelpers<FormikValuesType>,
+    values: FormikValues<TFormikValues>,
+    helpers: FormikHelpers<TFormikValues>,
   ) => void;
 }
 
 function useFormikSubmit<
-  BlockType extends Block,
-  FormikValuesType extends Record<string, any>,
+  TBlock extends Block,
+  TFormikValues extends Record<string, any>,
 >(
-  factory: () => FormikSubmitOptions<BlockType, FormikValuesType>,
+  factory: () => FormikSubmitOptions<TBlock, TFormikValues>,
   deps: React.DependencyList,
 ) {
   const reactFlow = useReactFlow();
@@ -58,8 +62,8 @@ function useFormikSubmit<
 
   return useCallback(
     async (
-      values: FormikValuesType,
-      helpers: FormikHelpers<FormikValuesType>,
+      values: TFormikValues,
+      helpers: FormikHelpers<TFormikValues>,
     ): Promise<void> => {
       const {
         messages,
@@ -78,26 +82,26 @@ function useFormikSubmit<
 
       const position: XYPosition | null =
         action === 'add' ? getReactFlowCentralPosition() : null;
-      const saveResponse = await saveAPICall(
+      const saveResult = await saveAPICall(
         position ? { ...values, ...position } : values,
         helpers,
       );
-      if (saveResponse === null) return;
+      if (saveResult === null) return;
 
-      if (!saveResponse.ok) {
-        for (const error of saveResponse.json.errors) {
-          if (!error.attr) continue;
-          setFieldError(normalizeFieldName?.(error.attr) ?? error.attr, error.detail);
+      if (saveResult.error || !saveResult.data) {
+        for (const item of saveResult.error) {
+          if (!item.attr) continue;
+          setFieldError(normalizeFieldName?.(item.attr) ?? item.attr, item.detail);
         }
         return handleError();
       }
 
-      const { id } = saveResponse.json;
+      const { id } = saveResult.data;
 
-      const diagramResponse = await diagramAPICall(id, values, helpers);
-      if (!diagramResponse.ok) return handleError();
+      const diagramResult = await diagramAPICall(id, values, helpers);
+      if (diagramResult.error || !diagramResult.data) return handleError();
 
-      const newNode: Node = convertDiagramBlockToNode(type, diagramResponse.json);
+      const newNode: Node = convertDiagramBlockToNode(type, diagramResult.data);
 
       reactFlow.setNodes((prevNodes) => {
         const newNodes: Node[] = [...prevNodes];

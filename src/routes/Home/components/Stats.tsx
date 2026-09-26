@@ -13,7 +13,7 @@ export interface StatsProps extends Omit<
   'variant' | 'gradient' | 'children'
 > {}
 
-const Stats = forwardRef<HTMLDivElement, StatsProps>(({ className, ...props }, ref) => {
+const Stats = forwardRef<HTMLDivElement, StatsProps>((props, ref) => {
   const { t } = useTranslation<`${RouteID.Home}`, any>('home', { keyPrefix: 'stats' });
 
   const { stats } = useHomeRouteLoaderData();

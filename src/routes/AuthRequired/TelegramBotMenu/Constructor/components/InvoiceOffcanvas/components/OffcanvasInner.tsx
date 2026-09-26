@@ -8,7 +8,7 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import Offcanvas, { type OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { InvoiceAPI } from 'api/telegram-bots/invoice';
+import { TelegramBotsService } from 'api';
 import fetchFile from 'api/utils/fetchFile';
 
 import type { FormValues } from '..';
@@ -48,9 +48,11 @@ function OffcanvasInner({
   useEffect(() => {
     if (!invoiceID) return;
     (async () => {
-      const response = await InvoiceAPI.get(telegramBotID, invoiceID);
+      const { data, error } = await TelegramBotsService.getInvoice({
+        path: { telegramBotId: telegramBotID, id: invoiceID },
+      });
 
-      if (!response.ok) {
+      if (error || !data) {
         hideOffcanvas();
         createMessageToast({
           message: t('messages.getInvoice.error'),
@@ -60,11 +62,11 @@ function OffcanvasInner({
       }
 
       const {
-        id,
+        id: _id,
         image,
         prices: [price],
         ...invoice
-      } = response.json;
+      } = data;
 
       const imageFile: File | null =
         image && image.url && image.name
@@ -73,11 +75,13 @@ function OffcanvasInner({
 
       setValues({
         ...invoice,
-        image: image && {
-          file: imageFile,
-          file_url: imageFile && URL.createObjectURL(imageFile),
-          from_url: image.from_url,
-        },
+        image: image
+          ? {
+              file: imageFile,
+              file_url: imageFile && URL.createObjectURL(imageFile),
+              from_url: image.from_url ?? null,
+            }
+          : null,
         price: { label: price.label, amount: price.amount.toString() },
         show_image_block: Boolean(image),
       });

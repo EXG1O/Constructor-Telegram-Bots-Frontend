@@ -1,97 +1,77 @@
-import type { Params } from 'react-router-dom';
+import { type LoaderFunctionArgs, redirect } from 'react-router-dom';
+import i18n from 'i18n';
 
-import { DiagramAPIRequestsAPI } from 'api/telegram-bots/api-request';
-import type { APIResponse as APIRequestAPIResponse } from 'api/telegram-bots/api-request/types';
-import { DiagramBackgroundTasksAPI } from 'api/telegram-bots/background-task';
-import type { APIResponse as BackgroundTaskAPIResponse } from 'api/telegram-bots/background-task/types';
-import { DiagramConditionsAPI } from 'api/telegram-bots/condition';
-import type { APIResponse as ConditionAPIResponse } from 'api/telegram-bots/condition/types';
-import { DiagramDatabaseOperationsAPI } from 'api/telegram-bots/database-operation';
-import type { APIResponse as DatabaseOperationAPIResponse } from 'api/telegram-bots/database-operation/types';
-import { DiagramInvoicesAPI } from 'api/telegram-bots/invoice';
-import type { APIResponse as InvoiceAPIResponse } from 'api/telegram-bots/invoice/types';
-import { DiagramMessagesAPI } from 'api/telegram-bots/message';
-import type { APIResponse as MessageAPIResponse } from 'api/telegram-bots/message/types';
-import { DiagramRandomizersAPI } from 'api/telegram-bots/randomizer';
-import type { APIResponse as RandomizerAPIResponse } from 'api/telegram-bots/randomizer/types';
-import { DiagramTemporaryVariablesAPI } from 'api/telegram-bots/temporary-variable';
-import type { APIResponse as TemporaryVariableAPIResponse } from 'api/telegram-bots/temporary-variable/types';
-import { DiagramTimersAPI } from 'api/telegram-bots/timer';
-import type { APIResponse as TimerAPIResponse } from 'api/telegram-bots/timer/types';
-import { DiagramTriggersAPI } from 'api/telegram-bots/trigger';
-import type { APIResponse as TriggerAPIResponse } from 'api/telegram-bots/trigger/types';
+import { RouteID } from 'routes';
 
-export interface LoaderData {
-  diagramTriggers: TriggerAPIResponse.DiagramTriggersAPI.Get;
-  diagramMessages: MessageAPIResponse.DiagramMessagesAPI.Get;
-  diagramConditions: ConditionAPIResponse.DiagramConditionsAPI.Get;
-  diagramBackgroundTasks: BackgroundTaskAPIResponse.DiagramBackgroundTasksAPI.Get;
-  diagramAPIRequests: APIRequestAPIResponse.DiagramAPIRequestsAPI.Get;
-  diagramDatabaseOperations: DatabaseOperationAPIResponse.DiagramDatabaseOperationsAPI.Get;
-  diagramInvoices: InvoiceAPIResponse.DiagramInvoicesAPI.Get;
-  diagramTemporaryVariables: TemporaryVariableAPIResponse.DiagramTemporaryVariablesAPI.Get;
-  diagramRandomizers: RandomizerAPIResponse.DiagramRandomizersAPI.Get;
-  diagramTimers: TimerAPIResponse.DiagramTimersAPI.Get;
-}
+import { createMessageToast } from 'components/ui/ToastContainer';
 
-async function loader({
-  params,
-}: {
-  params: Params<'telegramBotID'>;
-}): Promise<LoaderData | null> {
-  const telegramBotID = Number(params.telegramBotID);
-  if (Number.isNaN(telegramBotID)) return null;
+import { type DiagramBlock, type Options, TelegramBotsService } from 'api';
 
-  const [
-    diagramTriggersResponse,
-    diagramMessagesResponse,
-    diagramConditionsResponse,
-    diagramBackgroundTasksResponse,
-    diagramAPIRequestsResponse,
-    diagramDatabaseOperationsResponse,
-    diagramInvoicesResponse,
-    diagramTemporaryVariablesResponse,
-    diagramRandomizersResponse,
-    diagramTimersResponse,
-  ] = await Promise.all([
-    DiagramTriggersAPI.get(telegramBotID),
-    DiagramMessagesAPI.get(telegramBotID),
-    DiagramConditionsAPI.get(telegramBotID),
-    DiagramBackgroundTasksAPI.get(telegramBotID),
-    DiagramAPIRequestsAPI.get(telegramBotID),
-    DiagramDatabaseOperationsAPI.get(telegramBotID),
-    DiagramInvoicesAPI.get(telegramBotID),
-    DiagramTemporaryVariablesAPI.get(telegramBotID),
-    DiagramRandomizersAPI.get({ botID: telegramBotID }),
-    DiagramTimersAPI.get({ botID: telegramBotID }),
-  ]);
+import reverse from 'utils/reverse';
 
-  if (
-    !diagramTriggersResponse.ok ||
-    !diagramMessagesResponse.ok ||
-    !diagramConditionsResponse.ok ||
-    !diagramBackgroundTasksResponse.ok ||
-    !diagramAPIRequestsResponse.ok ||
-    !diagramDatabaseOperationsResponse.ok ||
-    !diagramInvoicesResponse.ok ||
-    !diagramTemporaryVariablesResponse.ok ||
-    !diagramRandomizersResponse.ok ||
-    !diagramTimersResponse.ok
-  )
-    return null;
+import type { NodeType } from './enums';
 
-  return {
-    diagramTriggers: diagramTriggersResponse.json,
-    diagramMessages: diagramMessagesResponse.json,
-    diagramConditions: diagramConditionsResponse.json,
-    diagramBackgroundTasks: diagramBackgroundTasksResponse.json,
-    diagramAPIRequests: diagramAPIRequestsResponse.json,
-    diagramDatabaseOperations: diagramDatabaseOperationsResponse.json,
-    diagramInvoices: diagramInvoicesResponse.json,
-    diagramTemporaryVariables: diagramTemporaryVariablesResponse.json,
-    diagramRandomizers: diagramRandomizersResponse.json,
-    diagramTimers: diagramTimersResponse.json,
+export type LoaderData = Record<NodeType, DiagramBlock[]>;
+
+async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData> {
+  const fallback = () => {
+    createMessageToast({
+      message: i18n.t('messages.loader.error'),
+      level: 'error',
+    });
+    return redirect(reverse(RouteID.TelegramBots));
   };
+
+  const telegramBotID = Number(params.telegramBotID);
+
+  if (Number.isNaN(telegramBotID)) {
+    throw fallback();
+  }
+
+  const options: Options<{ url: string; path: { telegramBotId: number } }, true> = {
+    path: { telegramBotId: telegramBotID },
+    throwOnError: true,
+  };
+
+  try {
+    const [
+      { data: diagramTriggers },
+      { data: diagramMessages },
+      { data: diagramConditions },
+      { data: diagramBackgroundTasks },
+      { data: diagramAPIRequests },
+      { data: diagramDatabaseOperations },
+      { data: diagramInvoices },
+      { data: diagramTemporaryVariables },
+      { data: diagramRandomizers },
+      { data: diagramTimers },
+    ] = await Promise.all([
+      TelegramBotsService.getDiagramTriggerList(options),
+      TelegramBotsService.getDiagramMessageList(options),
+      TelegramBotsService.getDiagramConditionList(options),
+      TelegramBotsService.getDiagramBackgroundTaskList(options),
+      TelegramBotsService.getDiagramApiRequestList(options),
+      TelegramBotsService.getDiagramDatabaseOperationList(options),
+      TelegramBotsService.getDiagramInvoiceList(options),
+      TelegramBotsService.getDiagramTemporaryVariableList(options),
+      TelegramBotsService.getDiagramRandomizerList(options),
+      TelegramBotsService.getDiagramTimerList(options),
+    ]);
+    return {
+      trigger: diagramTriggers,
+      message: diagramMessages,
+      condition: diagramConditions,
+      background_task: diagramBackgroundTasks,
+      api_request: diagramAPIRequests,
+      database_operation: diagramDatabaseOperations,
+      invoice: diagramInvoices,
+      temporary_variable: diagramTemporaryVariables,
+      randomizer: diagramRandomizers,
+      timer: diagramTimers,
+    };
+  } catch {
+    throw fallback();
+  }
 }
 
 export default loader;

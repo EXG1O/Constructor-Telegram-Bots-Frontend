@@ -16,14 +16,12 @@ export type LoaderData = Response;
 
 async function loader(): Promise<LoaderData> {
   await i18n.loadNamespaces(RouteID.NotFound);
-
   createMessageToast({
     message: i18n.t<string, StrictTOptions, string, StrictTOptions>('text', {
       ns: 'not-found',
     }),
     level: 'error',
   });
-
   return redirect(reverse(RouteID.Home));
 }
 

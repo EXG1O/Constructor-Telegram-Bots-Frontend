@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import {
   type Node as RFNode,
   type NodeProps as RFNodeProps,
-  Position,
   useReactFlow,
 } from '@xyflow/react';
 import { Link } from 'lucide-react';
@@ -18,30 +17,34 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useMessageOffcanvasStore } from './MessageOffcanvas/store';
 import Node from './Node';
+import type { NodeHandleProps } from './Node/components/NodeHandle';
 
 import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
 
-import { DiagramMessageAPI, MessageAPI, MessagesAPI } from 'api/telegram-bots/message';
-import type {
-  Data,
-  DiagramMessage,
-  MessageDocument,
-  MessageImage,
-} from 'api/telegram-bots/message/types';
+import {
+  ConnectionHandlePosition,
+  type DiagramMessage,
+  type Message,
+  type MessageDocument,
+  type MessageDocumentRequestWritable,
+  type MessageImage,
+  type MessageImageRequestWritable,
+  TelegramBotsService,
+} from 'api';
 import fetchFile from 'api/utils/fetchFile';
+import formDataBodySerializer from 'api/utils/formDataBodySerializer';
 
 import cn from 'utils/cn';
 
+import type { NodeType } from '../enums';
 import { messageKeyboardButtonStyleVariants } from '../styles/messageKeyboardButtonStyle';
-import {
-  buildEdgeSourceHandle,
-  buildEdgeTargetHandle,
-  type EdgeHandle,
-} from '../utils/edges';
 
-export type NodeData = Omit<DiagramMessage, 'x' | 'y' | 'source_connections'>;
-
-export interface MessageNodeProps extends RFNodeProps<RFNode<NodeData, 'message'>> {}
+export interface MessageNodeProps extends RFNodeProps<
+  RFNode<
+    Omit<DiagramMessage, 'x' | 'y' | 'source_connections'>,
+    typeof NodeType.Message
+  >
+> {}
 
 function MessageNode({
   id,
@@ -67,7 +70,7 @@ function MessageNode({
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const handleDuplicate = useNodeDuplicate(
+  const handleDuplicate = useNodeDuplicate<Message>(
     () => ({
       title: t('duplicateModal.title'),
       text: t('duplicateModal.text'),
@@ -79,39 +82,48 @@ function MessageNode({
       type,
       x: positionAbsoluteX,
       y: positionAbsoluteY,
-      retrieveAPICall: () => MessageAPI.get(telegramBotID, message.id),
+      retrieveAPICall: () =>
+        TelegramBotsService.getMessage({
+          path: { telegramBotId: telegramBotID, id: message.id },
+        }),
       createAPICall: async ({ images, documents, ...data }) => {
         const processMedia = (media: (MessageImage | MessageDocument)[]) =>
           Promise.all(
-            media.map<Promise<Data.MessagesAPI.CreateMessageMedia>>(
-              async ({ name, url, from_url, position }) => ({
-                file: url && name ? await fetchFile(url, name) : null,
-                from_url,
-                position,
-              }),
-            ),
+            media.map<
+              Promise<MessageImageRequestWritable | MessageDocumentRequestWritable>
+            >(async ({ name, url, from_url, position }) => ({
+              file: url && name ? await fetchFile(url, name) : null,
+              from_url,
+              position,
+            })),
           );
 
         const [processedImages, processedDocuments] = await Promise.all([
-          processMedia(images),
-          processMedia(documents),
+          processMedia(images ?? []),
+          processMedia(documents ?? []),
         ]);
 
-        return MessagesAPI.create(telegramBotID, {
-          ...data,
-          images: processedImages,
-          documents: processedDocuments,
+        return TelegramBotsService.createMessage({
+          ...formDataBodySerializer,
+          path: { telegramBotId: telegramBotID },
+          body: {
+            ...data,
+            images: processedImages,
+            documents: processedDocuments,
+          },
         });
       },
-      diagramAPICall: (id) => DiagramMessageAPI.get(telegramBotID, id),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramMessage({
+          path: { telegramBotId: telegramBotID, id },
+        }),
     }),
     [message.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
+  const nodeHandlerProps: Pick<NodeHandleProps, 'objectType' | 'objectID'> = {
     objectType: type,
     objectID: message.id,
-    nestedObjectID: 0,
   };
 
   function handleEdit(): void {
@@ -125,9 +137,11 @@ function MessageNode({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await MessageAPI.delete(telegramBotID, message.id);
+        const { error } = await TelegramBotsService.deleteMessage({
+          path: { telegramBotId: telegramBotID, id: message.id },
+        });
 
-        if (!response.ok) {
+        if (error) {
           createMessageToast({
             message: t('messages.delete.error'),
             level: 'error',
@@ -157,20 +171,16 @@ function MessageNode({
       <Node.Block className='relative'>
         <Node.Title>{message.name}</Node.Title>
         <Node.Handle
-          id={buildEdgeTargetHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'left',
-          })}
+          {...nodeHandlerProps}
           type='target'
-          position={Position.Left}
+          nestedObjectID={0}
+          position={ConnectionHandlePosition.Left}
         />
         <Node.Handle
-          id={buildEdgeSourceHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'right',
-          })}
+          {...nodeHandlerProps}
           type='source'
-          position={Position.Right}
+          nestedObjectID={0}
+          position={ConnectionHandlePosition.Right}
         />
       </Node.Block>
       {message.text && (
@@ -218,22 +228,16 @@ function MessageNode({
                 >
                   {button.text}
                   <Node.Handle
-                    id={buildEdgeSourceHandle({
-                      ...defaultEdgeHandleBuildParams,
-                      position: 'left',
-                      nestedObjectID: button.id,
-                    })}
+                    {...nodeHandlerProps}
                     type='source'
-                    position={Position.Left}
+                    nestedObjectID={button.id}
+                    position={ConnectionHandlePosition.Left}
                   />
                   <Node.Handle
-                    id={buildEdgeSourceHandle({
-                      ...defaultEdgeHandleBuildParams,
-                      position: 'right',
-                      nestedObjectID: button.id,
-                    })}
+                    {...nodeHandlerProps}
                     type='source'
-                    position={Position.Right}
+                    nestedObjectID={button.id}
+                    position={ConnectionHandlePosition.Right}
                   />
                 </Node.Block>
               ),

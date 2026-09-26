@@ -67,7 +67,7 @@
     "ts-loader": "~9",
     "ts-node": "~10.9",
     "tw-animate-css": "~1.3",
-    "typescript": "~5.2",
+    "typescript": "~5.5",
     "webpack": "~5.89",
     "webpack-cli": "~6",
     "webpack-dev-server": "~5.2",
@@ -75,6 +75,7 @@
   },
   "devDependencies": {
     "@eslint/compat": "~2",
+    "@hey-api/openapi-ts": "~0.99",
     "@typescript-eslint/eslint-plugin": "~8",
     "@typescript-eslint/parser": "~8",
     "eslint": "~9",

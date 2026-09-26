@@ -2,10 +2,10 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 import { RouteID } from 'routes';
 
-import type { LoaderData } from '../loader';
+import type loader from '../loader';
 
 function useHomeRouteLoaderData() {
-  return useRouteLoaderData(RouteID.Home) as LoaderData;
+  return useRouteLoaderData(RouteID.Home) as Awaited<ReturnType<typeof loader>>;
 }
 
 export default useHomeRouteLoaderData;

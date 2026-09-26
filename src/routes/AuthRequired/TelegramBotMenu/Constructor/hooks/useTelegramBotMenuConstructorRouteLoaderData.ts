@@ -2,10 +2,12 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 import { RouteID } from 'routes';
 
-import type { LoaderData } from '../loader';
+import type loader from '../loader';
 
 function useTelegramBotMenuConstructorRouteLoaderData() {
-  return useRouteLoaderData(RouteID.TelegramBotMenuConstructor) as LoaderData;
+  return useRouteLoaderData(RouteID.TelegramBotMenuConstructor) as Awaited<
+    ReturnType<typeof loader>
+  >;
 }
 
 export default useTelegramBotMenuConstructorRouteLoaderData;

@@ -8,7 +8,7 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 import Offcanvas, { type OffcanvasProps } from 'components/ui/Offcanvas';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { ConditionAPI } from 'api/telegram-bots/condition';
+import { TelegramBotsService } from 'api';
 
 import type { FormValues } from '..';
 import { useConditionOffcanvasStore } from '../store';
@@ -44,9 +44,11 @@ function OffcanvasInner({
   useEffect(() => {
     if (!conditionID) return;
     (async () => {
-      const response = await ConditionAPI.get(telegramBotID, conditionID);
+      const { data, error } = await TelegramBotsService.getCondition({
+        path: { telegramBotId: telegramBotID, id: conditionID },
+      });
 
-      if (!response.ok) {
+      if (error || !data) {
         hideOffcanvas();
         createMessageToast({
           message: t('messages.getCondition.error'),
@@ -55,13 +57,13 @@ function OffcanvasInner({
         return;
       }
 
-      const { id, parts, ...condition } = response.json;
+      const { id: _id, parts, ...condition } = data;
 
       setValues({
         ...condition,
         parts: parts.map(({ next_part_operator, ...part }) => ({
           ...part,
-          next_part_operator: next_part_operator ?? 'null',
+          next_part_operator: next_part_operator || 'null',
         })),
       });
       setLoading(false);

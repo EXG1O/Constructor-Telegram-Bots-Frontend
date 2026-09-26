@@ -1,6 +1,6 @@
 import { createStore } from 'zustand';
 
-import type { TelegramBot } from 'api/telegram-bots/telegram-bot/types';
+import type { TelegramBot } from 'api';
 
 import createZustandContext, { type BaseState } from 'utils/createZustandContext';
 

@@ -1,6 +1,4 @@
-import type { Method } from 'api/telegram-bots/api-request/types';
-
-export type { Method };
+import type { Method } from './enums';
 
 export interface MethodBlockFormValues {
   method: Method;

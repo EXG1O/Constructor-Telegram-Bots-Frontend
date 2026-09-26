@@ -14,9 +14,10 @@ import type { NameBlockFormValues } from '../NameBlock/types';
 
 import useFormikSubmit from '../../hooks/useFormikSubmit';
 
-import { DiagramTimerAPI, TimerAPI, TimersAPI } from 'api/telegram-bots/timer';
-import type { Data, Timer } from 'api/telegram-bots/timer/types';
+import type { Timer, TimerRequestWritable } from 'api';
+import { TelegramBotsService } from 'api';
 
+import { NodeType } from '../../enums';
 import { useTimerOffcanvasStore } from './store';
 
 export interface FormValues extends NameBlockFormValues, DurationBlockFormValues {}
@@ -52,18 +53,22 @@ function TimerOffcanvas(props: TimerOffcanvasProps): ReactElement {
           error: t('messages.editTimer.error'),
         },
       },
-      type: 'timer',
+      type: NodeType.Timer,
       action,
       saveAPICall: ({ duration, ...values }) => {
-        const data: Data.TimersAPI.Create | Data.TimerAPI.Update = {
-          ...values,
-          duration_seconds: duration,
-        };
+        const data: TimerRequestWritable = { ...values, duration_seconds: duration };
         return action === 'edit' && timerID
-          ? TimerAPI.update({ botID, id: timerID, data })
-          : TimersAPI.create({ botID, data });
+          ? TelegramBotsService.updateTimer({
+              path: { telegramBotId: botID, id: timerID },
+              body: data,
+            })
+          : TelegramBotsService.createTimer({
+              path: { telegramBotId: botID },
+              body: data,
+            });
       },
-      diagramAPICall: (id) => DiagramTimerAPI.get({ botID, id }),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramTimer({ path: { telegramBotId: botID, id } }),
       normalizeFieldName: (fieldName) =>
         fieldName.replace('duration_seconds', 'duration'),
       onHide: () => hideOffcanvas(),

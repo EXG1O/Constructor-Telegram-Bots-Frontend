@@ -2,7 +2,7 @@ import React, { type HTMLAttributes, type ReactElement, useMemo } from 'react';
 
 import SelectButton from '../../SelectButton';
 
-import type { DatabaseRecord } from 'api/telegram-bots/database-record/types';
+import type { DatabaseRecord } from 'api';
 
 import cn from 'utils/cn';
 import getJSONPathLines, { type JSONPath } from 'utils/getJSONPathLines';

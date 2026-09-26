@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import {
   type Node as RFNode,
   type NodeProps as RFNodeProps,
-  Position,
   useReactFlow,
 } from '@xyflow/react';
 
@@ -15,26 +14,24 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useDatabaseOperationOffcanvasStore } from './DatabaseOperationOffcanvas/store';
 import Node from './Node';
+import type { NodeHandleProps } from './Node/components/NodeHandle';
 
 import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
 
 import {
-  DatabaseOperationAPI,
-  DatabaseOperationsAPI,
-  DiagramDatabaseOperationAPI,
-} from 'api/telegram-bots/database-operation';
-import type { DiagramDatabaseOperation } from 'api/telegram-bots/database-operation/types';
+  ConnectionHandlePosition,
+  type DatabaseOperation,
+  type DiagramDatabaseOperation,
+  TelegramBotsService,
+} from 'api';
 
-import {
-  buildEdgeSourceHandle,
-  buildEdgeTargetHandle,
-  type EdgeHandle,
-} from '../utils/edges';
-
-export type NodeData = Omit<DiagramDatabaseOperation, 'x' | 'y' | 'source_connections'>;
+import type { NodeType } from '../enums';
 
 export interface DatabaseOperationNodeProps extends RFNodeProps<
-  RFNode<NodeData, 'database_operation'>
+  RFNode<
+    Omit<DiagramDatabaseOperation, 'x' | 'y' | 'source_connections'>,
+    typeof NodeType.DatabaseOperation
+  >
 > {}
 
 function DatabaseOperationNode({
@@ -61,7 +58,7 @@ function DatabaseOperationNode({
   const hideConfirmModal = useConfirmModalStore((state) => state.setHide);
   const setLoadingConfirmModal = useConfirmModalStore((state) => state.setLoading);
 
-  const handleDuplicate = useNodeDuplicate(
+  const handleDuplicate = useNodeDuplicate<DatabaseOperation>(
     () => ({
       title: t('duplicateModal.title'),
       text: t('duplicateModal.text'),
@@ -73,14 +70,27 @@ function DatabaseOperationNode({
       type,
       x: positionAbsoluteX,
       y: positionAbsoluteY,
-      retrieveAPICall: () => DatabaseOperationAPI.get(telegramBotID, operation.id),
-      createAPICall: (data) => DatabaseOperationsAPI.create(telegramBotID, data),
-      diagramAPICall: (id) => DiagramDatabaseOperationAPI.get(telegramBotID, id),
+      retrieveAPICall: () =>
+        TelegramBotsService.getDatabaseOperation({
+          path: { telegramBotId: telegramBotID, id: operation.id },
+        }),
+      createAPICall: (data) =>
+        TelegramBotsService.createDatabaseOperation({
+          path: { telegramBotId: telegramBotID },
+          body: data,
+        }),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramDatabaseOperation({
+          path: { telegramBotId: telegramBotID, id },
+        }),
     }),
     [operation.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
   );
 
-  const defaultEdgeHandleBuildParams: Omit<EdgeHandle<typeof type>, 'position'> = {
+  const nodeHandlerProps: Pick<
+    NodeHandleProps,
+    'objectType' | 'objectID' | 'nestedObjectID'
+  > = {
     objectType: type,
     objectID: operation.id,
     nestedObjectID: 0,
@@ -93,9 +103,11 @@ function DatabaseOperationNode({
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
-        const response = await DatabaseOperationAPI.delete(telegramBotID, operation.id);
+        const { error } = await TelegramBotsService.deleteDatabaseOperation({
+          path: { telegramBotId: telegramBotID, id: operation.id },
+        });
 
-        if (!response.ok) {
+        if (error) {
           createMessageToast({
             message: t('messages.delete.error'),
             level: 'error',
@@ -129,20 +141,14 @@ function DatabaseOperationNode({
       <Node.Block className='relative'>
         <Node.Title>{operation.name}</Node.Title>
         <Node.Handle
-          id={buildEdgeTargetHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'left',
-          })}
+          {...nodeHandlerProps}
           type='target'
-          position={Position.Left}
+          position={ConnectionHandlePosition.Left}
         />
         <Node.Handle
-          id={buildEdgeSourceHandle({
-            ...defaultEdgeHandleBuildParams,
-            position: 'right',
-          })}
+          {...nodeHandlerProps}
           type='source'
-          position={Position.Right}
+          position={ConnectionHandlePosition.Right}
         />
       </Node.Block>
     </Node>

@@ -24,9 +24,11 @@ import type { NameBlockFormValues } from '../NameBlock/types';
 
 import useFormikSubmit from '../../hooks/useFormikSubmit';
 
-import { DiagramMessageAPI, MessageAPI, MessagesAPI } from 'api/telegram-bots/message';
-import type { Data, Message } from 'api/telegram-bots/message/types';
+import type { Message, MessageKeyboardType, MessageRequestWritable } from 'api';
+import { TelegramBotsService } from 'api';
+import formDataBodySerializer from 'api/utils/formDataBodySerializer';
 
+import { NodeType } from '../../enums';
 import { useMessageOffcanvasStore } from './store';
 
 export interface FormValues
@@ -84,7 +86,7 @@ function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
           error: t('messages.editMessage.error'),
         },
       },
-      type: 'message',
+      type: NodeType.Message,
       action,
       saveAPICall: async ({
         images,
@@ -120,37 +122,31 @@ function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
           return null;
         }
 
-        const data: Data.MessagesAPI.Create | Data.MessageAPI.Update = {
+        const data: MessageRequestWritable = {
           ...values,
           images:
             show_images_block && images.length
-              ? images.map<Data.MessagesAPI.CreateMessageMedia>(
-                  ({ id, file, from_url }, index) => ({
-                    id,
-                    position: index,
-                    file,
-                    from_url,
-                  }),
-                )
+              ? images.map(({ id, file, from_url }, index) => ({
+                  id,
+                  position: index,
+                  file,
+                  from_url,
+                }))
               : null,
           documents:
             show_documents_block && documents.length
-              ? documents.map<Data.MessagesAPI.CreateMessageMedia>(
-                  ({ id, file, from_url }, index) => ({
-                    id,
-                    position: index,
-                    file,
-                    from_url,
-                  }),
-                )
+              ? documents.map(({ id, file, from_url }, index) => ({
+                  id,
+                  position: index,
+                  file,
+                  from_url,
+                }))
               : null,
           text: show_text_block ? text : null,
           keyboard: show_keyboard_block
             ? {
-                type: keyboard.type,
-                buttons: keyboard.rows.reduce<
-                  Data.MessagesAPI.CreateMessageKeyboardButton[]
-                >((buttons, row, rowIndex) => {
+                type: keyboard.type as MessageKeyboardType,
+                buttons: keyboard.rows.reduce<any[]>((buttons, row, rowIndex) => {
                   buttons.push(
                     ...row.buttons.map(({ id, text, url, style }, buttonIndex) => ({
                       id,
@@ -161,7 +157,6 @@ function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
                       style,
                     })),
                   );
-
                   return buttons;
                 }, []),
               }
@@ -169,10 +164,18 @@ function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
         };
 
         const response = await (action === 'edit' && messageID
-          ? MessageAPI.update(telegramBotID, messageID, data)
-          : MessagesAPI.create(telegramBotID, data));
+          ? TelegramBotsService.updateMessage({
+              ...formDataBodySerializer,
+              path: { telegramBotId: telegramBotID, id: messageID },
+              body: data,
+            })
+          : TelegramBotsService.createMessage({
+              ...formDataBodySerializer,
+              path: { telegramBotId: telegramBotID },
+              body: data,
+            }));
 
-        if (response.ok) {
+        if (response) {
           const { usedStorageSize } = useMessageOffcanvasStore.getState();
 
           setTelegramBot((telegramBot) => {
@@ -182,7 +185,10 @@ function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
 
         return response;
       },
-      diagramAPICall: (id) => DiagramMessageAPI.get(telegramBotID, id),
+      diagramAPICall: (id) =>
+        TelegramBotsService.getDiagramMessage({
+          path: { telegramBotId: telegramBotID, id },
+        }),
       onHide: () => hideOffcanvas(),
     }),
     [messageID, action, hideOffcanvas, i18n.language],

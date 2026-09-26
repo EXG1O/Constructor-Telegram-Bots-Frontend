@@ -16,10 +16,7 @@ export interface KeyboardTypeTabsButtonGroupProps extends Omit<
 // const types: Type[] = ['default', 'inline', 'payment'];
 const types: Type[] = ['default', 'inline'];
 
-function KeyboardTypeTabs({
-  onChange,
-  ...props
-}: KeyboardTypeTabsButtonGroupProps): ReactElement {
+function KeyboardTypeTabs(props: KeyboardTypeTabsButtonGroupProps): ReactElement {
   const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
     'telegram-bot-menu-constructor',
     { keyPrefix: 'messageOffcanvas.keyboardBlock.types' },

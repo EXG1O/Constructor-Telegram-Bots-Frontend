@@ -13,7 +13,7 @@ import { defaultType } from './TypeBlock/defaults';
 import { Type } from './TypeBlock/types';
 import { defaultUpdateOperation } from './UpdateBlock/defaults';
 
-import { DatabaseOperationAPI } from 'api/telegram-bots/database-operation';
+import { TelegramBotsService } from 'api';
 
 import type { FormValues } from '..';
 import { useDatabaseOperationOffcanvasStore } from '../store';
@@ -51,9 +51,11 @@ function OffcanvasInner({
   useEffect(() => {
     if (!operationID) return;
     (async () => {
-      const response = await DatabaseOperationAPI.get(telegramBotID, operationID);
+      const { data, error } = await TelegramBotsService.getDatabaseOperation({
+        path: { telegramBotId: telegramBotID, id: operationID },
+      });
 
-      if (!response.ok) {
+      if (error || !data) {
         hideOffcanvas();
         createMessageToast({
           message: t('messages.getDatabaseOperation.error'),
@@ -62,7 +64,7 @@ function OffcanvasInner({
         return;
       }
 
-      const { id, create_operation, update_operation, ...operation } = response.json;
+      const { id: _id, create_operation, update_operation, ...operation } = data;
 
       setValues({
         ...operation,
@@ -72,12 +74,16 @@ function OffcanvasInner({
             ? Type.Update
             : defaultType,
         create_operation: create_operation
-          ? { data: JSON.stringify(create_operation.data, undefined, 2) }
+          ? { data: JSON.stringify(create_operation.data, null, 2) }
           : defaultCreateOperation,
         update_operation: update_operation
           ? {
               ...update_operation,
-              new_data: JSON.stringify(update_operation.new_data, undefined, 2),
+              overwrite: update_operation.overwrite ?? defaultUpdateOperation.overwrite,
+              create_if_not_found:
+                update_operation.create_if_not_found ??
+                defaultUpdateOperation.create_if_not_found,
+              new_data: JSON.stringify(update_operation.new_data, null, 2),
             }
           : defaultUpdateOperation,
       });
