@@ -34,7 +34,8 @@
       "uk": "Ukrainian"
     },
     "links": {
-      "instruction": "Instruction"
+      "instruction": "Instruction",
+      "premium": "Premium subscription"
     },
     "telegramBotDropdown": {
       "constructor": "Constructor",

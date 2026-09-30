@@ -1,0 +1,30 @@
+{
+  "messages": {
+    "getCheckout": {
+      "error": "Failed to retrieve checkout data."
+    },
+    "getPrices": {
+      "error_empty": "Subscription checkout is temporarily unavailable."
+    }
+  },
+  "subscription": {
+    "description": [
+      "To keep the service evolving, we've moved from donations to a subscription model.",
+      "By supporting the project, you'll gain access to exclusive features, with more coming regularly.",
+      "Thank you for being with us! We appreciate each of you."
+    ],
+    "disclaimer": "Checkout happens in Telegram using Telegram Stars. No personal information is required.",
+    "extendButton": "Extend subscription",
+    "features": {
+      "button": "Exclusive features",
+      "priorityMode": {
+        "description": "Enhanced priority in the system and maximum bandwidth for your bots.",
+        "title": "Priority mode"
+      }
+    },
+    "period_one": "{{months}} month",
+    "period_other": "{{months}} months",
+    "submitButton": "Subscribe"
+  },
+  "title": "Premium subscription"
+}

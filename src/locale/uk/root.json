@@ -34,7 +34,8 @@
       "uk": "Українська"
     },
     "links": {
-      "instruction": "Інструкція"
+      "instruction": "Інструкція",
+      "premium": "Premium підписка"
     },
     "telegramBotDropdown": {
       "constructor": "Конструктор",
