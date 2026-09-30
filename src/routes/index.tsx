@@ -8,6 +8,7 @@ export enum RouteID {
   Home = 'home',
   Instruction = 'instruction',
   Legal = 'legal',
+  Premium = 'premium',
   Profile = 'profile',
   TelegramBots = 'telegram-bots',
   TelegramBotMenuRoot = 'telegram-bot-menu-root',
@@ -88,6 +89,21 @@ export const routes: RouteObject[] = [
           const [component, loader] = await Promise.all([
             await import('./Legal'),
             await import('./Legal/loader'),
+          ]);
+
+          return {
+            Component: component.default,
+            loader: loader.default,
+          };
+        },
+      },
+      {
+        id: RouteID.Premium,
+        path: 'premium/',
+        async lazy() {
+          const [component, loader] = await Promise.all([
+            await import('./Premium'),
+            await import('./Premium/loader'),
           ]);
 
           return {

@@ -826,8 +826,6 @@ export type PatchedVariableRequest = {
   description?: string;
 };
 
-export type PremiumGetSubscriptionErrorResponse400 = ParseErrorResponse;
-
 export type PremiumGetSubscriptionInvoiceErrorResponse400 = ParseErrorResponse;
 
 export type PremiumGetSubscriptionInvoiceListErrorResponse400 = ParseErrorResponse;
@@ -864,11 +862,6 @@ export enum StatusEnum {
   Expired = 'expired',
   Refunded = 'refunded',
 }
-
-export type Subscription = {
-  readonly id: number;
-  readonly expiry_date: string;
-};
 
 export type SubscriptionInvoice = {
   readonly id: number;
@@ -6762,8 +6755,8 @@ export type User = {
   readonly first_name: string;
   readonly last_name: string | null;
   readonly full_name: string;
+  readonly subscription: UserSubscription | null;
   readonly accepted_terms: boolean;
-  readonly has_subscription: boolean;
   readonly is_staff: boolean;
   readonly joined_date: string;
 };
@@ -6788,6 +6781,11 @@ export type UserStats = {
 
 export type UserStatsResponse = {
   readonly total: number;
+};
+
+export type UserSubscription = {
+  readonly is_expired: boolean;
+  readonly expiry_date: string;
 };
 
 export type UserTimelineStatsResponse = {
@@ -7543,32 +7541,6 @@ export type PremiumGetSubscriptionPriceCheckoutResponses = {
 
 export type PremiumGetSubscriptionPriceCheckoutResponse =
   PremiumGetSubscriptionPriceCheckoutResponses[keyof PremiumGetSubscriptionPriceCheckoutResponses];
-
-export type PremiumGetSubscriptionData = {
-  body?: never;
-  path?: never;
-  query?: never;
-  url: '/api/premium/subscriptions/me/';
-};
-
-export type PremiumGetSubscriptionErrors = {
-  400: PremiumGetSubscriptionErrorResponse400;
-  401: ErrorResponse401;
-  405: ErrorResponse405;
-  406: ErrorResponse406;
-  415: ErrorResponse415;
-  500: ErrorResponse500;
-};
-
-export type PremiumGetSubscriptionError =
-  PremiumGetSubscriptionErrors[keyof PremiumGetSubscriptionErrors];
-
-export type PremiumGetSubscriptionResponses = {
-  200: Subscription;
-};
-
-export type PremiumGetSubscriptionResponse =
-  PremiumGetSubscriptionResponses[keyof PremiumGetSubscriptionResponses];
 
 export type TelegramBotsGetTelegramBotListData = {
   body?: never;

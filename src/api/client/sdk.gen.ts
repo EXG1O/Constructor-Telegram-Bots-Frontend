@@ -15,8 +15,6 @@ import type {
   LegalGetDocumentData,
   LegalGetDocumentErrors,
   LegalGetDocumentResponses,
-  PremiumGetSubscriptionData,
-  PremiumGetSubscriptionErrors,
   PremiumGetSubscriptionInvoiceData,
   PremiumGetSubscriptionInvoiceErrors,
   PremiumGetSubscriptionInvoiceListData,
@@ -32,7 +30,6 @@ import type {
   PremiumGetSubscriptionPriceListErrors,
   PremiumGetSubscriptionPriceListResponses,
   PremiumGetSubscriptionPriceResponses,
-  PremiumGetSubscriptionResponses,
   TelegramBotsCreateApiRequestData,
   TelegramBotsCreateApiRequestErrors,
   TelegramBotsCreateApiRequestResponses,
@@ -616,24 +613,6 @@ export class PremiumService {
     >({
       security: [{ name: 'Authorization', type: 'apiKey' }],
       url: '/api/premium/subscription-prices/{id}/checkout/',
-      ...options,
-    });
-  }
-
-  public static getSubscription<ThrowOnError extends boolean = false>(
-    options?: Options<PremiumGetSubscriptionData, ThrowOnError>,
-  ): RequestResult<
-    PremiumGetSubscriptionResponses,
-    PremiumGetSubscriptionErrors,
-    ThrowOnError
-  > {
-    return (options?.client ?? client).get<
-      PremiumGetSubscriptionResponses,
-      PremiumGetSubscriptionErrors,
-      ThrowOnError
-    >({
-      security: [{ name: 'Authorization', type: 'apiKey' }],
-      url: '/api/premium/subscriptions/me/',
       ...options,
     });
   }
