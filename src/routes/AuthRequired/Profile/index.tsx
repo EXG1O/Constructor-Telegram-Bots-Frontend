@@ -6,6 +6,7 @@ import type { RouteID } from 'routes';
 import Page from 'components/ui/Page';
 
 import ActionButtonGroup from './components/ActionButtonGroup';
+import PaymentHistoryBlock from './components/PaymentHistoryBlock';
 import RefreshTokensBlock from './components/RefreshTokensBlock';
 import UserDataBlock from './components/UserDataBlock';
 
@@ -15,6 +16,7 @@ function Profile(): ReactElement {
   return (
     <Page title={t('title')} flex gutters className='flex-auto'>
       <UserDataBlock />
+      <PaymentHistoryBlock />
       <RefreshTokensBlock />
       <ActionButtonGroup />
     </Page>

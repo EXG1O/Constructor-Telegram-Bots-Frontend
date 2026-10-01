@@ -1,6 +1,7 @@
 import React, { type ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import formatDate from 'i18n/formatDate';
+import { Check, X } from 'lucide-react';
 
 import type { RouteID } from 'routes';
 import useRootRouteLoaderData from 'routes/Root/hooks/useRootRouteLoaderData';
@@ -50,6 +51,24 @@ function UserDataBlock({ className, ...props }: UserDataBlockProps): ReactElemen
               <Table.Head scope='row'>{t('table.headers.lastName')}</Table.Head>
               <Table.Cell>{user.last_name || '-'}</Table.Cell>
             </Table.Row>
+            <Table.Row>
+              <Table.Head scope='row'>{t('table.headers.hasSubscription')}</Table.Head>
+              <Table.Cell>
+                {user.subscription && !user.subscription.is_expired ? (
+                  <Check className='-ms-px size-4.5 text-success' />
+                ) : (
+                  <X className='-ms-1 size-5 text-danger' />
+                )}
+              </Table.Cell>
+            </Table.Row>
+            {user.subscription && !user.subscription.is_expired && (
+              <Table.Row>
+                <Table.Head scope='row'>
+                  {t('table.headers.subscriptionExpiryDate')}
+                </Table.Head>
+                <Table.Cell>{formatDate(user.subscription.expiry_date)}</Table.Cell>
+              </Table.Row>
+            )}
             <Table.Row>
               <Table.Head scope='row'>{t('table.headers.joinedDate')}</Table.Head>
               <Table.Cell>{formatDate(user.joined_date)}</Table.Cell>

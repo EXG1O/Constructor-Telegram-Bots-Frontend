@@ -23,6 +23,51 @@
       "title": "Вихід з усіх пристроїв"
     }
   },
+  "paymentHistoryBlock": {
+    "footer": {
+      "count_one": "{{count}} платіж",
+      "count_few": "{{count}} платежу",
+      "count_many": "{{count}} платежів",
+      "count_other": "{{count}} платежів"
+    },
+    "messages": {
+      "getInvoices": {
+        "error": "Не вдалося отримати список рахунків."
+      }
+    },
+    "placeholders": {
+      "empty": "Ви ще не совершили жодного платежу"
+    },
+    "table": {
+      "amount": {
+        "header": "Сума"
+      },
+      "createdDate": {
+        "header": "Створено"
+      },
+      "paidDate": {
+        "header": "Оплачено"
+      },
+      "period": {
+        "header": "Період",
+        "months_one": "{{count}} місяць",
+        "months_few": "{{count}} місяці",
+        "months_many": "{{count}} місяців",
+        "months_other": "{{count}} місяців"
+      },
+      "status": {
+        "header": "Статус",
+        "values": {
+          "expired": "Закінчився",
+          "failed": "Відхилено",
+          "paid": "Оплачено",
+          "pending": "Очікується",
+          "refunded": "Повернено"
+        }
+      }
+    },
+    "title": "Історія платежів"
+  },
   "refreshTokensBlock": {
     "helpText": "Під час кожної вашої авторизації створюється токен оновлення, який використовується для подальшого створення короткоживучих токенів доступу.",
     "table": {
@@ -39,8 +84,10 @@
     "table": {
       "headers": {
         "firstName": "Ім’я:",
+        "hasSubscription": "Підписка:",
         "joinedDate": "Приєднався:",
-        "lastName": "Прізвище:"
+        "lastName": "Прізвище:",
+        "subscriptionExpiryDate": "Підписка закінчиться:"
       }
     },
     "title": "Дані акаунта"
