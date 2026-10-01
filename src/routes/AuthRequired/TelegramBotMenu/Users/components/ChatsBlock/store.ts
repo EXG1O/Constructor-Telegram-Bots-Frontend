@@ -68,7 +68,6 @@ export const [ChatsBlockStoreProvider, useChatsBlockStore] = createZustandContex
           type: currentType,
         } = get();
 
-        const offset = params?.offset ?? currentOffset;
         const search = params?.search === undefined ? currentSearch : params?.search;
         const mode = params?.mode ?? currentMode;
         const type = params?.type ?? currentType;
@@ -77,7 +76,7 @@ export const [ChatsBlockStoreProvider, useChatsBlockStore] = createZustandContex
           path: { telegramBotId: telegramBot.id },
           query: {
             limit,
-            offset,
+            offset: params?.offset ?? currentOffset,
             ...(search && { search }),
             ...(typeMap[type] && { chat_type: typeMap[type] }),
             ...(mode === 'allowed' && { is_allowed: true }),
@@ -97,9 +96,8 @@ export const [ChatsBlockStoreProvider, useChatsBlockStore] = createZustandContex
           return;
         }
 
-        const { count, results } = data;
-
-        set({ count, offset, search, mode, type, chats: results, loading: false });
+        const { results, ...rest } = data;
+        set({ ...rest, search, mode, type, chats: results, loading: false });
       },
     })),
 );

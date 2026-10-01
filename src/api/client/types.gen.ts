@@ -543,6 +543,14 @@ export type InvoiceRequest = {
   prices: Array<InvoicePriceRequest>;
 };
 
+export enum InvoiceStatus {
+  Pending = 'pending',
+  Paid = 'paid',
+  Failed = 'failed',
+  Expired = 'expired',
+  Refunded = 'refunded',
+}
+
 export type LegalGetDocumentErrorResponse400 = ParseErrorResponse;
 
 export type Message = {
@@ -651,26 +659,43 @@ export type NullEnum = null;
 
 export type PaginatedChatList = {
   count: number;
+  limit: number;
+  offset: number;
   results: Array<Chat>;
 };
 
 export type PaginatedDatabaseRecordList = {
   count: number;
+  limit: number;
+  offset: number;
   results: Array<DatabaseRecord>;
+};
+
+export type PaginatedSubscriptionInvoiceList = {
+  count: number;
+  limit: number;
+  offset: number;
+  results: Array<SubscriptionInvoice>;
 };
 
 export type PaginatedTelegramBotUserList = {
   count: number;
+  limit: number;
+  offset: number;
   results: Array<TelegramBotUser>;
 };
 
 export type PaginatedTemporaryVariableList = {
   count: number;
+  limit: number;
+  offset: number;
   results: Array<TemporaryVariable>;
 };
 
 export type PaginatedVariableList = {
   count: number;
+  limit: number;
+  offset: number;
   results: Array<Variable>;
 };
 
@@ -828,7 +853,27 @@ export type PatchedVariableRequest = {
 
 export type PremiumGetSubscriptionInvoiceErrorResponse400 = ParseErrorResponse;
 
-export type PremiumGetSubscriptionInvoiceListErrorResponse400 = ParseErrorResponse;
+export type PremiumGetSubscriptionInvoiceListError =
+  PremiumGetSubscriptionInvoiceListStatusesErrorComponent;
+
+export type PremiumGetSubscriptionInvoiceListErrorResponse400 =
+  | ({
+      type: 'validation_error';
+    } & PremiumGetSubscriptionInvoiceListValidationError)
+  | ({
+      type: 'client_error';
+    } & ParseErrorResponse);
+
+export type PremiumGetSubscriptionInvoiceListStatusesErrorComponent = {
+  attr: 'statuses';
+  code: 'invalid_choice';
+  detail: string;
+};
+
+export type PremiumGetSubscriptionInvoiceListValidationError = {
+  type: ValidationErrorType;
+  errors: Array<PremiumGetSubscriptionInvoiceListError>;
+};
 
 export type PremiumGetSubscriptionPriceCheckoutErrorResponse400 = ParseErrorResponse;
 
@@ -855,17 +900,9 @@ export enum ServerErrorType {
   ServerError = 'server_error',
 }
 
-export enum StatusEnum {
-  Pending = 'pending',
-  Paid = 'paid',
-  Failed = 'failed',
-  Expired = 'expired',
-  Refunded = 'refunded',
-}
-
 export type SubscriptionInvoice = {
   readonly id: number;
-  readonly status: StatusEnum;
+  readonly status: InvoiceStatus;
   readonly period_months: number;
   readonly amount_stars: number;
   readonly telegram_charge_id: string | null;
@@ -7174,26 +7211,43 @@ export type MessageRequestWritable = {
 
 export type PaginatedChatListWritable = {
   count: number;
+  limit: number;
+  offset: number;
   results: Array<ChatWritable>;
 };
 
 export type PaginatedDatabaseRecordListWritable = {
   count: number;
+  limit: number;
+  offset: number;
   results: Array<DatabaseRecordWritable>;
+};
+
+export type PaginatedSubscriptionInvoiceListWritable = {
+  count: number;
+  limit: number;
+  offset: number;
+  results: Array<any>;
 };
 
 export type PaginatedTelegramBotUserListWritable = {
   count: number;
+  limit: number;
+  offset: number;
   results: Array<TelegramBotUserWritable>;
 };
 
 export type PaginatedTemporaryVariableListWritable = {
   count: number;
+  limit: number;
+  offset: number;
   results: Array<TemporaryVariableWritable>;
 };
 
 export type PaginatedVariableListWritable = {
   count: number;
+  limit: number;
+  offset: number;
   results: Array<VariableWritable>;
 };
 
@@ -7407,7 +7461,11 @@ export type LegalGetDocumentResponse =
 export type PremiumGetSubscriptionInvoiceListData = {
   body?: never;
   path?: never;
-  query?: never;
+  query?: {
+    limit?: number;
+    offset?: number;
+    statuses?: Array<'expired' | 'failed' | 'paid' | 'pending' | 'refunded'>;
+  };
   url: '/api/premium/subscription-invoices/';
 };
 
@@ -7420,11 +7478,11 @@ export type PremiumGetSubscriptionInvoiceListErrors = {
   500: ErrorResponse500;
 };
 
-export type PremiumGetSubscriptionInvoiceListError =
+export type PremiumGetSubscriptionInvoiceListError2 =
   PremiumGetSubscriptionInvoiceListErrors[keyof PremiumGetSubscriptionInvoiceListErrors];
 
 export type PremiumGetSubscriptionInvoiceListResponses = {
-  200: Array<SubscriptionInvoice>;
+  200: PaginatedSubscriptionInvoiceList;
 };
 
 export type PremiumGetSubscriptionInvoiceListResponse =

@@ -56,7 +56,6 @@ export const [UsersBlockStoreProvider, useUsersBlockStore] = createZustandContex
           mode: currentMode,
         } = get();
 
-        const offset = params?.offset ?? currentOffset;
         const search = params?.search === undefined ? currentSearch : params?.search;
         const mode = params?.mode ?? currentMode;
 
@@ -64,7 +63,7 @@ export const [UsersBlockStoreProvider, useUsersBlockStore] = createZustandContex
           path: { telegramBotId: telegramBot.id },
           query: {
             limit,
-            offset,
+            offset: params?.offset ?? currentOffset,
             ...(search && { search }),
             ...(mode === 'allowed' && { is_allowed: true }),
             ...(mode === 'blocked' && { is_blocked: true }),
@@ -83,9 +82,8 @@ export const [UsersBlockStoreProvider, useUsersBlockStore] = createZustandContex
           return;
         }
 
-        const { count, results } = data;
-
-        set({ count, offset, search, mode, users: results, loading: false });
+        const { results, ...rest } = data;
+        set({ ...rest, search, mode, users: results, loading: false });
       },
     })),
 );
