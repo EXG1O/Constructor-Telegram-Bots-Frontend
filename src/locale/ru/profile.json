@@ -23,6 +23,51 @@
       "title": "Выход со всех устройств"
     }
   },
+  "paymentHistoryBlock": {
+    "footer": {
+      "count_one": "{{count}} платёж",
+      "count_few": "{{count}} платежа",
+      "count_many": "{{count}} платежей",
+      "count_other": "{{count}} платежей"
+    },
+    "messages": {
+      "getInvoices": {
+        "error": "Не удалось получить список счетов."
+      }
+    },
+    "placeholders": {
+      "empty": "Вы ещё не успели совершить платёж"
+    },
+    "table": {
+      "amount": {
+        "header": "Сумма"
+      },
+      "createdDate": {
+        "header": "Создан"
+      },
+      "paidDate": {
+        "header": "Оплачен"
+      },
+      "period": {
+        "header": "Период",
+        "months_one": "{{count}} месяц",
+        "months_few": "{{count}} месяца",
+        "months_many": "{{count}} месяцев",
+        "months_other": "{{count}} месяцев"
+      },
+      "status": {
+        "header": "Статус",
+        "values": {
+          "expired": "Истёк",
+          "failed": "Отклонён",
+          "paid": "Оплачен",
+          "pending": "Ожидает",
+          "refunded": "Возвращён"
+        }
+      }
+    },
+    "title": "История платежей"
+  },
   "refreshTokensBlock": {
     "helpText": "При каждой вашей авторизации создаётся токен обновления, который используется для последующего создания короткоживущих токенов доступа.",
     "table": {
@@ -39,8 +84,10 @@
     "table": {
       "headers": {
         "firstName": "Имя:",
+        "hasSubscription": "Подписка:",
         "joinedDate": "Присоединился:",
-        "lastName": "Фамилия:"
+        "lastName": "Фамилия:",
+        "subscriptionExpiryDate": "Подписка истечёт:"
       }
     },
     "title": "Данные аккаунта"

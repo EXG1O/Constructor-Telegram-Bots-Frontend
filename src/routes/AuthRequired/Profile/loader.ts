@@ -5,28 +5,63 @@ import { RouteID } from 'routes';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import { type Token, UsersService } from 'api';
+import {
+  InvoiceStatus,
+  type PaginatedSubscriptionInvoiceList,
+  type PremiumGetSubscriptionInvoiceListData,
+  PremiumService,
+  type Token,
+  TokenType,
+  UsersService,
+} from 'api';
 
 import reverse from 'utils/reverse';
 
+type SubscriptionInvoiceQuery = NonNullable<
+  PremiumGetSubscriptionInvoiceListData['query']
+>;
+
+export interface SubscriptionInvoicePagination
+  extends
+    PaginatedSubscriptionInvoiceList,
+    Required<Pick<SubscriptionInvoiceQuery, 'statuses'>> {}
+
 export interface LoaderData {
+  subscriptionInvoicePagination: SubscriptionInvoicePagination;
   refreshTokens: Token[];
 }
 
-async function loader(): Promise<LoaderData> {
-  const { data, error } = await UsersService.getTokenList({
-    query: { type: 'refresh' },
-  });
+const defaultInvoiceLimit: number = 10;
+const defaultInvoiceStatuses: SubscriptionInvoicePagination['statuses'] = [
+  InvoiceStatus.Failed,
+  InvoiceStatus.Paid,
+  InvoiceStatus.Refunded,
+];
 
-  if (error || !data) {
+async function loader(): Promise<LoaderData> {
+  try {
+    const invoiceResult = await PremiumService.getSubscriptionInvoiceList({
+      query: { limit: defaultInvoiceLimit, statuses: defaultInvoiceStatuses },
+      throwOnError: true,
+    });
+    const { data: refreshTokens } = await UsersService.getTokenList({
+      query: { type: TokenType.Refresh },
+      throwOnError: true,
+    });
+    return {
+      subscriptionInvoicePagination: {
+        ...invoiceResult.data,
+        statuses: defaultInvoiceStatuses,
+      },
+      refreshTokens,
+    };
+  } catch {
     createMessageToast({
       message: i18n.t('messages.loader.error'),
       level: 'error',
     });
     throw redirect(reverse(RouteID.Home));
   }
-
-  return { refreshTokens: data };
 }
 
 export default loader;

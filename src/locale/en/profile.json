@@ -23,6 +23,47 @@
       "title": "Logging out from all devices"
     }
   },
+  "paymentHistoryBlock": {
+    "footer": {
+      "count_one": "{{count}} payment",
+      "count_other": "{{count}} payments"
+    },
+    "messages": {
+      "getInvoices": {
+        "error": "Failed to retrieve the list of invoices."
+      }
+    },
+    "placeholders": {
+      "empty": "You haven't made any payments yet"
+    },
+    "table": {
+      "amount": {
+        "header": "Amount"
+      },
+      "createdDate": {
+        "header": "Created"
+      },
+      "paidDate": {
+        "header": "Paid"
+      },
+      "period": {
+        "header": "Period",
+        "months_one": "{{count}} month",
+        "months_other": "{{count}} months"
+      },
+      "status": {
+        "header": "Status",
+        "values": {
+          "expired": "Expired",
+          "failed": "Failed",
+          "paid": "Paid",
+          "pending": "Pending",
+          "refunded": "Refunded"
+        }
+      }
+    },
+    "title": "Payment History"
+  },
   "refreshTokensBlock": {
     "helpText": "Each time you log in, a refresh token is created, which is then used to generate short-lived access tokens.",
     "table": {
@@ -39,8 +80,10 @@
     "table": {
       "headers": {
         "firstName": "First name:",
+        "hasSubscription": "Subscription:",
         "joinedDate": "Joined:",
-        "lastName": "Last name:"
+        "lastName": "Last name:",
+        "subscriptionExpiryDate": "Subscription expires:"
       }
     },
     "title": "Account data"
