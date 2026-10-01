@@ -5,23 +5,26 @@ import { RouteID } from 'routes';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import type { PaginatedChatList, PaginatedTelegramBotUserList } from 'api';
+import type {
+  Options,
+  PaginatedChatList,
+  PaginatedTelegramBotUserList,
+  TelegramBotsGetChatListData,
+  TelegramBotsGetUserListData,
+} from 'api';
 import { TelegramBotsService } from 'api';
 
 import reverse from 'utils/reverse';
 
-export interface PaginationOptions {
-  limit: number;
-  offset: number;
-}
-
-export type ChatPagination = PaginatedChatList & PaginationOptions;
-export type UserPagination = PaginatedTelegramBotUserList & PaginationOptions;
+export type ChatPagination = PaginatedChatList;
+export type UserPagination = PaginatedTelegramBotUserList;
 
 export interface LoaderData {
   chatPagination: ChatPagination;
   userPagination: UserPagination;
 }
+
+const defaultLimit: (ChatPagination | UserPagination)['limit'] = 20;
 
 async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData> {
   const fallback = () => {
@@ -38,28 +41,21 @@ async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData> {
     throw fallback();
   }
 
-  const [limit, offset] = [20, 0];
+  const options: Options<
+    TelegramBotsGetChatListData | TelegramBotsGetUserListData,
+    true
+  > = {
+    path: { telegramBotId: telegramBotID },
+    query: { limit: defaultLimit },
+    throwOnError: true,
+  };
 
   try {
-    const [chatsResult, usersResult] = await Promise.all([
-      TelegramBotsService.getChatList({
-        path: { telegramBotId: telegramBotID },
-        query: { limit, offset },
-        throwOnError: true,
-      }),
-      TelegramBotsService.getUserList({
-        path: { telegramBotId: telegramBotID },
-        query: { limit, offset },
-        throwOnError: true,
-      }),
+    const [{ data: chatPagination }, { data: userPagination }] = await Promise.all([
+      TelegramBotsService.getChatList(options),
+      TelegramBotsService.getUserList(options),
     ]);
-
-    const pagination: PaginationOptions = { limit, offset };
-
-    return {
-      chatPagination: { ...chatsResult.data, ...pagination },
-      userPagination: { ...usersResult.data, ...pagination },
-    };
+    return { chatPagination, userPagination };
   } catch {
     throw fallback();
   }

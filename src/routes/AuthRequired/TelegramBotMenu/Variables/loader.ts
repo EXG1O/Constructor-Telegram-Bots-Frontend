@@ -10,16 +10,13 @@ import { TelegramBotsService } from 'api';
 
 import reverse from 'utils/reverse';
 
-export interface PaginationOptions {
-  limit: number;
-  offset: number;
-}
-
-export type VariablePagination = PaginatedVariableList & PaginationOptions;
+export type VariablePagination = PaginatedVariableList;
 
 export interface LoaderData {
   pagination: VariablePagination;
 }
+
+const defaultLimit: VariablePagination['limit'] = 10;
 
 async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData> {
   const fallback = () => {
@@ -36,18 +33,16 @@ async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData> {
     throw fallback();
   }
 
-  const pagination: PaginationOptions = { limit: 10, offset: 0 };
-
   const { data, error } = await TelegramBotsService.getVariableList({
     path: { telegramBotId: telegramBotID },
-    query: pagination,
+    query: { limit: defaultLimit },
   });
 
   if (error || !data) {
     throw fallback();
   }
 
-  return { pagination: { ...data, ...pagination } };
+  return { pagination: data };
 }
 
 export default loader;

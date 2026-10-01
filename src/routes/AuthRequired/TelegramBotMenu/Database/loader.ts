@@ -5,24 +5,25 @@ import { RouteID } from 'routes';
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import type { PaginatedDatabaseRecordList } from 'api';
+import type {
+  PaginatedDatabaseRecordList,
+  TelegramBotsGetDatabaseRecordListData,
+} from 'api';
 import { TelegramBotsService } from 'api';
 
 import reverse from 'utils/reverse';
 
-export interface PaginationOptions {
-  limit: number;
-  offset: number;
-}
+type RecordQuery = NonNullable<TelegramBotsGetDatabaseRecordListData['query']>;
 
-export interface RecordPagination
-  extends PaginatedDatabaseRecordList, PaginationOptions {
-  search: string | null;
+export interface RecordPagination extends PaginatedDatabaseRecordList {
+  search: NonNullable<RecordQuery['search']> | null;
 }
 
 export interface LoaderData {
   pagination: RecordPagination;
 }
+
+const defaultLimit: RecordPagination['limit'] = 10;
 
 async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData> {
   const fallback = () => {
@@ -39,18 +40,16 @@ async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData> {
     throw fallback();
   }
 
-  const pagination: PaginationOptions = { limit: 10, offset: 0 };
-
   const { data, error } = await TelegramBotsService.getDatabaseRecordList({
     path: { telegramBotId: telegramBotID },
-    query: pagination,
+    query: { limit: defaultLimit },
   });
 
   if (error || !data) {
     throw fallback();
   }
 
-  return { pagination: { ...data, ...pagination, search: null } };
+  return { pagination: { ...data, search: null } };
 }
 
 export default loader;

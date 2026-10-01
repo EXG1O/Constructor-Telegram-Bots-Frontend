@@ -547,6 +547,7 @@ export class PremiumService {
       PremiumGetSubscriptionInvoiceListErrors,
       ThrowOnError
     >({
+      querySerializer: { parameters: { statuses: { array: { explode: false } } } },
       security: [{ name: 'Authorization', type: 'apiKey' }],
       url: '/api/premium/subscription-invoices/',
       ...options,

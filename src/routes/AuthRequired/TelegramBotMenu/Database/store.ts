@@ -56,15 +56,13 @@ export function createStore(initialProps: InitialProps) {
         search: currentSearch,
       } = get();
 
-      const limit = newLimit ?? currentLimit;
-      const offset = newOffset ?? currentOffset;
       const search = newSearch === undefined ? currentSearch : newSearch;
 
       const { data, error } = await TelegramBotsService.getDatabaseRecordList({
         path: { telegramBotId: telegramBot.id },
         query: {
-          limit,
-          offset,
+          limit: newLimit ?? currentLimit,
+          offset: newOffset ?? currentOffset,
           ...(search && { search }),
         },
       });
@@ -81,9 +79,8 @@ export function createStore(initialProps: InitialProps) {
         return;
       }
 
-      const { count, results } = data;
-
-      set({ loading: false, count, limit, offset, search, records: results });
+      const { results, ...rest } = data;
+      set({ ...rest, loading: false, search, records: results });
     },
 
     setLoading: (loading) => set({ loading }),
