@@ -161,9 +161,9 @@ function BackgroundTaskNode({
               <Table.Row>
                 <Table.Head scope='row'>{t('table.status.header')}:</Table.Head>
                 <Table.Cell>
-                  {t(
-                    `table.status.${botIsEnabled ? (task.status as BackgroundTaskStatus) : 'inactive'}`,
-                  )}
+                  {botIsEnabled
+                    ? t(`table.status.${task.status as BackgroundTaskStatus}`)
+                    : t('table.status.inactive')}
                 </Table.Cell>
               </Table.Row>
               <Table.Row>
