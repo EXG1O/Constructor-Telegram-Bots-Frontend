@@ -14,7 +14,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
           {...props}
           ref={ref}
           scope={scope}
-          className={cn(scope === 'row' && 'text-left', className)}
+          className={cn('font-semibold', scope === 'row' && 'text-left', className)}
         />
       </TableCell>
     );

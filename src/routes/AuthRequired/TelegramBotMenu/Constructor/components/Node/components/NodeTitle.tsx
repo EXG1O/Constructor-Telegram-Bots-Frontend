@@ -10,7 +10,7 @@ const NodeTitle = forwardRef<HTMLHeadingElement, NodeTitleProps>(
       <h5
         {...props}
         ref={ref}
-        className={cn('w-full', 'font-medium', 'text-center', className)}
+        className={cn('w-full', 'font-semibold', 'text-center', className)}
       />
     );
   },
