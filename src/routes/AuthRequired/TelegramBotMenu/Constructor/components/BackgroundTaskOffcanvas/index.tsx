@@ -14,7 +14,7 @@ import type { NameBlockFormValues } from '../NameBlock/types';
 
 import useFormikSubmit from '../../hooks/useFormikSubmit';
 
-import type { BackgroundTask } from 'api';
+import type { BackgroundTask, BackgroundTaskRequestWritable } from 'api';
 import { TelegramBotsService } from 'api';
 
 import { NodeType } from '../../enums';
@@ -55,16 +55,22 @@ function BackgroundTaskOffcanvas(props: BackgroundTaskOffcanvasProps): ReactElem
       },
       type: NodeType.BackgroundTask,
       action,
-      saveAPICall: (values) =>
-        action === 'edit' && taskID
+      saveAPICall: ({ interval, ...values }) => {
+        const data: BackgroundTaskRequestWritable = {
+          ...values,
+          interval: Number(interval),
+        };
+
+        return action === 'edit' && taskID
           ? TelegramBotsService.updateBackgroundTask({
               path: { telegramBotId: telegramBotID, id: taskID },
-              body: values,
+              body: data,
             })
           : TelegramBotsService.createBackgroundTask({
               path: { telegramBotId: telegramBotID },
-              body: values,
-            }),
+              body: data,
+            });
+      },
       diagramAPICall: (id) =>
         TelegramBotsService.getDiagramBackgroundTask({
           path: { telegramBotId: telegramBotID, id },

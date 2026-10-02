@@ -53,12 +53,9 @@
     "actionButton_add": "Add",
     "actionButton_edit": "Save",
     "intervalBlock": {
-      "select": {
-        "1": "1 day",
-        "3": "3 days",
-        "7": "7 days",
-        "14": "14 days",
-        "28": "28 days"
+      "input": {
+        "label": "seconds",
+        "placeholder": "Enter interval"
       },
       "title": "Interval"
     },
@@ -378,7 +375,6 @@
         "text": "Are you sure you want to duplicate the background task?",
         "title": "Duplicating the background task"
       },
-      "interval": "Interval",
       "messages": {
         "delete": {
           "error": "Failed to delete the background task.",
@@ -387,6 +383,18 @@
         "duplicate": {
           "error": "Failed to duplicate the background task.",
           "success": "You have successfully duplicated the background task."
+        }
+      },
+      "table": {
+        "interval": {
+          "header": "Interval",
+          "value": "{{value}} seconds"
+        },
+        "status": {
+          "header": "Status",
+          "inactive": "Inactive",
+          "pending": "Queued",
+          "running": "Running"
         }
       },
       "title": "Background Task"

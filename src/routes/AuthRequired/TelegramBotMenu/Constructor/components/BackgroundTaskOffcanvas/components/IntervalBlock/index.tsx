@@ -3,35 +3,43 @@ import { useTranslation } from 'react-i18next';
 
 import type { RouteID } from 'routes';
 
-import FormSelectFeedback from 'components/shared/FormSelectFeedback';
+import FormSimpleInputFeedback from 'components/shared/FormSimpleInputFeedback';
 import Block, { type BlockProps } from 'components/ui/Block';
+import SimpleInput from 'components/ui/SimpleInput';
 
 import cn from 'utils/cn';
 
-import type { Interval } from './types';
-
 export interface IntervalBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
 
-const intervals: Interval[] = [1, 3, 7, 14, 28];
-
-function IntervalBlock(props: IntervalBlockProps): ReactElement {
+function IntervalBlock({ className, ...props }: IntervalBlockProps): ReactElement {
   const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
     'telegram-bot-menu-constructor',
     { keyPrefix: 'backgroundTaskOffcanvas.intervalBlock' },
   );
 
   return (
-    <Block {...props} variant='light' className={cn('flex', 'flex-col', 'gap-2')}>
+    <Block
+      {...props}
+      variant='light'
+      className={cn('flex', 'flex-col', 'gap-2', className)}
+    >
       <Block.Title>
         <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
-      <FormSelectFeedback name='interval'>
-        {intervals.map((interval, index) => (
-          <option key={index} value={interval}>
-            {t(`select.${interval}`)}
-          </option>
-        ))}
-      </FormSelectFeedback>
+      <div className='flex w-full items-start'>
+        <FormSimpleInputFeedback
+          name='interval'
+          inputMode='numeric'
+          placeholder={t('input.placeholder')}
+        >
+          <SimpleInput.Container className='flex-auto rounded-r-none'>
+            <SimpleInput.Editor />
+          </SimpleInput.Container>
+        </FormSimpleInputFeedback>
+        <span className='rounded-r-md border border-s-0 border-outline px-3 py-1.5'>
+          {t('input.label')}
+        </span>
+      </div>
     </Block>
   );
 }
