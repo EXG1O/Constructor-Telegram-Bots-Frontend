@@ -16,7 +16,7 @@ const ModelTitle = forwardRef<HTMLHeadingElement, ModelTitleProps>(
         <Component
           {...props}
           ref={ref}
-          className={cn('text-xl', 'font-medium', 'text-foreground', className)}
+          className={cn('text-xl', 'font-semibold', 'text-foreground', className)}
         />
       </DialogTitle>
     );
