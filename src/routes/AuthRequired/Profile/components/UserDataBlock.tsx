@@ -44,15 +44,15 @@ function UserDataBlock({ className, ...props }: UserDataBlockProps): ReactElemen
               <Table.Cell>{user.telegram_id}</Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Head scope='row'>{t('table.headers.firstName')}</Table.Head>
+              <Table.Head scope='row'>{t('table.headers.firstName')}:</Table.Head>
               <Table.Cell>{user.first_name}</Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Head scope='row'>{t('table.headers.lastName')}</Table.Head>
+              <Table.Head scope='row'>{t('table.headers.lastName')}:</Table.Head>
               <Table.Cell>{user.last_name || '-'}</Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Head scope='row'>{t('table.headers.hasSubscription')}</Table.Head>
+              <Table.Head scope='row'>{t('table.headers.hasSubscription')}:</Table.Head>
               <Table.Cell>
                 {user.subscription && !user.subscription.is_expired ? (
                   <Check className='-ms-px size-4.5 text-success' />
@@ -64,13 +64,13 @@ function UserDataBlock({ className, ...props }: UserDataBlockProps): ReactElemen
             {user.subscription && !user.subscription.is_expired && (
               <Table.Row>
                 <Table.Head scope='row'>
-                  {t('table.headers.subscriptionExpiryDate')}
+                  {t('table.headers.subscriptionExpiryDate')}:
                 </Table.Head>
                 <Table.Cell>{formatDate(user.subscription.expiry_date)}</Table.Cell>
               </Table.Row>
             )}
             <Table.Row>
-              <Table.Head scope='row'>{t('table.headers.joinedDate')}</Table.Head>
+              <Table.Head scope='row'>{t('table.headers.joinedDate')}:</Table.Head>
               <Table.Cell>{formatDate(user.joined_date)}</Table.Cell>
             </Table.Row>
           </Table.Body>

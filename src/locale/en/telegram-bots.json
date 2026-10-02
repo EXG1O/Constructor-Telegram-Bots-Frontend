@@ -3,13 +3,15 @@
     "addTelegramBotButton": "Add Telegram bot",
     "title": "Added Telegram bots"
   },
-  "notTelegramBots": "You haven't added any Telegram bots yet",
+  "placeholders": {
+    "empty": "You don't have any added Telegram bots yet"
+  },
   "telegramBotAdditionModal": {
     "addButton": "Add",
     "apiTokenInputPlaceholder": "Enter API-token",
     "messages": {
       "createTelegramBot": {
-        "error": "An unexpected error occurred, and the Telegram bot could not be added.",
+        "error": "Failed to add the Telegram bot.",
         "success": "You have successfully added the Telegram bot."
       }
     },

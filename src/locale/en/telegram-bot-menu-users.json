@@ -62,14 +62,14 @@
         "title": "Title"
       },
       "placeholders": {
-        "notAllowed": "You have no allowed chats",
-        "notBlocked": "You have no blocked chats",
-        "notChannels": "Your Telegram bot has no channel chats",
-        "notChats": "Your Telegram bot has no chats yet",
-        "notFound": "No chats found",
-        "notGroups": "Your Telegram bot has no group chats",
-        "notPrivate": "Your Telegram bot has no private chats",
-        "notSupergroups": "Your Telegram bot has no supergroup chats"
+        "empty": "Your bot doesn't have any chats yet",
+        "empty_allowed": "You don't have any allowed chats yet",
+        "empty_blocked": "You don't have any blocked chats yet",
+        "empty_channel": "Your bot doesn't have any channels yet",
+        "empty_group": "Your bot doesn't have any groups yet",
+        "empty_private": "Your bot doesn't have any private chats yet",
+        "empty_search": "No search results for chats",
+        "empty_supergroup": "Your bot doesn't have any supergroups yet"
       }
     },
     "title": "Chats",
@@ -81,10 +81,10 @@
       },
       "typeTabs": {
         "all": "All",
-        "channel": "Channel",
-        "group": "Group",
+        "channel": "Channels",
+        "group": "Groups",
         "private": "Private",
-        "supergroup": "Supergroup"
+        "supergroup": "Supergroups"
       }
     }
   },
@@ -152,10 +152,10 @@
         "premium": "Premium"
       },
       "placeholders": {
-        "notAllowed": "You have no allowed users",
-        "notBlocked": "You have no blocked users",
-        "notChats": "Your Telegram bot has no users yet",
-        "notFound": "No users found"
+        "empty": "Your bot doesn't have any users yet",
+        "empty_allowed": "You don't have any allowed users yet",
+        "empty_blocked": "You don't have any blocked users yet",
+        "empty_search": "No search results for users"
       }
     },
     "title": "Users",

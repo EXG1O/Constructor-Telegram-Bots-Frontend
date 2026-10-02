@@ -8,7 +8,11 @@ import Tabs, { type TabsProps } from 'components/ui/Tabs';
 
 import { useChatsBlockStore } from '../../../store';
 
-export type Mode = 'all' | 'allowed' | 'blocked';
+export enum Mode {
+  All = 'all',
+  Allowed = 'allowed',
+  Blocked = 'blocked',
+}
 
 export interface ModeTabsProps extends Omit<
   TabsProps,
@@ -32,9 +36,13 @@ function ModeTabs(props: ModeTabsProps): ReactElement {
 
   return (
     <Tabs {...props} size='sm' value={mode} onChange={handleChange}>
-      <Tabs.Button value='all'>{t('all')}</Tabs.Button>
-      {botIsPrivate && <Tabs.Button value='allowed'>{t('allowed')}</Tabs.Button>}
-      <Tabs.Button value='blocked'>{t('blocked')}</Tabs.Button>
+      {Object.values(Mode)
+        .filter((mode) => mode !== Mode.Blocked || botIsPrivate)
+        .map((mode) => (
+          <Tabs.Button key={mode} value={mode}>
+            {t(mode as Mode)}
+          </Tabs.Button>
+        ))}
     </Tabs>
   );
 }

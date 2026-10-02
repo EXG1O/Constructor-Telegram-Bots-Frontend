@@ -8,6 +8,7 @@ import Block, { type BlockProps } from 'components/ui/Block';
 import BlockFooter from './components/BlockFooter';
 import BlockTable from './components/BlockTable';
 import BlockToolbar from './components/BlockToolbar';
+import { Mode } from './components/BlockToolbar/components/ModeTabs';
 
 import useTelegramBotMenuChatsRouteLoaderData from '../../hooks/useTelegramBotMenuChatsRouteLoaderData';
 
@@ -32,7 +33,7 @@ function UsersBlock({ className, ...props }: UsersBlockProps): ReactElement {
       limit,
       offset,
       search: null,
-      mode: 'all',
+      mode: Mode.All,
       users: results,
       loading: false,
     }),

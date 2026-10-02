@@ -1,7 +1,7 @@
 {
   "messages": {
     "loader": {
-      "error": "Failed to get the necessary data from the server for an unknown reason."
+      "error": "Failed to retrieve the necessary data from the server for an unknown reason."
     }
   },
   "seo": {

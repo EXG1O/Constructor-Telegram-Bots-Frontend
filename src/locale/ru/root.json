@@ -27,7 +27,7 @@
       "en": "Английский",
       "messages": {
         "changeLanguage": {
-          "error": "Не удалось изменить язык."
+          "error": "Не удалось сменить язык."
         }
       },
       "ru": "Русский",
@@ -35,7 +35,7 @@
     },
     "links": {
       "instruction": "Инструкция",
-      "premium": "Premium подписка"
+      "premium": "Подписка"
     },
     "telegramBotDropdown": {
       "constructor": "Конструктор",
@@ -53,7 +53,7 @@
         "newUsersChart": {
           "title": "Новые пользователи"
         },
-        "title": "Статистика Telegram бота",
+        "title": "Статистика",
         "usersLastActivityChart": {
           "title": "Последняя активность пользователей"
         }

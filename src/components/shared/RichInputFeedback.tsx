@@ -6,7 +6,7 @@ import RichInput, { type RichInputProps } from 'components/ui/RichInput';
 import cn from 'utils/cn';
 
 export interface RichInputFeedbackProps extends RichInputProps {
-  error?: string;
+  error?: string | null;
   wrapperProps?: HTMLAttributes<HTMLDivElement>;
 }
 

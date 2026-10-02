@@ -6,7 +6,7 @@ import Feedback from 'components/ui/Feedback';
 import cn from 'utils/cn';
 
 export interface CodeInputFeedbackProps extends CodeInputProps {
-  error?: string;
+  error?: string | null;
   wrapperProps?: HTMLAttributes<HTMLDivElement>;
 }
 

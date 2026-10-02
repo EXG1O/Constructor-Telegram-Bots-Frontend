@@ -7,7 +7,13 @@ import Tabs, { type TabsProps } from 'components/ui/Tabs';
 
 import { useChatsBlockStore } from '../../../store';
 
-export type Type = 'all' | 'private' | 'group' | 'supergroup' | 'channel';
+export enum Type {
+  All = 'all',
+  Private = 'private',
+  Group = 'group',
+  Supergroup = 'supergroup',
+  Channel = 'channel',
+}
 
 export interface TypeTabsProps extends Omit<
   TabsProps,
@@ -29,11 +35,11 @@ function TypeTabs(props: TypeTabsProps): ReactElement {
 
   return (
     <Tabs {...props} size='sm' value={type} onChange={handleChange}>
-      <Tabs.Button value='all'>{t('all')}</Tabs.Button>
-      <Tabs.Button value='private'>{t('private')}</Tabs.Button>
-      <Tabs.Button value='group'>{t('group')}</Tabs.Button>
-      <Tabs.Button value='supergroup'>{t('supergroup')}</Tabs.Button>
-      <Tabs.Button value='channel'>{t('channel')}</Tabs.Button>
+      {Object.values(Type).map((type) => (
+        <Tabs.Button key={type} value={type}>
+          {t(type)}
+        </Tabs.Button>
+      ))}
     </Tabs>
   );
 }

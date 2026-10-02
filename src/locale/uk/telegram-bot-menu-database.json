@@ -1,10 +1,9 @@
 {
   "footer": {
-    "recordCount_one": "{{count}} запис",
-    "recordCount_two": "{{count}} записи",
-    "recordCount_few": "{{count}} записи",
-    "recordCount_many": "{{count}} записів",
-    "recordCount_other": "{{count}} записів"
+    "count_one": "{{count}} запис",
+    "count_few": "{{count}} записи",
+    "count_many": "{{count}} записів",
+    "count_other": "{{count}} записів"
   },
   "messages": {
     "getRecords": {
@@ -26,15 +25,14 @@
         }
       },
       "placeholders": {
-        "notAdded": "Ви ще не додали записів",
-        "notFound": "Пошук за записами не дав результатів"
+        "empty": "У вас ще немає доданих записів",
+        "empty_search": "Пошук за записами не дав результатів"
       }
     },
     "messages": {
       "partialUpdateRecord": {
         "error": "Не вдалося оновити запис.",
         "error_other": "Сталася непередбачена помилка.",
-        "error_validJSON": "Введіть правильно дані у форматі JSON.",
         "success": "Ви успішно оновили запис."
       }
     },
@@ -43,7 +41,6 @@
       "messages": {
         "addRecord": {
           "error": "Не вдалося додати запис.",
-          "error_validJSON": "Введіть дані запису у форматі JSON.",
           "success": "Ви успішно додали запис."
         }
       },

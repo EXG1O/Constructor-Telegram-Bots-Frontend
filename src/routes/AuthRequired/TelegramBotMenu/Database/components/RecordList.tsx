@@ -38,7 +38,9 @@ function RecordList({ className, ...props }: RecordListProps): ReactElement {
             records.map((record) => <RecordItem key={record.id} record={record} />)
           ) : (
             <List.Item className='text-center'>
-              {search ? t('placeholders.notFound') : t('placeholders.notAdded')}
+              {search
+                ? t('placeholders.empty', { context: 'search' })
+                : t('placeholders.empty')}
             </List.Item>
           )
         ) : (

@@ -14,6 +14,8 @@ import useDatabaseRecordsStore from '../../hooks/useDatabaseRecordsStore';
 
 import { TelegramBotsService } from 'api';
 
+import safeParseJSON from 'utils/safeParseJSON';
+
 interface FormValues {
   data: string;
 }
@@ -36,33 +38,17 @@ function RecordAdditionModal({
     { keyPrefix: 'records.recordAdditionModal' },
   );
 
-  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const updateRecords = useDatabaseRecordsStore((state) => state.updateRecords);
 
   async function handleSubmit(
-    values: FormValues,
+    { data, ...values }: FormValues,
     { setFieldError }: FormikHelpers<FormValues>,
   ): Promise<void> {
-    let data: Record<string, any>;
-
-    try {
-      data = JSON.parse(values.data);
-    } catch (error) {
-      if (error instanceof SyntaxError) {
-        setFieldError('data', t('messages.addRecord.error', { context: 'validJSON' }));
-      }
-
-      createMessageToast({
-        message: t('messages.addRecord.error'),
-        level: 'error',
-      });
-      return;
-    }
-
     const { error } = await TelegramBotsService.createDatabaseRecord({
-      path: { telegramBotId: telegramBotID },
-      body: { data },
+      path: { telegramBotId: botID },
+      body: { ...values, data: safeParseJSON(data) },
     });
 
     if (error) {

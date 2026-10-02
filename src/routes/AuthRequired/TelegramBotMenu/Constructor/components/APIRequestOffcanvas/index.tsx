@@ -23,8 +23,9 @@ import useFormikSubmit from '../../hooks/useFormikSubmit';
 import type { ApiRequest, ApiRequestRequestWritable } from 'api';
 import { TelegramBotsService } from 'api';
 
+import safeParseJSON from 'utils/safeParseJSON';
+
 import { NodeType } from '../../enums';
-import parseJsonField from '../../utils/parseJsonField';
 import { useAPIRequestOffcanvasStore } from './store';
 import { convertHeadersToRecord, getBodyBlockOpen } from './utils';
 
@@ -72,18 +73,11 @@ function APIRequestOffcanvas(props: APIRequestOffcanvasProps): ReactElement {
       },
       type: NodeType.ApiRequest,
       action,
-      saveAPICall: async ({ headers, ...values }, { setFieldError }) => {
-        let body: Record<string, any> | null = null;
-
-        if (getBodyBlockOpen(values.method)) {
-          body = parseJsonField(values.body, 'body', setFieldError);
-          if (!body) return null;
-        }
-
+      saveAPICall: async ({ headers, body, ...values }) => {
         const data: ApiRequestRequestWritable = {
           ...values,
           headers: convertHeadersToRecord(headers),
-          body,
+          body: getBodyBlockOpen(values.method) ? safeParseJSON(body) : null,
         };
 
         return action === 'edit' && requestID

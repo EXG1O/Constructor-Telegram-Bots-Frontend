@@ -15,14 +15,14 @@ function Footer({ className, ...props }: FooterProps): ReactElement | null {
     { keyPrefix: 'footer' },
   );
 
-  const recordCount = useDatabaseRecordsStore((state) => state.count);
+  const count = useDatabaseRecordsStore((state) => state.count);
 
-  return recordCount ? (
+  return count ? (
     <small
       {...props}
       className={cn('w-full', 'text-end', 'text-xs', 'text-muted', className)}
     >
-      {t('recordCount', { count: recordCount })}
+      {t('count', { count })}
     </small>
   ) : null;
 }

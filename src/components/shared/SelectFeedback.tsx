@@ -8,7 +8,7 @@ import cn from 'utils/cn';
 export { selectVariants as selectFeedbackVariants };
 
 export interface SelectFeedbackProps extends Omit<SelectProps, 'invalid'> {
-  error?: string;
+  error?: string | null;
   wrapperProps?: HTMLAttributes<HTMLDivElement>;
 }
 

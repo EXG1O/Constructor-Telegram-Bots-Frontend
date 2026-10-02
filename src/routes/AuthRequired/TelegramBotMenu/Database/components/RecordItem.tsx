@@ -5,8 +5,9 @@ import { Check, Trash2, X } from 'lucide-react';
 import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
+import CodeInputFeedback from 'components/shared/CodeInputFeedback';
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
-import CodeInput, { type Editor } from 'components/ui/CodeInput';
+import type { Editor } from 'components/ui/CodeInput';
 import IconButton from 'components/ui/IconButton';
 import List from 'components/ui/List';
 import type { ListItemProps } from 'components/ui/List/components/ListItem';
@@ -19,6 +20,7 @@ import type { DatabaseRecord } from 'api';
 import { TelegramBotsService } from 'api';
 
 import cn from 'utils/cn';
+import safeParseJSON from 'utils/safeParseJSON';
 
 export interface RecordItemProps extends Omit<ListItemProps, 'children'> {
   record: DatabaseRecord;
@@ -30,7 +32,7 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
     { keyPrefix: 'records' },
   );
 
-  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
   const updateRecords = useDatabaseRecordsStore((state) => state.updateRecords);
 
@@ -40,6 +42,7 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
   );
 
   const [value, setValue] = useState<string>(defaultValue);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const editorRef = useRef<Editor | null>(null);
@@ -58,37 +61,29 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
     }
 
     setValue(nextValue);
+
+    if (nextValue === defaultValue) {
+      setError(null);
+    }
   }
 
   async function handleConfirmClick(): Promise<void> {
     setLoading(true);
 
-    let data: Record<string, any>;
-
-    try {
-      data = JSON.parse(value);
-    } catch {
-      createMessageToast({
-        message: t('messages.partialUpdateRecord.error', {
-          context: 'validJSON',
-        }),
-        level: 'error',
-      });
-      return;
-    }
-
     const { error } = await TelegramBotsService.partialUpdateDatabaseRecord({
-      path: { telegramBotId: telegramBotID, id: record.id },
-      body: { data },
+      path: { telegramBotId: botID, id: record.id },
+      body: { data: safeParseJSON(value) },
     });
 
     if (!error) {
       updateRecords();
+      setError(null);
       createMessageToast({
         message: t('messages.partialUpdateRecord.success'),
         level: 'success',
       });
     } else {
+      setError(error.errors.find((item) => item.attr === 'data')?.detail ?? null);
       createMessageToast({
         message: t('messages.partialUpdateRecord.error'),
         level: 'error',
@@ -110,15 +105,16 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
         setLoadingConfirmModal(true);
 
         const { error } = await TelegramBotsService.deleteDatabaseRecord({
-          path: { telegramBotId: telegramBotID, id: record.id },
+          path: { telegramBotId: botID, id: record.id },
         });
 
-        if (!error) {
+        if (error) {
           createMessageToast({
             message: t('list.item.messages.deleteRecord.error'),
             level: 'error',
           });
           setLoadingConfirmModal(false);
+          return;
         }
 
         updateRecords();
@@ -134,10 +130,11 @@ function RecordItem({ record, className, ...props }: RecordItemProps): ReactElem
 
   return !loading ? (
     <List.Item {...props} className={cn('flex', 'items-center', 'gap-2', className)}>
-      <CodeInput
+      <CodeInputFeedback
         size='sm'
         value={value}
         language='json'
+        error={error}
         onMount={handleMount}
         onChange={handleChange}
       />

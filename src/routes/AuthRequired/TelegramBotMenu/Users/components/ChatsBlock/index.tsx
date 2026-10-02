@@ -8,6 +8,8 @@ import Block, { type BlockProps } from 'components/ui/Block';
 import BlockFooter from './components/BlockFooter';
 import BlockTable from './components/BlockTable';
 import BlockToolbar from './components/BlockToolbar';
+import { Mode } from './components/BlockToolbar/components/ModeTabs';
+import { Type } from './components/BlockToolbar/components/TypeTabs';
 
 import useTelegramBotMenuChatsRouteLoaderData from '../../hooks/useTelegramBotMenuChatsRouteLoaderData';
 
@@ -32,8 +34,8 @@ function ChatsBlock({ className, ...props }: ChatsBlockProps): ReactElement {
       limit,
       offset,
       search: null,
-      mode: 'all',
-      type: 'all',
+      mode: Mode.All,
+      type: Type.All,
       chats: results,
       loading: false,
     }),

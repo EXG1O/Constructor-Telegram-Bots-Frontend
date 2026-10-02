@@ -6,7 +6,7 @@ import SimpleInput, { type SimpleInputProps } from 'components/ui/SimpleInput';
 import cn from 'utils/cn';
 
 export interface SimpleInputFeedbackProps extends Omit<SimpleInputProps, 'invalid'> {
-  error?: string;
+  error?: string | null;
   wrapperProps?: HTMLAttributes<HTMLDivElement>;
 }
 

@@ -43,7 +43,7 @@ const NodeToolbar = forwardRef<HTMLDivElement, NodeToolbarProps>(
                 <Copy />
               </IconButton>
             )}
-            <IconButton className='-ms-0.25 text-danger' onClick={onDelete}>
+            <IconButton className='-ms-px text-danger' onClick={onDelete}>
               <Trash2 />
             </IconButton>
           </div>

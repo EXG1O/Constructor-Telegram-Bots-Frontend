@@ -8,6 +8,8 @@ import Table, { type TableProps } from 'components/ui/Table';
 
 import UserTableRow from './components/UserTableRow';
 
+import { Mode } from '../BlockToolbar/components/ModeTabs';
+
 import cn from 'utils/cn';
 
 import { useUsersBlockStore } from '../../store';
@@ -54,12 +56,12 @@ function BlockTable({
               <Table.Row>
                 <Table.Cell className='text-center'>
                   {search
-                    ? t('placeholders.notFound')
-                    : mode === 'allowed'
-                      ? t('placeholders.notAllowed')
-                      : mode === 'blocked'
-                        ? t('placeholders.notBlocked')
-                        : t('placeholders.notChats')}
+                    ? t('placeholders.empty', { context: 'search' })
+                    : mode === Mode.Allowed
+                      ? t('placeholders.empty', { context: Mode.Allowed })
+                      : mode === Mode.Blocked
+                        ? t('placeholders.empty', { context: Mode.Blocked })
+                        : t('placeholders.empty')}
                 </Table.Cell>
               </Table.Row>
             </Table.Body>
