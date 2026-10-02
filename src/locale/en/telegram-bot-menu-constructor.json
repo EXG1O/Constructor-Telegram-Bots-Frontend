@@ -534,7 +534,6 @@
         "text": "Are you sure you want to duplicate the timer?",
         "title": "Duplicating the timer"
       },
-      "duration": "<bold>Duration:</bold> {{value}} sec",
       "messages": {
         "delete": {
           "error": "Failed to delete the timer.",
@@ -543,6 +542,12 @@
         "duplicate": {
           "error": "Failed to duplicate the timer.",
           "success": "You have successfully duplicated the timer."
+        }
+      },
+      "table": {
+        "duration": {
+          "header": "Duration",
+          "value": "{{value}} seconds"
         }
       },
       "title": "Timer"

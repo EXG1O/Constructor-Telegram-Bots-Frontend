@@ -1,5 +1,5 @@
 import React, { type ReactElement } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import {
   type Node as RFNode,
   type NodeProps as RFNodeProps,
@@ -10,6 +10,7 @@ import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
+import Table from 'components/ui/Table';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import Node from './Node';
@@ -140,12 +141,18 @@ function TimerNode({
         />
       </Node.Block>
       <Node.Block>
-        <Trans
-          t={t}
-          i18nKey='duration'
-          values={{ value: timer.duration_seconds }}
-          components={{ bold: <strong /> }}
-        />
+        <div className='-m-0.5 w-full'>
+          <Table size='xs'>
+            <Table.Body>
+              <Table.Row>
+                <Table.Head scope='row'>{t('table.duration.header')}:</Table.Head>
+                <Table.Cell>
+                  {t('table.duration.value', { value: timer.duration_seconds })}
+                </Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table>
+        </div>
       </Node.Block>
     </Node>
   );
