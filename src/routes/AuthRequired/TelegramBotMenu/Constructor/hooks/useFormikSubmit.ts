@@ -89,7 +89,7 @@ function useFormikSubmit<
       if (saveResult === null) return;
 
       if (saveResult.error || !saveResult.data) {
-        for (const item of saveResult.error) {
+        for (const item of saveResult.error.errors) {
           if (!item.attr) continue;
           setFieldError(normalizeFieldName?.(item.attr) ?? item.attr, item.detail);
         }
