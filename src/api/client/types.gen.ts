@@ -32,21 +32,18 @@ export type ApiRequestRequest = {
 export type BackgroundTask = {
   readonly id: number;
   name: string;
-  interval: BackgroundTaskInterval;
+  interval: number;
 };
-
-export enum BackgroundTaskInterval {
-  Day1 = 1,
-  Days3 = 3,
-  Days7 = 7,
-  Days14 = 14,
-  Days28 = 28,
-}
 
 export type BackgroundTaskRequest = {
   name: string;
-  interval: BackgroundTaskInterval;
+  interval: number;
 };
+
+export enum BackgroundTaskStatus {
+  Pending = 'pending',
+  Running = 'running',
+}
 
 export enum BlankEnum {
   '' = '',
@@ -246,7 +243,8 @@ export type DiagramBackgroundTask = {
   x?: number;
   y?: number;
   readonly source_connections: Array<Connection>;
-  readonly interval: BackgroundTaskInterval;
+  readonly status: BackgroundTaskStatus;
+  readonly interval: number;
 };
 
 export type DiagramBackgroundTaskRequest = {
@@ -724,7 +722,7 @@ export type PatchedApiRequestRequest = {
 
 export type PatchedBackgroundTaskRequest = {
   name?: string;
-  interval?: BackgroundTaskInterval;
+  interval?: number;
 };
 
 export type PatchedChatRequest = {
@@ -1096,7 +1094,8 @@ export type TelegramBotsCreateBackgroundTaskErrorResponse400 =
 
 export type TelegramBotsCreateBackgroundTaskIntervalErrorComponent = {
   attr: 'interval';
-  code: 'invalid_choice' | 'max_value' | 'min_value' | 'null' | 'required';
+  code:
+    'invalid' | 'max_string_length' | 'max_value' | 'min_value' | 'null' | 'required';
   detail: string;
 };
 
@@ -2925,7 +2924,8 @@ export type TelegramBotsPartialUpdateBackgroundTaskErrorResponse400 =
 
 export type TelegramBotsPartialUpdateBackgroundTaskIntervalErrorComponent = {
   attr: 'interval';
-  code: 'invalid_choice' | 'max_value' | 'min_value' | 'null' | 'required';
+  code:
+    'invalid' | 'max_string_length' | 'max_value' | 'min_value' | 'null' | 'required';
   detail: string;
 };
 
@@ -4888,7 +4888,8 @@ export type TelegramBotsUpdateBackgroundTaskErrorResponse400 =
 
 export type TelegramBotsUpdateBackgroundTaskIntervalErrorComponent = {
   attr: 'interval';
-  code: 'invalid_choice' | 'max_value' | 'min_value' | 'null' | 'required';
+  code:
+    'invalid' | 'max_string_length' | 'max_value' | 'min_value' | 'null' | 'required';
   detail: string;
 };
 
@@ -7005,14 +7006,14 @@ export type ApiRequestRequestWritable = {
 
 export type BackgroundTaskWritable = {
   name: string;
-  interval: BackgroundTaskInterval;
+  interval: number;
 };
 
 export type BackgroundTaskRequestWritable = {
   name: string;
   x?: number;
   y?: number;
-  interval: BackgroundTaskInterval;
+  interval: number;
 };
 
 export type ChatWritable = {
@@ -7265,7 +7266,7 @@ export type PatchedBackgroundTaskRequestWritable = {
   name?: string;
   x?: number;
   y?: number;
-  interval?: BackgroundTaskInterval;
+  interval?: number;
 };
 
 export type PatchedConditionRequestWritable = {

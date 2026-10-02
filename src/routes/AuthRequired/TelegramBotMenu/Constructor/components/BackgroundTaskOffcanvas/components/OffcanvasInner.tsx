@@ -57,9 +57,8 @@ function OffcanvasInner({
         return;
       }
 
-      const { id: _id, ...task } = data;
-
-      setValues(task);
+      const { id: _id, interval, ...rest } = data;
+      setValues({ ...rest, interval: interval.toString() });
       setLoading(false);
     })();
   }, [telegramBotID, taskID]);

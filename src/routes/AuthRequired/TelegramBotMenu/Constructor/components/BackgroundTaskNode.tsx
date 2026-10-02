@@ -10,6 +10,7 @@ import type { RouteID } from 'routes';
 import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/store';
 
 import { useConfirmModalStore } from 'components/shared/ConfirmModal/store';
+import Table from 'components/ui/Table';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { useBackgroundTaskOffcanvasStore } from './BackgroundTaskOffcanvas/store';
@@ -20,6 +21,7 @@ import useNodeDuplicate from './Node/hooks/useNodeDuplicate';
 
 import {
   type BackgroundTask,
+  type BackgroundTaskStatus,
   ConnectionHandlePosition,
   type DiagramBackgroundTask,
   TelegramBotsService,
@@ -34,9 +36,6 @@ export interface BackgroundTaskNodeProps extends RFNodeProps<
   >
 > {}
 
-const NODE_PREFIX: string = 'nodes.backgroundTask';
-const OFFCANVAS_PREFIX: string = 'backgroundTaskOffcanvas';
-
 function BackgroundTaskNode({
   id,
   type,
@@ -46,11 +45,13 @@ function BackgroundTaskNode({
 }: BackgroundTaskNodeProps): ReactElement {
   const { t, i18n } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
     'telegram-bot-menu-constructor',
+    { keyPrefix: 'nodes.backgroundTask' },
   );
 
   const reactFlow = useReactFlow();
 
-  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botIsEnabled = useTelegramBotStore((state) => state.telegramBot!.is_enabled);
 
   const showEditBackgroundTaskOffcanvas = useBackgroundTaskOffcanvasStore(
     (state) => state.showOffcanvas,
@@ -62,11 +63,11 @@ function BackgroundTaskNode({
 
   const handleDuplicate = useNodeDuplicate<BackgroundTask>(
     () => ({
-      title: t(`${NODE_PREFIX}.duplicateModal.title`),
-      text: t(`${NODE_PREFIX}.duplicateModal.text`),
+      title: t('duplicateModal.title'),
+      text: t('duplicateModal.text'),
       messages: {
-        success: t(`${NODE_PREFIX}.messages.duplicate.success`),
-        error: t(`${NODE_PREFIX}.messages.duplicate.error`),
+        success: t('messages.duplicate.success'),
+        error: t('messages.duplicate.error'),
       },
       nodeID: id,
       type,
@@ -74,16 +75,16 @@ function BackgroundTaskNode({
       y: positionAbsoluteY,
       retrieveAPICall: () =>
         TelegramBotsService.getBackgroundTask({
-          path: { telegramBotId: telegramBotID, id: task.id },
+          path: { telegramBotId: botID, id: task.id },
         }),
       createAPICall: (data) =>
         TelegramBotsService.createBackgroundTask({
-          path: { telegramBotId: telegramBotID },
+          path: { telegramBotId: botID },
           body: data,
         }),
       diagramAPICall: (id) =>
         TelegramBotsService.getDiagramBackgroundTask({
-          path: { telegramBotId: telegramBotID, id },
+          path: { telegramBotId: botID, id },
         }),
     }),
     [task.id, id, positionAbsoluteX, positionAbsoluteY, i18n.language],
@@ -100,18 +101,18 @@ function BackgroundTaskNode({
 
   function handleDelete(): void {
     showConfirmModal({
-      title: t(`${NODE_PREFIX}.deleteModal.title`),
-      text: t(`${NODE_PREFIX}.deleteModal.text`),
+      title: t('deleteModal.title'),
+      text: t('deleteModal.text'),
       onConfirm: async () => {
         setLoadingConfirmModal(true);
 
         const { error } = await TelegramBotsService.deleteBackgroundTask({
-          path: { telegramBotId: telegramBotID, id: task.id },
+          path: { telegramBotId: botID, id: task.id },
         });
 
         if (error) {
           createMessageToast({
-            message: t(`${NODE_PREFIX}.messages.delete.error`),
+            message: t('messages.delete.error'),
             level: 'error',
           });
           setLoadingConfirmModal(false);
@@ -121,7 +122,7 @@ function BackgroundTaskNode({
         reactFlow.setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
         hideConfirmModal();
         createMessageToast({
-          message: t(`${NODE_PREFIX}.messages.delete.success`),
+          message: t('messages.delete.success'),
           level: 'success',
         });
       },
@@ -135,7 +136,7 @@ function BackgroundTaskNode({
 
   return (
     <Node
-      title={t(`${NODE_PREFIX}.title`)}
+      title={t('title')}
       onEdit={handleEdit}
       onDuplicate={handleDuplicate}
       onDelete={handleDelete}
@@ -154,8 +155,26 @@ function BackgroundTaskNode({
         />
       </Node.Block>
       <Node.Block>
-        <strong>{`${t(`${NODE_PREFIX}.interval`)}:`}</strong>{' '}
-        {t(`${OFFCANVAS_PREFIX}.intervalBlock.select.${task.interval}`)}
+        <div className='-m-0.5 w-full'>
+          <Table size='xs'>
+            <Table.Body>
+              <Table.Row>
+                <Table.Head scope='row'>{t('table.status.header')}:</Table.Head>
+                <Table.Cell>
+                  {t(
+                    `table.status.${botIsEnabled ? (task.status as BackgroundTaskStatus) : 'inactive'}`,
+                  )}
+                </Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Head scope='row'>{t('table.interval.header')}:</Table.Head>
+                <Table.Cell>
+                  {t('table.interval.value', { value: task.interval })}
+                </Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table>
+        </div>
       </Node.Block>
     </Node>
   );
