@@ -205,8 +205,8 @@
   "mediaPopover": {
     "filePopoverBody": {
       "table": {
-        "name": "Название:",
-        "size": "Размер:"
+        "name": "Название",
+        "size": "Размер"
       }
     },
     "selectPopoverBody": {
@@ -335,9 +335,6 @@
     },
     "deleteConnection": {
       "error": "Не удалось отключить блок от другого блока."
-    },
-    "validation": {
-      "invalidJSON": "Введите данные в формате JSON."
     }
   },
   "nameBlock": {
@@ -608,7 +605,7 @@
       "name": "Фоновая задача"
     },
     "condition": {
-      "description": "Ветвляет логику в зависимости от данных.",
+      "description": "Выполняет дальнейшую логику только при соблюдении заданного условия.",
       "name": "Условие"
     },
     "databaseOperation": {
@@ -628,7 +625,7 @@
       "name": "Рандомайзер"
     },
     "temporaryVariable": {
-      "description": "Создаёт временную переменную в цепочки логики.",
+      "description": "Создаёт переменную в рамках текущей цепочки логики.",
       "name": "Временная переменная"
     },
     "timer": {
@@ -672,7 +669,7 @@
     "actionButton_edit": "Сохранить",
     "durationBlock": {
       "input": {
-        "label": "сек",
+        "label": "секунд",
         "placeholder": "Введите длительность"
       },
       "title": "Длительность"

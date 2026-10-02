@@ -7,8 +7,8 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import type { Mode } from './components/BlockToolbar/components/ModeTabs';
-import type { Type } from './components/BlockToolbar/components/TypeTabs';
+import { Mode } from './components/BlockToolbar/components/ModeTabs';
+import { Type } from './components/BlockToolbar/components/TypeTabs';
 
 import type { Chat } from 'api';
 import { ChatType, TelegramBotsService } from 'api';
@@ -41,12 +41,12 @@ export type State = BaseState<StoreProps> & StateData & StateActions;
 
 export interface StoreProps extends StateData {}
 
-const typeMap: Record<Type, ChatType | undefined> = {
-  all: undefined,
-  private: ChatType.Private,
-  group: ChatType.Group,
-  supergroup: ChatType.Supergroup,
-  channel: ChatType.Channel,
+const typeMap: Record<Type, ChatType | null> = {
+  [Type.All]: null,
+  [Type.Private]: ChatType.Private,
+  [Type.Group]: ChatType.Group,
+  [Type.Supergroup]: ChatType.Supergroup,
+  [Type.Channel]: ChatType.Channel,
 };
 
 export const [ChatsBlockStoreProvider, useChatsBlockStore] = createZustandContext(
@@ -79,8 +79,8 @@ export const [ChatsBlockStoreProvider, useChatsBlockStore] = createZustandContex
             offset: params?.offset ?? currentOffset,
             ...(search && { search }),
             ...(typeMap[type] && { chat_type: typeMap[type] }),
-            ...(mode === 'allowed' && { is_allowed: true }),
-            ...(mode === 'blocked' && { is_blocked: true }),
+            ...(mode === Mode.Allowed && { is_allowed: true }),
+            ...(mode === Mode.Blocked && { is_blocked: true }),
           },
         });
 

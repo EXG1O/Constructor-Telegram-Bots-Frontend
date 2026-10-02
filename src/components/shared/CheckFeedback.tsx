@@ -8,7 +8,7 @@ import cn from 'utils/cn';
 export { checkVariants as checkFeedbackVariants };
 
 export interface CheckFeedbackProps extends Omit<CheckProps, 'invalid'> {
-  error?: string;
+  error?: string | null;
   wrapperProps?: HTMLAttributes<HTMLDivElement>;
 }
 

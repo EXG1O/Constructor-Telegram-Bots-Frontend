@@ -41,7 +41,9 @@ function VariablesTable({ className, ...props }: VariablesTableProps): ReactElem
               ) : (
                 <Table.Row>
                   <Table.Cell className='text-center'>
-                    {search ? t('placeholders.notFound') : t('placeholders.notAdded')}
+                    {search
+                      ? t('placeholders.empty', { context: 'search' })
+                      : t('placeholders.empty')}
                   </Table.Cell>
                 </Table.Row>
               )

@@ -10,7 +10,7 @@ import Page from 'components/ui/Page';
 
 import useLegalRouteLoaderData from './hooks/useLegalRouteLoaderData';
 
-import { DocumentType } from 'api';
+import type { DocumentType } from 'api';
 
 interface StrictTOptions extends TOptions {
   context: `${DocumentType.TermsOfService | DocumentType.PrivacyPolicy}`;
@@ -22,8 +22,7 @@ function Legal(): ReactElement {
   const { type, document } = useLegalRouteLoaderData();
 
   const title: string = t<string, StrictTOptions, string, StrictTOptions>('title', {
-    context:
-      type === DocumentType.TermsOfService ? 'terms-of-service' : 'privacy-policy',
+    context: type as DocumentType,
   });
 
   return (

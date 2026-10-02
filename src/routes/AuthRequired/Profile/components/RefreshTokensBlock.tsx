@@ -69,6 +69,9 @@ function RefreshTokensBlock({
           </Table.Body>
         </Table>
       </div>
+      <small className='w-full text-end text-xs text-muted'>
+        {t('footer.count', { count: refreshTokens.length })}
+      </small>
     </Block>
   );
 }

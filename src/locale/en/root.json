@@ -35,7 +35,7 @@
     },
     "links": {
       "instruction": "Instruction",
-      "premium": "Premium subscription"
+      "premium": "Subscription"
     },
     "telegramBotDropdown": {
       "constructor": "Constructor",
@@ -44,16 +44,16 @@
       "statsModal": {
         "messages": {
           "getNewUsersStats": {
-            "error": "Failed to get new users statistics."
+            "error": "Failed to retrieve new users statistics."
           },
           "getUsersLastActivityStats": {
-            "error": "Failed to get latest users activity statistics."
+            "error": "Failed to retrieve latest users activity statistics."
           }
         },
         "newUsersChart": {
           "title": "New Users"
         },
-        "title": "Telegram bot statistics",
+        "title": "Statistics",
         "usersLastActivityChart": {
           "title": "Last Users Activity"
         }
@@ -92,15 +92,15 @@
     },
     "userDropdown": {
       "adminPanel": "Admin panel",
-      "exit": "Exit",
+      "exit": "Log out",
       "logoutConfirmModal": {
-        "text": "Are you sure you want to logout from account?",
+        "text": "Are you sure you want to log out of your account?",
         "title": "Logout"
       },
       "messages": {
         "logout": {
-          "error": "Failed to logout from account.",
-          "success": "You have successfully logout from account."
+          "error": "Failed to log out of your account.",
+          "success": "You have successfully logged out of your account."
         }
       },
       "profile": "Profile",

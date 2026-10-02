@@ -65,6 +65,10 @@
     "title": "Payment History"
   },
   "refreshTokensBlock": {
+    "footer": {
+      "count_one": "{{count}} token",
+      "count_other": "{{count}} tokens"
+    },
     "helpText": "Each time you log in, a refresh token is created, which is then used to generate short-lived access tokens.",
     "table": {
       "headers": {
@@ -79,11 +83,11 @@
   "userDataBlock": {
     "table": {
       "headers": {
-        "firstName": "First name:",
-        "hasSubscription": "Subscription:",
-        "joinedDate": "Joined:",
-        "lastName": "Last name:",
-        "subscriptionExpiryDate": "Subscription expires:"
+        "firstName": "First name",
+        "hasSubscription": "Subscription",
+        "joinedDate": "Joined",
+        "lastName": "Last name",
+        "subscriptionExpiryDate": "Subscription expires"
       }
     },
     "title": "Account data"

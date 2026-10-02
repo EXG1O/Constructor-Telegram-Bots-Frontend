@@ -1,7 +1,7 @@
 {
   "messages": {
     "userLogin": {
-      "error": "Authorization failed. Please try again.",
+      "error": "Failed to authorize for an unknown reason.",
       "success": "You have successfully logged in."
     }
   },

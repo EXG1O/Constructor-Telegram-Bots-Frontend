@@ -29,11 +29,11 @@ function FilePopoverBody(props: FilePopoverBodyProps): ReactElement {
       <Table size='xs' className='text-sm'>
         <Table.Body>
           <Table.Row>
-            <Table.Head scope='row'>{t('table.name')}</Table.Head>
+            <Table.Head scope='row'>{t('table.name')}:</Table.Head>
             <Table.Cell className='w-min wrap-anywhere'>{file.name}</Table.Cell>
           </Table.Row>
           <Table.Row>
-            <Table.Head scope='row'>{t('table.size')}</Table.Head>
+            <Table.Head scope='row'>{t('table.size')}:</Table.Head>
             <Table.Cell>{formatMB(file.size)}</Table.Cell>
           </Table.Row>
         </Table.Body>

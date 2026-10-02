@@ -1,10 +1,10 @@
 {
   "footer": {
-    "recordCount_one": "{{count}} запись",
-    "recordCount_two": "{{count}} записи",
-    "recordCount_few": "{{count}} записи",
-    "recordCount_many": "{{count}} записей",
-    "recordCount_other": "{{count}} записей"
+    "count_one": "{{count}} запись",
+    "count_two": "{{count}} записи",
+    "count_few": "{{count}} записи",
+    "count_many": "{{count}} записей",
+    "count_other": "{{count}} записей"
   },
   "messages": {
     "getRecords": {
@@ -26,15 +26,14 @@
         }
       },
       "placeholders": {
-        "notAdded": "Вы ещё не добавили записи",
-        "notFound": "Поиск по записям не дал результатов"
+        "empty": "У вас пока нет добавленных записей",
+        "empty_search": "Поиск по записям не дал результатов"
       }
     },
     "messages": {
       "partialUpdateRecord": {
         "error": "Не удалось обновить запись.",
         "error_other": "Произошла непредвиденная ошибка.",
-        "error_validJSON": "Введите правильно данные в формате JSON.",
         "success": "Вы успешно обновили запись."
       }
     },
@@ -43,7 +42,6 @@
       "messages": {
         "addRecord": {
           "error": "Не удалось добавить запись.",
-          "error_validJSON": "Введите данных записи в формате JSON.",
           "success": "Вы успешно добавили запись."
         }
       },

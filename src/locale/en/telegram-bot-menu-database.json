@@ -1,7 +1,7 @@
 {
   "footer": {
-    "recordCount_one": "{{count}} record",
-    "recordCount_other": "{{count}} records"
+    "count_one": "{{count}} record",
+    "count_other": "{{count}} records"
   },
   "messages": {
     "getRecords": {
@@ -23,14 +23,13 @@
         }
       },
       "placeholders": {
-        "notAdded": "You haven't added any records yet",
-        "notFound": "No results found"
+        "empty": "You don't have any added records yet",
+        "empty_search": "No search results for records"
       }
     },
     "messages": {
       "partialUpdateRecord": {
         "error": "Failed to update the record.",
-        "error_validJSON": "Enter valid JSON data.",
         "success": "You have successfully updated the record."
       }
     },
@@ -39,7 +38,6 @@
       "messages": {
         "addRecord": {
           "error": "Failed to add the record.",
-          "error_validJSON": "Please enter the record data in JSON format.",
           "success": "You have successfully added a record."
         }
       },

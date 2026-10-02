@@ -8,6 +8,9 @@ import Table, { type TableProps } from 'components/ui/Table';
 
 import ChatTableRow from './components/ChatTableRow';
 
+import { Mode } from '../BlockToolbar/components/ModeTabs';
+import { Type } from '../BlockToolbar/components/TypeTabs';
+
 import cn from 'utils/cn';
 
 import { useChatsBlockStore } from '../../store';
@@ -55,20 +58,20 @@ function BlockTable({
               <Table.Row>
                 <Table.Cell className='text-center'>
                   {search
-                    ? t('placeholders.notFound')
-                    : mode === 'allowed'
-                      ? t('placeholders.notAllowed')
-                      : mode === 'blocked'
-                        ? t('placeholders.notBlocked')
-                        : type === 'private'
-                          ? t('placeholders.notPrivate')
-                          : type === 'group'
-                            ? t('placeholders.notGroups')
-                            : type === 'supergroup'
-                              ? t('placeholders.notSupergroups')
-                              : type === 'channel'
-                                ? t('placeholders.notChannels')
-                                : t('placeholders.notChats')}
+                    ? t('placeholders.empty', { context: 'search' })
+                    : mode === Mode.Allowed
+                      ? t('placeholders.empty', { context: Mode.Allowed })
+                      : mode === Mode.Blocked
+                        ? t('placeholders.empty', { context: Mode.Blocked })
+                        : type === Type.Private
+                          ? t('placeholders.empty', { context: Type.Private })
+                          : type === Type.Group
+                            ? t('placeholders.empty', { context: Type.Group })
+                            : type === Type.Supergroup
+                              ? t('placeholders.empty', { context: Type.Supergroup })
+                              : type === Type.Channel
+                                ? t('placeholders.empty', { context: Type.Channel })
+                                : t('placeholders.empty')}
                 </Table.Cell>
               </Table.Row>
             </Table.Body>

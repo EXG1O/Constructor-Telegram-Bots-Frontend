@@ -74,7 +74,7 @@ const ChartBlock = forwardRef<HTMLDivElement, ChartBlockProps>(
             </Chart.Line>
           </Chart>
         ) : (
-          <div className='flex h-[240px] flex-auto items-center justify-center'>
+          <div className='flex h-60 flex-auto items-center justify-center'>
             <Spinner size='sm' />
           </div>
         )}

@@ -15,8 +15,8 @@
     },
     "table": {
       "placeholders": {
-        "notAdded": "No variables have been added yet",
-        "notFound": "No variables found"
+        "empty": "You don't have any added variables yet",
+        "empty_search": "No search results for variables"
       },
       "row": {
         "deleteModal": {

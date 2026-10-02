@@ -36,7 +36,7 @@
       }
     },
     "placeholders": {
-      "empty": "Вы ещё не успели совершить платёж"
+      "empty": "У вас пока нет совершённых платежей"
     },
     "table": {
       "amount": {
@@ -69,6 +69,12 @@
     "title": "История платежей"
   },
   "refreshTokensBlock": {
+    "footer": {
+      "count_one": "{{count}} токен",
+      "count_few": "{{count}} токена",
+      "count_many": "{{count}} токенов",
+      "count_other": "{{count}} токенов"
+    },
     "helpText": "При каждой вашей авторизации создаётся токен обновления, который используется для последующего создания короткоживущих токенов доступа.",
     "table": {
       "headers": {
@@ -83,11 +89,11 @@
   "userDataBlock": {
     "table": {
       "headers": {
-        "firstName": "Имя:",
-        "hasSubscription": "Подписка:",
-        "joinedDate": "Присоединился:",
-        "lastName": "Фамилия:",
-        "subscriptionExpiryDate": "Подписка истечёт:"
+        "firstName": "Имя",
+        "hasSubscription": "Подписка",
+        "joinedDate": "Присоединился",
+        "lastName": "Фамилия",
+        "subscriptionExpiryDate": "Подписка истечёт"
       }
     },
     "title": "Данные аккаунта"

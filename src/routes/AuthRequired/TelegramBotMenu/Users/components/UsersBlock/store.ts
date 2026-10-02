@@ -7,7 +7,7 @@ import { useTelegramBotStore } from 'routes/AuthRequired/TelegramBotMenu/Root/st
 
 import { createMessageToast } from 'components/ui/ToastContainer';
 
-import type { Mode } from './components/BlockToolbar/components/ModeTabs';
+import { Mode } from './components/BlockToolbar/components/ModeTabs';
 
 import { TelegramBotsService, type TelegramBotUser } from 'api';
 
@@ -65,8 +65,8 @@ export const [UsersBlockStoreProvider, useUsersBlockStore] = createZustandContex
             limit,
             offset: params?.offset ?? currentOffset,
             ...(search && { search }),
-            ...(mode === 'allowed' && { is_allowed: true }),
-            ...(mode === 'blocked' && { is_blocked: true }),
+            ...(mode === Mode.Allowed && { is_allowed: true }),
+            ...(mode === Mode.Blocked && { is_blocked: true }),
           },
         });
 

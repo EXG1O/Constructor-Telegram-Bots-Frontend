@@ -21,8 +21,9 @@ import useFormikSubmit from '../../hooks/useFormikSubmit';
 import type { DatabaseOperation, DatabaseOperationRequestWritable } from 'api';
 import { TelegramBotsService } from 'api';
 
+import safeParseJSON from 'utils/safeParseJSON';
+
 import { NodeType } from '../../enums';
-import parseJsonField from '../../utils/parseJsonField';
 import { useDatabaseOperationOffcanvasStore } from './store';
 import { getCreateBlockOpen, getUpdateBlockOpen } from './utils';
 
@@ -72,36 +73,17 @@ function DatabaseOperationOffcanvas(
       },
       type: NodeType.DatabaseOperation,
       action,
-      saveAPICall: (
-        { type, create_operation, update_operation, ...values },
-        { setFieldError },
-      ) => {
-        let createOperationData: any[] | Record<string, any> | null = null;
-        let updateOperationNewData: any[] | Record<string, any> | null = null;
-
-        if (getCreateBlockOpen(type)) {
-          createOperationData = parseJsonField(
-            create_operation.data,
-            'create_operation.data',
-            setFieldError,
-          );
-          if (!createOperationData) return Promise.reject();
-        }
-
-        if (getUpdateBlockOpen(type)) {
-          updateOperationNewData = parseJsonField(
-            update_operation.new_data,
-            'update_operation.new_data',
-            setFieldError,
-          );
-          if (!updateOperationNewData) return Promise.reject();
-        }
-
+      saveAPICall: ({ type, create_operation, update_operation, ...values }) => {
         const data: DatabaseOperationRequestWritable = {
           ...values,
-          create_operation: createOperationData ? { data: createOperationData } : null,
-          update_operation: updateOperationNewData
-            ? { ...update_operation, new_data: updateOperationNewData }
+          create_operation: getCreateBlockOpen(type)
+            ? { data: safeParseJSON(create_operation.data) }
+            : null,
+          update_operation: getUpdateBlockOpen(type)
+            ? {
+                ...update_operation,
+                new_data: safeParseJSON(update_operation.new_data),
+              }
             : null,
         };
 

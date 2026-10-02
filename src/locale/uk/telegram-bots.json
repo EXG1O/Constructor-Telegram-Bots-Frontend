@@ -3,13 +3,15 @@
     "addTelegramBotButton": "Додати Telegram бота",
     "title": "Додані Telegram боти"
   },
-  "notTelegramBots": "Ви ще не додали Telegram ботів",
+  "placeholders": {
+    "empty": "У вас ще немає доданих Telegram ботів"
+  },
   "telegramBotAdditionModal": {
     "addButton": "Додати",
     "apiTokenInputPlaceholder": "Введіть API-токен",
     "messages": {
       "createTelegramBot": {
-        "error": "Сталася непередбачувана помилка, через яку не вдалося додати Telegram бота.",
+        "error": "Не вдалося додати Telegram бота.",
         "success": "Ви успішно додали Telegram бота."
       }
     },

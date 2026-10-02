@@ -72,7 +72,7 @@ function Premium(): ReactElement {
         <div className='items-center'>
           <Block variant='light' className='flex max-w-125 flex-col gap-3'>
             <Block.Title>
-              <h3 className='-mb-2 text-3xl font-semibold'>Premium</h3>
+              <h3 className='-mb-2 text-3xl font-semibold'>{t('title')}</h3>
             </Block.Title>
             <div className='flex flex-col gap-2 px-1'>
               {(t('subscription.description', { returnObjects: true }) as string[]).map(

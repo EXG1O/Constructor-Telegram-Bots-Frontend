@@ -38,7 +38,7 @@ function TelegramBotList({ className, ...props }: TelegramBotListProps): ReactEl
         ))
       ) : (
         <div className='rounded-md border border-outline px-3 py-2 text-center text-foreground'>
-          {t('notTelegramBots')}
+          {t('placeholders.empty')}
         </div>
       )}
     </div>

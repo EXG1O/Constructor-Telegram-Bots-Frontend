@@ -3,7 +3,9 @@
     "addTelegramBotButton": "Добавить Telegram бота",
     "title": "Добавленные Telegram боты"
   },
-  "notTelegramBots": "Вы ещё не добавили Telegram ботов",
+  "placeholders": {
+    "empty": "У вас пока нет добавленных Telegram ботов"
+  },
   "telegramBotAdditionModal": {
     "addButton": "Добавить",
     "apiTokenInputPlaceholder": "Введите API-токен",

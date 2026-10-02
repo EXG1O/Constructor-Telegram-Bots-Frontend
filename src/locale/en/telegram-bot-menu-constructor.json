@@ -8,11 +8,11 @@
     "actionButton_add": "Add",
     "actionButton_edit": "Save",
     "bodyBlock": {
-      "title": "Body"
+      "title": "Data"
     },
     "headersBlock": {
       "addHeaderButton": {
-        "text": "Add Header"
+        "text": "Add header"
       },
       "keyInput": {
         "placeholder": "Key"
@@ -32,14 +32,14 @@
         "success": "You have successfully saved the API request."
       },
       "getAPIRequest": {
-        "error": "Failed to get API request data."
+        "error": "Failed to retrieve API request data."
       }
     },
     "methodBlock": {
       "title": "Method"
     },
     "title": "title",
-    "title_add": "Adding a API request",
+    "title_add": "Adding an API request",
     "title_edit": "Editing the API request",
     "urlBlock": {
       "title": "URL",
@@ -69,7 +69,7 @@
         "success": "You have successfully saved the background task."
       },
       "getBackgroundTask": {
-        "error": "Failed to get background task data."
+        "error": "Failed to retrieve background task data."
       }
     },
     "title": "title",
@@ -90,7 +90,7 @@
         "success": "You have successfully saved the condition."
       },
       "getCondition": {
-        "error": "Failed to get condition data."
+        "error": "Failed to retrieve condition data."
       }
     },
     "partsBlock": {
@@ -129,7 +129,7 @@
         "success": "You have successfully saved the database operation."
       },
       "getDatabaseOperation": {
-        "error": "Failed to get database operation data."
+        "error": "Failed to retrieve database operation data."
       }
     },
     "title": "title",
@@ -195,7 +195,7 @@
       "title": "Price"
     },
     "title": "title",
-    "title_add": "Adding a invoice",
+    "title_add": "Adding an invoice",
     "title_edit": "Editing the invoice",
     "titleBlock": {
       "inputPlaceholder": "Enter title",
@@ -205,8 +205,8 @@
   "mediaPopover": {
     "filePopoverBody": {
       "table": {
-        "name": "Name:",
-        "size": "Size:"
+        "name": "Name",
+        "size": "Size"
       }
     },
     "selectPopoverBody": {
@@ -308,7 +308,7 @@
         "success": "You have successfully saved the message."
       },
       "getMessage": {
-        "error": "Failed to get message data."
+        "error": "Failed to retrieve message data."
       },
       "validation": {
         "error_keyboardRequiresText": "The «Keyboard» addon cannot be used without the «Text» addon.",
@@ -335,9 +335,6 @@
     },
     "deleteConnection": {
       "error": "Failed to disconnect one block from another."
-    },
-    "validation": {
-      "invalidJSON": "Please enter the data in JSON format."
     }
   },
   "nameBlock": {
@@ -608,7 +605,7 @@
       "name": "Background task"
     },
     "condition": {
-      "description": "Branches the logic depending on the data.",
+      "description": "Executes further logic only if the specified condition is met.",
       "name": "Condition"
     },
     "databaseOperation": {
@@ -672,7 +669,7 @@
     "actionButton_edit": "Save",
     "durationBlock": {
       "input": {
-        "label": "sec",
+        "label": "seconds",
         "placeholder": "Enter duration"
       },
       "title": "Duration"
@@ -704,7 +701,7 @@
       "description": {
         "hideButton": "Remove from menu",
         "inputPlaceholder": "Enter description",
-        "showButton": "Add to menu"
+        "showButton": "Show in menu"
       },
       "title": "Command"
     },
@@ -722,21 +719,21 @@
         "success": "You have successfully saved the trigger."
       },
       "getTrigger": {
-        "error": "Failed to get trigger data."
+        "error": "Failed to retrieve trigger data."
       }
     },
     "startCommandBlock": {
       "description": {
         "hideButton": "Remove from menu",
         "inputPlaceholder": "Enter description",
-        "showButton": "Add to menu"
+        "showButton": "Show in menu"
       },
       "payload": {
         "hideButton": "Remove payload",
         "inputPlaceholder": "Enter data",
         "showButton": "Add payload"
       },
-      "title": "Start Command"
+      "title": "Start command"
     },
     "title": "title",
     "title_add": "Adding a trigger",
@@ -762,7 +759,7 @@
         },
         "url": {
           "header": "URL:",
-          "placeholder": "Save this block to get the value."
+          "placeholder": "Save this block to retrieve the value."
         }
       },
       "title": "Webhook"
