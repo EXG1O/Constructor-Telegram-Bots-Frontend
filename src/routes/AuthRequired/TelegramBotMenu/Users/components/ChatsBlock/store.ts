@@ -78,7 +78,7 @@ export const [ChatsBlockStoreProvider, useChatsBlockStore] = createZustandContex
             limit,
             offset: params?.offset ?? currentOffset,
             ...(search && { search }),
-            ...(typeMap[type] && { chat_type: typeMap[type] }),
+            ...(typeMap[type] && { type: typeMap[type] }),
             ...(mode === Mode.Allowed && { is_allowed: true }),
             ...(mode === Mode.Blocked && { is_blocked: true }),
           },
