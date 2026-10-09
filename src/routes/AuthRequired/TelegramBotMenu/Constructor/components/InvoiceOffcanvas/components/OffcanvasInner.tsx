@@ -11,6 +11,8 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 import { TelegramBotsService } from 'api';
 import fetchFile from 'api/utils/fetchFile';
 
+import composeHandlers from 'utils/composeHandlers';
+
 import type { FormValues } from '..';
 import { useInvoiceOffcanvasStore } from '../store';
 
@@ -31,16 +33,15 @@ function OffcanvasInner({
     { keyPrefix: 'invoiceOffcanvas' },
   );
 
-  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
+  const { isSubmitting, setValues, setSubmitting, resetForm } =
+    useFormikContext<FormValues>();
 
-  const invoiceID = useInvoiceOffcanvasStore((state) => state.invoiceID);
+  const invoiceID = useInvoiceOffcanvasStore((state) => state.id);
   const action = useInvoiceOffcanvasStore((state) => state.action);
   const show = useInvoiceOffcanvasStore((state) => state.show);
-  const loading = useInvoiceOffcanvasStore((state) => state.loading);
   const hideOffcanvas = useInvoiceOffcanvasStore((state) => state.hideOffcanvas);
-  const setLoading = useInvoiceOffcanvasStore((state) => state.setLoading);
   const setUsedStorageSize = useInvoiceOffcanvasStore(
     (state) => state.setUsedStorageSize,
   );
@@ -48,8 +49,9 @@ function OffcanvasInner({
   useEffect(() => {
     if (!invoiceID) return;
     (async () => {
+      setSubmitting(true);
       const { data, error } = await TelegramBotsService.getInvoice({
-        path: { telegramBotId: telegramBotID, id: invoiceID },
+        path: { telegramBotId: botID, id: invoiceID },
       });
 
       if (error || !data) {
@@ -65,16 +67,15 @@ function OffcanvasInner({
         id: _id,
         image,
         prices: [price],
-        ...invoice
+        ...rest
       } = data;
-
       const imageFile: File | null =
         image && image.url && image.name
           ? await fetchFile(image.url, image.name)
           : null;
 
       setValues({
-        ...invoice,
+        ...rest,
         image: image
           ? {
               file: imageFile,
@@ -93,34 +94,24 @@ function OffcanvasInner({
         );
       }
 
-      setLoading(false);
+      setSubmitting(false);
     })();
-  }, [telegramBotID, invoiceID]);
-
-  function handleHide(): void {
-    hideOffcanvas();
-    onHide?.();
-  }
-
-  function handleHidden(): void {
-    resetForm();
-    onHidden?.();
-  }
+  }, [botID, invoiceID]);
 
   return (
     <Offcanvas
       {...props}
       show={show}
-      loading={isSubmitting || loading}
-      onHide={handleHide}
-      onHidden={handleHidden}
+      loading={isSubmitting}
+      onHide={composeHandlers(hideOffcanvas, onHide)}
+      onHidden={composeHandlers(resetForm, onHidden)}
     >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
           {t('title', { context: action === 'edit' ? 'edit' : 'add' })}
         </Offcanvas.Title>
       </Offcanvas.Header>
-      <Suspense fallback={<Offcanvas.Loading />}>
+      <Suspense fallback={!isSubmitting && <Offcanvas.Loading />}>
         <OffcanvasContent />
       </Suspense>
     </Offcanvas>

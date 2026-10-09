@@ -22,7 +22,7 @@ import type { TextBlockFormValues } from './components/TextBlock/types';
 import { defaultNameBlockFormValues } from '../NameBlock/defaults';
 import type { NameBlockFormValues } from '../NameBlock/types';
 
-import useFormikSubmit from '../../hooks/useFormikSubmit';
+import useBlockFormikSubmit from '../../hooks/useBlockFormikSubmit';
 
 import type { Message, MessageKeyboardType, MessageRequestWritable } from 'api';
 import { TelegramBotsService } from 'api';
@@ -67,14 +67,14 @@ function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
     { keyPrefix: 'messageOffcanvas' },
   );
 
-  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botID = useTelegramBotStore((state) => state.telegramBot!.id);
   const setTelegramBot = useTelegramBotStore((state) => state.setTelegramBot);
 
-  const messageID = useMessageOffcanvasStore((state) => state.messageID);
+  const messageID = useMessageOffcanvasStore((state) => state.id);
   const action = useMessageOffcanvasStore((state) => state.action);
   const hideOffcanvas = useMessageOffcanvasStore((state) => state.hideOffcanvas);
 
-  const handleSubmit = useFormikSubmit<Message, FormValues>(
+  const handleSubmit = useBlockFormikSubmit<Message, FormValues>(
     () => ({
       messages: {
         add: {
@@ -88,7 +88,7 @@ function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
       },
       type: NodeType.Message,
       action,
-      saveAPICall: async ({
+      saveBlock: async ({
         images,
         documents,
         text,
@@ -166,12 +166,12 @@ function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
         const response = await (action === 'edit' && messageID
           ? TelegramBotsService.updateMessage({
               ...formDataBodySerializer,
-              path: { telegramBotId: telegramBotID, id: messageID },
+              path: { telegramBotId: botID, id: messageID },
               body: data,
             })
           : TelegramBotsService.createMessage({
               ...formDataBodySerializer,
-              path: { telegramBotId: telegramBotID },
+              path: { telegramBotId: botID },
               body: data,
             }));
 
@@ -185,13 +185,13 @@ function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
 
         return response;
       },
-      diagramAPICall: (id) =>
+      getDiagramBlock: (id) =>
         TelegramBotsService.getDiagramMessage({
-          path: { telegramBotId: telegramBotID, id },
+          path: { telegramBotId: botID, id },
         }),
       onHide: () => hideOffcanvas(),
     }),
-    [messageID, action, hideOffcanvas, i18n.language],
+    [botID, messageID, action, hideOffcanvas, i18n.language],
   );
 
   return (

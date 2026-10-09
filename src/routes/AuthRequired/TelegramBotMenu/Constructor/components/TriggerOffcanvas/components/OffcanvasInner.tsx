@@ -17,6 +17,8 @@ import { defaultWebhook } from './WebhookBlock/defaults';
 
 import { TelegramBotsService } from 'api';
 
+import composeHandlers from 'utils/composeHandlers';
+
 import type { FormValues } from '..';
 import { useTriggerOffcanvasStore } from '../store';
 
@@ -37,22 +39,22 @@ function OffcanvasInner({
     { keyPrefix: 'triggerOffcanvas' },
   );
 
-  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
+  const { isSubmitting, setValues, setSubmitting, resetForm } =
+    useFormikContext<FormValues>();
 
-  const triggerID = useTriggerOffcanvasStore((state) => state.triggerID);
+  const triggerID = useTriggerOffcanvasStore((state) => state.id);
   const action = useTriggerOffcanvasStore((state) => state.action);
   const show = useTriggerOffcanvasStore((state) => state.show);
-  const loading = useTriggerOffcanvasStore((state) => state.loading);
   const hideOffcanvas = useTriggerOffcanvasStore((state) => state.hideOffcanvas);
-  const setLoading = useTriggerOffcanvasStore((state) => state.setLoading);
 
   useEffect(() => {
     if (!triggerID) return;
     (async () => {
+      setSubmitting(true);
       const { data, error } = await TelegramBotsService.getTrigger({
-        path: { telegramBotId: telegramBotID, id: triggerID },
+        path: { telegramBotId: botID, id: triggerID },
       });
 
       if (error || !data) {
@@ -64,10 +66,9 @@ function OffcanvasInner({
         return;
       }
 
-      const { id: _id, command, message, webhook, ...trigger } = data;
-
+      const { id: _id, command, message, webhook, ...rest } = data;
       setValues({
-        ...trigger,
+        ...rest,
 
         type: command
           ? command.command === 'start'
@@ -97,41 +98,31 @@ function OffcanvasInner({
         message: message
           ? { ...message, text: message.text ?? defaultMessage.text }
           : defaultMessage,
-        webhook: webhook || defaultWebhook,
+        webhook: webhook ?? defaultWebhook,
 
         show_start_command_payload: Boolean(command?.payload),
         show_start_command_description: Boolean(command?.description),
 
         show_command_description: Boolean(command?.description),
       });
-      setLoading(false);
+      setSubmitting(false);
     })();
-  }, [telegramBotID, triggerID]);
-
-  function handleHide(): void {
-    hideOffcanvas();
-    onHide?.();
-  }
-
-  function handleHidden(): void {
-    resetForm();
-    onHidden?.();
-  }
+  }, [botID, triggerID]);
 
   return (
     <Offcanvas
       {...props}
       show={show}
-      loading={isSubmitting || loading}
-      onHide={handleHide}
-      onHidden={handleHidden}
+      loading={isSubmitting}
+      onHide={composeHandlers(hideOffcanvas, onHide)}
+      onHidden={composeHandlers(resetForm, onHidden)}
     >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
           {t('title', { context: action === 'edit' ? 'edit' : 'add' })}
         </Offcanvas.Title>
       </Offcanvas.Header>
-      <Suspense fallback={<Offcanvas.Loading />}>
+      <Suspense fallback={!isSubmitting && <Offcanvas.Loading />}>
         <OffcanvasContent />
       </Suspense>
     </Offcanvas>

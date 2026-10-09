@@ -1,38 +1,24 @@
 import { create } from 'zustand';
 
 export interface StateData {
-  variableID: number | null;
-
+  id: number | null;
   action: 'add' | 'edit';
   show: boolean;
-  loading: boolean;
 }
 
 export interface StateActions {
-  showOffcanvas: (variableID?: StateData['variableID']) => void;
+  showOffcanvas: (id?: number) => void;
   hideOffcanvas: () => void;
-
-  setLoading: (loading: StateData['loading']) => void;
 }
 
 export type State = StateData & StateActions;
 
-export const useTemporaryVariableOffcanvasStore = create<State>()((set, _get, api) => ({
-  variableID: null,
-
+export const useTemporaryVariableOffcanvasStore = create<State>()((set) => ({
+  id: null,
   action: 'add',
   show: false,
-  loading: false,
 
-  showOffcanvas: (variableID) =>
-    set({
-      ...api.getInitialState(),
-      variableID,
-      action: variableID ? 'edit' : 'add',
-      show: true,
-      loading: Boolean(variableID),
-    }),
-  hideOffcanvas: () => set({ variableID: null, show: false }),
-
-  setLoading: (loading) => set({ loading }),
+  showOffcanvas: (id) =>
+    set({ id: id ?? null, action: id ? 'edit' : 'add', show: true }),
+  hideOffcanvas: () => set({ id: null, show: false }),
 }));

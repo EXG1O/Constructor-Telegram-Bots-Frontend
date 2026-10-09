@@ -15,6 +15,8 @@ import { defaultUpdateOperation } from './UpdateBlock/defaults';
 
 import { TelegramBotsService } from 'api';
 
+import composeHandlers from 'utils/composeHandlers';
+
 import type { FormValues } from '..';
 import { useDatabaseOperationOffcanvasStore } from '../store';
 
@@ -35,24 +37,24 @@ function OffcanvasInner({
     { keyPrefix: 'databaseOperationOffcanvas' },
   );
 
-  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
+  const { isSubmitting, setValues, setSubmitting, resetForm } =
+    useFormikContext<FormValues>();
 
-  const operationID = useDatabaseOperationOffcanvasStore((state) => state.operationID);
+  const operationID = useDatabaseOperationOffcanvasStore((state) => state.id);
   const action = useDatabaseOperationOffcanvasStore((state) => state.action);
   const show = useDatabaseOperationOffcanvasStore((state) => state.show);
-  const loading = useDatabaseOperationOffcanvasStore((state) => state.loading);
   const hideOffcanvas = useDatabaseOperationOffcanvasStore(
     (state) => state.hideOffcanvas,
   );
-  const setLoading = useDatabaseOperationOffcanvasStore((state) => state.setLoading);
 
   useEffect(() => {
     if (!operationID) return;
     (async () => {
+      setSubmitting(true);
       const { data, error } = await TelegramBotsService.getDatabaseOperation({
-        path: { telegramBotId: telegramBotID, id: operationID },
+        path: { telegramBotId: botID, id: operationID },
       });
 
       if (error || !data) {
@@ -64,10 +66,9 @@ function OffcanvasInner({
         return;
       }
 
-      const { id: _id, create_operation, update_operation, ...operation } = data;
-
+      const { id: _id, create_operation, update_operation, ...rest } = data;
       setValues({
-        ...operation,
+        ...rest,
         type: create_operation
           ? Type.Create
           : update_operation
@@ -87,34 +88,24 @@ function OffcanvasInner({
             }
           : defaultUpdateOperation,
       });
-      setLoading(false);
+      setSubmitting(false);
     })();
-  }, [telegramBotID, operationID]);
-
-  function handleHide(): void {
-    hideOffcanvas();
-    onHide?.();
-  }
-
-  function handleHidden(): void {
-    resetForm();
-    onHidden?.();
-  }
+  }, [botID, operationID]);
 
   return (
     <Offcanvas
       {...props}
       show={show}
-      loading={isSubmitting || loading}
-      onHide={handleHide}
-      onHidden={handleHidden}
+      loading={isSubmitting}
+      onHide={composeHandlers(hideOffcanvas, onHide)}
+      onHidden={composeHandlers(resetForm, onHidden)}
     >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
           {t('title', { context: action === 'edit' ? 'edit' : 'add' })}
         </Offcanvas.Title>
       </Offcanvas.Header>
-      <Suspense fallback={<Offcanvas.Loading />}>
+      <Suspense fallback={!isSubmitting && <Offcanvas.Loading />}>
         <OffcanvasContent />
       </Suspense>
     </Offcanvas>

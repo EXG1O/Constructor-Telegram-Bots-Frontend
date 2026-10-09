@@ -12,7 +12,7 @@ import type { ValueBlockFormValues } from './components/ValueBlock/types';
 import { defaultNameBlockFormValues } from '../NameBlock/defaults';
 import type { NameBlockFormValues } from '../NameBlock/types';
 
-import useFormikSubmit from '../../hooks/useFormikSubmit';
+import useBlockFormikSubmit from '../../hooks/useBlockFormikSubmit';
 
 import type { TemporaryVariable } from 'api';
 import { TelegramBotsService } from 'api';
@@ -37,15 +37,15 @@ function TemporaryVariableOffcanvas(
     { keyPrefix: 'temporaryVariableOffcanvas' },
   );
 
-  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const variableID = useTemporaryVariableOffcanvasStore((state) => state.variableID);
+  const variableID = useTemporaryVariableOffcanvasStore((state) => state.id);
   const action = useTemporaryVariableOffcanvasStore((state) => state.action);
   const hideOffcanvas = useTemporaryVariableOffcanvasStore(
     (state) => state.hideOffcanvas,
   );
 
-  const handleSubmit = useFormikSubmit<TemporaryVariable, FormValues>(
+  const handleSubmit = useBlockFormikSubmit<TemporaryVariable, FormValues>(
     () => ({
       messages: {
         add: {
@@ -59,23 +59,23 @@ function TemporaryVariableOffcanvas(
       },
       type: NodeType.TemporaryVariable,
       action,
-      saveAPICall: (values) =>
+      saveBlock: (values) =>
         action === 'edit' && variableID
           ? TelegramBotsService.updateTemporaryVariable({
-              path: { telegramBotId: telegramBotID, id: variableID },
+              path: { telegramBotId: botID, id: variableID },
               body: values,
             })
           : TelegramBotsService.createTemporaryVariable({
-              path: { telegramBotId: telegramBotID },
+              path: { telegramBotId: botID },
               body: values,
             }),
-      diagramAPICall: (id) =>
+      getDiagramBlock: (id) =>
         TelegramBotsService.getDiagramTemporaryVariable({
-          path: { telegramBotId: telegramBotID, id },
+          path: { telegramBotId: botID, id },
         }),
       onHide: () => hideOffcanvas(),
     }),
-    [variableID, action, hideOffcanvas, i18n.language],
+    [botID, variableID, action, hideOffcanvas, i18n.language],
   );
 
   return (

@@ -10,6 +10,8 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { TelegramBotsService } from 'api';
 
+import composeHandlers from 'utils/composeHandlers';
+
 import type { FormValues } from '..';
 import { useBackgroundTaskOffcanvasStore } from '../store';
 
@@ -30,22 +32,22 @@ function OffcanvasInner({
     { keyPrefix: 'backgroundTaskOffcanvas' },
   );
 
-  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
+  const { isSubmitting, setValues, setSubmitting, resetForm } =
+    useFormikContext<FormValues>();
 
-  const taskID = useBackgroundTaskOffcanvasStore((state) => state.taskID);
+  const taskID = useBackgroundTaskOffcanvasStore((state) => state.id);
   const action = useBackgroundTaskOffcanvasStore((state) => state.action);
   const show = useBackgroundTaskOffcanvasStore((state) => state.show);
-  const loading = useBackgroundTaskOffcanvasStore((state) => state.loading);
   const hideOffcanvas = useBackgroundTaskOffcanvasStore((state) => state.hideOffcanvas);
-  const setLoading = useBackgroundTaskOffcanvasStore((state) => state.setLoading);
 
   useEffect(() => {
     if (!taskID) return;
     (async () => {
+      setSubmitting(true);
       const { data, error } = await TelegramBotsService.getBackgroundTask({
-        path: { telegramBotId: telegramBotID, id: taskID },
+        path: { telegramBotId: botID, id: taskID },
       });
 
       if (error || !data) {
@@ -59,34 +61,24 @@ function OffcanvasInner({
 
       const { id: _id, interval, ...rest } = data;
       setValues({ ...rest, interval: interval.toString() });
-      setLoading(false);
+      setSubmitting(false);
     })();
-  }, [telegramBotID, taskID]);
-
-  function handleHide(): void {
-    hideOffcanvas();
-    onHide?.();
-  }
-
-  function handleHidden(): void {
-    resetForm();
-    onHidden?.();
-  }
+  }, [botID, taskID]);
 
   return (
     <Offcanvas
       {...props}
       show={show}
-      loading={isSubmitting || loading}
-      onHide={handleHide}
-      onHidden={handleHidden}
+      loading={isSubmitting}
+      onHide={composeHandlers(hideOffcanvas, onHide)}
+      onHidden={composeHandlers(resetForm, onHidden)}
     >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
           {t('title', { context: action === 'edit' ? 'edit' : 'add' })}
         </Offcanvas.Title>
       </Offcanvas.Header>
-      <Suspense fallback={<Offcanvas.Loading />}>
+      <Suspense fallback={!isSubmitting && <Offcanvas.Loading />}>
         <OffcanvasContent />
       </Suspense>
     </Offcanvas>

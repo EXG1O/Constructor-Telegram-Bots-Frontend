@@ -8,52 +8,43 @@ import {
 } from './components/ImagesBlock/store';
 
 export interface StateParams {
-  messageID: number | null;
-
+  id: number | null;
   action: 'add' | 'edit';
   show: boolean;
-  loading: boolean;
-
   usedStorageSize: number;
 }
 
 export interface StateActions {
-  showOffcanvas: (messageID?: number) => void;
+  showOffcanvas: (id?: number) => void;
   hideOffcanvas: () => void;
 
   getRemainingStorageSize: () => number;
 
-  setLoading: (loading: boolean) => void;
   setUsedStorageSize: (size: ((prev: number) => number) | number) => void;
 }
 
 export type State = StateParams & StateActions & ImagesBlockSlice;
 
 export const useMessageOffcanvasStore = create<State>((set, get, api) => ({
-  messageID: null,
-
+  id: null,
   action: 'add',
   show: false,
-  loading: false,
-
   usedStorageSize: 0,
 
   ...createImagesBlockSlice(set, get, api),
 
-  showOffcanvas: (messageID) =>
+  showOffcanvas: (id) =>
     set({
       ...api.getInitialState(),
-      messageID,
-      action: messageID ? 'edit' : 'add',
+      id: id ?? null,
+      action: id ? 'edit' : 'add',
       show: true,
-      loading: Boolean(messageID),
     }),
-  hideOffcanvas: () => set({ messageID: null, show: false }),
+  hideOffcanvas: () => set({ id: null, show: false }),
 
   getRemainingStorageSize: () =>
     useTelegramBotStore.getState().telegramBot!.storage_size - get().usedStorageSize,
 
-  setLoading: (loading) => set({ loading }),
   setUsedStorageSize: (size) =>
     set({
       usedStorageSize: typeof size === 'function' ? size(get().usedStorageSize) : size,

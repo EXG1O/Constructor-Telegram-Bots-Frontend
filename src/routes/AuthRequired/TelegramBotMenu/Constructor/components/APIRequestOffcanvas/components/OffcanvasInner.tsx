@@ -14,6 +14,8 @@ import { defaultMethod } from './MethodBlock/defaults';
 
 import { TelegramBotsService } from 'api';
 
+import composeHandlers from 'utils/composeHandlers';
+
 import type { FormValues } from '..';
 import { useAPIRequestOffcanvasStore } from '../store';
 
@@ -34,22 +36,22 @@ function OffcanvasInner({
     { keyPrefix: 'apiRequestOffcanvas' },
   );
 
-  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
+  const { isSubmitting, setValues, setSubmitting, resetForm } =
+    useFormikContext<FormValues>();
 
-  const requestID = useAPIRequestOffcanvasStore((state) => state.requestID);
+  const requestID = useAPIRequestOffcanvasStore((state) => state.id);
   const action = useAPIRequestOffcanvasStore((state) => state.action);
   const show = useAPIRequestOffcanvasStore((state) => state.show);
-  const loading = useAPIRequestOffcanvasStore((state) => state.loading);
   const hideOffcanvas = useAPIRequestOffcanvasStore((state) => state.hideOffcanvas);
-  const setLoading = useAPIRequestOffcanvasStore((state) => state.setLoading);
 
   useEffect(() => {
     if (!requestID) return;
     (async () => {
+      setSubmitting(true);
       const { data, error } = await TelegramBotsService.getApiRequest({
-        path: { telegramBotId: telegramBotID, id: requestID },
+        path: { telegramBotId: botID, id: requestID },
       });
 
       if (error || !data) {
@@ -61,11 +63,10 @@ function OffcanvasInner({
         return;
       }
 
-      const { id: _id, headers, body, ...request } = data;
-
+      const { id: _id, headers, body, ...rest } = data;
       setValues({
-        ...request,
-        method: request.method || defaultMethod,
+        ...rest,
+        method: rest.method || defaultMethod,
         headers: headers
           ? Object.entries(headers).map(([key, value]) => ({
               key,
@@ -74,34 +75,24 @@ function OffcanvasInner({
           : defaultHeaders,
         body: body ? JSON.stringify(body, null, 2) : defaultBody,
       });
-      setLoading(false);
+      setSubmitting(false);
     })();
-  }, [telegramBotID, requestID]);
-
-  function handleHide(): void {
-    hideOffcanvas();
-    onHide?.();
-  }
-
-  function handleHidden(): void {
-    resetForm();
-    onHidden?.();
-  }
+  }, [botID, requestID]);
 
   return (
     <Offcanvas
       {...props}
       show={show}
-      loading={isSubmitting || loading}
-      onHide={handleHide}
-      onHidden={handleHidden}
+      loading={isSubmitting}
+      onHide={composeHandlers(hideOffcanvas, onHide)}
+      onHidden={composeHandlers(resetForm, onHidden)}
     >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
           {t('title', { context: action === 'edit' ? 'edit' : 'add' })}
         </Offcanvas.Title>
       </Offcanvas.Header>
-      <Suspense fallback={<Offcanvas.Loading />}>
+      <Suspense fallback={!isSubmitting && <Offcanvas.Loading />}>
         <OffcanvasContent />
       </Suspense>
     </Offcanvas>
