@@ -37,13 +37,15 @@ function BlockTable({
           users.length ? (
             <>
               <Table.Header className='text-nowrap'>
-                <Table.Head>{t('headers.activatedDate')}</Table.Head>
-                <Table.Head>Telegram ID</Table.Head>
-                <Table.Head>@username</Table.Head>
-                <Table.Head className='w-1/2'>{t('headers.firstName')}</Table.Head>
-                <Table.Head className='w-1/2'>{t('headers.lastName')}</Table.Head>
-                <Table.Head>{t('headers.bot')}</Table.Head>
-                <Table.Head>{t('headers.premium')}</Table.Head>
+                <Table.Row>
+                  <Table.Head>{t('headers.activatedDate')}</Table.Head>
+                  <Table.Head>Telegram ID</Table.Head>
+                  <Table.Head>@username</Table.Head>
+                  <Table.Head className='w-1/2'>{t('headers.firstName')}</Table.Head>
+                  <Table.Head className='w-1/2'>{t('headers.lastName')}</Table.Head>
+                  <Table.Head>{t('headers.bot')}</Table.Head>
+                  <Table.Head>{t('headers.premium')}</Table.Head>
+                </Table.Row>
               </Table.Header>
               <Table.Body>
                 {users.map((user) => (

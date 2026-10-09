@@ -50,10 +50,12 @@ function RefreshTokensBlock({
       <div className='w-full overflow-hidden rounded-md'>
         <Table striped>
           <Table.Header>
-            <Table.Head>ID</Table.Head>
-            <Table.Head>{t('table.headers.blacklistedDate')}</Table.Head>
-            <Table.Head>{t('table.headers.expiryDate')}</Table.Head>
-            <Table.Head>{t('table.headers.createdDate')}</Table.Head>
+            <Table.Row>
+              <Table.Head>ID</Table.Head>
+              <Table.Head>{t('table.headers.blacklistedDate')}</Table.Head>
+              <Table.Head>{t('table.headers.expiryDate')}</Table.Head>
+              <Table.Head>{t('table.headers.createdDate')}</Table.Head>
+            </Table.Row>
           </Table.Header>
           <Table.Body className='text-center text-nowrap'>
             {refreshTokens.map((token) => (
