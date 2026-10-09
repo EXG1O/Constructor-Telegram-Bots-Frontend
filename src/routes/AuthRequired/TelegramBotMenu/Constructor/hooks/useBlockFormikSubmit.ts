@@ -127,7 +127,7 @@ function useBlockFormikSubmit<
       onHide(id, values, helpers);
       createMessageToast({ message: messages[action].success, level: 'success' });
     },
-    deps,
+    [...deps, reactFlow, getReactFlowCentralPosition],
   );
 }
 
