@@ -20,7 +20,7 @@ import type { WebhookBlockFormValues } from './components/WebhookBlock/types';
 import { defaultNameBlockFormValues } from '../NameBlock/defaults';
 import type { NameBlockFormValues } from '../NameBlock/types';
 
-import useFormikSubmit from '../../hooks/useFormikSubmit';
+import useBlockFormikSubmit from '../../hooks/useBlockFormikSubmit';
 
 import type { Trigger, TriggerRequestWritable } from 'api';
 import { TelegramBotsService } from 'api';
@@ -54,14 +54,14 @@ function TriggerOffcanvas(props: TriggerFormOffcanvasProps): ReactElement {
     { keyPrefix: 'triggerOffcanvas' },
   );
 
-  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const triggerID = useTriggerOffcanvasStore((state) => state.triggerID);
+  const triggerID = useTriggerOffcanvasStore((state) => state.id);
   const action = useTriggerOffcanvasStore((state) => state.action);
   const showOffcanvas = useTriggerOffcanvasStore((state) => state.showOffcanvas);
   const hideOffcanvas = useTriggerOffcanvasStore((state) => state.hideOffcanvas);
 
-  const handleSubmit = useFormikSubmit<Trigger, FormValues>(
+  const handleSubmit = useBlockFormikSubmit<Trigger, FormValues>(
     () => ({
       messages: {
         add: {
@@ -75,7 +75,7 @@ function TriggerOffcanvas(props: TriggerFormOffcanvasProps): ReactElement {
       },
       type: NodeType.Trigger,
       action,
-      saveAPICall: ({
+      saveBlock: ({
         type,
         start_command,
         command,
@@ -114,27 +114,25 @@ function TriggerOffcanvas(props: TriggerFormOffcanvasProps): ReactElement {
 
         return action === 'edit' && triggerID
           ? TelegramBotsService.updateTrigger({
-              path: { telegramBotId: telegramBotID, id: triggerID },
+              path: { telegramBotId: botID, id: triggerID },
               body: data,
             })
           : TelegramBotsService.createTrigger({
-              path: { telegramBotId: telegramBotID },
+              path: { telegramBotId: botID },
               body: data,
             });
       },
-      diagramAPICall: (id) =>
+      getDiagramBlock: (id) =>
         TelegramBotsService.getDiagramTrigger({
-          path: { telegramBotId: telegramBotID, id },
+          path: { telegramBotId: botID, id },
         }),
       onHide: (id, { type }) => {
-        if (type === Type.Webhook) {
-          showOffcanvas(id);
-        } else {
+        if (type !== Type.Webhook) {
           hideOffcanvas();
         }
       },
     }),
-    [triggerID, action, showOffcanvas, hideOffcanvas, i18n.language],
+    [botID, triggerID, action, showOffcanvas, hideOffcanvas, i18n.language],
   );
 
   return (

@@ -10,6 +10,8 @@ import { createMessageToast } from 'components/ui/ToastContainer';
 
 import { TelegramBotsService } from 'api';
 
+import composeHandlers from 'utils/composeHandlers';
+
 import type { FormValues } from '..';
 import { useTimerOffcanvasStore } from '../store';
 
@@ -32,18 +34,18 @@ function OffcanvasInner({
 
   const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const { isSubmitting, setValues, resetForm } = useFormikContext<FormValues>();
+  const { isSubmitting, setValues, setSubmitting, resetForm } =
+    useFormikContext<FormValues>();
 
-  const timerID = useTimerOffcanvasStore((state) => state.timerID);
+  const timerID = useTimerOffcanvasStore((state) => state.id);
   const action = useTimerOffcanvasStore((state) => state.action);
   const show = useTimerOffcanvasStore((state) => state.show);
-  const loading = useTimerOffcanvasStore((state) => state.loading);
   const hideOffcanvas = useTimerOffcanvasStore((state) => state.hideOffcanvas);
-  const setLoading = useTimerOffcanvasStore((state) => state.setLoading);
 
   useEffect(() => {
     if (!timerID) return;
     (async () => {
+      setSubmitting(true);
       const { data, error } = await TelegramBotsService.getTimer({
         path: { telegramBotId: botID, id: timerID },
       });
@@ -58,36 +60,25 @@ function OffcanvasInner({
       }
 
       const { id: _id, duration_seconds, ...rest } = data;
-
       setValues({ ...rest, duration: duration_seconds });
-      setLoading(false);
+      setSubmitting(false);
     })();
   }, [botID, timerID]);
-
-  function handleHide(): void {
-    hideOffcanvas();
-    onHide?.();
-  }
-
-  function handleHidden(): void {
-    resetForm();
-    onHidden?.();
-  }
 
   return (
     <Offcanvas
       {...props}
       show={show}
-      loading={isSubmitting || loading}
-      onHide={handleHide}
-      onHidden={handleHidden}
+      loading={isSubmitting}
+      onHide={composeHandlers(hideOffcanvas, onHide)}
+      onHidden={composeHandlers(resetForm, onHidden)}
     >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
           {t('title', { context: action === 'edit' ? 'edit' : 'add' })}
         </Offcanvas.Title>
       </Offcanvas.Header>
-      <Suspense fallback={<Offcanvas.Loading />}>
+      <Suspense fallback={!isSubmitting && <Offcanvas.Loading />}>
         <OffcanvasContent />
       </Suspense>
     </Offcanvas>

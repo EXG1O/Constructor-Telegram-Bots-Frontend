@@ -12,7 +12,7 @@ import type { PartsBlockFormValues } from './components/PartsBlock/types';
 import { defaultNameBlockFormValues } from '../NameBlock/defaults';
 import type { NameBlockFormValues } from '../NameBlock/types';
 
-import useFormikSubmit from '../../hooks/useFormikSubmit';
+import useBlockFormikSubmit from '../../hooks/useBlockFormikSubmit';
 
 import type {
   Condition,
@@ -40,13 +40,13 @@ function ConditionOffcanvas(props: ConditionFormOffcanvasProps): ReactElement {
     { keyPrefix: 'conditionOffcanvas' },
   );
 
-  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const conditionID = useConditionOffcanvasStore((state) => state.conditionID);
+  const conditionID = useConditionOffcanvasStore((state) => state.id);
   const action = useConditionOffcanvasStore((state) => state.action);
   const hideOffcanvas = useConditionOffcanvasStore((state) => state.hideOffcanvas);
 
-  const handleSubmit = useFormikSubmit<Condition, FormValues>(
+  const handleSubmit = useBlockFormikSubmit<Condition, FormValues>(
     () => ({
       messages: {
         add: {
@@ -60,7 +60,7 @@ function ConditionOffcanvas(props: ConditionFormOffcanvasProps): ReactElement {
       },
       type: NodeType.Condition,
       action,
-      saveAPICall: ({ parts, ...values }) => {
+      saveBlock: ({ parts, ...values }) => {
         const data: ConditionRequestWritable = {
           ...values,
           parts: parts.map(({ type, operator, next_part_operator, ...part }) => ({
@@ -76,21 +76,21 @@ function ConditionOffcanvas(props: ConditionFormOffcanvasProps): ReactElement {
 
         return action === 'edit' && conditionID
           ? TelegramBotsService.updateCondition({
-              path: { telegramBotId: telegramBotID, id: conditionID },
+              path: { telegramBotId: botID, id: conditionID },
               body: data,
             })
           : TelegramBotsService.createCondition({
-              path: { telegramBotId: telegramBotID },
+              path: { telegramBotId: botID },
               body: data,
             });
       },
-      diagramAPICall: (id) =>
+      getDiagramBlock: (id) =>
         TelegramBotsService.getDiagramCondition({
-          path: { telegramBotId: telegramBotID, id },
+          path: { telegramBotId: botID, id },
         }),
       onHide: () => hideOffcanvas(),
     }),
-    [conditionID, action, hideOffcanvas, i18n.language],
+    [botID, conditionID, action, hideOffcanvas, i18n.language],
   );
 
   return (

@@ -17,7 +17,7 @@ type FormikValues<T extends Record<string, any>> = Pick<
 > &
   T;
 
-export interface FormikSubmitOptions<
+export interface BlockFormikSubmitOptions<
   TBlock extends Block,
   TFormikValues extends Record<string, any>,
 > {
@@ -32,12 +32,12 @@ export interface FormikSubmitOptions<
     };
   };
   type: NodeType;
-  action: keyof FormikSubmitOptions<TBlock, TFormikValues>['messages'];
-  saveAPICall: (
+  action: keyof BlockFormikSubmitOptions<TBlock, TFormikValues>['messages'];
+  saveBlock: (
     values: FormikValues<TFormikValues>,
     helpers: FormikHelpers<TFormikValues>,
   ) => Promise<Awaited<RequestResult<{ 200: TBlock; 201: TBlock }, any, false>> | null>;
-  diagramAPICall: (
+  getDiagramBlock: (
     id: number,
     values: FormikValues<TFormikValues>,
     helpers: FormikHelpers<TFormikValues>,
@@ -50,11 +50,11 @@ export interface FormikSubmitOptions<
   ) => void;
 }
 
-function useFormikSubmit<
+function useBlockFormikSubmit<
   TBlock extends Block,
   TFormikValues extends Record<string, any>,
 >(
-  factory: () => FormikSubmitOptions<TBlock, TFormikValues>,
+  factory: () => BlockFormikSubmitOptions<TBlock, TFormikValues>,
   deps: React.DependencyList,
 ) {
   const reactFlow = useReactFlow();
@@ -69,8 +69,8 @@ function useFormikSubmit<
         messages,
         type,
         action,
-        saveAPICall,
-        diagramAPICall,
+        saveBlock,
+        getDiagramBlock,
         normalizeFieldName,
         onHide,
       } = factory();
@@ -82,7 +82,7 @@ function useFormikSubmit<
 
       const position: XYPosition | null =
         action === 'add' ? getReactFlowCentralPosition() : null;
-      const saveResult = await saveAPICall(
+      const saveResult = await saveBlock(
         position ? { ...values, ...position } : values,
         helpers,
       );
@@ -98,7 +98,7 @@ function useFormikSubmit<
 
       const { id } = saveResult.data;
 
-      const diagramResult = await diagramAPICall(id, values, helpers);
+      const diagramResult = await getDiagramBlock(id, values, helpers);
       if (diagramResult.error || !diagramResult.data) return handleError();
 
       const newNode: Node = convertDiagramBlockToNode(type, diagramResult.data);
@@ -131,4 +131,4 @@ function useFormikSubmit<
   );
 }
 
-export default useFormikSubmit;
+export default useBlockFormikSubmit;

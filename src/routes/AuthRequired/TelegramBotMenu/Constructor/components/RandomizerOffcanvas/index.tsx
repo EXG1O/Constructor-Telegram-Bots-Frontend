@@ -10,7 +10,7 @@ import OffcanvasInner, { type OffcanvasInnerProps } from './components/Offcanvas
 import { defaultNameBlockFormValues } from '../NameBlock/defaults';
 import type { NameBlockFormValues } from '../NameBlock/types';
 
-import useFormikSubmit from '../../hooks/useFormikSubmit';
+import useBlockFormikSubmit from '../../hooks/useBlockFormikSubmit';
 
 import type { Randomizer } from 'api';
 import { TelegramBotsService } from 'api';
@@ -34,11 +34,11 @@ function RandomizerOffcanvas(props: RandomizerOffcanvasProps): ReactElement {
 
   const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const randomizerID = useRandomizerOffcanvasStore((state) => state.randomizerID);
+  const randomizerID = useRandomizerOffcanvasStore((state) => state.id);
   const action = useRandomizerOffcanvasStore((state) => state.action);
   const hideOffcanvas = useRandomizerOffcanvasStore((state) => state.hideOffcanvas);
 
-  const handleSubmit = useFormikSubmit<Randomizer, FormValues>(
+  const handleSubmit = useBlockFormikSubmit<Randomizer, FormValues>(
     () => ({
       messages: {
         add: {
@@ -52,7 +52,7 @@ function RandomizerOffcanvas(props: RandomizerOffcanvasProps): ReactElement {
       },
       type: NodeType.Randomizer,
       action,
-      saveAPICall: (values) =>
+      saveBlock: (values) =>
         action === 'edit' && randomizerID
           ? TelegramBotsService.updateRandomizer({
               path: { telegramBotId: botID, id: randomizerID },
@@ -62,13 +62,13 @@ function RandomizerOffcanvas(props: RandomizerOffcanvasProps): ReactElement {
               path: { telegramBotId: botID },
               body: values,
             }),
-      diagramAPICall: (id) =>
+      getDiagramBlock: (id) =>
         TelegramBotsService.getDiagramRandomizer({
           path: { telegramBotId: botID, id },
         }),
       onHide: () => hideOffcanvas(),
     }),
-    [i18n.language, botID, randomizerID, action, hideOffcanvas],
+    [botID, randomizerID, action, hideOffcanvas, i18n.language],
   );
 
   return (

@@ -12,7 +12,7 @@ import OffcanvasInner, { type OffcanvasInnerProps } from './components/Offcanvas
 import { defaultNameBlockFormValues } from '../NameBlock/defaults';
 import type { NameBlockFormValues } from '../NameBlock/types';
 
-import useFormikSubmit from '../../hooks/useFormikSubmit';
+import useBlockFormikSubmit from '../../hooks/useBlockFormikSubmit';
 
 import type { Timer, TimerRequestWritable } from 'api';
 import { TelegramBotsService } from 'api';
@@ -37,11 +37,11 @@ function TimerOffcanvas(props: TimerOffcanvasProps): ReactElement {
 
   const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const timerID = useTimerOffcanvasStore((state) => state.timerID);
+  const timerID = useTimerOffcanvasStore((state) => state.id);
   const action = useTimerOffcanvasStore((state) => state.action);
   const hideOffcanvas = useTimerOffcanvasStore((state) => state.hideOffcanvas);
 
-  const handleSubmit = useFormikSubmit<Timer, FormValues>(
+  const handleSubmit = useBlockFormikSubmit<Timer, FormValues>(
     () => ({
       messages: {
         add: {
@@ -55,7 +55,7 @@ function TimerOffcanvas(props: TimerOffcanvasProps): ReactElement {
       },
       type: NodeType.Timer,
       action,
-      saveAPICall: ({ duration, ...values }) => {
+      saveBlock: ({ duration, ...values }) => {
         const data: TimerRequestWritable = { ...values, duration_seconds: duration };
         return action === 'edit' && timerID
           ? TelegramBotsService.updateTimer({
@@ -67,13 +67,13 @@ function TimerOffcanvas(props: TimerOffcanvasProps): ReactElement {
               body: data,
             });
       },
-      diagramAPICall: (id) =>
+      getDiagramBlock: (id) =>
         TelegramBotsService.getDiagramTimer({ path: { telegramBotId: botID, id } }),
       normalizeFieldName: (fieldName) =>
         fieldName.replace('duration_seconds', 'duration'),
       onHide: () => hideOffcanvas(),
     }),
-    [i18n.language, botID, timerID, action, hideOffcanvas],
+    [botID, timerID, action, hideOffcanvas, i18n.language],
   );
 
   return (

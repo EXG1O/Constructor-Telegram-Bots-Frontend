@@ -18,7 +18,7 @@ import type { URLBlockFormValues } from './components/URLBlock/types';
 import { defaultNameBlockFormValues } from '../NameBlock/defaults';
 import type { NameBlockFormValues } from '../NameBlock/types';
 
-import useFormikSubmit from '../../hooks/useFormikSubmit';
+import useBlockFormikSubmit from '../../hooks/useBlockFormikSubmit';
 
 import type { ApiRequest, ApiRequestRequestWritable } from 'api';
 import { TelegramBotsService } from 'api';
@@ -53,13 +53,13 @@ function APIRequestOffcanvas(props: APIRequestOffcanvasProps): ReactElement {
     { keyPrefix: 'apiRequestOffcanvas' },
   );
 
-  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const requestID = useAPIRequestOffcanvasStore((state) => state.requestID);
+  const requestID = useAPIRequestOffcanvasStore((state) => state.id);
   const action = useAPIRequestOffcanvasStore((state) => state.action);
   const hideOffcanvas = useAPIRequestOffcanvasStore((state) => state.hideOffcanvas);
 
-  const handleSubmit = useFormikSubmit<ApiRequest, FormValues>(
+  const handleSubmit = useBlockFormikSubmit<ApiRequest, FormValues>(
     () => ({
       messages: {
         add: {
@@ -73,7 +73,7 @@ function APIRequestOffcanvas(props: APIRequestOffcanvasProps): ReactElement {
       },
       type: NodeType.ApiRequest,
       action,
-      saveAPICall: async ({ headers, body, ...values }) => {
+      saveBlock: async ({ headers, body, ...values }) => {
         const data: ApiRequestRequestWritable = {
           ...values,
           headers: convertHeadersToRecord(headers),
@@ -82,21 +82,21 @@ function APIRequestOffcanvas(props: APIRequestOffcanvasProps): ReactElement {
 
         return action === 'edit' && requestID
           ? TelegramBotsService.updateApiRequest({
-              path: { telegramBotId: telegramBotID, id: requestID },
+              path: { telegramBotId: botID, id: requestID },
               body: data,
             })
           : TelegramBotsService.createApiRequest({
-              path: { telegramBotId: telegramBotID },
+              path: { telegramBotId: botID },
               body: data,
             });
       },
-      diagramAPICall: (id) =>
+      getDiagramBlock: (id) =>
         TelegramBotsService.getDiagramApiRequest({
-          path: { telegramBotId: telegramBotID, id },
+          path: { telegramBotId: botID, id },
         }),
       onHide: () => hideOffcanvas(),
     }),
-    [requestID, action, hideOffcanvas, i18n.language],
+    [botID, requestID, action, hideOffcanvas, i18n.language],
   );
 
   return (

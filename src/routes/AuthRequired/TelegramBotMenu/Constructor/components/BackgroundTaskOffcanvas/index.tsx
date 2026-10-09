@@ -12,7 +12,7 @@ import OffcanvasInner, { type OffcanvasInnerProps } from './components/Offcanvas
 import { defaultNameBlockFormValues } from '../NameBlock/defaults';
 import type { NameBlockFormValues } from '../NameBlock/types';
 
-import useFormikSubmit from '../../hooks/useFormikSubmit';
+import useBlockFormikSubmit from '../../hooks/useBlockFormikSubmit';
 
 import type { BackgroundTask, BackgroundTaskRequestWritable } from 'api';
 import { TelegramBotsService } from 'api';
@@ -35,13 +35,13 @@ function BackgroundTaskOffcanvas(props: BackgroundTaskOffcanvasProps): ReactElem
     { keyPrefix: 'backgroundTaskOffcanvas' },
   );
 
-  const telegramBotID = useTelegramBotStore((state) => state.telegramBot!.id);
+  const botID = useTelegramBotStore((state) => state.telegramBot!.id);
 
-  const taskID = useBackgroundTaskOffcanvasStore((state) => state.taskID);
+  const taskID = useBackgroundTaskOffcanvasStore((state) => state.id);
   const action = useBackgroundTaskOffcanvasStore((state) => state.action);
   const hideOffcanvas = useBackgroundTaskOffcanvasStore((state) => state.hideOffcanvas);
 
-  const handleSubmit = useFormikSubmit<BackgroundTask, FormValues>(
+  const handleSubmit = useBlockFormikSubmit<BackgroundTask, FormValues>(
     () => ({
       messages: {
         add: {
@@ -55,7 +55,7 @@ function BackgroundTaskOffcanvas(props: BackgroundTaskOffcanvasProps): ReactElem
       },
       type: NodeType.BackgroundTask,
       action,
-      saveAPICall: ({ interval, ...values }) => {
+      saveBlock: ({ interval, ...values }) => {
         const data: BackgroundTaskRequestWritable = {
           ...values,
           interval: Number(interval),
@@ -63,21 +63,21 @@ function BackgroundTaskOffcanvas(props: BackgroundTaskOffcanvasProps): ReactElem
 
         return action === 'edit' && taskID
           ? TelegramBotsService.updateBackgroundTask({
-              path: { telegramBotId: telegramBotID, id: taskID },
+              path: { telegramBotId: botID, id: taskID },
               body: data,
             })
           : TelegramBotsService.createBackgroundTask({
-              path: { telegramBotId: telegramBotID },
+              path: { telegramBotId: botID },
               body: data,
             });
       },
-      diagramAPICall: (id) =>
+      getDiagramBlock: (id) =>
         TelegramBotsService.getDiagramBackgroundTask({
-          path: { telegramBotId: telegramBotID, id },
+          path: { telegramBotId: botID, id },
         }),
       onHide: () => hideOffcanvas(),
     }),
-    [taskID, action, hideOffcanvas, i18n.language],
+    [botID, taskID, action, hideOffcanvas, i18n.language],
   );
 
   return (
