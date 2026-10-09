@@ -39,13 +39,15 @@ function BlockTable({
           chats.length ? (
             <>
               <Table.Header className='text-nowrap'>
-                <Table.Head>Telegram ID</Table.Head>
-                <Table.Head>{t('headers.title')}</Table.Head>
-                <Table.Head>@username</Table.Head>
-                <Table.Head>{t('headers.firstName')}</Table.Head>
-                <Table.Head>{t('headers.lastName')}</Table.Head>
-                <Table.Head>{t('headers.forum')}</Table.Head>
-                <Table.Head>{t('headers.comments')}</Table.Head>
+                <Table.Row>
+                  <Table.Head>Telegram ID</Table.Head>
+                  <Table.Head>{t('headers.title')}</Table.Head>
+                  <Table.Head>@username</Table.Head>
+                  <Table.Head>{t('headers.firstName')}</Table.Head>
+                  <Table.Head>{t('headers.lastName')}</Table.Head>
+                  <Table.Head>{t('headers.forum')}</Table.Head>
+                  <Table.Head>{t('headers.comments')}</Table.Head>
+                </Table.Row>
               </Table.Header>
               <Table.Body>
                 {chats.map((chat) => (

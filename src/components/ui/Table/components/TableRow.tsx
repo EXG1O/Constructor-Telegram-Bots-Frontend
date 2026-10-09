@@ -1,5 +1,7 @@
-import React, { forwardRef, type HTMLAttributes } from 'react';
+import React, { forwardRef, type HTMLAttributes, useContext } from 'react';
 import { cva } from 'class-variance-authority';
+
+import TableHeaderContext from '../contexts/TableHeaderContext';
 
 import useTable from '../hooks/useTable';
 
@@ -21,12 +23,13 @@ export interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {}
 const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
   ({ className, ...props }, ref) => {
     const { striped } = useTable();
+    const isInHeader = useContext(TableHeaderContext);
 
     return (
       <tr
         {...props}
         ref={ref}
-        className={cn(tableRowVariants({ striped, className }))}
+        className={cn(tableRowVariants({ striped: !isInHeader && striped, className }))}
       />
     );
   },
