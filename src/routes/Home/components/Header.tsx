@@ -7,7 +7,7 @@ import Block, { type BlockProps } from 'components/ui/Block';
 
 export interface HeaderProps extends Omit<
   BlockProps,
-  'variant' | 'gradient' | 'children'
+  'size' | 'variant' | 'gradient' | 'children'
 > {}
 
 function Header(props: HeaderProps): ReactElement {
