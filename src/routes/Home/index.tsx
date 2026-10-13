@@ -5,6 +5,7 @@ import type { RouteID } from 'routes';
 
 import Page from 'components/ui/Page';
 
+import Features from './components/Features';
 import Header from './components/Header';
 import Stats from './components/Stats';
 
@@ -19,7 +20,10 @@ function Home(): ReactElement {
             <Header />
           </div>
           <div className='lg:col-span-1'>
-            <Stats />
+            <Features className='h-full' />
+          </div>
+          <div className='lg:col-span-1'>
+            <Stats className='h-full' />
           </div>
         </div>
       </Page>

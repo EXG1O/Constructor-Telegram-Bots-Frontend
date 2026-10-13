@@ -1,13 +1,36 @@
 {
+  "features": {
+    "freeLimits": {
+      "description": "Free limits allow you to peacefully implement complex logic without hitting restrictions.",
+      "title": "Free limits"
+    },
+    "modularity": {
+      "description": "Block modularity allows you to easily assemble flexible logic.",
+      "title": "Modularity"
+    },
+    "openSource": {
+      "description": "The project's source code is open to everyone, ensuring transparency of its operation.",
+      "title": "Open source code"
+    },
+    "title": "Features",
+    "userRespect": {
+      "description": "The project was created as a free alternative without artificial money-making restrictions, with respect for users.",
+      "title": "Respect for users"
+    }
+  },
   "header": {
     "text": "A user-friendly platform that lets you easily create your own multifunctional Telegram bot with no coding required."
   },
   "stats": {
-    "telegramBotsEnabled": "Enabled Telegram bots",
-    "telegramBotsTotal": "Added Telegram bots",
-    "telegramBotsUsers": "Users of Telegram bots",
+    "telegramBots": {
+      "enabled": "Enabled Telegram bots",
+      "total": "Added Telegram bots",
+      "users": "Users of Telegram bots"
+    },
     "title": "Statistics",
-    "usersTotal": "Users"
+    "users": {
+      "total": "Users"
+    }
   },
   "title": "Constructor Telegram Bots"
 }
