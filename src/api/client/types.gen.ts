@@ -911,8 +911,9 @@ export type SubscriptionInvoice = {
 export type SubscriptionPrice = {
   readonly id: number;
   readonly badge: string | null;
+  readonly discount_percentage: number | null;
   readonly period_months: number;
-  readonly amount_stars_per_month: number;
+  readonly base_amount_stars: number;
   readonly amount_stars: number;
 };
 

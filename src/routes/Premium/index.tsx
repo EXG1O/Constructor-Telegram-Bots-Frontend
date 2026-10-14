@@ -21,10 +21,7 @@ import { PremiumService } from 'api';
 
 import cn from 'utils/cn';
 
-interface Feature {
-  title: string;
-  description: string;
-}
+const featureNames: string[] = ['priorityMode'];
 
 function Premium(): ReactElement {
   const { t } = useTranslation<`${RouteID.Premium}`, any>('premium');
@@ -33,15 +30,8 @@ function Premium(): ReactElement {
   const { prices } = usePremiumRouteLoaderData();
 
   const [activePriceID, setActivePriceID] = useState<number>(prices[0].id);
-  const [open, setOpen] = useState<boolean>(false);
+  const [featuresOpen, setFeaturesOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-
-  const features: Feature[] = [
-    {
-      title: t('subscription.features.priorityMode.title'),
-      description: t('subscription.features.priorityMode.description'),
-    },
-  ];
 
   async function handleSubmit(): Promise<void> {
     setLoading(true);
@@ -94,14 +84,14 @@ function Premium(): ReactElement {
                   value={price.id.toString()}
                   className='flex items-end justify-between gap-2'
                 >
-                  <div className='flex flex-wrap-reverse items-center gap-1'>
+                  <div className='flex items-center gap-1'>
                     <span className='font-medium text-nowrap'>
                       {t('subscription.period', {
                         months: price.period_months,
                         count: price.period_months,
                       })}
                     </span>
-                    {price.badge && (
+                    {price.discount_percentage && (
                       <span
                         className={cn(
                           'bg-primary',
@@ -112,15 +102,13 @@ function Premium(): ReactElement {
                           price.id !== activePriceID && 'opacity-90',
                         )}
                       >
-                        {price.badge}
+                        {`-${price.discount_percentage}%`}
                       </span>
                     )}
                   </div>
                   <div className='flex items-center gap-1'>
-                    {price.period_months !== 1 && (
-                      <s className='text-sm'>
-                        {prices[0].amount_stars_per_month * price.period_months}
-                      </s>
+                    {price.discount_percentage && (
+                      <s className='text-sm'>{price.base_amount_stars}</s>
                     )}
                     <span>{price.amount_stars}</span>
                     <Star className='fill-warning text-warning' />
@@ -128,11 +116,15 @@ function Premium(): ReactElement {
                 </Tabs.Button>
               ))}
             </Tabs>
-            <Collapsible open={open} className='w-full' onOpenChange={setOpen}>
+            <Collapsible
+              open={featuresOpen}
+              className='w-full'
+              onOpenChange={setFeaturesOpen}
+            >
               <Collapsible.Trigger asChild>
                 <Button
                   size='sm'
-                  variant={open ? 'secondary' : 'dark'}
+                  variant={featuresOpen ? 'secondary' : 'dark'}
                   className='w-full data-[state=open]:rounded-b-none'
                 >
                   {t('subscription.features.button')}
@@ -141,10 +133,17 @@ function Premium(): ReactElement {
               <Collapsible.Body>
                 <List striped>
                   <ul className='w-full overflow-hidden rounded-md rounded-t-none'>
-                    {features.map((feature, id) => (
-                      <List.Item key={id} className='flex flex-col'>
-                        <span className='w-full font-medium'>{feature.title}</span>
-                        <span className='w-full text-sm'>{feature.description}</span>
+                    {featureNames.map((name) => (
+                      <List.Item
+                        key={name}
+                        className='flex flex-col gap-0.75 px-2.5 py-1.5'
+                      >
+                        <h4 className='w-full font-medium'>
+                          {t(`subscription.features.${name}.title`)}
+                        </h4>
+                        <p className='w-full text-sm'>
+                          {t(`subscription.features.${name}.description`)}
+                        </p>
                       </List.Item>
                     ))}
                   </ul>
