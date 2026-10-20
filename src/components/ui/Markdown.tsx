@@ -37,28 +37,28 @@ function Markdown({
       components={{
         h1: ({ node: _node, className, ...props }) => {
           return (
-            <h1 {...props} className={cn('text-5xl', 'font-semibold', className)} />
+            <h1 {...props} className={cn('text-5xl', 'font-semibold', 'mb-1', 'not-first:mt-4', className)} />
           );
         },
         h2: ({ node: _node, className, ...props }) => {
           return (
-            <h2 {...props} className={cn('text-4xl', 'font-semibold', className)} />
+            <h2 {...props} className={cn('text-4xl', 'font-semibold', 'mb-1', 'not-first:mt-4', className)} />
           );
         },
         h3: ({ node: _node, className, ...props }) => {
           return (
-            <h3 {...props} className={cn('text-3xl', 'font-semibold', className)} />
+            <h3 {...props} className={cn('text-3xl', 'font-semibold', 'mb-1', 'not-first:mt-4', className)} />
           );
         },
         h4: ({ node: _node, className, ...props }) => {
-          return <h4 {...props} className={cn('text-2xl', 'font-medium', className)} />;
+          return <h4 {...props} className={cn('text-2xl', 'font-medium', 'mb-1', 'not-first:mt-3', className)} />;
         },
         h5: ({ node: _node, className, ...props }) => {
-          return <h5 {...props} className={cn('text-xl', 'font-medium', className)} />;
+          return <h5 {...props} className={cn('text-xl', 'font-medium', 'mb-1', 'not-first:mt-3', className)} />;
         },
         h6: ({ node: _node, className, ...props }) => {
           return (
-            <h6 {...props} className={cn('text-base', 'font-medium', className)} />
+            <h6 {...props} className={cn('text-base', 'font-medium', 'mb-1', 'not-first:mt-3', className)} />
           );
         },
         strong: ({ node: _node, className, ...props }) => {
