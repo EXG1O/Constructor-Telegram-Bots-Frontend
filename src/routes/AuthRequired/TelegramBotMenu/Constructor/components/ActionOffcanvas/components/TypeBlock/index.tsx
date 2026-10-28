@@ -1,0 +1,40 @@
+import React, { type ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import type { RouteID } from 'routes';
+
+import FormSelectFeedback from 'components/shared/FormSelectFeedback';
+import Block, { type BlockProps } from 'components/ui/Block';
+
+import cn from 'utils/cn';
+
+import { Type } from './enums';
+
+export interface TypeBlockProps extends Omit<BlockProps, 'variant' | 'children'> {}
+
+function TypeBlock({ className, ...props }: TypeBlockProps): ReactElement {
+  const { t } = useTranslation<`${RouteID.TelegramBotMenuConstructor}`, any>(
+    'telegram-bot-menu-constructor',
+    { keyPrefix: 'actionOffcanvas.typeBlock' },
+  );
+
+  return (
+    <Block
+      {...props}
+      variant='light'
+      className={cn('flex', 'flex-col', 'gap-2', className)}
+    >
+      <Block.Title>
+        <h3 className='text-lg font-medium'>{t('title')}</h3>
+      </Block.Title>
+      <FormSelectFeedback name='type'>
+        <option value={Type.MessageDeletion}>{t('types.messageDeletion')}</option>
+        <option value={Type.DefaultKeyboardRemoval}>
+          {t('types.defaultKeyboardRemoval')}
+        </option>
+      </FormSelectFeedback>
+    </Block>
+  );
+}
+
+export default TypeBlock;

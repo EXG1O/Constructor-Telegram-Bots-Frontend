@@ -7,6 +7,7 @@ import Modal, { type ModalProps } from 'components/ui/Modal';
 
 import BlockButton from './components/BlockButton';
 
+import { useActionOffcanvasStore } from '../ActionOffcanvas/store';
 import { useAPIRequestOffcanvasStore } from '../APIRequestOffcanvas/store';
 import { useBackgroundTaskOffcanvasStore } from '../BackgroundTaskOffcanvas/store';
 import { useConditionOffcanvasStore } from '../ConditionOffcanvas/store';
@@ -54,6 +55,9 @@ function SelectBlockModal({ children, ...props }: SelectBlockModalProps): ReactE
     (state) => state.showOffcanvas,
   );
   const showAddTimerOffcanvas = useTimerOffcanvasStore((state) => state.showOffcanvas);
+  const showAddActionOffcanvas = useActionOffcanvasStore(
+    (state) => state.showOffcanvas,
+  );
 
   return (
     <Modal {...props}>
@@ -112,6 +116,11 @@ function SelectBlockModal({ children, ...props }: SelectBlockModalProps): ReactE
             name={t('randomizer.name')}
             description={t('randomizer.description')}
             onClick={() => showAddRandomizerOffcanvas()}
+          />
+          <BlockButton
+            name={t('action.name')}
+            description={t('action.description')}
+            onClick={() => showAddActionOffcanvas()}
           />
         </Modal.Body>
       </Modal.Content>

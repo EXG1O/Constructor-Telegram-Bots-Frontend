@@ -29,6 +29,40 @@ export type ApiRequestRequest = {
   body?: any | null;
 };
 
+export type Action = {
+  readonly id: number;
+  name: string;
+  message_deletion?: ActionMessageDeletion | null;
+  default_keyboard_removal?: ActionDefaultKeyboardRemoval | null;
+};
+
+export type ActionDefaultKeyboardRemoval = {
+  [key: string]: any;
+};
+
+export type ActionDefaultKeyboardRemovalRequest = {
+  [key: string]: any;
+};
+
+export type ActionMessageDeletion = {
+  target: ActionMessageDeletionTarget;
+};
+
+export type ActionMessageDeletionRequest = {
+  target: ActionMessageDeletionTarget;
+};
+
+export enum ActionMessageDeletionTarget {
+  UserMessage = 'user_message',
+  LastBotMessages = 'last_bot_messages',
+}
+
+export type ActionRequest = {
+  name: string;
+  message_deletion?: ActionMessageDeletionRequest | null;
+  default_keyboard_removal?: ActionDefaultKeyboardRemovalRequest | null;
+};
+
 export type BackgroundTask = {
   readonly id: number;
   name: string;
@@ -162,6 +196,7 @@ export enum ConnectionSourceObjectType {
   TemporaryVariable = 'temporary_variable',
   Timer = 'timer',
   Randomizer = 'randomizer',
+  Action = 'action',
 }
 
 export enum ConnectionTargetObjectType {
@@ -174,6 +209,7 @@ export enum ConnectionTargetObjectType {
   TemporaryVariable = 'temporary_variable',
   Timer = 'timer',
   Randomizer = 'randomizer',
+  Action = 'action',
 }
 
 export type DatabaseCreateOperation = {
@@ -233,6 +269,19 @@ export type DiagramApiRequest = {
 };
 
 export type DiagramApiRequestRequest = {
+  x?: number;
+  y?: number;
+};
+
+export type DiagramAction = {
+  readonly id: number;
+  readonly name: string;
+  x?: number;
+  y?: number;
+  readonly source_connections: Array<Connection>;
+};
+
+export type DiagramActionRequest = {
   x?: number;
   y?: number;
 };
@@ -643,13 +692,11 @@ export type MessageRequest = {
 
 export type MessageSettings = {
   reply_to_user_message?: boolean;
-  delete_user_message?: boolean;
   send_as_new_message?: boolean;
 };
 
 export type MessageSettingsRequest = {
   reply_to_user_message?: boolean;
-  delete_user_message?: boolean;
   send_as_new_message?: boolean;
 };
 
@@ -720,6 +767,12 @@ export type PatchedApiRequestRequest = {
   body?: any | null;
 };
 
+export type PatchedActionRequest = {
+  name?: string;
+  message_deletion?: ActionMessageDeletionRequest | null;
+  default_keyboard_removal?: ActionDefaultKeyboardRemovalRequest | null;
+};
+
 export type PatchedBackgroundTaskRequest = {
   name?: string;
   interval?: number;
@@ -746,6 +799,11 @@ export type PatchedDatabaseRecordRequest = {
 };
 
 export type PatchedDiagramApiRequestRequest = {
+  x?: number;
+  y?: number;
+};
+
+export type PatchedDiagramActionRequest = {
   x?: number;
   y?: number;
 };
@@ -1063,6 +1121,92 @@ export type TelegramBotsCreateApiRequestXErrorComponent = {
 };
 
 export type TelegramBotsCreateApiRequestYErrorComponent = {
+  attr: 'y';
+  code: 'invalid' | 'max_string_length' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsCreateActionDefaultKeyboardRemovalNonFieldErrorsErrorComponent =
+  {
+    attr: 'default_keyboard_removal.non_field_errors';
+    code: 'invalid';
+    detail: string;
+  };
+
+export type TelegramBotsCreateActionError =
+  | ({
+      attr: 'non_field_errors';
+    } & TelegramBotsCreateActionNonFieldErrorsErrorComponent)
+  | ({
+      attr: 'name';
+    } & TelegramBotsCreateActionNameErrorComponent)
+  | ({
+      attr: 'x';
+    } & TelegramBotsCreateActionXErrorComponent)
+  | ({
+      attr: 'y';
+    } & TelegramBotsCreateActionYErrorComponent)
+  | ({
+      attr: 'message_deletion.non_field_errors';
+    } & TelegramBotsCreateActionMessageDeletionNonFieldErrorsErrorComponent)
+  | ({
+      attr: 'message_deletion.target';
+    } & TelegramBotsCreateActionMessageDeletionTargetErrorComponent)
+  | ({
+      attr: 'default_keyboard_removal.non_field_errors';
+    } & TelegramBotsCreateActionDefaultKeyboardRemovalNonFieldErrorsErrorComponent);
+
+export type TelegramBotsCreateActionErrorResponse400 =
+  | ({
+      type: 'validation_error';
+    } & TelegramBotsCreateActionValidationError)
+  | ({
+      type: 'client_error';
+    } & ParseErrorResponse);
+
+export type TelegramBotsCreateActionMessageDeletionNonFieldErrorsErrorComponent = {
+  attr: 'message_deletion.non_field_errors';
+  code: 'invalid';
+  detail: string;
+};
+
+export type TelegramBotsCreateActionMessageDeletionTargetErrorComponent = {
+  attr: 'message_deletion.target';
+  code: 'invalid_choice' | 'null' | 'required';
+  detail: string;
+};
+
+export type TelegramBotsCreateActionNameErrorComponent = {
+  attr: 'name';
+  code:
+    | 'blank'
+    | 'invalid'
+    | 'max_length'
+    | 'null'
+    | 'null_characters_not_allowed'
+    | 'required'
+    | 'surrogate_characters_not_allowed';
+  detail: string;
+};
+
+export type TelegramBotsCreateActionNonFieldErrorsErrorComponent = {
+  attr: 'non_field_errors';
+  code: 'invalid' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsCreateActionValidationError = {
+  type: ValidationErrorType;
+  errors: Array<TelegramBotsCreateActionError>;
+};
+
+export type TelegramBotsCreateActionXErrorComponent = {
+  attr: 'x';
+  code: 'invalid' | 'max_string_length' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsCreateActionYErrorComponent = {
   attr: 'y';
   code: 'invalid' | 'max_string_length' | 'null';
   detail: string;
@@ -1889,9 +2033,6 @@ export type TelegramBotsCreateMessageError =
       attr: 'settings.reply_to_user_message';
     } & TelegramBotsCreateMessageSettingsReplyToUserMessageErrorComponent)
   | ({
-      attr: 'settings.delete_user_message';
-    } & TelegramBotsCreateMessageSettingsDeleteUserMessageErrorComponent)
-  | ({
       attr: 'settings.send_as_new_message';
     } & TelegramBotsCreateMessageSettingsSendAsNewMessageErrorComponent)
   | ({
@@ -2099,12 +2240,6 @@ export type TelegramBotsCreateMessageNameErrorComponent = {
 
 export type TelegramBotsCreateMessageNonFieldErrorsErrorComponent = {
   attr: 'non_field_errors';
-  code: 'invalid' | 'null';
-  detail: string;
-};
-
-export type TelegramBotsCreateMessageSettingsDeleteUserMessageErrorComponent = {
-  attr: 'settings.delete_user_message';
   code: 'invalid' | 'null';
   detail: string;
 };
@@ -2620,6 +2755,8 @@ export type TelegramBotsCreateVariableValueErrorComponent = {
 
 export type TelegramBotsDeleteApiRequestErrorResponse400 = ParseErrorResponse;
 
+export type TelegramBotsDeleteActionErrorResponse400 = ParseErrorResponse;
+
 export type TelegramBotsDeleteBackgroundTaskErrorResponse400 = ParseErrorResponse;
 
 export type TelegramBotsDeleteChatErrorResponse400 = ParseErrorResponse;
@@ -2659,6 +2796,10 @@ export type TelegramBotsDeleteVariableErrorResponse400 = ParseErrorResponse;
 export type TelegramBotsGetApiRequestErrorResponse400 = ParseErrorResponse;
 
 export type TelegramBotsGetApiRequestListErrorResponse400 = ParseErrorResponse;
+
+export type TelegramBotsGetActionErrorResponse400 = ParseErrorResponse;
+
+export type TelegramBotsGetActionListErrorResponse400 = ParseErrorResponse;
 
 export type TelegramBotsGetBackgroundTaskErrorResponse400 = ParseErrorResponse;
 
@@ -2702,6 +2843,10 @@ export type TelegramBotsGetDatabaseRecordListErrorResponse400 = ParseErrorRespon
 export type TelegramBotsGetDiagramApiRequestErrorResponse400 = ParseErrorResponse;
 
 export type TelegramBotsGetDiagramApiRequestListErrorResponse400 = ParseErrorResponse;
+
+export type TelegramBotsGetDiagramActionErrorResponse400 = ParseErrorResponse;
+
+export type TelegramBotsGetDiagramActionListErrorResponse400 = ParseErrorResponse;
 
 export type TelegramBotsGetDiagramBackgroundTaskErrorResponse400 = ParseErrorResponse;
 
@@ -2893,6 +3038,93 @@ export type TelegramBotsPartialUpdateApiRequestXErrorComponent = {
 };
 
 export type TelegramBotsPartialUpdateApiRequestYErrorComponent = {
+  attr: 'y';
+  code: 'invalid' | 'max_string_length' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsPartialUpdateActionDefaultKeyboardRemovalNonFieldErrorsErrorComponent =
+  {
+    attr: 'default_keyboard_removal.non_field_errors';
+    code: 'invalid';
+    detail: string;
+  };
+
+export type TelegramBotsPartialUpdateActionError =
+  | ({
+      attr: 'non_field_errors';
+    } & TelegramBotsPartialUpdateActionNonFieldErrorsErrorComponent)
+  | ({
+      attr: 'name';
+    } & TelegramBotsPartialUpdateActionNameErrorComponent)
+  | ({
+      attr: 'x';
+    } & TelegramBotsPartialUpdateActionXErrorComponent)
+  | ({
+      attr: 'y';
+    } & TelegramBotsPartialUpdateActionYErrorComponent)
+  | ({
+      attr: 'message_deletion.non_field_errors';
+    } & TelegramBotsPartialUpdateActionMessageDeletionNonFieldErrorsErrorComponent)
+  | ({
+      attr: 'message_deletion.target';
+    } & TelegramBotsPartialUpdateActionMessageDeletionTargetErrorComponent)
+  | ({
+      attr: 'default_keyboard_removal.non_field_errors';
+    } & TelegramBotsPartialUpdateActionDefaultKeyboardRemovalNonFieldErrorsErrorComponent);
+
+export type TelegramBotsPartialUpdateActionErrorResponse400 =
+  | ({
+      type: 'validation_error';
+    } & TelegramBotsPartialUpdateActionValidationError)
+  | ({
+      type: 'client_error';
+    } & ParseErrorResponse);
+
+export type TelegramBotsPartialUpdateActionMessageDeletionNonFieldErrorsErrorComponent =
+  {
+    attr: 'message_deletion.non_field_errors';
+    code: 'invalid';
+    detail: string;
+  };
+
+export type TelegramBotsPartialUpdateActionMessageDeletionTargetErrorComponent = {
+  attr: 'message_deletion.target';
+  code: 'invalid_choice' | 'null' | 'required';
+  detail: string;
+};
+
+export type TelegramBotsPartialUpdateActionNameErrorComponent = {
+  attr: 'name';
+  code:
+    | 'blank'
+    | 'invalid'
+    | 'max_length'
+    | 'null'
+    | 'null_characters_not_allowed'
+    | 'required'
+    | 'surrogate_characters_not_allowed';
+  detail: string;
+};
+
+export type TelegramBotsPartialUpdateActionNonFieldErrorsErrorComponent = {
+  attr: 'non_field_errors';
+  code: 'invalid' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsPartialUpdateActionValidationError = {
+  type: ValidationErrorType;
+  errors: Array<TelegramBotsPartialUpdateActionError>;
+};
+
+export type TelegramBotsPartialUpdateActionXErrorComponent = {
+  attr: 'x';
+  code: 'invalid' | 'max_string_length' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsPartialUpdateActionYErrorComponent = {
   attr: 'y';
   code: 'invalid' | 'max_string_length' | 'null';
   detail: string;
@@ -3366,6 +3598,48 @@ export type TelegramBotsPartialUpdateDiagramApiRequestXErrorComponent = {
 };
 
 export type TelegramBotsPartialUpdateDiagramApiRequestYErrorComponent = {
+  attr: 'y';
+  code: 'invalid' | 'max_string_length' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsPartialUpdateDiagramActionError =
+  | ({
+      attr: 'non_field_errors';
+    } & TelegramBotsPartialUpdateDiagramActionNonFieldErrorsErrorComponent)
+  | ({
+      attr: 'x';
+    } & TelegramBotsPartialUpdateDiagramActionXErrorComponent)
+  | ({
+      attr: 'y';
+    } & TelegramBotsPartialUpdateDiagramActionYErrorComponent);
+
+export type TelegramBotsPartialUpdateDiagramActionErrorResponse400 =
+  | ({
+      type: 'validation_error';
+    } & TelegramBotsPartialUpdateDiagramActionValidationError)
+  | ({
+      type: 'client_error';
+    } & ParseErrorResponse);
+
+export type TelegramBotsPartialUpdateDiagramActionNonFieldErrorsErrorComponent = {
+  attr: 'non_field_errors';
+  code: 'invalid' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsPartialUpdateDiagramActionValidationError = {
+  type: ValidationErrorType;
+  errors: Array<TelegramBotsPartialUpdateDiagramActionError>;
+};
+
+export type TelegramBotsPartialUpdateDiagramActionXErrorComponent = {
+  attr: 'x';
+  code: 'invalid' | 'max_string_length' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsPartialUpdateDiagramActionYErrorComponent = {
   attr: 'y';
   code: 'invalid' | 'max_string_length' | 'null';
   detail: string;
@@ -3982,9 +4256,6 @@ export type TelegramBotsPartialUpdateMessageError =
       attr: 'settings.reply_to_user_message';
     } & TelegramBotsPartialUpdateMessageSettingsReplyToUserMessageErrorComponent)
   | ({
-      attr: 'settings.delete_user_message';
-    } & TelegramBotsPartialUpdateMessageSettingsDeleteUserMessageErrorComponent)
-  | ({
       attr: 'settings.send_as_new_message';
     } & TelegramBotsPartialUpdateMessageSettingsSendAsNewMessageErrorComponent)
   | ({
@@ -4194,12 +4465,6 @@ export type TelegramBotsPartialUpdateMessageNameErrorComponent = {
 
 export type TelegramBotsPartialUpdateMessageNonFieldErrorsErrorComponent = {
   attr: 'non_field_errors';
-  code: 'invalid' | 'null';
-  detail: string;
-};
-
-export type TelegramBotsPartialUpdateMessageSettingsDeleteUserMessageErrorComponent = {
-  attr: 'settings.delete_user_message';
   code: 'invalid' | 'null';
   detail: string;
 };
@@ -4862,6 +5127,92 @@ export type TelegramBotsUpdateApiRequestYErrorComponent = {
   detail: string;
 };
 
+export type TelegramBotsUpdateActionDefaultKeyboardRemovalNonFieldErrorsErrorComponent =
+  {
+    attr: 'default_keyboard_removal.non_field_errors';
+    code: 'invalid';
+    detail: string;
+  };
+
+export type TelegramBotsUpdateActionError =
+  | ({
+      attr: 'non_field_errors';
+    } & TelegramBotsUpdateActionNonFieldErrorsErrorComponent)
+  | ({
+      attr: 'name';
+    } & TelegramBotsUpdateActionNameErrorComponent)
+  | ({
+      attr: 'x';
+    } & TelegramBotsUpdateActionXErrorComponent)
+  | ({
+      attr: 'y';
+    } & TelegramBotsUpdateActionYErrorComponent)
+  | ({
+      attr: 'message_deletion.non_field_errors';
+    } & TelegramBotsUpdateActionMessageDeletionNonFieldErrorsErrorComponent)
+  | ({
+      attr: 'message_deletion.target';
+    } & TelegramBotsUpdateActionMessageDeletionTargetErrorComponent)
+  | ({
+      attr: 'default_keyboard_removal.non_field_errors';
+    } & TelegramBotsUpdateActionDefaultKeyboardRemovalNonFieldErrorsErrorComponent);
+
+export type TelegramBotsUpdateActionErrorResponse400 =
+  | ({
+      type: 'validation_error';
+    } & TelegramBotsUpdateActionValidationError)
+  | ({
+      type: 'client_error';
+    } & ParseErrorResponse);
+
+export type TelegramBotsUpdateActionMessageDeletionNonFieldErrorsErrorComponent = {
+  attr: 'message_deletion.non_field_errors';
+  code: 'invalid';
+  detail: string;
+};
+
+export type TelegramBotsUpdateActionMessageDeletionTargetErrorComponent = {
+  attr: 'message_deletion.target';
+  code: 'invalid_choice' | 'null' | 'required';
+  detail: string;
+};
+
+export type TelegramBotsUpdateActionNameErrorComponent = {
+  attr: 'name';
+  code:
+    | 'blank'
+    | 'invalid'
+    | 'max_length'
+    | 'null'
+    | 'null_characters_not_allowed'
+    | 'required'
+    | 'surrogate_characters_not_allowed';
+  detail: string;
+};
+
+export type TelegramBotsUpdateActionNonFieldErrorsErrorComponent = {
+  attr: 'non_field_errors';
+  code: 'invalid' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsUpdateActionValidationError = {
+  type: ValidationErrorType;
+  errors: Array<TelegramBotsUpdateActionError>;
+};
+
+export type TelegramBotsUpdateActionXErrorComponent = {
+  attr: 'x';
+  code: 'invalid' | 'max_string_length' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsUpdateActionYErrorComponent = {
+  attr: 'y';
+  code: 'invalid' | 'max_string_length' | 'null';
+  detail: string;
+};
+
 export type TelegramBotsUpdateBackgroundTaskError =
   | ({
       attr: 'non_field_errors';
@@ -5327,6 +5678,48 @@ export type TelegramBotsUpdateDiagramApiRequestXErrorComponent = {
 };
 
 export type TelegramBotsUpdateDiagramApiRequestYErrorComponent = {
+  attr: 'y';
+  code: 'invalid' | 'max_string_length' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsUpdateDiagramActionError =
+  | ({
+      attr: 'non_field_errors';
+    } & TelegramBotsUpdateDiagramActionNonFieldErrorsErrorComponent)
+  | ({
+      attr: 'x';
+    } & TelegramBotsUpdateDiagramActionXErrorComponent)
+  | ({
+      attr: 'y';
+    } & TelegramBotsUpdateDiagramActionYErrorComponent);
+
+export type TelegramBotsUpdateDiagramActionErrorResponse400 =
+  | ({
+      type: 'validation_error';
+    } & TelegramBotsUpdateDiagramActionValidationError)
+  | ({
+      type: 'client_error';
+    } & ParseErrorResponse);
+
+export type TelegramBotsUpdateDiagramActionNonFieldErrorsErrorComponent = {
+  attr: 'non_field_errors';
+  code: 'invalid' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsUpdateDiagramActionValidationError = {
+  type: ValidationErrorType;
+  errors: Array<TelegramBotsUpdateDiagramActionError>;
+};
+
+export type TelegramBotsUpdateDiagramActionXErrorComponent = {
+  attr: 'x';
+  code: 'invalid' | 'max_string_length' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsUpdateDiagramActionYErrorComponent = {
   attr: 'y';
   code: 'invalid' | 'max_string_length' | 'null';
   detail: string;
@@ -5939,9 +6332,6 @@ export type TelegramBotsUpdateMessageError =
       attr: 'settings.reply_to_user_message';
     } & TelegramBotsUpdateMessageSettingsReplyToUserMessageErrorComponent)
   | ({
-      attr: 'settings.delete_user_message';
-    } & TelegramBotsUpdateMessageSettingsDeleteUserMessageErrorComponent)
-  | ({
       attr: 'settings.send_as_new_message';
     } & TelegramBotsUpdateMessageSettingsSendAsNewMessageErrorComponent)
   | ({
@@ -6149,12 +6539,6 @@ export type TelegramBotsUpdateMessageNameErrorComponent = {
 
 export type TelegramBotsUpdateMessageNonFieldErrorsErrorComponent = {
   attr: 'non_field_errors';
-  code: 'invalid' | 'null';
-  detail: string;
-};
-
-export type TelegramBotsUpdateMessageSettingsDeleteUserMessageErrorComponent = {
-  attr: 'settings.delete_user_message';
   code: 'invalid' | 'null';
   detail: string;
 };
@@ -7005,6 +7389,20 @@ export type ApiRequestRequestWritable = {
   body?: any | null;
 };
 
+export type ActionWritable = {
+  name: string;
+  message_deletion?: ActionMessageDeletion | null;
+  default_keyboard_removal?: ActionDefaultKeyboardRemoval | null;
+};
+
+export type ActionRequestWritable = {
+  name: string;
+  x?: number;
+  y?: number;
+  message_deletion?: ActionMessageDeletionRequest | null;
+  default_keyboard_removal?: ActionDefaultKeyboardRemovalRequest | null;
+};
+
 export type BackgroundTaskWritable = {
   name: string;
   interval: number;
@@ -7070,6 +7468,11 @@ export type DatabaseRecordWritable = {
 };
 
 export type DiagramApiRequestWritable = {
+  x?: number;
+  y?: number;
+};
+
+export type DiagramActionWritable = {
   x?: number;
   y?: number;
 };
@@ -7261,6 +7664,14 @@ export type PatchedApiRequestRequestWritable = {
   method?: ApiRequestMethod;
   headers?: any | null;
   body?: any | null;
+};
+
+export type PatchedActionRequestWritable = {
+  name?: string;
+  x?: number;
+  y?: number;
+  message_deletion?: ActionMessageDeletionRequest | null;
+  default_keyboard_removal?: ActionDefaultKeyboardRemovalRequest | null;
 };
 
 export type PatchedBackgroundTaskRequestWritable = {
@@ -7466,6 +7877,7 @@ export type PremiumGetSubscriptionInvoiceListData = {
   query?: {
     limit?: number;
     offset?: number;
+    ordering?: string;
     statuses?: Array<'expired' | 'failed' | 'paid' | 'pending' | 'refunded'>;
   };
   url: '/api/premium/subscription-invoices/';
@@ -7865,6 +8277,190 @@ export type TelegramBotsPostTelegramBotStopResponses = {
 
 export type TelegramBotsPostTelegramBotStopResponse =
   TelegramBotsPostTelegramBotStopResponses[keyof TelegramBotsPostTelegramBotStopResponses];
+
+export type TelegramBotsGetActionListData = {
+  body?: never;
+  path: {
+    telegramBotId: number;
+  };
+  query?: never;
+  url: '/api/telegram-bots/{telegramBotId}/actions/';
+};
+
+export type TelegramBotsGetActionListErrors = {
+  400: TelegramBotsGetActionListErrorResponse400;
+  401: ErrorResponse401;
+  403: ErrorResponse403;
+  404: ErrorResponse404;
+  405: ErrorResponse405;
+  406: ErrorResponse406;
+  415: ErrorResponse415;
+  500: ErrorResponse500;
+};
+
+export type TelegramBotsGetActionListError =
+  TelegramBotsGetActionListErrors[keyof TelegramBotsGetActionListErrors];
+
+export type TelegramBotsGetActionListResponses = {
+  200: Array<Action>;
+};
+
+export type TelegramBotsGetActionListResponse =
+  TelegramBotsGetActionListResponses[keyof TelegramBotsGetActionListResponses];
+
+export type TelegramBotsCreateActionData = {
+  body: ActionRequestWritable;
+  path: {
+    telegramBotId: number;
+  };
+  query?: never;
+  url: '/api/telegram-bots/{telegramBotId}/actions/';
+};
+
+export type TelegramBotsCreateActionErrors = {
+  400: TelegramBotsCreateActionErrorResponse400;
+  401: ErrorResponse401;
+  403: ErrorResponse403;
+  404: ErrorResponse404;
+  405: ErrorResponse405;
+  406: ErrorResponse406;
+  415: ErrorResponse415;
+  500: ErrorResponse500;
+};
+
+export type TelegramBotsCreateActionError2 =
+  TelegramBotsCreateActionErrors[keyof TelegramBotsCreateActionErrors];
+
+export type TelegramBotsCreateActionResponses = {
+  201: Action;
+};
+
+export type TelegramBotsCreateActionResponse =
+  TelegramBotsCreateActionResponses[keyof TelegramBotsCreateActionResponses];
+
+export type TelegramBotsDeleteActionData = {
+  body?: never;
+  path: {
+    id: number;
+    telegramBotId: number;
+  };
+  query?: never;
+  url: '/api/telegram-bots/{telegramBotId}/actions/{id}/';
+};
+
+export type TelegramBotsDeleteActionErrors = {
+  400: TelegramBotsDeleteActionErrorResponse400;
+  401: ErrorResponse401;
+  403: ErrorResponse403;
+  404: ErrorResponse404;
+  405: ErrorResponse405;
+  406: ErrorResponse406;
+  415: ErrorResponse415;
+  500: ErrorResponse500;
+};
+
+export type TelegramBotsDeleteActionError =
+  TelegramBotsDeleteActionErrors[keyof TelegramBotsDeleteActionErrors];
+
+export type TelegramBotsDeleteActionResponses = {
+  204: void;
+};
+
+export type TelegramBotsDeleteActionResponse =
+  TelegramBotsDeleteActionResponses[keyof TelegramBotsDeleteActionResponses];
+
+export type TelegramBotsGetActionData = {
+  body?: never;
+  path: {
+    id: number;
+    telegramBotId: number;
+  };
+  query?: never;
+  url: '/api/telegram-bots/{telegramBotId}/actions/{id}/';
+};
+
+export type TelegramBotsGetActionErrors = {
+  400: TelegramBotsGetActionErrorResponse400;
+  401: ErrorResponse401;
+  403: ErrorResponse403;
+  404: ErrorResponse404;
+  405: ErrorResponse405;
+  406: ErrorResponse406;
+  415: ErrorResponse415;
+  500: ErrorResponse500;
+};
+
+export type TelegramBotsGetActionError =
+  TelegramBotsGetActionErrors[keyof TelegramBotsGetActionErrors];
+
+export type TelegramBotsGetActionResponses = {
+  200: Action;
+};
+
+export type TelegramBotsGetActionResponse =
+  TelegramBotsGetActionResponses[keyof TelegramBotsGetActionResponses];
+
+export type TelegramBotsPartialUpdateActionData = {
+  body?: PatchedActionRequestWritable;
+  path: {
+    id: number;
+    telegramBotId: number;
+  };
+  query?: never;
+  url: '/api/telegram-bots/{telegramBotId}/actions/{id}/';
+};
+
+export type TelegramBotsPartialUpdateActionErrors = {
+  400: TelegramBotsPartialUpdateActionErrorResponse400;
+  401: ErrorResponse401;
+  403: ErrorResponse403;
+  404: ErrorResponse404;
+  405: ErrorResponse405;
+  406: ErrorResponse406;
+  415: ErrorResponse415;
+  500: ErrorResponse500;
+};
+
+export type TelegramBotsPartialUpdateActionError2 =
+  TelegramBotsPartialUpdateActionErrors[keyof TelegramBotsPartialUpdateActionErrors];
+
+export type TelegramBotsPartialUpdateActionResponses = {
+  200: Action;
+};
+
+export type TelegramBotsPartialUpdateActionResponse =
+  TelegramBotsPartialUpdateActionResponses[keyof TelegramBotsPartialUpdateActionResponses];
+
+export type TelegramBotsUpdateActionData = {
+  body: ActionRequestWritable;
+  path: {
+    id: number;
+    telegramBotId: number;
+  };
+  query?: never;
+  url: '/api/telegram-bots/{telegramBotId}/actions/{id}/';
+};
+
+export type TelegramBotsUpdateActionErrors = {
+  400: TelegramBotsUpdateActionErrorResponse400;
+  401: ErrorResponse401;
+  403: ErrorResponse403;
+  404: ErrorResponse404;
+  405: ErrorResponse405;
+  406: ErrorResponse406;
+  415: ErrorResponse415;
+  500: ErrorResponse500;
+};
+
+export type TelegramBotsUpdateActionError2 =
+  TelegramBotsUpdateActionErrors[keyof TelegramBotsUpdateActionErrors];
+
+export type TelegramBotsUpdateActionResponses = {
+  200: Action;
+};
+
+export type TelegramBotsUpdateActionResponse =
+  TelegramBotsUpdateActionResponses[keyof TelegramBotsUpdateActionResponses];
 
 export type TelegramBotsGetApiRequestListData = {
   body?: never;
@@ -9013,6 +9609,129 @@ export type TelegramBotsUpdateDatabaseRecordResponses = {
 
 export type TelegramBotsUpdateDatabaseRecordResponse =
   TelegramBotsUpdateDatabaseRecordResponses[keyof TelegramBotsUpdateDatabaseRecordResponses];
+
+export type TelegramBotsGetDiagramActionListData = {
+  body?: never;
+  path: {
+    telegramBotId: number;
+  };
+  query?: never;
+  url: '/api/telegram-bots/{telegramBotId}/diagram/actions/';
+};
+
+export type TelegramBotsGetDiagramActionListErrors = {
+  400: TelegramBotsGetDiagramActionListErrorResponse400;
+  401: ErrorResponse401;
+  403: ErrorResponse403;
+  404: ErrorResponse404;
+  405: ErrorResponse405;
+  406: ErrorResponse406;
+  415: ErrorResponse415;
+  500: ErrorResponse500;
+};
+
+export type TelegramBotsGetDiagramActionListError =
+  TelegramBotsGetDiagramActionListErrors[keyof TelegramBotsGetDiagramActionListErrors];
+
+export type TelegramBotsGetDiagramActionListResponses = {
+  200: Array<DiagramAction>;
+};
+
+export type TelegramBotsGetDiagramActionListResponse =
+  TelegramBotsGetDiagramActionListResponses[keyof TelegramBotsGetDiagramActionListResponses];
+
+export type TelegramBotsGetDiagramActionData = {
+  body?: never;
+  path: {
+    id: number;
+    telegramBotId: number;
+  };
+  query?: never;
+  url: '/api/telegram-bots/{telegramBotId}/diagram/actions/{id}/';
+};
+
+export type TelegramBotsGetDiagramActionErrors = {
+  400: TelegramBotsGetDiagramActionErrorResponse400;
+  401: ErrorResponse401;
+  403: ErrorResponse403;
+  404: ErrorResponse404;
+  405: ErrorResponse405;
+  406: ErrorResponse406;
+  415: ErrorResponse415;
+  500: ErrorResponse500;
+};
+
+export type TelegramBotsGetDiagramActionError =
+  TelegramBotsGetDiagramActionErrors[keyof TelegramBotsGetDiagramActionErrors];
+
+export type TelegramBotsGetDiagramActionResponses = {
+  200: DiagramAction;
+};
+
+export type TelegramBotsGetDiagramActionResponse =
+  TelegramBotsGetDiagramActionResponses[keyof TelegramBotsGetDiagramActionResponses];
+
+export type TelegramBotsPartialUpdateDiagramActionData = {
+  body?: PatchedDiagramActionRequest;
+  path: {
+    id: number;
+    telegramBotId: number;
+  };
+  query?: never;
+  url: '/api/telegram-bots/{telegramBotId}/diagram/actions/{id}/';
+};
+
+export type TelegramBotsPartialUpdateDiagramActionErrors = {
+  400: TelegramBotsPartialUpdateDiagramActionErrorResponse400;
+  401: ErrorResponse401;
+  403: ErrorResponse403;
+  404: ErrorResponse404;
+  405: ErrorResponse405;
+  406: ErrorResponse406;
+  415: ErrorResponse415;
+  500: ErrorResponse500;
+};
+
+export type TelegramBotsPartialUpdateDiagramActionError2 =
+  TelegramBotsPartialUpdateDiagramActionErrors[keyof TelegramBotsPartialUpdateDiagramActionErrors];
+
+export type TelegramBotsPartialUpdateDiagramActionResponses = {
+  200: DiagramAction;
+};
+
+export type TelegramBotsPartialUpdateDiagramActionResponse =
+  TelegramBotsPartialUpdateDiagramActionResponses[keyof TelegramBotsPartialUpdateDiagramActionResponses];
+
+export type TelegramBotsUpdateDiagramActionData = {
+  body?: DiagramActionRequest;
+  path: {
+    id: number;
+    telegramBotId: number;
+  };
+  query?: never;
+  url: '/api/telegram-bots/{telegramBotId}/diagram/actions/{id}/';
+};
+
+export type TelegramBotsUpdateDiagramActionErrors = {
+  400: TelegramBotsUpdateDiagramActionErrorResponse400;
+  401: ErrorResponse401;
+  403: ErrorResponse403;
+  404: ErrorResponse404;
+  405: ErrorResponse405;
+  406: ErrorResponse406;
+  415: ErrorResponse415;
+  500: ErrorResponse500;
+};
+
+export type TelegramBotsUpdateDiagramActionError2 =
+  TelegramBotsUpdateDiagramActionErrors[keyof TelegramBotsUpdateDiagramActionErrors];
+
+export type TelegramBotsUpdateDiagramActionResponses = {
+  200: DiagramAction;
+};
+
+export type TelegramBotsUpdateDiagramActionResponse =
+  TelegramBotsUpdateDiagramActionResponses[keyof TelegramBotsUpdateDiagramActionResponses];
 
 export type TelegramBotsGetDiagramApiRequestListData = {
   body?: never;

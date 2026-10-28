@@ -1,4 +1,39 @@
 {
+  "actionOffcanvas": {
+    "actionButton": "",
+    "actionButton_add": "Добавить",
+    "actionButton_edit": "Сохранить",
+    "messageDeletionBlock": {
+      "targets": {
+        "lastBotMessages": "Последние сообщения бота",
+        "userMessage": "Сообщение пользователя"
+      },
+      "title": "Цель удаления сообщения"
+    },
+    "messages": {
+      "addAction": {
+        "error": "Не удалось добавить действие.",
+        "success": "Вы успешно добавили действие."
+      },
+      "editAction": {
+        "error": "Не удалось сохранить действие.",
+        "success": "Вы успешно сохранили действие."
+      },
+      "getAction": {
+        "error": "Не удалось получить данные действия."
+      }
+    },
+    "title": "",
+    "title_add": "Добавление действия",
+    "title_edit": "Редактирование действия",
+    "typeBlock": {
+      "title": "Тип",
+      "types": {
+        "defaultKeyboardRemoval": "Удаление обычной клавиатуры",
+        "messageDeletion": "Удаление сообщения"
+      }
+    }
+  },
   "addonButtonGroup": {
     "hideButton": "Скрыть дополнения",
     "showButton": "Показать дополнения"
@@ -316,7 +351,6 @@
       }
     },
     "settingsBlock": {
-      "deleteUserMessageSwitch": "Удалить сообщение пользователя",
       "replyToUserMessageSwitch": "Ответить на сообщение пользователя",
       "sendAsNewMessageSwitch": "Отправить сообщение как новое",
       "title": "Настройки"
@@ -342,6 +376,27 @@
     "title": "Название"
   },
   "nodes": {
+    "action": {
+      "deleteModal": {
+        "text": "Вы точно хотите удалить действие?",
+        "title": "Удаление действия"
+      },
+      "duplicateModal": {
+        "text": "Вы точно хотите дублировать действие?",
+        "title": "Дублирование действия"
+      },
+      "messages": {
+        "delete": {
+          "error": "Не удалось удалить действие.",
+          "success": "Вы успешно удалили действие."
+        },
+        "duplicate": {
+          "error": "Не удалось дублировать действие.",
+          "success": "Вы успешно дублировали действие."
+        }
+      },
+      "title": "Действие"
+    },
     "apiRequest": {
       "deleteModal": {
         "text": "Вы точно хотите удалить API-запрос?",
@@ -596,6 +651,10 @@
     "title_edit": "Редактирование рандомайзера"
   },
   "selectBlockModal": {
+    "action": {
+      "description": "Выполняет выбранное действие.",
+      "name": "Действие"
+    },
     "apiRequest": {
       "description": "Выполняет запрос к внешнему API.",
       "name": "API-запрос"

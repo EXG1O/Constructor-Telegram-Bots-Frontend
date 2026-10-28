@@ -30,6 +30,9 @@ import type {
   PremiumGetSubscriptionPriceListErrors,
   PremiumGetSubscriptionPriceListResponses,
   PremiumGetSubscriptionPriceResponses,
+  TelegramBotsCreateActionData,
+  TelegramBotsCreateActionErrors,
+  TelegramBotsCreateActionResponses,
   TelegramBotsCreateApiRequestData,
   TelegramBotsCreateApiRequestErrors,
   TelegramBotsCreateApiRequestResponses,
@@ -81,6 +84,9 @@ import type {
   TelegramBotsCreateVariableData,
   TelegramBotsCreateVariableErrors,
   TelegramBotsCreateVariableResponses,
+  TelegramBotsDeleteActionData,
+  TelegramBotsDeleteActionErrors,
+  TelegramBotsDeleteActionResponses,
   TelegramBotsDeleteApiRequestData,
   TelegramBotsDeleteApiRequestErrors,
   TelegramBotsDeleteApiRequestResponses,
@@ -138,6 +144,12 @@ import type {
   TelegramBotsDeleteVariableData,
   TelegramBotsDeleteVariableErrors,
   TelegramBotsDeleteVariableResponses,
+  TelegramBotsGetActionData,
+  TelegramBotsGetActionErrors,
+  TelegramBotsGetActionListData,
+  TelegramBotsGetActionListErrors,
+  TelegramBotsGetActionListResponses,
+  TelegramBotsGetActionResponses,
   TelegramBotsGetApiRequestData,
   TelegramBotsGetApiRequestErrors,
   TelegramBotsGetApiRequestListData,
@@ -174,6 +186,12 @@ import type {
   TelegramBotsGetDatabaseRecordListErrors,
   TelegramBotsGetDatabaseRecordListResponses,
   TelegramBotsGetDatabaseRecordResponses,
+  TelegramBotsGetDiagramActionData,
+  TelegramBotsGetDiagramActionErrors,
+  TelegramBotsGetDiagramActionListData,
+  TelegramBotsGetDiagramActionListErrors,
+  TelegramBotsGetDiagramActionListResponses,
+  TelegramBotsGetDiagramActionResponses,
   TelegramBotsGetDiagramApiRequestData,
   TelegramBotsGetDiagramApiRequestErrors,
   TelegramBotsGetDiagramApiRequestListData,
@@ -294,6 +312,9 @@ import type {
   TelegramBotsGetVariableListErrors,
   TelegramBotsGetVariableListResponses,
   TelegramBotsGetVariableResponses,
+  TelegramBotsPartialUpdateActionData,
+  TelegramBotsPartialUpdateActionErrors,
+  TelegramBotsPartialUpdateActionResponses,
   TelegramBotsPartialUpdateApiRequestData,
   TelegramBotsPartialUpdateApiRequestErrors,
   TelegramBotsPartialUpdateApiRequestResponses,
@@ -312,6 +333,9 @@ import type {
   TelegramBotsPartialUpdateDatabaseRecordData,
   TelegramBotsPartialUpdateDatabaseRecordErrors,
   TelegramBotsPartialUpdateDatabaseRecordResponses,
+  TelegramBotsPartialUpdateDiagramActionData,
+  TelegramBotsPartialUpdateDiagramActionErrors,
+  TelegramBotsPartialUpdateDiagramActionResponses,
   TelegramBotsPartialUpdateDiagramApiRequestData,
   TelegramBotsPartialUpdateDiagramApiRequestErrors,
   TelegramBotsPartialUpdateDiagramApiRequestResponses,
@@ -378,6 +402,9 @@ import type {
   TelegramBotsPostTelegramBotStopData,
   TelegramBotsPostTelegramBotStopErrors,
   TelegramBotsPostTelegramBotStopResponses,
+  TelegramBotsUpdateActionData,
+  TelegramBotsUpdateActionErrors,
+  TelegramBotsUpdateActionResponses,
   TelegramBotsUpdateApiRequestData,
   TelegramBotsUpdateApiRequestErrors,
   TelegramBotsUpdateApiRequestResponses,
@@ -396,6 +423,9 @@ import type {
   TelegramBotsUpdateDatabaseRecordData,
   TelegramBotsUpdateDatabaseRecordErrors,
   TelegramBotsUpdateDatabaseRecordResponses,
+  TelegramBotsUpdateDiagramActionData,
+  TelegramBotsUpdateDiagramActionErrors,
+  TelegramBotsUpdateDiagramActionResponses,
   TelegramBotsUpdateDiagramApiRequestData,
   TelegramBotsUpdateDiagramApiRequestErrors,
   TelegramBotsUpdateDiagramApiRequestResponses,
@@ -791,6 +821,126 @@ export class TelegramBotsService {
       security: [{ name: 'Authorization', type: 'apiKey' }],
       url: '/api/telegram-bots/{id}/stop/',
       ...options,
+    });
+  }
+
+  public static getActionList<ThrowOnError extends boolean = false>(
+    options: Options<TelegramBotsGetActionListData, ThrowOnError>,
+  ): RequestResult<
+    TelegramBotsGetActionListResponses,
+    TelegramBotsGetActionListErrors,
+    ThrowOnError
+  > {
+    return (options.client ?? client).get<
+      TelegramBotsGetActionListResponses,
+      TelegramBotsGetActionListErrors,
+      ThrowOnError
+    >({
+      security: [{ name: 'Authorization', type: 'apiKey' }],
+      url: '/api/telegram-bots/{telegramBotId}/actions/',
+      ...options,
+    });
+  }
+
+  public static createAction<ThrowOnError extends boolean = false>(
+    options: Options<TelegramBotsCreateActionData, ThrowOnError>,
+  ): RequestResult<
+    TelegramBotsCreateActionResponses,
+    TelegramBotsCreateActionErrors,
+    ThrowOnError
+  > {
+    return (options.client ?? client).post<
+      TelegramBotsCreateActionResponses,
+      TelegramBotsCreateActionErrors,
+      ThrowOnError
+    >({
+      security: [{ name: 'Authorization', type: 'apiKey' }],
+      url: '/api/telegram-bots/{telegramBotId}/actions/',
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+    });
+  }
+
+  public static deleteAction<ThrowOnError extends boolean = false>(
+    options: Options<TelegramBotsDeleteActionData, ThrowOnError>,
+  ): RequestResult<
+    TelegramBotsDeleteActionResponses,
+    TelegramBotsDeleteActionErrors,
+    ThrowOnError
+  > {
+    return (options.client ?? client).delete<
+      TelegramBotsDeleteActionResponses,
+      TelegramBotsDeleteActionErrors,
+      ThrowOnError
+    >({
+      security: [{ name: 'Authorization', type: 'apiKey' }],
+      url: '/api/telegram-bots/{telegramBotId}/actions/{id}/',
+      ...options,
+    });
+  }
+
+  public static getAction<ThrowOnError extends boolean = false>(
+    options: Options<TelegramBotsGetActionData, ThrowOnError>,
+  ): RequestResult<
+    TelegramBotsGetActionResponses,
+    TelegramBotsGetActionErrors,
+    ThrowOnError
+  > {
+    return (options.client ?? client).get<
+      TelegramBotsGetActionResponses,
+      TelegramBotsGetActionErrors,
+      ThrowOnError
+    >({
+      security: [{ name: 'Authorization', type: 'apiKey' }],
+      url: '/api/telegram-bots/{telegramBotId}/actions/{id}/',
+      ...options,
+    });
+  }
+
+  public static partialUpdateAction<ThrowOnError extends boolean = false>(
+    options: Options<TelegramBotsPartialUpdateActionData, ThrowOnError>,
+  ): RequestResult<
+    TelegramBotsPartialUpdateActionResponses,
+    TelegramBotsPartialUpdateActionErrors,
+    ThrowOnError
+  > {
+    return (options.client ?? client).patch<
+      TelegramBotsPartialUpdateActionResponses,
+      TelegramBotsPartialUpdateActionErrors,
+      ThrowOnError
+    >({
+      security: [{ name: 'Authorization', type: 'apiKey' }],
+      url: '/api/telegram-bots/{telegramBotId}/actions/{id}/',
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+    });
+  }
+
+  public static updateAction<ThrowOnError extends boolean = false>(
+    options: Options<TelegramBotsUpdateActionData, ThrowOnError>,
+  ): RequestResult<
+    TelegramBotsUpdateActionResponses,
+    TelegramBotsUpdateActionErrors,
+    ThrowOnError
+  > {
+    return (options.client ?? client).put<
+      TelegramBotsUpdateActionResponses,
+      TelegramBotsUpdateActionErrors,
+      ThrowOnError
+    >({
+      security: [{ name: 'Authorization', type: 'apiKey' }],
+      url: '/api/telegram-bots/{telegramBotId}/actions/{id}/',
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
     });
   }
 
@@ -1524,6 +1674,86 @@ export class TelegramBotsService {
     >({
       security: [{ name: 'Authorization', type: 'apiKey' }],
       url: '/api/telegram-bots/{telegramBotId}/database-records/{id}/',
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+    });
+  }
+
+  public static getDiagramActionList<ThrowOnError extends boolean = false>(
+    options: Options<TelegramBotsGetDiagramActionListData, ThrowOnError>,
+  ): RequestResult<
+    TelegramBotsGetDiagramActionListResponses,
+    TelegramBotsGetDiagramActionListErrors,
+    ThrowOnError
+  > {
+    return (options.client ?? client).get<
+      TelegramBotsGetDiagramActionListResponses,
+      TelegramBotsGetDiagramActionListErrors,
+      ThrowOnError
+    >({
+      security: [{ name: 'Authorization', type: 'apiKey' }],
+      url: '/api/telegram-bots/{telegramBotId}/diagram/actions/',
+      ...options,
+    });
+  }
+
+  public static getDiagramAction<ThrowOnError extends boolean = false>(
+    options: Options<TelegramBotsGetDiagramActionData, ThrowOnError>,
+  ): RequestResult<
+    TelegramBotsGetDiagramActionResponses,
+    TelegramBotsGetDiagramActionErrors,
+    ThrowOnError
+  > {
+    return (options.client ?? client).get<
+      TelegramBotsGetDiagramActionResponses,
+      TelegramBotsGetDiagramActionErrors,
+      ThrowOnError
+    >({
+      security: [{ name: 'Authorization', type: 'apiKey' }],
+      url: '/api/telegram-bots/{telegramBotId}/diagram/actions/{id}/',
+      ...options,
+    });
+  }
+
+  public static partialUpdateDiagramAction<ThrowOnError extends boolean = false>(
+    options: Options<TelegramBotsPartialUpdateDiagramActionData, ThrowOnError>,
+  ): RequestResult<
+    TelegramBotsPartialUpdateDiagramActionResponses,
+    TelegramBotsPartialUpdateDiagramActionErrors,
+    ThrowOnError
+  > {
+    return (options.client ?? client).patch<
+      TelegramBotsPartialUpdateDiagramActionResponses,
+      TelegramBotsPartialUpdateDiagramActionErrors,
+      ThrowOnError
+    >({
+      security: [{ name: 'Authorization', type: 'apiKey' }],
+      url: '/api/telegram-bots/{telegramBotId}/diagram/actions/{id}/',
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+    });
+  }
+
+  public static updateDiagramAction<ThrowOnError extends boolean = false>(
+    options: Options<TelegramBotsUpdateDiagramActionData, ThrowOnError>,
+  ): RequestResult<
+    TelegramBotsUpdateDiagramActionResponses,
+    TelegramBotsUpdateDiagramActionErrors,
+    ThrowOnError
+  > {
+    return (options.client ?? client).put<
+      TelegramBotsUpdateDiagramActionResponses,
+      TelegramBotsUpdateDiagramActionErrors,
+      ThrowOnError
+    >({
+      security: [{ name: 'Authorization', type: 'apiKey' }],
+      url: '/api/telegram-bots/{telegramBotId}/diagram/actions/{id}/',
       ...options,
       headers: {
         'Content-Type': 'application/json',

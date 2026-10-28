@@ -45,6 +45,7 @@ async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData> {
       { data: diagramTemporaryVariables },
       { data: diagramRandomizers },
       { data: diagramTimers },
+      { data: diagramActions },
     ] = await Promise.all([
       TelegramBotsService.getDiagramTriggerList(options),
       TelegramBotsService.getDiagramMessageList(options),
@@ -56,6 +57,7 @@ async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData> {
       TelegramBotsService.getDiagramTemporaryVariableList(options),
       TelegramBotsService.getDiagramRandomizerList(options),
       TelegramBotsService.getDiagramTimerList(options),
+      TelegramBotsService.getDiagramActionList(options),
     ]);
     return {
       trigger: diagramTriggers,
@@ -68,6 +70,7 @@ async function loader({ params }: LoaderFunctionArgs): Promise<LoaderData> {
       temporary_variable: diagramTemporaryVariables,
       randomizer: diagramRandomizers,
       timer: diagramTimers,
+      action: diagramActions,
     };
   } catch {
     throw fallback();

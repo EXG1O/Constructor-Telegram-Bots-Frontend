@@ -36,6 +36,8 @@ import { iconButtonVariants } from 'components/ui/IconButton';
 import Page from 'components/ui/Page';
 import { createMessageToast } from 'components/ui/ToastContainer';
 
+import ActionNode from './components/ActionNode';
+import ActionOffcanvas from './components/ActionOffcanvas';
 import APIRequestNode from './components/APIRequestNode';
 import APIRequestOffcanvas from './components/APIRequestOffcanvas';
 import BackgroundTaskNode from './components/BackgroundTaskNode';
@@ -95,6 +97,7 @@ export const nodeTypes: Record<NodeType, ComponentType<any>> = {
   [NodeType.TemporaryVariable]: TemporaryVariableNode,
   [NodeType.Randomizer]: RandomizerNode,
   [NodeType.Timer]: TimerNode,
+  [NodeType.Action]: ActionNode,
 };
 const defaultEdgeOptions: DefaultEdgeOptions = {
   type: ConnectionLineType.SmoothStep,
@@ -136,6 +139,7 @@ const diagramBlockUpdateMap: Record<
   [NodeType.Randomizer]: (options) =>
     TelegramBotsService.updateDiagramRandomizer(options),
   [NodeType.Timer]: (options) => TelegramBotsService.updateDiagramTimer(options),
+  [NodeType.Action]: (options) => TelegramBotsService.updateDiagramAction(options),
 };
 
 function Constructor(): ReactElement {
@@ -345,6 +349,7 @@ function Constructor(): ReactElement {
         <TemporaryVariableOffcanvas />
         <RandomizerOffcanvas />
         <TimerOffcanvas />
+        <ActionOffcanvas />
         <div ref={handleRef} className='size-full overflow-hidden rounded-lg bg-light'>
           <ReactFlow
             fitView
