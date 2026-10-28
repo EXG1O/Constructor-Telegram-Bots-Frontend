@@ -32,11 +32,6 @@ function SettingsBlock({ className, ...props }: SettingsBlockProps): ReactElemen
       />
       <FormCheckFeedback
         type='switch'
-        name='settings.delete_user_message'
-        label={t('deleteUserMessageSwitch')}
-      />
-      <FormCheckFeedback
-        type='switch'
         name='settings.send_as_new_message'
         label={t('sendAsNewMessageSwitch')}
       />

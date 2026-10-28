@@ -1,4 +1,39 @@
 {
+  "actionOffcanvas": {
+    "actionButton": "",
+    "actionButton_add": "Add",
+    "actionButton_edit": "Save",
+    "messageDeletionBlock": {
+      "targets": {
+        "lastBotMessages": "Last bot messages",
+        "userMessage": "User message"
+      },
+      "title": "Message deletion target"
+    },
+    "messages": {
+      "addAction": {
+        "error": "Failed to add the action.",
+        "success": "You have successfully added the action."
+      },
+      "editAction": {
+        "error": "Failed to save the action.",
+        "success": "You have successfully saved the action."
+      },
+      "getAction": {
+        "error": "Failed to retrieve the action data."
+      }
+    },
+    "title": "",
+    "title_add": "Adding an action",
+    "title_edit": "Editing the action",
+    "typeBlock": {
+      "title": "Type",
+      "types": {
+        "defaultKeyboardRemoval": "Removing a regular keyboard",
+        "messageDeletion": "Deleting a message"
+      }
+    }
+  },
   "addonButtonGroup": {
     "hideButton": "Hide addons",
     "showButton": "Show addons"
@@ -316,7 +351,6 @@
       }
     },
     "settingsBlock": {
-      "deleteUserMessageSwitch": "Delete user message",
       "replyToUserMessageSwitch": "Reply to user message",
       "sendAsNewMessageSwitch": "Send message as new",
       "title": "Settings"
@@ -342,6 +376,27 @@
     "title": "Name"
   },
   "nodes": {
+    "action": {
+      "deleteModal": {
+        "text": "Are you sure you want to delete the action?",
+        "title": "Deleting the action"
+      },
+      "duplicateModal": {
+        "text": "Are you sure you want to duplicate the action?",
+        "title": "Duplicating the action"
+      },
+      "messages": {
+        "delete": {
+          "error": "Failed to delete the action.",
+          "success": "You have successfully deleted the action."
+        },
+        "duplicate": {
+          "error": "Failed to duplicate the action.",
+          "success": "You have successfully duplicated the action."
+        }
+      },
+      "title": "Action"
+    },
     "apiRequest": {
       "deleteModal": {
         "text": "Are you sure you want to delete the API request?",
@@ -596,6 +651,10 @@
     "title_edit": "Editing the randomizer"
   },
   "selectBlockModal": {
+    "action": {
+      "description": "Performs the selected action.",
+      "name": "Action"
+    },
     "apiRequest": {
       "description": "Sends a request to an external API.",
       "name": "API request"

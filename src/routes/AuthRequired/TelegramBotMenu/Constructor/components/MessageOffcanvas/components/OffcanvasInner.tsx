@@ -110,8 +110,6 @@ function OffcanvasInner({
         settings: {
           reply_to_user_message:
             settings.reply_to_user_message ?? defaultSettings.reply_to_user_message,
-          delete_user_message:
-            settings.delete_user_message ?? defaultSettings.delete_user_message,
           send_as_new_message:
             settings.send_as_new_message ?? defaultSettings.send_as_new_message,
         },

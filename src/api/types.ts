@@ -1,4 +1,6 @@
 import type {
+  Action,
+  ActionRequestWritable,
   ApiRequest,
   ApiRequestRequestWritable,
   BackgroundTask,
@@ -7,6 +9,7 @@ import type {
   ConditionRequestWritable,
   DatabaseOperation,
   DatabaseOperationRequestWritable,
+  DiagramAction,
   DiagramApiRequest,
   DiagramBackgroundTask,
   DiagramCondition,
@@ -41,7 +44,8 @@ export type Block =
   | Invoice
   | TemporaryVariable
   | Timer
-  | Randomizer;
+  | Randomizer
+  | Action;
 
 export type BlockRequestWritable =
   | TriggerRequestWritable
@@ -53,7 +57,8 @@ export type BlockRequestWritable =
   | InvoiceRequestWritable
   | TemporaryVariableRequestWritable
   | TimerRequestWritable
-  | RandomizerRequestWritable;
+  | RandomizerRequestWritable
+  | ActionRequestWritable;
 
 export type DiagramBlock =
   | DiagramTrigger
@@ -65,4 +70,5 @@ export type DiagramBlock =
   | DiagramInvoice
   | DiagramTemporaryVariable
   | DiagramTimer
-  | DiagramRandomizer;
+  | DiagramRandomizer
+  | DiagramAction;
