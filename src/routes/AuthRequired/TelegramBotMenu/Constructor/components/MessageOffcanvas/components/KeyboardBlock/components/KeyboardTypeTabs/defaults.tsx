@@ -1,3 +1,3 @@
-import type { Type } from './types';
+import { Type } from './enums';
 
-export const defaultType: Type = 'default';
+export const defaultType: Type = Type.Default;

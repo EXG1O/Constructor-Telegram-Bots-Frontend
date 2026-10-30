@@ -29,9 +29,6 @@ function TypeBlock({ className, ...props }: TypeBlockProps): ReactElement {
       </Block.Title>
       <FormSelectFeedback name='type'>
         <option value={Type.MessageDeletion}>{t('types.messageDeletion')}</option>
-        <option value={Type.DefaultKeyboardRemoval}>
-          {t('types.defaultKeyboardRemoval')}
-        </option>
       </FormSelectFeedback>
     </Block>
   );

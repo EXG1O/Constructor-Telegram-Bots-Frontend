@@ -75,7 +75,7 @@ function OffcanvasInner({
         return;
       }
 
-      const { id: _id, settings, text, images, documents, keyboard, ...message } = data;
+      const { id: _id, name, settings, text, images, documents, keyboard } = data;
 
       const [loadedImages, loadedDocuments] = await Promise.all([
         Promise.all(
@@ -105,8 +105,7 @@ function OffcanvasInner({
         ),
       ]);
       const values: FormValues = {
-        ...message,
-
+        name,
         settings: {
           reply_to_user_message:
             settings.reply_to_user_message ?? defaultSettings.reply_to_user_message,

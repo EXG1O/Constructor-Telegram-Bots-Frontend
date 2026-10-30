@@ -11,6 +11,7 @@ import { defaultDocumentsBlockFormValues } from './components/DocumentsBlock/def
 import type { DocumentsBlockFormValues } from './components/DocumentsBlock/types';
 import { defaultImagesBlockFormValues } from './components/ImagesBlock/defaults';
 import type { ImagesBlockFormValues } from './components/ImagesBlock/types';
+import { Type } from './components/KeyboardBlock/components/KeyboardTypeTabs/enums';
 import { defaultKeyboardBlockFormValues } from './components/KeyboardBlock/defaults';
 import type { KeyboardBlockFormValues } from './components/KeyboardBlock/types';
 import OffcanvasInner, { type OffcanvasInnerProps } from './components/OffcanvasInner';
@@ -24,7 +25,12 @@ import type { NameBlockFormValues } from '../NameBlock/types';
 
 import useBlockFormikSubmit from '../../hooks/useBlockFormikSubmit';
 
-import type { Message, MessageKeyboardType, MessageRequestWritable } from 'api';
+import {
+  type Message,
+  MessageKeyboardType,
+  type MessageKeyboardTypeEnum,
+  type MessageRequestWritable,
+} from 'api';
 import { TelegramBotsService } from 'api';
 import formDataBodySerializer from 'api/utils/formDataBodySerializer';
 
@@ -89,6 +95,8 @@ function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
       type: NodeType.Message,
       action,
       saveBlock: async ({
+        name,
+        settings,
         images,
         documents,
         text,
@@ -97,8 +105,11 @@ function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
         show_documents_block,
         show_text_block,
         show_keyboard_block,
-        ...values
+        x,
+        y,
       }) => {
+        let hasValidationError: boolean = false;
+
         if (
           !show_images_block &&
           !show_documents_block &&
@@ -109,7 +120,7 @@ function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
             message: t('messages.validation.error', { context: 'noAddons' }),
             level: 'error',
           });
-          return null;
+          hasValidationError = true;
         }
 
         if (show_keyboard_block && !show_text_block) {
@@ -119,11 +130,30 @@ function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
             }),
             level: 'error',
           });
+          hasValidationError = true;
+        }
+
+        if (
+          show_keyboard_block &&
+          keyboard.type !== Type.Removal &&
+          !keyboard.rows.length
+        ) {
+          createMessageToast({
+            message: t('messages.validation.error', {
+              context: 'keyboardRequiresButtons',
+            }),
+            level: 'error',
+          });
+          hasValidationError = true;
+        }
+
+        if (hasValidationError) {
           return null;
         }
 
         const data: MessageRequestWritable = {
-          ...values,
+          name,
+          settings,
           images:
             show_images_block && images.length
               ? images.map(({ id, file, from_url }, index) => ({
@@ -144,23 +174,30 @@ function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
               : null,
           text: show_text_block ? text : null,
           keyboard: show_keyboard_block
-            ? {
-                type: keyboard.type as MessageKeyboardType,
-                buttons: keyboard.rows.reduce<any[]>((buttons, row, rowIndex) => {
-                  buttons.push(
-                    ...row.buttons.map(({ id, text, url, style }, buttonIndex) => ({
-                      id,
-                      row: rowIndex,
-                      position: buttonIndex,
-                      text,
-                      url,
-                      style,
-                    })),
-                  );
-                  return buttons;
-                }, []),
-              }
+            ? keyboard.type === Type.Removal
+              ? {
+                  type: MessageKeyboardType.Removal,
+                }
+              : {
+                  // Request enum is a separate generated type with the same values; cast is required
+                  type: keyboard.type as unknown as MessageKeyboardTypeEnum,
+                  buttons: keyboard.rows.reduce<any[]>((buttons, row, rowIndex) => {
+                    buttons.push(
+                      ...row.buttons.map(({ id, text, url, style }, buttonIndex) => ({
+                        id,
+                        row: rowIndex,
+                        position: buttonIndex,
+                        text,
+                        url,
+                        style,
+                      })),
+                    );
+                    return buttons;
+                  }, []),
+                }
             : null,
+          x,
+          y,
         };
 
         const response = await (action === 'edit' && messageID

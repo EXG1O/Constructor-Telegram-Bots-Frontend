@@ -33,15 +33,6 @@ export type Action = {
   readonly id: number;
   name: string;
   message_deletion?: ActionMessageDeletion | null;
-  default_keyboard_removal?: ActionDefaultKeyboardRemoval | null;
-};
-
-export type ActionDefaultKeyboardRemoval = {
-  [key: string]: any;
-};
-
-export type ActionDefaultKeyboardRemovalRequest = {
-  [key: string]: any;
 };
 
 export type ActionMessageDeletion = {
@@ -60,7 +51,6 @@ export enum ActionMessageDeletionTarget {
 export type ActionRequest = {
   name: string;
   message_deletion?: ActionMessageDeletionRequest | null;
-  default_keyboard_removal?: ActionDefaultKeyboardRemovalRequest | null;
 };
 
 export type BackgroundTask = {
@@ -670,12 +660,23 @@ export enum MessageKeyboardButtonStyle {
   Danger = 'danger',
 }
 
-export type MessageKeyboardRequest = {
-  type?: MessageKeyboardType;
-  buttons: Array<MessageKeyboardButtonRequest>;
-};
+export type MessageKeyboardRequest =
+  | {
+      type: 'removal';
+    }
+  | {
+      type?: MessageKeyboardTypeEnum;
+      buttons: Array<MessageKeyboardButtonRequest>;
+    };
 
 export enum MessageKeyboardType {
+  Default = 'default',
+  Inline = 'inline',
+  Payment = 'payment',
+  Removal = 'removal',
+}
+
+export enum MessageKeyboardTypeEnum {
   Default = 'default',
   Inline = 'inline',
   Payment = 'payment',
@@ -770,7 +771,6 @@ export type PatchedApiRequestRequest = {
 export type PatchedActionRequest = {
   name?: string;
   message_deletion?: ActionMessageDeletionRequest | null;
-  default_keyboard_removal?: ActionDefaultKeyboardRemovalRequest | null;
 };
 
 export type PatchedBackgroundTaskRequest = {
@@ -1126,13 +1126,6 @@ export type TelegramBotsCreateApiRequestYErrorComponent = {
   detail: string;
 };
 
-export type TelegramBotsCreateActionDefaultKeyboardRemovalNonFieldErrorsErrorComponent =
-  {
-    attr: 'default_keyboard_removal.non_field_errors';
-    code: 'invalid';
-    detail: string;
-  };
-
 export type TelegramBotsCreateActionError =
   | ({
       attr: 'non_field_errors';
@@ -1151,10 +1144,7 @@ export type TelegramBotsCreateActionError =
     } & TelegramBotsCreateActionMessageDeletionNonFieldErrorsErrorComponent)
   | ({
       attr: 'message_deletion.target';
-    } & TelegramBotsCreateActionMessageDeletionTargetErrorComponent)
-  | ({
-      attr: 'default_keyboard_removal.non_field_errors';
-    } & TelegramBotsCreateActionDefaultKeyboardRemovalNonFieldErrorsErrorComponent);
+    } & TelegramBotsCreateActionMessageDeletionTargetErrorComponent);
 
 export type TelegramBotsCreateActionErrorResponse400 =
   | ({
@@ -3043,13 +3033,6 @@ export type TelegramBotsPartialUpdateApiRequestYErrorComponent = {
   detail: string;
 };
 
-export type TelegramBotsPartialUpdateActionDefaultKeyboardRemovalNonFieldErrorsErrorComponent =
-  {
-    attr: 'default_keyboard_removal.non_field_errors';
-    code: 'invalid';
-    detail: string;
-  };
-
 export type TelegramBotsPartialUpdateActionError =
   | ({
       attr: 'non_field_errors';
@@ -3068,10 +3051,7 @@ export type TelegramBotsPartialUpdateActionError =
     } & TelegramBotsPartialUpdateActionMessageDeletionNonFieldErrorsErrorComponent)
   | ({
       attr: 'message_deletion.target';
-    } & TelegramBotsPartialUpdateActionMessageDeletionTargetErrorComponent)
-  | ({
-      attr: 'default_keyboard_removal.non_field_errors';
-    } & TelegramBotsPartialUpdateActionDefaultKeyboardRemovalNonFieldErrorsErrorComponent);
+    } & TelegramBotsPartialUpdateActionMessageDeletionTargetErrorComponent);
 
 export type TelegramBotsPartialUpdateActionErrorResponse400 =
   | ({
@@ -5127,13 +5107,6 @@ export type TelegramBotsUpdateApiRequestYErrorComponent = {
   detail: string;
 };
 
-export type TelegramBotsUpdateActionDefaultKeyboardRemovalNonFieldErrorsErrorComponent =
-  {
-    attr: 'default_keyboard_removal.non_field_errors';
-    code: 'invalid';
-    detail: string;
-  };
-
 export type TelegramBotsUpdateActionError =
   | ({
       attr: 'non_field_errors';
@@ -5152,10 +5125,7 @@ export type TelegramBotsUpdateActionError =
     } & TelegramBotsUpdateActionMessageDeletionNonFieldErrorsErrorComponent)
   | ({
       attr: 'message_deletion.target';
-    } & TelegramBotsUpdateActionMessageDeletionTargetErrorComponent)
-  | ({
-      attr: 'default_keyboard_removal.non_field_errors';
-    } & TelegramBotsUpdateActionDefaultKeyboardRemovalNonFieldErrorsErrorComponent);
+    } & TelegramBotsUpdateActionMessageDeletionTargetErrorComponent);
 
 export type TelegramBotsUpdateActionErrorResponse400 =
   | ({
@@ -7392,7 +7362,6 @@ export type ApiRequestRequestWritable = {
 export type ActionWritable = {
   name: string;
   message_deletion?: ActionMessageDeletion | null;
-  default_keyboard_removal?: ActionDefaultKeyboardRemoval | null;
 };
 
 export type ActionRequestWritable = {
@@ -7400,7 +7369,6 @@ export type ActionRequestWritable = {
   x?: number;
   y?: number;
   message_deletion?: ActionMessageDeletionRequest | null;
-  default_keyboard_removal?: ActionDefaultKeyboardRemovalRequest | null;
 };
 
 export type BackgroundTaskWritable = {
@@ -7671,7 +7639,6 @@ export type PatchedActionRequestWritable = {
   x?: number;
   y?: number;
   message_deletion?: ActionMessageDeletionRequest | null;
-  default_keyboard_removal?: ActionDefaultKeyboardRemovalRequest | null;
 };
 
 export type PatchedBackgroundTaskRequestWritable = {
