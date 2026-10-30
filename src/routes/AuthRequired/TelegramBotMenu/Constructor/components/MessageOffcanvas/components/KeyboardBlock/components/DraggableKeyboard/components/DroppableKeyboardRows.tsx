@@ -39,25 +39,27 @@ function DroppableKeyboardRows({
       getContainerForClone={getContainerForClone}
     >
       {({ innerRef, droppableProps, placeholder }) => (
-        <FastField name='keyboard.rows'>
-          {({ field }: FastFieldProps<KeyboardRow[]>) => (
-            <ol
-              {...props}
-              {...droppableProps}
-              ref={innerRef}
-              className={cn('w-full', '-mb-1', className)}
-            >
-              {field.value.map((row, index) => (
-                <DraggableKeyboardRow
-                  key={row.draggableId}
-                  rowIndex={index}
-                  className='mb-1'
-                />
-              ))}
-              {placeholder}
-            </ol>
-          )}
-        </FastField>
+        <>
+          <FastField name='keyboard.rows'>
+            {({ field }: FastFieldProps<KeyboardRow[]>) => (
+              <ol
+                {...props}
+                {...droppableProps}
+                ref={innerRef}
+                className={cn('w-full', '-mb-1', className)}
+              >
+                {field.value.map((row, index) => (
+                  <DraggableKeyboardRow
+                    key={row.draggableId}
+                    rowIndex={index}
+                    className='mb-1'
+                  />
+                ))}
+              </ol>
+            )}
+          </FastField>
+          {placeholder}
+        </>
       )}
     </Droppable>
   );
