@@ -15,7 +15,7 @@ import URLInput, { type URL as URLValue } from './components/URLInput';
 
 import type { KeyboardButton } from '../DraggableKeyboard/components/DraggableKeyboardButton';
 import type { KeyboardRow } from '../DraggableKeyboard/components/DraggableKeyboardRow';
-import type { Type } from '../KeyboardTypeTabs/types';
+import { Type } from '../KeyboardTypeTabs/enums';
 
 import cn from 'utils/cn';
 
@@ -59,7 +59,7 @@ function KeyboardButtonPopover({
   function urlInputVisible(): boolean {
     return (
       useKeyboardButtonPopoverStore.getState().showURLInput &&
-      keyboardType !== 'default'
+      keyboardType !== Type.Default
     );
   }
 
@@ -154,7 +154,7 @@ function KeyboardButtonPopover({
         className={cn('flex', 'flex-col', 'w-70', 'gap-1', className)}
       >
         <TextInput />
-        {keyboardType !== 'default' && (
+        {keyboardType !== Type.Default && (
           <URLInput.ToggleSection>
             <URLInput />
           </URLInput.ToggleSection>

@@ -29,7 +29,6 @@
     "typeBlock": {
       "title": "Type",
       "types": {
-        "defaultKeyboardRemoval": "Removing a regular keyboard",
         "messageDeletion": "Deleting a message"
       }
     }
@@ -330,7 +329,11 @@
       "title": "Keyboard",
       "types": {
         "default": "Regular",
-        "inline": "Inline"
+        "inline": "Inline",
+        "removal": {
+          "helpText": "Removes the previously sent regular keyboard.",
+          "name": "Removal"
+        }
       }
     },
     "messages": {
@@ -346,6 +349,7 @@
         "error": "Failed to retrieve message data."
       },
       "validation": {
+        "error_keyboardRequiresButtons": "The «Keyboard» addon must have at least one button.",
         "error_keyboardRequiresText": "The «Keyboard» addon cannot be used without the «Text» addon.",
         "error_noAddons": "You must specify at least one addon."
       }

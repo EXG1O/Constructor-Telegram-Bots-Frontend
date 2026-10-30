@@ -64,7 +64,6 @@ function ActionOffcanvas(props: ActionOffcanvasProps): ReactElement {
         const data: ActionRequestWritable = {
           name,
           message_deletion: type === Type.MessageDeletion ? message_deletion : null,
-          default_keyboard_removal: type === Type.DefaultKeyboardRemoval ? {} : null,
           x,
           y,
         };

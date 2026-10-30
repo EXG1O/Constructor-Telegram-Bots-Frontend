@@ -29,6 +29,8 @@ import {
   type MessageDocumentRequestWritable,
   type MessageImage,
   type MessageImageRequestWritable,
+  MessageKeyboardType,
+  type MessageKeyboardTypeEnum,
   TelegramBotsService,
 } from 'api';
 import fetchFile from 'api/utils/fetchFile';
@@ -86,7 +88,7 @@ function MessageNode({
         TelegramBotsService.getMessage({
           path: { telegramBotId: telegramBotID, id: message.id },
         }),
-      createAPICall: async ({ images, documents, ...data }) => {
+      createAPICall: async ({ images, documents, keyboard, ...data }) => {
         const processMedia = (media: (MessageImage | MessageDocument)[]) =>
           Promise.all(
             media.map<
@@ -110,6 +112,11 @@ function MessageNode({
             ...data,
             images: processedImages,
             documents: processedDocuments,
+            keyboard: keyboard && {
+              ...keyboard,
+              // Request enum is a separate generated type with the same values; cast is required
+              type: keyboard.type as unknown as MessageKeyboardTypeEnum,
+            },
           },
         });
       },
@@ -194,7 +201,7 @@ function MessageNode({
           }}
         />
       )}
-      {message.keyboard?.buttons && (
+      {message.keyboard && message.keyboard.type !== MessageKeyboardType.Removal && (
         <div className='flex flex-col gap-1'>
           {message.keyboard.buttons
             .sort((a, b) => (a.row !== b.row ? a.row - b.row : a.position - b.position))

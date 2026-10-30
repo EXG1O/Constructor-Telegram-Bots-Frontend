@@ -64,15 +64,11 @@ function OffcanvasInner({
         return;
       }
 
-      const { name, message_deletion, default_keyboard_removal } = data;
+      const { name, message_deletion } = data;
 
       setValues({
         name,
-        type: message_deletion
-          ? Type.MessageDeletion
-          : default_keyboard_removal
-            ? Type.DefaultKeyboardRemoval
-            : defaultType,
+        type: message_deletion ? Type.MessageDeletion : defaultType,
         message_deletion: message_deletion ?? defaultMessageDeletion,
       });
       setSubmitting(false);

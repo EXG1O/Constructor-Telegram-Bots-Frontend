@@ -1,5 +1,5 @@
 import type { KeyboardRow } from './components/DraggableKeyboard';
-import type { Type } from './components/KeyboardTypeTabs/types';
+import type { Type } from './components/KeyboardTypeTabs/enums';
 
 export interface Keyboard {
   type: Type;
