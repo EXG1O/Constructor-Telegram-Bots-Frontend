@@ -4,7 +4,10 @@ import IconButton, { type IconButtonProps } from 'components/ui/IconButton';
 
 import PopoverTrigger from './PopoverTrigger';
 
-export interface PopoverQuestionTriggerIconButtonProps extends Omit<IconButtonProps, 'asChild' | 'children'> {}
+export interface PopoverQuestionTriggerIconButtonProps extends Omit<
+  IconButtonProps,
+  'asChild' | 'children'
+> {}
 
 const PopoverQuestionTriggerIconButton = forwardRef<
   HTMLButtonElement,
