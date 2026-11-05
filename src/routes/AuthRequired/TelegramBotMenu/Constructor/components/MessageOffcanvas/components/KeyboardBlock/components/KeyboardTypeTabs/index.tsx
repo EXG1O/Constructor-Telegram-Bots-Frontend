@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import type { RouteID } from 'routes';
 
 import FormTabs, { type FormTabsProps } from 'components/shared/FormTabs';
-import IconButton from 'components/ui/IconButton';
 import Popover from 'components/ui/Popover';
 import Tabs from 'components/ui/Tabs';
 
@@ -28,11 +27,11 @@ function KeyboardTypeTabs(props: KeyboardTypeTabsButtonGroupProps): ReactElement
       <Tabs.Button value={Type.Removal} className='gap-0.75'>
         <span>{t('removal.name')}</span>
         <Popover>
-          <Popover.Trigger asChild onClick={(event) => event.stopPropagation()}>
-            <IconButton size='xs' className='mt-0.5 text-foreground'>
-              <Popover.Trigger.QuestionIcon />
-            </IconButton>
-          </Popover.Trigger>
+          <Popover.QuestionTriggerIconButton
+            size='xs'
+            className='mt-0.5 text-foreground'
+            onClick={(event) => event.stopPropagation()}
+          />
           <Popover.Body size='sm' content='text'>
             {t('removal.helpText')}
           </Popover.Body>

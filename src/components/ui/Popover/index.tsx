@@ -3,12 +3,14 @@ import { Popover, type PopoverProps } from '@radix-ui/react-popover';
 import PopoverAnchor from './components/PopoverAnchor';
 import PopoverBody from './components/PopoverBody';
 import PopoverClose from './components/PopoverClose';
+import PopoverQuestionTriggerIconButton from './components/PopoverQuestionTriggerIconButton';
 import PopoverTrigger from './components/PopoverTrigger';
 
 export type { PopoverProps };
 export default Object.assign(Popover, {
   Anchor: PopoverAnchor,
   Trigger: PopoverTrigger,
+  QuestionTriggerIconButton: PopoverQuestionTriggerIconButton,
   Body: PopoverBody,
   Close: PopoverClose,
 });

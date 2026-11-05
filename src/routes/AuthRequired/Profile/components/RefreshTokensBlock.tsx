@@ -5,7 +5,6 @@ import formatDate from 'i18n/formatDate';
 import type { RouteID } from 'routes';
 
 import Block, { type BlockProps } from 'components/ui/Block';
-import IconButton from 'components/ui/IconButton';
 import Popover from 'components/ui/Popover';
 import Table from 'components/ui/Table';
 
@@ -37,11 +36,7 @@ function RefreshTokensBlock({
       <div className='flex items-center justify-center gap-1'>
         <h3 className='text-3xl font-semibold'>{t('title')}</h3>
         <Popover>
-          <Popover.Trigger asChild>
-            <IconButton size='sm' className='mt-1'>
-              <Popover.Trigger.QuestionIcon />
-            </IconButton>
-          </Popover.Trigger>
+          <Popover.QuestionTriggerIconButton size='sm' className='mt-1' />
           <Popover.Body size='sm' content='text'>
             {t('helpText')}
           </Popover.Body>
