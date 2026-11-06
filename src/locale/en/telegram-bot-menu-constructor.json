@@ -297,6 +297,33 @@
       "addRowButton": {
         "text": "Add row"
       },
+      "defaultTypeOnlySection": {
+        "inputPlaceholder": {
+          "hideButton": {
+            "text": "Remove hint"
+          },
+          "input": {
+            "placeholder": "Enter hint text"
+          },
+          "showButton": {
+            "text": "Add hint"
+          },
+          "toggleButton": {
+            "helpText": "Shown inside the input field until the user starts typing."
+          }
+        },
+        "settings": {
+          "compactSwitch": {
+            "label": "Compact"
+          },
+          "hideOnClickSwitch": {
+            "label": "Hide after click"
+          },
+          "persistentSwitch": {
+            "label": "Prevent user from hiding"
+          }
+        }
+      },
       "keyboardButtonPopover": {
         "actionButton": "actionButton",
         "actionButton_add": "Add",

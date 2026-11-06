@@ -7,6 +7,7 @@ import Block, { type BlockProps } from 'components/ui/Block';
 
 import AddKeyboardButtonButton from './components/AddKeyboardButtonButton';
 import AddKeyboardRowButton from './components/AddKeyboardRowButton';
+import DefaultTypeOnlySection from './components/DefaultTypeOnlySection';
 import DraggableKeyboard from './components/DraggableKeyboard';
 import KeyboardTypeTabs from './components/KeyboardTypeTabs';
 import { Type } from './components/KeyboardTypeTabs/enums';
@@ -24,9 +25,10 @@ function KeyboardBlock(props: KeyboardBlockProps): ReactElement {
   return (
     <Block {...props} variant='light'>
       <Block.Title>
-        <h3 className='mb-2 text-lg font-medium'>{t('title')}</h3>
+        <h3 className='text-lg font-medium'>{t('title')}</h3>
       </Block.Title>
-      <KeyboardTypeTabs />
+      <KeyboardTypeTabs className='mt-2' />
+      <DefaultTypeOnlySection className='mt-2' />
       <FormToggleSection
         name='keyboard.type'
         getOpen={(field) => field.value !== Type.Removal}

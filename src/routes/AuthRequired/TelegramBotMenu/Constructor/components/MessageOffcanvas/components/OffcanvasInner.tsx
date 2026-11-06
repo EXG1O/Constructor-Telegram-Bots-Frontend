@@ -118,6 +118,23 @@ function OffcanvasInner({
         keyboard: keyboard
           ? {
               type: keyboard.type ?? defaultType,
+              default_type_only: {
+                settings: {
+                  is_compact:
+                    keyboard.is_compact ??
+                    defaultKeyboard.default_type_only.settings.is_compact,
+                  hide_on_click:
+                    keyboard.hide_on_click ??
+                    defaultKeyboard.default_type_only.settings.hide_on_click,
+                  is_persistent:
+                    keyboard.is_persistent ??
+                    defaultKeyboard.default_type_only.settings.is_persistent,
+                },
+                input_placeholder:
+                  keyboard.input_placeholder ??
+                  defaultKeyboard.default_type_only.input_placeholder,
+                show_input_placeholder: Boolean(keyboard.input_placeholder),
+              },
               rows: keyboard.buttons.reduce<KeyboardRow[]>(
                 (
                   rows,

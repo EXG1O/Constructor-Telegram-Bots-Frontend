@@ -297,6 +297,33 @@
       "addRowButton": {
         "text": "Добавить ряд"
       },
+      "defaultTypeOnlySection": {
+        "inputPlaceholder": {
+          "hideButton": {
+            "text": "Убрать подсказку"
+          },
+          "input": {
+            "placeholder": "Введите текст подсказки"
+          },
+          "showButton": {
+            "text": "Добавить подсказку"
+          },
+          "toggleButton": {
+            "helpText": "Отображается внутри поля ввода, пока пользователь не начнет печатать."
+          }
+        },
+        "settings": {
+          "compactSwitch": {
+            "label": "Компактная"
+          },
+          "hideOnClickSwitch": {
+            "label": "Скрывать после нажатия"
+          },
+          "persistentSwitch": {
+            "label": "Запретить скрытие пользователем"
+          }
+        }
+      },
       "keyboardButtonPopover": {
         "actionButton": "",
         "actionButton_add": "Добавить",

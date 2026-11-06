@@ -181,6 +181,14 @@ function MessageOffcanvas(props: MessageOffcanvasProps): ReactElement {
               : {
                   // Request enum is a separate generated type with the same values; cast is required
                   type: keyboard.type as unknown as MessageKeyboardTypeEnum,
+                  ...(keyboard.type === MessageKeyboardType.Default && {
+                    is_compact: keyboard.default_type_only.settings.is_compact,
+                    hide_on_click: keyboard.default_type_only.settings.hide_on_click,
+                    is_persistent: keyboard.default_type_only.settings.is_persistent,
+                    input_placeholder: keyboard.default_type_only.show_input_placeholder
+                      ? keyboard.default_type_only.input_placeholder
+                      : null,
+                  }),
                   buttons: keyboard.rows.reduce<any[]>((buttons, row, rowIndex) => {
                     buttons.push(
                       ...row.buttons.map(({ id, text, url, style }, buttonIndex) => ({
