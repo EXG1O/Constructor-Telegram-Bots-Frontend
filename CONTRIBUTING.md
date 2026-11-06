@@ -79,10 +79,10 @@ npx eslint ./src --fix
 
 ### Run all checks
 
-To run all code quality checks (formatting and linting) at once, you can use:
+To run all code quality checks (formatting and linting) at once on a path, you can use:
 
 ```bash
-npx prettier ./src --check && npx eslint ./src
+npm run lint:format -- ./src
 ```
 
 ## Translations

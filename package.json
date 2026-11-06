@@ -4,7 +4,8 @@
   "scripts": {
     "start": "webpack serve --mode=development",
     "dev": "webpack --mode=development",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "lint:format": "sh -c 'eslint --fix \"$@\" && prettier --write \"$@\"' sh"
   },
   "dependencies": {
     "@babel/core": "~7",
