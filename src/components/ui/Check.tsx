@@ -110,9 +110,7 @@ const Check = forwardRef<HTMLInputElement, CheckProps>(
     return (
       <div
         {...wrapperProps}
-        className={cn(
-          wrapperVariants({ size, className: wrapperProps?.className }),
-        )}
+        className={cn(wrapperVariants({ size, className: wrapperProps?.className }))}
       >
         <Component
           {...props}
@@ -120,11 +118,7 @@ const Check = forwardRef<HTMLInputElement, CheckProps>(
           type='checkbox'
           className={cn(checkVariants({ type, size, invalid, className }))}
         />
-        {label && (
-          <label className={labelVariants({ size, invalid })}>
-            {label}
-          </label>
-        )}
+        {label && <label className={labelVariants({ size, invalid })}>{label}</label>}
       </div>
     );
   },
