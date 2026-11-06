@@ -633,6 +633,10 @@ export type MessageImageRequest = {
 export type MessageKeyboard = {
   type?: MessageKeyboardType;
   buttons: Array<MessageKeyboardButton>;
+  is_compact?: boolean;
+  hide_on_click?: boolean;
+  is_persistent?: boolean;
+  input_placeholder?: string | null;
 };
 
 export type MessageKeyboardButton = {
@@ -662,11 +666,19 @@ export enum MessageKeyboardButtonStyle {
 
 export type MessageKeyboardRequest =
   | {
-      type: 'removal';
+      type: MessageKeyboardTypeEnum;
+      buttons: Array<MessageKeyboardButtonRequest>;
     }
   | {
-      type?: MessageKeyboardTypeEnum;
+      type: 'default';
       buttons: Array<MessageKeyboardButtonRequest>;
+      is_compact?: boolean;
+      hide_on_click?: boolean;
+      is_persistent?: boolean;
+      input_placeholder?: string | null;
+    }
+  | {
+      type: 'removal';
     };
 
 export enum MessageKeyboardType {
@@ -677,7 +689,6 @@ export enum MessageKeyboardType {
 }
 
 export enum MessageKeyboardTypeEnum {
-  Default = 'default',
   Inline = 'inline',
   Payment = 'payment',
 }
@@ -2090,7 +2101,19 @@ export type TelegramBotsCreateMessageError =
     } & TelegramBotsCreateMessageKeyboardButtonsIndexUrlErrorComponent)
   | ({
       attr: 'keyboard.buttons.INDEX.style';
-    } & TelegramBotsCreateMessageKeyboardButtonsIndexStyleErrorComponent);
+    } & TelegramBotsCreateMessageKeyboardButtonsIndexStyleErrorComponent)
+  | ({
+      attr: 'keyboard.is_compact';
+    } & TelegramBotsCreateMessageKeyboardIsCompactErrorComponent)
+  | ({
+      attr: 'keyboard.hide_on_click';
+    } & TelegramBotsCreateMessageKeyboardHideOnClickErrorComponent)
+  | ({
+      attr: 'keyboard.is_persistent';
+    } & TelegramBotsCreateMessageKeyboardIsPersistentErrorComponent)
+  | ({
+      attr: 'keyboard.input_placeholder';
+    } & TelegramBotsCreateMessageKeyboardInputPlaceholderErrorComponent);
 
 export type TelegramBotsCreateMessageErrorResponse400 =
   | ({
@@ -2200,6 +2223,34 @@ export type TelegramBotsCreateMessageKeyboardButtonsIndexUrlErrorComponent = {
 export type TelegramBotsCreateMessageKeyboardButtonsNonFieldErrorsErrorComponent = {
   attr: 'keyboard.buttons.non_field_errors';
   code: 'not_a_list' | 'null' | 'required';
+  detail: string;
+};
+
+export type TelegramBotsCreateMessageKeyboardHideOnClickErrorComponent = {
+  attr: 'keyboard.hide_on_click';
+  code: 'invalid' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsCreateMessageKeyboardInputPlaceholderErrorComponent = {
+  attr: 'keyboard.input_placeholder';
+  code:
+    | 'invalid'
+    | 'max_length'
+    | 'null_characters_not_allowed'
+    | 'surrogate_characters_not_allowed';
+  detail: string;
+};
+
+export type TelegramBotsCreateMessageKeyboardIsCompactErrorComponent = {
+  attr: 'keyboard.is_compact';
+  code: 'invalid' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsCreateMessageKeyboardIsPersistentErrorComponent = {
+  attr: 'keyboard.is_persistent';
+  code: 'invalid' | 'null';
   detail: string;
 };
 
@@ -4303,7 +4354,19 @@ export type TelegramBotsPartialUpdateMessageError =
     } & TelegramBotsPartialUpdateMessageKeyboardButtonsIndexUrlErrorComponent)
   | ({
       attr: 'keyboard.buttons.INDEX.style';
-    } & TelegramBotsPartialUpdateMessageKeyboardButtonsIndexStyleErrorComponent);
+    } & TelegramBotsPartialUpdateMessageKeyboardButtonsIndexStyleErrorComponent)
+  | ({
+      attr: 'keyboard.is_compact';
+    } & TelegramBotsPartialUpdateMessageKeyboardIsCompactErrorComponent)
+  | ({
+      attr: 'keyboard.hide_on_click';
+    } & TelegramBotsPartialUpdateMessageKeyboardHideOnClickErrorComponent)
+  | ({
+      attr: 'keyboard.is_persistent';
+    } & TelegramBotsPartialUpdateMessageKeyboardIsPersistentErrorComponent)
+  | ({
+      attr: 'keyboard.input_placeholder';
+    } & TelegramBotsPartialUpdateMessageKeyboardInputPlaceholderErrorComponent);
 
 export type TelegramBotsPartialUpdateMessageErrorResponse400 =
   | ({
@@ -4417,6 +4480,34 @@ export type TelegramBotsPartialUpdateMessageKeyboardButtonsNonFieldErrorsErrorCo
     code: 'not_a_list' | 'null' | 'required';
     detail: string;
   };
+
+export type TelegramBotsPartialUpdateMessageKeyboardHideOnClickErrorComponent = {
+  attr: 'keyboard.hide_on_click';
+  code: 'invalid' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsPartialUpdateMessageKeyboardInputPlaceholderErrorComponent = {
+  attr: 'keyboard.input_placeholder';
+  code:
+    | 'invalid'
+    | 'max_length'
+    | 'null_characters_not_allowed'
+    | 'surrogate_characters_not_allowed';
+  detail: string;
+};
+
+export type TelegramBotsPartialUpdateMessageKeyboardIsCompactErrorComponent = {
+  attr: 'keyboard.is_compact';
+  code: 'invalid' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsPartialUpdateMessageKeyboardIsPersistentErrorComponent = {
+  attr: 'keyboard.is_persistent';
+  code: 'invalid' | 'null';
+  detail: string;
+};
 
 export type TelegramBotsPartialUpdateMessageKeyboardNonFieldErrorsErrorComponent = {
   attr: 'keyboard.non_field_errors';
@@ -6369,7 +6460,19 @@ export type TelegramBotsUpdateMessageError =
     } & TelegramBotsUpdateMessageKeyboardButtonsIndexUrlErrorComponent)
   | ({
       attr: 'keyboard.buttons.INDEX.style';
-    } & TelegramBotsUpdateMessageKeyboardButtonsIndexStyleErrorComponent);
+    } & TelegramBotsUpdateMessageKeyboardButtonsIndexStyleErrorComponent)
+  | ({
+      attr: 'keyboard.is_compact';
+    } & TelegramBotsUpdateMessageKeyboardIsCompactErrorComponent)
+  | ({
+      attr: 'keyboard.hide_on_click';
+    } & TelegramBotsUpdateMessageKeyboardHideOnClickErrorComponent)
+  | ({
+      attr: 'keyboard.is_persistent';
+    } & TelegramBotsUpdateMessageKeyboardIsPersistentErrorComponent)
+  | ({
+      attr: 'keyboard.input_placeholder';
+    } & TelegramBotsUpdateMessageKeyboardInputPlaceholderErrorComponent);
 
 export type TelegramBotsUpdateMessageErrorResponse400 =
   | ({
@@ -6479,6 +6582,34 @@ export type TelegramBotsUpdateMessageKeyboardButtonsIndexUrlErrorComponent = {
 export type TelegramBotsUpdateMessageKeyboardButtonsNonFieldErrorsErrorComponent = {
   attr: 'keyboard.buttons.non_field_errors';
   code: 'not_a_list' | 'null' | 'required';
+  detail: string;
+};
+
+export type TelegramBotsUpdateMessageKeyboardHideOnClickErrorComponent = {
+  attr: 'keyboard.hide_on_click';
+  code: 'invalid' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsUpdateMessageKeyboardInputPlaceholderErrorComponent = {
+  attr: 'keyboard.input_placeholder';
+  code:
+    | 'invalid'
+    | 'max_length'
+    | 'null_characters_not_allowed'
+    | 'surrogate_characters_not_allowed';
+  detail: string;
+};
+
+export type TelegramBotsUpdateMessageKeyboardIsCompactErrorComponent = {
+  attr: 'keyboard.is_compact';
+  code: 'invalid' | 'null';
+  detail: string;
+};
+
+export type TelegramBotsUpdateMessageKeyboardIsPersistentErrorComponent = {
+  attr: 'keyboard.is_persistent';
+  code: 'invalid' | 'null';
   detail: string;
 };
 
